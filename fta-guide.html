@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="원산지증명서(C/O) 자율발급과 기관발급 차이, 한국의 주요 FTA 협정국별 특징을 정리한 가이드. FTA 협정관세 적용에 필요한 서류 체크리스트 포함.">
+<meta name="keywords" content="원산지증명서 발급방법, FTA 협정관세, C/O 자율발급 기관발급, 한국 FTA 체결국">
+<title>원산지증명서(FTA) 가이드 — CBM Lab</title>
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  :root{--accent:#2563EB;--accent-light:#DBEAFE;--accent-dark:#1D4ED8;--slate-50:#F8FAFC;--slate-100:#F1F5F9;--slate-200:#E2E8F0;--slate-400:#94A3B8;--slate-500:#64748B;--slate-600:#475569;--slate-700:#334155;--slate-800:#1E293B;--slate-900:#0F172A;--radius:8px;--radius-lg:12px;--shadow-sm:0 1px 2px rgba(0,0,0,.05);font-family:'Pretendard','Apple SD Gothic Neo',system-ui,-apple-system,sans-serif}
+  body{background:var(--slate-50);color:var(--slate-800);font-size:14px;line-height:1.6}
+  header{background:#fff;border-bottom:1px solid var(--slate-200)}
+  .header-inner{max-width:1100px;margin:0 auto;padding:16px 24px;display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}
+  .logo-mark{font-size:20px;font-weight:800;color:var(--slate-900);text-decoration:none}
+  .logo-mark span{color:var(--accent)}
+  .nav-link{font-size:13px;font-weight:600;color:var(--slate-500);text-decoration:none;padding:7px 12px;border-radius:6px}
+  .nav-link:hover{background:var(--slate-100)}
+  .hero{background:#fff;border-bottom:1px solid var(--slate-200);padding:28px 24px 24px}
+  .hero-inner{max-width:1100px;margin:0 auto}
+  .hero h1{font-size:22px;font-weight:700;color:var(--slate-900);margin-bottom:6px}
+  .hero p{font-size:14px;color:var(--slate-500);max-width:640px}
+  .main{max-width:1100px;margin:0 auto;padding:28px 24px 60px}
+  .card{background:#fff;border:1px solid var(--slate-200);border-radius:var(--radius-lg);box-shadow:var(--shadow-sm);margin-bottom:20px}
+  .card-header{padding:16px 20px;border-bottom:1px solid var(--slate-100)}
+  .card-title{font-size:14px;font-weight:600;color:var(--slate-800)}
+  .card-body{padding:20px}
+  .compare-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  .compare-card{border:1px solid var(--slate-200);border-radius:var(--radius);padding:16px 18px}
+  .compare-card h3{font-size:14px;font-weight:700;color:var(--slate-900);margin-bottom:8px}
+  .compare-card ul{padding-left:18px;font-size:12.5px;color:var(--slate-600);line-height:1.7}
+  .fta-table{width:100%;border-collapse:collapse;font-size:12px}
+  .fta-table th,.fta-table td{border:1px solid var(--slate-100);padding:8px 10px;text-align:left}
+  .fta-table th{background:var(--slate-50);font-size:11px;color:var(--slate-500);text-transform:uppercase}
+  .checklist{list-style:none}
+  .checklist li{display:flex;align-items:flex-start;gap:8px;padding:8px 0;border-bottom:1px solid var(--slate-100);font-size:13px}
+  .checklist li:last-child{border-bottom:none}
+  .checklist li::before{content:'☐';color:var(--accent);font-size:15px;flex-shrink:0}
+  .notice-box{background:var(--accent-light);border:1px solid #BFDBFE;border-radius:var(--radius);padding:10px 14px;font-size:12px;color:#1E40AF;margin-top:14px}
+  .cta-box{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;background:var(--slate-900);border-radius:var(--radius-lg);padding:22px 26px;color:#fff}
+  .cta-box h4{font-size:15px;font-weight:700;margin-bottom:4px}
+  .cta-box p{font-size:12.5px;color:var(--slate-400)}
+  .cta-btn{background:var(--accent);color:#fff;font-size:13px;font-weight:700;padding:10px 18px;border-radius:6px;text-decoration:none;white-space:nowrap}
+  footer{background:var(--slate-900);color:var(--slate-400);padding:24px;font-size:12px}
+  .footer-inner{max-width:1100px;margin:0 auto;display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
+  .footer-logo{font-size:15px;font-weight:800;color:#fff}
+  .footer-logo span{color:var(--accent)}
+  .footer-link{color:var(--slate-500);text-decoration:none;font-size:11px;margin-right:14px}
+  @media (max-width:768px){.compare-grid{grid-template-columns:1fr}.fta-table{font-size:11px}.cta-box{flex-direction:column;align-items:flex-start}}
+</style>
+</head>
+<body>
+<header><div class="header-inner">
+  <a href="index.html" class="logo-mark">CBM<span>Lab</span></a>
+  <a href="index.html" class="nav-link">← 전체 도구 보기</a>
+</div></header>
+
+<section class="hero"><div class="hero-inner">
+  <h1>원산지증명서(C/O) &amp; FTA 가이드</h1>
+  <p>자율발급과 기관발급의 차이, 한국이 체결한 주요 FTA 협정국 특징, 발급 전 확인할 체크리스트를 정리했습니다.</p>
+</div></section>
+
+<div class="main">
+  <div class="card">
+    <div class="card-header"><div class="card-title">자율발급 vs 기관발급</div></div>
+    <div class="card-body">
+      <div class="compare-grid">
+        <div class="compare-card">
+          <h3>자율발급 (Self-Certification)</h3>
+          <ul>
+            <li>수출자가 직접 원산지증명서를 작성·서명</li>
+            <li>한-미 FTA, 한-EU FTA 등에서 주로 적용</li>
+            <li>발급 시간이 빠르지만, 사후 검증 시 수출자가 직접 소명 책임</li>
+            <li>정확한 원산지 결정기준 사전 검토가 중요</li>
+          </ul>
+        </div>
+        <div class="compare-card">
+          <h3>기관발급 (Certification by Authority)</h3>
+          <ul>
+            <li>상공회의소, 세관 등 공인 기관이 발급</li>
+            <li>한-아세안, 한-중, RCEP 등 다수 협정에서 적용</li>
+            <li>서류 심사를 거치므로 신뢰도는 높지만 발급까지 시간 소요</li>
+            <li>원산지 소명 자료(원가계산서 등)를 기관에 제출해야 함</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header"><div class="card-title">한국 주요 FTA 체결국 비교 (참고용)</div></div>
+    <div class="card-body">
+      <table class="fta-table">
+        <thead><tr><th>협정</th><th>발급 방식</th><th>주요 특징</th></tr></thead>
+        <tbody>
+          <tr><td>한-미 FTA</td><td>자율발급</td><td>수출자/생산자 자율증명, 특정 형식 없이 필수 문구 포함 서류로 가능</td></tr>
+          <tr><td>한-EU FTA</td><td>자율발급</td><td>6,000유로 초과 시 인증수출자 자격 필요</td></tr>
+          <tr><td>한-아세안 FTA</td><td>기관발급</td><td>Form AK 사용, 상공회의소 등 발급기관 통한 인증</td></tr>
+          <tr><td>한-중 FTA</td><td>기관발급</td><td>세관 또는 인증기관 통한 원산지증명서 발급</td></tr>
+          <tr><td>RCEP</td><td>기관발급 + 자율발급 병행</td><td>참여국별로 방식이 다를 수 있어 개별 확인 필요</td></tr>
+        </tbody>
+      </table>
+      <div class="notice-box">본 표는 일반적인 참고 정보입니다. 협정별 세부 요건과 개정 사항은 관세청 FTA포털 또는 상공회의소를 통해 반드시 최신 정보로 확인하세요.</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header"><div class="card-title">발급 전 체크리스트</div></div>
+    <div class="card-body">
+      <ul class="checklist">
+        <li>수출 품목의 정확한 HS Code를 확인했는가</li>
+        <li>해당 협정의 원산지 결정기준(완전생산/세번변경/부가가치 기준)을 충족하는가</li>
+        <li>원산지 소명 자료(BOM, 원가계산서 등)를 준비했는가</li>
+        <li>자율발급 협정이라면 인증수출자 자격이 필요한지 확인했는가</li>
+        <li>협정관세율이 기본관세보다 실제로 유리한지 비교했는가</li>
+        <li>수입자에게 원산지증명서 유효기간(통상 1년) 내 도착하도록 일정 확인했는가</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="cta-box">
+    <div><h4>협정관세 적용 후 실제 원가가 궁금하다면</h4><p>관세율까지 반영한 실제 수입 원가를 계산해보세요.</p></div>
+    <a href="fob-cif.html" class="cta-btn">수입원가 계산기로 이동 →</a>
+  </div>
+</div>
+
+<footer><div class="footer-inner">
+  <div class="footer-logo">CBM<span>Lab</span></div>
+  <nav><a href="index.html" class="footer-link">전체 도구</a><a href="privacy.html" class="footer-link">개인정보 처리방침</a></nav>
+</div></footer>
+</body>
+</html>

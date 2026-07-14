@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="발주일, 생산기간, 운송방식(해상/항공), 통관기간을 입력하면 예상 출고일과 예상 도착일을 자동으로 계산합니다.">
+<meta name="keywords" content="리드타임 계산기, 선적 예상 도착일, 해상운송 기간, 무역 일정 계산">
+<title>선적 리드타임 계산기 — CBM Lab</title>
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  :root{--accent:#2563EB;--accent-light:#DBEAFE;--accent-dark:#1D4ED8;--slate-50:#F8FAFC;--slate-100:#F1F5F9;--slate-200:#E2E8F0;--slate-400:#94A3B8;--slate-500:#64748B;--slate-600:#475569;--slate-700:#334155;--slate-800:#1E293B;--slate-900:#0F172A;--radius:8px;--radius-lg:12px;--shadow-sm:0 1px 2px rgba(0,0,0,.05);font-family:'Pretendard','Apple SD Gothic Neo',system-ui,-apple-system,sans-serif}
+  body{background:var(--slate-50);color:var(--slate-800);font-size:14px;line-height:1.6}
+  header{background:#fff;border-bottom:1px solid var(--slate-200)}
+  .header-inner{max-width:1100px;margin:0 auto;padding:16px 24px;display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}
+  .logo-mark{font-size:20px;font-weight:800;color:var(--slate-900);text-decoration:none}
+  .logo-mark span{color:var(--accent)}
+  .nav-link{font-size:13px;font-weight:600;color:var(--slate-500);text-decoration:none;padding:7px 12px;border-radius:6px}
+  .nav-link:hover{background:var(--slate-100)}
+  .hero{background:#fff;border-bottom:1px solid var(--slate-200);padding:28px 24px 24px}
+  .hero-inner{max-width:1100px;margin:0 auto}
+  .hero h1{font-size:22px;font-weight:700;color:var(--slate-900);margin-bottom:6px}
+  .hero p{font-size:14px;color:var(--slate-500);max-width:640px}
+  .main{max-width:1100px;margin:0 auto;padding:28px 24px 60px;display:grid;grid-template-columns:1fr 380px;gap:24px;align-items:start}
+  .card{background:#fff;border:1px solid var(--slate-200);border-radius:var(--radius-lg);box-shadow:var(--shadow-sm);margin-bottom:20px}
+  .card-header{padding:16px 20px;border-bottom:1px solid var(--slate-100)}
+  .card-title{font-size:14px;font-weight:600;color:var(--slate-800)}
+  .card-body{padding:20px}
+  .field-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  .field-label{font-size:12px;font-weight:600;color:var(--slate-600);margin-bottom:6px;display:block}
+  .inp,select.inp{width:100%;border:1px solid var(--slate-200);border-radius:6px;padding:8px 11px;font-size:13px;font-family:inherit}
+  .inp:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px rgba(37,99,235,.1)}
+  .route-hint{font-size:11.5px;color:var(--slate-400);margin-top:4px}
+  .timeline{margin-top:8px}
+  .tl-item{display:flex;gap:12px;padding:10px 0;border-bottom:1px solid var(--slate-100)}
+  .tl-item:last-child{border-bottom:none}
+  .tl-dot{width:10px;height:10px;border-radius:50%;background:var(--accent);margin-top:4px;flex-shrink:0}
+  .tl-content .tl-label{font-size:11px;color:var(--slate-400);font-weight:600;text-transform:uppercase}
+  .tl-content .tl-date{font-size:14px;font-weight:700;color:var(--slate-800)}
+  .tl-content .tl-days{font-size:11.5px;color:var(--slate-500)}
+  .result-total{background:var(--accent-light);border:1px solid #BFDBFE;border-radius:var(--radius);padding:16px 18px;margin-top:6px;text-align:center}
+  .result-total .label{font-size:11px;font-weight:700;color:var(--accent-dark);text-transform:uppercase;margin-bottom:4px}
+  .result-total .value{font-size:22px;font-weight:800;color:var(--accent-dark)}
+  .notice-box{background:var(--accent-light);border:1px solid #BFDBFE;border-radius:var(--radius);padding:10px 14px;font-size:12px;color:#1E40AF;margin-top:14px}
+  .ad-placeholder{border:1px dashed var(--slate-200);border-radius:var(--radius);background:var(--slate-50);padding:20px;text-align:center;color:var(--slate-400);font-size:12px}
+  footer{background:var(--slate-900);color:var(--slate-400);padding:24px;font-size:12px}
+  .footer-inner{max-width:1100px;margin:0 auto;display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
+  .footer-logo{font-size:15px;font-weight:800;color:#fff}
+  .footer-logo span{color:var(--accent)}
+  .footer-link{color:var(--slate-500);text-decoration:none;font-size:11px;margin-right:14px}
+  @media (max-width:900px){.main{grid-template-columns:1fr}}
+  @media (max-width:640px){.field-grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header><div class="header-inner">
+  <a href="index.html" class="logo-mark">CBM<span>Lab</span></a>
+  <a href="index.html" class="nav-link">← 전체 도구 보기</a>
+</div></header>
+
+<section class="hero"><div class="hero-inner">
+  <h1>선적 리드타임 계산기</h1>
+  <p>발주일부터 생산, 운송, 통관까지 더해 예상 도착일을 계산합니다. 바이어에게 납기를 안내할 때 참고하세요.</p>
+</div></section>
+
+<div class="main">
+  <section>
+    <div class="card">
+      <div class="card-header"><div class="card-title">일정 입력</div></div>
+      <div class="card-body">
+        <div class="field-grid">
+          <div>
+            <label class="field-label">발주일</label>
+            <input type="date" class="inp" id="orderDate" oninput="calc()">
+          </div>
+          <div>
+            <label class="field-label">생산기간 (일)</label>
+            <input type="number" class="inp" id="prodDays" value="20" min="0" oninput="calc()">
+          </div>
+          <div>
+            <label class="field-label">출발 지역</label>
+            <select class="inp" id="route" onchange="applyRoute()">
+              <option value="6">중국 → 한국 (해상)</option>
+              <option value="8">동남아 → 한국 (해상)</option>
+              <option value="25">미주 서안 → 한국 (해상)</option>
+              <option value="35">유럽 → 한국 (해상)</option>
+              <option value="3">아시아 → 한국 (항공)</option>
+              <option value="0">직접 입력</option>
+            </select>
+            <div class="route-hint">일반적인 평균치이며 항로·선사에 따라 달라질 수 있습니다</div>
+          </div>
+          <div>
+            <label class="field-label">운송 소요일</label>
+            <input type="number" class="inp" id="transitDays" value="6" min="0" oninput="calc()">
+          </div>
+          <div>
+            <label class="field-label">통관 소요일</label>
+            <input type="number" class="inp" id="customsDays" value="2" min="0" oninput="calc()">
+          </div>
+          <div>
+            <label class="field-label">여유 버퍼 (일)</label>
+            <input type="number" class="inp" id="bufferDays" value="3" min="0" oninput="calc()">
+          </div>
+        </div>
+        <div class="notice-box">운송 소요일은 항로, 선사 스케줄, 성수기 여부에 따라 크게 달라질 수 있습니다. 실제 견적/스케줄은 포워더에게 재확인하시기 바랍니다.</div>
+      </div>
+    </div>
+  </section>
+
+  <aside>
+    <div class="card">
+      <div class="card-header"><div class="card-title">예상 일정</div></div>
+      <div class="card-body">
+        <div class="result-total"><div class="label">예상 도착일 (버퍼 포함)</div><div class="value" id="finalDate">-</div></div>
+        <div class="timeline" id="timeline"></div>
+      </div>
+    </div>
+    <div class="ad-placeholder"><strong>Advertisement</strong> 광고 영역 (300×250)</div>
+  </aside>
+</div>
+
+<footer><div class="footer-inner">
+  <div class="footer-logo">CBM<span>Lab</span></div>
+  <nav><a href="index.html" class="footer-link">전체 도구</a><a href="privacy.html" class="footer-link">개인정보 처리방침</a></nav>
+</div></footer>
+
+<script>
+function applyRoute(){
+  const v = document.getElementById('route').value;
+  if(v !== '0'){ document.getElementById('transitDays').value = v; }
+  calc();
+}
+function addDays(date, days){ const d = new Date(date); d.setDate(d.getDate()+days); return d; }
+function fmtDate(d){ return d.toLocaleDateString('ko-KR', {year:'numeric', month:'long', day:'numeric', weekday:'short'}); }
+
+function calc(){
+  const orderVal = document.getElementById('orderDate').value;
+  if(!orderVal){ document.getElementById('finalDate').textContent='발주일을 입력하세요'; document.getElementById('timeline').innerHTML=''; return; }
+  const orderDate = new Date(orderVal);
+  const prodDays = parseInt(document.getElementById('prodDays').value)||0;
+  const transitDays = parseInt(document.getElementById('transitDays').value)||0;
+  const customsDays = parseInt(document.getElementById('customsDays').value)||0;
+  const bufferDays = parseInt(document.getElementById('bufferDays').value)||0;
+
+  const shipDate = addDays(orderDate, prodDays);
+  const arriveDate = addDays(shipDate, transitDays);
+  const clearedDate = addDays(arriveDate, customsDays);
+  const finalDate = addDays(clearedDate, bufferDays);
+
+  document.getElementById('finalDate').textContent = fmtDate(finalDate);
+  document.getElementById('timeline').innerHTML = `
+    <div class="tl-item"><div class="tl-dot"></div><div class="tl-content"><div class="tl-label">발주일</div><div class="tl-date">${fmtDate(orderDate)}</div></div></div>
+    <div class="tl-item"><div class="tl-dot"></div><div class="tl-content"><div class="tl-label">예상 출고일</div><div class="tl-date">${fmtDate(shipDate)}</div><div class="tl-days">생산기간 +${prodDays}일</div></div></div>
+    <div class="tl-item"><div class="tl-dot"></div><div class="tl-content"><div class="tl-label">항구/공항 도착</div><div class="tl-date">${fmtDate(arriveDate)}</div><div class="tl-days">운송 +${transitDays}일</div></div></div>
+    <div class="tl-item"><div class="tl-dot"></div><div class="tl-content"><div class="tl-label">통관 완료</div><div class="tl-date">${fmtDate(clearedDate)}</div><div class="tl-days">통관 +${customsDays}일</div></div></div>
+    <div class="tl-item"><div class="tl-dot" style="background:#0F766E;"></div><div class="tl-content"><div class="tl-label">최종 도착 (버퍼 포함)</div><div class="tl-date">${fmtDate(finalDate)}</div><div class="tl-days">버퍼 +${bufferDays}일</div></div></div>
+  `;
+}
+document.getElementById('orderDate').valueAsDate = new Date();
+calc();
+</script>
+</body>
+</html>

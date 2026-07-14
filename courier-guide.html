@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="DHL, FedEx, UPS, EMS 등 국제특송사별 특징과 배송조회 페이지를 한곳에 모았습니다. 서류, 샘플, 대량화물 상황별 추천 특송사도 확인하세요.">
+<meta name="keywords" content="국제특송 비교, DHL FedEx UPS 차이, 배송조회, EMS 국제특송">
+<title>국제특송사 비교 &amp; 배송조회 바로가기 — CBM Lab</title>
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  :root{--accent:#2563EB;--accent-light:#DBEAFE;--accent-dark:#1D4ED8;--slate-50:#F8FAFC;--slate-100:#F1F5F9;--slate-200:#E2E8F0;--slate-400:#94A3B8;--slate-500:#64748B;--slate-600:#475569;--slate-700:#334155;--slate-800:#1E293B;--slate-900:#0F172A;--radius:8px;--radius-lg:12px;--shadow-sm:0 1px 2px rgba(0,0,0,.05);font-family:'Pretendard','Apple SD Gothic Neo',system-ui,-apple-system,sans-serif}
+  body{background:var(--slate-50);color:var(--slate-800);font-size:14px;line-height:1.6}
+  header{background:#fff;border-bottom:1px solid var(--slate-200)}
+  .header-inner{max-width:1100px;margin:0 auto;padding:16px 24px;display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}
+  .logo-mark{font-size:20px;font-weight:800;color:var(--slate-900);text-decoration:none}
+  .logo-mark span{color:var(--accent)}
+  .nav-link{font-size:13px;font-weight:600;color:var(--slate-500);text-decoration:none;padding:7px 12px;border-radius:6px}
+  .nav-link:hover{background:var(--slate-100)}
+  .hero{background:#fff;border-bottom:1px solid var(--slate-200);padding:28px 24px 24px}
+  .hero-inner{max-width:1100px;margin:0 auto}
+  .hero h1{font-size:22px;font-weight:700;color:var(--slate-900);margin-bottom:6px}
+  .hero p{font-size:14px;color:var(--slate-500);max-width:640px}
+  .main{max-width:1100px;margin:0 auto;padding:28px 24px 60px}
+  .card{background:#fff;border:1px solid var(--slate-200);border-radius:var(--radius-lg);box-shadow:var(--shadow-sm);margin-bottom:20px}
+  .card-header{padding:16px 20px;border-bottom:1px solid var(--slate-100)}
+  .card-title{font-size:14px;font-weight:600;color:var(--slate-800)}
+  .card-body{padding:20px}
+  .courier-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+  .courier-card{border:1px solid var(--slate-200);border-radius:var(--radius);padding:16px}
+  .courier-card h3{font-size:14px;font-weight:700;color:var(--slate-900);margin-bottom:8px}
+  .courier-card ul{list-style:none;font-size:11.5px;color:var(--slate-600);margin-bottom:10px}
+  .courier-card li{padding:3px 0;border-bottom:1px dashed var(--slate-100)}
+  .courier-card li b{color:var(--slate-500);display:inline-block;width:52px;font-weight:600;}
+  .courier-btn{display:block;text-align:center;background:var(--accent);color:#fff;font-size:12px;font-weight:700;padding:8px 0;border-radius:6px;text-decoration:none}
+  .courier-btn:hover{background:var(--accent-dark)}
+  .usecase-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+  .usecase-card{border:1px solid var(--slate-200);border-radius:var(--radius);padding:14px 16px}
+  .usecase-card .u-title{font-size:13px;font-weight:700;color:var(--slate-800);margin-bottom:6px}
+  .usecase-card .u-desc{font-size:12px;color:var(--slate-500);line-height:1.6}
+  .usecase-card .u-pick{margin-top:8px;font-size:11.5px;font-weight:700;color:var(--accent-dark);background:var(--accent-light);display:inline-block;padding:3px 10px;border-radius:999px}
+  .ad-main-box{border:1px dashed #CBD5E1;border-radius:var(--radius);background:#fff;height:90px;display:flex;flex-direction:column;align-items:center;justify-content:center;color:var(--slate-400);font-size:12px;gap:4px;margin-bottom:20px}
+  .ad-main-box strong{font-size:11px;font-weight:700;text-transform:uppercase;color:#CBD5E1}
+  .disclaimer{font-size:11px;color:var(--slate-400);line-height:1.6}
+  footer{background:var(--slate-900);color:var(--slate-400);padding:24px;font-size:12px}
+  .footer-inner{max-width:1100px;margin:0 auto;display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
+  .footer-logo{font-size:15px;font-weight:800;color:#fff}
+  .footer-logo span{color:var(--accent)}
+  .footer-link{color:var(--slate-500);text-decoration:none;font-size:11px;margin-right:14px}
+  @media (max-width:900px){.courier-grid{grid-template-columns:1fr 1fr}.usecase-grid{grid-template-columns:1fr}}
+  @media (max-width:640px){.courier-grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header><div class="header-inner">
+  <a href="index.html" class="logo-mark">CBM<span>Lab</span></a>
+  <a href="index.html" class="nav-link">← 전체 도구 보기</a>
+</div></header>
+
+<section class="hero"><div class="hero-inner">
+  <h1>국제특송사 비교 &amp; 배송조회 바로가기</h1>
+  <p>매번 검색해서 들어가는 번거로움을 줄이기 위해, 주요 국제특송사의 특징과 공식 배송조회 페이지를 한곳에 모았습니다.</p>
+</div></section>
+
+<div class="main">
+  <div class="ad-main-box"><strong>Advertisement</strong>광고 영역 (Google AdSense) — 728 × 90</div>
+
+  <div class="card">
+    <div class="card-header"><div class="card-title">주요 특송사 비교</div></div>
+    <div class="card-body">
+      <div class="courier-grid">
+        <div class="courier-card">
+          <h3>DHL Express</h3>
+          <ul>
+            <li><b>강점</b> 유럽·전 세계 최다 취항</li>
+            <li><b>속도</b> 1~3영업일</li>
+            <li><b>통관</b> 자체 통관 대행 강함</li>
+          </ul>
+          <a class="courier-btn" href="https://www.dhl.com/kr-ko/home/tracking.html" target="_blank" rel="noopener">배송조회 →</a>
+        </div>
+        <div class="courier-card">
+          <h3>FedEx</h3>
+          <ul>
+            <li><b>강점</b> 미주 지역 강세</li>
+            <li><b>속도</b> 1~3영업일</li>
+            <li><b>통관</b> 자체 브로커리지 보유</li>
+          </ul>
+          <a class="courier-btn" href="https://www.fedex.com/ko-kr/tracking.html" target="_blank" rel="noopener">배송조회 →</a>
+        </div>
+        <div class="courier-card">
+          <h3>UPS</h3>
+          <ul>
+            <li><b>강점</b> 미주·유럽 균형</li>
+            <li><b>속도</b> 1~4영업일</li>
+            <li><b>통관</b> 자체 통관 처리</li>
+          </ul>
+          <a class="courier-btn" href="https://www.ups.com/track?loc=ko_KR" target="_blank" rel="noopener">배송조회 →</a>
+        </div>
+        <div class="courier-card">
+          <h3>EMS (우체국)</h3>
+          <ul>
+            <li><b>강점</b> 저렴한 요금, 전 세계 우편망</li>
+            <li><b>속도</b> 3~7영업일</li>
+            <li><b>통관</b> 관세청 별도 통관 필요</li>
+          </ul>
+          <a class="courier-btn" href="https://ems.epost.go.kr/front.Tracking01.postal" target="_blank" rel="noopener">배송조회 →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header"><div class="card-title">상황별 추천</div></div>
+    <div class="card-body">
+      <div class="usecase-grid">
+        <div class="usecase-card">
+          <div class="u-title">서류/계약서 발송</div>
+          <div class="u-desc">가볍고 시간이 급한 서류는 통관 절차가 거의 없어 속도가 가장 중요합니다.</div>
+          <span class="u-pick">DHL / FedEx 추천</span>
+        </div>
+        <div class="usecase-card">
+          <div class="u-title">샘플 (소량, 저가)</div>
+          <div class="u-desc">면세 한도 이내의 저가 샘플은 통관이 간단해 EMS로도 충분한 경우가 많습니다.</div>
+          <span class="u-pick">EMS / K-Packet 추천</span>
+        </div>
+        <div class="usecase-card">
+          <div class="u-title">대량 화물 (상업 수입)</div>
+          <div class="u-desc">정식 수입신고가 필요한 대량 화물은 통관 대행이 강한 특송사나 포워더를 통하는 것이 안전합니다.</div>
+          <span class="u-pick">DHL/FedEx/UPS + 관세사 협업</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="disclaimer"><strong>안내:</strong> 배송조회 링크는 각 특송사 공식 홈페이지로 연결됩니다. 실시간 조회 결과, 요금, 서비스 범위는 각 특송사 정책에 따라 수시로 변경될 수 있으니 정확한 정보는 해당 사이트에서 확인하시기 바랍니다.</div>
+</div>
+
+<footer><div class="footer-inner">
+  <div class="footer-logo">CBM<span>Lab</span></div>
+  <nav><a href="index.html" class="footer-link">전체 도구</a><a href="privacy.html" class="footer-link">개인정보 처리방침</a></nav>
+</div></footer>
+</body>
+</html>

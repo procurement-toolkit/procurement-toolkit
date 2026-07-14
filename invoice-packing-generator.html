@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="커머셜 인보이스와 패킹리스트를 무료로 자동 생성하세요. 인코텀즈, 원산지, HS Code까지 포함한 무역 실무용 서식을 즉시 만들고 인쇄할 수 있습니다.">
+<meta name="keywords" content="커머셜 인보이스 양식, 패킹리스트 양식, commercial invoice generator, packing list template">
+<title>커머셜 인보이스 &amp; 패킹리스트 생성기 — CBM Lab</title>
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  :root{--accent:#2563EB;--accent-light:#DBEAFE;--accent-dark:#1D4ED8;--slate-50:#F8FAFC;--slate-100:#F1F5F9;--slate-200:#E2E8F0;--slate-300:#CBD5E1;--slate-400:#94A3B8;--slate-500:#64748B;--slate-600:#475569;--slate-700:#334155;--slate-800:#1E293B;--slate-900:#0F172A;--radius:8px;--radius-lg:12px;--shadow-sm:0 1px 2px rgba(0,0,0,.05);font-family:'Pretendard','Apple SD Gothic Neo',system-ui,-apple-system,sans-serif}
+  body{background:var(--slate-50);color:var(--slate-800);font-size:14px;line-height:1.6}
+  header{background:#fff;border-bottom:1px solid var(--slate-200)}
+  .header-inner{max-width:1300px;margin:0 auto;padding:16px 24px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+  .logo-mark{font-size:20px;font-weight:800;color:var(--slate-900);text-decoration:none}
+  .logo-mark span{color:var(--accent)}
+  .nav-link{font-size:13px;font-weight:600;color:var(--slate-500);text-decoration:none;padding:7px 12px;border-radius:6px}
+  .nav-link:hover{background:var(--slate-100)}
+  .hero{background:#fff;border-bottom:1px solid var(--slate-200);padding:28px 24px 24px}
+  .hero-inner{max-width:1300px;margin:0 auto}
+  .hero h1{font-size:22px;font-weight:700;color:var(--slate-900);margin-bottom:6px}
+  .hero p{font-size:14px;color:var(--slate-500);max-width:680px}
+  .main{max-width:1300px;margin:0 auto;padding:28px 24px 60px;display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:start}
+  .card{background:#fff;border:1px solid var(--slate-200);border-radius:var(--radius-lg);box-shadow:var(--shadow-sm);margin-bottom:20px}
+  .card-header{padding:16px 20px;border-bottom:1px solid var(--slate-100)}
+  .card-title{font-size:14px;font-weight:600;color:var(--slate-800)}
+  .card-body{padding:18px}
+  .field-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px}
+  .field-label{font-size:11px;font-weight:600;color:var(--slate-500);margin-bottom:4px;display:block}
+  .inp{width:100%;border:1px solid var(--slate-200);border-radius:6px;padding:7px 10px;font-size:12.5px;color:var(--slate-800);font-family:inherit}
+  .inp:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px rgba(37,99,235,.1)}
+  textarea.inp{resize:vertical;min-height:50px}
+  .item-row{display:grid;grid-template-columns:1.6fr .8fr 1fr .8fr .8fr .8fr 30px;gap:6px;margin-bottom:6px;align-items:center}
+  .item-row input{font-size:11.5px;padding:6px 8px}
+  .btn-del{width:26px;height:26px;border:1px solid var(--slate-200);border-radius:6px;background:#fff;color:var(--slate-400);cursor:pointer}
+  .btn-del:hover{border-color:#DC2626;color:#DC2626}
+  .btn-add{display:block;width:100%;padding:8px;border:1px dashed var(--slate-300);border-radius:6px;background:transparent;color:var(--slate-500);font-size:12px;cursor:pointer;margin-top:6px;font-family:inherit}
+  .btn-add:hover{border-color:var(--accent);color:var(--accent)}
+  .col-labels{display:grid;grid-template-columns:1.6fr .8fr 1fr .8fr .8fr .8fr 30px;gap:6px;font-size:10px;color:var(--slate-400);font-weight:600;margin-bottom:6px;text-transform:uppercase}
+  .btn-generate{width:100%;padding:12px;background:var(--slate-900);color:#fff;border:none;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;margin-top:6px}
+  .btn-generate:hover{background:var(--accent)}
+  .doc-tabs{display:flex;gap:6px;margin-bottom:14px}
+  .doc-tab{padding:7px 14px;border:1px solid var(--slate-200);background:#fff;border-radius:999px;font-size:12px;font-weight:600;color:var(--slate-500);cursor:pointer}
+  .doc-tab.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+  .doc-preview{border:1px solid var(--slate-200);border-radius:var(--radius);background:#fff;padding:28px;font-size:11.5px;line-height:1.6;min-height:400px}
+  .doc-preview h2{font-size:16px;text-align:center;margin-bottom:16px;letter-spacing:1px}
+  .doc-preview table{width:100%;border-collapse:collapse;margin:12px 0;font-size:11px}
+  .doc-preview th,.doc-preview td{border:1px solid var(--slate-300);padding:5px 7px;text-align:left}
+  .doc-preview th{background:var(--slate-50)}
+  .doc-preview .row2{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:10px}
+  .doc-preview .box{border:1px solid var(--slate-200);padding:8px 10px;border-radius:4px}
+  .doc-preview .box b{display:block;font-size:10px;color:var(--slate-400);margin-bottom:3px;text-transform:uppercase}
+  .btn-print{width:100%;padding:10px;background:var(--accent);color:#fff;border:none;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;margin-top:12px}
+  .btn-print:hover{background:var(--accent-dark)}
+  .notice-box{background:var(--accent-light);border:1px solid #BFDBFE;border-radius:var(--radius);padding:10px 14px;font-size:12px;color:#1E40AF;margin-top:14px}
+  footer{background:var(--slate-900);color:var(--slate-400);padding:24px;font-size:12px}
+  .footer-inner{max-width:1300px;margin:0 auto;display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
+  .footer-logo{font-size:15px;font-weight:800;color:#fff}
+  .footer-logo span{color:var(--accent)}
+  .footer-link{color:var(--slate-500);text-decoration:none;font-size:11px;margin-right:14px}
+  @media print{ header,.hero,.left-col,.doc-tabs,.btn-print,footer{display:none !important} .main{padding:0;display:block} .doc-preview{border:none;padding:0} }
+  @media (max-width:900px){.main{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header><div class="header-inner">
+  <a href="index.html" class="logo-mark">CBM<span>Lab</span></a>
+  <a href="index.html" class="nav-link">← 전체 도구 보기</a>
+</div></header>
+
+<section class="hero"><div class="hero-inner">
+  <h1>커머셜 인보이스 &amp; 패킹리스트 생성기</h1>
+  <p>일반 인보이스 양식과 달리, 인코텀즈·원산지·HS Code까지 포함한 무역 실무 전용 서식입니다. 한 번 입력하면 인보이스와 패킹리스트가 동시에 생성됩니다.</p>
+</div></section>
+
+<div class="main">
+  <section class="left-col">
+    <div class="card">
+      <div class="card-header"><div class="card-title">기본 정보</div></div>
+      <div class="card-body">
+        <div class="field-grid">
+          <div><label class="field-label">Invoice No.</label><input class="inp" id="invNo" value="INV-2026-001" oninput="render()"></div>
+          <div><label class="field-label">Invoice Date</label><input type="date" class="inp" id="invDate" oninput="render()"></div>
+        </div>
+        <div class="field-grid">
+          <div><label class="field-label">Incoterm</label><input class="inp" id="incoterm" value="FOB Busan" oninput="render()"></div>
+          <div><label class="field-label">Country of Origin</label><input class="inp" id="origin" value="Republic of Korea" oninput="render()"></div>
+        </div>
+        <div class="field-grid">
+          <div><label class="field-label">Port of Loading</label><input class="inp" id="pol" value="Busan, Korea" oninput="render()"></div>
+          <div><label class="field-label">Port of Discharge</label><input class="inp" id="pod" value="" placeholder="e.g. Long Beach, USA" oninput="render()"></div>
+        </div>
+        <div class="field-grid">
+          <div><label class="field-label">Payment Terms</label><input class="inp" id="payment" value="T/T 30% Advance, 70% Before Shipment" oninput="render()"></div>
+          <div><label class="field-label">Total Packages</label><input class="inp" id="totalPkg" value="" placeholder="e.g. 50 CARTONS" oninput="render()"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header"><div class="card-title">Shipper (수출자)</div></div>
+      <div class="card-body">
+        <textarea class="inp" id="shipper" rows="3" oninput="render()">Our Company Co., Ltd.
+123 Trade St., Seoul, Korea
+Tel: +82-2-000-0000</textarea>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-header"><div class="card-title">Consignee (수입자)</div></div>
+      <div class="card-body">
+        <textarea class="inp" id="consignee" rows="3" placeholder="ABC Trading Co., Ltd.&#10;123 Main St., City, Country&#10;Attn: Mr. John Smith" oninput="render()"></textarea>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header"><div class="card-title">품목 내역</div></div>
+      <div class="card-body">
+        <div class="col-labels"><span>Description</span><span>HS Code</span><span>Qty</span><span>단가(USD)</span><span>순중량(kg)</span><span>총중량(kg)</span><span></span></div>
+        <div id="items"></div>
+        <button class="btn-add" onclick="addItem()">+ 품목 추가</button>
+      </div>
+    </div>
+  </section>
+
+  <aside>
+    <div class="doc-tabs">
+      <button class="doc-tab active" id="tab-invoice" onclick="switchDoc('invoice')">Commercial Invoice</button>
+      <button class="doc-tab" id="tab-packing" onclick="switchDoc('packing')">Packing List</button>
+    </div>
+    <div class="doc-preview" id="preview"></div>
+    <button class="btn-print" onclick="window.print()">🖨️ 인쇄 / PDF로 저장</button>
+    <div class="notice-box">브라우저의 "인쇄" 기능에서 대상을 "PDF로 저장"으로 선택하면 파일로도 저장할 수 있습니다.</div>
+  </aside>
+</div>
+
+<footer><div class="footer-inner">
+  <div class="footer-logo">CBM<span>Lab</span></div>
+  <nav><a href="index.html" class="footer-link">전체 도구</a><a href="privacy.html" class="footer-link">개인정보 처리방침</a></nav>
+</div></footer>
+
+<script>
+let items = [];
+let counter = 0;
+let currentDoc = 'invoice';
+
+function addItem(desc,hs,qty,price,nw,gw){
+  counter++;
+  items.push({id:counter, desc:desc||'', hs:hs||'', qty:qty??1, price:price??0, nw:nw??0, gw:gw??0});
+  renderItems();
+}
+function removeItem(id){ items = items.filter(i=>i.id!==id); if(items.length===0) addItem(); else renderItems(); }
+function updateItem(id, field, val){
+  const it = items.find(i=>i.id===id); if(!it) return;
+  if(field==='desc'||field==='hs') it[field]=val; else it[field]=parseFloat(val)||0;
+  render();
+}
+function renderItems(){
+  const c = document.getElementById('items'); c.innerHTML='';
+  items.forEach(it=>{
+    const row=document.createElement('div'); row.className='item-row';
+    row.innerHTML=`
+      <input class="inp" placeholder="Product name" value="${it.desc}" oninput="updateItem(${it.id},'desc',this.value)">
+      <input class="inp" placeholder="8471.30" value="${it.hs}" oninput="updateItem(${it.id},'hs',this.value)">
+      <input class="inp" type="number" value="${it.qty}" oninput="updateItem(${it.id},'qty',this.value)">
+      <input class="inp" type="number" step="0.01" value="${it.price}" oninput="updateItem(${it.id},'price',this.value)">
+      <input class="inp" type="number" step="0.1" value="${it.nw}" oninput="updateItem(${it.id},'nw',this.value)">
+      <input class="inp" type="number" step="0.1" value="${it.gw}" oninput="updateItem(${it.id},'gw',this.value)">
+      <button class="btn-del" onclick="removeItem(${it.id})">✕</button>
+    `;
+    c.appendChild(row);
+  });
+  render();
+}
+function switchDoc(doc){
+  currentDoc = doc;
+  document.getElementById('tab-invoice').classList.toggle('active', doc==='invoice');
+  document.getElementById('tab-packing').classList.toggle('active', doc==='packing');
+  render();
+}
+function v(id){ return document.getElementById(id).value.trim(); }
+function fmt(n,d=2){ return (n||0).toLocaleString('en-US',{minimumFractionDigits:d,maximumFractionDigits:d}); }
+
+function render(){
+  const shipper = v('shipper').replace(/\n/g,'<br>');
+  const consignee = v('consignee').replace(/\n/g,'<br>') || 'Consignee name and address here';
+  let subtotal = 0, totalNW=0, totalGW=0, totalQty=0;
+  const rows = items.map(it=>{
+    const amt = it.qty*it.price; subtotal+=amt; totalNW+=it.nw; totalGW+=it.gw; totalQty+=it.qty;
+    return {...it, amt};
+  });
+
+  if(currentDoc==='invoice'){
+    document.getElementById('preview').innerHTML = `
+      <h2>COMMERCIAL INVOICE</h2>
+      <div class="doc-preview" style="border:none;padding:0;">
+      <div class="row2">
+        <div class="box"><b>Shipper</b>${shipper}</div>
+        <div class="box"><b>Consignee</b>${consignee}</div>
+      </div>
+      <div class="row2">
+        <div class="box"><b>Invoice No. / Date</b>${v('invNo')} / ${v('invDate')||'-'}</div>
+        <div class="box"><b>Incoterm</b>${v('incoterm')}</div>
+      </div>
+      <div class="row2">
+        <div class="box"><b>Country of Origin</b>${v('origin')}</div>
+        <div class="box"><b>Payment Terms</b>${v('payment')}</div>
+      </div>
+      <div class="row2">
+        <div class="box"><b>Port of Loading</b>${v('pol')}</div>
+        <div class="box"><b>Port of Discharge</b>${v('pod')||'-'}</div>
+      </div>
+      <table>
+        <thead><tr><th>Description</th><th>HS Code</th><th>Qty</th><th>Unit Price (USD)</th><th>Amount (USD)</th></tr></thead>
+        <tbody>${rows.map(r=>`<tr><td>${r.desc||'-'}</td><td>${r.hs||'-'}</td><td>${r.qty}</td><td>${fmt(r.price)}</td><td>${fmt(r.amt)}</td></tr>`).join('')}</tbody>
+        <tfoot><tr><td colspan="4" style="text-align:right;font-weight:700;">TOTAL</td><td style="font-weight:700;">USD ${fmt(subtotal)}</td></tr></tfoot>
+      </table>
+      </div>
+    `;
+  } else {
+    document.getElementById('preview').innerHTML = `
+      <h2>PACKING LIST</h2>
+      <div class="doc-preview" style="border:none;padding:0;">
+      <div class="row2">
+        <div class="box"><b>Shipper</b>${shipper}</div>
+        <div class="box"><b>Consignee</b>${consignee}</div>
+      </div>
+      <div class="row2">
+        <div class="box"><b>Invoice No.</b>${v('invNo')}</div>
+        <div class="box"><b>Total Packages</b>${v('totalPkg')||'-'}</div>
+      </div>
+      <table>
+        <thead><tr><th>Description</th><th>Qty</th><th>Net Weight (kg)</th><th>Gross Weight (kg)</th></tr></thead>
+        <tbody>${rows.map(r=>`<tr><td>${r.desc||'-'}</td><td>${r.qty}</td><td>${fmt(r.nw,1)}</td><td>${fmt(r.gw,1)}</td></tr>`).join('')}</tbody>
+        <tfoot><tr><td style="font-weight:700;">TOTAL</td><td style="font-weight:700;">${totalQty}</td><td style="font-weight:700;">${fmt(totalNW,1)} kg</td><td style="font-weight:700;">${fmt(totalGW,1)} kg</td></tr></tfoot>
+      </table>
+      </div>
+    `;
+  }
+}
+
+document.getElementById('invDate').valueAsDate = new Date();
+addItem('Model XR-200 Widget','8471.30',100,5.00,1.2,1.5);
+</script>
+</body>
+</html>

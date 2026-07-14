@@ -48,7 +48,8 @@
 
   .tools { max-width: 1100px; margin: 0 auto; padding: 48px 24px 20px; }
   .tools-heading { font-size: 13px; font-weight: 700; color: var(--slate-400); text-transform: uppercase; margin-bottom: 18px; }
-  .tool-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+  .tool-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 20px; }
+  .tools { margin-bottom: 8px; }
 
   .tool-card { background: #fff; border: 1px solid var(--slate-200); border-radius: var(--radius-lg); padding: 24px; }
 
@@ -133,63 +134,113 @@
 </section>
 
 <section class="tools">
-  <div class="tools-heading">도구 4종</div>
+  <div class="tools-heading">계산기</div>
   <div class="tool-grid">
-
     <div class="tool-card">
-      <div class="tool-icon">
-        <svg width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 10V11"/></svg>
-      </div>
+      <div class="tool-icon"><svg width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 10V11"/></svg></div>
       <h3>CBM(용적중량) 계산기</h3>
       <p>카톤별 치수를 입력하면 총 CBM, 볼륨 무게, 컨테이너 적재 가능량을 즉시 계산합니다.</p>
-      <div class="tool-tags">
-        <span class="tool-tag">해상/항공</span>
-        <span class="tool-tag">컨테이너 적재</span>
-      </div>
+      <div class="tool-tags"><span class="tool-tag">해상/항공</span><span class="tool-tag">컨테이너 적재</span></div>
       <a class="tool-go" href="cbm.html">계산기 열기 →</a>
     </div>
-
     <div class="tool-card">
-      <div class="tool-icon">
-        <svg width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
-      </div>
+      <div class="tool-icon"><svg width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg></div>
       <h3>수입 원가 계산기</h3>
       <p>EXW·FOB·CFR·CIF·DDP 조건별로 관세, 부가세, 환율까지 반영한 실제 랜디드 코스트를 계산합니다.</p>
-      <div class="tool-tags">
-        <span class="tool-tag">FOB/CIF</span>
-        <span class="tool-tag">관세·마진</span>
-      </div>
+      <div class="tool-tags"><span class="tool-tag">FOB/CIF</span><span class="tool-tag">관세·마진</span></div>
       <a class="tool-go" href="fob-cif.html">계산기 열기 →</a>
     </div>
-
     <div class="tool-card">
-      <div class="tool-icon">
-        <svg width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
-      </div>
-      <h3>영문 구매 이메일 생성기</h3>
-      <p>견적 요청, 주문 확인, 납기 문의, 샘플 요청, 클레임까지 — 항목만 입력하면 완성됩니다.</p>
-      <div class="tool-tags">
-        <span class="tool-tag">RFQ</span>
-        <span class="tool-tag">비즈니스 영어</span>
-      </div>
-      <a class="tool-go" href="email-generator.html">생성기 열기 →</a>
+      <div class="tool-icon"><svg width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 7h6m-6 4h6m-7 8h8a2 2 0 002-2V7a2 2 0 00-2-2H8a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg></div>
+      <h3>해외직구 관부가세 계산기</h3>
+      <p>물품가액과 카테고리를 입력하면 예상 관세·부가세와 면세한도까지 남은 금액을 계산합니다.</p>
+      <div class="tool-tags"><span class="tool-tag">해외직구</span><span class="tool-tag">면세한도</span></div>
+      <a class="tool-go" href="personal-duty-calculator.html">계산기 열기 →</a>
     </div>
-
     <div class="tool-card">
-      <div class="tool-icon">
-        <svg width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 17V7m0 10a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h2a2 2 0 012 2m0 10a2 2 0 002 2h2a2 2 0 002-2M9 7a2 2 0 012-2h2a2 2 0 012 2m0 10V7m0 10a2 2 0 002 2h2a2 2 0 002-2V7a2 2 0 00-2-2h-2a2 2 0 00-2 2"/></svg>
-      </div>
-      <h3>인코텀즈 2020 가이드</h3>
-      <p>EXW부터 DDP까지 11개 조건별로 운임·보험·통관·위험 이전 시점을 표로 한눈에 비교합니다.</p>
-      <div class="tool-tags">
-        <span class="tool-tag">FOB 뜻</span>
-        <span class="tool-tag">CIF란</span>
-      </div>
-      <a class="tool-go" href="incoterms-guide.html">가이드 보기 →</a>
+      <div class="tool-icon"><svg width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16V6a1 1 0 011-1h9v11H3zm10-6h4l3 3v3h-7v-6z"/><circle cx="7" cy="18" r="2"/><circle cx="17" cy="18" r="2"/></svg></div>
+      <h3>선적 리드타임 계산기</h3>
+      <p>발주일, 생산기간, 운송·통관 소요일을 더해 예상 도착일을 자동으로 계산합니다.</p>
+      <div class="tool-tags"><span class="tool-tag">예상 도착일</span><span class="tool-tag">일정 관리</span></div>
+      <a class="tool-go" href="leadtime-calculator.html">계산기 열기 →</a>
     </div>
-
   </div>
 </section>
+
+<section class="tools">
+  <div class="tools-heading">생성기</div>
+  <div class="tool-grid">
+    <div class="tool-card">
+      <div class="tool-icon"><svg width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg></div>
+      <h3>영문 구매 이메일 생성기</h3>
+      <p>견적 요청, 주문 확인, 납기 문의, 샘플 요청, 클레임까지 — 항목만 입력하면 완성됩니다.</p>
+      <div class="tool-tags"><span class="tool-tag">RFQ</span><span class="tool-tag">비즈니스 영어</span></div>
+      <a class="tool-go" href="email-generator.html">생성기 열기 →</a>
+    </div>
+    <div class="tool-card">
+      <div class="tool-icon"><svg width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg></div>
+      <h3>인보이스 & 패킹리스트 생성기</h3>
+      <p>인코텀즈, 원산지, HS Code까지 포함한 무역 실무용 서식을 입력만으로 완성하고 인쇄합니다.</p>
+      <div class="tool-tags"><span class="tool-tag">커머셜인보이스</span><span class="tool-tag">패킹리스트</span></div>
+      <a class="tool-go" href="invoice-packing-generator.html">생성기 열기 →</a>
+    </div>
+  </div>
+</section>
+
+<section class="tools">
+  <div class="tools-heading">가이드 &amp; 정보</div>
+  <div class="tool-grid">
+    <div class="tool-card">
+      <div class="tool-icon"><svg width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 17V7m0 10a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h2a2 2 0 012 2m0 10a2 2 0 002 2h2a2 2 0 002-2M9 7a2 2 0 012-2h2a2 2 0 012 2m0 10V7m0 10a2 2 0 002 2h2a2 2 0 002-2V7a2 2 0 00-2-2h-2a2 2 0 00-2 2"/></svg></div>
+      <h3>인코텀즈 2020 가이드</h3>
+      <p>EXW부터 DDP까지 11개 조건별로 운임·보험·통관·위험 이전 시점을 표로 한눈에 비교합니다.</p>
+      <div class="tool-tags"><span class="tool-tag">FOB 뜻</span><span class="tool-tag">CIF란</span></div>
+      <a class="tool-go" href="incoterms-guide.html">가이드 보기 →</a>
+    </div>
+    <div class="tool-card">
+      <div class="tool-icon"><svg width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 15a4 4 0 100-8 4 4 0 000 8zm-4 2l-2 5 6-3 6 3-2-5"/></svg></div>
+      <h3>원산지증명서(FTA) 가이드</h3>
+      <p>자율발급·기관발급 차이와 주요 FTA 협정국 비교, 발급 전 체크리스트를 정리했습니다.</p>
+      <div class="tool-tags"><span class="tool-tag">C/O</span><span class="tool-tag">FTA</span></div>
+      <a class="tool-go" href="fta-guide.html">가이드 보기 →</a>
+    </div>
+    <div class="tool-card">
+      <div class="tool-icon"><svg width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16V6a1 1 0 011-1h9v11H3zm10-6h4l3 3v3h-7v-6z"/><circle cx="7" cy="18" r="2"/><circle cx="17" cy="18" r="2"/></svg></div>
+      <h3>국제특송사 비교 허브</h3>
+      <p>DHL·FedEx·UPS·EMS 특징 비교와 공식 배송조회 페이지 바로가기를 모았습니다.</p>
+      <div class="tool-tags"><span class="tool-tag">DHL/FedEx/UPS</span><span class="tool-tag">배송조회</span></div>
+      <a class="tool-go" href="courier-guide.html">허브 보기 →</a>
+    </div>
+    <div class="tool-card">
+      <div class="tool-icon"><svg width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 3v18h18M7 15l4-4 3 3 5-6"/></svg></div>
+      <h3>원자재 & 경기지표 허브</h3>
+      <p>PMI, LME, 철강가격, BDI 등 구매·물류 담당자가 챙겨야 할 지표와 공식 출처를 정리했습니다.</p>
+      <div class="tool-tags"><span class="tool-tag">PMI</span><span class="tool-tag">LME</span></div>
+      <a class="tool-go" href="market-index-hub.html">허브 보기 →</a>
+    </div>
+    <div class="tool-card">
+      <div class="tool-icon"><svg width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 15a4 4 0 100-8 4 4 0 000 8zm-4 2l-2 5 6-3 6 3-2-5"/></svg></div>
+      <h3>무역 자격시험 일정 가이드</h3>
+      <p>관세사, 국제무역사, 무역영어 등 자격시험의 일반적인 시행 주기와 공식 접수처를 정리했습니다.</p>
+      <div class="tool-tags"><span class="tool-tag">자격시험</span><span class="tool-tag">시험일정</span></div>
+      <a class="tool-go" href="exam-calendar.html">가이드 보기 →</a>
+    </div>
+  </div>
+</section>
+
+<section class="tools">
+  <div class="tools-heading">실시간 도구</div>
+  <div class="tool-grid">
+    <div class="tool-card">
+      <div class="tool-icon"><svg width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></div>
+      <h3>세계시간 & 시차 계산기</h3>
+      <p>주요 거래국의 현재 시각과 업무시간 여부를 실시간으로 확인합니다.</p>
+      <div class="tool-tags"><span class="tool-tag">시차</span><span class="tool-tag">업무시간</span></div>
+      <a class="tool-go" href="worldclock.html">바로 보기 →</a>
+    </div>
+  </div>
+</section>
+
 
 <section class="about">
   <div class="about-card">

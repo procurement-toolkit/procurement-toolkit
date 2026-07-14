@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="한국 기준 미국, 유럽, 중국 등 주요 거래국의 현재 시간과 시차를 실시간으로 확인하고, 통화 가능한 업무시간대까지 한눈에 볼 수 있습니다.">
+<meta name="keywords" content="세계시간, 시차 계산기, 무역 거래국 시간, 해외 업무시간">
+<title>세계시간 &amp; 시차 계산기 — CBM Lab</title>
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  :root{--accent:#2563EB;--accent-light:#DBEAFE;--accent-dark:#1D4ED8;--slate-50:#F8FAFC;--slate-100:#F1F5F9;--slate-200:#E2E8F0;--slate-400:#94A3B8;--slate-500:#64748B;--slate-600:#475569;--slate-700:#334155;--slate-800:#1E293B;--slate-900:#0F172A;--success:#0F766E;--success-light:#CCFBF1;--danger:#DC2626;--danger-light:#FEE2E2;--radius:8px;--radius-lg:12px;--shadow-sm:0 1px 2px rgba(0,0,0,.05);font-family:'Pretendard','Apple SD Gothic Neo',system-ui,-apple-system,sans-serif}
+  body{background:var(--slate-50);color:var(--slate-800);font-size:14px;line-height:1.6}
+  header{background:#fff;border-bottom:1px solid var(--slate-200)}
+  .header-inner{max-width:1100px;margin:0 auto;padding:16px 24px;display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}
+  .logo-mark{font-size:20px;font-weight:800;color:var(--slate-900);text-decoration:none}
+  .logo-mark span{color:var(--accent)}
+  .nav-link{font-size:13px;font-weight:600;color:var(--slate-500);text-decoration:none;padding:7px 12px;border-radius:6px}
+  .nav-link:hover{background:var(--slate-100)}
+  .hero{background:#fff;border-bottom:1px solid var(--slate-200);padding:28px 24px 24px}
+  .hero-inner{max-width:1100px;margin:0 auto}
+  .hero h1{font-size:22px;font-weight:700;color:var(--slate-900);margin-bottom:6px}
+  .hero p{font-size:14px;color:var(--slate-500);max-width:640px}
+  .main{max-width:1100px;margin:0 auto;padding:28px 24px 60px}
+  .clock-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+  .clock-card{background:#fff;border:1px solid var(--slate-200);border-radius:var(--radius-lg);padding:18px 20px;box-shadow:var(--shadow-sm);position:relative}
+  .clock-card.home{border-color:var(--accent);background:var(--accent-light);}
+  .clock-city{font-size:14px;font-weight:700;color:var(--slate-900)}
+  .clock-country{font-size:11px;color:var(--slate-400);margin-bottom:10px}
+  .clock-time{font-size:28px;font-weight:800;color:var(--slate-900);letter-spacing:-1px;font-variant-numeric:tabular-nums}
+  .clock-date{font-size:12px;color:var(--slate-500);margin-top:2px}
+  .clock-diff{font-size:11.5px;color:var(--slate-500);margin-top:8px}
+  .badge{position:absolute;top:16px;right:16px;font-size:10px;font-weight:700;padding:3px 9px;border-radius:999px}
+  .badge.open{background:var(--success-light);color:var(--success)}
+  .badge.closed{background:var(--danger-light);color:var(--danger)}
+  .notice-box{background:var(--accent-light);border:1px solid #BFDBFE;border-radius:var(--radius);padding:10px 14px;font-size:12px;color:#1E40AF;margin-top:20px}
+  footer{background:var(--slate-900);color:var(--slate-400);padding:24px;font-size:12px}
+  .footer-inner{max-width:1100px;margin:0 auto;display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
+  .footer-logo{font-size:15px;font-weight:800;color:#fff}
+  .footer-logo span{color:var(--accent)}
+  .footer-link{color:var(--slate-500);text-decoration:none;font-size:11px;margin-right:14px}
+  @media (max-width:900px){.clock-grid{grid-template-columns:1fr 1fr}}
+  @media (max-width:560px){.clock-grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header><div class="header-inner">
+  <a href="index.html" class="logo-mark">CBM<span>Lab</span></a>
+  <a href="index.html" class="nav-link">← 전체 도구 보기</a>
+</div></header>
+
+<section class="hero"><div class="hero-inner">
+  <h1>세계시간 &amp; 시차 계산기</h1>
+  <p>주요 거래국의 현재 시각을 실시간으로 확인하세요. 초록 배지는 현지 업무시간(09:00~18:00)입니다.</p>
+</div></section>
+
+<div class="main">
+  <div class="clock-grid" id="clocks"></div>
+  <div class="notice-box">업무시간 배지는 평일 09:00~18:00(현지 시각) 기준 단순 추정치이며, 실제 공휴일이나 회사별 근무시간과는 다를 수 있습니다.</div>
+</div>
+
+<footer><div class="footer-inner">
+  <div class="footer-logo">CBM<span>Lab</span></div>
+  <nav><a href="index.html" class="footer-link">전체 도구</a><a href="privacy.html" class="footer-link">개인정보 처리방침</a></nav>
+</div></footer>
+
+<script>
+const CITIES = [
+  {city:'서울', country:'대한민국', tz:'Asia/Seoul', home:true},
+  {city:'뉴욕', country:'미국 (동부)', tz:'America/New_York'},
+  {city:'로스앤젤레스', country:'미국 (서부)', tz:'America/Los_Angeles'},
+  {city:'런던', country:'영국', tz:'Europe/London'},
+  {city:'프랑크푸르트', country:'독일', tz:'Europe/Berlin'},
+  {city:'상하이', country:'중국', tz:'Asia/Shanghai'},
+  {city:'호치민', country:'베트남', tz:'Asia/Ho_Chi_Minh'},
+  {city:'두바이', country:'아랍에미리트', tz:'Asia/Dubai'},
+  {city:'도쿄', country:'일본', tz:'Asia/Tokyo'}
+];
+
+function render(){
+  const grid = document.getElementById('clocks');
+  const now = new Date();
+  grid.innerHTML = CITIES.map(c=>{
+    const timeStr = now.toLocaleTimeString('ko-KR', {timeZone:c.tz, hour:'2-digit', minute:'2-digit', second:'2-digit', hour12:false});
+    const dateStr = now.toLocaleDateString('ko-KR', {timeZone:c.tz, month:'long', day:'numeric', weekday:'short'});
+    const hour = parseInt(now.toLocaleString('en-US', {timeZone:c.tz, hour:'2-digit', hour12:false}));
+    const weekday = now.toLocaleString('en-US', {timeZone:c.tz, weekday:'short'});
+    const isWeekday = !['Sat','Sun'].includes(weekday);
+    const isOpen = isWeekday && hour>=9 && hour<18;
+
+    // 시차 계산 (서울 기준)
+    const seoulHourStr = now.toLocaleString('en-US', {timeZone:'Asia/Seoul', hour:'2-digit', hour12:false, hourCycle:'h23'});
+    const localHourStr = now.toLocaleString('en-US', {timeZone:c.tz, hour:'2-digit', hour12:false, hourCycle:'h23'});
+    let diff = parseInt(localHourStr) - parseInt(seoulHourStr);
+    if(diff > 12) diff -= 24; if(diff < -12) diff += 24;
+    const diffLabel = c.home ? '기준 시간' : (diff===0 ? '시차 없음' : `서울보다 ${diff>0?'+':''}${diff}시간`);
+
+    return `<div class="clock-card ${c.home?'home':''}">
+      <span class="badge ${isOpen?'open':'closed'}">${isOpen?'업무중':'업무시간 외'}</span>
+      <div class="clock-city">${c.city}</div>
+      <div class="clock-country">${c.country}</div>
+      <div class="clock-time">${timeStr}</div>
+      <div class="clock-date">${dateStr}</div>
+      <div class="clock-diff">${diffLabel}</div>
+    </div>`;
+  }).join('');
+}
+render();
+setInterval(render, 1000);
+</script>
+</body>
+</html>

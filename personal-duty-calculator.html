@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="해외직구 관부가세 계산기 - 물품가액, 배송비, 카테고리를 입력하면 예상 관세와 부가세, 면세한도까지 남은 금액을 바로 계산합니다.">
+<meta name="keywords" content="해외직구 관부가세 계산기, 관세 계산, 면세한도, 해외직구 세금">
+<title>해외직구 관부가세 계산기 — CBM Lab</title>
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  :root{--accent:#2563EB;--accent-light:#DBEAFE;--accent-dark:#1D4ED8;--slate-50:#F8FAFC;--slate-100:#F1F5F9;--slate-200:#E2E8F0;--slate-300:#CBD5E1;--slate-400:#94A3B8;--slate-500:#64748B;--slate-600:#475569;--slate-700:#334155;--slate-800:#1E293B;--slate-900:#0F172A;--success:#0F766E;--success-light:#CCFBF1;--danger:#DC2626;--radius:8px;--radius-lg:12px;--shadow-sm:0 1px 2px rgba(0,0,0,.05);font-family:'Pretendard','Apple SD Gothic Neo',system-ui,-apple-system,sans-serif}
+  body{background:var(--slate-50);color:var(--slate-800);font-size:14px;line-height:1.6}
+  header{background:#fff;border-bottom:1px solid var(--slate-200)}
+  .header-inner{max-width:1200px;margin:0 auto;padding:16px 24px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+  .logo-mark{font-size:20px;font-weight:800;color:var(--slate-900);text-decoration:none}
+  .logo-mark span{color:var(--accent)}
+  .nav-link{font-size:13px;font-weight:600;color:var(--slate-500);text-decoration:none;padding:7px 12px;border-radius:6px}
+  .nav-link:hover{background:var(--slate-100)}
+  .hero{background:#fff;border-bottom:1px solid var(--slate-200);padding:28px 24px 24px}
+  .hero-inner{max-width:1200px;margin:0 auto}
+  .hero h1{font-size:22px;font-weight:700;color:var(--slate-900);margin-bottom:6px}
+  .hero p{font-size:14px;color:var(--slate-500);max-width:640px}
+  .hero-tags{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}
+  .tag{background:var(--slate-100);color:var(--slate-600);font-size:11px;font-weight:500;padding:3px 10px;border-radius:4px;border:1px solid var(--slate-200)}
+  .main{max-width:1200px;margin:0 auto;padding:28px 24px 60px;display:grid;grid-template-columns:1fr 380px;gap:24px;align-items:start}
+  .card{background:#fff;border:1px solid var(--slate-200);border-radius:var(--radius-lg);box-shadow:var(--shadow-sm);margin-bottom:20px}
+  .card:last-child{margin-bottom:0}
+  .card-header{padding:18px 20px;border-bottom:1px solid var(--slate-100)}
+  .card-title{font-size:14px;font-weight:600;color:var(--slate-800)}
+  .card-body{padding:20px}
+  .field-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  .field-label{font-size:12px;font-weight:600;color:var(--slate-600);margin-bottom:6px;display:block}
+  .inp,select.inp{width:100%;border:1px solid var(--slate-200);border-radius:6px;padding:8px 11px;font-size:13px;color:var(--slate-800);background:#fff;font-family:inherit}
+  .inp:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px rgba(37,99,235,.1)}
+  .check-row{display:flex;align-items:center;gap:8px;font-size:12.5px;color:var(--slate-600);margin-top:14px}
+  .check-row input{accent-color:var(--accent);width:15px;height:15px}
+  .result-line{display:flex;justify-content:space-between;padding:9px 0;border-bottom:1px solid var(--slate-100);font-size:13px}
+  .result-line:last-child{border-bottom:none}
+  .result-line .label{color:var(--slate-500)}
+  .result-line .value{font-weight:600;color:var(--slate-800);font-variant-numeric:tabular-nums}
+  .result-total{background:var(--accent-light);border:1px solid #BFDBFE;border-radius:var(--radius);padding:16px 18px;margin-top:10px}
+  .result-total .label{font-size:11px;font-weight:700;color:var(--accent-dark);letter-spacing:.4px;text-transform:uppercase;margin-bottom:4px}
+  .result-total .value{font-size:24px;font-weight:800;color:var(--accent-dark);letter-spacing:-.6px}
+  .result-total.free{background:var(--success-light);border-color:#99F6E4}
+  .result-total.free .label,.result-total.free .value{color:var(--success)}
+  .headroom-box{background:var(--slate-50);border:1px solid var(--slate-100);border-radius:var(--radius);padding:12px 14px;margin-top:12px;font-size:12.5px;color:var(--slate-600)}
+  .headroom-box strong{color:var(--slate-800)}
+  .notice-box{background:var(--accent-light);border:1px solid #BFDBFE;border-radius:var(--radius);padding:10px 14px;font-size:12px;color:#1E40AF;line-height:1.5;margin-top:14px}
+  .ad-placeholder{border:1px dashed var(--slate-300);border-radius:var(--radius);background:var(--slate-50);padding:20px;text-align:center;color:var(--slate-400);font-size:12px}
+  .ad-placeholder strong{display:block;font-size:11px;font-weight:600;text-transform:uppercase;color:var(--slate-300);margin-bottom:4px}
+  .disclaimer{max-width:1200px;margin:0 auto;padding:0 24px 20px;font-size:11px;color:var(--slate-400);line-height:1.6}
+  footer{background:var(--slate-900);color:var(--slate-400);padding:24px;font-size:12px}
+  .footer-inner{max-width:1200px;margin:0 auto;display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
+  .footer-logo{font-size:15px;font-weight:800;color:#fff}
+  .footer-logo span{color:var(--accent)}
+  .footer-link{color:var(--slate-500);text-decoration:none;font-size:11px;margin-right:14px}
+  .footer-link:hover{color:var(--slate-200)}
+  @media (max-width:900px){.main{grid-template-columns:1fr}}
+  @media (max-width:640px){.field-grid{grid-template-columns:1fr}.hero h1{font-size:18px}}
+</style>
+</head>
+<body>
+<header><div class="header-inner">
+  <a href="index.html" class="logo-mark">CBM<span>Lab</span></a>
+  <a href="index.html" class="nav-link">← 전체 도구 보기</a>
+</div></header>
+
+<section class="hero"><div class="hero-inner">
+  <h1>해외직구 관부가세 계산기</h1>
+  <p>해외 쇼핑몰에서 직구할 때 발생할 수 있는 관세와 부가세를 미리 확인하세요. 면세한도까지 얼마나 남았는지도 함께 계산해 드립니다.</p>
+  <div class="hero-tags"><span class="tag">면세한도</span><span class="tag">관세·부가세</span><span class="tag">자가사용</span></div>
+</div></section>
+
+<div class="main">
+  <section>
+    <div class="card">
+      <div class="card-header"><div class="card-title">구매 정보 입력</div></div>
+      <div class="card-body">
+        <div class="field-grid">
+          <div>
+            <label class="field-label">발송 국가</label>
+            <select class="inp" id="country" onchange="calc()">
+              <option value="150">미국 외 국가 (면세한도 $150)</option>
+              <option value="200">미국 (면세한도 $200)</option>
+            </select>
+          </div>
+          <div>
+            <label class="field-label">물품 카테고리</label>
+            <select class="inp" id="category" onchange="calc()">
+              <option value="8">일반 공산품 (약 8%)</option>
+              <option value="13">의류/신발 (약 13%)</option>
+              <option value="6.5">화장품 (약 6.5%)</option>
+              <option value="8">가방/잡화 (약 8%)</option>
+              <option value="0">전자기기 일부 (약 0~8%, 품목별 상이)</option>
+              <option value="20">주류 (약 20%+주세, 별도 계산 필요)</option>
+            </select>
+          </div>
+          <div>
+            <label class="field-label">물품가액 (USD, 배송비 제외)</label>
+            <input type="number" class="inp" id="value" value="120" min="0" oninput="calc()">
+          </div>
+          <div>
+            <label class="field-label">적용 환율 (1 USD = ? KRW)</label>
+            <input type="number" class="inp" id="fx" value="1380" min="0" oninput="calc()">
+          </div>
+        </div>
+        <div class="check-row">
+          <input type="checkbox" id="selfUse" checked onchange="calc()">
+          <label for="selfUse">자가사용 목적 구매입니다 (판매 목적이 아님)</label>
+        </div>
+        <div class="notice-box">
+          면세한도는 <strong>물품가격(운임 제외)</strong> 기준이며, 미국발은 $200, 그 외 국가는 $150입니다. 같은 날 같은 사람 앞으로 여러 건이 오면 금액이 합산되어 과세될 수 있습니다(합산과세).
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <aside>
+    <div class="card">
+      <div class="card-header"><div class="card-title">예상 세액</div></div>
+      <div class="card-body">
+        <div id="result-total-wrap"></div>
+        <div id="result-lines"></div>
+        <div class="headroom-box" id="headroom"></div>
+      </div>
+    </div>
+    <div class="ad-placeholder"><strong>Advertisement</strong>광고 영역 (Google AdSense)<br>300 × 250 권장</div>
+  </aside>
+</div>
+
+<div class="disclaimer"><strong>안내:</strong> 본 계산기는 개략적인 참고용 추정치이며, 실제 세액은 품목의 정확한 HS Code 분류, FTA 협정 적용 여부, 통관 시점 환율에 따라 달라질 수 있습니다. 정확한 금액은 관세청 홈페이지 또는 관세청 콜센터(125)를 통해 확인하시기 바랍니다.</div>
+
+<footer><div class="footer-inner">
+  <div class="footer-logo">CBM<span>Lab</span></div>
+  <nav><a href="index.html" class="footer-link">전체 도구</a><a href="privacy.html" class="footer-link">개인정보 처리방침</a></nav>
+</div></footer>
+
+<script>
+function fmt(v,d=0){return (v||0).toLocaleString('ko-KR',{minimumFractionDigits:d,maximumFractionDigits:d});}
+function calc(){
+  const threshold = parseFloat(document.getElementById('country').value);
+  const dutyRate = parseFloat(document.getElementById('category').value);
+  const value = parseFloat(document.getElementById('value').value)||0;
+  const fx = parseFloat(document.getElementById('fx').value)||0;
+  const selfUse = document.getElementById('selfUse').checked;
+  const wrap = document.getElementById('result-total-wrap');
+  const lines = document.getElementById('result-lines');
+  const headroom = document.getElementById('headroom');
+
+  if(!selfUse){
+    wrap.innerHTML = `<div class="result-total"><div class="label">주의</div><div class="value" style="font-size:15px;">판매 목적 구매는 별도 수입신고 대상입니다</div></div>`;
+    lines.innerHTML = '';
+    headroom.innerHTML = '판매 목적(리셀 등)의 구매는 자가사용 면세 규정이 적용되지 않으며, 정식 수입신고 절차가 필요합니다.';
+    return;
+  }
+
+  if(value <= threshold){
+    wrap.innerHTML = `<div class="result-total free"><div class="label">예상 세액</div><div class="value">면세 (0원)</div></div>`;
+    lines.innerHTML = `<div class="result-line"><span class="label">물품가액</span><span class="value">$${fmt(value,2)}</span></div>
+      <div class="result-line"><span class="label">면세한도</span><span class="value">$${fmt(threshold)}</span></div>`;
+    const remain = threshold - value;
+    headroom.innerHTML = `면세한도까지 <strong>$${fmt(remain,2)}</strong> 더 구매하셔도 면세 범위입니다. (단, 같은 날 여러 건 합산 시 초과될 수 있습니다)`;
+  } else {
+    const duty = value * (dutyRate/100);
+    const vatBase = value + duty;
+    const vat = vatBase * 0.10;
+    const totalUsd = duty + vat;
+    const totalKrw = totalUsd * fx;
+
+    wrap.innerHTML = `<div class="result-total"><div class="label">예상 총 세액</div><div class="value">₩${fmt(totalKrw)}</div></div>`;
+    lines.innerHTML = `
+      <div class="result-line"><span class="label">물품가액</span><span class="value">$${fmt(value,2)}</span></div>
+      <div class="result-line"><span class="label">관세 (${dutyRate}%)</span><span class="value">$${fmt(duty,2)}</span></div>
+      <div class="result-line"><span class="label">부가세 (10%)</span><span class="value">$${fmt(vat,2)}</span></div>
+    `;
+    const over = value - threshold;
+    headroom.innerHTML = `면세한도(<strong>$${fmt(threshold)}</strong>)를 <strong>$${fmt(over,2)}</strong> 초과했습니다. 다음엔 한도 이하로 나눠서 주문하면 면세 가능합니다.`;
+  }
+}
+calc();
+</script>
+</body>
+</html>
