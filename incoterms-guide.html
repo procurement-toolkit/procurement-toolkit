@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="인코텀즈(Incoterms) 2020 11개 조건(EXW, FCA, FOB, CFR, CIF, CPT, CIP, DAP, DPU, DDP 등)별로 수출입 통관, 운임, 보험, 위험 이전 시점까지 한눈에 비교하는 무료 가이드.">
+<meta name="keywords" content="인코텀즈, Incoterms 2020, FOB 뜻, CIF란, EXW DDP 차이, 무역조건, 인코텀즈 비교표">
+<title>인코텀즈(Incoterms) 2020 가이드 — CBM Lab</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --accent: #2563EB;
+    --accent-light: #DBEAFE;
+    --accent-dark: #1D4ED8;
+    --slate-50: #F8FAFC;
+    --slate-100: #F1F5F9;
+    --slate-200: #E2E8F0;
+    --slate-300: #CBD5E1;
+    --slate-400: #94A3B8;
+    --slate-500: #64748B;
+    --slate-600: #475569;
+    --slate-700: #334155;
+    --slate-800: #1E293B;
+    --slate-900: #0F172A;
+    --seller: #0F766E;
+    --seller-light: #CCFBF1;
+    --buyer: #B45309;
+    --buyer-light: #FEF3C7;
+    --radius: 8px;
+    --radius-lg: 12px;
+    --shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
+    font-family: 'Pretendard', 'Apple SD Gothic Neo', system-ui, -apple-system, sans-serif;
+  }
+
+  body { background: var(--slate-50); color: var(--slate-800); font-size: 14px; line-height: 1.6; min-height: 100vh; }
+
+  header { background: #fff; border-bottom: 1px solid var(--slate-200); }
+  .header-inner { max-width: 1200px; margin: 0 auto; padding: 16px 24px; display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+  .logo-mark { font-size: 20px; font-weight: 800; color: var(--slate-900); text-decoration: none; }
+  .logo-mark span { color: var(--accent); }
+  .header-nav { display: flex; gap: 4px; flex-wrap: wrap; }
+  .nav-link { font-size: 13px; font-weight: 600; color: var(--slate-500); text-decoration: none; padding: 7px 12px; border-radius: 6px; }
+  .nav-link:hover { background: var(--slate-100); }
+  .nav-link.active { background: var(--accent-light); color: var(--accent-dark); }
+
+  .hero { background: #fff; border-bottom: 1px solid var(--slate-200); padding: 28px 24px 24px; }
+  .hero-inner { max-width: 1200px; margin: 0 auto; }
+  .hero h1 { font-size: 22px; font-weight: 700; color: var(--slate-900); margin-bottom: 6px; }
+  .hero p { font-size: 14px; color: var(--slate-500); max-width: 640px; }
+  .hero-tags { display: flex; gap: 8px; margin-top: 12px; flex-wrap: wrap; }
+  .tag { background: var(--slate-100); color: var(--slate-600); font-size: 11px; font-weight: 500; padding: 3px 10px; border-radius: 4px; border: 1px solid var(--slate-200); }
+
+  .main { max-width: 1200px; margin: 0 auto; padding: 28px 24px 60px; }
+
+  .card { background: #fff; border: 1px solid var(--slate-200); border-radius: var(--radius-lg); box-shadow: var(--shadow-sm); margin-bottom: 20px; }
+  .card-header { padding: 18px 20px; border-bottom: 1px solid var(--slate-100); }
+  .card-title { font-size: 14px; font-weight: 600; color: var(--slate-800); }
+  .card-body { padding: 20px; }
+
+  /* GROUP LEGEND */
+  .legend { display: flex; gap: 18px; flex-wrap: wrap; margin-bottom: 4px; }
+  .legend-item { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--slate-600); }
+  .legend-dot { width: 12px; height: 12px; border-radius: 3px; }
+  .legend-dot.seller { background: var(--seller); }
+  .legend-dot.buyer { background: var(--buyer); }
+
+  /* MATRIX TABLE */
+  .matrix-wrap { overflow-x: auto; margin-top: 16px; }
+  .matrix { width: 100%; min-width: 920px; border-collapse: collapse; }
+  .matrix th, .matrix td { padding: 8px 10px; text-align: center; font-size: 11.5px; border: 1px solid var(--slate-100); }
+  .matrix thead th {
+    background: var(--slate-50); color: var(--slate-500); font-weight: 700; font-size: 10.5px;
+    text-transform: uppercase; letter-spacing: .3px; white-space: nowrap; position: sticky; top: 0;
+  }
+  .matrix .term-cell {
+    text-align: left; font-weight: 700; color: var(--slate-800); cursor: pointer; white-space: nowrap;
+    background: #fff; position: sticky; left: 0;
+  }
+  .matrix .term-cell .term-name { display: block; font-size: 9.5px; font-weight: 500; color: var(--slate-400); }
+  .matrix tbody tr:hover td { background: var(--slate-50); }
+  .matrix tbody tr.active td { background: var(--accent-light) !important; }
+  .matrix tbody tr.active .term-cell { color: var(--accent-dark); }
+
+  .cell-seller, .cell-buyer {
+    display: inline-block; width: 100%; padding: 3px 0; border-radius: 4px; font-weight: 700; font-size: 10px;
+  }
+  .cell-seller { background: var(--seller-light); color: var(--seller); }
+  .cell-buyer { background: var(--buyer-light); color: var(--buyer); }
+
+  /* TERM DETAIL */
+  .term-detail { display: none; }
+  .term-detail.visible { display: block; }
+  .term-detail-head { display: flex; align-items: baseline; gap: 10px; margin-bottom: 8px; flex-wrap: wrap; }
+  .term-detail-head .code { font-size: 20px; font-weight: 800; color: var(--accent-dark); }
+  .term-detail-head .name { font-size: 13px; color: var(--slate-500); }
+  .term-detail p { font-size: 13px; color: var(--slate-600); line-height: 1.7; margin-bottom: 10px; }
+  .term-detail .use-case { font-size: 12px; color: var(--slate-500); background: var(--slate-50); border: 1px solid var(--slate-100); border-radius: 6px; padding: 10px 14px; }
+  .term-detail .use-case strong { color: var(--slate-700); }
+
+  /* GROUP CARDS */
+  .group-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-top: 16px; }
+  .group-card { border: 1px solid var(--slate-200); border-radius: var(--radius); padding: 14px 16px; }
+  .group-card .g-name { font-size: 13px; font-weight: 700; color: var(--slate-800); margin-bottom: 4px; }
+  .group-card .g-terms { font-size: 11px; font-weight: 600; color: var(--accent-dark); margin-bottom: 6px; }
+  .group-card .g-desc { font-size: 11.5px; color: var(--slate-500); line-height: 1.55; }
+
+  .notice-box { background: var(--accent-light); border: 1px solid #BFDBFE; border-radius: var(--radius); padding: 10px 14px; font-size: 12px; color: #1E40AF; line-height: 1.5; margin-top: 14px; }
+
+  .cta-box {
+    display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap;
+    background: var(--slate-900); border-radius: var(--radius-lg); padding: 22px 26px; color: #fff; margin-top: 4px;
+  }
+  .cta-box h4 { font-size: 15px; font-weight: 700; margin-bottom: 4px; }
+  .cta-box p { font-size: 12.5px; color: var(--slate-400); }
+  .cta-btn { background: var(--accent); color: #fff; font-size: 13px; font-weight: 700; padding: 10px 18px; border-radius: 6px; text-decoration: none; white-space: nowrap; }
+  .cta-btn:hover { background: var(--accent-dark); }
+
+  .ad-area-main { max-width: 1200px; margin: 0 auto 0; padding: 0 24px 28px; }
+  .ad-main-box { border: 1px dashed var(--slate-300); border-radius: var(--radius); background: #fff; height: 90px; display: flex; flex-direction: column; align-items: center; justify-content: center; color: var(--slate-400); font-size: 12px; gap: 4px; }
+  .ad-main-box strong { font-size: 11px; font-weight: 700; text-transform: uppercase; color: var(--slate-300); }
+
+  .disclaimer { max-width: 1200px; margin: 0 auto; padding: 0 24px 20px; font-size: 11px; color: var(--slate-400); line-height: 1.6; }
+
+  footer { background: var(--slate-900); color: var(--slate-400); padding: 24px; font-size: 12px; }
+  .footer-inner { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: flex-start; gap: 20px; flex-wrap: wrap; }
+  .footer-logo { font-size: 15px; font-weight: 800; color: #fff; }
+  .footer-logo span { color: var(--accent); }
+  .footer-desc { margin-top: 4px; font-size: 11px; color: var(--slate-500); max-width: 320px; line-height: 1.6; }
+  .footer-links { display: flex; gap: 16px; flex-wrap: wrap; }
+  .footer-link { color: var(--slate-500); text-decoration: none; font-size: 11px; }
+  .footer-link:hover { color: var(--slate-200); }
+  .footer-copy { margin-top: 20px; padding-top: 16px; border-top: 1px solid var(--slate-800); font-size: 11px; color: var(--slate-600); text-align: center; }
+
+  @media (max-width: 900px) { .group-grid { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 640px) {
+    .hero { padding: 20px 16px 16px; } .hero h1 { font-size: 18px; }
+    .main { padding: 16px 16px 40px; }
+    .header-inner { padding: 12px 16px; }
+    .group-grid { grid-template-columns: 1fr; }
+    .cta-box { flex-direction: column; align-items: flex-start; }
+    .ad-area-main { padding: 0 16px 20px; }
+    .disclaimer { padding: 0 16px 16px; }
+    footer { padding: 20px 16px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo-mark">CBM<span>Lab</span></a>
+    <nav class="header-nav">
+      <a href="cbm.html" class="nav-link">CBM 계산기</a>
+      <a href="fob-cif.html" class="nav-link">수입원가 계산기</a>
+      <a href="email-generator.html" class="nav-link">영문 이메일 생성기</a>
+      <a href="incoterms-guide.html" class="nav-link active">인코텀즈 가이드</a>
+    </nav>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="hero-inner">
+    <h1>인코텀즈(Incoterms) 2020 가이드</h1>
+    <p>EXW부터 DDP까지 11개 무역 조건에서 운임, 보험, 통관, 위험 이전 시점을 누가 부담하는지 표 하나로 확인하세요. 조건을 클릭하면 상세 설명이 나옵니다.</p>
+    <div class="hero-tags">
+      <span class="tag">FOB 뜻</span>
+      <span class="tag">CIF란</span>
+      <span class="tag">EXW/DDP 차이</span>
+      <span class="tag">위험 이전 시점</span>
+    </div>
+  </div>
+</section>
+
+<div class="main">
+
+  <!-- MATRIX -->
+  <div class="card">
+    <div class="card-header">
+      <div class="card-title">조건별 비용 부담 매트릭스 — 조건을 클릭하면 아래에 상세 설명이 나옵니다</div>
+    </div>
+    <div class="card-body">
+      <div class="legend">
+        <div class="legend-item"><span class="legend-dot seller"></span> Seller(매도인) 부담</div>
+        <div class="legend-item"><span class="legend-dot buyer"></span> Buyer(매수인) 부담</div>
+      </div>
+
+      <div class="matrix-wrap">
+        <table class="matrix" id="matrix">
+          <thead>
+            <tr>
+              <th>조건</th>
+              <th>수출통관</th>
+              <th>공장→항구<br>내륙운송</th>
+              <th>본선/터미널<br>적재</th>
+              <th>국제운임</th>
+              <th>적하보험</th>
+              <th>수입통관</th>
+              <th>항구→창고<br>내륙운송</th>
+              <th>위험 이전 시점</th>
+            </tr>
+          </thead>
+          <tbody id="matrix-body"></tbody>
+        </table>
+      </div>
+
+      <div class="notice-box">
+        표는 대표적인 실무 관행 기준입니다. 실제 계약에서는 당사자 간 합의(예: CIF 보험 부보율, FCA 인도 장소)에 따라 세부 사항이 달라질 수 있으니 계약서 문구를 우선 확인하세요.
+      </div>
+    </div>
+  </div>
+
+  <!-- DETAIL -->
+  <div class="card">
+    <div class="card-header"><div class="card-title">선택한 조건 상세 설명</div></div>
+    <div class="card-body" id="detail-container"></div>
+  </div>
+
+  <!-- GROUPS -->
+  <div class="card">
+    <div class="card-header"><div class="card-title">4개 그룹으로 이해하기</div></div>
+    <div class="card-body">
+      <div class="group-grid">
+        <div class="group-card">
+          <div class="g-name">E 그룹</div>
+          <div class="g-terms">EXW</div>
+          <div class="g-desc">매도인의 부담이 가장 적은 조건. 공장/창고에서 상품을 넘기면 끝이며, 이후 모든 운송·통관·비용은 매수인이 책임집니다.</div>
+        </div>
+        <div class="group-card">
+          <div class="g-name">F 그룹</div>
+          <div class="g-terms">FCA · FAS · FOB</div>
+          <div class="g-desc">매도인이 지정 장소(항구/터미널)까지 운송하고, 주 운송(국제운임)은 매수인이 지정한 운송인이 담당합니다.</div>
+        </div>
+        <div class="group-card">
+          <div class="g-name">C 그룹</div>
+          <div class="g-terms">CFR · CIF · CPT · CIP</div>
+          <div class="g-desc">매도인이 운임(과 일부는 보험)까지 계약·지불하지만, 위험은 상품을 선적/인도하는 시점에 이미 매수인에게 이전됩니다.</div>
+        </div>
+        <div class="group-card">
+          <div class="g-name">D 그룹</div>
+          <div class="g-terms">DAP · DPU · DDP</div>
+          <div class="g-desc">매도인의 부담이 가장 큰 조건. 목적지까지 상품을 인도할 책임(DDP는 관세까지)을 매도인이 집니다.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="cta-box">
+    <div>
+      <h4>조건을 정했다면, 실제 원가를 계산해보세요</h4>
+      <p>선택한 인코텀즈 조건에 맞춰 관세·부가세·환율까지 반영한 실제 수입 원가를 바로 계산할 수 있습니다.</p>
+    </div>
+    <a href="fob-cif.html" class="cta-btn">수입원가 계산기로 이동 →</a>
+  </div>
+</div>
+
+<div class="ad-area-main">
+  <div class="ad-main-box">
+    <strong>Advertisement</strong>
+    광고 영역 (Google AdSense) — 728 × 90 리더보드
+  </div>
+</div>
+
+<div class="disclaimer">
+  <strong>안내:</strong> 본 가이드는 Incoterms® 2020 규칙에 대한 일반적인 실무 참고 정보이며, ICC(국제상업회의소)의 공식 해석을 대체하지 않습니다. 실제 계약 체결 시에는 계약서에 명시된 정확한 문구와 버전을 반드시 확인하시기 바랍니다. "Incoterms"는 국제상업회의소(ICC)의 등록 상표입니다.
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <div>
+      <div class="footer-logo">CBM<span>Lab</span></div>
+      <div class="footer-desc">무역·구매 실무자를 위한 무료 도구 모음. 외부 서버 없이 브라우저에서 직접 계산합니다.</div>
+    </div>
+    <nav class="footer-links">
+      <a href="cbm.html" class="footer-link">CBM 계산기</a>
+      <a href="fob-cif.html" class="footer-link">수입원가 계산기</a>
+      <a href="email-generator.html" class="footer-link">영문 이메일 생성기</a>
+      <a href="incoterms-guide.html" class="footer-link">인코텀즈 가이드</a>
+      <a href="privacy.html" class="footer-link">개인정보 처리방침</a>
+    </nav>
+  </div>
+  <div class="footer-copy">&copy; 2026 CBM Lab. 본 도구는 교육/참고 목적으로 제공됩니다.</div>
+</footer>
+
+<script>
+  const TERMS = [
+    { code: 'EXW', name: 'Ex Works (공장인도)', group: 'E',
+      costs: ['buyer','buyer','buyer','buyer','buyer','buyer','buyer'],
+      risk: '매도인의 작업장(공장/창고)에서 상품을 매수인 처분 하에 둔 시점',
+      desc: '매도인은 자신의 시설에서 상품을 준비해 두기만 하면 됩니다. 적재, 수출통관, 운송, 수입통관 등 이후의 모든 절차와 비용, 위험은 매수인이 부담합니다. 매도인 입장에서 가장 부담이 적은 조건입니다.',
+      use: '매수인이 자체 물류망(포워더, 통관사)을 이미 갖추고 있어 전 과정을 직접 통제하고 싶을 때 주로 사용합니다.' },
+    { code: 'FCA', name: 'Free Carrier (운송인인도)', group: 'F',
+      costs: ['seller','seller','buyer','buyer','buyer','buyer','buyer'],
+      risk: '지정 장소에서 매수인이 지정한 운송인에게 상품을 인도한 시점',
+      desc: '매도인이 수출통관까지 마친 뒤, 매수인이 지정한 장소(공장, 터미널 등)에서 운송인에게 상품을 넘깁니다. 이후 국제운임 계약과 비용은 매수인 책임입니다. 컨테이너 화물에 널리 권장되는 조건입니다.',
+      use: '컨테이너 화물에서 FOB보다 더 정확한 위험 이전 시점을 원할 때 실무에서 많이 권장됩니다.' },
+    { code: 'FAS', name: 'Free Alongside Ship (선측인도)', group: 'F',
+      costs: ['seller','seller','buyer','buyer','buyer','buyer','buyer'],
+      risk: '지정 선적항의 본선 선측에 상품을 두었을 때',
+      desc: '매도인이 지정 선적항의 부두 또는 부선에서 본선 선측까지 상품을 인도합니다. 본선 적재부터는 매수인 책임입니다. 주로 벌크화물(곡물, 광물 등)에 사용됩니다.',
+      use: '컨테이너가 아닌 벌크·비포장 화물 해상운송에서 주로 사용합니다.' },
+    { code: 'FOB', name: 'Free On Board (본선인도)', group: 'F',
+      costs: ['seller','seller','seller','buyer','buyer','buyer','buyer'],
+      risk: '지정 선적항에서 상품이 본선에 적재되었을 때',
+      desc: '매도인이 수출통관과 본선 적재까지 책임집니다. 이후 국제운임, 보험, 수입통관, 목적지 내륙운송은 매수인이 부담합니다. 실무에서 가장 널리 쓰이는 조건 중 하나입니다.',
+      use: '해상 컨테이너/벌크 화물에서 가장 보편적으로 사용되는 조건이며, 견적 비교 기준으로도 자주 쓰입니다.' },
+    { code: 'CFR', name: 'Cost and Freight (운임포함인도)', group: 'C',
+      costs: ['seller','seller','seller','seller','buyer','buyer','buyer'],
+      risk: '지정 선적항에서 상품이 본선에 적재되었을 때 (FOB와 동일)',
+      desc: '매도인이 목적항까지의 운임을 계약·지불하지만, 위험은 FOB와 동일하게 선적 시점에 매수인에게 이전됩니다. 보험은 매도인 의무가 아닙니다.',
+      use: '매수인이 자체적으로 적하보험을 들고 싶을 때, 운임만 매도인이 부담하도록 하는 조건입니다.' },
+    { code: 'CIF', name: 'Cost, Insurance and Freight (운임보험료포함인도)', group: 'C',
+      costs: ['seller','seller','seller','seller','seller','buyer','buyer'],
+      risk: '지정 선적항에서 상품이 본선에 적재되었을 때 (CFR과 동일)',
+      desc: '매도인이 운임뿐 아니라 최소담보조건의 적하보험까지 부보합니다. 다만 위험 이전 시점은 CFR과 동일하게 선적 시점입니다 — 운송 중 사고는 보험으로 보상받되, 계약상 위험은 이미 매수인에게 있었다는 점이 실무에서 자주 오해되는 부분입니다.',
+      use: '해상 벌크·컨테이너 화물 견적에서 FOB 다음으로 가장 많이 쓰이는 조건입니다.' },
+    { code: 'CPT', name: 'Carriage Paid To (운송비지급인도)', group: 'C',
+      costs: ['seller','seller','seller','seller','buyer','buyer','buyer'],
+      risk: '매도인이 최초 운송인에게 상품을 인도했을 때',
+      desc: '해상 전용인 CFR과 달리 항공·복합운송에도 사용 가능합니다. 매도인이 목적지까지 운임을 지불하지만, 위험은 최초 운송인에게 인도하는 시점에 이전됩니다.',
+      use: '항공화물이나 해상+육상 복합운송에서 CFR 대신 사용합니다.' },
+    { code: 'CIP', name: 'Carriage and Insurance Paid To (운송비보험료지급인도)', group: 'C',
+      costs: ['seller','seller','seller','seller','seller','buyer','buyer'],
+      risk: '매도인이 최초 운송인에게 상품을 인도했을 때 (CPT와 동일)',
+      desc: 'CPT에 보험까지 추가된 조건으로, Incoterms 2020에서는 매도인이 부보해야 하는 보험 수준이 CIF보다 높은 "협회적하약관(A)" 수준으로 상향되었습니다.',
+      use: '항공화물이나 복합운송에서 매도인이 보험까지 들어주길 원할 때 사용합니다.' },
+    { code: 'DAP', name: 'Delivered At Place (도착지인도)', group: 'D',
+      costs: ['seller','seller','seller','seller','seller','buyer','seller'],
+      risk: '지정 목적지에서 운송수단에 실린 채로 매수인의 처분 하에 두었을 때 (하역 전)',
+      desc: '매도인이 목적지까지 상품을 가져다 주지만, 수입통관과 관세는 매수인이 부담합니다. 하역은 매수인 책임입니다.',
+      use: '매도인이 목적지까지 배송을 책임지되, 수입 관세/통관은 현지 사정을 잘 아는 매수인에게 맡기고 싶을 때 사용합니다.' },
+    { code: 'DPU', name: 'Delivered at Place Unloaded (도착지양하인도)', group: 'D',
+      costs: ['seller','seller','seller','seller','seller','buyer','seller'],
+      risk: '지정 목적지에서 운송수단으로부터 하역을 완료했을 때',
+      desc: 'DAP와 유사하지만, 매도인이 목적지에서 하역까지 완료한 뒤 위험이 이전됩니다. Incoterms 2020에서 유일하게 매도인이 목적지 하역까지 책임지는 조건입니다.',
+      use: '목적지에 하역 설비가 필요한 대형 화물, 프로젝트 화물 등에 사용됩니다.' },
+    { code: 'DDP', name: 'Delivered Duty Paid (관세지급인도)', group: 'D',
+      costs: ['seller','seller','seller','seller','seller','seller','seller'],
+      risk: '지정 목적지에서 하역 준비된 상태로 매수인의 처분 하에 두었을 때',
+      desc: '매도인의 부담이 가장 큰 조건입니다. 수입통관과 관세, 부가세까지 매도인이 부담하고 지정 장소까지 배송합니다. 매수인은 물건을 받기만 하면 됩니다.',
+      use: '매도인이 현지 법인이나 관세사를 통해 수입통관까지 직접 처리할 수 있을 때, 매수인에게 가장 간편한 조건으로 제시합니다.' }
+  ];
+
+  const COL_LABELS = ['수출통관', '공장→항구 내륙운송', '본선/터미널 적재', '국제운임', '적하보험', '수입통관', '항구→창고 내륙운송'];
+
+  function renderMatrix() {
+    const tbody = document.getElementById('matrix-body');
+    tbody.innerHTML = TERMS.map((t, idx) => `
+      <tr id="row-${t.code}" onclick="selectTerm('${t.code}')">
+        <td class="term-cell">${t.code}<span class="term-name">${t.name.split(' (')[0]}</span></td>
+        ${t.costs.map((c, i) => `<td><span class="cell-${c}">${c === 'seller' ? 'S' : 'B'}</span></td>`).join('')}
+        <td style="font-size:10.5px;color:var(--slate-500);text-align:left;max-width:160px;">${t.risk}</td>
+      </tr>
+    `).join('');
+  }
+
+  function selectTerm(code) {
+    const term = TERMS.find(t => t.code === code);
+    document.querySelectorAll('#matrix-body tr').forEach(r => r.classList.remove('active'));
+    document.getElementById('row-' + code).classList.add('active');
+
+    document.getElementById('detail-container').innerHTML = `
+      <div class="term-detail visible">
+        <div class="term-detail-head">
+          <span class="code">${term.code}</span>
+          <span class="name">${term.name}</span>
+        </div>
+        <p>${term.desc}</p>
+        <div class="use-case"><strong>언제 쓰나요:</strong> ${term.use}</div>
+      </div>
+    `;
+  }
+
+  renderMatrix();
+  selectTerm('FOB');
+</script>
+
+</body>
+</html>
