@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<!-- saved from url=(0044)file:///C:/Users/user/Downloads/index_6.html -->
-<html lang="ko"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="무역·구매 실무자를 위한 무료 도구 모음. CBM 계산기, 수입원가(FOB/CIF) 계산기, 영문 구매 이메일 생성기를 브라우저에서 바로 사용하세요.">
 <meta name="keywords" content="무역 계산기, 구매 도구, CBM 계산기, FOB CIF 계산기, 영문 이메일 생성기, 무역 실무 도구">
@@ -26,111 +26,72 @@
     --radius: 8px;
     --radius-lg: 12px;
     --shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
-    --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06);
     font-family: 'Pretendard', 'Apple SD Gothic Neo', system-ui, -apple-system, sans-serif;
   }
 
-  html { scroll-behavior: smooth; }
   body { background: var(--slate-50); color: var(--slate-800); font-size: 14px; line-height: 1.6; min-height: 100vh; }
 
-  header { background: #fff; border-bottom: 1px solid var(--slate-200); position: sticky; top: 0; z-index: 100; }
-  .header-inner { max-width: 1100px; margin: 0 auto; padding: 0 24px; height: 60px; display: flex; align-items: center; justify-content: space-between; gap: 16px; }
-  .logo { display: flex; align-items: baseline; gap: 10px; flex-shrink: 0; text-decoration: none; }
-  .logo-mark { font-size: 20px; font-weight: 800; letter-spacing: -0.5px; color: var(--slate-900); }
+  header { background: #fff; border-bottom: 1px solid var(--slate-200); }
+  .header-inner { max-width: 1100px; margin: 0 auto; padding: 16px 24px; display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+  .logo-mark { font-size: 20px; font-weight: 800; letter-spacing: -0.5px; color: var(--slate-900); text-decoration: none; }
   .logo-mark span { color: var(--accent); }
-  .logo-sub { font-size: 12px; color: var(--slate-400); font-weight: 400; border-left: 1px solid var(--slate-200); padding-left: 10px; white-space: nowrap; }
-  .header-nav { display: flex; gap: 4px; }
-  .nav-link { font-size: 13px; font-weight: 600; color: var(--slate-500); text-decoration: none; padding: 7px 12px; border-radius: 6px; transition: all 0.15s; white-space: nowrap; }
-  .nav-link:hover { background: var(--slate-100); color: var(--slate-700); }
+  .header-nav { display: flex; gap: 4px; flex-wrap: wrap; }
+  .nav-link { font-size: 13px; font-weight: 600; color: var(--slate-500); text-decoration: none; padding: 7px 12px; border-radius: 6px; }
+  .nav-link:hover { background: var(--slate-100); }
 
-  @media (max-width: 640px) { .header-nav { display: none; } .logo-sub { display: none; } }
-
-  /* HERO */
   .hero { background: #fff; border-bottom: 1px solid var(--slate-200); padding: 56px 24px 48px; text-align: center; }
   .hero-inner { max-width: 720px; margin: 0 auto; }
-  .hero-badge {
-    display: inline-block; background: var(--accent-light); color: var(--accent-dark); font-size: 12px; font-weight: 700;
-    padding: 5px 14px; border-radius: 999px; letter-spacing: .3px; margin-bottom: 18px;
-  }
-  .hero h1 { font-size: 32px; font-weight: 800; color: var(--slate-900); letter-spacing: -0.8px; line-height: 1.3; margin-bottom: 14px; }
+  .hero-badge { display: inline-block; background: var(--accent-light); color: var(--accent-dark); font-size: 12px; font-weight: 700; padding: 5px 14px; border-radius: 999px; margin-bottom: 18px; }
+  .hero h1 { font-size: 32px; font-weight: 800; color: var(--slate-900); line-height: 1.3; margin-bottom: 14px; }
   .hero h1 span { color: var(--accent); }
   .hero p { font-size: 15px; color: var(--slate-500); max-width: 540px; margin: 0 auto; }
 
-  /* TOOL GRID */
   .tools { max-width: 1100px; margin: 0 auto; padding: 48px 24px 20px; }
-  .tools-heading { font-size: 13px; font-weight: 700; color: var(--slate-400); letter-spacing: .6px; text-transform: uppercase; margin-bottom: 18px; }
-
+  .tools-heading { font-size: 13px; font-weight: 700; color: var(--slate-400); text-transform: uppercase; margin-bottom: 18px; }
   .tool-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
 
-  .tool-card {
-    display: block; background: #fff; border: 1px solid var(--slate-200); border-radius: var(--radius-lg);
-    padding: 24px; text-decoration: none; color: inherit; transition: all .18s; position: relative;
-  }
-  .tool-card { -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
-  @media (hover: hover) and (pointer: fine) {
-    .tool-card:hover { border-color: var(--accent); box-shadow: var(--shadow-md); transform: translateY(-2px); }
-    .tool-card:hover .tool-arrow { color: var(--accent); transform: translateX(2px); }
-  }
-  .tool-card:active { border-color: var(--accent); background: var(--slate-50); }
+  .tool-card { background: #fff; border: 1px solid var(--slate-200); border-radius: var(--radius-lg); padding: 24px; }
 
-  .tool-icon {
-    width: 44px; height: 44px; border-radius: 10px; background: var(--accent-light); color: var(--accent);
-    display: flex; align-items: center; justify-content: center; margin-bottom: 16px;
-  }
-
-  .tool-card h3 { font-size: 16px; font-weight: 700; color: var(--slate-900); margin-bottom: 6px; letter-spacing: -0.2px; }
+  .tool-icon { width: 44px; height: 44px; border-radius: 10px; background: var(--accent-light); color: var(--accent); display: flex; align-items: center; justify-content: center; margin-bottom: 16px; }
+  .tool-card h3 { font-size: 16px; font-weight: 700; color: var(--slate-900); margin-bottom: 6px; }
   .tool-card p { font-size: 12.5px; color: var(--slate-500); line-height: 1.6; margin-bottom: 14px; }
-
-  .tool-tags { display: flex; gap: 6px; flex-wrap: wrap; }
+  .tool-tags { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 16px; }
   .tool-tag { font-size: 10.5px; font-weight: 600; color: var(--slate-500); background: var(--slate-100); padding: 3px 8px; border-radius: 4px; }
 
-  .tool-arrow {
-    position: absolute; top: 24px; right: 24px; color: var(--slate-300); transition: all .18s;
+  /* GO BUTTON — 명확한 버튼 링크 (전체 카드 클릭 방식 대신) */
+  .tool-go {
+    display: inline-block; width: 100%; text-align: center; background: var(--accent); color: #fff !important;
+    font-size: 13px; font-weight: 700; padding: 10px 0; border-radius: 6px; text-decoration: none;
   }
+  .tool-go:visited { color: #fff !important; }
+  .tool-go:hover { background: var(--accent-dark); }
 
-  /* WHY SECTION */
-  .why { max-width: 1100px; margin: 0 auto; padding: 40px 24px 60px; }
-  .why-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 20px; }
-  .why-item { padding: 4px 0; }
-  .why-item .num { font-size: 12px; font-weight: 700; color: var(--accent); margin-bottom: 8px; }
-  .why-item h4 { font-size: 14px; font-weight: 700; color: var(--slate-800); margin-bottom: 6px; }
-  .why-item p { font-size: 12.5px; color: var(--slate-500); line-height: 1.6; }
-
-  .section-title { font-size: 20px; font-weight: 700; color: var(--slate-900); letter-spacing: -0.4px; }
-
-  /* ABOUT / FOUNDER */
   .about { max-width: 1100px; margin: 40px auto 0; padding: 0 24px; }
-  .about-card {
-    display: flex; gap: 24px; align-items: center; background: #fff; border: 1px solid var(--slate-200);
-    border-radius: var(--radius-lg); padding: 28px 32px; box-shadow: var(--shadow-sm);
-  }
-  .about-icon {
-    flex-shrink: 0; width: 56px; height: 56px; border-radius: 14px; background: var(--slate-900); color: #fff;
-    display: flex; align-items: center; justify-content: center;
-  }
+  .about-card { display: flex; gap: 24px; align-items: center; background: #fff; border: 1px solid var(--slate-200); border-radius: var(--radius-lg); padding: 28px 32px; box-shadow: var(--shadow-sm); flex-wrap: wrap; }
+  .about-icon { flex-shrink: 0; width: 56px; height: 56px; border-radius: 14px; background: var(--slate-900); color: #fff; display: flex; align-items: center; justify-content: center; }
   .about-text h3 { font-size: 15px; font-weight: 700; color: var(--slate-900); margin-bottom: 6px; }
   .about-text p { font-size: 13px; color: var(--slate-500); line-height: 1.65; max-width: 640px; }
   .about-chips { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 12px; }
   .about-chip { font-size: 11px; font-weight: 700; color: var(--accent-dark); background: var(--accent-light); padding: 4px 10px; border-radius: 999px; }
 
-  @media (max-width: 640px) {
-    .about { margin-top: 28px; padding: 0 16px; }
-    .about-card { flex-direction: column; align-items: flex-start; gap: 14px; padding: 20px; }
-  }
+  .why { max-width: 1100px; margin: 0 auto; padding: 40px 24px 60px; }
+  .why-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 20px; }
+  .why-item .num { font-size: 12px; font-weight: 700; color: var(--accent); margin-bottom: 8px; }
+  .why-item h4 { font-size: 14px; font-weight: 700; color: var(--slate-800); margin-bottom: 6px; }
+  .why-item p { font-size: 12.5px; color: var(--slate-500); line-height: 1.6; }
+  .section-title { font-size: 20px; font-weight: 700; color: var(--slate-900); }
 
-  /* AD */
   .ad-area-main { max-width: 1100px; margin: 0 auto 0; padding: 0 24px 40px; }
   .ad-main-box { border: 1px dashed var(--slate-300); border-radius: var(--radius); background: #fff; height: 90px; display: flex; flex-direction: column; align-items: center; justify-content: center; color: var(--slate-400); font-size: 12px; gap: 4px; }
-  .ad-main-box strong { font-size: 11px; font-weight: 700; letter-spacing: .5px; text-transform: uppercase; color: var(--slate-300); }
+  .ad-main-box strong { font-size: 11px; font-weight: 700; text-transform: uppercase; color: var(--slate-300); }
 
-  /* FOOTER */
   footer { background: var(--slate-900); color: var(--slate-400); padding: 24px; font-size: 12px; }
   .footer-inner { max-width: 1100px; margin: 0 auto; display: flex; justify-content: space-between; align-items: flex-start; gap: 20px; flex-wrap: wrap; }
-  .footer-logo { font-size: 15px; font-weight: 800; color: #fff; letter-spacing: -0.3px; }
+  .footer-logo { font-size: 15px; font-weight: 800; color: #fff; }
   .footer-logo span { color: var(--accent); }
   .footer-desc { margin-top: 4px; font-size: 11px; color: var(--slate-500); max-width: 320px; line-height: 1.6; }
   .footer-links { display: flex; gap: 16px; flex-wrap: wrap; }
-  .footer-link { color: var(--slate-500); text-decoration: none; font-size: 11px; transition: color .15s; }
+  .footer-link { color: var(--slate-500); text-decoration: none; font-size: 11px; }
   .footer-link:hover { color: var(--slate-200); }
   .footer-copy { margin-top: 20px; padding-top: 16px; border-top: 1px solid var(--slate-800); font-size: 11px; color: var(--slate-600); text-align: center; }
 
@@ -139,9 +100,8 @@
     .why-grid { grid-template-columns: 1fr; gap: 18px; }
   }
   @media (max-width: 640px) {
-    .hero { padding: 40px 16px 32px; }
-    .hero h1 { font-size: 24px; }
-    .header-inner { padding: 0 16px; }
+    .hero { padding: 40px 16px 32px; } .hero h1 { font-size: 24px; }
+    .header-inner { padding: 12px 16px; }
     .tools { padding: 36px 16px 10px; }
     .tool-grid { grid-template-columns: 1fr; }
     .why { padding: 30px 16px 40px; }
@@ -154,14 +114,11 @@
 
 <header>
   <div class="header-inner">
-    <a href="file:///C:/" class="logo">
-      <div class="logo-mark">CBM<span>Lab</span></div>
-      <div class="logo-sub">무역·구매 실무 도구 모음</div>
-    </a>
-    <nav class="header-nav" aria-label="도구 메뉴">
-      <a href="file:///C:/cbm.html" class="nav-link">CBM 계산기</a>
-      <a href="file:///C:/fob-cif.html" class="nav-link">수입원가 계산기</a>
-      <a href="file:///C:/email-generator.html" class="nav-link">영문 이메일 생성기</a>
+    <a href="index.html" class="logo-mark">CBM<span>Lab</span></a>
+    <nav class="header-nav">
+      <a href="cbm.html" class="nav-link">CBM 계산기</a>
+      <a href="fob-cif.html" class="nav-link">수입원가 계산기</a>
+      <a href="email-generator.html" class="nav-link">영문 이메일 생성기</a>
     </nav>
   </div>
 </header>
@@ -178,10 +135,9 @@
   <div class="tools-heading">도구 3종</div>
   <div class="tool-grid">
 
-    <a href="file:///C:/cbm.html" class="tool-card">
-      <svg class="tool-arrow" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
+    <div class="tool-card">
       <div class="tool-icon">
-        <svg width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 10V11"></path></svg>
+        <svg width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 10V11"/></svg>
       </div>
       <h3>CBM(용적중량) 계산기</h3>
       <p>카톤별 치수를 입력하면 총 CBM, 볼륨 무게, 컨테이너 적재 가능량을 즉시 계산합니다.</p>
@@ -189,12 +145,12 @@
         <span class="tool-tag">해상/항공</span>
         <span class="tool-tag">컨테이너 적재</span>
       </div>
-    </a>
+      <a class="tool-go" href="cbm.html">계산기 열기 →</a>
+    </div>
 
-    <a href="file:///C:/fob-cif.html" class="tool-card">
-      <svg class="tool-arrow" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
+    <div class="tool-card">
       <div class="tool-icon">
-        <svg width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>
+        <svg width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
       </div>
       <h3>수입 원가 계산기</h3>
       <p>EXW·FOB·CFR·CIF·DDP 조건별로 관세, 부가세, 환율까지 반영한 실제 랜디드 코스트를 계산합니다.</p>
@@ -202,12 +158,12 @@
         <span class="tool-tag">FOB/CIF</span>
         <span class="tool-tag">관세·마진</span>
       </div>
-    </a>
+      <a class="tool-go" href="fob-cif.html">계산기 열기 →</a>
+    </div>
 
-    <a href="file:///C:/email-generator.html" class="tool-card">
-      <svg class="tool-arrow" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
+    <div class="tool-card">
       <div class="tool-icon">
-        <svg width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+        <svg width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
       </div>
       <h3>영문 구매 이메일 생성기</h3>
       <p>견적 요청, 주문 확인, 납기 문의, 샘플 요청, 클레임까지 — 항목만 입력하면 완성됩니다.</p>
@@ -215,7 +171,8 @@
         <span class="tool-tag">RFQ</span>
         <span class="tool-tag">비즈니스 영어</span>
       </div>
-    </a>
+      <a class="tool-go" href="email-generator.html">생성기 열기 →</a>
+    </div>
 
   </div>
 </section>
@@ -223,7 +180,7 @@
 <section class="about">
   <div class="about-card">
     <div class="about-icon">
-      <svg width="26" height="26" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
+      <svg width="26" height="26" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
     </div>
     <div class="about-text">
       <h3>실무와 이론을 함께 갖춘 사람이 만듭니다</h3>
@@ -259,7 +216,7 @@
   </div>
 </section>
 
-<div class="ad-area-main" role="complementary" aria-label="광고 영역">
+<div class="ad-area-main">
   <div class="ad-main-box">
     <strong>Advertisement</strong>
     광고 영역 (Google AdSense) — 728 × 90 리더보드
@@ -272,16 +229,15 @@
       <div class="footer-logo">CBM<span>Lab</span></div>
       <div class="footer-desc">무역·구매 실무자를 위한 무료 도구 모음. 외부 서버 없이 브라우저에서 직접 계산합니다.</div>
     </div>
-    <nav class="footer-links" aria-label="푸터 링크">
-      <a href="file:///C:/cbm.html" class="footer-link">CBM 계산기</a>
-      <a href="file:///C:/fob-cif.html" class="footer-link">수입원가 계산기</a>
-      <a href="file:///C:/email-generator.html" class="footer-link">영문 이메일 생성기</a>
-      <a href="file:///C:/privacy.html" class="footer-link">개인정보 처리방침</a>
+    <nav class="footer-links">
+      <a href="cbm.html" class="footer-link">CBM 계산기</a>
+      <a href="fob-cif.html" class="footer-link">수입원가 계산기</a>
+      <a href="email-generator.html" class="footer-link">영문 이메일 생성기</a>
+      <a href="privacy.html" class="footer-link">개인정보 처리방침</a>
     </nav>
   </div>
-  <div class="footer-copy">© 2026 CBM Lab. 본 도구는 교육/참고 목적으로 제공됩니다.</div>
+  <div class="footer-copy">&copy; 2026 CBM Lab. 본 도구는 교육/참고 목적으로 제공됩니다.</div>
 </footer>
 
-
-
-</body></html>
+</body>
+</html>
