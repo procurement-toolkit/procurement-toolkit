@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="T/T, L/C, D/P, D/A 등 무역 결제조건별 위험 부담, 자금 흐름, 적합한 거래 관계를 비교합니다. 신용장(L/C) 실무 기본 개념도 함께 정리했습니다.">
+<meta name="keywords" content="무역 결제조건, T/T L/C 차이, 신용장 실무, D/P D/A 뜻">
+<title>결제조건(T/T·L/C·D/P·D/A) 비교 가이드 — CBM Lab</title>
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  :root{--accent:#2563EB;--accent-light:#DBEAFE;--accent-dark:#1D4ED8;--slate-50:#F8FAFC;--slate-100:#F1F5F9;--slate-200:#E2E8F0;--slate-400:#94A3B8;--slate-500:#64748B;--slate-600:#475569;--slate-700:#334155;--slate-800:#1E293B;--slate-900:#0F172A;--seller:#0F766E;--seller-light:#CCFBF1;--buyer:#B45309;--buyer-light:#FEF3C7;--radius:8px;--radius-lg:12px;--shadow-sm:0 1px 2px rgba(0,0,0,.05);font-family:'Pretendard','Apple SD Gothic Neo',system-ui,-apple-system,sans-serif}
+  body{background:var(--slate-50);color:var(--slate-800);font-size:14px;line-height:1.6}
+  header{background:#fff;border-bottom:1px solid var(--slate-200)}
+  .header-inner{max-width:1100px;margin:0 auto;padding:16px 24px;display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}
+  .logo-mark{font-size:20px;font-weight:800;color:var(--slate-900);text-decoration:none}
+  .logo-mark span{color:var(--accent)}
+  .nav-link{font-size:13px;font-weight:600;color:var(--slate-500);text-decoration:none;padding:7px 12px;border-radius:6px}
+  .nav-link:hover{background:var(--slate-100)}
+  .hero{background:#fff;border-bottom:1px solid var(--slate-200);padding:28px 24px 24px}
+  .hero-inner{max-width:1100px;margin:0 auto}
+  .hero h1{font-size:22px;font-weight:700;color:var(--slate-900);margin-bottom:6px}
+  .hero p{font-size:14px;color:var(--slate-500);max-width:640px}
+  .main{max-width:1100px;margin:0 auto;padding:28px 24px 60px}
+  .card{background:#fff;border:1px solid var(--slate-200);border-radius:var(--radius-lg);box-shadow:var(--shadow-sm);margin-bottom:20px}
+  .card-header{padding:16px 20px;border-bottom:1px solid var(--slate-100)}
+  .card-title{font-size:14px;font-weight:600;color:var(--slate-800)}
+  .card-body{padding:20px}
+  .risk-slider{position:relative;height:36px;background:linear-gradient(90deg, var(--buyer-light), var(--slate-100) 50%, var(--seller-light));border-radius:8px;margin:20px 0 30px;}
+  .risk-labels{display:flex;justify-content:space-between;font-size:11px;color:var(--slate-500);margin-top:-24px;padding:0 4px;}
+  .term-marker{position:absolute;top:-8px;transform:translateX(-50%);text-align:center;}
+  .term-marker .dot{width:14px;height:14px;border-radius:50%;background:var(--accent);margin:0 auto 4px;border:2px solid #fff;box-shadow:0 1px 3px rgba(0,0,0,.2);}
+  .term-marker .label{font-size:11px;font-weight:700;color:var(--slate-700);white-space:nowrap;}
+  .payment-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+  .payment-card{border:1px solid var(--slate-200);border-radius:var(--radius);padding:16px 18px}
+  .payment-card h3{font-size:14px;font-weight:700;color:var(--slate-900);margin-bottom:8px}
+  .payment-card ul{padding-left:18px;font-size:12px;color:var(--slate-600);line-height:1.7}
+  .payment-card .risk-tag{display:inline-block;font-size:10.5px;font-weight:700;padding:2px 8px;border-radius:999px;margin-bottom:8px}
+  .risk-tag.seller-risk{background:var(--buyer-light);color:var(--buyer)}
+  .risk-tag.buyer-risk{background:var(--seller-light);color:var(--seller)}
+  .risk-tag.balanced{background:var(--accent-light);color:var(--accent-dark)}
+  .checklist{list-style:none}
+  .checklist li{display:flex;gap:8px;padding:8px 0;border-bottom:1px solid var(--slate-100);font-size:13px}
+  .checklist li::before{content:'☐';color:var(--accent);font-size:15px;flex-shrink:0}
+  .notice-box{background:var(--accent-light);border:1px solid #BFDBFE;border-radius:var(--radius);padding:10px 14px;font-size:12px;color:#1E40AF;margin-top:14px}
+  footer{background:var(--slate-900);color:var(--slate-400);padding:24px;font-size:12px}
+  .footer-inner{max-width:1100px;margin:0 auto;display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
+  .footer-logo{font-size:15px;font-weight:800;color:#fff}
+  .footer-logo span{color:var(--accent)}
+  .footer-link{color:var(--slate-500);text-decoration:none;font-size:11px;margin-right:14px}
+  @media (max-width:768px){.payment-grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header><div class="header-inner">
+  <a href="index.html" class="logo-mark">CBM<span>Lab</span></a>
+  <a href="index.html" class="nav-link">← 전체 도구 보기</a>
+</div></header>
+
+<section class="hero"><div class="hero-inner">
+  <h1>결제조건 비교 가이드 (T/T·L/C·D/P·D/A)</h1>
+  <p>어떤 결제조건이든 위험은 매도인(수출자)과 매수인(수입자) 중 한쪽으로 쏠립니다. 어느 쪽에 유리한지 한눈에 확인하세요.</p>
+</div></section>
+
+<div class="main">
+  <div class="card">
+    <div class="card-header"><div class="card-title">위험 부담 스펙트럼</div></div>
+    <div class="card-body">
+      <div class="risk-slider">
+        <div class="term-marker" style="left:8%;"><div class="dot"></div><div class="label">선지급(T/T Advance)</div></div>
+        <div class="term-marker" style="left:35%;"><div class="dot"></div><div class="label">L/C (신용장)</div></div>
+        <div class="term-marker" style="left:60%;"><div class="dot"></div><div class="label">D/P</div></div>
+        <div class="term-marker" style="left:80%;"><div class="dot"></div><div class="label">D/A</div></div>
+        <div class="term-marker" style="left:95%;"><div class="dot"></div><div class="label">후지급(Open Account)</div></div>
+      </div>
+      <div style="display:flex;justify-content:space-between;font-size:11.5px;color:var(--slate-500);margin-top:-8px;">
+        <span>← 매도인(수출자)에게 안전</span>
+        <span>매수인(수입자)에게 안전 →</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header"><div class="card-title">결제조건별 특징</div></div>
+    <div class="card-body">
+      <div class="payment-grid">
+        <div class="payment-card">
+          <span class="risk-tag seller-risk">매수인에게 유리</span>
+          <h3>T/T (전신송금, Telegraphic Transfer)</h3>
+          <ul>
+            <li>은행을 통한 단순 계좌이체</li>
+            <li>선지급/후지급/분할지급 등 협의에 따라 다양하게 조합 가능</li>
+            <li>절차가 간단하고 수수료가 저렴</li>
+            <li>신뢰 관계가 없는 신규 거래처에는 리스크가 클 수 있음</li>
+          </ul>
+        </div>
+        <div class="payment-card">
+          <span class="risk-tag balanced">균형적, 은행이 지급 보증</span>
+          <h3>L/C (신용장, Letter of Credit)</h3>
+          <ul>
+            <li>매수인의 거래은행이 대금 지급을 보증</li>
+            <li>서류(선하증권, 인보이스 등) 일치 시 은행이 지급 확약</li>
+            <li>신규 거래처와 큰 금액 거래 시 안전장치로 활용</li>
+            <li>개설 수수료 발생, 서류 요건이 까다로워 실무 부담 있음</li>
+          </ul>
+        </div>
+        <div class="payment-card">
+          <span class="risk-tag seller-risk">매도인에게 유리</span>
+          <h3>D/P (지급인도, Documents against Payment)</h3>
+          <ul>
+            <li>매수인이 대금을 지급해야 선적서류를 받을 수 있음</li>
+            <li>은행이 서류를 중개하지만 지급을 보증하지는 않음</li>
+            <li>매수인이 대금을 안 내면 화물을 찾을 수 없음</li>
+          </ul>
+        </div>
+        <div class="payment-card">
+          <span class="risk-tag buyer-risk">매도인에게 리스크</span>
+          <h3>D/A (인수인도, Documents against Acceptance)</h3>
+          <ul>
+            <li>매수인이 환어음 인수(향후 지급 약속)만 하면 서류를 받을 수 있음</li>
+            <li>화물을 먼저 받고 나중에 대금을 지급하는 구조</li>
+            <li>매수인의 신용도가 검증된 경우에만 권장</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header"><div class="card-title">결제조건 선택 전 체크리스트</div></div>
+    <div class="card-body">
+      <ul class="checklist">
+        <li>상대방과의 거래 이력이 있는가, 신규 거래처인가</li>
+        <li>거래 금액이 커서 은행의 지급 보증(L/C)이 필요한가</li>
+        <li>상대국의 외환 규제나 정치적 리스크는 어떤가</li>
+        <li>L/C 개설 시 매수인의 신용 한도(credit line)에 여유가 있는가</li>
+        <li>서류 불일치(Discrepancy) 시 대응 절차를 알고 있는가</li>
+        <li>결제조건에 따른 자금 회수 시점이 자금 계획과 맞는가</li>
+      </ul>
+      <div class="notice-box">본 가이드는 일반적인 개념 이해를 돕기 위한 참고 자료입니다. 실제 계약 조건, 신용장 조항 해석 등은 반드시 거래은행 무역금융 담당자 또는 전문가와 상담하시기 바랍니다.</div>
+    </div>
+  </div>
+</div>
+
+<footer><div class="footer-inner">
+  <div class="footer-logo">CBM<span>Lab</span></div>
+  <nav><a href="index.html" class="footer-link">전체 도구</a><a href="privacy.html" class="footer-link">개인정보 처리방침</a></nav>
+</div></footer>
+</body>
+</html>

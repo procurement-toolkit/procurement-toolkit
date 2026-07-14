@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="경제적 주문량(EOQ), 안전재고, 재주문점을 한 번에 계산하는 구매/재고 담당자용 발주 계획 도구. 리드타임과 서비스 수준까지 반영합니다.">
+<meta name="keywords" content="EOQ 계산기, 안전재고 계산기, 재주문점 계산기, 재고 발주 계획">
+<title>재고 발주 계획 도구 (EOQ·안전재고·재주문점) — CBM Lab</title>
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  :root{--accent:#2563EB;--accent-light:#DBEAFE;--accent-dark:#1D4ED8;--slate-50:#F8FAFC;--slate-100:#F1F5F9;--slate-200:#E2E8F0;--slate-400:#94A3B8;--slate-500:#64748B;--slate-600:#475569;--slate-700:#334155;--slate-800:#1E293B;--slate-900:#0F172A;--radius:8px;--radius-lg:12px;--shadow-sm:0 1px 2px rgba(0,0,0,.05);font-family:'Pretendard','Apple SD Gothic Neo',system-ui,-apple-system,sans-serif}
+  body{background:var(--slate-50);color:var(--slate-800);font-size:14px;line-height:1.6}
+  header{background:#fff;border-bottom:1px solid var(--slate-200)}
+  .header-inner{max-width:1100px;margin:0 auto;padding:16px 24px;display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}
+  .logo-mark{font-size:20px;font-weight:800;color:var(--slate-900);text-decoration:none}
+  .logo-mark span{color:var(--accent)}
+  .nav-link{font-size:13px;font-weight:600;color:var(--slate-500);text-decoration:none;padding:7px 12px;border-radius:6px}
+  .nav-link:hover{background:var(--slate-100)}
+  .hero{background:#fff;border-bottom:1px solid var(--slate-200);padding:28px 24px 24px}
+  .hero-inner{max-width:1100px;margin:0 auto}
+  .hero h1{font-size:22px;font-weight:700;color:var(--slate-900);margin-bottom:6px}
+  .hero p{font-size:14px;color:var(--slate-500);max-width:640px}
+  .main{max-width:1100px;margin:0 auto;padding:28px 24px 60px;display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:start}
+  .card{background:#fff;border:1px solid var(--slate-200);border-radius:var(--radius-lg);box-shadow:var(--shadow-sm);margin-bottom:20px}
+  .card-header{padding:16px 20px;border-bottom:1px solid var(--slate-100)}
+  .card-title{font-size:14px;font-weight:600;color:var(--slate-800)}
+  .card-body{padding:20px}
+  .field-label{font-size:12px;font-weight:600;color:var(--slate-600);margin-bottom:6px;display:block}
+  .field-sub{font-size:10.5px;color:var(--slate-400);margin-top:-4px;margin-bottom:6px}
+  .inp,select.inp{width:100%;border:1px solid var(--slate-200);border-radius:6px;padding:8px 10px;font-size:13px;font-family:inherit}
+  .inp:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px rgba(37,99,235,.1)}
+  .field-group{margin-bottom:12px}
+  .result-item{background:var(--slate-50);border:1px solid var(--slate-100);border-radius:var(--radius);padding:14px 16px;margin-bottom:12px}
+  .result-item .r-label{font-size:11px;font-weight:700;color:var(--slate-400);text-transform:uppercase;margin-bottom:4px}
+  .result-item .r-value{font-size:22px;font-weight:800;color:var(--accent-dark)}
+  .result-item .r-desc{font-size:11.5px;color:var(--slate-500);margin-top:4px}
+  .notice-box{background:var(--accent-light);border:1px solid #BFDBFE;border-radius:var(--radius);padding:10px 14px;font-size:12px;color:#1E40AF;margin-top:10px}
+  .timeline-bar{position:relative;height:24px;background:var(--slate-100);border-radius:4px;margin-top:10px;overflow:hidden}
+  .timeline-fill{position:absolute;top:0;left:0;height:100%;background:var(--accent);opacity:.25}
+  .timeline-mark{position:absolute;top:0;height:100%;width:2px;background:var(--accent-dark)}
+  footer{background:var(--slate-900);color:var(--slate-400);padding:24px;font-size:12px}
+  .footer-inner{max-width:1100px;margin:0 auto;display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
+  .footer-logo{font-size:15px;font-weight:800;color:#fff}
+  .footer-logo span{color:var(--accent)}
+  .footer-link{color:var(--slate-500);text-decoration:none;font-size:11px;margin-right:14px}
+  @media (max-width:900px){.main{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header><div class="header-inner">
+  <a href="index.html" class="logo-mark">CBM<span>Lab</span></a>
+  <a href="index.html" class="nav-link">← 전체 도구 보기</a>
+</div></header>
+
+<section class="hero"><div class="hero-inner">
+  <h1>재고 발주 계획 도구</h1>
+  <p>경제적 주문량(EOQ), 안전재고, 재주문점을 한 번에 계산합니다. "얼마나, 언제 발주해야 하는지"에 대한 출발점으로 활용하세요.</p>
+</div></section>
+
+<div class="main">
+  <section>
+    <div class="card">
+      <div class="card-header"><div class="card-title">기본 정보 입력</div></div>
+      <div class="card-body">
+        <div class="field-group">
+          <label class="field-label">연간 수요량 (Annual Demand, D)</label>
+          <input type="number" class="inp" id="demand" value="12000" oninput="calc()">
+        </div>
+        <div class="field-group">
+          <label class="field-label">1회 발주비용 (Order Cost, S)</label>
+          <div class="field-sub">발주 처리, 통관, 검수 등 1회 주문당 고정 비용</div>
+          <input type="number" class="inp" id="orderCost" value="80000" oninput="calc()">
+        </div>
+        <div class="field-group">
+          <label class="field-label">단위당 연간 보관비용 (Holding Cost, H)</label>
+          <div class="field-sub">보통 단위원가의 15~30%로 추정</div>
+          <input type="number" class="inp" id="holdCost" value="2500" oninput="calc()">
+        </div>
+        <div class="field-group">
+          <label class="field-label">리드타임 (일)</label>
+          <input type="number" class="inp" id="leadTime" value="20" oninput="calc()">
+        </div>
+        <div class="field-group">
+          <label class="field-label">수요 변동성 (일별 표준편차, 단위)</label>
+          <div class="field-sub">모르면 일평균 수요의 20~30% 정도로 추정해보세요</div>
+          <input type="number" class="inp" id="demandStd" value="8" oninput="calc()">
+        </div>
+        <div class="field-group">
+          <label class="field-label">목표 서비스 수준</label>
+          <select class="inp" id="serviceLevel" onchange="calc()">
+            <option value="1.28">90% (Z=1.28)</option>
+            <option value="1.65" selected>95% (Z=1.65)</option>
+            <option value="2.05">98% (Z=2.05)</option>
+            <option value="2.33">99% (Z=2.33)</option>
+          </select>
+        </div>
+        <div class="notice-box">EOQ는 수요와 리드타임이 일정하다는 가정 하의 이론적 출발점입니다. 실제로는 계절성, 최소발주수량(MOQ), 가격할인 구간 등을 함께 고려해 조정하세요.</div>
+      </div>
+    </div>
+  </section>
+
+  <aside>
+    <div class="card">
+      <div class="card-header"><div class="card-title">계산 결과</div></div>
+      <div class="card-body">
+        <div class="result-item">
+          <div class="r-label">EOQ (경제적 주문량)</div>
+          <div class="r-value" id="eoqResult">-</div>
+          <div class="r-desc">1회 주문 시 가장 총비용이 낮아지는 수량</div>
+        </div>
+        <div class="result-item">
+          <div class="r-label">안전재고 (Safety Stock)</div>
+          <div class="r-value" id="ssResult">-</div>
+          <div class="r-desc">수요/리드타임 변동에 대비한 완충 재고</div>
+        </div>
+        <div class="result-item">
+          <div class="r-label">재주문점 (Reorder Point)</div>
+          <div class="r-value" id="ropResult">-</div>
+          <div class="r-desc">재고가 이 수준에 도달하면 새로 발주해야 함</div>
+        </div>
+        <div class="result-item">
+          <div class="r-label">연간 예상 발주 횟수</div>
+          <div class="r-value" id="freqResult">-</div>
+        </div>
+      </div>
+    </div>
+  </aside>
+</div>
+
+<footer><div class="footer-inner">
+  <div class="footer-logo">CBM<span>Lab</span></div>
+  <nav><a href="index.html" class="footer-link">전체 도구</a><a href="privacy.html" class="footer-link">개인정보 처리방침</a></nav>
+</div></footer>
+
+<script>
+function fmt(n){ return Math.round(n||0).toLocaleString('ko-KR'); }
+function calc(){
+  const D = parseFloat(document.getElementById('demand').value)||0;
+  const S = parseFloat(document.getElementById('orderCost').value)||0;
+  const H = parseFloat(document.getElementById('holdCost').value)||1;
+  const LT = parseFloat(document.getElementById('leadTime').value)||0;
+  const sigma = parseFloat(document.getElementById('demandStd').value)||0;
+  const Z = parseFloat(document.getElementById('serviceLevel').value)||1.65;
+
+  const eoq = Math.sqrt((2*D*S)/H);
+  const dailyDemand = D/365;
+  const safetyStock = Z * sigma * Math.sqrt(LT);
+  const rop = (dailyDemand * LT) + safetyStock;
+  const freq = D/eoq;
+
+  document.getElementById('eoqResult').textContent = fmt(eoq) + ' 개';
+  document.getElementById('ssResult').textContent = fmt(safetyStock) + ' 개';
+  document.getElementById('ropResult').textContent = fmt(rop) + ' 개';
+  document.getElementById('freqResult').textContent = fmt(freq) + ' 회/년';
+}
+calc();
+</script>
+</body>
+</html>
