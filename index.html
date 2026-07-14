@@ -101,6 +101,31 @@
     letter-spacing: 0.3px;
   }
 
+  .header-nav {
+    display: flex;
+    gap: 4px;
+    margin-left: auto;
+    margin-right: 12px;
+  }
+
+  .nav-link {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--slate-500);
+    text-decoration: none;
+    padding: 7px 12px;
+    border-radius: 6px;
+    transition: all 0.15s;
+    white-space: nowrap;
+  }
+
+  .nav-link:hover { background: var(--slate-100); color: var(--slate-700); }
+  .nav-link.active { background: var(--accent-light); color: var(--accent-dark); }
+
+  @media (max-width: 640px) {
+    .header-nav { display: none; }
+  }
+
   /* HERO */
   .hero {
     background: #fff;
@@ -761,10 +786,14 @@
 
 <header>
   <div class="header-inner">
-    <div class="logo">
+    <a href="/" class="logo" style="text-decoration:none;">
       <div class="logo-mark">CBM<span>Lab</span></div>
       <div class="logo-sub">해상/항공 화물 부피 계산기</div>
-    </div>
+    </a>
+    <nav class="header-nav" aria-label="도구 메뉴">
+      <a href="/" class="nav-link active">CBM 계산기</a>
+      <a href="/fob-cif.html" class="nav-link">수입원가 계산기</a>
+    </nav>
     <div class="header-badge">무료 도구</div>
   </div>
 </header>
@@ -940,8 +969,8 @@
       <div class="footer-desc">해상·항공 화물 실무자를 위한 무료 CBM 계산 도구. 외부 서버 없이 브라우저에서 직접 계산합니다.</div>
     </div>
     <nav class="footer-links" aria-label="푸터 링크">
-      <a href="#" class="footer-link">CBM 계산기</a>
-      <a href="#" class="footer-link">계산 방식 안내</a>
+      <a href="/" class="footer-link">CBM 계산기</a>
+      <a href="/fob-cif.html" class="footer-link">수입원가 계산기</a>
       <a href="/privacy.html" class="footer-link">개인정보 처리방침</a>
       <a href="#" class="footer-link">문의</a>
     </nav>

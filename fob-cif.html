@@ -1,0 +1,924 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="FOB, CIF, EXW, CFR, DDP 등 인코텀즈 조건별 수입 원가(랜디드 코스트)를 무료로 계산하세요. 관세, 부가세, 환율까지 한 번에 반영한 단가별 원가 계산기.">
+<meta name="keywords" content="FOB 계산기, CIF 계산기, 수입원가 계산기, 랜디드코스트, 인코텀즈, 관세 계산기, 무역 계산기">
+<title>수입 원가 계산기 (FOB·CIF·랜디드코스트) — CBM Lab</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --accent: #2563EB;
+    --accent-light: #DBEAFE;
+    --accent-dark: #1D4ED8;
+    --slate-50: #F8FAFC;
+    --slate-100: #F1F5F9;
+    --slate-200: #E2E8F0;
+    --slate-300: #CBD5E1;
+    --slate-400: #94A3B8;
+    --slate-500: #64748B;
+    --slate-600: #475569;
+    --slate-700: #334155;
+    --slate-800: #1E293B;
+    --slate-900: #0F172A;
+    --success: #0F766E;
+    --success-light: #CCFBF1;
+    --warning: #B45309;
+    --warning-light: #FEF3C7;
+    --danger: #DC2626;
+    --danger-light: #FEE2E2;
+    --radius: 8px;
+    --radius-lg: 12px;
+    --shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
+    --shadow: 0 1px 3px rgba(0,0,0,0.1), 0 1px 2px rgba(0,0,0,0.06);
+    font-family: 'Pretendard', 'Apple SD Gothic Neo', system-ui, -apple-system, sans-serif;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--slate-50);
+    color: var(--slate-800);
+    font-size: 14px;
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+
+  /* HEADER */
+  header {
+    background: #fff;
+    border-bottom: 1px solid var(--slate-200);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+
+  .header-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 24px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+  }
+
+  .logo {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    flex-shrink: 0;
+  }
+
+  .logo-mark {
+    font-size: 20px;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    color: var(--slate-900);
+    text-decoration: none;
+  }
+
+  .logo-mark span { color: var(--accent); }
+
+  .logo-sub {
+    font-size: 12px;
+    color: var(--slate-400);
+    font-weight: 400;
+    border-left: 1px solid var(--slate-200);
+    padding-left: 10px;
+    white-space: nowrap;
+  }
+
+  .header-nav {
+    display: flex;
+    gap: 4px;
+    margin-left: auto;
+  }
+
+  .nav-link {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--slate-500);
+    text-decoration: none;
+    padding: 7px 12px;
+    border-radius: 6px;
+    transition: all 0.15s;
+    white-space: nowrap;
+  }
+
+  .nav-link:hover { background: var(--slate-100); color: var(--slate-700); }
+  .nav-link.active { background: var(--accent-light); color: var(--accent-dark); }
+
+  /* HERO */
+  .hero {
+    background: #fff;
+    border-bottom: 1px solid var(--slate-200);
+    padding: 28px 24px 24px;
+  }
+
+  .hero-inner { max-width: 1200px; margin: 0 auto; }
+
+  .hero h1 {
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--slate-900);
+    letter-spacing: -0.4px;
+    margin-bottom: 6px;
+  }
+
+  .hero p { font-size: 14px; color: var(--slate-500); max-width: 620px; }
+
+  .hero-tags { display: flex; gap: 8px; margin-top: 12px; flex-wrap: wrap; }
+
+  .tag {
+    background: var(--slate-100);
+    color: var(--slate-600);
+    font-size: 11px;
+    font-weight: 500;
+    padding: 3px 10px;
+    border-radius: 4px;
+    border: 1px solid var(--slate-200);
+  }
+
+  /* MAIN LAYOUT */
+  .main {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 28px 24px 60px;
+    display: grid;
+    grid-template-columns: 1fr 380px;
+    gap: 24px;
+    align-items: start;
+  }
+
+  .card {
+    background: #fff;
+    border: 1px solid var(--slate-200);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+    margin-bottom: 20px;
+  }
+
+  .card:last-child { margin-bottom: 0; }
+
+  .card-header {
+    padding: 18px 20px;
+    border-bottom: 1px solid var(--slate-100);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  .card-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--slate-800);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .card-title svg { color: var(--accent); flex-shrink: 0; }
+
+  .card-body { padding: 20px; }
+
+  /* INCOTERM TABS */
+  .incoterm-group {
+    display: flex;
+    background: var(--slate-100);
+    border-radius: 8px;
+    padding: 3px;
+    gap: 2px;
+    flex-wrap: wrap;
+  }
+
+  .incoterm-btn {
+    flex: 1;
+    min-width: 56px;
+    padding: 8px 6px;
+    border: none;
+    background: transparent;
+    border-radius: 6px;
+    font-size: 12.5px;
+    font-weight: 700;
+    color: var(--slate-500);
+    cursor: pointer;
+    transition: all 0.15s;
+    font-family: inherit;
+  }
+
+  .incoterm-btn.active {
+    background: #fff;
+    color: var(--accent);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .incoterm-desc {
+    margin-top: 10px;
+    font-size: 12px;
+    color: var(--slate-500);
+    background: var(--slate-50);
+    border: 1px solid var(--slate-100);
+    border-radius: 6px;
+    padding: 8px 12px;
+    line-height: 1.5;
+  }
+
+  .incoterm-desc strong { color: var(--slate-700); }
+
+  /* TABLE (product rows) */
+  .item-table-wrap { overflow-x: auto; margin: 0 -20px; padding: 0 20px; }
+
+  .item-table { width: 100%; min-width: 480px; border-collapse: collapse; }
+
+  .item-table thead th {
+    padding: 8px 10px;
+    text-align: left;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--slate-400);
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    white-space: nowrap;
+    background: var(--slate-50);
+    border-top: 1px solid var(--slate-100);
+    border-bottom: 1px solid var(--slate-100);
+  }
+
+  .item-table thead th:last-child { text-align: center; }
+
+  .item-table tbody tr { border-bottom: 1px solid var(--slate-100); transition: background 0.1s; }
+  .item-table tbody tr:last-child { border-bottom: none; }
+  .item-table tbody tr:hover { background: var(--slate-50); }
+  .item-table tbody td { padding: 8px 6px; }
+  .item-table tbody td:first-child { padding-left: 10px; }
+  .item-table tbody td:last-child { padding-right: 10px; text-align: center; }
+
+  .row-num {
+    font-size: 11px; font-weight: 600; color: var(--slate-400);
+    min-width: 18px; display: inline-block; text-align: right;
+  }
+
+  .row-subtotal {
+    font-size: 12.5px; font-weight: 600; color: var(--slate-600);
+    font-variant-numeric: tabular-nums; white-space: nowrap;
+  }
+
+  /* INPUT */
+  .inp {
+    width: 100%;
+    border: 1px solid var(--slate-200);
+    border-radius: 6px;
+    padding: 7px 10px;
+    font-size: 13px;
+    color: var(--slate-800);
+    background: #fff;
+    transition: border-color 0.15s, box-shadow 0.15s;
+    font-family: inherit;
+    font-variant-numeric: tabular-nums;
+    -moz-appearance: textfield;
+  }
+
+  .inp::-webkit-outer-spin-button, .inp::-webkit-inner-spin-button { -webkit-appearance: none; }
+  .inp:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1); }
+  .inp-qty { max-width: 64px; }
+  .inp-price { max-width: 100px; }
+  .inp-name { min-width: 110px; }
+
+  .btn-del {
+    width: 28px; height: 28px; border: 1px solid var(--slate-200); border-radius: 6px;
+    background: #fff; color: var(--slate-400); cursor: pointer;
+    display: inline-flex; align-items: center; justify-content: center; transition: all 0.15s;
+  }
+  .btn-del:hover { border-color: var(--danger); color: var(--danger); background: var(--danger-light); }
+  .btn-del:disabled { opacity: 0.3; cursor: not-allowed; pointer-events: none; }
+
+  .btn-add-row {
+    display: flex; align-items: center; gap: 6px; padding: 9px 16px;
+    border: 1px dashed var(--slate-300); border-radius: var(--radius);
+    background: transparent; color: var(--slate-500); font-size: 13px; font-weight: 500;
+    cursor: pointer; width: 100%; margin-top: 12px; transition: all 0.15s; font-family: inherit;
+  }
+  .btn-add-row:hover { border-color: var(--accent); color: var(--accent); background: var(--accent-light); }
+
+  .item-row { animation: rowIn 0.2s ease; }
+  @keyframes rowIn { from { opacity: 0; transform: translateY(-6px); } to { opacity: 1; transform: translateY(0); } }
+
+  /* FIELD GRID (cost inputs) */
+  .field-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .field-grid.single { grid-template-columns: 1fr; }
+
+  .field {
+    transition: opacity 0.15s;
+  }
+
+  .field.hidden { display: none; }
+
+  .field-label {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--slate-600);
+    margin-bottom: 6px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .field-suffix { font-size: 11px; color: var(--slate-400); font-weight: 400; }
+
+  .field-input-wrap { position: relative; display: flex; align-items: center; }
+  .field-input-wrap .inp { padding-right: 44px; }
+  .field-unit-badge {
+    position: absolute; right: 8px; font-size: 11px; font-weight: 600;
+    color: var(--slate-400); pointer-events: none;
+  }
+
+  /* RESULT */
+  .result-section { display: flex; flex-direction: column; gap: 16px; }
+
+  .result-line {
+    display: flex; justify-content: space-between; align-items: baseline;
+    padding: 9px 0; border-bottom: 1px solid var(--slate-100); font-size: 13px;
+  }
+  .result-line:last-child { border-bottom: none; }
+  .result-line .label { color: var(--slate-500); }
+  .result-line .label .sub { display: block; font-size: 10.5px; color: var(--slate-400); margin-top: 1px; }
+  .result-line .value { font-weight: 600; color: var(--slate-800); font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .result-line.deduct .value { color: var(--slate-500); }
+  .result-line.add .value::before { content: '+ '; color: var(--slate-400); font-weight: 400; }
+
+  .result-total {
+    background: var(--accent-light);
+    border: 1px solid #BFDBFE;
+    border-radius: var(--radius);
+    padding: 16px 18px;
+    margin-top: 4px;
+  }
+
+  .result-total .label {
+    font-size: 11px; font-weight: 700; color: var(--accent-dark);
+    letter-spacing: 0.4px; text-transform: uppercase; margin-bottom: 4px;
+  }
+
+  .result-total .value {
+    font-size: 26px; font-weight: 800; color: var(--accent-dark);
+    letter-spacing: -0.8px; font-variant-numeric: tabular-nums; line-height: 1.2;
+  }
+
+  .result-total .value-sub { font-size: 12px; color: var(--accent); margin-top: 2px; font-weight: 500; }
+
+  .result-perunit {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 4px;
+  }
+
+  .result-item {
+    background: var(--slate-50); border: 1px solid var(--slate-100); border-radius: var(--radius); padding: 12px 14px;
+  }
+
+  .result-item .result-label {
+    font-size: 10.5px; font-weight: 600; color: var(--slate-400);
+    letter-spacing: 0.4px; text-transform: uppercase; margin-bottom: 4px;
+  }
+
+  .result-item .result-value {
+    font-size: 18px; font-weight: 700; color: var(--slate-900);
+    letter-spacing: -0.4px; font-variant-numeric: tabular-nums;
+  }
+
+  /* VAT toggle */
+  .vat-toggle-row {
+    display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--slate-500);
+    margin-top: 10px; padding-top: 10px; border-top: 1px dashed var(--slate-200);
+  }
+  .vat-toggle-row input { accent-color: var(--accent); width: 15px; height: 15px; cursor: pointer; }
+  .vat-toggle-row label { cursor: pointer; }
+
+  /* MARGIN CARD */
+  .margin-input-row { display: flex; gap: 10px; align-items: flex-end; }
+  .margin-result {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 14px;
+  }
+
+  /* NOTICE */
+  .notice-box {
+    background: var(--accent-light); border: 1px solid #BFDBFE; border-radius: var(--radius);
+    padding: 10px 14px; font-size: 12px; color: #1E40AF; line-height: 1.5;
+  }
+
+  /* AD PLACEHOLDER */
+  .ad-placeholder {
+    border: 1px dashed var(--slate-300); border-radius: var(--radius); background: var(--slate-50);
+    padding: 20px; text-align: center; color: var(--slate-400); font-size: 12px;
+  }
+  .ad-placeholder strong {
+    display: block; font-size: 11px; font-weight: 600; letter-spacing: 0.5px;
+    text-transform: uppercase; color: var(--slate-300); margin-bottom: 4px;
+  }
+
+  .ad-area-main { max-width: 1200px; margin: 0 auto 0; padding: 0 24px 28px; }
+  .ad-main-box {
+    border: 1px dashed var(--slate-300); border-radius: var(--radius); background: #fff;
+    height: 90px; display: flex; flex-direction: column; align-items: center; justify-content: center;
+    color: var(--slate-400); font-size: 12px; gap: 4px;
+  }
+  .ad-main-box strong { font-size: 11px; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase; color: var(--slate-300); }
+
+  /* FOOTER */
+  footer { background: var(--slate-900); color: var(--slate-400); padding: 24px; font-size: 12px; }
+  .footer-inner { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: flex-start; gap: 20px; flex-wrap: wrap; }
+  .footer-logo { font-size: 15px; font-weight: 800; color: #fff; letter-spacing: -0.3px; }
+  .footer-logo span { color: var(--accent); }
+  .footer-desc { margin-top: 4px; font-size: 11px; color: var(--slate-500); max-width: 320px; line-height: 1.6; }
+  .footer-links { display: flex; gap: 16px; flex-wrap: wrap; }
+  .footer-link { color: var(--slate-500); text-decoration: none; font-size: 11px; transition: color 0.15s; }
+  .footer-link:hover { color: var(--slate-200); }
+  .footer-copy { margin-top: 20px; padding-top: 16px; border-top: 1px solid var(--slate-800); font-size: 11px; color: var(--slate-600); text-align: center; }
+
+  .disclaimer { max-width: 1200px; margin: 0 auto; padding: 0 24px 20px; font-size: 11px; color: var(--slate-400); line-height: 1.6; }
+  .disclaimer strong { color: var(--slate-500); }
+
+  .section-divider { height: 1px; background: var(--slate-100); margin: 0; }
+
+  /* RESPONSIVE */
+  @media (max-width: 900px) {
+    .main { grid-template-columns: 1fr; }
+    .right-col { order: -1; }
+  }
+
+  @media (max-width: 640px) {
+    .hero { padding: 20px 16px 16px; }
+    .hero h1 { font-size: 18px; }
+    .main { padding: 16px 16px 40px; gap: 16px; }
+    .header-inner { padding: 0 16px; flex-wrap: wrap; height: auto; padding-top: 10px; padding-bottom: 10px; }
+    .logo-sub { display: none; }
+    .header-nav { margin-left: 0; width: 100%; }
+    .nav-link { flex: 1; text-align: center; }
+    .field-grid { grid-template-columns: 1fr; }
+    .result-perunit, .margin-result { grid-template-columns: 1fr; }
+    .ad-area-main { padding: 0 16px 20px; }
+    .disclaimer { padding: 0 16px 16px; }
+    footer { padding: 20px 16px; }
+  }
+
+  /* HIGHLIGHT ON UPDATE */
+  @keyframes flashUpdate { 0% { background: #BFDBFE; } 100% { background: var(--accent-light); } }
+  .result-total.flash { animation: flashUpdate 0.5s ease; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <a href="/" class="logo">
+      <div class="logo-mark">CBM<span>Lab</span></div>
+      <div class="logo-sub">수입 원가 계산기</div>
+    </a>
+    <nav class="header-nav" aria-label="도구 메뉴">
+      <a href="/" class="nav-link">CBM 계산기</a>
+      <a href="/fob-cif.html" class="nav-link active">수입원가 계산기</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section class="hero" aria-label="서비스 소개">
+    <div class="hero-inner">
+      <h1>수입 원가 계산기 (FOB · CIF · 랜디드코스트)</h1>
+      <p>인코텀즈(EXW·FOB·CFR·CIF·DDP) 조건에 따라 필요한 비용 항목이 자동으로 바뀝니다. 상품가액에 운임·보험·관세·부가세를 더해 실제 수입 원가와 개당 단가까지 한 번에 계산하세요.</p>
+      <div class="hero-tags">
+        <span class="tag">FOB/CIF</span>
+        <span class="tag">랜디드코스트</span>
+        <span class="tag">관세 계산</span>
+        <span class="tag">개당 원가</span>
+        <span class="tag">마진 계산</span>
+      </div>
+    </div>
+  </section>
+
+  <div class="main">
+    <!-- LEFT: INPUT -->
+    <section aria-label="원가 입력">
+
+      <!-- INCOTERM SELECT -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">
+            <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M3 7l9-4 9 4-9 4-9-4zm0 0v10l9 4m0-10v10m0-10l9-4v10l-9 4"/></svg>
+            무역 조건 (Incoterms)
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="incoterm-group" role="group" aria-label="인코텀즈 선택">
+            <button class="incoterm-btn" data-term="EXW" onclick="setIncoterm('EXW')">EXW</button>
+            <button class="incoterm-btn active" data-term="FOB" onclick="setIncoterm('FOB')">FOB</button>
+            <button class="incoterm-btn" data-term="CFR" onclick="setIncoterm('CFR')">CFR</button>
+            <button class="incoterm-btn" data-term="CIF" onclick="setIncoterm('CIF')">CIF</button>
+            <button class="incoterm-btn" data-term="DDP" onclick="setIncoterm('DDP')">DDP</button>
+          </div>
+          <div class="incoterm-desc" id="incoterm-desc"></div>
+        </div>
+      </div>
+
+      <!-- PRODUCT TABLE -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">
+            <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 10V11"/></svg>
+            상품 내역 (<span id="term-value-label">FOB</span> 단가 기준)
+          </div>
+          <span style="font-size:11px;color:var(--slate-400)">통화: USD</span>
+        </div>
+        <div class="card-body">
+          <div class="item-table-wrap">
+            <table class="item-table" aria-label="상품 목록">
+              <thead>
+                <tr>
+                  <th style="width:28px">#</th>
+                  <th>품목명</th>
+                  <th style="width:70px">수량</th>
+                  <th style="width:100px">단가 (USD)</th>
+                  <th style="width:90px">소계</th>
+                  <th style="width:40px">삭제</th>
+                </tr>
+              </thead>
+              <tbody id="item-tbody"></tbody>
+            </table>
+          </div>
+          <button class="btn-add-row" onclick="addItemRow()" aria-label="품목 행 추가">
+            <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/></svg>
+            품목 추가
+          </button>
+        </div>
+      </div>
+
+      <!-- ADDITIONAL COSTS -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">
+            <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V6m0 10v2"/><circle cx="12" cy="12" r="9"/></svg>
+            추가 비용 &amp; 세금
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="field-grid">
+            <div class="field" id="field-inlandOrigin">
+              <div class="field-label">공장 → 항구/공항 내륙운송비 <span class="field-suffix">(USD)</span></div>
+              <div class="field-input-wrap"><input type="number" class="inp" id="inlandOrigin" value="0" min="0" oninput="calc()"></div>
+            </div>
+            <div class="field" id="field-freight">
+              <div class="field-label">국제 운임 (해상/항공) <span class="field-suffix">(USD)</span></div>
+              <div class="field-input-wrap"><input type="number" class="inp" id="freight" value="0" min="0" oninput="calc()"></div>
+            </div>
+            <div class="field" id="field-insurance">
+              <div class="field-label">해상/적하보험료 <span class="field-suffix">(USD)</span></div>
+              <div class="field-input-wrap"><input type="number" class="inp" id="insurance" value="0" min="0" oninput="calc()"></div>
+            </div>
+            <div class="field" id="field-dutyRate">
+              <div class="field-label">관세율 <span class="field-suffix">(%, HS Code 기준)</span></div>
+              <div class="field-input-wrap"><input type="number" class="inp" id="dutyRate" value="8" min="0" step="0.1" oninput="calc()"><span class="field-unit-badge">%</span></div>
+            </div>
+            <div class="field" id="field-vatRate">
+              <div class="field-label">부가가치세율 <span class="field-suffix">(%)</span></div>
+              <div class="field-input-wrap"><input type="number" class="inp" id="vatRate" value="10" min="0" step="0.1" oninput="calc()"><span class="field-unit-badge">%</span></div>
+            </div>
+            <div class="field" id="field-customsFee">
+              <div class="field-label">통관 수수료 (관세사) <span class="field-suffix">(KRW)</span></div>
+              <div class="field-input-wrap"><input type="number" class="inp" id="customsFee" value="0" min="0" oninput="calc()"></div>
+            </div>
+            <div class="field" id="field-inlandDest">
+              <div class="field-label">국내 운송비 (항구 → 창고) <span class="field-suffix">(KRW)</span></div>
+              <div class="field-input-wrap"><input type="number" class="inp" id="inlandDest" value="0" min="0" oninput="calc()"></div>
+            </div>
+            <div class="field">
+              <div class="field-label">적용 환율 <span class="field-suffix">(1 USD = ? KRW)</span></div>
+              <div class="field-input-wrap"><input type="number" class="inp" id="fxRate" value="1380" min="0" step="1" oninput="calc()"><span class="field-unit-badge">원</span></div>
+            </div>
+          </div>
+          <div class="vat-toggle-row">
+            <input type="checkbox" id="includeVat" onchange="calc()">
+            <label for="includeVat">부가가치세를 총 원가에 포함 (통상 사업자는 매입세액공제로 환급 가능하므로 기본은 제외)</label>
+          </div>
+        </div>
+        <div class="section-divider"></div>
+        <div class="card-body" style="padding-top:14px;padding-bottom:14px;">
+          <div class="notice-box">
+            <strong style="font-size:12px;">계산 방식 안내</strong><br>
+            관세 = (상품가액+운임+보험료) × 관세율 &nbsp;|&nbsp; 부가세 = (관세 포함 금액) × 부가세율<br>
+            실제 관세율은 HS Code, FTA 협정세율 적용 여부에 따라 달라지므로 관세청 또는 관세사 확인이 필요합니다.
+          </div>
+        </div>
+      </div>
+
+      <!-- MARGIN CALCULATOR -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">
+            <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 7h6m-6 4h6m-7 8h8a2 2 0 002-2V7a2 2 0 00-2-2H8a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+            판매 마진 계산 (선택)
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="field-label">개당 판매 예정가 <span class="field-suffix">(KRW)</span></div>
+          <div class="field-input-wrap" style="max-width:220px;">
+            <input type="number" class="inp" id="sellPrice" value="0" min="0" oninput="calc()">
+          </div>
+          <div class="margin-result">
+            <div class="result-item">
+              <div class="result-label">개당 예상 이익</div>
+              <div class="result-value" id="marginProfit">-</div>
+            </div>
+            <div class="result-item">
+              <div class="result-label">마진율</div>
+              <div class="result-value" id="marginPct">-</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- RIGHT: RESULT -->
+    <aside class="right-col" aria-label="계산 결과">
+      <div class="result-section">
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">
+              <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
+              원가 계산 결과
+            </div>
+          </div>
+          <div class="card-body">
+            <div id="result-lines"></div>
+            <div class="result-total" id="result-total-box">
+              <div class="label">총 수입 원가 (Landed Cost)</div>
+              <div class="value" id="totalKrw">₩0</div>
+              <div class="value-sub" id="totalUsd">$0.00</div>
+            </div>
+            <div class="result-perunit">
+              <div class="result-item">
+                <div class="result-label">총 수량</div>
+                <div class="result-value" id="totalQty">0</div>
+              </div>
+              <div class="result-item">
+                <div class="result-label">개당 원가</div>
+                <div class="result-value" id="unitCost">₩0</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="ad-placeholder" role="complementary" aria-label="광고 영역">
+          <strong>Advertisement</strong>
+          광고 영역 (Google AdSense)<br>300 × 250 권장
+          <!-- Google AdSense 코드를 아래에 삽입하세요 -->
+        </div>
+      </div>
+    </aside>
+  </div>
+
+  <div class="ad-area-main" role="complementary" aria-label="하단 광고 영역">
+    <div class="ad-main-box">
+      <strong>Advertisement</strong>
+      광고 영역 (Google AdSense) — 728 × 90 리더보드
+    </div>
+  </div>
+
+  <div class="disclaimer">
+    <strong>면책 고지:</strong> 본 계산기는 참고용 개략 계산 도구입니다. 실제 관세율, FTA 협정세율 적용 여부, 부가세 환급 가능 여부는 품목(HS Code)과 사업자 형태에 따라 다르므로 관세청, 관세사 또는 세무사를 통해 정확한 금액을 확인하시기 바랍니다. 환율은 실시간으로 반영되지 않으므로 계산 시점의 환율을 직접 확인하여 입력해야 합니다.
+  </div>
+</main>
+
+<footer>
+  <div class="footer-inner">
+    <div>
+      <div class="footer-logo">CBM<span>Lab</span></div>
+      <div class="footer-desc">무역·구매 실무자를 위한 무료 계산기 모음. 외부 서버 없이 브라우저에서 직접 계산합니다.</div>
+    </div>
+    <nav class="footer-links" aria-label="푸터 링크">
+      <a href="/" class="footer-link">CBM 계산기</a>
+      <a href="/fob-cif.html" class="footer-link">수입원가 계산기</a>
+      <a href="/privacy.html" class="footer-link">개인정보 처리방침</a>
+    </nav>
+  </div>
+  <div class="footer-copy">&copy; 2026 CBM Lab. 본 도구는 교육/참고 목적으로 제공됩니다.</div>
+</footer>
+
+<script>
+  let items = [];
+  let itemCounter = 0;
+  let currentTerm = 'FOB';
+
+  const TERM_INFO = {
+    EXW: {
+      label: 'EXW (공장인도)',
+      desc: '<strong>EXW:</strong> 상품가액에 공장→항구 내륙운송비, 국제운임, 보험료를 모두 buyer가 부담합니다. 실질적으로 buyer가 처음부터 끝까지 모든 물류비를 책임집니다.',
+      show: ['inlandOrigin', 'freight', 'insurance', 'dutyRate', 'vatRate', 'customsFee', 'inlandDest']
+    },
+    FOB: {
+      label: 'FOB (본선인도)',
+      desc: '<strong>FOB:</strong> 상품가액에 이미 항구까지의 내륙운송비가 포함되어 있습니다. buyer는 국제운임과 보험료부터 부담하면 됩니다.',
+      show: ['freight', 'insurance', 'dutyRate', 'vatRate', 'customsFee', 'inlandDest']
+    },
+    CFR: {
+      label: 'CFR (운임포함인도)',
+      desc: '<strong>CFR:</strong> 상품가액에 국제운임까지 포함되어 있습니다. buyer는 보험료만 추가로 부담하면 됩니다.',
+      show: ['insurance', 'dutyRate', 'vatRate', 'customsFee', 'inlandDest']
+    },
+    CIF: {
+      label: 'CIF (운임보험료포함인도)',
+      desc: '<strong>CIF:</strong> 상품가액에 국제운임과 보험료까지 이미 포함되어 있습니다. 관세·부가세·통관비만 추가하면 됩니다.',
+      show: ['dutyRate', 'vatRate', 'customsFee', 'inlandDest']
+    },
+    DDP: {
+      label: 'DDP (관세지급인도)',
+      desc: '<strong>DDP:</strong> 관세, 부가세, 통관비까지 모두 seller가 부담하고 지정 장소까지 배송합니다. buyer가 추가로 부담할 비용이 거의 없습니다.',
+      show: []
+    }
+  };
+
+  const ALL_FIELDS = ['inlandOrigin', 'freight', 'insurance', 'dutyRate', 'vatRate', 'customsFee', 'inlandDest'];
+
+  function setIncoterm(term) {
+    currentTerm = term;
+    document.querySelectorAll('.incoterm-btn').forEach(b => {
+      b.classList.toggle('active', b.dataset.term === term);
+    });
+    document.getElementById('incoterm-desc').innerHTML = TERM_INFO[term].desc;
+    document.getElementById('term-value-label').textContent = term;
+
+    const visible = TERM_INFO[term].show;
+    ALL_FIELDS.forEach(f => {
+      const el = document.getElementById('field-' + f);
+      if (el) el.classList.toggle('hidden', !visible.includes(f));
+    });
+    calc();
+  }
+
+  function addItemRow(name, qty, price) {
+    itemCounter++;
+    const id = itemCounter;
+    items.push({ id, name: name || '', qty: qty ?? 1, price: price ?? 0 });
+    renderItems();
+  }
+
+  function removeItemRow(id) {
+    items = items.filter(i => i.id !== id);
+    if (items.length === 0) addItemRow();
+    else renderItems();
+  }
+
+  function updateItem(id, field, value) {
+    const item = items.find(i => i.id === id);
+    if (!item) return;
+    if (field === 'name') item.name = value;
+    else item.qty = parseFloat(value) || 0;
+    if (field === 'price') item.price = parseFloat(value) || 0;
+    calc();
+  }
+
+  function renderItems() {
+    const tbody = document.getElementById('item-tbody');
+    tbody.innerHTML = '';
+    items.forEach((item, idx) => {
+      const tr = document.createElement('tr');
+      tr.className = 'item-row';
+      tr.innerHTML = `
+        <td><span class="row-num">${idx + 1}</span></td>
+        <td><input type="text" class="inp inp-name" placeholder="품목명" value="${item.name}" oninput="updateItem(${item.id},'name',this.value)"></td>
+        <td><input type="number" class="inp inp-qty" min="0" value="${item.qty}" oninput="updateItem(${item.id},'qty',this.value)"></td>
+        <td><input type="number" class="inp inp-price" min="0" step="0.01" value="${item.price}" oninput="updateItem(${item.id},'price',this.value)"></td>
+        <td><span class="row-subtotal" id="sub-${item.id}">$0.00</span></td>
+        <td><button class="btn-del" onclick="removeItemRow(${item.id})" aria-label="행 삭제" ${items.length <= 1 ? 'disabled' : ''}>
+          <svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+        </button></td>
+      `;
+      tbody.appendChild(tr);
+    });
+    calc();
+  }
+
+  function fmt(v, digits = 0) {
+    if (typeof v !== 'number' || isNaN(v)) return '0';
+    return v.toLocaleString('ko-KR', { minimumFractionDigits: digits, maximumFractionDigits: digits });
+  }
+
+  function calc() {
+    let goodsValue = 0;
+    let totalQty = 0;
+    items.forEach(item => {
+      const sub = item.qty * item.price;
+      goodsValue += sub;
+      totalQty += item.qty;
+      const el = document.getElementById('sub-' + item.id);
+      if (el) el.textContent = '$' + fmt(sub, 2);
+    });
+
+    const inlandOrigin = parseFloat(document.getElementById('inlandOrigin').value) || 0;
+    const freight = parseFloat(document.getElementById('freight').value) || 0;
+    const insurance = parseFloat(document.getElementById('insurance').value) || 0;
+    const dutyRate = parseFloat(document.getElementById('dutyRate').value) || 0;
+    const vatRate = parseFloat(document.getElementById('vatRate').value) || 0;
+    const customsFee = parseFloat(document.getElementById('customsFee').value) || 0;
+    const inlandDest = parseFloat(document.getElementById('inlandDest').value) || 0;
+    const fxRate = parseFloat(document.getElementById('fxRate').value) || 0;
+    const includeVat = document.getElementById('includeVat').checked;
+
+    const lines = [];
+    let cifValue; // USD, goods + freight + insurance (as applicable) — the customs valuation base
+
+    if (currentTerm === 'DDP') {
+      cifValue = goodsValue;
+      lines.push({ label: 'DDP 상품가액 (전체 포함)', value: '$' + fmt(goodsValue, 2) });
+    } else {
+      let base = goodsValue;
+      lines.push({ label: `상품가액 (${currentTerm} 기준)`, value: '$' + fmt(goodsValue, 2) });
+
+      if (TERM_INFO[currentTerm].show.includes('inlandOrigin') && inlandOrigin > 0) {
+        base += inlandOrigin;
+        lines.push({ label: '내륙운송비 (공장→항구)', value: '$' + fmt(inlandOrigin, 2), add: true });
+      }
+      if (TERM_INFO[currentTerm].show.includes('freight') && freight > 0) {
+        base += freight;
+        lines.push({ label: '국제 운임', value: '$' + fmt(freight, 2), add: true });
+      }
+      if (TERM_INFO[currentTerm].show.includes('insurance') && insurance > 0) {
+        base += insurance;
+        lines.push({ label: '적하보험료', value: '$' + fmt(insurance, 2), add: true });
+      }
+      cifValue = base;
+      lines.push({ label: 'CIF 과세가격 (관세 부과 기준)', value: '$' + fmt(cifValue, 2), strong: true });
+    }
+
+    let dutyAmount = 0, vatAmount = 0;
+    let landedUsd = cifValue;
+
+    if (currentTerm !== 'DDP') {
+      dutyAmount = cifValue * (dutyRate / 100);
+      lines.push({ label: `관세 (${dutyRate}%)`, value: '$' + fmt(dutyAmount, 2), add: true });
+      landedUsd += dutyAmount;
+
+      vatAmount = (cifValue + dutyAmount) * (vatRate / 100);
+      lines.push({ label: `부가가치세 (${vatRate}%)${includeVat ? '' : ' — 미포함, 참고용'}`, value: '$' + fmt(vatAmount, 2), sub: !includeVat });
+      if (includeVat) landedUsd += vatAmount;
+    }
+
+    let landedKrw = landedUsd * fxRate;
+
+    if (currentTerm !== 'DDP') {
+      if (customsFee > 0) landedKrw += customsFee;
+      if (inlandDest > 0) landedKrw += inlandDest;
+    }
+
+    // render lines
+    const linesHtml = lines.map(l => `
+      <div class="result-line ${l.add ? 'add' : ''}" style="${l.sub ? 'opacity:.6' : ''}">
+        <span class="label">${l.label}</span>
+        <span class="value" style="${l.strong ? 'color:var(--accent)' : ''}">${l.value}</span>
+      </div>
+    `).join('');
+
+    let extraHtml = '';
+    if (currentTerm !== 'DDP' && (customsFee > 0 || inlandDest > 0)) {
+      if (customsFee > 0) extraHtml += `<div class="result-line add"><span class="label">통관 수수료</span><span class="value">₩${fmt(customsFee)}</span></div>`;
+      if (inlandDest > 0) extraHtml += `<div class="result-line add"><span class="label">국내 운송비</span><span class="value">₩${fmt(inlandDest)}</span></div>`;
+    }
+
+    document.getElementById('result-lines').innerHTML = linesHtml + extraHtml;
+    document.getElementById('totalKrw').textContent = '₩' + fmt(landedKrw);
+    document.getElementById('totalUsd').textContent = '$' + fmt(landedUsd, 2) + ' (부대비용 KRW 별도 가산)';
+    document.getElementById('totalQty').textContent = fmt(totalQty);
+
+    const unitCostKrw = totalQty > 0 ? landedKrw / totalQty : 0;
+    document.getElementById('unitCost').textContent = '₩' + fmt(unitCostKrw);
+
+    const box = document.getElementById('result-total-box');
+    box.classList.remove('flash');
+    void box.offsetWidth;
+    box.classList.add('flash');
+
+    // margin
+    const sellPrice = parseFloat(document.getElementById('sellPrice').value) || 0;
+    if (sellPrice > 0 && unitCostKrw > 0) {
+      const profit = sellPrice - unitCostKrw;
+      const marginPct = (profit / sellPrice) * 100;
+      document.getElementById('marginProfit').textContent = '₩' + fmt(profit);
+      document.getElementById('marginProfit').style.color = profit >= 0 ? 'var(--success)' : 'var(--danger)';
+      document.getElementById('marginPct').textContent = fmt(marginPct, 1) + '%';
+      document.getElementById('marginPct').style.color = marginPct >= 0 ? 'var(--success)' : 'var(--danger)';
+    } else {
+      document.getElementById('marginProfit').textContent = '-';
+      document.getElementById('marginPct').textContent = '-';
+    }
+  }
+
+  // init
+  addItemRow('상품 A', 100, 5.00);
+  setIncoterm('FOB');
+</script>
+
+</body>
+</html>
