@@ -1,0 +1,1402 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="해상·항공 화물의 CBM(용적중량)을 무료로 계산하세요. 컨테이너 적재 추천, 볼륨 무게, 청구 적용 무게까지 한 번에.">
+<meta name="keywords" content="CBM 계산기, 용적중량, 해상화물, 컨테이너 적재량, 화물 계산, 무역 계산기">
+<title>CBM Lab — 해상/항공 화물 부피 계산기</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --accent: #2563EB;
+    --accent-light: #DBEAFE;
+    --accent-dark: #1D4ED8;
+    --slate-50: #F8FAFC;
+    --slate-100: #F1F5F9;
+    --slate-200: #E2E8F0;
+    --slate-300: #CBD5E1;
+    --slate-400: #94A3B8;
+    --slate-500: #64748B;
+    --slate-600: #475569;
+    --slate-700: #334155;
+    --slate-800: #1E293B;
+    --slate-900: #0F172A;
+    --success: #0F766E;
+    --success-light: #CCFBF1;
+    --warning: #B45309;
+    --warning-light: #FEF3C7;
+    --danger: #DC2626;
+    --danger-light: #FEE2E2;
+    --radius: 8px;
+    --radius-lg: 12px;
+    --shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
+    --shadow: 0 1px 3px rgba(0,0,0,0.1), 0 1px 2px rgba(0,0,0,0.06);
+    --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06);
+    font-family: 'Pretendard', 'Apple SD Gothic Neo', system-ui, -apple-system, sans-serif;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--slate-50);
+    color: var(--slate-800);
+    font-size: 14px;
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+
+  /* HEADER */
+  header {
+    background: #fff;
+    border-bottom: 1px solid var(--slate-200);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+
+  .header-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 24px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .logo {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+  }
+
+  .logo-mark {
+    font-size: 20px;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    color: var(--slate-900);
+  }
+
+  .logo-mark span {
+    color: var(--accent);
+  }
+
+  .logo-sub {
+    font-size: 12px;
+    color: var(--slate-400);
+    font-weight: 400;
+    border-left: 1px solid var(--slate-200);
+    padding-left: 10px;
+  }
+
+  .header-badge {
+    background: var(--accent-light);
+    color: var(--accent);
+    font-size: 11px;
+    font-weight: 600;
+    padding: 3px 10px;
+    border-radius: 20px;
+    letter-spacing: 0.3px;
+  }
+
+  /* HERO */
+  .hero {
+    background: #fff;
+    border-bottom: 1px solid var(--slate-200);
+    padding: 28px 24px 24px;
+  }
+
+  .hero-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .hero h1 {
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--slate-900);
+    letter-spacing: -0.4px;
+    margin-bottom: 6px;
+  }
+
+  .hero p {
+    font-size: 14px;
+    color: var(--slate-500);
+    max-width: 560px;
+  }
+
+  .hero-tags {
+    display: flex;
+    gap: 8px;
+    margin-top: 12px;
+    flex-wrap: wrap;
+  }
+
+  .tag {
+    background: var(--slate-100);
+    color: var(--slate-600);
+    font-size: 11px;
+    font-weight: 500;
+    padding: 3px 10px;
+    border-radius: 4px;
+    border: 1px solid var(--slate-200);
+  }
+
+  /* MAIN LAYOUT */
+  .main {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 28px 24px 60px;
+    display: grid;
+    grid-template-columns: 1fr 380px;
+    gap: 24px;
+    align-items: start;
+  }
+
+  /* CARD */
+  .card {
+    background: #fff;
+    border: 1px solid var(--slate-200);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .card-header {
+    padding: 18px 20px;
+    border-bottom: 1px solid var(--slate-100);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+  }
+
+  .card-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--slate-800);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .card-title svg {
+    color: var(--accent);
+  }
+
+  .card-body { padding: 20px; }
+
+  /* UNIT TOGGLE */
+  .unit-toggle-group {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+  }
+
+  .unit-toggle-label {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--slate-500);
+  }
+
+  .toggle-btn-group {
+    display: flex;
+    background: var(--slate-100);
+    border-radius: 6px;
+    padding: 2px;
+    gap: 2px;
+  }
+
+  .toggle-btn {
+    padding: 4px 12px;
+    border: none;
+    background: transparent;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--slate-500);
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+
+  .toggle-btn.active {
+    background: #fff;
+    color: var(--accent);
+    box-shadow: var(--shadow-sm);
+  }
+
+  /* TABLE */
+  .carton-table-wrap {
+    overflow-x: auto;
+    margin: 0 -20px;
+    padding: 0 20px;
+  }
+
+  .carton-table {
+    width: 100%;
+    min-width: 640px;
+    border-collapse: collapse;
+  }
+
+  .carton-table thead th {
+    padding: 8px 10px;
+    text-align: left;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--slate-400);
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    white-space: nowrap;
+    background: var(--slate-50);
+    border-top: 1px solid var(--slate-100);
+    border-bottom: 1px solid var(--slate-100);
+  }
+
+  .carton-table thead th:last-child { text-align: center; }
+
+  .carton-table tbody tr {
+    border-bottom: 1px solid var(--slate-100);
+    transition: background 0.1s;
+  }
+
+  .carton-table tbody tr:last-child { border-bottom: none; }
+  .carton-table tbody tr:hover { background: var(--slate-50); }
+
+  .carton-table tbody td {
+    padding: 8px 6px;
+  }
+
+  .carton-table tbody td:first-child { padding-left: 10px; }
+  .carton-table tbody td:last-child { padding-right: 10px; text-align: center; }
+
+  .row-num {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--slate-400);
+    min-width: 20px;
+    display: inline-block;
+    text-align: right;
+  }
+
+  /* INPUT */
+  .inp {
+    width: 100%;
+    border: 1px solid var(--slate-200);
+    border-radius: 6px;
+    padding: 7px 10px;
+    font-size: 13px;
+    color: var(--slate-800);
+    background: #fff;
+    transition: border-color 0.15s, box-shadow 0.15s;
+    font-family: inherit;
+    font-variant-numeric: tabular-nums;
+    -moz-appearance: textfield;
+  }
+
+  .inp::-webkit-outer-spin-button,
+  .inp::-webkit-inner-spin-button { -webkit-appearance: none; }
+
+  .inp:focus {
+    outline: none;
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+  }
+
+  .inp.invalid { border-color: var(--danger); }
+
+  .inp-qty { max-width: 70px; }
+  .inp-dim { max-width: 80px; }
+  .inp-wgt { max-width: 88px; }
+
+  /* DELETE BTN */
+  .btn-del {
+    width: 28px;
+    height: 28px;
+    border: 1px solid var(--slate-200);
+    border-radius: 6px;
+    background: #fff;
+    color: var(--slate-400);
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.15s;
+  }
+
+  .btn-del:hover {
+    border-color: var(--danger);
+    color: var(--danger);
+    background: var(--danger-light);
+  }
+
+  .btn-del:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+
+  /* ADD ROW BTN */
+  .btn-add-row {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 9px 16px;
+    border: 1px dashed var(--slate-300);
+    border-radius: var(--radius);
+    background: transparent;
+    color: var(--slate-500);
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    width: 100%;
+    margin-top: 12px;
+    transition: all 0.15s;
+    font-family: inherit;
+  }
+
+  .btn-add-row:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+    background: var(--accent-light);
+  }
+
+  /* ROW ANIMATION */
+  .carton-row {
+    animation: rowIn 0.2s ease;
+  }
+
+  @keyframes rowIn {
+    from { opacity: 0; transform: translateY(-6px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* RESULT CARD */
+  .result-section { display: flex; flex-direction: column; gap: 16px; }
+
+  .result-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+
+  .result-item {
+    background: var(--slate-50);
+    border: 1px solid var(--slate-100);
+    border-radius: var(--radius);
+    padding: 14px 16px;
+  }
+
+  .result-item.accent {
+    background: var(--accent-light);
+    border-color: #BFDBFE;
+  }
+
+  .result-item.full { grid-column: 1 / -1; }
+
+  .result-label {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--slate-400);
+    letter-spacing: 0.4px;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+
+  .result-value {
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--slate-900);
+    letter-spacing: -0.8px;
+    font-variant-numeric: tabular-nums;
+    line-height: 1.2;
+  }
+
+  .result-value.accent { color: var(--accent); }
+
+  .result-unit {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--slate-400);
+    margin-top: 2px;
+  }
+
+  /* CONTAINER CARDS */
+  .container-section h2 {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--slate-700);
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .cont-card {
+    border: 1px solid var(--slate-200);
+    border-radius: var(--radius);
+    padding: 14px 16px;
+    margin-bottom: 8px;
+    background: #fff;
+  }
+
+  .cont-card:last-child { margin-bottom: 0; }
+
+  .cont-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+  }
+
+  .cont-name {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--slate-800);
+  }
+
+  .cont-specs {
+    font-size: 11px;
+    color: var(--slate-400);
+    margin-top: 1px;
+  }
+
+  .cont-pct-badge {
+    font-size: 13px;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+    padding: 3px 8px;
+    border-radius: 4px;
+    background: var(--slate-100);
+    color: var(--slate-600);
+  }
+
+  .cont-pct-badge.ok { background: var(--success-light); color: var(--success); }
+  .cont-pct-badge.warn { background: var(--warning-light); color: var(--warning); }
+  .cont-pct-badge.over { background: var(--danger-light); color: var(--danger); }
+
+  .progress-bar-wrap {
+    height: 6px;
+    background: var(--slate-100);
+    border-radius: 999px;
+    overflow: hidden;
+  }
+
+  .progress-bar-fill {
+    height: 100%;
+    border-radius: 999px;
+    transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1), background 0.3s;
+  }
+
+  .progress-bar-fill.ok { background: var(--success); }
+  .progress-bar-fill.warn { background: #F59E0B; }
+  .progress-bar-fill.over { background: var(--danger); }
+
+  .cont-sub {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 6px;
+    font-size: 11px;
+    color: var(--slate-400);
+  }
+
+  /* COPY BUTTON */
+  .btn-copy {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    width: 100%;
+    padding: 10px 16px;
+    background: var(--slate-800);
+    color: #fff;
+    border: none;
+    border-radius: var(--radius);
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.15s;
+    font-family: inherit;
+  }
+
+  .btn-copy:hover { background: var(--slate-700); }
+  .btn-copy.copied { background: var(--success); }
+
+  /* NOTICE */
+  .notice-box {
+    background: var(--accent-light);
+    border: 1px solid #BFDBFE;
+    border-radius: var(--radius);
+    padding: 10px 14px;
+    font-size: 12px;
+    color: #1E40AF;
+    line-height: 1.5;
+  }
+
+  /* AD PLACEHOLDER */
+  .ad-placeholder {
+    border: 1px dashed var(--slate-300);
+    border-radius: var(--radius);
+    background: var(--slate-50);
+    padding: 20px;
+    text-align: center;
+    color: var(--slate-400);
+    font-size: 12px;
+  }
+
+  .ad-placeholder strong {
+    display: block;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    color: var(--slate-300);
+    margin-bottom: 4px;
+  }
+
+  .ad-area-main {
+    max-width: 1200px;
+    margin: 0 auto 0;
+    padding: 0 24px 28px;
+  }
+
+  .ad-main-box {
+    border: 1px dashed var(--slate-300);
+    border-radius: var(--radius);
+    background: #fff;
+    height: 90px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: var(--slate-400);
+    font-size: 12px;
+    gap: 4px;
+  }
+
+  .ad-main-box strong {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    color: var(--slate-300);
+  }
+
+  /* FOOTER */
+  footer {
+    background: var(--slate-900);
+    color: var(--slate-400);
+    padding: 24px;
+    font-size: 12px;
+  }
+
+  .footer-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+
+  .footer-logo {
+    font-size: 15px;
+    font-weight: 800;
+    color: #fff;
+    letter-spacing: -0.3px;
+  }
+
+  .footer-logo span { color: var(--accent); }
+
+  .footer-desc {
+    margin-top: 4px;
+    font-size: 11px;
+    color: var(--slate-500);
+    max-width: 300px;
+    line-height: 1.6;
+  }
+
+  .footer-links {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
+  .footer-link {
+    color: var(--slate-500);
+    text-decoration: none;
+    font-size: 11px;
+    transition: color 0.15s;
+  }
+
+  .footer-link:hover { color: var(--slate-200); }
+
+  .footer-copy {
+    margin-top: 20px;
+    padding-top: 16px;
+    border-top: 1px solid var(--slate-800);
+    font-size: 11px;
+    color: var(--slate-600);
+    text-align: center;
+  }
+
+  /* DISCLAIMER */
+  .disclaimer {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 24px 20px;
+    font-size: 11px;
+    color: var(--slate-400);
+    line-height: 1.6;
+  }
+
+  .disclaimer strong { color: var(--slate-500); }
+
+  /* EMPTY STATE */
+  .empty-result {
+    text-align: center;
+    padding: 32px 20px;
+    color: var(--slate-400);
+  }
+
+  .empty-result svg { margin-bottom: 10px; opacity: 0.4; }
+  .empty-result p { font-size: 13px; }
+
+  /* SECTION DIVIDER */
+  .section-divider {
+    height: 1px;
+    background: var(--slate-100);
+    margin: 0;
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 900px) {
+    .main {
+      grid-template-columns: 1fr;
+    }
+
+    .right-col {
+      order: -1;
+    }
+  }
+
+  @media (max-width: 600px) {
+    .hero { padding: 20px 16px 16px; }
+    .hero h1 { font-size: 18px; }
+    .main { padding: 16px 16px 40px; gap: 16px; }
+    .header-inner { padding: 0 16px; }
+    .logo-sub { display: none; }
+    .result-grid { grid-template-columns: 1fr 1fr; }
+    .result-value { font-size: 22px; }
+    .ad-area-main { padding: 0 16px 20px; }
+    .disclaimer { padding: 0 16px 16px; }
+    footer { padding: 20px 16px; }
+  }
+
+  @media (max-width: 400px) {
+    .result-grid { grid-template-columns: 1fr; }
+    .result-item.full { grid-column: 1; }
+  }
+
+  /* TOOLTIP */
+  .tooltip-wrap { position: relative; display: inline-flex; align-items: center; }
+
+  .tooltip-icon {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: var(--slate-200);
+    color: var(--slate-500);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 9px;
+    font-weight: 700;
+    cursor: help;
+    margin-left: 4px;
+  }
+
+  .tooltip-text {
+    display: none;
+    position: absolute;
+    bottom: calc(100% + 6px);
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--slate-800);
+    color: #fff;
+    font-size: 11px;
+    font-weight: 400;
+    padding: 6px 10px;
+    border-radius: 6px;
+    white-space: nowrap;
+    z-index: 200;
+    pointer-events: none;
+    line-height: 1.5;
+  }
+
+  .tooltip-text::after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 4px solid transparent;
+    border-top-color: var(--slate-800);
+  }
+
+  .tooltip-wrap:hover .tooltip-text { display: block; }
+
+  /* HIGHLIGHT RESULT ON UPDATE */
+  @keyframes flashUpdate {
+    0% { background: #DBEAFE; }
+    100% { background: var(--slate-50); }
+  }
+
+  .result-item.flash { animation: flashUpdate 0.5s ease; }
+  .result-item.accent.flash { animation: none; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <div class="logo">
+      <div class="logo-mark">CBM<span>Lab</span></div>
+      <div class="logo-sub">해상/항공 화물 부피 계산기</div>
+    </div>
+    <div class="header-badge">무료 도구</div>
+  </div>
+</header>
+
+<main>
+  <section class="hero" aria-label="서비스 소개">
+    <div class="hero-inner">
+      <h1>CBM(용적중량) 계산기</h1>
+      <p>한국 무역 실무자를 위한 무료 CBM 계산기. 카톤별 치수를 입력하면 총 CBM, 볼륨 무게, 컨테이너 적재 가능량을 즉시 계산합니다.</p>
+      <div class="hero-tags">
+        <span class="tag">해상 화물</span>
+        <span class="tag">항공 화물</span>
+        <span class="tag">컨테이너 적재</span>
+        <span class="tag">볼륨 무게</span>
+        <span class="tag">다중 카톤</span>
+      </div>
+    </div>
+  </section>
+
+  <div class="main">
+    <!-- LEFT: INPUT -->
+    <section aria-label="카톤 정보 입력">
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">
+            <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 10V11"/>
+            </svg>
+            카톤 정보 입력
+          </div>
+          <div class="unit-toggle-group">
+            <span class="unit-toggle-label">단위</span>
+            <div class="toggle-btn-group" role="group" aria-label="치수 단위 선택">
+              <button class="toggle-btn active" id="btn-cm" onclick="setDimUnit('cm')" aria-pressed="true">cm</button>
+              <button class="toggle-btn" id="btn-inch" onclick="setDimUnit('inch')" aria-pressed="false">inch</button>
+            </div>
+            <div class="toggle-btn-group" role="group" aria-label="무게 단위 선택">
+              <button class="toggle-btn active" id="btn-kg" onclick="setWgtUnit('kg')" aria-pressed="true">kg</button>
+              <button class="toggle-btn" id="btn-lb" onclick="setWgtUnit('lb')" aria-pressed="false">lb</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="card-body">
+          <div class="carton-table-wrap">
+            <table class="carton-table" aria-label="카톤 목록">
+              <thead>
+                <tr>
+                  <th style="width:32px">#</th>
+                  <th style="width:80px">수량<br><span style="font-weight:400;text-transform:none">(CTN)</span></th>
+                  <th>
+                    <span id="th-w">가로 (cm)</span>
+                  </th>
+                  <th>
+                    <span id="th-h">세로 (cm)</span>
+                  </th>
+                  <th>
+                    <span id="th-d">높이 (cm)</span>
+                  </th>
+                  <th>
+                    <span id="th-wgt">무게 (kg)</span>
+                  </th>
+                  <th style="width:44px">삭제</th>
+                </tr>
+              </thead>
+              <tbody id="carton-tbody">
+              </tbody>
+            </table>
+          </div>
+
+          <button class="btn-add-row" onclick="addRow()" aria-label="카톤 행 추가">
+            <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/>
+            </svg>
+            행 추가
+          </button>
+        </div>
+
+        <div class="section-divider"></div>
+
+        <div class="card-body" style="padding-top:14px;padding-bottom:14px;">
+          <div class="notice-box">
+            <strong style="font-size:12px;">계산 기준 안내</strong><br>
+            해상 볼륨 무게: CBM × 1,000 kg/m³ &nbsp;|&nbsp; 항공 볼륨 무게: cm³ ÷ 6,000 (kg)<br>
+            청구 적용 무게 = max(실제 무게, 볼륨 무게). 실제 운임은 포워더 확인 필요.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- RIGHT: RESULT -->
+    <aside class="right-col" aria-label="계산 결과">
+      <div class="result-section">
+
+        <!-- RESULT NUMBERS -->
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">
+              <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+              </svg>
+              계산 결과
+            </div>
+          </div>
+          <div class="card-body">
+            <div id="result-content">
+              <div class="empty-result">
+                <svg width="40" height="40" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.2" aria-hidden="true">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 10V11"/>
+                </svg>
+                <p>카톤 정보를 입력하면<br>결과가 표시됩니다</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- CONTAINER RECOMMENDATION -->
+        <div class="card" id="container-card" style="display:none">
+          <div class="card-header">
+            <div class="card-title">
+              <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <rect x="2" y="7" width="20" height="13" rx="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path stroke-linecap="round" stroke-linejoin="round" d="M16 7V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2"/>
+              </svg>
+              컨테이너 적재 추천
+            </div>
+          </div>
+          <div class="card-body" id="container-body"></div>
+        </div>
+
+        <!-- COPY BUTTON -->
+        <button class="btn-copy" id="btn-copy" onclick="copyResult()" style="display:none" aria-label="결과 복사">
+          <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <rect x="9" y="9" width="13" height="13" rx="2"/>
+            <path stroke-linecap="round" d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/>
+          </svg>
+          이 결과 복사
+        </button>
+
+        <!-- AD PLACEHOLDER (Sidebar) -->
+        <div class="ad-placeholder" role="complementary" aria-label="광고 영역">
+          <strong>Advertisement</strong>
+          광고 영역 (Google AdSense)<br>
+          300 × 250 권장
+          <!-- Google AdSense 코드를 아래에 삽입하세요 -->
+          <!-- <ins class="adsbygoogle" ...></ins> -->
+        </div>
+
+      </div>
+    </aside>
+  </div>
+
+  <!-- AD (하단 배너) -->
+  <div class="ad-area-main" role="complementary" aria-label="하단 광고 영역">
+    <div class="ad-main-box">
+      <strong>Advertisement</strong>
+      광고 영역 (Google AdSense) — 728 × 90 리더보드
+      <!-- Google AdSense 코드를 아래에 삽입하세요 -->
+      <!-- <ins class="adsbygoogle" style="display:inline-block;width:728px;height:90px" ...></ins> -->
+    </div>
+  </div>
+
+  <!-- DISCLAIMER -->
+  <div class="disclaimer">
+    <strong>면책 고지:</strong> 본 계산기는 참고용으로 제공됩니다. 실제 운임 및 적재 가능 여부는 선사/포워더의 공식 견적을 통해 확인하시기 바랍니다. 컨테이너 실적재 가능량은 화물 형태, 적입 방식, 선사별 기준에 따라 상이할 수 있습니다.
+  </div>
+</main>
+
+<footer>
+  <div class="footer-inner">
+    <div>
+      <div class="footer-logo">CBM<span>Lab</span></div>
+      <div class="footer-desc">해상·항공 화물 실무자를 위한 무료 CBM 계산 도구. 외부 서버 없이 브라우저에서 직접 계산합니다.</div>
+    </div>
+    <nav class="footer-links" aria-label="푸터 링크">
+      <a href="#" class="footer-link">CBM 계산기</a>
+      <a href="#" class="footer-link">계산 방식 안내</a>
+      <a href="#" class="footer-link">개인정보 처리방침</a>
+      <a href="#" class="footer-link">문의</a>
+    </nav>
+  </div>
+  <div class="footer-copy">
+    &copy; 2025 CBM Lab. 본 도구는 교육/참고 목적으로 제공됩니다.
+  </div>
+</footer>
+
+<script>
+  // =====================
+  // STATE
+  // =====================
+  let dimUnit = 'cm';   // 'cm' | 'inch'
+  let wgtUnit = 'kg';   // 'kg' | 'lb'
+  let rowCounter = 0;
+
+  const CONTAINERS = [
+    { name: '20ft 컨테이너', maxCbm: 28,   maxKg: 21500 },
+    { name: '40ft 컨테이너', maxCbm: 56,   maxKg: 26500 },
+    { name: '40ft HC 컨테이너', maxCbm: 67, maxKg: 26500 },
+  ];
+
+  // =====================
+  // INIT
+  // =====================
+  (function init() {
+    for (let i = 0; i < 3; i++) addRow();
+  })();
+
+  // =====================
+  // ROW MANAGEMENT
+  // =====================
+  function addRow() {
+    rowCounter++;
+    const id = rowCounter;
+    const tbody = document.getElementById('carton-tbody');
+    const tr = document.createElement('tr');
+    tr.classList.add('carton-row');
+    tr.id = 'row-' + id;
+    tr.innerHTML = buildRowHTML(id);
+    tbody.appendChild(tr);
+    updateRowNumbers();
+    attachRowListeners(id);
+  }
+
+  function buildRowHTML(id) {
+    const dimLabel = dimUnit === 'cm' ? 'cm' : 'in';
+    const wgtLabel = wgtUnit === 'kg' ? 'kg' : 'lb';
+    return `
+      <td><span class="row-num" id="rnum-${id}">1</span></td>
+      <td>
+        <label for="qty-${id}" class="sr-only">수량 (카톤 ${id}번)</label>
+        <input class="inp inp-qty" type="number" id="qty-${id}" name="qty-${id}"
+          inputmode="numeric" min="1" step="1" value="1"
+          placeholder="1" aria-label="수량">
+      </td>
+      <td>
+        <label for="w-${id}" class="sr-only">가로 (${dimLabel})</label>
+        <input class="inp inp-dim" type="number" id="w-${id}" name="w-${id}"
+          inputmode="decimal" min="0" step="any"
+          placeholder="0" aria-label="가로">
+      </td>
+      <td>
+        <label for="h-${id}" class="sr-only">세로 (${dimLabel})</label>
+        <input class="inp inp-dim" type="number" id="h-${id}" name="h-${id}"
+          inputmode="decimal" min="0" step="any"
+          placeholder="0" aria-label="세로">
+      </td>
+      <td>
+        <label for="d-${id}" class="sr-only">높이 (${dimLabel})</label>
+        <input class="inp inp-dim" type="number" id="d-${id}" name="d-${id}"
+          inputmode="decimal" min="0" step="any"
+          placeholder="0" aria-label="높이">
+      </td>
+      <td>
+        <label for="wgt-${id}" class="sr-only">무게 (${wgtLabel})</label>
+        <input class="inp inp-wgt" type="number" id="wgt-${id}" name="wgt-${id}"
+          inputmode="decimal" min="0" step="any"
+          placeholder="0" aria-label="무게">
+      </td>
+      <td>
+        <button class="btn-del" onclick="deleteRow(${id})" aria-label="행 ${id} 삭제">
+          <svg width="12" height="12" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
+          </svg>
+        </button>
+      </td>
+    `;
+  }
+
+  function attachRowListeners(id) {
+    ['qty', 'w', 'h', 'd', 'wgt'].forEach(function(field) {
+      const el = document.getElementById(field + '-' + id);
+      if (el) {
+        el.addEventListener('input', calculate);
+        el.addEventListener('change', calculate);
+      }
+    });
+  }
+
+  function deleteRow(id) {
+    const rows = document.querySelectorAll('#carton-tbody .carton-row');
+    if (rows.length <= 1) return;
+    const el = document.getElementById('row-' + id);
+    if (el) {
+      el.style.opacity = '0';
+      el.style.transform = 'translateY(-6px)';
+      el.style.transition = 'opacity 0.15s, transform 0.15s';
+      setTimeout(function() {
+        el.remove();
+        updateRowNumbers();
+        calculate();
+      }, 150);
+    }
+  }
+
+  function updateRowNumbers() {
+    const rows = document.querySelectorAll('#carton-tbody .carton-row');
+    rows.forEach(function(row, i) {
+      const id = row.id.replace('row-', '');
+      const numEl = document.getElementById('rnum-' + id);
+      if (numEl) numEl.textContent = i + 1;
+      const delBtn = row.querySelector('.btn-del');
+      if (delBtn) delBtn.disabled = rows.length === 1;
+    });
+  }
+
+  // =====================
+  // UNIT TOGGLE
+  // =====================
+  function setDimUnit(unit) {
+    if (dimUnit === unit) return;
+    dimUnit = unit;
+    document.getElementById('btn-cm').classList.toggle('active', unit === 'cm');
+    document.getElementById('btn-cm').setAttribute('aria-pressed', unit === 'cm');
+    document.getElementById('btn-inch').classList.toggle('active', unit === 'inch');
+    document.getElementById('btn-inch').setAttribute('aria-pressed', unit === 'inch');
+
+    // Convert existing values
+    const rows = document.querySelectorAll('#carton-tbody .carton-row');
+    rows.forEach(function(row) {
+      const id = row.id.replace('row-', '');
+      ['w', 'h', 'd'].forEach(function(f) {
+        const el = document.getElementById(f + '-' + id);
+        if (!el || el.value === '' || el.value === '0') return;
+        const v = parseFloat(el.value);
+        if (isNaN(v)) return;
+        el.value = unit === 'inch'
+          ? roundTo(v / 2.54, 4)
+          : roundTo(v * 2.54, 4);
+      });
+    });
+
+    // Update headers
+    const label = unit === 'cm' ? 'cm' : 'inch';
+    document.getElementById('th-w').textContent = '가로 (' + label + ')';
+    document.getElementById('th-h').textContent = '세로 (' + label + ')';
+    document.getElementById('th-d').textContent = '높이 (' + label + ')';
+
+    calculate();
+  }
+
+  function setWgtUnit(unit) {
+    if (wgtUnit === unit) return;
+    wgtUnit = unit;
+    document.getElementById('btn-kg').classList.toggle('active', unit === 'kg');
+    document.getElementById('btn-kg').setAttribute('aria-pressed', unit === 'kg');
+    document.getElementById('btn-lb').classList.toggle('active', unit === 'lb');
+    document.getElementById('btn-lb').setAttribute('aria-pressed', unit === 'lb');
+
+    const rows = document.querySelectorAll('#carton-tbody .carton-row');
+    rows.forEach(function(row) {
+      const id = row.id.replace('row-', '');
+      const el = document.getElementById('wgt-' + id);
+      if (!el || el.value === '' || el.value === '0') return;
+      const v = parseFloat(el.value);
+      if (isNaN(v)) return;
+      el.value = unit === 'lb'
+        ? roundTo(v * 2.20462, 4)
+        : roundTo(v / 2.20462, 4);
+    });
+
+    const wgtLabel = unit === 'kg' ? 'kg' : 'lb';
+    document.getElementById('th-wgt').textContent = '무게 (' + wgtLabel + ')';
+
+    calculate();
+  }
+
+  // =====================
+  // CALCULATION
+  // =====================
+  function calculate() {
+    const rows = document.querySelectorAll('#carton-tbody .carton-row');
+    let totalCtns = 0;
+    let totalCbm = 0;
+    let totalKg = 0;
+    let hasData = false;
+
+    rows.forEach(function(row) {
+      const id = row.id.replace('row-', '');
+      const qty = parseFloat(document.getElementById('qty-' + id).value) || 0;
+      const w   = parseFloat(document.getElementById('w-' + id).value) || 0;
+      const h   = parseFloat(document.getElementById('h-' + id).value) || 0;
+      const d   = parseFloat(document.getElementById('d-' + id).value) || 0;
+      const wgt = parseFloat(document.getElementById('wgt-' + id).value) || 0;
+
+      if (qty > 0 && w > 0 && h > 0 && d > 0) {
+        hasData = true;
+        // Convert to meters
+        let wM, hM, dM;
+        if (dimUnit === 'cm') {
+          wM = w / 100; hM = h / 100; dM = d / 100;
+        } else {
+          wM = (w * 2.54) / 100; hM = (h * 2.54) / 100; dM = (d * 2.54) / 100;
+        }
+        totalCtns += qty;
+        totalCbm  += qty * wM * hM * dM;
+      }
+
+      if (wgt > 0) {
+        let kg = wgtUnit === 'kg' ? wgt : wgt / 2.20462;
+        totalKg += qty * kg;
+      }
+    });
+
+    if (!hasData) {
+      showEmpty();
+      return;
+    }
+
+    const volWeightKg = totalCbm * 1000; // 해상 기준
+    const chargeableKg = Math.max(totalKg, volWeightKg);
+
+    renderResult({
+      totalCtns: totalCtns,
+      totalCbm: totalCbm,
+      totalKg: totalKg,
+      volWeightKg: volWeightKg,
+      chargeableKg: chargeableKg,
+    });
+  }
+
+  // =====================
+  // RENDER
+  // =====================
+  function showEmpty() {
+    document.getElementById('result-content').innerHTML = `
+      <div class="empty-result">
+        <svg width="40" height="40" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.2" aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 10V11"/>
+        </svg>
+        <p>카톤 정보를 입력하면<br>결과가 표시됩니다</p>
+      </div>
+    `;
+    document.getElementById('container-card').style.display = 'none';
+    document.getElementById('btn-copy').style.display = 'none';
+  }
+
+  function renderResult(d) {
+    const isHeavy = d.totalKg >= d.volWeightKg;
+    const wgtLabel = wgtUnit === 'kg' ? 'kg' : 'lb';
+    const displayTotalKg = wgtUnit === 'kg' ? d.totalKg : d.totalKg * 2.20462;
+    const displayVolKg   = wgtUnit === 'kg' ? d.volWeightKg : d.volWeightKg * 2.20462;
+    const displayChgKg   = wgtUnit === 'kg' ? d.chargeableKg : d.chargeableKg * 2.20462;
+
+    document.getElementById('result-content').innerHTML = `
+      <div class="result-grid">
+        <div class="result-item" id="ri-ctns">
+          <div class="result-label">총 카톤 수</div>
+          <div class="result-value">${fmt(d.totalCtns, 0)}</div>
+          <div class="result-unit">CTN</div>
+        </div>
+        <div class="result-item accent" id="ri-cbm">
+          <div class="result-label">총 CBM</div>
+          <div class="result-value accent">${fmt(d.totalCbm, 3)}</div>
+          <div class="result-unit">m&sup3;</div>
+        </div>
+        <div class="result-item" id="ri-actkg">
+          <div class="result-label">
+            총 실제 무게
+            ${isHeavy ? '<span style="color:var(--warning);font-size:10px;font-weight:700;margin-left:4px;">적용</span>' : ''}
+          </div>
+          <div class="result-value">${fmt(displayTotalKg, 1)}</div>
+          <div class="result-unit">${wgtLabel}</div>
+        </div>
+        <div class="result-item" id="ri-volkg">
+          <div class="result-label">
+            볼륨 무게
+            <span class="tooltip-wrap">
+              <span class="tooltip-icon">?</span>
+              <span class="tooltip-text">해상 기준: CBM x 1,000 kg/m3</span>
+            </span>
+            ${!isHeavy ? '<span style="color:var(--warning);font-size:10px;font-weight:700;margin-left:4px;">적용</span>' : ''}
+          </div>
+          <div class="result-value">${fmt(displayVolKg, 1)}</div>
+          <div class="result-unit">${wgtLabel} (해상 기준)</div>
+        </div>
+        <div class="result-item full" id="ri-chg" style="background:var(--slate-800);border-color:var(--slate-700)">
+          <div class="result-label" style="color:var(--slate-400)">청구 적용 무게</div>
+          <div class="result-value" style="color:#fff">${fmt(displayChgKg, 1)}</div>
+          <div class="result-unit" style="color:var(--slate-400)">${wgtLabel} &mdash; ${isHeavy ? '실제 무게 적용' : '볼륨 무게 적용'}</div>
+        </div>
+      </div>
+    `;
+
+    renderContainers(d.totalCbm, d.totalKg);
+    document.getElementById('container-card').style.display = 'block';
+    document.getElementById('btn-copy').style.display = 'flex';
+
+    // Store for copy
+    window._lastResult = d;
+  }
+
+  function renderContainers(cbm, kg) {
+    const html = CONTAINERS.map(function(c) {
+      const cbmPct = Math.min((cbm / c.maxCbm) * 100, 200);
+      const kgPct  = Math.min((kg / c.maxKg) * 100, 200);
+      const limitPct = Math.max(cbmPct, kgPct);
+      const displayPct = Math.min(limitPct, 100);
+      const rawPct = limitPct;
+
+      let cls = 'ok';
+      if (rawPct > 100) cls = 'over';
+      else if (rawPct > 80) cls = 'warn';
+
+      const cbmPctDisplay = roundTo((cbm / c.maxCbm) * 100, 1);
+      const kgPctDisplay  = roundTo((kg / c.maxKg) * 100, 1);
+
+      const statusText = rawPct > 100 ? '적재 초과' : rawPct > 80 ? '주의' : '적재 가능';
+
+      return `
+        <div class="cont-card">
+          <div class="cont-header">
+            <div>
+              <div class="cont-name">${c.name}</div>
+              <div class="cont-specs">최대 ${c.maxCbm} m&sup3; / ${fmtN(c.maxKg)} kg</div>
+            </div>
+            <div>
+              <div class="cont-pct-badge ${cls}">${rawPct > 100 ? '초과' : roundTo(rawPct, 1) + '%'}</div>
+            </div>
+          </div>
+          <div class="progress-bar-wrap" aria-label="적재율 ${roundTo(displayPct, 1)}%">
+            <div class="progress-bar-fill ${cls}" style="width:${displayPct}%"></div>
+          </div>
+          <div class="cont-sub">
+            <span>CBM: ${cbmPctDisplay}%</span>
+            <span>무게: ${kgPctDisplay}%</span>
+            <span style="font-weight:600;color:${cls === 'over' ? 'var(--danger)' : cls === 'warn' ? 'var(--warning)' : 'var(--success)'}">${statusText}</span>
+          </div>
+        </div>
+      `;
+    }).join('');
+
+    document.getElementById('container-body').innerHTML = html;
+  }
+
+  // =====================
+  // COPY
+  // =====================
+  function copyResult() {
+    const d = window._lastResult;
+    if (!d) return;
+
+    const wgtLabel = wgtUnit === 'kg' ? 'kg' : 'lb';
+    const displayTotalKg = wgtUnit === 'kg' ? d.totalKg : d.totalKg * 2.20462;
+    const displayVolKg   = wgtUnit === 'kg' ? d.volWeightKg : d.volWeightKg * 2.20462;
+    const displayChgKg   = wgtUnit === 'kg' ? d.chargeableKg : d.chargeableKg * 2.20462;
+
+    const text = [
+      '[CBM Lab 계산 결과]',
+      '==================',
+      '총 카톤 수: ' + fmt(d.totalCtns, 0) + ' CTN',
+      '총 CBM: ' + fmt(d.totalCbm, 3) + ' m3',
+      '총 실제 무게: ' + fmt(displayTotalKg, 1) + ' ' + wgtLabel,
+      '볼륨 무게 (해상): ' + fmt(displayVolKg, 1) + ' ' + wgtLabel,
+      '청구 적용 무게: ' + fmt(displayChgKg, 1) + ' ' + wgtLabel,
+      '',
+      '[ 컨테이너 적재율 ]',
+      CONTAINERS.map(function(c) {
+        const pct = roundTo((d.totalCbm / c.maxCbm) * 100, 1);
+        return c.name + ': CBM ' + pct + '%';
+      }).join('\n'),
+      '',
+      '* CBM Lab (참고용, 실제 운임은 포워더 확인 필요)',
+    ].join('\n');
+
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(function() {
+        showCopied();
+      }).catch(function() {
+        fallbackCopy(text);
+      });
+    } else {
+      fallbackCopy(text);
+    }
+  }
+
+  function fallbackCopy(text) {
+    const ta = document.createElement('textarea');
+    ta.value = text;
+    ta.style.position = 'fixed';
+    ta.style.opacity = '0';
+    document.body.appendChild(ta);
+    ta.select();
+    try { document.execCommand('copy'); showCopied(); } catch(e) {}
+    document.body.removeChild(ta);
+  }
+
+  function showCopied() {
+    const btn = document.getElementById('btn-copy');
+    btn.classList.add('copied');
+    btn.innerHTML = `
+      <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/>
+      </svg>
+      복사 완료!
+    `;
+    setTimeout(function() {
+      btn.classList.remove('copied');
+      btn.innerHTML = `
+        <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <rect x="9" y="9" width="13" height="13" rx="2"/>
+          <path stroke-linecap="round" d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/>
+        </svg>
+        이 결과 복사
+      `;
+    }, 2000);
+  }
+
+  // =====================
+  // UTILS
+  // =====================
+  function roundTo(v, digits) {
+    const factor = Math.pow(10, digits);
+    return Math.round(v * factor) / factor;
+  }
+
+  function fmt(v, digits) {
+    if (typeof v !== 'number' || isNaN(v)) return '0';
+    return v.toLocaleString('ko-KR', {
+      minimumFractionDigits: digits,
+      maximumFractionDigits: digits
+    });
+  }
+
+  function fmtN(v) {
+    return v.toLocaleString('ko-KR');
+  }
+
+  // Screen reader only
+  const style = document.createElement('style');
+  style.textContent = '.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border-width:0}';
+  document.head.appendChild(style);
+</script>
+
+</body>
+</html>
