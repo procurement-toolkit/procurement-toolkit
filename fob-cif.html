@@ -469,6 +469,13 @@
   @keyframes flashUpdate { 0% { background: #BFDBFE; } 100% { background: var(--accent-light); } }
   .result-total.flash { animation: flashUpdate 0.5s ease; }
 </style>
+<script src="https://cdn.amplitude.com/script/d4aa9301e01f4600b5eeb018e160aa7c.js"></script>
+<script>
+  window.amplitude.init("d4aa9301e01f4600b5eeb018e160aa7c", {
+    fetchRemoteConfig: true,
+    autocapture: true,
+  });
+</script>
 </head>
 <body>
 

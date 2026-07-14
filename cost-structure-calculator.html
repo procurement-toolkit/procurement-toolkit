@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="직접원가, 제조원가, 매입원가, 수입원가, 총원가 등 헷갈리는 원가 용어를 국제표준 영어 용어와 함께 쉽게 이해하고, 단계별로 직접 원가를 계산해보세요. Markup과 Margin의 차이까지 한 번에 확인합니다.">
+<meta name="keywords" content="원가계산, 원가구조, 직접원가 간접원가, 제조원가 매출원가, markup margin 차이, 수입원가 매입원가">
+<title>원가구조 이해 가이드 &amp; 계산기 — CBM Lab</title>
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  :root{--accent:#2563EB;--accent-light:#DBEAFE;--accent-dark:#1D4ED8;--slate-50:#F8FAFC;--slate-100:#F1F5F9;--slate-200:#E2E8F0;--slate-300:#CBD5E1;--slate-400:#94A3B8;--slate-500:#64748B;--slate-600:#475569;--slate-700:#334155;--slate-800:#1E293B;--slate-900:#0F172A;--success:#0F766E;--success-light:#CCFBF1;--warning:#B45309;--warning-light:#FEF3C7;--radius:8px;--radius-lg:12px;--shadow-sm:0 1px 2px rgba(0,0,0,.05);font-family:'Pretendard','Apple SD Gothic Neo',system-ui,-apple-system,sans-serif}
+  body{background:var(--slate-50);color:var(--slate-800);font-size:14px;line-height:1.6}
+  header{background:#fff;border-bottom:1px solid var(--slate-200)}
+  .header-inner{max-width:1200px;margin:0 auto;padding:16px 24px;display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}
+  .logo-mark{font-size:20px;font-weight:800;color:var(--slate-900);text-decoration:none}
+  .logo-mark span{color:var(--accent)}
+  .nav-link{font-size:13px;font-weight:600;color:var(--slate-500);text-decoration:none;padding:7px 12px;border-radius:6px}
+  .nav-link:hover{background:var(--slate-100)}
+  .hero{background:#fff;border-bottom:1px solid var(--slate-200);padding:28px 24px 24px}
+  .hero-inner{max-width:1200px;margin:0 auto}
+  .hero h1{font-size:22px;font-weight:700;color:var(--slate-900);margin-bottom:6px}
+  .hero p{font-size:14px;color:var(--slate-500);max-width:680px}
+  .hero-tags{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}
+  .tag{background:var(--slate-100);color:var(--slate-600);font-size:11px;font-weight:500;padding:3px 10px;border-radius:4px;border:1px solid var(--slate-200)}
+  .main{max-width:1200px;margin:0 auto;padding:28px 24px 60px}
+  .card{background:#fff;border:1px solid var(--slate-200);border-radius:var(--radius-lg);box-shadow:var(--shadow-sm);margin-bottom:20px}
+  .card-header{padding:16px 20px;border-bottom:1px solid var(--slate-100);display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+  .card-title{font-size:14px;font-weight:600;color:var(--slate-800)}
+  .card-body{padding:20px}
+
+  /* TYPE TOGGLE */
+  .type-toggle{display:flex;background:var(--slate-100);border-radius:8px;padding:3px;gap:2px;max-width:360px}
+  .type-btn{flex:1;padding:9px 6px;border:none;background:transparent;border-radius:6px;font-size:13px;font-weight:700;color:var(--slate-500);cursor:pointer;font-family:inherit}
+  .type-btn.active{background:#fff;color:var(--accent);box-shadow:var(--shadow-sm)}
+
+  /* COMPARE TOGGLE */
+  .compare-btn{font-size:12px;font-weight:700;color:var(--accent);background:var(--accent-light);border:1px solid #BFDBFE;padding:7px 14px;border-radius:6px;cursor:pointer}
+  .compare-btn:hover{background:#BFDBFE}
+
+  .scenario-grid{display:grid;grid-template-columns:1fr;gap:20px}
+  .scenario-grid.dual{grid-template-columns:1fr 1fr}
+
+  .step-row{display:grid;grid-template-columns:1fr 130px;gap:14px;align-items:start;padding:14px 0;border-bottom:1px dashed var(--slate-200)}
+  .step-row:last-child{border-bottom:none}
+  .step-info .step-kr{font-size:13.5px;font-weight:700;color:var(--slate-800);display:flex;align-items:center;gap:6px}
+  .step-info .step-en{font-size:11px;color:var(--slate-400);font-style:italic;margin-bottom:4px}
+  .step-info .step-desc{font-size:11.5px;color:var(--slate-500);line-height:1.5;max-width:420px}
+  .info-dot{width:15px;height:15px;border-radius:50%;background:var(--slate-200);color:var(--slate-500);font-size:10px;font-weight:700;display:inline-flex;align-items:center;justify-content:center;cursor:help;flex-shrink:0}
+  .inp{width:100%;border:1px solid var(--slate-200);border-radius:6px;padding:8px 10px;font-size:13px;text-align:right;font-variant-numeric:tabular-nums;font-family:inherit}
+  .inp:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px rgba(37,99,235,.1)}
+
+  .subtotal-row{display:flex;justify-content:space-between;align-items:center;background:var(--slate-50);border:1px solid var(--slate-100);border-radius:6px;padding:10px 14px;margin:4px 0 8px;}
+  .subtotal-row .st-label{font-size:12px;font-weight:700;color:var(--slate-600)}
+  .subtotal-row .st-value{font-size:15px;font-weight:800;color:var(--slate-800);font-variant-numeric:tabular-nums}
+  .subtotal-row.final{background:var(--accent-light);border-color:#BFDBFE}
+  .subtotal-row.final .st-label,.subtotal-row.final .st-value{color:var(--accent-dark)}
+
+  .margin-box{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:16px}
+  .margin-card{border:1px solid var(--slate-200);border-radius:var(--radius);padding:14px 16px}
+  .margin-card h4{font-size:12.5px;font-weight:700;color:var(--slate-800);margin-bottom:2px}
+  .margin-card .en{font-size:10.5px;color:var(--slate-400);font-style:italic;margin-bottom:8px}
+  .margin-card input{width:80px;text-align:right;border:1px solid var(--slate-200);border-radius:6px;padding:5px 8px;font-size:13px;font-family:inherit}
+  .margin-result{font-size:20px;font-weight:800;color:var(--accent-dark);margin-top:8px}
+  .margin-result .sub{font-size:11px;color:var(--slate-500);font-weight:400;display:block;margin-top:2px}
+
+  .diff-notice{background:var(--warning-light);border:1px solid #FDE68A;border-radius:var(--radius);padding:10px 14px;font-size:11.5px;color:var(--warning);margin-top:12px;line-height:1.6}
+
+  .notice-box{background:var(--accent-light);border:1px solid #BFDBFE;border-radius:var(--radius);padding:10px 14px;font-size:12px;color:#1E40AF;line-height:1.5;margin-top:14px}
+  .save-indicator{font-size:11px;color:var(--success);display:flex;align-items:center;gap:4px;opacity:0;transition:opacity .3s}
+  .save-indicator.show{opacity:1}
+
+  .ad-main-box{border:1px dashed var(--slate-300);border-radius:var(--radius);background:#fff;height:90px;display:flex;flex-direction:column;align-items:center;justify-content:center;color:var(--slate-400);font-size:12px;gap:4px;margin-top:20px}
+  .ad-main-box strong{font-size:11px;font-weight:700;text-transform:uppercase;color:var(--slate-300)}
+
+  footer{background:var(--slate-900);color:var(--slate-400);padding:24px;font-size:12px}
+  .footer-inner{max-width:1200px;margin:0 auto;display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
+  .footer-logo{font-size:15px;font-weight:800;color:#fff}
+  .footer-logo span{color:var(--accent)}
+  .footer-link{color:var(--slate-500);text-decoration:none;font-size:11px;margin-right:14px}
+
+  @media (max-width:900px){.scenario-grid.dual{grid-template-columns:1fr}.margin-box{grid-template-columns:1fr}}
+  @media (max-width:640px){.step-row{grid-template-columns:1fr}}
+</style>
+<script src="https://cdn.amplitude.com/script/d4aa9301e01f4600b5eeb018e160aa7c.js"></script>
+<script>
+  window.amplitude.init("d4aa9301e01f4600b5eeb018e160aa7c", {
+    fetchRemoteConfig: true,
+    autocapture: true,
+  });
+</script>
+</head>
+<body>
+<header><div class="header-inner">
+  <a href="index.html" class="logo-mark">CBM<span>Lab</span></a>
+  <a href="index.html" class="nav-link">← 전체 도구 보기</a>
+</div></header>
+
+<section class="hero"><div class="hero-inner">
+  <h1>원가구조 이해 가이드 &amp; 계산기</h1>
+  <p>직접원가, 제조원가, 매입원가, 수입원가, 총원가... 비슷해 보이지만 다 다른 개념입니다. 국제표준 영어 용어와 함께 하나씩 쌓아가며 이해하고, 직접 숫자를 넣어 내 사업의 원가를 계산해보세요.</p>
+  <div class="hero-tags"><span class="tag">Direct Cost</span><span class="tag">COGM/COGS</span><span class="tag">Markup vs Margin</span></div>
+</div></section>
+
+<div class="main">
+  <div class="card">
+    <div class="card-header">
+      <div class="type-toggle" role="group">
+        <button class="type-btn active" data-type="mfg" onclick="setType('mfg')">제조업 (생산원가)</button>
+        <button class="type-btn" data-type="trade" onclick="setType('trade')">무역·수입업 (매입원가)</button>
+      </div>
+      <div style="display:flex;align-items:center;gap:10px;">
+        <span class="save-indicator" id="saveIndicator">✓ 자동 저장됨</span>
+        <button class="compare-btn" onclick="toggleCompare()" id="compareBtn">+ 다른 시나리오와 비교하기</button>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="scenario-grid" id="scenarioGrid"></div>
+    </div>
+  </div>
+
+  <div class="ad-main-box"><strong>Advertisement</strong>광고 영역 (Google AdSense) — 728 × 90</div>
+</div>
+
+<footer><div class="footer-inner">
+  <div class="footer-logo">CBM<span>Lab</span></div>
+  <nav><a href="index.html" class="footer-link">전체 도구</a><a href="privacy.html" class="footer-link">개인정보 처리방침</a></nav>
+</div></footer>
+
+<script>
+// ===== 용어 정의 =====
+const MFG_STEPS = [
+  {id:'dm', kr:'직접재료비', en:'Direct Material Cost (DM)', desc:'제품 생산에 직접 투입되는 원재료 비용', def:100},
+  {id:'dl', kr:'직접노무비', en:'Direct Labor Cost (DL)', desc:'제품 생산에 직접 참여한 인건비', def:40},
+  {id:'__subtotal_prime', label:'직접원가 (기초원가)', enLabel:'Prime Cost = DM + DL'},
+  {id:'moh', kr:'제조간접비', en:'Manufacturing Overhead (MOH)', desc:'공장 임대료, 전기료, 감가상각비 등 생산에 간접적으로 들어가는 비용', def:30},
+  {id:'__subtotal_cogm', label:'제조원가 (생산원가)', enLabel:'Manufacturing Cost / COGM = Prime Cost + MOH'},
+  {id:'sga', kr:'판매비와관리비', en:'SG&A (Selling, General & Administrative Expenses)', desc:'영업, 마케팅, 관리 부서 등 제조 이후 단계에서 발생하는 비용', def:25},
+  {id:'__subtotal_total', label:'총원가', enLabel:'Total Cost = Manufacturing Cost + SG&A'}
+];
+
+const TRADE_STEPS = [
+  {id:'purchase', kr:'매입가 (구매단가)', en:'Purchase Price', desc:'공급업체에 실제로 지불하는 상품 단가 (FOB/CIF 등 인코텀즈 기준)', def:100},
+  {id:'incidental', kr:'부대비용', en:'Incidental Purchase Costs', desc:'관세, 국제운임, 보험료, 통관수수료 등 상품을 들여오는 데 추가로 드는 비용', def:35},
+  {id:'__subtotal_acq', label:'매입원가 (수입원가/취득원가)', enLabel:'Acquisition Cost / Landed Cost = Purchase + Incidental Costs'},
+  {id:'sga', kr:'판매비와관리비', en:'SG&A (Selling, General & Administrative Expenses)', desc:'창고 보관비, 영업/마케팅비, 관리비 등 판매 전까지 드는 비용', def:20},
+  {id:'__subtotal_total', label:'총원가', enLabel:'Total Cost = Acquisition Cost + SG&A'}
+];
+
+let currentType = 'mfg';
+let compareMode = false;
+
+function fmt(n){ return (n||0).toLocaleString('ko-KR', {maximumFractionDigits:1}); }
+
+function getSteps(type){ return type==='mfg' ? MFG_STEPS : TRADE_STEPS; }
+
+function buildScenarioHTML(scenarioId, type){
+  const steps = getSteps(type);
+  let html = `<div class="scenario-col" data-scenario="${scenarioId}">`;
+  steps.forEach(s=>{
+    if(s.id.startsWith('__subtotal')){
+      html += `<div class="subtotal-row ${s.id==='__subtotal_total'||s.id==='__subtotal_cogm2'?'':''}" data-sub="${s.id}-${scenarioId}">
+        <span class="st-label">${s.label}<br><span style="font-size:10px;font-weight:400;color:var(--slate-400);font-style:italic;">${s.enLabel}</span></span>
+        <span class="st-value" id="val-${s.id}-${scenarioId}">0</span>
+      </div>`;
+    } else {
+      html += `<div class="step-row">
+        <div class="step-info">
+          <div class="step-kr">${s.kr} <span class="info-dot" title="${s.desc}">ⓘ</span></div>
+          <div class="step-en">${s.en}</div>
+        </div>
+        <input type="number" class="inp" id="in-${s.id}-${scenarioId}" value="${s.def}" min="0" oninput="calc('${scenarioId}')">
+      </div>`;
+    }
+  });
+
+  html += `
+    <div class="margin-box">
+      <div class="margin-card">
+        <h4>Markup 방식 (원가 기준)</h4>
+        <div class="en">이익 ÷ 원가 × 100</div>
+        <input type="number" id="markup-${scenarioId}" value="30" min="0" oninput="calc('${scenarioId}')"> %
+        <div class="margin-result" id="markupResult-${scenarioId}">-</div>
+      </div>
+      <div class="margin-card">
+        <h4>Margin 방식 (판매가 기준)</h4>
+        <div class="en">이익 ÷ 판매가 × 100</div>
+        <input type="number" id="margin-${scenarioId}" value="30" min="0" oninput="calc('${scenarioId}')"> %
+        <div class="margin-result" id="marginResult-${scenarioId}">-</div>
+      </div>
+    </div>
+    <div class="diff-notice">⚠️ <strong>많이 헷갈리는 부분:</strong> 같은 "30%"라도 Markup(원가 대비)과 Margin(판매가 대비)은 계산 결과가 다릅니다. 원가 100원에 Markup 30%를 적용하면 판매가는 130원(이익 30원)이지만, Margin 30%를 적용하면 판매가는 약 143원(이익 43원)이 됩니다. 위 두 카드에서 직접 숫자를 바꿔보며 차이를 확인해보세요.</div>
+  `;
+  html += `</div>`;
+  return html;
+}
+
+function render(){
+  const grid = document.getElementById('scenarioGrid');
+  grid.className = 'scenario-grid' + (compareMode ? ' dual' : '');
+  if(compareMode){
+    grid.innerHTML = buildScenarioHTML('a', currentType) + buildScenarioHTML('b', currentType);
+    calc('a'); calc('b');
+  } else {
+    grid.innerHTML = buildScenarioHTML('a', currentType);
+    calc('a');
+  }
+  restoreState();
+}
+
+function setType(type){
+  currentType = type;
+  document.querySelectorAll('.type-btn').forEach(b=>b.classList.toggle('active', b.dataset.type===type));
+  render();
+  saveState();
+}
+
+function toggleCompare(){
+  compareMode = !compareMode;
+  document.getElementById('compareBtn').textContent = compareMode ? '✕ 비교 닫기' : '+ 다른 시나리오와 비교하기';
+  render();
+}
+
+function calc(scenarioId){
+  const steps = getSteps(currentType);
+  let running = 0;
+  steps.forEach(s=>{
+    if(s.id.startsWith('__subtotal')){
+      const el = document.getElementById('val-'+s.id+'-'+scenarioId);
+      if(el) el.textContent = fmt(running);
+    } else {
+      const inp = document.getElementById('in-'+s.id+'-'+scenarioId);
+      const v = inp ? (parseFloat(inp.value)||0) : 0;
+      running += v;
+    }
+  });
+  const totalCost = running;
+
+  const markupPct = parseFloat(document.getElementById('markup-'+scenarioId).value)||0;
+  const marginPct = parseFloat(document.getElementById('margin-'+scenarioId).value)||0;
+
+  const markupPrice = totalCost * (1 + markupPct/100);
+  const markupProfit = markupPrice - totalCost;
+  document.getElementById('markupResult-'+scenarioId).innerHTML = `판매가 ${fmt(markupPrice)}<span class="sub">이익 ${fmt(markupProfit)} (총원가 ${fmt(totalCost)} 기준)</span>`;
+
+  const marginPrice = marginPct < 100 ? totalCost / (1 - marginPct/100) : totalCost;
+  const marginProfit = marginPrice - totalCost;
+  document.getElementById('marginResult-'+scenarioId).innerHTML = `판매가 ${fmt(marginPrice)}<span class="sub">이익 ${fmt(marginProfit)} (판매가 대비 ${marginPct}%)</span>`;
+
+  saveState();
+}
+
+// ===== 자동 저장 (localStorage) =====
+let saveTimeout;
+function saveState(){
+  clearTimeout(saveTimeout);
+  saveTimeout = setTimeout(()=>{
+    try{
+      const state = { type: currentType, compare: compareMode, values: {} };
+      document.querySelectorAll('input').forEach(inp=>{ state.values[inp.id] = inp.value; });
+      localStorage.setItem('cbmlab_cost_calc', JSON.stringify(state));
+      const ind = document.getElementById('saveIndicator');
+      ind.classList.add('show');
+      setTimeout(()=>ind.classList.remove('show'), 1500);
+    }catch(e){}
+  }, 400);
+}
+function restoreState(){
+  try{
+    const raw = localStorage.getItem('cbmlab_cost_calc');
+    if(!raw) return;
+    const state = JSON.parse(raw);
+    if(state.values){
+      Object.keys(state.values).forEach(id=>{
+        const el = document.getElementById(id);
+        if(el) el.value = state.values[id];
+      });
+    }
+    ['a','b'].forEach(id=>{ if(document.getElementById('in-dm-'+id) || document.getElementById('in-purchase-'+id)) calc(id); });
+  }catch(e){}
+}
+
+// 최초 로드시 저장된 타입/비교모드 복원
+(function init(){
+  try{
+    const raw = localStorage.getItem('cbmlab_cost_calc');
+    if(raw){
+      const state = JSON.parse(raw);
+      if(state.type) currentType = state.type;
+      if(state.compare) compareMode = state.compare;
+    }
+  }catch(e){}
+  document.querySelectorAll('.type-btn').forEach(b=>b.classList.toggle('active', b.dataset.type===currentType));
+  document.getElementById('compareBtn').textContent = compareMode ? '✕ 비교 닫기' : '+ 다른 시나리오와 비교하기';
+  render();
+})();
+</script>
+</body>
+</html>
