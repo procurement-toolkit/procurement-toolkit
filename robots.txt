@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://procurement-toolkit.netlify.app/sitemap.xml
+Sitemap: https://procurement-toolkit-eight.vercel.app/sitemap.xml
