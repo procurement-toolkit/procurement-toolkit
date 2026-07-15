@@ -3,9 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="박스 규격과 컨테이너 종류를 입력하면 컨테이너 안에 박스가 어떻게 배치되는지 2D로 시각화하고, 적재 가능 수량과 공간 활용률을 계산합니다.">
+<meta name="description" content="박스 규격과 컨테이너 종류를 입력하면 컨테이너 안에 박스가 어떻게 배치되는지 2D 평면도와 드래그로 회전 가능한 3D 뷰로 시각화하고, 적재 가능 수량과 공간 활용률을 계산합니다.">
 <meta name="keywords" content="컨테이너 적재 계산기, 컨테이너 적재 시뮬레이션, 20ft 40ft 컨테이너 적재량">
-<title>컨테이너 적재 시각화 (2D) — CBM Lab</title>
+<title>컨테이너 적재 시각화 (2D/3D) — CBM Lab</title>
 <style>
   *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
   :root{--accent:#2563EB;--accent-light:#DBEAFE;--accent-dark:#1D4ED8;--slate-50:#F8FAFC;--slate-100:#F1F5F9;--slate-200:#E2E8F0;--slate-400:#94A3B8;--slate-500:#64748B;--slate-600:#475569;--slate-700:#334155;--slate-800:#1E293B;--slate-900:#0F172A;--success:#0F766E;--success-light:#CCFBF1;--radius:8px;--radius-lg:12px;--shadow-sm:0 1px 2px rgba(0,0,0,.05);font-family:'Pretendard','Apple SD Gothic Neo',system-ui,-apple-system,sans-serif}
@@ -31,6 +31,21 @@
   .inp,select.inp{width:100%;border:1px solid var(--slate-200);border-radius:6px;padding:8px 10px;font-size:13px;font-family:inherit}
   .inp:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px rgba(37,99,235,.1)}
   .viz-wrap{display:flex;flex-direction:column;align-items:center;gap:8px}
+  .view-toggle{display:flex;background:var(--slate-100);border-radius:8px;padding:3px;gap:2px;margin-bottom:4px}
+  .view-btn{padding:7px 16px;border:none;background:transparent;border-radius:6px;font-size:12.5px;font-weight:700;color:var(--slate-500);cursor:pointer;font-family:inherit}
+  .view-btn.active{background:#fff;color:var(--accent);box-shadow:var(--shadow-sm)}
+  .scene-wrap{width:100%;display:none}
+  .scene-wrap.active{display:block}
+  .scene{width:100%;height:320px;perspective:900px;display:flex;align-items:center;justify-content:center;cursor:grab;touch-action:none;background:linear-gradient(180deg,#F1F5F9,#F8FAFC);border-radius:8px;overflow:hidden}
+  .scene:active{cursor:grabbing}
+  .rig{position:relative;transform-style:preserve-3d}
+  .cube-group{position:absolute;transform-style:preserve-3d}
+  .face{position:absolute;border:1.5px solid rgba(30,41,59,.55);box-sizing:border-box}
+  .face.container-face{background:rgba(255,255,255,.05);border-color:rgba(30,41,59,.45)}
+  .face.cargo-face{background:rgba(37,99,235,.35);border-color:rgba(29,78,216,.7)}
+  .scene-controls{display:flex;align-items:center;justify-content:center;gap:14px;margin-top:10px;font-size:11.5px;color:var(--slate-500)}
+  .scene-controls input[type=range]{width:140px}
+  .scene-hint{font-size:11px;color:var(--slate-400);text-align:center;margin-top:4px}
   .viz-label{font-size:12px;font-weight:700;color:var(--slate-600);align-self:flex-start}
   .result-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:16px}
   .result-item{background:var(--slate-50);border:1px solid var(--slate-100);border-radius:var(--radius);padding:12px 14px;text-align:center}
@@ -68,8 +83,8 @@
 </div></header>
 
 <section class="hero"><div class="hero-inner">
-  <h1>컨테이너 적재 시각화 (2D)</h1>
-  <p>박스 규격을 입력하면 컨테이너 바닥면에 어떻게 배치되는지 직접 그려서 보여드립니다. 숫자만이 아니라 눈으로 확인하세요.</p>
+  <h1>컨테이너 적재 시각화 (2D/3D)</h1>
+  <p>박스 규격을 입력하면 컨테이너 바닥면에 어떻게 배치되는지 그려드립니다. 2D 평면도로 빠르게 확인하거나, 3D로 전환해서 드래그로 돌려가며 살펴보세요.</p>
 </div></section>
 
 <div class="main">
@@ -104,11 +119,27 @@
 
   <aside>
     <div class="card">
-      <div class="card-header"><div class="card-title">적재 시각화 (한 층 기준, 위에서 본 모습)</div></div>
+      <div class="card-header"><div class="card-title">적재 시각화</div></div>
       <div class="card-body">
-        <div class="viz-wrap">
+        <div class="view-toggle">
+          <button class="view-btn active" id="btn2d" onclick="setView('2d')">2D (위에서 본 모습)</button>
+          <button class="view-btn" id="btn3d" onclick="setView('3d')">3D (드래그로 회전)</button>
+        </div>
+
+        <div class="viz-wrap scene-wrap active" id="wrap2d">
           <div class="viz-label" id="vizLabel"></div>
           <svg id="vizSvg" width="100%" height="220" viewBox="0 0 600 220"></svg>
+        </div>
+
+        <div class="scene-wrap" id="wrap3d">
+          <div class="scene" id="scene3d">
+            <div class="rig" id="rig3d"></div>
+          </div>
+          <div class="scene-controls">
+            <label>회전 <input type="range" id="rotY" min="-180" max="180" value="-35" oninput="applyRotation()"></label>
+            <label>기울기 <input type="range" id="rotX" min="0" max="70" value="22" oninput="applyRotation()"></label>
+          </div>
+          <div class="scene-hint">마우스로 드래그하거나 슬라이더로 회전해서 적재 상태를 확인하세요. 진한 파란 블록이 실제 적재되는 화물입니다.</div>
         </div>
         <div class="result-grid">
           <div class="result-item"><div class="r-label">1층당 박스</div><div class="r-value" id="perLayer">-</div></div>
@@ -164,6 +195,13 @@ function calc(){
   document.getElementById('utilFill').textContent = utilization.toFixed(0)+'%';
 
   drawViz(c, bl, bw, cols, rows, cappedByQty ? requested : null, perLayer);
+
+  // 3D 뷰용 실제 적재 치수(cm) 계산: 층수만큼 쌓인 부피
+  const packedL = cols * bl;
+  const packedW = rows * bw;
+  const packedH = layers * bh;
+  lastCalcParams = [c, packedL, packedW, packedH];
+  if(currentView === '3d') render3D(...lastCalcParams);
 }
 
 function fmt(n){ return Math.round(n||0).toLocaleString('ko-KR'); }
@@ -194,6 +232,87 @@ function drawViz(container, bl, bw, cols, rows, cappedQty, perLayer){
   }
   svg.innerHTML = rects;
 }
+
+// ===== 3D VIEW =====
+let currentView = '2d';
+let rotY = -35, rotX = 22;
+let lastCalcParams = null;
+
+function setView(v){
+  currentView = v;
+  document.getElementById('btn2d').classList.toggle('active', v==='2d');
+  document.getElementById('btn3d').classList.toggle('active', v==='3d');
+  document.getElementById('wrap2d').classList.toggle('active', v==='2d');
+  document.getElementById('wrap3d').classList.toggle('active', v==='3d');
+  if(v==='3d' && lastCalcParams) render3D(...lastCalcParams);
+}
+
+function applyRotation(){
+  rotY = parseFloat(document.getElementById('rotY').value);
+  rotX = parseFloat(document.getElementById('rotX').value);
+  const rig = document.getElementById('rig3d');
+  rig.style.transform = `rotateX(${rotX}deg) rotateY(${rotY}deg)`;
+}
+
+function buildCuboid(w, h, d, className){
+  // returns HTML for a 6-face cuboid group, centered at its own origin
+  return `
+    <div class="face ${className}" style="width:${w}px;height:${h}px;transform:translate3d(-${w/2}px,-${h/2}px,${d/2}px)"></div>
+    <div class="face ${className}" style="width:${w}px;height:${h}px;transform:translate3d(-${w/2}px,-${h/2}px,-${d/2}px) rotateY(180deg)"></div>
+    <div class="face ${className}" style="width:${d}px;height:${h}px;transform:translate3d(-${d/2}px,-${h/2}px,${w/2}px) rotateY(90deg)"></div>
+    <div class="face ${className}" style="width:${d}px;height:${h}px;transform:translate3d(-${d/2}px,-${h/2}px,-${w/2}px) rotateY(-90deg)"></div>
+    <div class="face ${className}" style="width:${w}px;height:${d}px;transform:translate3d(-${w/2}px,-${d/2}px,${h/2}px) rotateX(90deg)"></div>
+    <div class="face ${className}" style="width:${w}px;height:${d}px;transform:translate3d(-${w/2}px,-${d/2}px,-${h/2}px) rotateX(-90deg)"></div>
+  `;
+}
+
+function render3D(container, cargoL, cargoW, cargoH){
+  const maxDim = Math.max(container.l, container.w, container.h);
+  const scale = 220 / maxDim;
+
+  const contW = container.l*scale, contH = container.h*scale, contD = container.w*scale;
+  const cargoWpx = cargoL*scale, cargoHpx = cargoH*scale, cargoDpx = cargoW*scale;
+
+  const rig = document.getElementById('rig3d');
+  rig.style.width = contW+'px';
+  rig.style.height = contH+'px';
+
+  // cargo offset: floor + front-left aligned inside container
+  const offX = -contW/2 + cargoWpx/2;
+  const offY = contH/2 - cargoHpx/2;
+  const offZ = contD/2 - cargoDpx/2;
+
+  rig.innerHTML = `
+    <div class="cube-group" style="transform:translate3d(0,0,0)">${buildCuboid(contW, contH, contD, 'container-face')}</div>
+    <div class="cube-group" style="transform:translate3d(${offX}px,${offY}px,${offZ}px)">${buildCuboid(cargoWpx, cargoHpx, cargoDpx, 'cargo-face')}</div>
+  `;
+  applyRotation();
+}
+
+// 마우스/터치 드래그로 회전
+(function initDrag(){
+  const scene = document.getElementById('scene3d');
+  let dragging = false, lastX = 0, lastY = 0;
+  const start = (x,y) => { dragging = true; lastX = x; lastY = y; };
+  const move = (x,y) => {
+    if(!dragging) return;
+    rotY += (x - lastX) * 0.4;
+    rotX -= (y - lastY) * 0.3;
+    rotX = Math.max(0, Math.min(70, rotX));
+    document.getElementById('rotY').value = Math.max(-180, Math.min(180, rotY));
+    document.getElementById('rotX').value = rotX;
+    lastX = x; lastY = y;
+    applyRotation();
+  };
+  const end = () => { dragging = false; };
+
+  scene.addEventListener('mousedown', e => start(e.clientX, e.clientY));
+  window.addEventListener('mousemove', e => move(e.clientX, e.clientY));
+  window.addEventListener('mouseup', end);
+  scene.addEventListener('touchstart', e => start(e.touches[0].clientX, e.touches[0].clientY), {passive:true});
+  scene.addEventListener('touchmove', e => move(e.touches[0].clientX, e.touches[0].clientY), {passive:true});
+  scene.addEventListener('touchend', end);
+})();
 
 calc();
 </script>
