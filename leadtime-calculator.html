@@ -6,14 +6,17 @@
 <meta name="description" content="발주일, 생산기간, 운송방식(해상/항공), 통관기간을 입력하면 예상 출고일과 예상 도착일을 자동으로 계산합니다.">
 <meta name="keywords" content="리드타임 계산기, 선적 예상 도착일, 해상운송 기간, 무역 일정 계산">
 <title>선적 리드타임 계산기 — CBM Lab</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700;800&display=swap" rel="stylesheet">
 <style>
   *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
   :root{--accent:#2563EB;--accent-light:#DBEAFE;--accent-dark:#1D4ED8;--slate-50:#F8FAFC;--slate-100:#F1F5F9;--slate-200:#E2E8F0;--slate-400:#94A3B8;--slate-500:#64748B;--slate-600:#475569;--slate-700:#334155;--slate-800:#1E293B;--slate-900:#0F172A;--radius:8px;--radius-lg:12px;--shadow-sm:0 1px 2px rgba(0,0,0,.05);font-family:'Pretendard','Apple SD Gothic Neo',system-ui,-apple-system,sans-serif}
   body{background:var(--slate-50);color:var(--slate-800);font-size:14px;line-height:1.6}
   header{background:#fff;border-bottom:1px solid var(--slate-200)}
   .header-inner{max-width:1100px;margin:0 auto;padding:16px 24px;display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}
-  .logo-mark{font-size:20px;font-weight:800;color:var(--slate-900);text-decoration:none}
-  .logo-mark span{color:var(--accent)}
+  .logo-mark{font-size:20px;font-weight:800;color:var(--slate-900);text-decoration:none;font-family:'Space Grotesk','Pretendard',sans-serif;letter-spacing:-0.4px;}
+  .logo-mark span{color:var(--accent);font-weight:500}
   .nav-link{font-size:13px;font-weight:600;color:var(--slate-500);text-decoration:none;padding:7px 12px;border-radius:6px}
   .nav-link:hover{background:var(--slate-100)}
   .hero{background:#fff;border-bottom:1px solid var(--slate-200);padding:28px 24px 24px}
@@ -44,8 +47,8 @@
   .ad-placeholder{border:1px dashed var(--slate-200);border-radius:var(--radius);background:var(--slate-50);padding:20px;text-align:center;color:var(--slate-400);font-size:12px}
   footer{background:var(--slate-900);color:var(--slate-400);padding:24px;font-size:12px}
   .footer-inner{max-width:1100px;margin:0 auto;display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
-  .footer-logo{font-size:15px;font-weight:800;color:#fff}
-  .footer-logo span{color:var(--accent)}
+  .footer-logo{font-size:15px;font-weight:800;color:#fff;font-family:'Space Grotesk','Pretendard',sans-serif;letter-spacing:-0.4px;}
+  .footer-logo span{color:var(--accent);font-weight:500}
   .footer-link{color:var(--slate-500);text-decoration:none;font-size:11px;margin-right:14px}
   @media (max-width:900px){.main{grid-template-columns:1fr}}
   @media (max-width:640px){.field-grid{grid-template-columns:1fr}}
@@ -67,7 +70,7 @@
 </head>
 <body>
 <header><div class="header-inner">
-  <a href="index.html" class="logo-mark"><svg width="26" height="26" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align:middle;margin-right:9px;flex-shrink:0;"><path d="M20 2.5L36.5 11.5V28.5L20 37.5L3.5 28.5V11.5L20 2.5Z" stroke="#2563EB" stroke-width="2.3" stroke-linejoin="round"/><path d="M20 2.5V20M20 20L36.5 11.5M20 20L3.5 11.5" stroke="#2563EB" stroke-width="2.3" stroke-linejoin="round" opacity="0.55"/></svg>CBM<span>Lab</span></a>
+  <a href="index.html" class="logo-mark"><svg width="28" height="28" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align:middle;margin-right:9px;flex-shrink:0;"><path d="M20 2.5L36.5 11.5V28.5L20 37.5L3.5 28.5V11.5L20 2.5Z" stroke="#2563EB" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M20 2.5V20M20 20L36.5 11.5M20 20L3.5 11.5" stroke="#2563EB" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" opacity="0.55"/></svg>CBM<span>Lab</span></a>
   <a href="index.html" class="nav-link">← 전체 도구 보기</a>
 </div></header>
 
@@ -133,7 +136,7 @@
 </div>
 
 <footer><div class="footer-inner">
-  <div class="footer-logo"><svg width="22" height="22" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align:middle;margin-right:9px;flex-shrink:0;"><path d="M20 2.5L36.5 11.5V28.5L20 37.5L3.5 28.5V11.5L20 2.5Z" stroke="#5B9EFF" stroke-width="2.3" stroke-linejoin="round"/><path d="M20 2.5V20M20 20L36.5 11.5M20 20L3.5 11.5" stroke="#5B9EFF" stroke-width="2.3" stroke-linejoin="round" opacity="0.6"/></svg>CBM<span>Lab</span></div>
+  <div class="footer-logo"><svg width="24" height="24" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align:middle;margin-right:9px;flex-shrink:0;"><path d="M20 2.5L36.5 11.5V28.5L20 37.5L3.5 28.5V11.5L20 2.5Z" stroke="#5B9EFF" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M20 2.5V20M20 20L36.5 11.5M20 20L3.5 11.5" stroke="#5B9EFF" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" opacity="0.6"/></svg>CBM<span>Lab</span></div>
   <nav><a href="index.html" class="footer-link">전체 도구</a><a href="privacy.html" class="footer-link">개인정보 처리방침</a></nav>
 </div></footer>
 
