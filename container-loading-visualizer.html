@@ -11,16 +11,16 @@
   :root{--accent:#2563EB;--accent-light:#DBEAFE;--accent-dark:#1D4ED8;--slate-50:#F8FAFC;--slate-100:#F1F5F9;--slate-200:#E2E8F0;--slate-300:#CBD5E1;--slate-400:#94A3B8;--slate-500:#64748B;--slate-600:#475569;--slate-700:#334155;--slate-800:#1E293B;--slate-900:#0F172A;--success:#0F766E;--success-light:#CCFBF1;--danger:#DC2626;--danger-light:#FEE2E2;--radius:8px;--radius-lg:12px;--shadow-sm:0 1px 2px rgba(0,0,0,.05);font-family:'Pretendard','Apple SD Gothic Neo',system-ui,-apple-system,sans-serif}
   body{background:var(--slate-50);color:var(--slate-800);font-size:14px;line-height:1.6}
   header{background:#fff;border-bottom:1px solid var(--slate-200)}
-  .header-inner{max-width:1240px;margin:0 auto;padding:16px 24px;display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}
+  .header-inner{max-width:1320px;margin:0 auto;padding:16px 24px;display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}
   .logo-mark{font-size:20px;font-weight:800;color:var(--slate-900);text-decoration:none}
   .logo-mark span{color:var(--accent)}
   .nav-link{font-size:13px;font-weight:600;color:var(--slate-500);text-decoration:none;padding:7px 12px;border-radius:6px}
   .nav-link:hover{background:var(--slate-100)}
   .hero{background:#fff;border-bottom:1px solid var(--slate-200);padding:28px 24px 24px}
-  .hero-inner{max-width:1240px;margin:0 auto}
+  .hero-inner{max-width:1320px;margin:0 auto}
   .hero h1{font-size:22px;font-weight:700;color:var(--slate-900);margin-bottom:6px}
   .hero p{font-size:14px;color:var(--slate-500);max-width:680px}
-  .main{max-width:1240px;margin:0 auto;padding:28px 24px 60px;display:grid;grid-template-columns:380px 1fr;gap:24px;align-items:start}
+  .main{max-width:1320px;margin:0 auto;padding:28px 24px 60px;display:grid;grid-template-columns:460px 1fr;gap:24px;align-items:start}
   .card{background:#fff;border:1px solid var(--slate-200);border-radius:var(--radius-lg);box-shadow:var(--shadow-sm);margin-bottom:20px}
   .card-header{padding:16px 20px;border-bottom:1px solid var(--slate-100);display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
   .card-title{font-size:14px;font-weight:600;color:var(--slate-800)}
@@ -30,15 +30,19 @@
   .inp,select.inp{width:100%;border:1px solid var(--slate-200);border-radius:6px;padding:8px 10px;font-size:13px;font-family:inherit}
   .inp:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px rgba(37,99,235,.1)}
 
-  .item-table-wrap{overflow-x:auto;margin:0 -4px}
-  .item-table{width:100%;border-collapse:collapse;min-width:400px}
-  .item-table thead th{padding:6px 5px;text-align:left;font-size:10px;font-weight:700;color:var(--slate-400);text-transform:uppercase;white-space:nowrap}
+  .item-table-wrap{overflow-x:visible}
+  .item-table{width:100%;border-collapse:collapse;table-layout:fixed}
+  .item-table col.col-name{width:30%}
+  .item-table col.col-dim{width:15%}
+  .item-table col.col-qty{width:17%}
+  .item-table col.col-del{width:8%}
+  .item-table thead th{padding:6px 6px;text-align:left;font-size:10px;font-weight:700;color:var(--slate-400);text-transform:uppercase;white-space:nowrap}
   .item-table thead th:last-child{text-align:center}
-  .item-table tbody td{padding:4px 3px}
+  .item-table tbody td{padding:5px 4px}
   .item-table tbody td:last-child{text-align:center}
-  .item-table input{width:100%;border:1px solid var(--slate-200);border-radius:5px;padding:6px 6px;font-size:12.5px;font-family:inherit;font-variant-numeric:tabular-nums}
-  .item-table input.name-inp{min-width:70px}
-  .item-table input.dim-inp{width:56px;text-align:center}
+  .item-table input{width:100%;border:1px solid var(--slate-200);border-radius:5px;padding:7px 6px;font-size:12.5px;font-family:inherit;font-variant-numeric:tabular-nums}
+  .item-table input.name-inp{min-width:64px}
+  .item-table input.dim-inp{width:100%;min-width:44px;text-align:center}
   .item-table tr.row-error input{border-color:var(--danger);background:var(--danger-light)}
   .color-dot{display:inline-block;width:11px;height:11px;border-radius:50%;margin-right:4px;vertical-align:middle;flex-shrink:0}
   .btn-del-row{width:24px;height:24px;border:1px solid var(--slate-200);border-radius:5px;background:#fff;color:var(--slate-400);cursor:pointer;font-size:11px}
@@ -93,7 +97,7 @@
   .badge-no{background:var(--danger-light);color:var(--danger);font-size:11px;font-weight:700;padding:3px 9px;border-radius:999px}
 
   footer{background:var(--slate-900);color:var(--slate-400);padding:24px;font-size:12px}
-  .footer-inner{max-width:1240px;margin:0 auto;display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
+  .footer-inner{max-width:1320px;margin:0 auto;display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
   .footer-logo{font-size:15px;font-weight:800;color:#fff}
   .footer-logo span{color:var(--accent)}
   .footer-link{color:var(--slate-500);text-decoration:none;font-size:11px;margin-right:14px}
@@ -129,6 +133,9 @@
           <label class="field-label">박스 규격 (여러 종류 입력 가능, cm)</label>
           <div class="item-table-wrap">
             <table class="item-table">
+              <colgroup>
+                <col class="col-name"><col class="col-dim"><col class="col-dim"><col class="col-dim"><col class="col-qty"><col class="col-del">
+              </colgroup>
               <thead><tr><th>품목명</th><th>가로(L)</th><th>세로(W)</th><th>높이(H)</th><th>수량</th><th></th></tr></thead>
               <tbody id="itemBody"></tbody>
             </table>
@@ -234,11 +241,11 @@ function renderItemRows(){
   const body = document.getElementById('itemBody');
   body.innerHTML = items.map(it=>`
     <tr>
-      <td><span class="color-dot" style="background:${it.color}"></span><input class="inp name-inp" value="${it.name}" oninput="updateItem(${it.id},'name',this.value)"></td>
-      <td><input class="inp dim-inp" type="number" value="${it.l}" oninput="updateItem(${it.id},'l',this.value)"></td>
-      <td><input class="inp dim-inp" type="number" value="${it.w}" oninput="updateItem(${it.id},'w',this.value)"></td>
-      <td><input class="inp dim-inp" type="number" value="${it.h}" oninput="updateItem(${it.id},'h',this.value)"></td>
-      <td><input class="inp dim-inp" type="number" value="${it.qty}" oninput="updateItem(${it.id},'qty',this.value)"></td>
+      <td><span class="color-dot" style="background:${it.color}"></span><input class="inp name-inp" value="${it.name}" oninput="updateItem(${it.id},'name',this.value)" onchange="updateItem(${it.id},'name',this.value)"></td>
+      <td><input class="inp dim-inp" type="number" value="${it.l}" oninput="updateItem(${it.id},'l',this.value)" onchange="updateItem(${it.id},'l',this.value)"></td>
+      <td><input class="inp dim-inp" type="number" value="${it.w}" oninput="updateItem(${it.id},'w',this.value)" onchange="updateItem(${it.id},'w',this.value)"></td>
+      <td><input class="inp dim-inp" type="number" value="${it.h}" oninput="updateItem(${it.id},'h',this.value)" onchange="updateItem(${it.id},'h',this.value)"></td>
+      <td><input class="inp dim-inp" type="number" value="${it.qty}" oninput="updateItem(${it.id},'qty',this.value)" onchange="updateItem(${it.id},'qty',this.value)"></td>
       <td><button class="btn-del-row" onclick="removeItem(${it.id})" ${items.length<=1?'disabled':''}>✕</button></td>
     </tr>
   `).join('');
