@@ -163,16 +163,15 @@
       <div class="card-header">
         <div class="card-title">적재 시각화</div>
         <div class="view-toggle">
-          <button class="view-btn active" id="btn2d" onclick="setView('2d')">2D (측면 단면도)</button>
+          <button class="view-btn active" id="btn2d" onclick="setView('2d')">미리보기 (고정 각도)</button>
           <button class="view-btn" id="btn3d" onclick="setView('3d')">3D (드래그로 회전)</button>
         </div>
       </div>
       <div class="card-body">
         <div class="scene-wrap active" id="wrap2d">
-          <div class="elevation-svg-wrap">
-            <svg id="vizSvg" width="900" height="300" viewBox="0 0 900 300"></svg>
-          </div>
-          <div class="legend" id="legend2d"></div>
+          <div class="scene" id="scenePreview"><div class="rig" id="rigPreview"></div></div>
+          <div class="legend" id="legendPreview"></div>
+          <div class="scene-hint">박스 하나하나가 실제 배치 수량만큼 표시됩니다. 회전하려면 "3D" 탭을 이용하세요.</div>
         </div>
 
         <div class="scene-wrap" id="wrap3d">
@@ -344,9 +343,9 @@ function calc(){
   // 컨테이너 비교표
   renderCompareTable(containerKey);
 
-  // 시각화
-  drawElevation(container, result);
-  if(currentView === '3d') render3D(container, result);
+  // 시각화 (미리보기 + 3D 둘 다 같은 렌더러 사용)
+  renderScene('rigPreview', 'legendPreview', container, result, false);
+  renderScene('rig3d', 'legend3d', container, result, true);
 }
 
 function renderShortfallWarning(container, result, totalRequested, totalPlaced){
@@ -390,88 +389,15 @@ function renderCompareTable(currentKey){
   `;
 }
 
-// ===== 2D 측면 단면도 (길이 x 높이) =====
-function drawElevation(container, result){
-  const svg = document.getElementById('vizSvg');
-  const padding = 46; // 치수선/축 라벨 공간 확보
-  const availW = 900 - padding*2, availH = 300 - padding*2 - 20;
-  const scale = Math.min(availW/container.l, availH/container.h);
-  const contW = container.l*scale, contH = container.h*scale;
-  const offX = padding, offY = 300 - padding - contH - 20;
+// ===== 개별 박스 렌더러 (미리보기/3D 공용) =====
+const MAX_TOTAL_BOXES = 140; // 성능을 위한 개별 박스 렌더 상한
 
-  let svgContent = '';
-
-  // 안내 제목 (평면도 아님을 명확히)
-  svgContent += `<text x="${offX}" y="16" font-size="11.5" fill="#475569" font-weight="700">▤ 컨테이너를 옆에서 본 단면 (측면도) — 왼쪽에서 오른쪽으로 화물 적재 순서</text>`;
-
-  // 컨테이너 실선 박스
-  svgContent += `<rect x="${offX}" y="${offY}" width="${contW}" height="${contH}" fill="#F8FAFC" stroke="#1E293B" stroke-width="2" rx="2"/>`;
-
-  // 각 구간(품목)별 실제 배치 수량만큼만 칸을 채워서 그림
-  result.sections.forEach(s=>{
-    if(s.error || s.colsUsed<=0) return;
-    const secW = s.lengthUsedCm*scale;
-    const secH = s.layers*s.item.h*scale;
-    const x = offX + s.startLengthCm*scale;
-    const y = offY + contH - secH;
-    const cellW = s.item.l*scale, cellH = s.item.h*scale;
-
-    // 구간 테두리(용량 전체 = 옅게)
-    svgContent += `<rect x="${x}" y="${y}" width="${secW}" height="${secH}" fill="none" stroke="${s.color}" stroke-width="1" stroke-dasharray="3,3" stroke-opacity="0.5"/>`;
-
-    // 칸(cols × layers) 단위로 실제 채워진 만큼만 색칠. 칸 하나 = 깊이 방향(안 보이는 축)으로 rows개가 쌓인 다발.
-    const totalCells = s.colsUsed * s.layers;
-    const filledCells = Math.min(totalCells, Math.ceil(s.placedQty / s.rows));
-    let cellIdx = 0;
-    for(let c=0;c<s.colsUsed;c++){
-      for(let l=0;l<s.layers;l++){
-        const cx = x + c*cellW, cy = y + (s.layers-1-l)*cellH;
-        const isFilled = cellIdx < filledCells;
-        if(isFilled){
-          svgContent += `<rect x="${cx+1}" y="${cy+1}" width="${cellW-2}" height="${cellH-2}" fill="${s.color}" fill-opacity="0.55" stroke="${s.color}" stroke-width="1"/>`;
-        } else {
-          svgContent += `<rect x="${cx+1}" y="${cy+1}" width="${cellW-2}" height="${cellH-2}" fill="#fff" fill-opacity="0.4" stroke="${s.color}" stroke-width="0.6" stroke-opacity="0.35"/>`;
-        }
-        cellIdx++;
-      }
-    }
-
-    if(secW > 30){
-      svgContent += `<text x="${x+secW/2}" y="${y-6}" font-size="11" fill="${s.color}" text-anchor="middle" font-weight="700">${s.item.name}</text>`;
-    }
-  });
-
-  // 길이 치수선 (하단)
-  const dimY = offY + contH + 22;
-  svgContent += `
-    <line x1="${offX}" y1="${dimY}" x2="${offX+contW}" y2="${dimY}" stroke="#94A3B8" stroke-width="1"/>
-    <line x1="${offX}" y1="${dimY-5}" x2="${offX}" y2="${dimY+5}" stroke="#94A3B8" stroke-width="1"/>
-    <line x1="${offX+contW}" y1="${dimY-5}" x2="${offX+contW}" y2="${dimY+5}" stroke="#94A3B8" stroke-width="1"/>
-    <text x="${offX+contW/2}" y="${dimY+16}" font-size="11" fill="#64748B" text-anchor="middle">컨테이너 길이 ${fmt(container.l)} cm →</text>
-  `;
-  // 높이 치수선 (좌측)
-  const dimX = offX - 14;
-  svgContent += `
-    <line x1="${dimX}" y1="${offY}" x2="${dimX}" y2="${offY+contH}" stroke="#94A3B8" stroke-width="1"/>
-    <line x1="${dimX-5}" y1="${offY}" x2="${dimX+5}" y2="${offY}" stroke="#94A3B8" stroke-width="1"/>
-    <line x1="${dimX-5}" y1="${offY+contH}" x2="${dimX+5}" y2="${offY+contH}" stroke="#94A3B8" stroke-width="1"/>
-    <text x="${dimX-8}" y="${offY+contH/2}" font-size="11" fill="#64748B" text-anchor="middle" transform="rotate(-90, ${dimX-8}, ${offY+contH/2})">↑ 높이 ${fmt(container.h)} cm</text>
-  `;
-
-  svg.innerHTML = svgContent;
-  document.getElementById('legend2d').innerHTML = result.sections.filter(s=>!s.error && s.colsUsed>0).map(s=>
-    `<span class="item"><span class="color-dot" style="background:${s.color}"></span>${s.item.name}: ${fmt(s.placedQty)}개 (칸 1개 = 깊이 방향 ${s.rows}개 적층)</span>`
-  ).join('');
-}
-
-// ===== 3D (와이어프레임 컨테이너 + 구간별 불투명 큐브) =====
 function setView(v){
   currentView = v;
   document.getElementById('btn2d').classList.toggle('active', v==='2d');
   document.getElementById('btn3d').classList.toggle('active', v==='3d');
   document.getElementById('wrap2d').classList.toggle('active', v==='2d');
   document.getElementById('wrap3d').classList.toggle('active', v==='3d');
-  if(v==='3d' && currentResult) render3D(currentResult.container, currentResult.result);
 }
 function applyRotation(){
   rotY = parseFloat(document.getElementById('rotY').value);
@@ -479,6 +405,7 @@ function applyRotation(){
   const rig = document.getElementById('rig3d');
   if(rig) rig.style.transform = `rotateX(${rotX}deg) rotateY(${rotY}deg)`;
 }
+
 function shade(hex, factor){
   const n = parseInt(hex.slice(1),16);
   let r=(n>>16)&255, g=(n>>8)&255, b=n&255;
@@ -488,12 +415,12 @@ function shade(hex, factor){
 function buildSolidCuboid(w,h,d,color){
   const top=shade(color,1.35), front=shade(color,1.0), side=shade(color,0.8), back=shade(color,0.65), bottom=shade(color,0.55);
   return `
-    <div class="face" style="width:${w}px;height:${h}px;background:${front};transform:translate3d(-${w/2}px,-${h/2}px,${d/2}px)"></div>
-    <div class="face" style="width:${w}px;height:${h}px;background:${back};transform:translate3d(-${w/2}px,-${h/2}px,-${d/2}px) rotateY(180deg)"></div>
-    <div class="face" style="width:${d}px;height:${h}px;background:${side};transform:translate3d(-${d/2}px,-${h/2}px,${w/2}px) rotateY(90deg)"></div>
-    <div class="face" style="width:${d}px;height:${h}px;background:${side};transform:translate3d(-${d/2}px,-${h/2}px,-${w/2}px) rotateY(-90deg)"></div>
-    <div class="face" style="width:${w}px;height:${d}px;background:${top};transform:translate3d(-${w/2}px,-${d/2}px,${h/2}px) rotateX(90deg)"></div>
-    <div class="face" style="width:${w}px;height:${d}px;background:${bottom};transform:translate3d(-${w/2}px,-${d/2}px,-${h/2}px) rotateX(-90deg)"></div>
+    <div class="face" style="width:${w}px;height:${h}px;background:${front};border:1px solid rgba(0,0,0,.25);transform:translate3d(-${w/2}px,-${h/2}px,${d/2}px)"></div>
+    <div class="face" style="width:${w}px;height:${h}px;background:${back};border:1px solid rgba(0,0,0,.25);transform:translate3d(-${w/2}px,-${h/2}px,-${d/2}px) rotateY(180deg)"></div>
+    <div class="face" style="width:${d}px;height:${h}px;background:${side};border:1px solid rgba(0,0,0,.25);transform:translate3d(-${d/2}px,-${h/2}px,${w/2}px) rotateY(90deg)"></div>
+    <div class="face" style="width:${d}px;height:${h}px;background:${side};border:1px solid rgba(0,0,0,.25);transform:translate3d(-${d/2}px,-${h/2}px,-${w/2}px) rotateY(-90deg)"></div>
+    <div class="face" style="width:${w}px;height:${d}px;background:${top};border:1px solid rgba(0,0,0,.25);transform:translate3d(-${w/2}px,-${d/2}px,${h/2}px) rotateX(90deg)"></div>
+    <div class="face" style="width:${w}px;height:${d}px;background:${bottom};border:1px solid rgba(0,0,0,.25);transform:translate3d(-${w/2}px,-${d/2}px,-${h/2}px) rotateX(-90deg)"></div>
   `;
 }
 function buildWireframe(w,h,d){
@@ -504,33 +431,73 @@ function buildWireframe(w,h,d){
   return html;
 }
 
-function render3D(container, result){
-  const maxDim = Math.max(container.l, container.w, container.h);
-  const scale = 240 / maxDim;
-  const contW = container.l*scale, contH = container.h*scale, contD = container.w*scale;
-
-  const rig = document.getElementById('rig3d');
-  let html = `<div class="cube-group">${buildWireframe(contW, contH, contD)}</div>`;
+// 표시할 개별 박스들의 좌표 목록(cm 단위, 컨테이너 좌측/바닥/앞면 기준)을 계산
+function buildBoxList(container, result){
+  const totalPlaced = result.sections.reduce((a,s)=>a+(s.error?0:s.placedQty),0);
+  const budget = Math.min(MAX_TOTAL_BOXES, totalPlaced || 1);
+  let boxes = [];
+  let overflowNote = false;
 
   result.sections.forEach(s=>{
-    if(s.error || s.colsUsed<=0) return;
-    const blockW = s.lengthUsedCm*scale;
-    const blockH = s.layers*s.item.h*scale;
-    const blockD = s.rows*s.item.w*scale;
+    if(s.error || s.colsUsed<=0 || s.placedQty<=0) return;
+    const shareRaw = totalPlaced>0 ? (s.placedQty/totalPlaced)*budget : 0;
+    let renderCount = Math.max(1, Math.round(shareRaw));
+    renderCount = Math.min(renderCount, s.placedQty);
+    if(renderCount < s.placedQty) overflowNote = true;
 
-    const offX = -contW/2 + s.startLengthCm*scale + blockW/2;
-    const offY = contH/2 - blockH/2;
-    const offZ = contD/2 - blockD/2;
+    let placed = 0;
+    outer:
+    for(let c=0;c<s.colsUsed;c++){
+      for(let l=0;l<s.layers;l++){
+        for(let r=0;r<s.rows;r++){
+          if(placed >= renderCount) break outer;
+          boxes.push({
+            color: s.color,
+            l: s.item.l, w: s.item.w, h: s.item.h,
+            // 위치(cm): X=길이방향 시작지점 기준, Y=바닥기준 층, Z=앞면기준 깊이
+            xCm: s.startLengthCm + c*s.item.l + s.item.l/2,
+            layerIdx: l, rowIdx: r
+          });
+          placed++;
+        }
+      }
+    }
+  });
+  return { boxes, overflowNote, totalPlaced, rendered: boxes.length };
+}
 
-    html += `<div class="cube-group" style="transform:translate3d(${offX}px,${offY}px,${offZ}px)">${buildSolidCuboid(blockW, blockH, blockD, s.color)}</div>`;
+function renderScene(rigId, legendId, container, result, interactive){
+  const rig = document.getElementById(rigId);
+  if(!rig) return;
+  const maxDim = Math.max(container.l, container.w, container.h);
+  const scale = 230 / maxDim;
+  const contW = container.l*scale, contH = container.h*scale, contD = container.w*scale;
+
+  let html = `<div class="cube-group">${buildWireframe(contW, contH, contD)}</div>`;
+
+  const { boxes, overflowNote } = buildBoxList(container, result);
+  boxes.forEach(b=>{
+    const bw = b.l*scale, bh = b.h*scale, bd = b.w*scale;
+    const offX = -contW/2 + b.xCm*scale;
+    const offY = contH/2 - (b.layerIdx+0.5)*bh;
+    const offZ = contD/2 - (b.rowIdx+0.5)*bd;
+    html += `<div class="cube-group" style="transform:translate3d(${offX}px,${offY}px,${offZ}px)">${buildSolidCuboid(bw, bh, bd, b.color)}</div>`;
   });
 
   rig.innerHTML = html;
-  applyRotation();
 
-  document.getElementById('legend3d').innerHTML = result.sections.filter(s=>!s.error && s.colsUsed>0).map(s=>
-    `<span class="item"><span class="color-dot" style="background:${s.color}"></span>${s.item.name}</span>`
-  ).join('');
+  if(interactive){
+    applyRotation();
+  } else {
+    rig.style.transform = 'rotateX(20deg) rotateY(-28deg)';
+  }
+
+  const legend = document.getElementById(legendId);
+  if(legend){
+    legend.innerHTML = result.sections.filter(s=>!s.error && s.colsUsed>0).map(s=>
+      `<span class="item"><span class="color-dot" style="background:${s.color}"></span>${s.item.name}: ${fmt(s.placedQty)}개</span>`
+    ).join('') + (overflowNote ? `<span class="item" style="color:var(--slate-400);">(화면에는 성능상 일부만 개별 표시, 실제 수량은 위 표 기준)</span>` : '');
+  }
 }
 
 (function initDrag(){
