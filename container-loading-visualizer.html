@@ -170,7 +170,7 @@
       <div class="card-body">
         <div class="scene-wrap active" id="wrap2d">
           <div class="elevation-svg-wrap">
-            <svg id="vizSvg" width="900" height="260" viewBox="0 0 900 260"></svg>
+            <svg id="vizSvg" width="900" height="300" viewBox="0 0 900 300"></svg>
           </div>
           <div class="legend" id="legend2d"></div>
         </div>
@@ -393,39 +393,74 @@ function renderCompareTable(currentKey){
 // ===== 2D 측면 단면도 (길이 x 높이) =====
 function drawElevation(container, result){
   const svg = document.getElementById('vizSvg');
-  const padding = 30;
-  const availW = 900 - padding*2, availH = 240 - padding*2;
+  const padding = 46; // 치수선/축 라벨 공간 확보
+  const availW = 900 - padding*2, availH = 300 - padding*2 - 20;
   const scale = Math.min(availW/container.l, availH/container.h);
   const contW = container.l*scale, contH = container.h*scale;
-  const offX = padding, offY = 260 - padding - contH;
+  const offX = padding, offY = 300 - padding - contH - 20;
 
-  let svgContent = `<rect x="${offX}" y="${offY}" width="${contW}" height="${contH}" fill="#F8FAFC" stroke="#1E293B" stroke-width="2" rx="3"/>`;
+  let svgContent = '';
 
+  // 안내 제목 (평면도 아님을 명확히)
+  svgContent += `<text x="${offX}" y="16" font-size="11.5" fill="#475569" font-weight="700">▤ 컨테이너를 옆에서 본 단면 (측면도) — 왼쪽에서 오른쪽으로 화물 적재 순서</text>`;
+
+  // 컨테이너 실선 박스
+  svgContent += `<rect x="${offX}" y="${offY}" width="${contW}" height="${contH}" fill="#F8FAFC" stroke="#1E293B" stroke-width="2" rx="2"/>`;
+
+  // 각 구간(품목)별 실제 배치 수량만큼만 칸을 채워서 그림
   result.sections.forEach(s=>{
     if(s.error || s.colsUsed<=0) return;
     const secW = s.lengthUsedCm*scale;
     const secH = s.layers*s.item.h*scale;
     const x = offX + s.startLengthCm*scale;
     const y = offY + contH - secH;
+    const cellW = s.item.l*scale, cellH = s.item.h*scale;
 
-    svgContent += `<rect x="${x}" y="${y}" width="${secW}" height="${secH}" fill="${s.color}33" stroke="${s.color}" stroke-width="1.5"/>`;
-    // 내부 격자 (열 구분)
-    for(let c=1;c<s.colsUsed;c++){
-      const lx = x + c*(s.item.l*scale);
-      svgContent += `<line x1="${lx}" y1="${y}" x2="${lx}" y2="${y+secH}" stroke="${s.color}" stroke-width="0.6" stroke-opacity="0.5"/>`;
+    // 구간 테두리(용량 전체 = 옅게)
+    svgContent += `<rect x="${x}" y="${y}" width="${secW}" height="${secH}" fill="none" stroke="${s.color}" stroke-width="1" stroke-dasharray="3,3" stroke-opacity="0.5"/>`;
+
+    // 칸(cols × layers) 단위로 실제 채워진 만큼만 색칠. 칸 하나 = 깊이 방향(안 보이는 축)으로 rows개가 쌓인 다발.
+    const totalCells = s.colsUsed * s.layers;
+    const filledCells = Math.min(totalCells, Math.ceil(s.placedQty / s.rows));
+    let cellIdx = 0;
+    for(let c=0;c<s.colsUsed;c++){
+      for(let l=0;l<s.layers;l++){
+        const cx = x + c*cellW, cy = y + (s.layers-1-l)*cellH;
+        const isFilled = cellIdx < filledCells;
+        if(isFilled){
+          svgContent += `<rect x="${cx+1}" y="${cy+1}" width="${cellW-2}" height="${cellH-2}" fill="${s.color}" fill-opacity="0.55" stroke="${s.color}" stroke-width="1"/>`;
+        } else {
+          svgContent += `<rect x="${cx+1}" y="${cy+1}" width="${cellW-2}" height="${cellH-2}" fill="#fff" fill-opacity="0.4" stroke="${s.color}" stroke-width="0.6" stroke-opacity="0.35"/>`;
+        }
+        cellIdx++;
+      }
     }
-    for(let l=1;l<s.layers;l++){
-      const ly = y + l*(s.item.h*scale);
-      svgContent += `<line x1="${x}" y1="${ly}" x2="${x+secW}" y2="${ly}" stroke="${s.color}" stroke-width="0.6" stroke-opacity="0.5"/>`;
-    }
-    if(secW > 34){
-      svgContent += `<text x="${x+secW/2}" y="${y+secH/2}" font-size="11" fill="${s.color}" text-anchor="middle" font-weight="700" dy="4">${s.item.name}</text>`;
+
+    if(secW > 30){
+      svgContent += `<text x="${x+secW/2}" y="${y-6}" font-size="11" fill="${s.color}" text-anchor="middle" font-weight="700">${s.item.name}</text>`;
     }
   });
 
+  // 길이 치수선 (하단)
+  const dimY = offY + contH + 22;
+  svgContent += `
+    <line x1="${offX}" y1="${dimY}" x2="${offX+contW}" y2="${dimY}" stroke="#94A3B8" stroke-width="1"/>
+    <line x1="${offX}" y1="${dimY-5}" x2="${offX}" y2="${dimY+5}" stroke="#94A3B8" stroke-width="1"/>
+    <line x1="${offX+contW}" y1="${dimY-5}" x2="${offX+contW}" y2="${dimY+5}" stroke="#94A3B8" stroke-width="1"/>
+    <text x="${offX+contW/2}" y="${dimY+16}" font-size="11" fill="#64748B" text-anchor="middle">컨테이너 길이 ${fmt(container.l)} cm →</text>
+  `;
+  // 높이 치수선 (좌측)
+  const dimX = offX - 14;
+  svgContent += `
+    <line x1="${dimX}" y1="${offY}" x2="${dimX}" y2="${offY+contH}" stroke="#94A3B8" stroke-width="1"/>
+    <line x1="${dimX-5}" y1="${offY}" x2="${dimX+5}" y2="${offY}" stroke="#94A3B8" stroke-width="1"/>
+    <line x1="${dimX-5}" y1="${offY+contH}" x2="${dimX+5}" y2="${offY+contH}" stroke="#94A3B8" stroke-width="1"/>
+    <text x="${dimX-8}" y="${offY+contH/2}" font-size="11" fill="#64748B" text-anchor="middle" transform="rotate(-90, ${dimX-8}, ${offY+contH/2})">↑ 높이 ${fmt(container.h)} cm</text>
+  `;
+
   svg.innerHTML = svgContent;
   document.getElementById('legend2d').innerHTML = result.sections.filter(s=>!s.error && s.colsUsed>0).map(s=>
-    `<span class="item"><span class="color-dot" style="background:${s.color}"></span>${s.item.name} (${s.rows}×${s.layers}, ${s.colsUsed}열)</span>`
+    `<span class="item"><span class="color-dot" style="background:${s.color}"></span>${s.item.name}: ${fmt(s.placedQty)}개 (칸 1개 = 깊이 방향 ${s.rows}개 적층)</span>`
   ).join('');
 }
 
