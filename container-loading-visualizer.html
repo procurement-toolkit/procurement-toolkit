@@ -3,12 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="박스 규격과 컨테이너 종류를 입력하면 컨테이너 안에 박스가 어떻게 배치되는지 2D 평면도와 드래그로 회전 가능한 3D 뷰로 시각화하고, 적재 가능 수량과 공간 활용률을 계산합니다.">
+<meta name="description" content="여러 박스 규격을 동시에 입력하면 컨테이너 안에 어떻게 쌓이는지 2D 평면도와 드래그로 회전 가능한 3D 뷰로 시각화하고, 적재 가능 수량과 공간 활용률을 계산합니다.">
 <meta name="keywords" content="컨테이너 적재 계산기, 컨테이너 적재 시뮬레이션, 20ft 40ft 컨테이너 적재량">
 <title>컨테이너 적재 시각화 (2D/3D) — CBM Lab</title>
 <style>
   *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-  :root{--accent:#2563EB;--accent-light:#DBEAFE;--accent-dark:#1D4ED8;--slate-50:#F8FAFC;--slate-100:#F1F5F9;--slate-200:#E2E8F0;--slate-400:#94A3B8;--slate-500:#64748B;--slate-600:#475569;--slate-700:#334155;--slate-800:#1E293B;--slate-900:#0F172A;--success:#0F766E;--success-light:#CCFBF1;--radius:8px;--radius-lg:12px;--shadow-sm:0 1px 2px rgba(0,0,0,.05);font-family:'Pretendard','Apple SD Gothic Neo',system-ui,-apple-system,sans-serif}
+  :root{--accent:#2563EB;--accent-light:#DBEAFE;--accent-dark:#1D4ED8;--slate-50:#F8FAFC;--slate-100:#F1F5F9;--slate-200:#E2E8F0;--slate-300:#CBD5E1;--slate-400:#94A3B8;--slate-500:#64748B;--slate-600:#475569;--slate-700:#334155;--slate-800:#1E293B;--slate-900:#0F172A;--success:#0F766E;--success-light:#CCFBF1;--radius:8px;--radius-lg:12px;--shadow-sm:0 1px 2px rgba(0,0,0,.05);font-family:'Pretendard','Apple SD Gothic Neo',system-ui,-apple-system,sans-serif}
   body{background:var(--slate-50);color:var(--slate-800);font-size:14px;line-height:1.6}
   header{background:#fff;border-bottom:1px solid var(--slate-200)}
   .header-inner{max-width:1200px;margin:0 auto;padding:16px 24px;display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}
@@ -20,40 +20,68 @@
   .hero-inner{max-width:1200px;margin:0 auto}
   .hero h1{font-size:22px;font-weight:700;color:var(--slate-900);margin-bottom:6px}
   .hero p{font-size:14px;color:var(--slate-500);max-width:640px}
-  .main{max-width:1200px;margin:0 auto;padding:28px 24px 60px;display:grid;grid-template-columns:340px 1fr;gap:24px;align-items:start}
+  .main{max-width:1200px;margin:0 auto;padding:28px 24px 60px;display:grid;grid-template-columns:360px 1fr;gap:24px;align-items:start}
   .card{background:#fff;border:1px solid var(--slate-200);border-radius:var(--radius-lg);box-shadow:var(--shadow-sm);margin-bottom:20px}
   .card-header{padding:16px 20px;border-bottom:1px solid var(--slate-100)}
   .card-title{font-size:14px;font-weight:600;color:var(--slate-800)}
   .card-body{padding:20px}
   .field-group{margin-bottom:12px}
   .field-label{font-size:12px;font-weight:600;color:var(--slate-600);margin-bottom:6px;display:block}
-  .field-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px}
   .inp,select.inp{width:100%;border:1px solid var(--slate-200);border-radius:6px;padding:8px 10px;font-size:13px;font-family:inherit}
   .inp:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px rgba(37,99,235,.1)}
-  .viz-wrap{display:flex;flex-direction:column;align-items:center;gap:8px}
-  .view-toggle{display:flex;background:var(--slate-100);border-radius:8px;padding:3px;gap:2px;margin-bottom:4px}
+
+  /* ITEM TABLE */
+  .item-table-wrap{overflow-x:auto;margin:0 -4px}
+  .item-table{width:100%;border-collapse:collapse;min-width:340px}
+  .item-table thead th{padding:6px 4px;text-align:left;font-size:10px;font-weight:700;color:var(--slate-400);text-transform:uppercase;white-space:nowrap}
+  .item-table thead th:last-child{text-align:center}
+  .item-table tbody td{padding:4px}
+  .item-table tbody td:last-child{text-align:center}
+  .item-table input{width:100%;border:1px solid var(--slate-200);border-radius:5px;padding:6px 7px;font-size:12px;font-family:inherit}
+  .item-table input.name-inp{min-width:76px}
+  .item-table input.dim-inp{width:48px}
+  .item-table .color-dot{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:4px;vertical-align:middle}
+  .btn-del-row{width:24px;height:24px;border:1px solid var(--slate-200);border-radius:5px;background:#fff;color:var(--slate-400);cursor:pointer;font-size:11px}
+  .btn-del-row:hover{border-color:#DC2626;color:#DC2626}
+  .btn-add-row{display:block;width:100%;padding:8px;border:1px dashed var(--slate-300);border-radius:6px;background:transparent;color:var(--slate-500);font-size:12px;cursor:pointer;margin-top:8px;font-family:inherit}
+  .btn-add-row:hover{border-color:var(--accent);color:var(--accent)}
+
+  .notice-box{background:var(--accent-light);border:1px solid #BFDBFE;border-radius:var(--radius);padding:10px 14px;font-size:12px;color:#1E40AF;margin-top:14px}
+
+  .view-toggle{display:flex;background:var(--slate-100);border-radius:8px;padding:3px;gap:2px;margin-bottom:14px}
   .view-btn{padding:7px 16px;border:none;background:transparent;border-radius:6px;font-size:12.5px;font-weight:700;color:var(--slate-500);cursor:pointer;font-family:inherit}
   .view-btn.active{background:#fff;color:var(--accent);box-shadow:var(--shadow-sm)}
   .scene-wrap{width:100%;display:none}
   .scene-wrap.active{display:block}
-  .scene{width:100%;height:320px;perspective:900px;display:flex;align-items:center;justify-content:center;cursor:grab;touch-action:none;background:linear-gradient(180deg,#F1F5F9,#F8FAFC);border-radius:8px;overflow:hidden}
+
+  .viz-label{font-size:12px;font-weight:600;color:var(--slate-600);margin-bottom:8px}
+  .layer-picker{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px}
+  .layer-pick-btn{font-size:11.5px;font-weight:600;padding:5px 11px;border-radius:999px;border:1px solid var(--slate-200);background:#fff;cursor:pointer;display:flex;align-items:center;gap:5px}
+  .layer-pick-btn.active{border-color:var(--accent);color:var(--accent);background:var(--accent-light)}
+
+  .scene{width:100%;height:340px;perspective:1000px;display:flex;align-items:center;justify-content:center;cursor:grab;touch-action:none;background:linear-gradient(180deg,#EEF2F7,#F8FAFC);border-radius:8px;overflow:hidden}
   .scene:active{cursor:grabbing}
-  .rig{position:relative;transform-style:preserve-3d}
-  .cube-group{position:absolute;transform-style:preserve-3d}
-  .face{position:absolute;border:1.5px solid rgba(30,41,59,.55);box-sizing:border-box}
-  .face.container-face{background:rgba(255,255,255,.05);border-color:rgba(30,41,59,.45)}
-  .face.cargo-face{background:rgba(37,99,235,.35);border-color:rgba(29,78,216,.7)}
+  .rig{position:relative;transform-style:preserve-3d;width:0;height:0}
+  .edge{position:absolute;background:#334155;top:0;left:0}
+  .cube-group{position:absolute;top:0;left:0;transform-style:preserve-3d}
+  .face{position:absolute;top:0;left:0;backface-visibility:hidden}
   .scene-controls{display:flex;align-items:center;justify-content:center;gap:14px;margin-top:10px;font-size:11.5px;color:var(--slate-500)}
-  .scene-controls input[type=range]{width:140px}
-  .scene-hint{font-size:11px;color:var(--slate-400);text-align:center;margin-top:4px}
-  .viz-label{font-size:12px;font-weight:700;color:var(--slate-600);align-self:flex-start}
-  .result-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:16px}
+  .scene-controls input[type=range]{width:130px}
+  .scene-hint{font-size:11px;color:var(--slate-400);text-align:center;margin-top:6px}
+  .scene-legend{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:10px;font-size:11px;color:var(--slate-500)}
+  .scene-legend .item{display:flex;align-items:center;gap:5px}
+  .scene-legend .sw{width:11px;height:11px;border-radius:3px}
+
+  .result-table{width:100%;border-collapse:collapse;margin-top:16px;font-size:12.5px}
+  .result-table th,.result-table td{padding:8px 10px;text-align:left;border-bottom:1px solid var(--slate-100)}
+  .result-table th{font-size:10.5px;color:var(--slate-400);text-transform:uppercase;font-weight:700}
+  .result-summary{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:14px}
   .result-item{background:var(--slate-50);border:1px solid var(--slate-100);border-radius:var(--radius);padding:12px 14px;text-align:center}
   .result-item .r-label{font-size:10.5px;font-weight:700;color:var(--slate-400);text-transform:uppercase}
-  .result-item .r-value{font-size:19px;font-weight:800;color:var(--accent-dark);margin-top:2px}
-  .util-bar{height:20px;background:var(--slate-100);border-radius:999px;overflow:hidden;margin-top:14px}
-  .util-fill{height:100%;background:var(--success);display:flex;align-items:center;justify-content:center;font-size:10.5px;color:#fff;font-weight:700;transition:width .3s}
-  .notice-box{background:var(--accent-light);border:1px solid #BFDBFE;border-radius:var(--radius);padding:10px 14px;font-size:12px;color:#1E40AF;margin-top:14px}
+  .result-item .r-value{font-size:18px;font-weight:800;color:var(--accent-dark);margin-top:2px}
+  .util-bar{height:20px;background:var(--slate-100);border-radius:999px;overflow:hidden;margin-top:14px;display:flex}
+  .util-seg{height:100%;display:flex;align-items:center;justify-content:center;font-size:10px;color:#fff;font-weight:700}
+
   footer{background:var(--slate-900);color:var(--slate-400);padding:24px;font-size:12px}
   .footer-inner{max-width:1200px;margin:0 auto;display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
   .footer-logo{font-size:15px;font-weight:800;color:#fff}
@@ -61,20 +89,6 @@
   .footer-link{color:var(--slate-500);text-decoration:none;font-size:11px;margin-right:14px}
   @media (max-width:900px){.main{grid-template-columns:1fr}}
 </style>
-<script src="https://cdn.amplitude.com/script/d4aa9301e01f4600b5eeb018e160aa7c.js"></script>
-<script>
-  window.amplitude.init("d4aa9301e01f4600b5eeb018e160aa7c", {
-    fetchRemoteConfig: true,
-    autocapture: true,
-  });
-</script>
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-W1YBL5BGGK"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-W1YBL5BGGK');
-</script>
 </head>
 <body>
 <header><div class="header-inner">
@@ -84,13 +98,13 @@
 
 <section class="hero"><div class="hero-inner">
   <h1>컨테이너 적재 시각화 (2D/3D)</h1>
-  <p>박스 규격을 입력하면 컨테이너 바닥면에 어떻게 배치되는지 그려드립니다. 2D 평면도로 빠르게 확인하거나, 3D로 전환해서 드래그로 돌려가며 살펴보세요.</p>
+  <p>서로 다른 박스 규격을 한 번에 입력하면, 컨테이너 안에 종류별로 어떻게 층층이 쌓이는지 계산하고 그려드립니다. 2D 평면도로 빠르게 확인하거나, 3D로 전환해서 드래그로 돌려가며 살펴보세요.</p>
 </div></section>
 
 <div class="main">
   <section>
     <div class="card">
-      <div class="card-header"><div class="card-title">규격 입력</div></div>
+      <div class="card-header"><div class="card-title">컨테이너 &amp; 박스 규격</div></div>
       <div class="card-body">
         <div class="field-group">
           <label class="field-label">컨테이너 종류</label>
@@ -100,19 +114,19 @@
             <option value="40hc">40ft High Cube (1203.2 × 235.2 × 269.8 cm)</option>
           </select>
         </div>
+
         <div class="field-group">
-          <label class="field-label">박스 규격 (cm)</label>
-          <div class="field-row">
-            <input type="number" class="inp" id="boxL" value="60" placeholder="가로" oninput="calc()">
-            <input type="number" class="inp" id="boxW" value="40" placeholder="세로" oninput="calc()">
-            <input type="number" class="inp" id="boxH" value="40" placeholder="높이" oninput="calc()">
+          <label class="field-label">박스 규격 (여러 종류 입력 가능, cm)</label>
+          <div class="item-table-wrap">
+            <table class="item-table">
+              <thead><tr><th>품목명</th><th>가로</th><th>세로</th><th>높이</th><th>수량</th><th></th></tr></thead>
+              <tbody id="itemBody"></tbody>
+            </table>
           </div>
+          <button class="btn-add-row" onclick="addItem()">+ 박스 규격 추가</button>
         </div>
-        <div class="field-group">
-          <label class="field-label">보유 수량 (선택, 비워두면 최대 적재량 계산)</label>
-          <input type="number" class="inp" id="boxQty" placeholder="예: 500" oninput="calc()">
-        </div>
-        <div class="notice-box">단순 격자 배치 기준의 참고용 시각화입니다. 실제로는 팔레트 사용 여부, 박스 회전, 화물 고정 규정에 따라 적재량이 달라질 수 있어 포워더의 정확한 적재 계획을 함께 확인하세요.</div>
+
+        <div class="notice-box">품목을 입력한 순서대로 바닥부터 층층이 쌓는 방식으로 계산합니다. 실제로는 팔레트 사용, 박스 회전, 화물 고정 규정 등에 따라 달라질 수 있어 포워더의 정확한 적재 계획을 함께 확인하세요.</div>
       </div>
     </div>
   </section>
@@ -122,32 +136,37 @@
       <div class="card-header"><div class="card-title">적재 시각화</div></div>
       <div class="card-body">
         <div class="view-toggle">
-          <button class="view-btn active" id="btn2d" onclick="setView('2d')">2D (위에서 본 모습)</button>
+          <button class="view-btn active" id="btn2d" onclick="setView('2d')">2D (층별 평면도)</button>
           <button class="view-btn" id="btn3d" onclick="setView('3d')">3D (드래그로 회전)</button>
         </div>
 
-        <div class="viz-wrap scene-wrap active" id="wrap2d">
+        <div class="scene-wrap active" id="wrap2d">
+          <div class="layer-picker" id="layerPicker"></div>
           <div class="viz-label" id="vizLabel"></div>
           <svg id="vizSvg" width="100%" height="220" viewBox="0 0 600 220"></svg>
         </div>
 
         <div class="scene-wrap" id="wrap3d">
-          <div class="scene" id="scene3d">
-            <div class="rig" id="rig3d"></div>
-          </div>
+          <div class="scene" id="scene3d"><div class="rig" id="rig3d"></div></div>
           <div class="scene-controls">
             <label>회전 <input type="range" id="rotY" min="-180" max="180" value="-35" oninput="applyRotation()"></label>
-            <label>기울기 <input type="range" id="rotX" min="0" max="70" value="22" oninput="applyRotation()"></label>
+            <label>기울기 <input type="range" id="rotX" min="0" max="70" value="20" oninput="applyRotation()"></label>
           </div>
-          <div class="scene-hint">마우스로 드래그하거나 슬라이더로 회전해서 적재 상태를 확인하세요. 진한 파란 블록이 실제 적재되는 화물입니다.</div>
+          <div class="scene-legend" id="sceneLegend"></div>
+          <div class="scene-hint">마우스(또는 손가락)로 드래그해서 회전할 수 있습니다. 색이 다른 블록은 서로 다른 박스 종류입니다.</div>
         </div>
-        <div class="result-grid">
-          <div class="result-item"><div class="r-label">1층당 박스</div><div class="r-value" id="perLayer">-</div></div>
-          <div class="result-item"><div class="r-label">적재 층수</div><div class="r-value" id="layers">-</div></div>
-          <div class="result-item"><div class="r-label">총 적재 가능량</div><div class="r-value" id="total">-</div></div>
+
+        <div class="result-summary">
+          <div class="result-item"><div class="r-label">총 사용 층수</div><div class="r-value" id="totalLayers">-</div></div>
+          <div class="result-item"><div class="r-label">총 배치 수량</div><div class="r-value" id="totalPlaced">-</div></div>
+          <div class="result-item"><div class="r-label">공간 활용률</div><div class="r-value" id="totalUtil">-</div></div>
         </div>
-        <div class="util-bar"><div class="util-fill" id="utilFill" style="width:0%">0%</div></div>
-        <div style="font-size:11px;color:var(--slate-400);text-align:center;margin-top:6px;">부피 기준 컨테이너 공간 활용률</div>
+        <div class="util-bar" id="utilBar"></div>
+
+        <table class="result-table">
+          <thead><tr><th>품목</th><th>층수</th><th>배치 / 요청 수량</th></tr></thead>
+          <tbody id="resultBody"></tbody>
+        </table>
       </div>
     </div>
   </aside>
@@ -164,132 +183,264 @@ const CONTAINERS = {
   '40': {l:1203.2, w:235.2, h:239.3, name:'40ft'},
   '40hc': {l:1203.2, w:235.2, h:269.8, name:'40ft HC'}
 };
+const COLORS = ['#2563EB','#F59E0B','#0F766E','#DC2626','#7C3AED','#0891B2'];
 
-function calc(){
-  const c = CONTAINERS[document.getElementById('containerType').value];
-  const bl = parseFloat(document.getElementById('boxL').value)||1;
-  const bw = parseFloat(document.getElementById('boxW').value)||1;
-  const bh = parseFloat(document.getElementById('boxH').value)||1;
-  const qtyInput = document.getElementById('boxQty').value;
+let items = [];
+let itemCounter = 0;
+let currentView = '2d';
+let currentLayerIdx = 0;
+let packResult = null;
+let rotY = -35, rotX = 20;
 
-  const cols = Math.floor(c.l / bl);
-  const rows = Math.floor(c.w / bw);
-  const perLayer = cols * rows;
-  const layers = Math.floor(c.h / bh);
-  let total = perLayer * layers;
+function addItem(name, l, w, h, qty){
+  itemCounter++;
+  items.push({id:itemCounter, name:name||('박스 '+String.fromCharCode(64+items.length+1)), l:l??60, w:w??40, h:h??40, qty:qty??50});
+  renderItemRows();
+}
+function removeItem(id){
+  items = items.filter(i=>i.id!==id);
+  if(items.length===0) addItem();
+  else renderItemRows();
+}
+function updateItem(id, field, val){
+  const it = items.find(i=>i.id===id); if(!it) return;
+  it[field] = (field==='name') ? val : (parseFloat(val)||0);
+  calc();
+}
 
-  const requested = parseFloat(qtyInput);
-  const cappedByQty = !isNaN(requested) && requested < total;
-  const displayTotal = cappedByQty ? requested : total;
-
-  document.getElementById('perLayer').textContent = perLayer + ' 개';
-  document.getElementById('layers').textContent = layers + ' 층';
-  document.getElementById('total').textContent = fmt(displayTotal) + ' 개' + (cappedByQty ? ' (보유수량 기준)' : '');
-  document.getElementById('vizLabel').textContent = `${c.name} 컨테이너 바닥면 — 가로 ${cols}개 × 세로 ${rows}개 = ${perLayer}개/층`;
-
-  const boxVolume = bl*bw*bh;
-  const usedVolume = Math.min(displayTotal, total) * boxVolume;
-  const containerVolume = c.l*c.w*c.h;
-  const utilization = Math.min(100, (usedVolume/containerVolume)*100);
-  document.getElementById('utilFill').style.width = utilization.toFixed(0)+'%';
-  document.getElementById('utilFill').textContent = utilization.toFixed(0)+'%';
-
-  drawViz(c, bl, bw, cols, rows, cappedByQty ? requested : null, perLayer);
-
-  // 3D 뷰용 실제 적재 치수(cm) 계산: 층수만큼 쌓인 부피
-  const packedL = cols * bl;
-  const packedW = rows * bw;
-  const packedH = layers * bh;
-  lastCalcParams = [c, packedL, packedW, packedH];
-  if(currentView === '3d') render3D(...lastCalcParams);
+function renderItemRows(){
+  const body = document.getElementById('itemBody');
+  body.innerHTML = items.map((it,idx)=>`
+    <tr>
+      <td><span class="color-dot" style="background:${COLORS[idx%COLORS.length]}"></span><input class="inp name-inp" value="${it.name}" oninput="updateItem(${it.id},'name',this.value)"></td>
+      <td><input class="inp dim-inp" type="number" value="${it.l}" oninput="updateItem(${it.id},'l',this.value)"></td>
+      <td><input class="inp dim-inp" type="number" value="${it.w}" oninput="updateItem(${it.id},'w',this.value)"></td>
+      <td><input class="inp dim-inp" type="number" value="${it.h}" oninput="updateItem(${it.id},'h',this.value)"></td>
+      <td><input class="inp dim-inp" type="number" value="${it.qty}" oninput="updateItem(${it.id},'qty',this.value)"></td>
+      <td><button class="btn-del-row" onclick="removeItem(${it.id})" ${items.length<=1?'disabled':''}>✕</button></td>
+    </tr>
+  `).join('');
+  calc();
 }
 
 function fmt(n){ return Math.round(n||0).toLocaleString('ko-KR'); }
 
-function drawViz(container, bl, bw, cols, rows, cappedQty, perLayer){
+// ===== PACKING (순서대로 바닥부터 층층이 쌓기) =====
+function pack(container, itemList){
+  let remainingHeight = container.h;
+  const layerRecords = []; // {item, color, layers, perLayer, placedQty, layerHeightCm, startHeightCm}
+  let cumHeight = 0;
+
+  itemList.forEach((it, idx) => {
+    const cols = Math.floor(container.l / it.l);
+    const rows = Math.floor(container.w / it.w);
+    const perLayer = cols * rows;
+    if(perLayer <= 0 || it.h <= 0 || remainingHeight < it.h){
+      layerRecords.push({item:it, color:COLORS[idx%COLORS.length], cols, rows, perLayer, layers:0, placedQty:0, startHeightCm:cumHeight});
+      return;
+    }
+    const layersByHeight = Math.floor(remainingHeight / it.h);
+    const layersByQty = perLayer>0 ? Math.ceil(it.qty / perLayer) : 0;
+    const layers = Math.max(0, Math.min(layersByHeight, layersByQty));
+    const placedQty = Math.min(it.qty, layers*perLayer);
+
+    layerRecords.push({item:it, color:COLORS[idx%COLORS.length], cols, rows, perLayer, layers, placedQty, startHeightCm:cumHeight});
+    cumHeight += layers*it.h;
+    remainingHeight -= layers*it.h;
+  });
+
+  return { layerRecords, usedHeight: cumHeight, remainingHeight };
+}
+
+function calc(){
+  const container = CONTAINERS[document.getElementById('containerType').value];
+  const result = pack(container, items);
+  packResult = result;
+
+  // 결과 테이블
+  const totalLayers = result.layerRecords.reduce((a,r)=>a+r.layers,0);
+  const totalPlaced = result.layerRecords.reduce((a,r)=>a+r.placedQty,0);
+  const totalRequested = items.reduce((a,i)=>a+i.qty,0);
+
+  document.getElementById('totalLayers').textContent = totalLayers + ' 층';
+  document.getElementById('totalPlaced').textContent = fmt(totalPlaced) + ' / ' + fmt(totalRequested);
+
+  let usedVolume = 0;
+  result.layerRecords.forEach(r=>{ usedVolume += r.placedQty * r.item.l * r.item.w * r.item.h; });
+  const containerVolume = container.l*container.w*container.h;
+  const util = Math.min(100, (usedVolume/containerVolume)*100);
+  document.getElementById('totalUtil').textContent = util.toFixed(0)+'%';
+
+  document.getElementById('resultBody').innerHTML = result.layerRecords.map(r=>`
+    <tr>
+      <td><span class="color-dot" style="background:${r.color}"></span>${r.item.name}</td>
+      <td>${r.layers} 층</td>
+      <td>${fmt(r.placedQty)} / ${fmt(r.item.qty)}${r.placedQty<r.item.qty ? ' <span style="color:#DC2626;">(공간부족)</span>' : ''}</td>
+    </tr>
+  `).join('');
+
+  // util bar (스택형 색상 바)
+  const utilBar = document.getElementById('utilBar');
+  utilBar.innerHTML = result.layerRecords.filter(r=>r.placedQty>0).map(r=>{
+    const vol = r.placedQty * r.item.l * r.item.w * r.item.h;
+    const pct = (vol/containerVolume)*100;
+    return `<div class="util-seg" style="width:${pct}%;background:${r.color};">${pct>=8?pct.toFixed(0)+'%':''}</div>`;
+  }).join('');
+
+  // 층 선택 UI (2D용)
+  renderLayerPicker(result);
+  currentLayerIdx = Math.min(currentLayerIdx, Math.max(0, totalLayers-1));
+  drawViz2D(container, result);
+
+  if(currentView === '3d') render3D(container, result);
+}
+
+function renderLayerPicker(result){
+  const picker = document.getElementById('layerPicker');
+  const flatLayers = [];
+  result.layerRecords.forEach(r=>{
+    for(let i=0;i<r.layers;i++) flatLayers.push({item:r.item, color:r.color, cols:r.cols, rows:r.rows, perLayer:r.perLayer});
+  });
+  if(flatLayers.length === 0){ picker.innerHTML = ''; return; }
+  picker.innerHTML = flatLayers.map((f,idx)=>`
+    <button class="layer-pick-btn ${idx===currentLayerIdx?'active':''}" onclick="pickLayer(${idx})">
+      <span class="color-dot" style="background:${f.color}"></span>${idx+1}층 (${f.item.name})
+    </button>
+  `).join('');
+  window._flatLayers = flatLayers;
+}
+function pickLayer(idx){
+  currentLayerIdx = idx;
+  const container = CONTAINERS[document.getElementById('containerType').value];
+  renderLayerPicker(packResult);
+  drawViz2D(container, packResult);
+}
+
+function drawViz2D(container, result){
   const svg = document.getElementById('vizSvg');
+  const flat = window._flatLayers || [];
+  if(flat.length === 0){
+    document.getElementById('vizLabel').textContent = '적재 가능한 층이 없습니다. 박스 규격 또는 컨테이너 크기를 확인하세요.';
+    svg.innerHTML = '';
+    return;
+  }
+  const layer = flat[currentLayerIdx] || flat[0];
+  document.getElementById('vizLabel').textContent = `${container.name} 컨테이너 바닥면 — ${layer.item.name}: 가로 ${layer.cols}개 × 세로 ${layer.rows}개 = ${layer.perLayer}개`;
+
   const padding = 20;
-  const availW = 600 - padding*2;
-  const availH = 200 - padding*2;
+  const availW = 600 - padding*2, availH = 200 - padding*2;
   const scale = Math.min(availW/container.l, availH/container.w);
   const contW = container.l*scale, contH = container.w*scale;
   const offX = (600-contW)/2, offY = (220-contH)/2 - 5;
 
-  let boxesToShow = perLayer;
-  if(cappedQty !== null) boxesToShow = Math.min(perLayer, Math.ceil(cappedQty));
-
   let rects = `<rect x="${offX}" y="${offY}" width="${contW}" height="${contH}" fill="none" stroke="#1E293B" stroke-width="2" rx="3"/>`;
-  let count = 0;
-  outer:
-  for(let r=0;r<rows;r++){
-    for(let c2=0;c2<cols;c2++){
-      if(count >= boxesToShow) break outer;
-      const x = offX + c2*bl*scale;
-      const y = offY + r*bw*scale;
-      rects += `<rect x="${x+1}" y="${y+1}" width="${bl*scale-2}" height="${bw*scale-2}" fill="#DBEAFE" stroke="#2563EB" stroke-width="1"/>`;
-      count++;
+  for(let r=0;r<layer.rows;r++){
+    for(let c=0;c<layer.cols;c++){
+      const x = offX + c*(container.l*scale/layer.cols);
+      const y = offY + r*(container.w*scale/layer.rows);
+      const bw = container.l*scale/layer.cols, bh = container.w*scale/layer.rows;
+      rects += `<rect x="${x+1}" y="${y+1}" width="${bw-2}" height="${bh-2}" fill="${layer.color}22" stroke="${layer.color}" stroke-width="1"/>`;
     }
   }
   svg.innerHTML = rects;
 }
 
-// ===== 3D VIEW =====
-let currentView = '2d';
-let rotY = -35, rotX = 22;
-let lastCalcParams = null;
-
+// ===== 3D VIEW (와이어프레임 컨테이너 + 불투명 셰이딩 큐브) =====
 function setView(v){
   currentView = v;
   document.getElementById('btn2d').classList.toggle('active', v==='2d');
   document.getElementById('btn3d').classList.toggle('active', v==='3d');
   document.getElementById('wrap2d').classList.toggle('active', v==='2d');
   document.getElementById('wrap3d').classList.toggle('active', v==='3d');
-  if(v==='3d' && lastCalcParams) render3D(...lastCalcParams);
+  if(v==='3d'){
+    const container = CONTAINERS[document.getElementById('containerType').value];
+    render3D(container, packResult);
+  }
 }
-
 function applyRotation(){
   rotY = parseFloat(document.getElementById('rotY').value);
   rotX = parseFloat(document.getElementById('rotX').value);
   const rig = document.getElementById('rig3d');
-  rig.style.transform = `rotateX(${rotX}deg) rotateY(${rotY}deg)`;
+  if(rig) rig.style.transform = `rotateX(${rotX}deg) rotateY(${rotY}deg)`;
 }
 
-function buildCuboid(w, h, d, className){
-  // returns HTML for a 6-face cuboid group, centered at its own origin
+function shade(hex, factor){
+  // hex like #2563EB, factor 0~1.4 (1=원색, >1 밝게, <1 어둡게)
+  const n = parseInt(hex.slice(1),16);
+  let r = (n>>16)&255, g=(n>>8)&255, b=n&255;
+  r = Math.min(255, Math.round(r*factor));
+  g = Math.min(255, Math.round(g*factor));
+  b = Math.min(255, Math.round(b*factor));
+  return `rgb(${r},${g},${b})`;
+}
+
+function buildSolidCuboid(w,h,d,color){
+  // 6 faces, opaque with per-face shading (표준 CSS 큐브 기법)
+  const top = shade(color,1.35), front = shade(color,1.0), side = shade(color,0.8), back = shade(color,0.65), bottom = shade(color,0.55);
   return `
-    <div class="face ${className}" style="width:${w}px;height:${h}px;transform:translate3d(-${w/2}px,-${h/2}px,${d/2}px)"></div>
-    <div class="face ${className}" style="width:${w}px;height:${h}px;transform:translate3d(-${w/2}px,-${h/2}px,-${d/2}px) rotateY(180deg)"></div>
-    <div class="face ${className}" style="width:${d}px;height:${h}px;transform:translate3d(-${d/2}px,-${h/2}px,${w/2}px) rotateY(90deg)"></div>
-    <div class="face ${className}" style="width:${d}px;height:${h}px;transform:translate3d(-${d/2}px,-${h/2}px,-${w/2}px) rotateY(-90deg)"></div>
-    <div class="face ${className}" style="width:${w}px;height:${d}px;transform:translate3d(-${w/2}px,-${d/2}px,${h/2}px) rotateX(90deg)"></div>
-    <div class="face ${className}" style="width:${w}px;height:${d}px;transform:translate3d(-${w/2}px,-${d/2}px,-${h/2}px) rotateX(-90deg)"></div>
+    <div class="face" style="width:${w}px;height:${h}px;background:${front};transform:translate3d(-${w/2}px,-${h/2}px,${d/2}px)"></div>
+    <div class="face" style="width:${w}px;height:${h}px;background:${back};transform:translate3d(-${w/2}px,-${h/2}px,-${d/2}px) rotateY(180deg)"></div>
+    <div class="face" style="width:${d}px;height:${h}px;background:${side};transform:translate3d(-${d/2}px,-${h/2}px,${w/2}px) rotateY(90deg)"></div>
+    <div class="face" style="width:${d}px;height:${h}px;background:${side};transform:translate3d(-${d/2}px,-${h/2}px,-${w/2}px) rotateY(-90deg)"></div>
+    <div class="face" style="width:${w}px;height:${d}px;background:${top};transform:translate3d(-${w/2}px,-${d/2}px,${h/2}px) rotateX(90deg)"></div>
+    <div class="face" style="width:${w}px;height:${d}px;background:${bottom};transform:translate3d(-${w/2}px,-${d/2}px,-${h/2}px) rotateX(-90deg)"></div>
   `;
 }
 
-function render3D(container, cargoL, cargoW, cargoH){
-  const maxDim = Math.max(container.l, container.w, container.h);
-  const scale = 220 / maxDim;
+function buildWireframe(w,h,d){
+  // 12 edges (얇은 막대), 축 정렬 박스이므로 회전 없이 배치 가능
+  const t = 2; // 두께
+  let html = '';
+  // X방향 4개 (길이 w)
+  [[-1,-1],[-1,1],[1,-1],[1,1]].forEach(([sy,sz])=>{
+    html += `<div class="edge" style="width:${w}px;height:${t}px;transform:translate3d(-${w/2}px, ${sy*h/2 - t/2}px, ${sz*d/2}px)"></div>`;
+  });
+  // Y방향 4개 (길이 h)
+  [[-1,-1],[-1,1],[1,-1],[1,1]].forEach(([sx,sz])=>{
+    html += `<div class="edge" style="width:${t}px;height:${h}px;transform:translate3d(${sx*w/2 - t/2}px, -${h/2}px, ${sz*d/2}px)"></div>`;
+  });
+  // Z방향 4개 (길이 d) - rotateY(90)으로 폭 방향을 Z축에 정렬
+  [[-1,-1],[-1,1],[1,-1],[1,1]].forEach(([sx,sy])=>{
+    html += `<div class="edge" style="width:${d}px;height:${t}px;transform:translate3d(${sx*w/2}px, ${sy*h/2 - t/2}px, -${d/2}px) rotateY(90deg)"></div>`;
+  });
+  return html;
+}
 
+function render3D(container, result){
+  if(!result) return;
+  const maxDim = Math.max(container.l, container.w, container.h);
+  const scale = 230 / maxDim;
   const contW = container.l*scale, contH = container.h*scale, contD = container.w*scale;
-  const cargoWpx = cargoL*scale, cargoHpx = cargoH*scale, cargoDpx = cargoW*scale;
 
   const rig = document.getElementById('rig3d');
-  rig.style.width = contW+'px';
-  rig.style.height = contH+'px';
+  let html = `<div class="cube-group">${buildWireframe(contW, contH, contD)}</div>`;
 
-  // cargo offset: floor + front-left aligned inside container
-  const offX = -contW/2 + cargoWpx/2;
-  const offY = contH/2 - cargoHpx/2;
-  const offZ = contD/2 - cargoDpx/2;
+  // 층별로 쌓인 블록들을 아래에서부터 배치
+  let cumH = 0;
+  result.layerRecords.forEach(r=>{
+    if(r.layers <= 0) return;
+    const blockHpx = r.layers * r.item.h * scale;
+    const blockWpx = r.cols * r.item.l * scale;
+    const blockDpx = r.rows * r.item.w * scale;
 
-  rig.innerHTML = `
-    <div class="cube-group" style="transform:translate3d(0,0,0)">${buildCuboid(contW, contH, contD, 'container-face')}</div>
-    <div class="cube-group" style="transform:translate3d(${offX}px,${offY}px,${offZ}px)">${buildCuboid(cargoWpx, cargoHpx, cargoDpx, 'cargo-face')}</div>
-  `;
+    const offX = -contW/2 + blockWpx/2;
+    const offY = contH/2 - cumH*scale - blockHpx/2;
+    const offZ = contD/2 - blockDpx/2;
+
+    html += `<div class="cube-group" style="transform:translate3d(${offX}px,${offY}px,${offZ}px)">${buildSolidCuboid(blockWpx, blockHpx, blockDpx, r.color)}</div>`;
+    cumH += r.layers * r.item.h;
+  });
+
+  rig.innerHTML = html;
   applyRotation();
+
+  // 범례
+  document.getElementById('sceneLegend').innerHTML = result.layerRecords.filter(r=>r.layers>0).map(r=>`
+    <span class="item"><span class="sw" style="background:${r.color}"></span>${r.item.name} (${r.layers}층)</span>
+  `).join('');
 }
 
-// 마우스/터치 드래그로 회전
+// 드래그 회전
 (function initDrag(){
   const scene = document.getElementById('scene3d');
   let dragging = false, lastX = 0, lastY = 0;
@@ -305,7 +456,6 @@ function render3D(container, cargoL, cargoW, cargoH){
     applyRotation();
   };
   const end = () => { dragging = false; };
-
   scene.addEventListener('mousedown', e => start(e.clientX, e.clientY));
   window.addEventListener('mousemove', e => move(e.clientX, e.clientY));
   window.addEventListener('mouseup', end);
@@ -314,7 +464,7 @@ function render3D(container, cargoL, cargoW, cargoH){
   scene.addEventListener('touchend', end);
 })();
 
-calc();
+addItem('박스 A', 60, 40, 40, 80);
 </script>
 </body>
 </html>
