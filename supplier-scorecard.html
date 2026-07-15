@@ -349,9 +349,10 @@ function initScores(){
 
 function renderTable(){
   initScores();
-  const totalWeight = selectedCriteria.reduce((a,c)=>a+c.weight,0);
+  const totalWeightRaw = selectedCriteria.reduce((a,c)=>a+c.weight,0);
+  const totalWeight = Math.round(totalWeightRaw * 10) / 10; // 부동소수점 오차 제거 (소수 첫째자리 반올림)
   const warn = document.getElementById('weightWarning');
-  warn.textContent = (selectedCriteria.length>0 && totalWeight !== 100) ? `⚠ 가중치 합계가 ${totalWeight}%입니다 (100%가 되도록 조정하세요)` : '';
+  warn.textContent = (selectedCriteria.length>0 && Math.abs(totalWeight - 100) > 0.05) ? `⚠ 가중치 합계가 ${totalWeight}%입니다 (100%가 되도록 조정하세요)` : '';
 
   document.getElementById('selectedBar').innerHTML = `선택된 평가 항목: <strong>${selectedCriteria.length}개</strong> · 가중치 합계: <strong>${totalWeight}%</strong>`;
 
@@ -360,8 +361,8 @@ function renderTable(){
     return;
   }
 
-  let html = '<thead><tr><th style="text-align:left;">평가 항목</th><th>가중치</th>';
-  vendors.forEach((v,vi)=> html += `<th><input class="vendor-name" value="${v}" oninput="updateVendorName(${vi},this.value)"></th>`);
+  let html = '<thead><tr><th style="text-align:left;">평가 항목</th><th>가중치 (%)</th>';
+  vendors.forEach((v,vi)=> html += `<th><input class="vendor-name" value="${v}" oninput="updateVendorName(${vi},this.value)"><div style="font-size:9.5px;font-weight:400;color:var(--slate-400);text-transform:none;margin-top:2px;">점수 (1~5점)</div></th>`);
   html += '<th>비고</th></tr></thead><tbody>';
 
   const vendorTotals = vendors.map(()=>0);
@@ -383,7 +384,7 @@ function renderTable(){
       const score = scores[c.id][vi];
       const weighted = (score/5) * c.weight;
       vendorTotals[vi] += weighted;
-      html += `<td><input class="score" type="number" min="0" max="5" value="${score}" oninput="updateScore('${c.id}',${vi},this.value)"></td>`;
+      html += `<td><input class="score" type="number" min="0" max="5" value="${score}" oninput="updateScore('${c.id}',${vi},this.value)"> <span style="font-size:10px;color:var(--slate-400);">/5</span></td>`;
     });
 
     html += `<td><input class="remark" placeholder="메모" value="${remarks[c.id]||''}" oninput="updateRemark('${c.id}',this.value)"></td>`;
@@ -427,10 +428,14 @@ function updateReportMeta(vendorTotals){
   document.getElementById(id).addEventListener('input', ()=>renderTable());
 });
 
-// 초기 기본 항목 몇 개 선택
-['price_unit','q_ppm','d_ontime','f_credit','cert_iso9001','s_response'].forEach(id=>{
+// 초기 기본 항목 몇 개 선택 (가중치는 100%를 정확히 나누는 정수로 배분)
+const DEFAULT_IDS = ['price_unit','q_ppm','d_ontime','f_credit','cert_iso9001','s_response'];
+const n = DEFAULT_IDS.length;
+const base = Math.floor(100/n), remainder = 100 - base*n; // 6개 기준: 17이 4개, 16이 2개 = 100
+DEFAULT_IDS.forEach((id, idx)=>{
   const item = findLibItem(id);
-  selectedCriteria.push({id:item.id, name:item.name, desc:item.desc, low:item.low, mid:item.mid, high:item.high, weight: 100/6});
+  const w = base + (idx < remainder ? 1 : 0);
+  selectedCriteria.push({id:item.id, name:item.name, desc:item.desc, low:item.low, mid:item.mid, high:item.high, weight: w});
 });
 document.getElementById('metaDate').valueAsDate = new Date();
 renderLibrary();
