@@ -3,156 +3,391 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="가중치 기반 공급업체 평가 스코어카드를 무료로 생성하세요. 가격, 품질, 납기, 재무안정성 등 항목별 점수를 입력하면 자동으로 합산되고 인쇄할 수 있습니다.">
-<meta name="keywords" content="공급업체 평가, 벤더 스코어카드, supplier scorecard, 협력업체 평가표">
+<meta name="description" content="공급업체 평가 스코어카드 생성기. 가격, 품질, 납기, 재무, 인증 등 30여 개 객관적 평가 항목 중 선택해서 가중치 기반 종합 점수를 계산하고, 전문적인 보고서 형식으로 인쇄합니다.">
+<meta name="keywords" content="공급업체 평가, 벤더 스코어카드, supplier scorecard, 협력업체 평가표, 공급업체 평가 기준">
 <title>공급업체 평가 스코어카드 생성기 — CBM Lab</title>
 <style>
   *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-  :root{--accent:#2563EB;--accent-light:#DBEAFE;--accent-dark:#1D4ED8;--slate-50:#F8FAFC;--slate-100:#F1F5F9;--slate-200:#E2E8F0;--slate-400:#94A3B8;--slate-500:#64748B;--slate-600:#475569;--slate-700:#334155;--slate-800:#1E293B;--slate-900:#0F172A;--success:#0F766E;--success-light:#CCFBF1;--warning:#B45309;--warning-light:#FEF3C7;--danger:#DC2626;--danger-light:#FEE2E2;--radius:8px;--radius-lg:12px;--shadow-sm:0 1px 2px rgba(0,0,0,.05);font-family:'Pretendard','Apple SD Gothic Neo',system-ui,-apple-system,sans-serif}
+  :root{--accent:#2563EB;--accent-light:#DBEAFE;--accent-dark:#1D4ED8;--slate-50:#F8FAFC;--slate-100:#F1F5F9;--slate-200:#E2E8F0;--slate-300:#CBD5E1;--slate-400:#94A3B8;--slate-500:#64748B;--slate-600:#475569;--slate-700:#334155;--slate-800:#1E293B;--slate-900:#0F172A;--success:#0F766E;--success-light:#CCFBF1;--warning:#B45309;--warning-light:#FEF3C7;--danger:#DC2626;--danger-light:#FEE2E2;--radius:8px;--radius-lg:12px;--shadow-sm:0 1px 2px rgba(0,0,0,.05);font-family:'Pretendard','Apple SD Gothic Neo',system-ui,-apple-system,sans-serif}
   body{background:var(--slate-50);color:var(--slate-800);font-size:14px;line-height:1.6}
   header{background:#fff;border-bottom:1px solid var(--slate-200)}
-  .header-inner{max-width:1200px;margin:0 auto;padding:16px 24px;display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}
+  .header-inner{max-width:1300px;margin:0 auto;padding:16px 24px;display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}
   .logo-mark{font-size:20px;font-weight:800;color:var(--slate-900);text-decoration:none}
   .logo-mark span{color:var(--accent)}
   .nav-link{font-size:13px;font-weight:600;color:var(--slate-500);text-decoration:none;padding:7px 12px;border-radius:6px}
   .nav-link:hover{background:var(--slate-100)}
   .hero{background:#fff;border-bottom:1px solid var(--slate-200);padding:28px 24px 24px}
-  .hero-inner{max-width:1200px;margin:0 auto}
+  .hero-inner{max-width:1300px;margin:0 auto}
   .hero h1{font-size:22px;font-weight:700;color:var(--slate-900);margin-bottom:6px}
-  .hero p{font-size:14px;color:var(--slate-500);max-width:680px}
-  .main{max-width:1200px;margin:0 auto;padding:28px 24px 60px}
+  .hero p{font-size:14px;color:var(--slate-500);max-width:720px}
+  .main{max-width:1300px;margin:0 auto;padding:28px 24px 60px}
   .card{background:#fff;border:1px solid var(--slate-200);border-radius:var(--radius-lg);box-shadow:var(--shadow-sm);margin-bottom:20px}
   .card-header{padding:16px 20px;border-bottom:1px solid var(--slate-100);display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
   .card-title{font-size:14px;font-weight:600;color:var(--slate-800)}
-  .card-body{padding:0}
-  .sc-table{width:100%;border-collapse:collapse;font-size:12.5px}
-  .sc-table th,.sc-table td{border-bottom:1px solid var(--slate-100);padding:10px 12px;text-align:center}
+  .card-body{padding:20px}
+
+  /* META INFO */
+  .meta-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+  .meta-field label{font-size:11.5px;font-weight:600;color:var(--slate-500);margin-bottom:5px;display:block}
+  .meta-field input,.meta-field select{width:100%;border:1px solid var(--slate-200);border-radius:6px;padding:8px 10px;font-size:12.5px;font-family:inherit}
+  .meta-note{grid-column:1/-1}
+  .meta-note textarea{width:100%;border:1px solid var(--slate-200);border-radius:6px;padding:8px 10px;font-size:12.5px;font-family:inherit;resize:vertical;min-height:44px}
+  .disclaimer-inline{font-size:11px;color:var(--slate-400);margin-top:4px;line-height:1.5}
+
+  /* CRITERIA LIBRARY */
+  .cat-group{border:1px solid var(--slate-200);border-radius:var(--radius);margin-bottom:10px;overflow:hidden}
+  .cat-header{background:var(--slate-50);padding:10px 14px;display:flex;justify-content:space-between;align-items:center;cursor:pointer;user-select:none}
+  .cat-header:hover{background:var(--slate-100)}
+  .cat-title{font-size:13px;font-weight:700;color:var(--slate-700)}
+  .cat-count{font-size:11px;color:var(--slate-400)}
+  .cat-body{padding:8px 14px 12px;display:none}
+  .cat-body.open{display:block}
+  .crit-row{display:flex;align-items:flex-start;gap:10px;padding:8px 0;border-bottom:1px solid var(--slate-100)}
+  .crit-row:last-child{border-bottom:none}
+  .crit-row input[type=checkbox]{margin-top:3px;width:16px;height:16px;accent-color:var(--accent);flex-shrink:0}
+  .crit-info .crit-name{font-size:12.5px;font-weight:600;color:var(--slate-800)}
+  .crit-info .crit-desc{font-size:11.5px;color:var(--slate-500);margin-top:1px}
+  .rubric-toggle{font-size:10.5px;color:var(--accent);cursor:pointer;margin-top:3px;display:inline-block}
+  .rubric-box{display:none;margin-top:6px;background:var(--slate-50);border:1px solid var(--slate-100);border-radius:6px;padding:8px 10px;font-size:11px;color:var(--slate-600)}
+  .rubric-box.open{display:block}
+  .rubric-box .rb-line{display:flex;gap:6px;padding:2px 0}
+  .rubric-box .rb-score{font-weight:700;color:var(--slate-800);width:34px;flex-shrink:0}
+
+  .btn-add-custom{width:100%;padding:9px;border:1px dashed var(--slate-300);border-radius:6px;background:transparent;color:var(--slate-500);font-size:12.5px;cursor:pointer;font-family:inherit;margin-top:6px}
+  .btn-add-custom:hover{border-color:var(--accent);color:var(--accent)}
+
+  /* SELECTED COUNT BAR */
+  .selected-bar{display:flex;justify-content:space-between;align-items:center;background:var(--accent-light);border:1px solid #BFDBFE;border-radius:var(--radius);padding:10px 16px;margin-bottom:16px;font-size:12.5px;color:#1E40AF}
+  .selected-bar strong{font-size:14px}
+
+  /* SCORE TABLE */
+  .sc-table-wrap{overflow-x:auto}
+  .sc-table{width:100%;border-collapse:collapse;font-size:12px}
+  .sc-table th,.sc-table td{border-bottom:1px solid var(--slate-100);padding:8px 10px;text-align:center;vertical-align:top}
   .sc-table th{background:var(--slate-50);font-size:10.5px;color:var(--slate-500);text-transform:uppercase;font-weight:700}
-  .sc-table td.crit{text-align:left;font-weight:600;color:var(--slate-700)}
-  .sc-table input.weight{width:56px;text-align:center;border:1px solid var(--slate-200);border-radius:5px;padding:5px}
+  .sc-table td.crit-col{text-align:left;font-weight:600;color:var(--slate-700);max-width:180px}
+  .sc-table td.crit-col .cw{font-size:10px;color:var(--slate-400);font-weight:400}
+  .sc-table input.weight{width:52px;text-align:center;border:1px solid var(--slate-200);border-radius:5px;padding:5px}
   .sc-table input.score{width:44px;text-align:center;border:1px solid var(--slate-200);border-radius:5px;padding:5px}
   .sc-table input.vendor-name{width:100%;border:none;background:transparent;font-weight:700;text-align:center;font-size:12.5px;border-bottom:2px solid var(--slate-200);padding-bottom:4px}
+  .sc-table input.remark{width:120px;border:1px solid var(--slate-200);border-radius:5px;padding:5px;font-size:11px}
   .weighted-cell{font-weight:700}
   .weighted-cell.green{color:var(--success)}
   .weighted-cell.yellow{color:var(--warning)}
   .weighted-cell.red{color:var(--danger)}
   .total-row td{background:var(--accent-light);font-weight:800;color:var(--accent-dark);font-size:14px}
+  .btn-del-crit{width:22px;height:22px;border:1px solid var(--slate-200);border-radius:5px;background:#fff;color:var(--slate-400);cursor:pointer;font-size:10px}
+  .btn-del-crit:hover{border-color:var(--danger);color:var(--danger)}
+
   .btn-add-vendor{padding:8px 16px;border:1px dashed var(--slate-300);background:transparent;border-radius:6px;font-size:12px;color:var(--slate-500);cursor:pointer;font-family:inherit}
   .btn-add-vendor:hover{border-color:var(--accent);color:var(--accent)}
   .btn-print{padding:8px 16px;background:var(--slate-900);color:#fff;border:none;border-radius:6px;font-size:12px;font-weight:700;cursor:pointer}
   .btn-print:hover{background:var(--accent)}
-  .weight-warning{font-size:11.5px;color:var(--warning);padding:10px 20px;}
-  .notice-box{background:var(--accent-light);border:1px solid #BFDBFE;border-radius:var(--radius);padding:10px 14px;font-size:12px;color:#1E40AF;margin:14px 20px}
-  @media print{ header,.hero,.btn-print,.btn-add-vendor,footer{display:none !important} }
-  footer{background:var(--slate-900);color:var(--slate-400);padding:24px;font-size:12px}
-  .footer-inner{max-width:1200px;margin:0 auto;display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
-  .footer-logo{font-size:15px;font-weight:800;color:#fff}
-  .footer-logo span{color:var(--accent)}
-  .footer-link{color:var(--slate-500);text-decoration:none;font-size:11px;margin-right:14px}
-  @media (max-width:768px){.sc-table{font-size:11px}.sc-table th,.sc-table td{padding:6px}}
+
+  .weight-warning{font-size:11.5px;color:var(--warning);margin-top:10px}
+  .notice-box{background:var(--accent-light);border:1px solid #BFDBFE;border-radius:var(--radius);padding:10px 14px;font-size:12px;color:#1E40AF;margin-top:14px}
+
+  /* PRINT REPORT LAYOUT */
+  .report-only{display:none}
+  @media print{
+    header,.hero,.left-controls,.btn-print,.btn-add-vendor,.btn-add-custom,.btn-del-crit,footer,.selected-bar,.weight-warning{display:none !important}
+    body{background:#fff}
+    .main{padding:0;max-width:100%}
+    .report-only{display:block}
+    .card{border:none;box-shadow:none;margin-bottom:0}
+    .card-body{padding:0}
+  }
+  .report-header{border:2px solid #1E293B;border-radius:8px;padding:24px 28px;margin-bottom:20px;position:relative}
+  .report-header .rh-badge{position:absolute;top:20px;right:24px;border:2px solid var(--accent);color:var(--accent);font-family:Georgia,serif;font-size:11px;font-weight:700;letter-spacing:1px;padding:6px 14px;border-radius:4px;transform:rotate(3deg)}
+  .report-header h1{font-family:Georgia,'Noto Serif KR',serif;font-size:22px;color:#1E293B;letter-spacing:.5px;margin-bottom:4px}
+  .report-header .rh-sub{font-size:11.5px;color:#64748B;letter-spacing:2px;text-transform:uppercase}
+  .report-meta-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:6px 30px;margin-top:18px;font-size:12.5px}
+  .report-meta-grid div{display:flex;justify-content:space-between;border-bottom:1px dotted var(--slate-300);padding:3px 0}
+  .report-meta-grid .rm-label{color:#64748B}
+  .report-meta-grid .rm-value{font-weight:600;color:#1E293B}
+  .report-sign{display:flex;justify-content:space-between;margin-top:40px;padding-top:16px}
+  .report-sign div{text-align:center;font-size:12px;color:#64748B}
+  .report-sign .sign-line{width:180px;border-top:1px solid #1E293B;margin-top:36px;padding-top:6px}
+  .report-footer-note{font-size:10.5px;color:#94A3B8;margin-top:24px;border-top:1px solid var(--slate-200);padding-top:10px;line-height:1.6}
+
+  @media (max-width:900px){.meta-grid{grid-template-columns:1fr 1fr}}
+  @media (max-width:640px){.meta-grid{grid-template-columns:1fr}.sc-table{font-size:11px}.sc-table th,.sc-table td{padding:6px}}
 </style>
-<script src="https://cdn.amplitude.com/script/d4aa9301e01f4600b5eeb018e160aa7c.js"></script>
-<script>
-  window.amplitude.init("d4aa9301e01f4600b5eeb018e160aa7c", {
-    fetchRemoteConfig: true,
-    autocapture: true,
-  });
-</script>
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-W1YBL5BGGK"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-W1YBL5BGGK');
-</script>
 </head>
 <body>
 <header><div class="header-inner">
-  <a href="index.html" class="logo-mark">CBM<span>Lab</span></a>
+  <a href="index.html" class="logo-mark"><svg width="26" height="26" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align:middle;margin-right:9px;flex-shrink:0;"><path d="M20 2.5L36.5 11.5V28.5L20 37.5L3.5 28.5V11.5L20 2.5Z" stroke="#2563EB" stroke-width="2.3" stroke-linejoin="round"/><path d="M20 2.5V20M20 20L36.5 11.5M20 20L3.5 11.5" stroke="#2563EB" stroke-width="2.3" stroke-linejoin="round" opacity="0.55"/></svg>CBM<span>Lab</span></a>
   <a href="index.html" class="nav-link">← 전체 도구 보기</a>
 </div></header>
 
 <section class="hero"><div class="hero-inner">
   <h1>공급업체 평가 스코어카드 생성기</h1>
-  <p>가중치를 설정하고 항목별 점수(1~5점)를 입력하면 가중 평균 점수가 자동으로 계산됩니다. 여러 공급업체를 나란히 비교해보세요.</p>
+  <p>약 30개 객관적 평가 항목 중 필요한 것만 골라 담고, 항목별 1·3·5점 기준을 참고해 채점하세요. 가중치 기반 종합 점수가 자동 계산되고, 전문적인 보고서 형식으로 인쇄할 수 있습니다.</p>
 </div></section>
 
 <div class="main">
+
+  <!-- 평가 메타정보 -->
+  <div class="card">
+    <div class="card-header"><div class="card-title">평가 정보</div></div>
+    <div class="card-body">
+      <div class="meta-grid">
+        <div class="meta-field"><label>평가일자</label><input type="date" id="metaDate"></div>
+        <div class="meta-field"><label>평가자</label><input type="text" id="metaEvaluator" placeholder="예: 홍길동 (구매팀)"></div>
+        <div class="meta-field"><label>평가 목적</label><input type="text" id="metaPurpose" placeholder="예: 신규 협력업체 등록 심사"></div>
+        <div class="meta-field"><label>평가 대상 부문</label><input type="text" id="metaScope" placeholder="예: 원자재 공급 / 완제품 OEM"></div>
+        <div class="meta-field meta-note">
+          <label>참고 기준 / 방법론 (선택 — 직접 기재)</label>
+          <textarea id="metaStandard" placeholder="예: 자체 구매규정 기준, ISO 9001 요구사항 참고, 사내 SQE 평가 가이드 등 — 회사 내부 기준을 직접 적어주세요"></textarea>
+          <div class="disclaimer-inline">※ 본 도구는 공인 인증기관의 평가 양식이 아니며, 어떤 국제표준의 공식 준수를 보증하지 않습니다. 이 칸은 귀사가 실제 참고한 내부 기준을 기록하는 용도입니다.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 평가 항목 라이브러리 -->
+  <div class="card">
+    <div class="card-header"><div class="card-title">평가 항목 선택 (카테고리 클릭 시 펼침)</div></div>
+    <div class="card-body">
+      <div id="libraryContainer"></div>
+      <button class="btn-add-custom" onclick="addCustomCriterion()">+ 직접 항목 추가 (라이브러리에 없는 항목)</button>
+    </div>
+  </div>
+
+  <!-- 평가표 -->
   <div class="card">
     <div class="card-header">
       <div class="card-title">평가표</div>
       <div style="display:flex;gap:8px;">
         <button class="btn-add-vendor" onclick="addVendor()">+ 공급업체 추가</button>
-        <button class="btn-print" onclick="window.print()">🖨️ 인쇄</button>
+        <button class="btn-print" onclick="window.print()">🖨️ 보고서 인쇄</button>
       </div>
     </div>
     <div class="card-body">
-      <div style="overflow-x:auto;">
+      <div class="selected-bar" id="selectedBar"></div>
+      <div class="sc-table-wrap">
         <table class="sc-table" id="scTable"></table>
       </div>
       <div class="weight-warning" id="weightWarning"></div>
-      <div class="notice-box">가중치 합계는 100%가 되어야 정확한 백분율 점수가 나옵니다. 점수는 1~5점(5점이 최고)으로 입력하세요. 80점 이상 초록, 60~79점 노랑, 60점 미만 빨강으로 자동 표시됩니다.</div>
+      <div class="notice-box">가중치 합계는 100%가 되어야 정확한 백분율 점수가 나옵니다. 점수는 각 항목의 1~5점 기준(체크박스 아래 "채점 기준 보기")을 참고해서 입력하세요. 80점 이상 초록, 60~79점 노랑, 60점 미만 빨강으로 자동 표시됩니다.</div>
     </div>
   </div>
+
+  <!-- 인쇄 전용 보고서 헤더 (화면에는 안 보이고 인쇄 시에만 표시) -->
+  <div class="report-only" id="reportHeader">
+    <div class="report-header">
+      <div class="rh-badge">EVALUATION</div>
+      <div class="rh-sub">Supplier Qualification Assessment Report</div>
+      <h1>공급업체 정성·정량 평가 보고서</h1>
+      <div class="report-meta-grid" id="reportMetaGrid"></div>
+    </div>
+  </div>
+
 </div>
 
-<footer><div class="footer-inner">
-  <div class="footer-logo">CBM<span>Lab</span></div>
-  <nav><a href="index.html" class="footer-link">전체 도구</a><a href="privacy.html" class="footer-link">개인정보 처리방침</a></nav>
-</div></footer>
+<footer style="background:#0F172A;color:#94A3B8;padding:24px;font-size:12px;">
+  <div style="max-width:1300px;margin:0 auto;display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;">
+    <div style="font-size:15px;font-weight:800;color:#fff;">CBM<span style="color:#2563EB;">Lab</span></div>
+    <nav><a href="index.html" style="color:#94A3B8;text-decoration:none;font-size:11px;margin-right:14px;">전체 도구</a><a href="privacy.html" style="color:#94A3B8;text-decoration:none;font-size:11px;">개인정보 처리방침</a></nav>
+  </div>
+</footer>
 
 <script>
-let criteria = [
-  {name:'가격 경쟁력', weight:20},
-  {name:'품질 (불량률)', weight:20},
-  {name:'납기 준수율', weight:20},
-  {name:'MOQ 유연성', weight:10},
-  {name:'커뮤니케이션 응답속도', weight:10},
-  {name:'재무 안정성', weight:10},
-  {name:'품질 인증 (ISO 등)', weight:10}
+// ===== 평가 항목 라이브러리 (약 30개, 카테고리별) =====
+const LIBRARY = [
+  {cat:'가격·원가', items:[
+    {id:'price_unit', name:'단가 경쟁력', desc:'동일 스펙 대비 시장 단가 수준', low:'시장평균 대비 10% 이상 높음', mid:'시장평균과 유사한 수준', high:'시장평균 대비 5% 이상 낮음'},
+    {id:'price_tco', name:'총소유비용(TCO) 경쟁력', desc:'운송비·불량비 등 숨은 비용 포함 총비용', low:'숨은 비용이 많아 실질 비용 높음', mid:'평균적인 수준', high:'총비용 기준으로도 우수'},
+    {id:'price_stability', name:'가격 안정성', desc:'최근 1~2년 단가 변동 이력', low:'분기별로 잦은 인상 요청', mid:'연 1회 수준의 조정', high:'장기 고정가/계약 가능'},
+    {id:'price_terms', name:'결제조건 유연성', desc:'선불/후불/분할 등 협의 가능 범위', low:'선불만 가능', mid:'일부 후불 협의 가능', high:'다양한 조건 협상 가능'}
+  ]},
+  {cat:'품질', items:[
+    {id:'q_ppm', name:'불량률(PPM)', desc:'최근 검수/입고 기준 불량 발생률', low:'1,000 PPM 초과', mid:'100~1,000 PPM', high:'100 PPM 미만'},
+    {id:'q_system', name:'품질관리 체계 성숙도', desc:'문서화된 품질관리 프로세스 보유 수준', low:'문서화된 프로세스 없음', mid:'기본 SOP 보유', high:'통계적 품질관리(SPC) 등 운영'},
+    {id:'q_ppap', name:'초도품 승인 대응', desc:'초물검사/PPAP 등 초도품 검증 대응력', low:'대응 이력 없음/미대응', mid:'요청 시 대응 가능', high:'사전에 자발적으로 제공'},
+    {id:'q_claim', name:'품질 클레임 대응 속도', desc:'불량 발견 후 회신·조치까지 걸리는 시간', low:'2주 이상 소요', mid:'3~5일 내 대응', high:'48시간 이내 대응'},
+    {id:'q_rework', name:'재작업/반품률', desc:'입고 후 재작업 또는 반품 비율', low:'5% 이상', mid:'1~5%', high:'1% 미만'}
+  ]},
+  {cat:'납기·물류', items:[
+    {id:'d_ontime', name:'납기 준수율', desc:'최근 발주 대비 정시 납품 비율', low:'80% 미만', mid:'80~95%', high:'95% 이상'},
+    {id:'d_leadtime', name:'리드타임 경쟁력', desc:'업계 평균 대비 생산·납품 소요기간', low:'업계 평균보다 김', mid:'업계 평균과 유사', high:'업계 평균보다 짧음'},
+    {id:'d_rush', name:'긴급 대응력(러시오더)', desc:'긴급 발주 시 대응 가능 여부', low:'대응 불가', mid:'추가 비용 시 가능', high:'별도 비용 없이 대응 가능'},
+    {id:'d_packaging', name:'포장/라벨링 표준 준수', desc:'합의된 포장·라벨 규격 준수 정도', low:'불일치가 잦음', mid:'대체로 준수', high:'완벽 준수 + 개선 제안까지'},
+    {id:'d_buffer', name:'안전재고 운영 능력', desc:'수요 변동에 대응하는 완충 재고 운영', low:'운영하지 않음', mid:'요청 시 협의 가능', high:'상시 안전재고 운영'}
+  ]},
+  {cat:'재무 안정성', items:[
+    {id:'f_disclosure', name:'재무제표 공개 여부', desc:'재무 정보 투명성', low:'비공개', mid:'요청 시 일부 제공', high:'투명하게 공개'},
+    {id:'f_credit', name:'신용등급/부도 이력', desc:'신용평가기관 등급 또는 최근 신용 이슈', low:'최근 신용 이슈 있음', mid:'특이사항 없음(보통)', high:'우수 등급 보유'},
+    {id:'f_dependency', name:'매출 의존도(리스크 분산)', desc:'해당 업체 매출에서 우리 발주가 차지하는 비중', low:'50% 이상(리스크 큼)', mid:'20~50%', high:'20% 미만(안정적)'},
+    {id:'f_debt', name:'부채비율/자본안정성', desc:'재무 건전성 지표', low:'위험 수준', mid:'업계 평균 수준', high:'우량한 수준'}
+  ]},
+  {cat:'생산능력·기술', items:[
+    {id:'c_capa', name:'생산 CAPA 여유율', desc:'현재 가동률 대비 추가 발주 수용 여력', low:'풀가동(여유 없음)', mid:'일부 여유 있음', high:'충분한 여유 보유'},
+    {id:'c_automation', name:'설비 자동화 수준', desc:'생산 공정의 자동화 정도', low:'수작업 위주', mid:'일부 공정 자동화', high:'고도로 자동화됨'},
+    {id:'c_rd', name:'R&D/설계 대응력', desc:'신제품 공동개발 및 설계 변경 대응 능력', low:'대응 불가', mid:'기본적인 대응 가능', high:'공동개발 수준까지 가능'},
+    {id:'c_redundancy', name:'생산라인 이중화', desc:'단일 라인 장애 시 대체 가능 여부', low:'단일 라인만 보유', mid:'일부 이중화', high:'완전 이중화 체계'}
+  ]},
+  {cat:'인증·컴플라이언스', items:[
+    {id:'cert_iso9001', name:'ISO 9001(품질경영) 인증', desc:'품질경영시스템 인증 보유 여부', low:'미보유', mid:'인증 진행 중', high:'인증 보유 및 유효'},
+    {id:'cert_iso14001', name:'ISO 14001(환경경영) 인증', desc:'환경경영시스템 인증 보유 여부', low:'미보유', mid:'인증 진행 중', high:'인증 보유 및 유효'},
+    {id:'cert_industry', name:'산업별 특화 인증', desc:'IATF16949, AS9100 등 업종별 인증', low:'미보유/미해당', mid:'일부 요구사항 충족', high:'인증 보유'},
+    {id:'cert_ethics', name:'노동·윤리 컴플라이언스', desc:'아동노동, 근로환경 등 윤리경영 준수', low:'확인 안 됨', mid:'자체 선언서 보유', high:'제3자 감사 통과 이력'}
+  ]},
+  {cat:'커뮤니케이션·서비스', items:[
+    {id:'s_response', name:'응답 속도', desc:'이메일/문의에 대한 평균 회신 시간', low:'48시간 이상', mid:'24시간 내외', high:'4시간 이내'},
+    {id:'s_language', name:'외국어 소통 역량', desc:'영어 등 외국어 커뮤니케이션 원활도', low:'소통 어려움', mid:'기본적인 소통 가능', high:'원활한 소통 가능'},
+    {id:'s_dedicated', name:'전담 담당자 배정', desc:'영업/기술 전담 인력 배정 여부', low:'배정 없음(공용 담당)', mid:'부분적으로 배정', high:'전담 담당자 배정'},
+    {id:'s_aftersales', name:'사후지원(A/S) 체계', desc:'납품 후 문제 발생 시 지원 체계', low:'지원 체계 없음', mid:'제한적으로 지원', high:'적극적인 사후지원'}
+  ]},
+  {cat:'지속가능성(ESG)', items:[
+    {id:'e_material', name:'친환경 원자재/공정', desc:'친환경 소재 및 공정 적용 정도', low:'고려하지 않음', mid:'일부 적용', high:'적극적으로 적용'},
+    {id:'e_carbon', name:'탄소배출 관리', desc:'탄소배출 측정 및 감축 활동', low:'측정하지 않음', mid:'측정만 하고 있음', high:'감축 목표를 운영 중'},
+    {id:'e_community', name:'지역사회·윤리경영', desc:'사회적 책임 활동 수준', low:'관련 이슈 있음', mid:'특이사항 없음', high:'우수 사례 보유'}
+  ]}
 ];
-let vendors = ['공급업체 A', '공급업체 B'];
-let scores = {}; // scores[critIdx][vendorIdx] = score
 
-function initScores(){
-  criteria.forEach((c,ci)=>{
-    if(!scores[ci]) scores[ci] = [];
-    vendors.forEach((v,vi)=>{
-      if(scores[ci][vi]===undefined) scores[ci][vi] = 3;
-    });
-  });
+let selectedCriteria = []; // {id, name, desc, low, mid, high, weight}
+let vendors = ['공급업체 A', '공급업체 B'];
+let scores = {}; // scores[critId][vendorIdx]
+let remarks = {}; // remarks[critId]
+let customCounter = 0;
+
+function renderLibrary(){
+  const container = document.getElementById('libraryContainer');
+  container.innerHTML = LIBRARY.map((group, gi) => {
+    const selectedInGroup = group.items.filter(it => selectedCriteria.some(s=>s.id===it.id)).length;
+    return `
+    <div class="cat-group">
+      <div class="cat-header" onclick="toggleCat(${gi})">
+        <span class="cat-title">${group.cat}</span>
+        <span class="cat-count">${selectedInGroup} / ${group.items.length} 선택됨</span>
+      </div>
+      <div class="cat-body" id="catBody${gi}">
+        ${group.items.map(it => {
+          const checked = selectedCriteria.some(s=>s.id===it.id);
+          return `
+          <div class="crit-row">
+            <input type="checkbox" ${checked?'checked':''} onchange="toggleCriterion('${it.id}', this.checked)">
+            <div class="crit-info">
+              <div class="crit-name">${it.name}</div>
+              <div class="crit-desc">${it.desc}</div>
+              <span class="rubric-toggle" onclick="toggleRubric('${it.id}')">채점 기준 보기 ▾</span>
+              <div class="rubric-box" id="rubric_${it.id}">
+                <div class="rb-line"><span class="rb-score">1점</span>${it.low}</div>
+                <div class="rb-line"><span class="rb-score">3점</span>${it.mid}</div>
+                <div class="rb-line"><span class="rb-score">5점</span>${it.high}</div>
+              </div>
+            </div>
+          </div>`;
+        }).join('')}
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function toggleCat(gi){
+  document.getElementById('catBody'+gi).classList.toggle('open');
+}
+function toggleRubric(id){
+  document.getElementById('rubric_'+id).classList.toggle('open');
+}
+
+function findLibItem(id){
+  for(const g of LIBRARY){ const f = g.items.find(i=>i.id===id); if(f) return f; }
+  return null;
+}
+
+function toggleCriterion(id, checked){
+  if(checked){
+    const item = findLibItem(id);
+    selectedCriteria.push({id: item.id, name: item.name, desc: item.desc, low: item.low, mid: item.mid, high: item.high, weight: 10});
+  } else {
+    selectedCriteria = selectedCriteria.filter(s=>s.id!==id);
+  }
+  renderLibrary();
+  renderTable();
+}
+
+function addCustomCriterion(){
+  customCounter++;
+  const id = 'custom_'+customCounter;
+  selectedCriteria.push({id, name:'새 평가 항목 '+customCounter, desc:'직접 입력한 항목입니다', low:'1점 기준을 직접 정의하세요', mid:'3점 기준을 직접 정의하세요', high:'5점 기준을 직접 정의하세요', weight:10, custom:true});
+  renderTable();
+}
+
+function removeCriterion(id){
+  selectedCriteria = selectedCriteria.filter(s=>s.id!==id);
+  renderLibrary();
+  renderTable();
 }
 
 function addVendor(){
   vendors.push('공급업체 ' + String.fromCharCode(65+vendors.length));
-  initScores();
-  render();
+  renderTable();
+}
+function updateVendorName(vi, val){ vendors[vi] = val; }
+function updateWeight(id, val){
+  const c = selectedCriteria.find(c=>c.id===id); if(c) c.weight = parseFloat(val)||0;
+  renderTable();
+}
+function updateCustomName(id, val){
+  const c = selectedCriteria.find(c=>c.id===id); if(c) c.name = val;
+}
+function updateScore(id, vi, val){
+  if(!scores[id]) scores[id]=[];
+  scores[id][vi] = parseFloat(val)||0;
+  renderTable();
+}
+function updateRemark(id, val){ remarks[id] = val; }
+
+function initScores(){
+  selectedCriteria.forEach(c=>{
+    if(!scores[c.id]) scores[c.id]=[];
+    vendors.forEach((v,vi)=>{ if(scores[c.id][vi]===undefined) scores[c.id][vi]=3; });
+  });
 }
 
-function updateWeight(idx, val){ criteria[idx].weight = parseFloat(val)||0; render(); }
-function updateScore(ci, vi, val){ scores[ci][vi] = parseFloat(val)||0; render(); }
-function updateVendorName(vi, val){ vendors[vi] = val; }
-
-function render(){
+function renderTable(){
   initScores();
-  const totalWeight = criteria.reduce((a,c)=>a+c.weight,0);
+  const totalWeight = selectedCriteria.reduce((a,c)=>a+c.weight,0);
   const warn = document.getElementById('weightWarning');
-  warn.textContent = totalWeight !== 100 ? `⚠️ 가중치 합계가 ${totalWeight}%입니다 (100%가 되도록 조정하세요)` : '';
+  warn.textContent = (selectedCriteria.length>0 && totalWeight !== 100) ? `⚠ 가중치 합계가 ${totalWeight}%입니다 (100%가 되도록 조정하세요)` : '';
+
+  document.getElementById('selectedBar').innerHTML = `선택된 평가 항목: <strong>${selectedCriteria.length}개</strong> · 가중치 합계: <strong>${totalWeight}%</strong>`;
+
+  if(selectedCriteria.length===0){
+    document.getElementById('scTable').innerHTML = '<tr><td style="padding:20px;color:var(--slate-400);">위에서 평가 항목을 1개 이상 선택해주세요.</td></tr>';
+    return;
+  }
 
   let html = '<thead><tr><th style="text-align:left;">평가 항목</th><th>가중치</th>';
   vendors.forEach((v,vi)=> html += `<th><input class="vendor-name" value="${v}" oninput="updateVendorName(${vi},this.value)"></th>`);
-  html += '</tr></thead><tbody>';
+  html += '<th>비고</th></tr></thead><tbody>';
 
   const vendorTotals = vendors.map(()=>0);
 
-  criteria.forEach((c,ci)=>{
-    html += `<tr><td class="crit">${c.name}</td><td><input class="weight" type="number" value="${c.weight}" oninput="updateWeight(${ci},this.value)">%</td>`;
+  selectedCriteria.forEach(c=>{
+    html += `<tr>
+      <td class="crit-col">${c.custom ? `<input class="inp" style="width:100%;border:1px solid var(--slate-200);border-radius:5px;padding:4px 6px;font-size:12px;" value="${c.name}" oninput="updateCustomName('${c.id}',this.value)">` : c.name}
+        <div class="cw">${c.desc}</div>
+        <span class="rubric-toggle" onclick="toggleRubric('t_${c.id}')">채점 기준 ▾</span>
+        <div class="rubric-box" id="rubric_t_${c.id}">
+          <div class="rb-line"><span class="rb-score">1점</span>${c.low}</div>
+          <div class="rb-line"><span class="rb-score">3점</span>${c.mid}</div>
+          <div class="rb-line"><span class="rb-score">5점</span>${c.high}</div>
+        </div>
+      </td>
+      <td><input class="weight" type="number" value="${c.weight}" oninput="updateWeight('${c.id}',this.value)">%</td>`;
+
     vendors.forEach((v,vi)=>{
-      const score = scores[ci][vi];
+      const score = scores[c.id][vi];
       const weighted = (score/5) * c.weight;
       vendorTotals[vi] += weighted;
-      html += `<td><input class="score" type="number" min="0" max="5" value="${score}" oninput="updateScore(${ci},${vi},this.value)"></td>`;
+      html += `<td><input class="score" type="number" min="0" max="5" value="${score}" oninput="updateScore('${c.id}',${vi},this.value)"></td>`;
     });
+
+    html += `<td><input class="remark" placeholder="메모" value="${remarks[c.id]||''}" oninput="updateRemark('${c.id}',this.value)"></td>`;
+    html += `<td><button class="btn-del-crit" onclick="removeCriterion('${c.id}')">✕</button></td>`;
     html += '</tr>';
   });
 
@@ -161,11 +396,45 @@ function render(){
     const cls = t>=80?'green':(t>=60?'yellow':'red');
     html += `<td class="weighted-cell ${cls}">${t.toFixed(1)}</td>`;
   });
-  html += '</tr></tbody>';
+  html += '<td colspan="2"></td></tr></tbody>';
 
   document.getElementById('scTable').innerHTML = html;
+
+  // 인쇄용 메타 정보 갱신
+  updateReportMeta(vendorTotals);
 }
-render();
+
+function updateReportMeta(vendorTotals){
+  const date = document.getElementById('metaDate').value || '(미기재)';
+  const evaluator = document.getElementById('metaEvaluator').value || '(미기재)';
+  const purpose = document.getElementById('metaPurpose').value || '(미기재)';
+  const scope = document.getElementById('metaScope').value || '(미기재)';
+  const standard = document.getElementById('metaStandard').value || '(미기재)';
+
+  const vendorSummary = vendors.map((v,vi)=>`${v}: ${(vendorTotals[vi]||0).toFixed(1)}점`).join(' · ');
+
+  document.getElementById('reportMetaGrid').innerHTML = `
+    <div><span class="rm-label">평가일자</span><span class="rm-value">${date}</span></div>
+    <div><span class="rm-label">평가자</span><span class="rm-value">${evaluator}</span></div>
+    <div><span class="rm-label">평가 목적</span><span class="rm-value">${purpose}</span></div>
+    <div><span class="rm-label">평가 대상 부문</span><span class="rm-value">${scope}</span></div>
+    <div style="grid-column:1/-1;"><span class="rm-label">참고 기준</span><span class="rm-value">${standard}</span></div>
+    <div style="grid-column:1/-1;"><span class="rm-label">종합 결과</span><span class="rm-value">${vendorSummary}</span></div>
+  `;
+}
+
+['metaDate','metaEvaluator','metaPurpose','metaScope','metaStandard'].forEach(id=>{
+  document.getElementById(id).addEventListener('input', ()=>renderTable());
+});
+
+// 초기 기본 항목 몇 개 선택
+['price_unit','q_ppm','d_ontime','f_credit','cert_iso9001','s_response'].forEach(id=>{
+  const item = findLibItem(id);
+  selectedCriteria.push({id:item.id, name:item.name, desc:item.desc, low:item.low, mid:item.mid, high:item.high, weight: 100/6});
+});
+document.getElementById('metaDate').valueAsDate = new Date();
+renderLibrary();
+renderTable();
 </script>
 </body>
 </html>
