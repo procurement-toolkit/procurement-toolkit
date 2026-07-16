@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="영문 RFI, RFP, RFQ 템플릿을 무료로 생성하세요. 원료 조달, 원료 개발, 설비/공사, 기획 등 구매 직군 전반에서 바로 쓸 수 있는 표준 양식을 항목만 입력하면 완성합니다.">
+<meta name="keywords" content="RFQ template, RFP template, RFI template, 영문 구매 견적요청서, 원료 조달 양식, 설비 발주 RFP">
+<title>RFI · RFP · RFQ 영문 템플릿 생성기 — CBM Lab</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  :root{--accent:#2563EB;--accent-light:#DBEAFE;--accent-dark:#1D4ED8;--slate-50:#F8FAFC;--slate-100:#F1F5F9;--slate-200:#E2E8F0;--slate-300:#CBD5E1;--slate-400:#94A3B8;--slate-500:#64748B;--slate-600:#475569;--slate-700:#334155;--slate-800:#1E293B;--slate-900:#0F172A;--radius:8px;--radius-lg:12px;--shadow-sm:0 1px 2px rgba(0,0,0,.05);font-family:'Pretendard','Apple SD Gothic Neo',system-ui,-apple-system,sans-serif}
+  body{background:var(--slate-50);color:var(--slate-800);font-size:14px;line-height:1.6}
+  header{background:#fff;border-bottom:1px solid var(--slate-200)}
+  .header-inner{max-width:1300px;margin:0 auto;padding:16px 24px;display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}
+  .logo-mark{font-size:20px;font-weight:800;color:var(--slate-900);text-decoration:none;font-family:'Space Grotesk','Pretendard',sans-serif;letter-spacing:-0.4px;}
+  .nav-link{font-size:13px;font-weight:600;color:var(--slate-500);text-decoration:none;padding:7px 12px;border-radius:6px}
+  .nav-link:hover{background:var(--slate-100)}
+  .hero{background:#fff;border-bottom:1px solid var(--slate-200);padding:28px 24px 24px}
+  .hero-inner{max-width:1300px;margin:0 auto}
+  .hero h1{font-size:22px;font-weight:700;color:var(--slate-900);margin-bottom:6px}
+  .hero p{font-size:14px;color:var(--slate-500);max-width:720px}
+  .hero-tags{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}
+  .tag{background:var(--slate-100);color:var(--slate-600);font-size:11px;font-weight:500;padding:3px 10px;border-radius:4px;border:1px solid var(--slate-200)}
+  .main{max-width:1300px;margin:0 auto;padding:28px 24px 60px;display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:start}
+  .card{background:#fff;border:1px solid var(--slate-200);border-radius:var(--radius-lg);box-shadow:var(--shadow-sm);margin-bottom:20px}
+  .card-header{padding:16px 20px;border-bottom:1px solid var(--slate-100)}
+  .card-title{font-size:14px;font-weight:600;color:var(--slate-800)}
+  .card-body{padding:18px}
+
+  .type-tabs{display:flex;gap:6px;flex-wrap:wrap}
+  .type-tab{padding:9px 16px;border:1px solid var(--slate-200);background:#fff;border-radius:999px;font-size:12.5px;font-weight:700;color:var(--slate-500);cursor:pointer}
+  .type-tab.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+  .type-desc{font-size:11.5px;color:var(--slate-500);margin-top:10px;background:var(--slate-50);border:1px solid var(--slate-100);border-radius:6px;padding:8px 12px}
+
+  .field-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px}
+  .field-label{font-size:11px;font-weight:600;color:var(--slate-500);margin-bottom:4px;display:block}
+  .inp,select.inp{width:100%;border:1px solid var(--slate-200);border-radius:6px;padding:7px 10px;font-size:12.5px;font-family:inherit}
+  .inp:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px rgba(37,99,235,.1)}
+  textarea.inp{resize:vertical;min-height:50px}
+
+  .check-list{display:flex;flex-direction:column;gap:6px;margin-top:6px}
+  .check-item{display:flex;align-items:flex-start;gap:8px;font-size:12.5px;color:var(--slate-700)}
+  .check-item input{margin-top:3px;accent-color:var(--accent)}
+
+  .item-table-wrap{overflow-x:auto;margin:0 -4px}
+  .item-table{width:100%;border-collapse:collapse}
+  .item-table th{padding:6px 5px;text-align:left;font-size:10px;color:var(--slate-400);text-transform:uppercase;font-weight:700}
+  .item-table td{padding:4px 3px}
+  .item-table input{width:100%;border:1px solid var(--slate-200);border-radius:5px;padding:6px 6px;font-size:11.5px}
+  .btn-del-row{width:22px;height:22px;border:1px solid var(--slate-200);border-radius:5px;background:#fff;color:var(--slate-400);cursor:pointer;font-size:10px}
+  .btn-del-row:hover{border-color:#DC2626;color:#DC2626}
+  .btn-add-row{display:block;width:100%;padding:8px;border:1px dashed var(--slate-300);border-radius:6px;background:transparent;color:var(--slate-500);font-size:12px;cursor:pointer;margin-top:6px;font-family:inherit}
+  .btn-add-row:hover{border-color:var(--accent);color:var(--accent)}
+
+  .crit-table th{padding:6px;font-size:10px;color:var(--slate-400);text-transform:uppercase}
+  .crit-table td{padding:4px}
+  .crit-table input{width:100%;border:1px solid var(--slate-200);border-radius:5px;padding:5px 6px;font-size:11.5px}
+  .crit-table input.weight{max-width:60px;text-align:center}
+
+  .btn-print{width:100%;padding:11px;background:var(--slate-900);color:#fff;border:none;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;margin-top:10px}
+  .btn-print:hover{background:var(--accent)}
+
+  .doc-preview{border:1px solid var(--slate-200);border-radius:var(--radius);background:#fff;padding:30px;font-size:12px;line-height:1.7;min-height:420px;font-family:Georgia,'Times New Roman',serif}
+  .doc-preview h2{font-size:17px;text-align:center;margin-bottom:4px;letter-spacing:.5px}
+  .doc-preview .doc-sub{text-align:center;font-size:11px;color:#64748B;margin-bottom:18px;letter-spacing:1px;text-transform:uppercase}
+  .doc-preview h3{font-size:13px;margin:16px 0 6px;border-bottom:1px solid #1E293B;padding-bottom:3px}
+  .doc-preview .meta-row{display:grid;grid-template-columns:1fr 1fr;gap:4px 24px;font-size:11.5px;margin-bottom:4px}
+  .doc-preview .meta-row div{display:flex;gap:6px}
+  .doc-preview .meta-row b{min-width:110px;color:#334155;font-weight:700;}
+  .doc-preview table{width:100%;border-collapse:collapse;margin:10px 0;font-size:11px}
+  .doc-preview th,.doc-preview td{border:1px solid #94A3B8;padding:5px 7px;text-align:left}
+  .doc-preview th{background:#F1F5F9}
+  .doc-preview ul{padding-left:18px;margin:4px 0;}
+  .doc-preview p{margin-bottom:6px;}
+
+  .notice-box{background:var(--accent-light);border:1px solid #BFDBFE;border-radius:var(--radius);padding:10px 14px;font-size:12px;color:#1E40AF;margin-top:12px}
+
+  @media print{ header,.hero,.left-col,.btn-print{display:none !important} .main{padding:0;display:block} .doc-preview{border:none;padding:0;} }
+  @media (max-width:900px){.main{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute;" aria-hidden="true">
+  <defs>
+    <linearGradient id="cbmGradH" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#14B8A6"/>
+      <stop offset="100%" stop-color="#0B2A4A"/>
+    </linearGradient>
+    <linearGradient id="cbmGradF" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#2DD4BF"/>
+      <stop offset="100%" stop-color="#5B9EFF"/>
+    </linearGradient>
+  </defs>
+</svg>
+<header><div class="header-inner">
+  <a href="index.html" class="logo-mark"><svg width="28" height="28" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align:middle;margin-right:9px;flex-shrink:0;"><path d="M20 2.5L36.5 11.5V28.5L20 37.5L3.5 28.5V11.5L20 2.5Z" stroke="url(#cbmGradH)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M20 2.5V20M20 20L36.5 11.5M20 20L3.5 11.5" stroke="url(#cbmGradH)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/></svg><span style="background:linear-gradient(90deg,#14B8A6,#0B2A4A);-webkit-background-clip:text;background-clip:text;color:transparent;">CBM</span><span style="color:#0B2A4A;font-weight:500;">Lab</span></a>
+  <a href="index.html" class="nav-link">← 전체 도구 보기</a>
+</div></header>
+
+<section class="hero"><div class="hero-inner">
+  <h1>RFI · RFP · RFQ 영문 템플릿 생성기</h1>
+  <p>원료 조달, 원료 개발, 설비/공사, 기획 등 구매 직군 전반에서 공용으로 쓸 수 있는 영문 표준 양식입니다. 언제·어디서·누가·왜·무엇을 요청하는지 항목만 채우면 전문적인 문서가 완성됩니다.</p>
+  <div class="hero-tags"><span class="tag">RFI</span><span class="tag">RFP</span><span class="tag">RFQ</span><span class="tag">원료·설비·기획 공용</span></div>
+</div></section>
+
+<div class="main">
+  <section class="left-col">
+
+    <div class="card">
+      <div class="card-header"><div class="card-title">문서 종류 선택</div></div>
+      <div class="card-body">
+        <div class="type-tabs">
+          <button class="type-tab active" data-type="RFI" onclick="setDocType('RFI')">RFI (정보요청서)</button>
+          <button class="type-tab" data-type="RFP" onclick="setDocType('RFP')">RFP (제안요청서)</button>
+          <button class="type-tab" data-type="RFQ" onclick="setDocType('RFQ')">RFQ (견적요청서)</button>
+        </div>
+        <div class="type-desc" id="typeDesc"></div>
+
+        <div class="field-grid" style="margin-top:14px;">
+          <div style="grid-column:1/-1;">
+            <label class="field-label">구매 직군 / 용도 (예시 문구 자동 반영)</label>
+            <select class="inp" id="category" onchange="applyCategoryDefaults()">
+              <option value="sourcing">원료 조달 (Raw Material Sourcing)</option>
+              <option value="development">원료 개발 (Raw Material / New Product Development)</option>
+              <option value="capex">설비 / 공사 (Equipment / Construction / CAPEX)</option>
+              <option value="planning">기획 (Strategic Sourcing / Planning Project)</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header"><div class="card-title">기본 정보 (When · Where · Who · Why)</div></div>
+      <div class="card-body">
+        <div class="field-grid">
+          <div><label class="field-label">Document No. (문서번호)</label><input class="inp" id="docNo" value="RFQ-2026-001" oninput="render()"></div>
+          <div><label class="field-label">Issue Date (발행일)</label><input type="date" class="inp" id="issueDate" oninput="render()"></div>
+          <div><label class="field-label">Response Due Date (회신 마감일)</label><input type="date" class="inp" id="dueDate" oninput="render()"></div>
+          <div><label class="field-label">Project / Item Title (건명)</label><input class="inp" id="projectTitle" placeholder="e.g. Sourcing of Aluminum Extrusion Profiles" oninput="render()"></div>
+          <div><label class="field-label">Issuing Company (발행 회사)</label><input class="inp" id="issuingCompany" value="Our Company Co., Ltd." oninput="render()"></div>
+          <div><label class="field-label">Delivery Location (납품 장소, 해당 시)</label><input class="inp" id="deliveryLoc" placeholder="e.g. Incheon Plant, Korea" oninput="render()"></div>
+          <div><label class="field-label">Contact Person (담당자)</label><input class="inp" id="contactName" placeholder="e.g. Jaehui Park, Procurement Team" oninput="render()"></div>
+          <div><label class="field-label">Contact Email (연락처)</label><input class="inp" id="contactEmail" placeholder="e.g. procurement@ourcompany.com" oninput="render()"></div>
+        </div>
+        <label class="field-label">Purpose / Background (요청 배경 및 목적 — Why)</label>
+        <textarea class="inp" id="purpose" rows="3" oninput="render()"></textarea>
+      </div>
+    </div>
+
+    <!-- RFI 전용 -->
+    <div class="card" id="card-rfi">
+      <div class="card-header"><div class="card-title">요청 정보 항목 (RFI — What we want to know)</div></div>
+      <div class="card-body">
+        <div class="check-list" id="rfiChecklist"></div>
+        <label class="field-label" style="margin-top:10px;">추가 질문 (선택)</label>
+        <textarea class="inp" id="rfiExtra" rows="2" placeholder="e.g. Please describe your disaster recovery / business continuity plan." oninput="render()"></textarea>
+      </div>
+    </div>
+
+    <!-- RFP 전용 -->
+    <div class="card" id="card-rfp">
+      <div class="card-header"><div class="card-title">과업 범위 및 평가 기준 (RFP — What we need)</div></div>
+      <div class="card-body">
+        <label class="field-label">Scope of Work (과업 범위)</label>
+        <textarea class="inp" id="scopeOfWork" rows="3" oninput="render()"></textarea>
+        <label class="field-label" style="margin-top:10px;">Proposal 필수 포함 항목</label>
+        <div class="check-list" id="rfpChecklist"></div>
+        <label class="field-label" style="margin-top:10px;">평가 기준 (가중치)</label>
+        <table class="crit-table" id="critTable"></table>
+        <button class="btn-add-row" onclick="addCriterion()">+ 평가 항목 추가</button>
+      </div>
+    </div>
+
+    <!-- RFQ 전용 -->
+    <div class="card" id="card-rfq">
+      <div class="card-header"><div class="card-title">견적 요청 품목 (RFQ — What to quote)</div></div>
+      <div class="card-body">
+        <div class="item-table-wrap">
+          <table class="item-table">
+            <thead><tr><th>Item / Description</th><th>Spec</th><th>Qty</th><th>Unit</th><th>Target Delivery</th><th></th></tr></thead>
+            <tbody id="itemBody"></tbody>
+          </table>
+        </div>
+        <button class="btn-add-row" onclick="addItem()">+ 품목 추가</button>
+        <div class="field-grid" style="margin-top:12px;">
+          <div><label class="field-label">Incoterm (희망)</label><input class="inp" id="incoterm" placeholder="e.g. FOB Shanghai" oninput="render()"></div>
+          <div><label class="field-label">Payment Terms (희망 결제조건)</label><input class="inp" id="paymentTerms" placeholder="e.g. T/T 30 days after B/L" oninput="render()"></div>
+          <div><label class="field-label">Quotation Validity (견적 유효기간)</label><input class="inp" id="validity" placeholder="e.g. 30 days from submission" oninput="render()"></div>
+          <div><label class="field-label">Currency (통화)</label><input class="inp" id="currency" value="USD" oninput="render()"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header"><div class="card-title">제출 안내</div></div>
+      <div class="card-body">
+        <label class="field-label">Submission Instructions (제출 방법)</label>
+        <textarea class="inp" id="submission" rows="2" oninput="render()"></textarea>
+        <label class="field-label" style="margin-top:10px;">Confidentiality Note (선택)</label>
+        <textarea class="inp" id="confidentiality" rows="2" oninput="render()"></textarea>
+      </div>
+    </div>
+
+  </section>
+
+  <aside>
+    <div class="card">
+      <div class="card-header"><div class="card-title">미리보기</div></div>
+      <div class="card-body">
+        <div class="doc-preview" id="preview"></div>
+        <button class="btn-print" onclick="window.print()">🖨️ 인쇄 / PDF로 저장</button>
+        <div class="notice-box">본 템플릿은 일반적인 참고 양식입니다. 회사 내부 구매 규정, 법무 검토 문구, NDA 등은 실제 발송 전 반드시 담당 부서와 확인하세요.</div>
+      </div>
+    </div>
+  </aside>
+</div>
+
+<footer style="background:#0F172A;color:#94A3B8;padding:24px;font-size:12px;">
+  <div style="max-width:1300px;margin:0 auto;display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;">
+    <div style="font-size:15px;font-weight:800;color:#fff;font-family:'Space Grotesk','Pretendard',sans-serif;"><svg width="24" height="24" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align:middle;margin-right:9px;flex-shrink:0;"><path d="M20 2.5L36.5 11.5V28.5L20 37.5L3.5 28.5V11.5L20 2.5Z" stroke="url(#cbmGradF)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M20 2.5V20M20 20L36.5 11.5M20 20L3.5 11.5" stroke="url(#cbmGradF)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/></svg>CBM<span style="color:#2563EB;">Lab</span></div>
+    <nav><a href="index.html" style="color:#94A3B8;text-decoration:none;font-size:11px;margin-right:14px;">전체 도구</a><a href="privacy.html" style="color:#94A3B8;text-decoration:none;font-size:11px;">개인정보 처리방침</a></nav>
+  </div>
+</footer>
+
+<script src="https://cdn.amplitude.com/script/d4aa9301e01f4600b5eeb018e160aa7c.js"></script>
+<script>
+  window.amplitude.init("d4aa9301e01f4600b5eeb018e160aa7c", {
+    fetchRemoteConfig: true,
+    autocapture: true,
+  });
+</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-W1YBL5BGGK"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-W1YBL5BGGK');
+</script>
+
+<script>
+let docType = 'RFI';
+
+const TYPE_DESC = {
+  RFI: 'RFI(Request for Information): 공급업체의 일반 정보·역량·인증 현황을 파악하기 위한 문서입니다. 가격 요청은 하지 않습니다.',
+  RFP: 'RFP(Request for Proposal): 문제/과업을 제시하고 공급업체가 해결 방안(제안)을 제출하도록 요청하는 문서입니다. 평가 기준이 중요합니다.',
+  RFQ: 'RFQ(Request for Quotation): 스펙이 확정된 품목에 대해 단가와 조건을 견적받기 위한 문서입니다.'
+};
+
+const RFI_ITEMS_DEFAULT = [
+  'Company overview (history, ownership, locations)',
+  'Manufacturing / service capability and capacity',
+  'Quality certifications (e.g., ISO 9001, ISO 14001, IATF 16949)',
+  'Financial stability (annual revenue range, credit standing)',
+  'Key clients / references in a similar industry',
+  'Sustainability / ESG practices',
+  'IT systems and data security practices',
+  'Lead time and typical MOQ for relevant products'
+];
+
+const RFP_ITEMS_DEFAULT = [
+  'Technical / solution proposal',
+  'Commercial proposal (pricing structure)',
+  'Implementation plan and timeline',
+  'Team composition and relevant experience',
+  'Risk management approach',
+  'References from similar projects'
+];
+
+const CATEGORY_DEFAULTS = {
+  sourcing: {
+    purpose: 'We are seeking to identify and qualify potential suppliers for the raw materials described below, as part of our ongoing sourcing and cost optimization initiatives.',
+    scope: 'Supply of the specified raw material(s) meeting our technical specifications, on a recurring basis, with stable quality and competitive pricing.'
+  },
+  development: {
+    purpose: 'We are evaluating potential partners to jointly develop a new raw material / material formulation that meets the technical requirements outlined below.',
+    scope: 'Joint development of a new material/component, including sample production, technical validation, and eventual mass production capability.'
+  },
+  capex: {
+    purpose: 'We are planning a capital investment project and are requesting proposals from qualified vendors for the equipment / construction work described below.',
+    scope: 'Design, supply, installation, and commissioning (as applicable) of the equipment / facility described in this document, including any related civil works.'
+  },
+  planning: {
+    purpose: 'As part of our strategic sourcing initiative, we are gathering information to inform our category strategy and long-term supplier planning.',
+    scope: 'Strategic partnership discussion covering long-term supply capability, innovation roadmap, and alignment with our category strategy.'
+  }
+};
+
+function setDocType(type){
+  docType = type;
+  document.querySelectorAll('.type-tab').forEach(t=>t.classList.toggle('active', t.dataset.type===type));
+  document.getElementById('typeDesc').textContent = TYPE_DESC[type];
+  document.getElementById('card-rfi').style.display = type==='RFI' ? 'block':'none';
+  document.getElementById('card-rfp').style.display = type==='RFP' ? 'block':'none';
+  document.getElementById('card-rfq').style.display = type==='RFQ' ? 'block':'none';
+  if(!document.getElementById('docNo').dataset.userEdited){
+    document.getElementById('docNo').value = type + '-2026-001';
+  }
+  render();
+}
+
+function applyCategoryDefaults(){
+  const cat = document.getElementById('category').value;
+  const d = CATEGORY_DEFAULTS[cat];
+  if(d){
+    document.getElementById('purpose').value = d.purpose;
+    if(docType==='RFP') document.getElementById('scopeOfWork').value = d.scope;
+  }
+  render();
+}
+
+// RFI checklist render
+function renderRfiChecklist(){
+  const c = document.getElementById('rfiChecklist');
+  c.innerHTML = RFI_ITEMS_DEFAULT.map((item,i)=>`
+    <label class="check-item"><input type="checkbox" checked data-rfi="${i}" onchange="render()"> ${item}</label>
+  `).join('');
+}
+function renderRfpChecklist(){
+  const c = document.getElementById('rfpChecklist');
+  c.innerHTML = RFP_ITEMS_DEFAULT.map((item,i)=>`
+    <label class="check-item"><input type="checkbox" checked data-rfp="${i}" onchange="render()"> ${item}</label>
+  `).join('');
+}
+
+// 평가 기준 (RFP)
+let criteria = [
+  {name:'Price / Total Cost', weight:30},
+  {name:'Technical Capability', weight:25},
+  {name:'Quality & Certifications', weight:20},
+  {name:'Delivery / Lead Time', weight:15},
+  {name:'Financial Stability', weight:10}
+];
+function addCriterion(){ criteria.push({name:'New Criterion', weight:10}); renderCriteria(); }
+function removeCriterion(i){ criteria.splice(i,1); renderCriteria(); }
+function updateCriterion(i, field, val){ criteria[i][field] = field==='weight' ? (parseFloat(val)||0) : val; render(); }
+function renderCriteria(){
+  document.getElementById('critTable').innerHTML = `
+    <thead><tr><th>Criterion</th><th>Weight (%)</th><th></th></tr></thead>
+    <tbody>${criteria.map((c,i)=>`
+      <tr>
+        <td><input value="${c.name}" oninput="updateCriterion(${i},'name',this.value)"></td>
+        <td><input class="weight" type="number" value="${c.weight}" oninput="updateCriterion(${i},'weight',this.value)"></td>
+        <td><button class="btn-del-row" onclick="removeCriterion(${i});renderCriteria()">✕</button></td>
+      </tr>`).join('')}</tbody>
+  `;
+  render();
+}
+
+// RFQ 품목
+let items = [];
+let itemCounter = 0;
+function addItem(desc, spec, qty, unit, delivery){
+  itemCounter++;
+  items.push({id:itemCounter, desc:desc||'', spec:spec||'', qty:qty??1, unit:unit||'PCS', delivery:delivery||''});
+  renderItems();
+}
+function removeItem(id){ items = items.filter(i=>i.id!==id); if(items.length===0) addItem(); else renderItems(); }
+function updateItem(id, field, val){
+  const it = items.find(i=>i.id===id); if(!it) return;
+  it[field] = (field==='qty') ? (parseFloat(val)||0) : val;
+  render();
+}
+function renderItems(){
+  document.getElementById('itemBody').innerHTML = items.map(it=>`
+    <tr>
+      <td><input value="${it.desc}" placeholder="Product name" oninput="updateItem(${it.id},'desc',this.value)"></td>
+      <td><input value="${it.spec}" placeholder="e.g. 6063-T5, 3mm" oninput="updateItem(${it.id},'spec',this.value)"></td>
+      <td><input type="number" value="${it.qty}" oninput="updateItem(${it.id},'qty',this.value)"></td>
+      <td><input value="${it.unit}" oninput="updateItem(${it.id},'unit',this.value)"></td>
+      <td><input value="${it.delivery}" placeholder="e.g. within 4 weeks" oninput="updateItem(${it.id},'delivery',this.value)"></td>
+      <td><button class="btn-del-row" onclick="removeItem(${it.id})">✕</button></td>
+    </tr>
+  `).join('');
+  render();
+}
+
+function v(id){ return document.getElementById(id).value.trim(); }
+
+function render(){
+  const docNo = v('docNo'), issueDate = v('issueDate')||'-', dueDate = v('dueDate')||'-';
+  const title = v('projectTitle') || '[Project / Item Title]';
+  const company = v('issuingCompany') || '[Issuing Company]';
+  const deliveryLoc = v('deliveryLoc');
+  const contactName = v('contactName') || '[Contact Person]';
+  const contactEmail = v('contactEmail') || '[email]';
+  const purpose = v('purpose') || '[Purpose / background to be filled in]';
+  const submission = v('submission') || `Please submit your response to ${contactEmail} by the response due date indicated above.`;
+  const confidentiality = v('confidentiality');
+
+  const docFullName = {RFI:'REQUEST FOR INFORMATION (RFI)', RFP:'REQUEST FOR PROPOSAL (RFP)', RFQ:'REQUEST FOR QUOTATION (RFQ)'}[docType];
+
+  let metaBlock = `
+    <div class="meta-row">
+      <div><b>Document No.</b>${docNo}</div>
+      <div><b>Issue Date</b>${issueDate}</div>
+      <div><b>Response Due Date</b>${dueDate}</div>
+      <div><b>Issuing Company</b>${company}</div>
+      <div><b>Contact Person</b>${contactName}</div>
+      <div><b>Contact Email</b>${contactEmail}</div>
+      ${deliveryLoc ? `<div><b>Delivery Location</b>${deliveryLoc}</div>` : ''}
+    </div>
+  `;
+
+  let body = '';
+
+  body += `<h3>1. Purpose / Background</h3><p>${purpose}</p>`;
+
+  if(docType === 'RFI'){
+    const checked = Array.from(document.querySelectorAll('[data-rfi]')).filter(el=>el.checked).map(el=>RFI_ITEMS_DEFAULT[el.dataset.rfi]);
+    const extra = v('rfiExtra');
+    body += `<h3>2. Information Requested</h3><ul>${checked.map(c=>`<li>${c}</li>`).join('')}${extra?`<li>${extra}</li>`:''}</ul>`;
+  }
+
+  if(docType === 'RFP'){
+    const scope = v('scopeOfWork') || '[Scope of work to be filled in]';
+    const checked = Array.from(document.querySelectorAll('[data-rfp]')).filter(el=>el.checked).map(el=>RFP_ITEMS_DEFAULT[el.dataset.rfp]);
+    body += `<h3>2. Scope of Work</h3><p>${scope}</p>`;
+    body += `<h3>3. Proposal Requirements</h3><p>Your proposal should include the following:</p><ul>${checked.map(c=>`<li>${c}</li>`).join('')}</ul>`;
+    const totalWeight = criteria.reduce((a,c)=>a+c.weight,0);
+    body += `<h3>4. Evaluation Criteria</h3><table><thead><tr><th>Criterion</th><th>Weight</th></tr></thead><tbody>${criteria.map(c=>`<tr><td>${c.name}</td><td>${c.weight}%</td></tr>`).join('')}<tr><td style="font-weight:700;">Total</td><td style="font-weight:700;">${totalWeight}%</td></tr></tbody></table>`;
+  }
+
+  if(docType === 'RFQ'){
+    const incoterm = v('incoterm'), paymentTerms = v('paymentTerms'), validity = v('validity'), currency = v('currency')||'USD';
+    body += `<h3>2. Items Requested for Quotation</h3>
+      <table><thead><tr><th>Item / Description</th><th>Spec</th><th>Qty</th><th>Unit</th><th>Target Delivery</th><th>Unit Price (${currency})</th></tr></thead>
+      <tbody>${items.map(it=>`<tr><td>${it.desc||'-'}</td><td>${it.spec||'-'}</td><td>${it.qty}</td><td>${it.unit}</td><td>${it.delivery||'-'}</td><td></td></tr>`).join('')}</tbody></table>`;
+    body += `<h3>3. Commercial Terms Requested</h3>
+      <div class="meta-row">
+        ${incoterm?`<div><b>Incoterm</b>${incoterm}</div>`:''}
+        ${paymentTerms?`<div><b>Payment Terms</b>${paymentTerms}</div>`:''}
+        ${validity?`<div><b>Quotation Validity</b>${validity}</div>`:''}
+      </div>`;
+  }
+
+  const sectionNum = docType==='RFI' ? 3 : (docType==='RFP' ? 5 : 4);
+  body += `<h3>${sectionNum}. Submission Instructions</h3><p>${submission}</p>`;
+  if(confidentiality){
+    body += `<h3>${sectionNum+1}. Confidentiality</h3><p>${confidentiality}</p>`;
+  }
+  body += `<p style="margin-top:20px;">Thank you for your attention to this request. We look forward to your response.</p>
+    <p style="margin-top:16px;">Sincerely,<br>${contactName}<br>${company}</p>`;
+
+  document.getElementById('preview').innerHTML = `
+    <h2>${docFullName}</h2>
+    <div class="doc-sub">${title}</div>
+    ${metaBlock}
+    ${body}
+  `;
+}
+
+// init
+renderRfiChecklist();
+renderRfpChecklist();
+renderCriteria();
+addItem('Aluminum Extrusion Profile', '6063-T5, 3.0mm thickness', 5000, 'PCS', 'within 4 weeks');
+document.getElementById('issueDate').valueAsDate = new Date();
+setDocType('RFI');
+applyCategoryDefaults();
+</script>
+</body>
+</html>

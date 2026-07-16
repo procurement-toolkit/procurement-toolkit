@@ -33,7 +33,10 @@
   .inp{width:100%;border:1px solid var(--slate-200);border-radius:6px;padding:7px 10px;font-size:12.5px;color:var(--slate-800);font-family:inherit}
   .inp:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px rgba(37,99,235,.1)}
   textarea.inp{resize:vertical;min-height:50px}
-  .item-row{display:grid;grid-template-columns:1.6fr .8fr 1fr .8fr .8fr .8fr 30px;gap:6px;margin-bottom:6px;align-items:center}
+  .item-row{display:grid;grid-template-columns:1.6fr .8fr 1fr .8fr .8fr .8fr 30px;gap:6px;margin-bottom:2px;align-items:center}
+  .item-remark-row{display:grid;grid-template-columns:1fr 30px;gap:6px;margin-bottom:8px;padding-left:2px}
+  .item-remark-row input{font-size:11px;padding:5px 8px;border:1px dashed var(--slate-300);border-radius:5px;color:var(--slate-500);background:var(--slate-50)}
+  .item-remark-row input::placeholder{color:var(--slate-400)}
   .item-row input{font-size:11.5px;padding:6px 8px}
   .btn-del{width:26px;height:26px;border:1px solid var(--slate-200);border-radius:6px;background:#fff;color:var(--slate-400);cursor:pointer}
   .btn-del:hover{border-color:#DC2626;color:#DC2626}
@@ -143,6 +146,14 @@ Tel: +82-2-000-0000</textarea>
     </div>
 
     <div class="card">
+      <div class="card-header"><div class="card-title">전체 특이사항 (선택)</div></div>
+      <div class="card-body">
+        <textarea class="inp" id="specialNote" rows="2" placeholder="예: This shipment contains samples with no commercial value. / Contains dangerous goods (Class 9). / Goods returned for repair and re-export." oninput="render()"></textarea>
+        <div style="font-size:11px;color:#94A3B8;margin-top:6px;">전체 선적 건에 대한 코멘트입니다. 개별 품목에 대한 메모는 아래 품목 내역의 각 항목 밑 "비고" 칸에 따로 입력하세요.</div>
+      </div>
+    </div>
+
+    <div class="card">
       <div class="card-header"><div class="card-title">품목 내역</div></div>
       <div class="card-body">
         <div class="col-labels"><span>Description</span><span>HS Code</span><span>Qty</span><span>단가(USD)</span><span>순중량(kg)</span><span>총중량(kg)</span><span></span></div>
@@ -173,29 +184,35 @@ let items = [];
 let counter = 0;
 let currentDoc = 'invoice';
 
-function addItem(desc,hs,qty,price,nw,gw){
+function addItem(desc,hs,qty,price,nw,gw,remark){
   counter++;
-  items.push({id:counter, desc:desc||'', hs:hs||'', qty:qty??1, price:price??0, nw:nw??0, gw:gw??0});
+  items.push({id:counter, desc:desc||'', hs:hs||'', qty:qty??1, price:price??0, nw:nw??0, gw:gw??0, remark:remark||''});
   renderItems();
 }
 function removeItem(id){ items = items.filter(i=>i.id!==id); if(items.length===0) addItem(); else renderItems(); }
 function updateItem(id, field, val){
   const it = items.find(i=>i.id===id); if(!it) return;
-  if(field==='desc'||field==='hs') it[field]=val; else it[field]=parseFloat(val)||0;
+  if(field==='desc'||field==='hs'||field==='remark') it[field]=val; else it[field]=parseFloat(val)||0;
   render();
 }
 function renderItems(){
   const c = document.getElementById('items'); c.innerHTML='';
   items.forEach(it=>{
-    const row=document.createElement('div'); row.className='item-row';
+    const row=document.createElement('div');
     row.innerHTML=`
-      <input class="inp" placeholder="Product name" value="${it.desc}" oninput="updateItem(${it.id},'desc',this.value)">
-      <input class="inp" placeholder="8471.30" value="${it.hs}" oninput="updateItem(${it.id},'hs',this.value)">
-      <input class="inp" type="number" value="${it.qty}" oninput="updateItem(${it.id},'qty',this.value)">
-      <input class="inp" type="number" step="0.01" value="${it.price}" oninput="updateItem(${it.id},'price',this.value)">
-      <input class="inp" type="number" step="0.1" value="${it.nw}" oninput="updateItem(${it.id},'nw',this.value)">
-      <input class="inp" type="number" step="0.1" value="${it.gw}" oninput="updateItem(${it.id},'gw',this.value)">
-      <button class="btn-del" onclick="removeItem(${it.id})">✕</button>
+      <div class="item-row">
+        <input class="inp" placeholder="Product name" value="${it.desc}" oninput="updateItem(${it.id},'desc',this.value)">
+        <input class="inp" placeholder="8471.30" value="${it.hs}" oninput="updateItem(${it.id},'hs',this.value)">
+        <input class="inp" type="number" value="${it.qty}" oninput="updateItem(${it.id},'qty',this.value)">
+        <input class="inp" type="number" step="0.01" value="${it.price}" oninput="updateItem(${it.id},'price',this.value)">
+        <input class="inp" type="number" step="0.1" value="${it.nw}" oninput="updateItem(${it.id},'nw',this.value)">
+        <input class="inp" type="number" step="0.1" value="${it.gw}" oninput="updateItem(${it.id},'gw',this.value)">
+        <button class="btn-del" onclick="removeItem(${it.id})">✕</button>
+      </div>
+      <div class="item-remark-row">
+        <input class="inp" placeholder="비고 (예: Sample, no commercial value / Dangerous goods - Class 9 / Repair &amp; re-export)" value="${it.remark}" oninput="updateItem(${it.id},'remark',this.value)">
+        <span></span>
+      </div>
     `;
     c.appendChild(row);
   });
@@ -213,11 +230,13 @@ function fmt(n,d=2){ return (n||0).toLocaleString('en-US',{minimumFractionDigits
 function render(){
   const shipper = v('shipper').replace(/\n/g,'<br>');
   const consignee = v('consignee').replace(/\n/g,'<br>') || 'Consignee name and address here';
+  const specialNote = v('specialNote');
   let subtotal = 0, totalNW=0, totalGW=0, totalQty=0;
   const rows = items.map(it=>{
     const amt = it.qty*it.price; subtotal+=amt; totalNW+=it.nw; totalGW+=it.gw; totalQty+=it.qty;
     return {...it, amt};
   });
+  const noteBlock = specialNote ? `<div class="box" style="margin-top:10px;"><b>Remarks / Special Instructions</b>${specialNote.replace(/\n/g,'<br>')}</div>` : '';
 
   if(currentDoc==='invoice'){
     document.getElementById('preview').innerHTML = `
@@ -240,10 +259,11 @@ function render(){
         <div class="box"><b>Port of Discharge</b>${v('pod')||'-'}</div>
       </div>
       <table>
-        <thead><tr><th>Description</th><th>HS Code</th><th>Qty</th><th>Unit Price (USD)</th><th>Amount (USD)</th></tr></thead>
-        <tbody>${rows.map(r=>`<tr><td>${r.desc||'-'}</td><td>${r.hs||'-'}</td><td>${r.qty}</td><td>${fmt(r.price)}</td><td>${fmt(r.amt)}</td></tr>`).join('')}</tbody>
-        <tfoot><tr><td colspan="4" style="text-align:right;font-weight:700;">TOTAL</td><td style="font-weight:700;">USD ${fmt(subtotal)}</td></tr></tfoot>
+        <thead><tr><th>Description</th><th>HS Code</th><th>Qty</th><th>Unit Price (USD)</th><th>Amount (USD)</th><th>Remarks</th></tr></thead>
+        <tbody>${rows.map(r=>`<tr><td>${r.desc||'-'}</td><td>${r.hs||'-'}</td><td>${r.qty}</td><td>${fmt(r.price)}</td><td>${fmt(r.amt)}</td><td style="font-size:10px;color:#475569;">${r.remark||'-'}</td></tr>`).join('')}</tbody>
+        <tfoot><tr><td colspan="4" style="text-align:right;font-weight:700;">TOTAL</td><td style="font-weight:700;">USD ${fmt(subtotal)}</td><td></td></tr></tfoot>
       </table>
+      ${noteBlock}
       </div>
     `;
   } else {
@@ -259,10 +279,11 @@ function render(){
         <div class="box"><b>Total Packages</b>${v('totalPkg')||'-'}</div>
       </div>
       <table>
-        <thead><tr><th>Description</th><th>Qty</th><th>Net Weight (kg)</th><th>Gross Weight (kg)</th></tr></thead>
-        <tbody>${rows.map(r=>`<tr><td>${r.desc||'-'}</td><td>${r.qty}</td><td>${fmt(r.nw,1)}</td><td>${fmt(r.gw,1)}</td></tr>`).join('')}</tbody>
-        <tfoot><tr><td style="font-weight:700;">TOTAL</td><td style="font-weight:700;">${totalQty}</td><td style="font-weight:700;">${fmt(totalNW,1)} kg</td><td style="font-weight:700;">${fmt(totalGW,1)} kg</td></tr></tfoot>
+        <thead><tr><th>Description</th><th>Qty</th><th>Net Weight (kg)</th><th>Gross Weight (kg)</th><th>Remarks</th></tr></thead>
+        <tbody>${rows.map(r=>`<tr><td>${r.desc||'-'}</td><td>${r.qty}</td><td>${fmt(r.nw,1)}</td><td>${fmt(r.gw,1)}</td><td style="font-size:10px;color:#475569;">${r.remark||'-'}</td></tr>`).join('')}</tbody>
+        <tfoot><tr><td style="font-weight:700;">TOTAL</td><td style="font-weight:700;">${totalQty}</td><td style="font-weight:700;">${fmt(totalNW,1)} kg</td><td style="font-weight:700;">${fmt(totalGW,1)} kg</td><td></td></tr></tfoot>
       </table>
+      ${noteBlock}
       </div>
     `;
   }

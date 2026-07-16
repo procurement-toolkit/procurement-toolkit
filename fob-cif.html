@@ -236,6 +236,12 @@
 
   /* TABLE (product rows) */
   .item-table-wrap { overflow-x: auto; margin: 0 -20px; padding: 0 20px; }
+  .duty-mode-toggle { }
+  .duty-mode-btn { padding:7px 14px; border:1px solid var(--slate-200); background:#fff; border-radius:999px; font-size:12px; font-weight:700; color:var(--slate-500); cursor:pointer; }
+  .duty-mode-btn.active { background: var(--accent); color:#fff; border-color: var(--accent); }
+  .duty-col { display:none; }
+  .item-table.per-item-mode .duty-col { display:table-cell; }
+  .inp-duty { max-width: 70px; }
 
   .item-table { width: 100%; min-width: 480px; border-collapse: collapse; }
 
@@ -561,8 +567,13 @@
           <span style="font-size:11px;color:var(--slate-400)">통화: USD</span>
         </div>
         <div class="card-body">
+          <div class="duty-mode-toggle" style="display:flex;gap:6px;margin-bottom:6px;">
+            <button type="button" class="duty-mode-btn active" id="btn-duty-uniform" onclick="setDutyMode('uniform')">일괄 관세 적용</button>
+            <button type="button" class="duty-mode-btn" id="btn-duty-peritem" onclick="setDutyMode('perItem')">품목별 관세 적용</button>
+          </div>
+          <div style="font-size:11px;color:var(--slate-400);margin-bottom:10px;">품목마다 HS Code(관세율)가 다른 경우 "품목별 관세 적용"을 선택하고, 아래 표에 품목별로 관세율(%)을 입력하세요. 운임·보험료는 각 품목의 상품가액 비중만큼 자동 배분됩니다.</div>
           <div class="item-table-wrap">
-            <table class="item-table" aria-label="상품 목록">
+            <table class="item-table" aria-label="상품 목록" id="item-table">
               <thead>
                 <tr>
                   <th style="width:28px">#</th>
@@ -570,6 +581,7 @@
                   <th style="width:70px">수량</th>
                   <th style="width:100px">단가 (USD)</th>
                   <th style="width:90px">소계</th>
+                  <th style="width:80px" class="duty-col">관세율(%)</th>
                   <th style="width:40px">삭제</th>
                 </tr>
               </thead>
@@ -781,10 +793,23 @@
     calc();
   }
 
-  function addItemRow(name, qty, price) {
+  let dutyMode = 'uniform'; // 'uniform' | 'perItem'
+
+  function setDutyMode(mode) {
+    dutyMode = mode;
+    document.getElementById('btn-duty-uniform').classList.toggle('active', mode === 'uniform');
+    document.getElementById('btn-duty-peritem').classList.toggle('active', mode === 'perItem');
+    document.getElementById('item-table').classList.toggle('per-item-mode', mode === 'perItem');
+    // 일괄 모드일 때는 기존 관세율 필드를 그대로 사용, 품목별 모드일 때는 그 필드를 참고용으로 흐리게 표시
+    const dutyField = document.getElementById('field-dutyRate');
+    if (dutyField) dutyField.style.opacity = (mode === 'perItem') ? '0.4' : '1';
+    calc();
+  }
+
+  function addItemRow(name, qty, price, dutyRate) {
     itemCounter++;
     const id = itemCounter;
-    items.push({ id, name: name || '', qty: qty ?? 1, price: price ?? 0 });
+    items.push({ id, name: name || '', qty: qty ?? 1, price: price ?? 0, dutyRate: dutyRate ?? 8 });
     renderItems();
   }
 
@@ -798,7 +823,8 @@
     const item = items.find(i => i.id === id);
     if (!item) return;
     if (field === 'name') item.name = value;
-    else item.qty = parseFloat(value) || 0;
+    else if (field === 'dutyRate') item.dutyRate = parseFloat(value) || 0;
+    else if (field === 'qty') item.qty = parseFloat(value) || 0;
     if (field === 'price') item.price = parseFloat(value) || 0;
     calc();
   }
@@ -815,6 +841,7 @@
         <td><input type="number" class="inp inp-qty" min="0" value="${item.qty}" oninput="updateItem(${item.id},'qty',this.value)"></td>
         <td><input type="number" class="inp inp-price" min="0" step="0.01" value="${item.price}" oninput="updateItem(${item.id},'price',this.value)"></td>
         <td><span class="row-subtotal" id="sub-${item.id}">$0.00</span></td>
+        <td class="duty-col"><input type="number" class="inp inp-duty" min="0" step="0.1" value="${item.dutyRate}" oninput="updateItem(${item.id},'dutyRate',this.value)"></td>
         <td><button class="btn-del" onclick="removeItemRow(${item.id})" aria-label="행 삭제" ${items.length <= 1 ? 'disabled' : ''}>
           <svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
         </button></td>
@@ -843,7 +870,6 @@
     const inlandOrigin = parseFloat(document.getElementById('inlandOrigin').value) || 0;
     const freight = parseFloat(document.getElementById('freight').value) || 0;
     const insurance = parseFloat(document.getElementById('insurance').value) || 0;
-    const dutyRate = parseFloat(document.getElementById('dutyRate').value) || 0;
     const vatRate = parseFloat(document.getElementById('vatRate').value) || 0;
     const customsFee = parseFloat(document.getElementById('customsFee').value) || 0;
     const inlandDest = parseFloat(document.getElementById('inlandDest').value) || 0;
@@ -878,10 +904,29 @@
 
     let dutyAmount = 0, vatAmount = 0;
     let landedUsd = cifValue;
+    let dutyDetailLines = [];
 
     if (currentTerm !== 'DDP') {
-      dutyAmount = cifValue * (dutyRate / 100);
-      lines.push({ label: `관세 (${dutyRate}%)`, value: '$' + fmt(dutyAmount, 2), add: true });
+      if (dutyMode === 'perItem' && goodsValue > 0) {
+        // 품목별 관세: 각 품목의 상품가액 비중만큼 운임/보험/내륙운송비를 배분한 뒤, 품목별 관세율 적용
+        const extraCosts = cifValue - goodsValue; // 이번 인코텀즈 조건에서 추가로 얹힌 운임/보험 등 총액
+        items.forEach(item => {
+          const itemGoods = item.qty * item.price;
+          const shareRatio = itemGoods / goodsValue;
+          const itemCif = itemGoods + extraCosts * shareRatio;
+          const itemDuty = itemCif * (item.dutyRate / 100);
+          dutyAmount += itemDuty;
+          if (itemGoods > 0) {
+            dutyDetailLines.push({ label: `　ㄴ ${item.name || '(품목명 없음)'} (${item.dutyRate}%)`, value: '$' + fmt(itemDuty, 2), add: true, sub2: true });
+          }
+        });
+        lines.push({ label: `관세 (품목별 적용, 합계)`, value: '$' + fmt(dutyAmount, 2), add: true, strong: true });
+        lines.push(...dutyDetailLines);
+      } else {
+        const dutyRate = parseFloat(document.getElementById('dutyRate').value) || 0;
+        dutyAmount = cifValue * (dutyRate / 100);
+        lines.push({ label: `관세 (일괄 ${dutyRate}%)`, value: '$' + fmt(dutyAmount, 2), add: true });
+      }
       landedUsd += dutyAmount;
 
       vatAmount = (cifValue + dutyAmount) * (vatRate / 100);
@@ -898,7 +943,7 @@
 
     // render lines
     const linesHtml = lines.map(l => `
-      <div class="result-line ${l.add ? 'add' : ''}" style="${l.sub ? 'opacity:.6' : ''}">
+      <div class="result-line ${l.add ? 'add' : ''}" style="${l.sub ? 'opacity:.6' : ''}${l.sub2 ? 'font-size:11px;color:var(--slate-500);padding:4px 0;' : ''}">
         <span class="label">${l.label}</span>
         <span class="value" style="${l.strong ? 'color:var(--accent)' : ''}">${l.value}</span>
       </div>
