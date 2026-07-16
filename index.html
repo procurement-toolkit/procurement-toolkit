@@ -37,8 +37,23 @@
   @media (max-width:640px){.logo-tag,.header-meta{display:none}}
 
   .hero{background:var(--ink);color:#fff;padding:64px 24px 56px;position:relative;overflow:hidden}
-  .hero::before{content:'';position:absolute;top:-140px;right:-100px;width:420px;height:420px;border-radius:50%;background:radial-gradient(circle, rgba(21,94,239,.35), transparent 70%);pointer-events:none}
-  .hero::after{content:'';position:absolute;bottom:-160px;left:-80px;width:360px;height:360px;border-radius:50%;background:radial-gradient(circle, rgba(245,158,11,.18), transparent 70%);pointer-events:none}
+  .hero::before{content:'';position:absolute;top:-160px;right:-120px;width:520px;height:520px;border-radius:50%;background:radial-gradient(circle, rgba(21,94,239,.42), transparent 70%);pointer-events:none;animation:driftA 16s ease-in-out infinite}
+  .hero::after{content:'';position:absolute;bottom:-180px;left:-100px;width:440px;height:440px;border-radius:50%;background:radial-gradient(circle, rgba(245,158,11,.22), transparent 70%);pointer-events:none;animation:driftB 20s ease-in-out infinite}
+  @keyframes driftA{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(-30px,25px) scale(1.08)}}
+  @keyframes driftB{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(25px,-20px) scale(1.1)}}
+  .hero-grid{position:absolute;inset:0;pointer-events:none;opacity:.5;
+    background-image:
+      linear-gradient(rgba(255,255,255,.045) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,.045) 1px, transparent 1px);
+    background-size:42px 42px;
+    -webkit-mask-image:radial-gradient(ellipse 90% 75% at 30% 25%, #000 40%, transparent 85%);
+    mask-image:radial-gradient(ellipse 90% 75% at 30% 25%, #000 40%, transparent 85%);
+  }
+  .hero-route{position:absolute;inset:0;pointer-events:none;width:100%;height:100%}
+  .hero-route path{fill:none;stroke:url(#routeGrad);stroke-width:1.4;stroke-dasharray:6 7;opacity:.55;animation:routeFlow 3.2s linear infinite}
+  @keyframes routeFlow{to{stroke-dashoffset:-52}}
+  .hero-fade{position:absolute;left:0;right:0;bottom:0;height:70px;background:linear-gradient(180deg, transparent, var(--paper));pointer-events:none}
+  .hero-inner{position:relative;z-index:1}
   .hero-inner{max-width:1180px;margin:0 auto;position:relative}
   .hero-eyebrow{display:inline-flex;align-items:center;gap:8px;font-family:var(--font-display);font-size:11.5px;font-weight:600;letter-spacing:.6px;color:var(--beacon);text-transform:uppercase;margin-bottom:18px}
   .hero-eyebrow .blip{width:6px;height:6px;border-radius:50%;background:var(--beacon);box-shadow:0 0 0 4px rgba(245,158,11,.25);animation:blip 2s infinite}
@@ -161,6 +176,19 @@
 </header>
 
 <section class="hero">
+  <div class="hero-grid"></div>
+  <svg class="hero-route" viewBox="0 0 1200 400" preserveAspectRatio="none">
+    <defs>
+      <linearGradient id="routeGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+        <stop offset="0%" stop-color="#14B8A6"/>
+        <stop offset="55%" stop-color="#155EEF"/>
+        <stop offset="100%" stop-color="#F59E0B"/>
+      </linearGradient>
+    </defs>
+    <path d="M -40 260 C 220 60, 480 340, 760 140 S 1180 40, 1260 90"/>
+    <path d="M -40 340 C 260 380, 560 120, 900 260 S 1150 320, 1260 260" opacity="0.4"/>
+  </svg>
+  <div class="hero-fade"></div>
   <div class="hero-inner">
     <div class="hero-eyebrow"><span class="blip"></span>LIVE · 실무 도구 18종 운영 중</div>
     <h1>계산과 서류, <span class="hl">CBM Lab</span>에서 끝내세요.</h1>
