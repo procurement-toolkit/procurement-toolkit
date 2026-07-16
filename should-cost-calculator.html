@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="BOM 원재료비, 가공 공정별 인건비, 설비 가동률/간접비, 적정 이윤까지 쌓아 올려 Should Cost(적정 원가)를 산출하고, 공급업체 견적과 비교해 협상 포인트와 영문 협상 이메일까지 자동 생성합니다.">
+<meta name="keywords" content="Should Cost 계산기, Should Cost Analysis, 원가 분석, 구매 협상, BOM 원가">
+<title>Should Cost 계산기 — CBM Lab</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@800;900&display=swap" rel="stylesheet">
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  :root{--accent:#2563EB;--accent-light:#DBEAFE;--accent-dark:#1D4ED8;--slate-50:#F8FAFC;--slate-100:#F1F5F9;--slate-200:#E2E8F0;--slate-300:#CBD5E1;--slate-400:#94A3B8;--slate-500:#64748B;--slate-600:#475569;--slate-700:#334155;--slate-800:#1E293B;--slate-900:#0F172A;--success:#0F766E;--success-light:#CCFBF1;--warning:#B45309;--warning-light:#FEF3C7;--danger:#DC2626;--danger-light:#FEE2E2;--radius:8px;--radius-lg:12px;--shadow-sm:0 1px 2px rgba(0,0,0,.05);font-family:'Pretendard','Apple SD Gothic Neo',system-ui,-apple-system,sans-serif}
+  body{background:var(--slate-50);color:var(--slate-800);font-size:14px;line-height:1.6}
+  header{background:#fff;border-bottom:1px solid var(--slate-200)}
+  .header-inner{max-width:1300px;margin:0 auto;padding:16px 24px;display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}
+  .logo-mark{font-size:20px;font-weight:800;color:var(--slate-900);text-decoration:none;font-family:'Space Grotesk','Pretendard',sans-serif;letter-spacing:-0.4px;}
+  .nav-link{font-size:13px;font-weight:600;color:var(--slate-500);text-decoration:none;padding:7px 12px;border-radius:6px}
+  .nav-link:hover{background:var(--slate-100)}
+  .hero{background:#fff;border-bottom:1px solid var(--slate-200);padding:28px 24px 24px}
+  .hero-inner{max-width:1300px;margin:0 auto}
+  .hero h1{font-size:22px;font-weight:700;color:var(--slate-900);margin-bottom:6px}
+  .hero p{font-size:14px;color:var(--slate-500);max-width:720px}
+  .hero-tags{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}
+  .tag{background:var(--slate-100);color:var(--slate-600);font-size:11px;font-weight:500;padding:3px 10px;border-radius:4px;border:1px solid var(--slate-200)}
+  .main{max-width:1300px;margin:0 auto;padding:28px 24px 60px;display:grid;grid-template-columns:1fr 380px;gap:24px;align-items:start}
+  .card{background:#fff;border:1px solid var(--slate-200);border-radius:var(--radius-lg);box-shadow:var(--shadow-sm);margin-bottom:20px}
+  .card-header{padding:16px 20px;border-bottom:1px solid var(--slate-100);display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+  .card-title{font-size:14px;font-weight:600;color:var(--slate-800)}
+  .card-body{padding:18px}
+  .field-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px}
+  .field-label{font-size:11.5px;font-weight:600;color:var(--slate-600);margin-bottom:5px;display:block}
+  .field-sub{font-size:10px;color:var(--slate-400);margin-top:-3px;margin-bottom:5px;}
+  .inp,select.inp{width:100%;border:1px solid var(--slate-200);border-radius:6px;padding:8px 10px;font-size:12.5px;font-family:inherit}
+  .inp:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px rgba(37,99,235,.1)}
+
+  .item-table-wrap{overflow-x:auto}
+  .item-table{width:100%;border-collapse:collapse}
+  .item-table th{padding:6px 5px;text-align:left;font-size:10px;color:var(--slate-400);text-transform:uppercase;font-weight:700;white-space:nowrap}
+  .item-table td{padding:4px 3px}
+  .item-table input{width:100%;border:1px solid var(--slate-200);border-radius:5px;padding:6px 6px;font-size:12px}
+  .btn-del-row{width:22px;height:22px;border:1px solid var(--slate-200);border-radius:5px;background:#fff;color:var(--slate-400);cursor:pointer;font-size:10px}
+  .btn-del-row:hover{border-color:var(--danger);color:var(--danger)}
+  .btn-add-row{display:block;width:100%;padding:8px;border:1px dashed var(--slate-300);border-radius:6px;background:transparent;color:var(--slate-500);font-size:12px;cursor:pointer;margin-top:6px;font-family:inherit}
+  .btn-add-row:hover{border-color:var(--accent);color:var(--accent)}
+
+  .subtotal-row{display:flex;justify-content:space-between;align-items:center;background:var(--slate-50);border:1px solid var(--slate-100);border-radius:6px;padding:10px 14px;margin-top:10px;}
+  .subtotal-row .st-label{font-size:12px;font-weight:700;color:var(--slate-600)}
+  .subtotal-row .st-value{font-size:15px;font-weight:800;color:var(--slate-800);font-variant-numeric:tabular-nums}
+
+  .region-presets{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px}
+  .region-btn{font-size:11px;font-weight:600;padding:5px 11px;border-radius:999px;border:1px solid var(--slate-200);background:#fff;cursor:pointer;color:var(--slate-600)}
+  .region-btn:hover{border-color:var(--accent);color:var(--accent)}
+
+  .result-line{display:flex;justify-content:space-between;padding:9px 0;border-bottom:1px solid var(--slate-100);font-size:12.5px}
+  .result-line:last-child{border-bottom:none}
+  .result-line .label{color:var(--slate-500)}
+  .result-line .value{font-weight:600;color:var(--slate-800);font-variant-numeric:tabular-nums}
+  .result-total{background:var(--accent-light);border:1px solid #BFDBFE;border-radius:var(--radius);padding:16px 18px;margin:10px 0}
+  .result-total .label{font-size:11px;font-weight:700;color:var(--accent-dark);text-transform:uppercase;margin-bottom:4px}
+  .result-total .value{font-size:24px;font-weight:800;color:var(--accent-dark)}
+
+  .compare-box{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
+  .compare-item{border-radius:var(--radius);padding:12px 14px;text-align:center}
+  .compare-item.should{background:var(--success-light);border:1px solid #99F6E4}
+  .compare-item.quote{background:var(--slate-50);border:1px solid var(--slate-100)}
+  .compare-item .c-label{font-size:10.5px;font-weight:700;color:var(--slate-500);text-transform:uppercase}
+  .compare-item .c-value{font-size:17px;font-weight:800;color:var(--slate-800);margin-top:2px}
+
+  .gap-badge{text-align:center;margin-top:12px;padding:10px;border-radius:var(--radius);font-size:13px;font-weight:700}
+  .gap-badge.high{background:var(--danger-light);color:var(--danger)}
+  .gap-badge.ok{background:var(--success-light);color:var(--success)}
+
+  .negotiation-points{margin-top:14px}
+  .negotiation-points li{font-size:12px;color:var(--slate-600);margin-bottom:6px;padding-left:4px}
+
+  .btn-email{width:100%;padding:10px;background:var(--slate-900);color:#fff;border:none;border-radius:8px;font-size:12.5px;font-weight:700;cursor:pointer;margin-top:12px}
+  .btn-email:hover{background:var(--accent)}
+
+  .email-preview{display:none;margin-top:12px;background:var(--slate-50);border:1px solid var(--slate-200);border-radius:var(--radius);padding:14px;font-size:11.5px;white-space:pre-wrap;line-height:1.6;font-family:Georgia,serif}
+  .email-preview.show{display:block}
+  .btn-copy-email{width:100%;padding:8px;background:transparent;border:1px dashed var(--slate-300);border-radius:6px;font-size:11.5px;color:var(--slate-500);cursor:pointer;margin-top:8px}
+  .btn-copy-email:hover{border-color:var(--accent);color:var(--accent)}
+
+  .notice-box{background:var(--accent-light);border:1px solid #BFDBFE;border-radius:var(--radius);padding:10px 14px;font-size:11.5px;color:#1E40AF;margin-top:12px;line-height:1.6}
+
+  @media (max-width:900px){.main{grid-template-columns:1fr}}
+  @media (max-width:640px){.field-grid{grid-template-columns:1fr}.compare-box{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute;" aria-hidden="true">
+  <defs>
+    <linearGradient id="cbmGradH" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#14B8A6"/><stop offset="100%" stop-color="#0B2A4A"/></linearGradient>
+    <linearGradient id="cbmGradF" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#2DD4BF"/><stop offset="100%" stop-color="#5B9EFF"/></linearGradient>
+  </defs>
+</svg>
+<header><div class="header-inner">
+  <a href="index.html" class="logo-mark"><svg width="28" height="28" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align:middle;margin-right:9px;flex-shrink:0;"><path d="M20 2.5L36.5 11.5V28.5L20 37.5L3.5 28.5V11.5L20 2.5Z" stroke="url(#cbmGradH)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M20 2.5V20M20 20L36.5 11.5M20 20L3.5 11.5" stroke="url(#cbmGradH)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/></svg><span style="font-family:'Montserrat','Space Grotesk',sans-serif;font-weight:800;letter-spacing:-0.8px;background:linear-gradient(90deg,#14B8A6 0%,#1E7A8C 45%,#0B2A4A 100%);-webkit-background-clip:text;background-clip:text;color:transparent;">CBMLab</span></a>
+  <a href="index.html" class="nav-link">← 전체 도구 보기</a>
+</div></header>
+
+<section class="hero"><div class="hero-inner">
+  <h1>Should Cost 계산기</h1>
+  <p>원재료비, 가공 공정별 인건비, 설비 가동률·간접비, 적정 이윤까지 쌓아 올려 "이 제품은 이 정도 원가가 나와야 한다"는 Should Cost를 산출합니다. 공급업체 견적과 비교해 협상 포인트와 영문 협상 이메일까지 바로 만들 수 있습니다.</p>
+  <div class="hero-tags"><span class="tag">Should Cost Analysis</span><span class="tag">BOM 원가</span><span class="tag">협상 지원</span></div>
+</div></section>
+
+<div class="main">
+  <section>
+    <div class="card">
+      <div class="card-header"><div class="card-title">1. BOM (원재료 내역)</div></div>
+      <div class="card-body">
+        <div class="item-table-wrap">
+          <table class="item-table">
+            <thead><tr><th>원재료명</th><th style="width:80px">수량</th><th style="width:70px">단위</th><th style="width:100px">단가</th><th style="width:90px">소계</th><th></th></tr></thead>
+            <tbody id="bomBody"></tbody>
+          </table>
+        </div>
+        <button class="btn-add-row" onclick="addBom()">+ 원재료 추가</button>
+        <div class="subtotal-row"><span class="st-label">원재료비 합계</span><span class="st-value" id="bomTotal">$0.00</span></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header"><div class="card-title">2. 가공 공정 (공정별 시간·인건비)</div></div>
+      <div class="card-body">
+        <div class="region-presets" id="regionPresets"></div>
+        <div class="item-table-wrap">
+          <table class="item-table">
+            <thead><tr><th>공정명</th><th style="width:90px">사이클타임(초)</th><th style="width:70px">투입인원</th><th style="width:110px">시급(USD)</th><th style="width:90px">인건비/개</th><th></th></tr></thead>
+            <tbody id="procBody"></tbody>
+          </table>
+        </div>
+        <button class="btn-add-row" onclick="addProcess()">+ 공정 추가</button>
+        <div class="subtotal-row"><span class="st-label">가공 인건비 합계</span><span class="st-value" id="procTotal">$0.00</span></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header"><div class="card-title">3. 설비 가동률 &amp; 간접비</div></div>
+      <div class="card-body">
+        <div class="field-grid">
+          <div>
+            <label class="field-label">설비 시간당 비용 (감가상각+전력 등)</label>
+            <input class="inp" type="number" id="machineRate" value="15" oninput="calc()">
+          </div>
+          <div>
+            <label class="field-label">설비 가동률 (%)</label>
+            <div class="field-sub">낮을수록 개당 설비비용 증가</div>
+            <input class="inp" type="number" id="utilRate" value="80" oninput="calc()">
+          </div>
+          <div>
+            <label class="field-label">총 사이클타임 (초, 공정 합계 자동)</label>
+            <input class="inp" type="number" id="totalCycleDisplay" value="0" disabled>
+          </div>
+          <div>
+            <label class="field-label">간접비 비율 (%)</label>
+            <div class="field-sub">재료비+인건비+설비비 소계에 적용</div>
+            <input class="inp" type="number" id="overheadRate" value="8" oninput="calc()">
+          </div>
+        </div>
+        <div class="subtotal-row"><span class="st-label">설비비 + 간접비 합계</span><span class="st-value" id="machineOverheadTotal">$0.00</span></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header"><div class="card-title">4. 적정 이윤</div></div>
+      <div class="card-body">
+        <div class="field-grid">
+          <div>
+            <label class="field-label">목표 이윤율 방식</label>
+            <select class="inp" id="marginMode" onchange="calc()">
+              <option value="markup">Markup (원가 대비)</option>
+              <option value="margin">Margin (판매가 대비)</option>
+            </select>
+          </div>
+          <div>
+            <label class="field-label">목표 이윤율 (%)</label>
+            <input class="inp" type="number" id="marginPct" value="12" oninput="calc()">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header"><div class="card-title">5. 공급업체 견적과 비교 (선택)</div></div>
+      <div class="card-body">
+        <label class="field-label">공급업체 제시 견적 단가 (USD)</label>
+        <input class="inp" type="number" id="supplierQuote" placeholder="예: 4.80" oninput="calc()">
+      </div>
+    </div>
+  </section>
+
+  <aside>
+    <div class="card">
+      <div class="card-header"><div class="card-title">Should Cost 산출 결과</div></div>
+      <div class="card-body">
+        <div id="resultLines"></div>
+        <div class="result-total">
+          <div class="label">Should Cost (개당 적정 원가)</div>
+          <div class="value" id="shouldCostValue">$0.00</div>
+        </div>
+
+        <div id="compareSection" style="display:none;">
+          <div class="compare-box">
+            <div class="compare-item should"><div class="c-label">Should Cost</div><div class="c-value" id="cmpShould">$0.00</div></div>
+            <div class="compare-item quote"><div class="c-label">공급업체 견적</div><div class="c-value" id="cmpQuote">$0.00</div></div>
+          </div>
+          <div class="gap-badge" id="gapBadge"></div>
+
+          <ul class="negotiation-points" id="negoPoints"></ul>
+
+          <button class="btn-email" onclick="toggleEmail()">✉️ 협상 이메일 초안 생성</button>
+          <div class="email-preview" id="emailPreview"></div>
+          <button class="btn-copy-email" id="copyEmailBtn" onclick="copyEmail()" style="display:none;">이메일 내용 복사</button>
+        </div>
+
+        <div class="notice-box">본 결과는 입력값 기반의 참고용 추정치입니다. 실제 원가는 품목별 세부 사양, 실제 시장 시세, 공급업체의 실제 원가 구조에 따라 달라질 수 있어 협상 준비 자료로 활용하시되 최종 판단은 실무 확인을 거치세요.</div>
+      </div>
+    </div>
+  </aside>
+</div>
+
+
+<div style="max-width:1300px;margin:0 auto;padding:0 24px 30px;">
+  <div class="card">
+    <div class="card-header"><div class="card-title">왜 Should Cost 분석이 필요한가</div></div>
+    <div class="card-body" style="font-size:12.5px;color:var(--slate-600);line-height:1.7;">
+<p>공급업체가 제시한 견적을 그대로 받아들이면, 실제 원가보다 얼마나 더 얹어져 있는지 알 수 없어 협상에서 불리한 위치에 서게 됩니다. Should Cost Analysis는 "이 제품이 실제로 이 정도 원가가 나와야 한다"는 기준을 직접 계산해서 협상의 근거로 삼는 기법입니다.</p>
+<p><b>실무 활용법:</b> 신규 품목 소싱 시 여러 공급업체 견적을 비교하는 기준으로 삼거나, 기존 거래처와 원가 절감 협상을 할 때 구체적인 근거 자료로 활용하세요. 공정별 인건비 비중이 높게 나오면 저비용 지역 생산 여부를, 설비 가동률이 낮게 가정되어 있으면 물량 확대를 통한 단가 인하를 협상 포인트로 제시할 수 있습니다.</p>
+</div>
+  </div>
+</div>
+
+<footer style="background:#0F172A;color:#94A3B8;padding:24px;font-size:12px;">
+  <div style="max-width:1300px;margin:0 auto;display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;">
+    <div style="font-size:15px;font-weight:800;color:#fff;"><svg width="24" height="24" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align:middle;margin-right:9px;flex-shrink:0;"><path d="M20 2.5L36.5 11.5V28.5L20 37.5L3.5 28.5V11.5L20 2.5Z" stroke="url(#cbmGradF)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M20 2.5V20M20 20L36.5 11.5M20 20L3.5 11.5" stroke="url(#cbmGradF)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/></svg>CBM<span style="color:#2563EB;">Lab</span></div>
+    <nav><a href="index.html" style="color:#94A3B8;text-decoration:none;font-size:11px;margin-right:14px;">전체 도구</a><a href="privacy.html" style="color:#94A3B8;text-decoration:none;font-size:11px;">개인정보 처리방침</a></nav>
+  </div>
+</footer>
+
+<script src="https://cdn.amplitude.com/script/d4aa9301e01f4600b5eeb018e160aa7c.js"></script>
+<script>
+  window.amplitude.init("d4aa9301e01f4600b5eeb018e160aa7c", { fetchRemoteConfig: true, autocapture: true });
+</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-W1YBL5BGGK"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-W1YBL5BGGK');
+</script>
+
+<script>
+const REGIONS = [
+  {name:'한국', rate:18},
+  {name:'중국', rate:6},
+  {name:'베트남', rate:3},
+  {name:'인도', rate:2.5},
+  {name:'멕시코', rate:4.5},
+  {name:'인도네시아', rate:2.8}
+];
+
+let bomItems = [];
+let procItems = [];
+let bomCounter = 0, procCounter = 0;
+
+function addBom(name, qty, unit, price){
+  bomCounter++;
+  bomItems.push({id:bomCounter, name:name||'', qty:qty??1, unit:unit||'EA', price:price??0});
+  renderBom();
+}
+function removeBom(id){ bomItems = bomItems.filter(i=>i.id!==id); if(bomItems.length===0) addBom(); else renderBom(); }
+function updateBom(id, field, val){
+  const it = bomItems.find(i=>i.id===id); if(!it) return;
+  it[field] = (field==='name'||field==='unit') ? val : (parseFloat(val)||0);
+  calc();
+}
+function renderBom(){
+  document.getElementById('bomBody').innerHTML = bomItems.map(it=>`
+    <tr>
+      <td><input value="${it.name}" placeholder="예: Aluminum Sheet 6063" oninput="updateBom(${it.id},'name',this.value)"></td>
+      <td><input type="number" value="${it.qty}" oninput="updateBom(${it.id},'qty',this.value)"></td>
+      <td><input value="${it.unit}" oninput="updateBom(${it.id},'unit',this.value)"></td>
+      <td><input type="number" step="0.01" value="${it.price}" oninput="updateBom(${it.id},'price',this.value)"></td>
+      <td><span id="bomSub${it.id}">$0.00</span></td>
+      <td><button class="btn-del-row" onclick="removeBom(${it.id})">✕</button></td>
+    </tr>
+  `).join('');
+  calc();
+}
+
+function addProcess(name, cycle, workers, rate){
+  procCounter++;
+  procItems.push({id:procCounter, name:name||'', cycle:cycle??10, workers:workers??1, rate:rate??18});
+  renderProc();
+}
+function removeProcess(id){ procItems = procItems.filter(i=>i.id!==id); if(procItems.length===0) addProcess(); else renderProc(); }
+function updateProc(id, field, val){
+  const it = procItems.find(i=>i.id===id); if(!it) return;
+  it[field] = (field==='name') ? val : (parseFloat(val)||0);
+  calc();
+}
+function renderProc(){
+  document.getElementById('procBody').innerHTML = procItems.map(it=>`
+    <tr>
+      <td><input value="${it.name}" placeholder="예: CNC 가공" oninput="updateProc(${it.id},'name',this.value)"></td>
+      <td><input type="number" value="${it.cycle}" oninput="updateProc(${it.id},'cycle',this.value)"></td>
+      <td><input type="number" value="${it.workers}" oninput="updateProc(${it.id},'workers',this.value)"></td>
+      <td><input type="number" step="0.1" value="${it.rate}" oninput="updateProc(${it.id},'rate',this.value)"></td>
+      <td><span id="procSub${it.id}">$0.00</span></td>
+      <td><button class="btn-del-row" onclick="removeProcess(${it.id})">✕</button></td>
+    </tr>
+  `).join('');
+
+  const presets = document.getElementById('regionPresets');
+  presets.innerHTML = REGIONS.map(r=>`<button type="button" class="region-btn" onclick="applyRegion(${r.rate})">${r.name} ($${r.rate}/hr)</button>`).join('');
+
+  calc();
+}
+
+function applyRegion(rate){
+  procItems.forEach(it => it.rate = rate);
+  renderProc();
+}
+
+function fmt(n, d=2){ return '$' + (n||0).toLocaleString('en-US', {minimumFractionDigits:d, maximumFractionDigits:d}); }
+
+function calc(){
+  // BOM
+  let bomTotal = 0;
+  bomItems.forEach(it=>{
+    const sub = it.qty * it.price;
+    bomTotal += sub;
+    const el = document.getElementById('bomSub'+it.id);
+    if(el) el.textContent = fmt(sub);
+  });
+  document.getElementById('bomTotal').textContent = fmt(bomTotal);
+
+  // 가공 공정
+  let procTotal = 0, totalCycle = 0;
+  procItems.forEach(it=>{
+    const laborCost = (it.cycle/3600) * it.rate * it.workers;
+    procTotal += laborCost;
+    totalCycle += it.cycle;
+    const el = document.getElementById('procSub'+it.id);
+    if(el) el.textContent = fmt(laborCost, 3);
+  });
+  document.getElementById('procTotal').textContent = fmt(procTotal, 3);
+  document.getElementById('totalCycleDisplay').value = totalCycle.toFixed(0);
+
+  // 설비 + 간접비
+  const machineRate = parseFloat(document.getElementById('machineRate').value) || 0;
+  const utilRate = parseFloat(document.getElementById('utilRate').value) || 100;
+  const overheadRate = parseFloat(document.getElementById('overheadRate').value) || 0;
+
+  const machineCostPerUnit = (totalCycle/3600) * machineRate / (utilRate/100 || 1);
+  const preOverheadSubtotal = bomTotal + procTotal + machineCostPerUnit;
+  const overheadAmount = preOverheadSubtotal * (overheadRate/100);
+  const machineOverheadTotal = machineCostPerUnit + overheadAmount;
+  document.getElementById('machineOverheadTotal').textContent = fmt(machineOverheadTotal, 3);
+
+  const costBeforeMargin = preOverheadSubtotal + overheadAmount;
+
+  // 이윤
+  const marginMode = document.getElementById('marginMode').value;
+  const marginPct = parseFloat(document.getElementById('marginPct').value) || 0;
+  let shouldCost;
+  if(marginMode === 'markup'){
+    shouldCost = costBeforeMargin * (1 + marginPct/100);
+  } else {
+    shouldCost = marginPct < 100 ? costBeforeMargin / (1 - marginPct/100) : costBeforeMargin;
+  }
+
+  document.getElementById('resultLines').innerHTML = `
+    <div class="result-line"><span class="label">원재료비 (BOM)</span><span class="value">${fmt(bomTotal)}</span></div>
+    <div class="result-line"><span class="label">가공 인건비</span><span class="value">${fmt(procTotal, 3)}</span></div>
+    <div class="result-line"><span class="label">설비비 (가동률 ${utilRate}% 반영)</span><span class="value">${fmt(machineCostPerUnit, 3)}</span></div>
+    <div class="result-line"><span class="label">간접비 (${overheadRate}%)</span><span class="value">${fmt(overheadAmount, 3)}</span></div>
+    <div class="result-line"><span class="label">이윤 (${marginMode==='markup'?'Markup':'Margin'} ${marginPct}%)</span><span class="value">${fmt(shouldCost - costBeforeMargin, 3)}</span></div>
+  `;
+  document.getElementById('shouldCostValue').textContent = fmt(shouldCost, 3);
+
+  // 견적 비교
+  const quote = parseFloat(document.getElementById('supplierQuote').value) || 0;
+  const compareSection = document.getElementById('compareSection');
+  if(quote > 0){
+    compareSection.style.display = 'block';
+    document.getElementById('cmpShould').textContent = fmt(shouldCost, 3);
+    document.getElementById('cmpQuote').textContent = fmt(quote, 3);
+    const gapPct = ((quote - shouldCost) / shouldCost) * 100;
+    const badge = document.getElementById('gapBadge');
+    if(gapPct > 5){
+      badge.className = 'gap-badge high';
+      badge.textContent = `공급업체 견적이 Should Cost보다 ${gapPct.toFixed(1)}% 높습니다 — 협상 여지 있음`;
+    } else if(gapPct < -5) {
+      badge.className = 'gap-badge ok';
+      badge.textContent = `공급업체 견적이 Should Cost보다 ${Math.abs(gapPct).toFixed(1)}% 낮습니다 — 양호한 조건`;
+    } else {
+      badge.className = 'gap-badge ok';
+      badge.textContent = `공급업체 견적이 Should Cost와 거의 근접합니다 (차이 ${gapPct.toFixed(1)}%)`;
+    }
+
+    // 협상 포인트
+    const points = [];
+    if(gapPct > 5){
+      points.push(`Should Cost 대비 ${gapPct.toFixed(1)}% 높은 금액에 대한 상세 원가 내역(Cost Breakdown)을 요청하세요.`);
+      if(procTotal/bomTotal > 0.5) points.push('가공 인건비 비중이 높은 품목입니다 — 저비용 지역 생산 여부나 자동화 수준을 확인해보세요.');
+      if(utilRate < 70) points.push('설비 가동률이 낮게 가정된 항목입니다 — 발주 물량을 늘려 가동률을 높이면 단가 인하 여지가 있을 수 있습니다.');
+      points.push('장기계약 또는 물량 확대를 조건으로 단가 재협상을 요청해보세요.');
+    } else {
+      points.push('현재 견적은 Should Cost 대비 합리적인 수준입니다. 추가 협상보다는 품질·납기 조건을 우선 확인하세요.');
+    }
+    document.getElementById('negoPoints').innerHTML = points.map(p=>`<li>• ${p}</li>`).join('');
+
+    window._shouldCostData = { shouldCost, quote, gapPct, points };
+  } else {
+    compareSection.style.display = 'none';
+    document.getElementById('emailPreview').classList.remove('show');
+    document.getElementById('copyEmailBtn').style.display = 'none';
+  }
+}
+
+function toggleEmail(){
+  const d = window._shouldCostData;
+  if(!d) return;
+  const preview = document.getElementById('emailPreview');
+  const gapAbs = Math.abs(d.gapPct).toFixed(1);
+  const text = `Subject: Cost Review Request — Unit Price Discussion
+
+Dear Sir/Madam,
+
+Thank you for submitting your quotation. After conducting an internal cost analysis (Should Cost Analysis) based on estimated material, labor, and overhead costs, we have identified a gap of approximately ${gapAbs}% between our estimated cost and your quoted price.
+
+We would appreciate it if you could share a detailed cost breakdown (material, labor, overhead, and margin) so we can better understand the pricing structure. Depending on the outcome, we would also like to discuss:
+
+- Potential volume commitments in exchange for a revised unit price
+- Production efficiency or automation levels that may affect labor cost
+- Long-term contract terms that could support a more competitive price
+
+We value our relationship with your company and hope to find a mutually beneficial agreement. Please let us know a convenient time to discuss further.
+
+Best regards,
+[Your Name]
+[Your Company]`;
+
+  preview.textContent = text;
+  preview.classList.toggle('show');
+  document.getElementById('copyEmailBtn').style.display = preview.classList.contains('show') ? 'block' : 'none';
+}
+
+function copyEmail(){
+  const text = document.getElementById('emailPreview').textContent;
+  navigator.clipboard.writeText(text).then(()=>{
+    const btn = document.getElementById('copyEmailBtn');
+    const orig = btn.textContent;
+    btn.textContent = '✓ 복사 완료';
+    setTimeout(()=>{ btn.textContent = orig; }, 2000);
+  });
+}
+
+// 초기값
+addBom('Aluminum Sheet 6063', 1.2, 'KG', 3.20);
+addBom('Fastener Set', 4, 'EA', 0.15);
+addProcess('CNC Machining', 45, 1, 18);
+addProcess('Surface Treatment', 20, 1, 18);
+calc();
+</script>
+</body>
+</html>
