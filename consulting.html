@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="20년 이상의 해외 구매·글로벌 소싱·물류 실무 경력을 바탕으로 구매 전략, 공급업체 소싱, 원가 협상, 무역 실무 자문을 제공합니다. 편하게 문의해보세요.">
+<meta name="keywords" content="구매 컨설팅, 소싱 자문, 무역 실무 컨설팅, 공급업체 소싱 컨설팅">
+<title>컨설팅 문의 — CBM Lab</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@800;900&display=swap" rel="stylesheet">
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  :root{--accent:#2563EB;--accent-light:#DBEAFE;--accent-dark:#1D4ED8;--slate-50:#F8FAFC;--slate-100:#F1F5F9;--slate-200:#E2E8F0;--slate-300:#CBD5E1;--slate-400:#94A3B8;--slate-500:#64748B;--slate-600:#475569;--slate-700:#334155;--slate-800:#1E293B;--slate-900:#0F172A;--success:#0F766E;--success-light:#CCFBF1;--radius:8px;--radius-lg:12px;--shadow-sm:0 1px 2px rgba(0,0,0,.05);font-family:'Pretendard','Apple SD Gothic Neo',system-ui,-apple-system,sans-serif}
+  body{background:var(--slate-50);color:var(--slate-800);font-size:14px;line-height:1.6}
+  header{background:#fff;border-bottom:1px solid var(--slate-200)}
+  .header-inner{max-width:1100px;margin:0 auto;padding:16px 24px;display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}
+  .logo-mark{font-size:20px;font-weight:800;color:var(--slate-900);text-decoration:none;font-family:'Space Grotesk','Pretendard',sans-serif;letter-spacing:-0.4px;}
+  .nav-link{font-size:13px;font-weight:600;color:var(--slate-500);text-decoration:none;padding:7px 12px;border-radius:6px}
+  .nav-link:hover{background:var(--slate-100)}
+
+  .hero{background:var(--slate-900);color:#fff;padding:48px 24px 40px}
+  .hero-inner{max-width:1100px;margin:0 auto}
+  .hero-badge{display:inline-block;background:rgba(37,99,235,.18);color:#93C5FD;font-size:11.5px;font-weight:700;padding:5px 14px;border-radius:999px;margin-bottom:16px;letter-spacing:.3px}
+  .hero h1{font-size:26px;font-weight:800;letter-spacing:-.5px;margin-bottom:12px}
+  .hero p{font-size:14.5px;color:#B7C0D1;max-width:620px}
+  .hero-chips{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px}
+  .hero-chip{font-size:11px;font-weight:700;color:#93C5FD;background:rgba(37,99,235,.15);padding:4px 11px;border-radius:999px}
+
+  .main{max-width:1100px;margin:0 auto;padding:32px 24px 60px;display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:start}
+  .card{background:#fff;border:1px solid var(--slate-200);border-radius:var(--radius-lg);box-shadow:var(--shadow-sm);margin-bottom:20px}
+  .card-header{padding:16px 20px;border-bottom:1px solid var(--slate-100)}
+  .card-title{font-size:14px;font-weight:600;color:var(--slate-800)}
+  .card-body{padding:20px}
+
+  .service-item{display:flex;gap:12px;padding:14px 0;border-bottom:1px solid var(--slate-100)}
+  .service-item:last-child{border-bottom:none}
+  .service-icon{width:34px;height:34px;border-radius:9px;background:var(--accent-light);color:var(--accent);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+  .service-item h4{font-size:13px;font-weight:700;color:var(--slate-800);margin-bottom:3px}
+  .service-item p{font-size:12px;color:var(--slate-500);line-height:1.55}
+
+  .field-group{margin-bottom:14px}
+  .field-label{font-size:12px;font-weight:600;color:var(--slate-600);margin-bottom:6px;display:block}
+  .inp,select.inp,textarea.inp{width:100%;border:1px solid var(--slate-200);border-radius:6px;padding:9px 11px;font-size:13px;font-family:inherit}
+  .inp:focus,textarea.inp:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px rgba(37,99,235,.1)}
+  textarea.inp{resize:vertical;min-height:110px}
+
+  .btn-submit{width:100%;padding:12px;background:var(--slate-900);color:#fff;border:none;border-radius:8px;font-size:13.5px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px}
+  .btn-submit:hover{background:var(--accent)}
+  .btn-copy-fallback{width:100%;padding:10px;background:transparent;color:var(--slate-500);border:1px dashed var(--slate-300);border-radius:8px;font-size:12.5px;cursor:pointer;margin-top:10px}
+  .btn-copy-fallback:hover{border-color:var(--accent);color:var(--accent)}
+  .btn-copy-fallback.copied{border-color:var(--success);color:var(--success)}
+
+  .notice-box{background:var(--accent-light);border:1px solid #BFDBFE;border-radius:var(--radius);padding:10px 14px;font-size:11.5px;color:#1E40AF;margin-top:14px;line-height:1.6}
+  .privacy-check{display:flex;align-items:flex-start;gap:8px;font-size:11.5px;color:var(--slate-500);margin-top:10px;margin-bottom:14px}
+  .privacy-check input{margin-top:2px;accent-color:var(--accent)}
+
+  .direct-email{text-align:center;background:var(--slate-50);border:1px solid var(--slate-100);border-radius:var(--radius);padding:14px;font-size:12.5px;color:var(--slate-600);margin-top:6px}
+  .direct-email a{color:var(--accent);font-weight:700;text-decoration:none}
+
+  @media (max-width:900px){.main{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute;" aria-hidden="true">
+  <defs>
+    <linearGradient id="cbmGradH" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#14B8A6"/>
+      <stop offset="100%" stop-color="#0B2A4A"/>
+    </linearGradient>
+    <linearGradient id="cbmGradF" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#2DD4BF"/>
+      <stop offset="100%" stop-color="#5B9EFF"/>
+    </linearGradient>
+  </defs>
+</svg>
+<header><div class="header-inner">
+  <a href="index.html" class="logo-mark"><svg width="28" height="28" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align:middle;margin-right:9px;flex-shrink:0;"><path d="M20 2.5L36.5 11.5V28.5L20 37.5L3.5 28.5V11.5L20 2.5Z" stroke="url(#cbmGradH)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M20 2.5V20M20 20L36.5 11.5M20 20L3.5 11.5" stroke="url(#cbmGradH)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/></svg><span style="font-family:'Montserrat','Space Grotesk',sans-serif;font-weight:800;letter-spacing:-0.8px;background:linear-gradient(90deg,#14B8A6 0%,#1E7A8C 45%,#0B2A4A 100%);-webkit-background-clip:text;background-clip:text;color:transparent;">CBMLab</span></a>
+  <a href="index.html" class="nav-link">← 전체 도구 보기</a>
+</div></header>
+
+<section class="hero"><div class="hero-inner">
+  <div class="hero-badge">1:1 CONSULTING</div>
+  <h1>구매·소싱·물류 실무, 직접 자문받아 보세요</h1>
+  <p>독일계·미국계 글로벌 기업에서 20년 이상 해외 구매(Overseas Procurement), 글로벌 소싱, 물류 업무를 담당해온 실무자가 직접 답변드립니다. 이론이 아니라 실제 현장에서 부딪혀본 경험을 바탕으로 자문합니다.</p>
+  <div class="hero-chips">
+    <span class="hero-chip">20+ Years Experience</span>
+    <span class="hero-chip">Global Sourcing &amp; Procurement</span>
+    <span class="hero-chip">MBA</span>
+    <span class="hero-chip">Certified Interpreter</span>
+  </div>
+</div></section>
+
+<div class="main">
+  <section>
+    <div class="card">
+      <div class="card-header"><div class="card-title">이런 것들을 도와드릴 수 있습니다</div></div>
+      <div class="card-body">
+        <div class="service-item">
+          <div class="service-icon"><svg width="17" height="17" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg></div>
+          <div><h4>구매 전략 / 원가 절감 자문</h4><p>Should Cost 분석, 원가 협상 포인트, 공급업체 다변화 전략 등</p></div>
+        </div>
+        <div class="service-item">
+          <div class="service-icon"><svg width="17" height="17" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3"/></svg></div>
+          <div><h4>해외 소싱 / 공급업체 발굴</h4><p>신규 소싱 국가·업체 탐색, 실사 체크리스트, 협상 준비</p></div>
+        </div>
+        <div class="service-item">
+          <div class="service-icon"><svg width="17" height="17" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg></div>
+          <div><h4>무역 실무 / 영문 커뮤니케이션</h4><p>계약서·인보이스 검토, 영문 협상 메일, 클레임 대응</p></div>
+        </div>
+        <div class="service-item">
+          <div class="service-icon"><svg width="17" height="17" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z"/></svg></div>
+          <div><h4>통역 / 번역 (한↔영)</h4><p>해외 출장 동행 통역, 계약서·이메일 번역</p></div>
+        </div>
+        <div class="service-item">
+          <div class="service-icon"><svg width="17" height="17" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></div>
+          <div><h4>사내 교육 / 특강</h4><p>구매팀 신입 교육, 무역 실무 세미나 등</p></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="notice-box">
+      정식 법률·세무 자문이 아닌 실무 경험 기반의 참고 의견입니다. 계약·법적 분쟁과 관련된 사항은 변호사·관세사 등 전문가 확인이 별도로 필요합니다. 문의 내용에 따라 답변이 어렵거나 시간이 걸릴 수 있는 점 양해 부탁드립니다.
+    </div>
+  </section>
+
+  <aside>
+    <div class="card">
+      <div class="card-header"><div class="card-title">문의하기</div></div>
+      <div class="card-body">
+        <div class="field-group">
+          <label class="field-label">성함 / 회사명</label>
+          <input class="inp" id="fName" placeholder="예: 홍길동 / OO상사 구매팀">
+        </div>
+        <div class="field-group">
+          <label class="field-label">회신받을 이메일</label>
+          <input class="inp" id="fEmail" type="email" placeholder="예: your@email.com">
+        </div>
+        <div class="field-group">
+          <label class="field-label">문의 유형</label>
+          <select class="inp" id="fType">
+            <option>구매 전략 / 원가 절감 자문</option>
+            <option>해외 소싱 / 공급업체 발굴</option>
+            <option>무역 실무 / 계약·서류 검토</option>
+            <option>통역 / 번역 의뢰</option>
+            <option>사내 교육 / 특강 문의</option>
+            <option>기타</option>
+          </select>
+        </div>
+        <div class="field-group">
+          <label class="field-label">문의 내용</label>
+          <textarea class="inp" id="fMessage" placeholder="현재 상황과 궁금하신 점을 자세히 적어주시면 더 정확한 답변을 드릴 수 있습니다."></textarea>
+        </div>
+        <div class="privacy-check">
+          <input type="checkbox" id="fConsent">
+          <label for="fConsent">입력하신 정보는 문의 회신 용도로만 사용되며 별도로 저장되지 않습니다 (이메일 전송 방식). 동의합니다.</label>
+        </div>
+        <button class="btn-submit" onclick="sendInquiry()">
+          <svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+          이메일 앱으로 문의 보내기
+        </button>
+        <button class="btn-copy-fallback" id="copyBtn" onclick="copyFallback()">메일 앱이 안 열리면 → 문의 내용 복사하기</button>
+
+        <div class="direct-email">
+          또는 직접 메일 주세요: <a href="mailto:jaehuipark@gmail.com">jaehuipark@gmail.com</a>
+        </div>
+      </div>
+    </div>
+  </aside>
+</div>
+
+<footer style="background:#0F172A;color:#94A3B8;padding:24px;font-size:12px;">
+  <div style="max-width:1100px;margin:0 auto;display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;">
+    <div style="font-size:15px;font-weight:800;color:#fff;"><svg width="24" height="24" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align:middle;margin-right:9px;flex-shrink:0;"><path d="M20 2.5L36.5 11.5V28.5L20 37.5L3.5 28.5V11.5L20 2.5Z" stroke="url(#cbmGradF)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M20 2.5V20M20 20L36.5 11.5M20 20L3.5 11.5" stroke="url(#cbmGradF)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/></svg>CBM<span style="color:#2563EB;">Lab</span></div>
+    <nav><a href="index.html" style="color:#94A3B8;text-decoration:none;font-size:11px;margin-right:14px;">전체 도구</a><a href="privacy.html" style="color:#94A3B8;text-decoration:none;font-size:11px;">개인정보 처리방침</a></nav>
+  </div>
+</footer>
+
+<script src="https://cdn.amplitude.com/script/d4aa9301e01f4600b5eeb018e160aa7c.js"></script>
+<script>
+  window.amplitude.init("d4aa9301e01f4600b5eeb018e160aa7c", {
+    fetchRemoteConfig: true,
+    autocapture: true,
+  });
+</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-W1YBL5BGGK"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-W1YBL5BGGK');
+</script>
+
+<script>
+const CONSULT_EMAIL = 'jaehuipark@gmail.com';
+
+function buildMessage(){
+  const name = document.getElementById('fName').value.trim() || '(미기재)';
+  const email = document.getElementById('fEmail').value.trim() || '(미기재)';
+  const type = document.getElementById('fType').value;
+  const message = document.getElementById('fMessage').value.trim() || '(내용 미기재)';
+  return {
+    subject: `[CBM Lab 문의] ${type} - ${name}`,
+    body: `문의 유형: ${type}\n성함/회사명: ${name}\n회신 이메일: ${email}\n\n문의 내용:\n${message}`
+  };
+}
+
+function validate(){
+  if(!document.getElementById('fConsent').checked){
+    alert('개인정보 이용 동의 체크박스를 확인해주세요.');
+    return false;
+  }
+  if(!document.getElementById('fMessage').value.trim()){
+    alert('문의 내용을 입력해주세요.');
+    return false;
+  }
+  return true;
+}
+
+function sendInquiry(){
+  if(!validate()) return;
+  const { subject, body } = buildMessage();
+  const mailto = `mailto:${CONSULT_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+  window.location.href = mailto;
+}
+
+function copyFallback(){
+  if(!validate()) return;
+  const { subject, body } = buildMessage();
+  const fullText = `받는사람: ${CONSULT_EMAIL}\n제목: ${subject}\n\n${body}`;
+  navigator.clipboard.writeText(fullText).then(()=>{
+    const btn = document.getElementById('copyBtn');
+    const original = btn.textContent;
+    btn.textContent = '✓ 복사 완료! 이메일 앱에 붙여넣어 보내주세요.';
+    btn.classList.add('copied');
+    setTimeout(()=>{ btn.textContent = original; btn.classList.remove('copied'); }, 3000);
+  });
+}
+</script>
+</body>
+</html>
