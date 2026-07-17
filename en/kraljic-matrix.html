@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Free interactive Kraljic Matrix tool. Drag and drop suppliers or purchasing categories onto the matrix by supply risk and profit impact, get instant quadrant classification (Strategic, Leverage, Bottleneck, Non-Critical) and a recommended sourcing strategy for each.">
+<meta name="keywords" content="Kraljic Matrix, Kraljic Matrix tool, supplier segmentation, procurement portfolio matrix, category management, strategic sourcing matrix, vendor segmentation tool">
+<title>Kraljic Matrix Tool — Supplier &amp; Category Segmentation | CBM Lab</title>
+<link rel="alternate" hreflang="ko" href="https://procurement-toolkit-eight.vercel.app/index.html">
+<link rel="alternate" hreflang="en" href="https://procurement-toolkit-eight.vercel.app/en/kraljic-matrix.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@800;900&display=swap" rel="stylesheet">
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  :root{--accent:#2563EB;--accent-light:#DBEAFE;--accent-dark:#1D4ED8;--slate-50:#F8FAFC;--slate-100:#F1F5F9;--slate-200:#E2E8F0;--slate-300:#CBD5E1;--slate-400:#94A3B8;--slate-500:#64748B;--slate-600:#475569;--slate-700:#334155;--slate-800:#1E293B;--slate-900:#0F172A;--success:#0F766E;--success-light:#CCFBF1;--warning:#B45309;--warning-light:#FEF3C7;--danger:#DC2626;--danger-light:#FEE2E2;--purple:#7C3AED;--purple-light:#EDE9FE;--radius:8px;--radius-lg:12px;--shadow-sm:0 1px 2px rgba(0,0,0,.05);font-family:'Inter','Pretendard',system-ui,-apple-system,sans-serif}
+  body{background:var(--slate-50);color:var(--slate-800);font-size:14px;line-height:1.6}
+  header{background:#fff;border-bottom:1px solid var(--slate-200)}
+  .header-inner{max-width:1300px;margin:0 auto;padding:16px 24px;display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}
+  .logo-mark{font-size:20px;font-weight:800;color:var(--slate-900);text-decoration:none;font-family:'Space Grotesk','Inter',sans-serif;letter-spacing:-0.4px;}
+  .nav-right{display:flex;align-items:center;gap:10px}
+  .nav-link{font-size:13px;font-weight:600;color:var(--slate-500);text-decoration:none;padding:7px 12px;border-radius:6px}
+  .nav-link:hover{background:var(--slate-100)}
+  .lang-switch{font-size:12px;font-weight:700;color:var(--accent);text-decoration:none;padding:6px 12px;border:1px solid var(--accent-light);border-radius:999px;background:var(--accent-light)}
+  .lang-switch:hover{background:#BFDBFE}
+
+  .hero{background:#fff;border-bottom:1px solid var(--slate-200);padding:28px 24px 24px}
+  .hero-inner{max-width:1300px;margin:0 auto}
+  .hero h1{font-size:24px;font-weight:700;color:var(--slate-900);margin-bottom:6px;letter-spacing:-0.3px}
+  .hero p{font-size:14px;color:var(--slate-500);max-width:740px}
+  .hero-tags{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}
+  .tag{background:var(--slate-100);color:var(--slate-600);font-size:11px;font-weight:500;padding:3px 10px;border-radius:4px;border:1px solid var(--slate-200)}
+
+  .main{max-width:1300px;margin:0 auto;padding:28px 24px 60px;display:grid;grid-template-columns:1fr 400px;gap:24px;align-items:start}
+  .card{background:#fff;border:1px solid var(--slate-200);border-radius:var(--radius-lg);box-shadow:var(--shadow-sm);margin-bottom:20px}
+  .card-header{padding:16px 20px;border-bottom:1px solid var(--slate-100);display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+  .card-title{font-size:14px;font-weight:600;color:var(--slate-800)}
+  .card-body{padding:20px}
+  .header-btns{display:flex;gap:6px}
+  .btn-icon{font-size:11px;font-weight:700;color:var(--slate-500);background:#fff;border:1px solid var(--slate-200);padding:6px 11px;border-radius:6px;cursor:pointer}
+  .btn-icon:hover{border-color:var(--accent);color:var(--accent)}
+
+  /* MATRIX VISUAL */
+  .matrix-wrap{position:relative;width:100%;padding-top:100%;background:#fff;border:1px solid var(--slate-200);border-radius:var(--radius);user-select:none}
+  .matrix-inner{position:absolute;inset:16px}
+  .quadrant{position:absolute;width:50%;height:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:10px;border:1px solid var(--slate-200);pointer-events:none}
+  .quadrant .q-title{font-size:12.5px;font-weight:800;letter-spacing:.3px}
+  .quadrant .q-sub{font-size:10px;color:var(--slate-500);margin-top:2px}
+  .q-strategic{top:0;right:0;background:var(--purple-light)}
+  .q-strategic .q-title{color:var(--purple)}
+  .q-leverage{top:0;left:0;background:var(--success-light)}
+  .q-leverage .q-title{color:var(--success)}
+  .q-bottleneck{bottom:0;right:0;background:var(--warning-light)}
+  .q-bottleneck .q-title{color:var(--warning)}
+  .q-noncritical{bottom:0;left:0;background:var(--slate-100)}
+  .q-noncritical .q-title{color:var(--slate-600)}
+
+  .gridline{position:absolute;background:rgba(15,23,42,.05);pointer-events:none}
+  .gridline.v{width:1px;top:0;bottom:0}
+  .gridline.h{height:1px;left:0;right:0}
+  .tick{position:absolute;font-size:8.5px;color:var(--slate-400);pointer-events:none}
+
+  .axis-label-x{position:absolute;bottom:-26px;left:0;right:0;text-align:center;font-size:11.5px;font-weight:700;color:var(--slate-600)}
+  .axis-label-y{position:absolute;top:0;bottom:0;left:-32px;display:flex;align-items:center;justify-content:center;font-size:11.5px;font-weight:700;color:var(--slate-600);writing-mode:vertical-rl;transform:rotate(180deg)}
+
+  .item-dot{position:absolute;border-radius:50%;color:#fff;font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center;transform:translate(-50%,50%);cursor:grab;border:2px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.3);z-index:2;touch-action:none;transition:box-shadow .15s}
+  .item-dot:hover{box-shadow:0 0 0 3px rgba(37,99,235,.35), 0 1px 4px rgba(0,0,0,.3)}
+  .item-dot.dragging{cursor:grabbing;z-index:10;box-shadow:0 4px 14px rgba(0,0,0,.35)}
+  .item-dot.selected{outline:2px solid var(--slate-900);outline-offset:2px}
+
+  .dot-tooltip{position:absolute;background:var(--slate-900);color:#fff;font-size:10.5px;padding:5px 9px;border-radius:6px;white-space:nowrap;pointer-events:none;z-index:20;transform:translate(-50%,-130%);display:none}
+
+  /* FORM */
+  .field-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px}
+  .field-label{font-size:11.5px;font-weight:600;color:var(--slate-600);margin-bottom:5px;display:block}
+  .field-sub{font-size:10px;color:var(--slate-400);margin-top:-3px;margin-bottom:5px}
+  .inp{width:100%;border:1px solid var(--slate-200);border-radius:6px;padding:8px 10px;font-size:12.5px;font-family:inherit}
+  .inp:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px rgba(37,99,235,.1)}
+  input[type=range]{width:100%;accent-color:var(--accent)}
+  .range-value{font-size:11px;color:var(--slate-500);text-align:right}
+
+  .btn-add{width:100%;padding:10px;background:var(--slate-900);color:#fff;border:none;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;margin-top:4px}
+  .btn-add:hover{background:var(--accent)}
+  .btn-add.editing{background:var(--warning)}
+  .btn-cancel-edit{width:100%;padding:8px;background:transparent;border:1px dashed var(--slate-300);border-radius:8px;font-size:12px;color:var(--slate-500);cursor:pointer;margin-top:6px;display:none}
+  .btn-cancel-edit.show{display:block}
+
+  /* ITEM LIST */
+  .item-row{display:flex;align-items:center;justify-content:space-between;padding:9px 0;border-bottom:1px solid var(--slate-100);gap:8px}
+  .item-row:last-child{border-bottom:none}
+  .item-row .dot-mini{width:18px;height:18px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:9px;color:#fff;font-weight:700}
+  .item-row .item-name{font-size:12.5px;font-weight:600;color:var(--slate-800);flex:1;cursor:pointer}
+  .item-row .item-name:hover{color:var(--accent)}
+  .item-row .item-quad{font-size:10px;font-weight:700;padding:2px 8px;border-radius:999px;white-space:nowrap}
+  .item-row .item-del{width:22px;height:22px;border:1px solid var(--slate-200);border-radius:5px;background:#fff;color:var(--slate-400);cursor:pointer;font-size:10px;flex-shrink:0}
+  .item-row .item-del:hover{border-color:var(--danger);color:var(--danger)}
+
+  .quad-badge.strategic{background:var(--purple-light);color:var(--purple)}
+  .quad-badge.leverage{background:var(--success-light);color:var(--success)}
+  .quad-badge.bottleneck{background:var(--warning-light);color:var(--warning)}
+  .quad-badge.noncritical{background:var(--slate-100);color:var(--slate-600)}
+
+  .strategy-box{margin-top:16px;padding:14px 16px;border-radius:var(--radius);font-size:12px;line-height:1.6}
+  .strategy-box h4{font-size:12.5px;font-weight:800;margin-bottom:6px}
+  .strategy-box.strategic{background:var(--purple-light);color:#4C1D95}
+  .strategy-box.leverage{background:var(--success-light);color:#134E4A}
+  .strategy-box.bottleneck{background:var(--warning-light);color:#78350F}
+  .strategy-box.noncritical{background:var(--slate-100);color:var(--slate-700)}
+
+  .notice-box{background:var(--accent-light);border:1px solid #BFDBFE;border-radius:var(--radius);padding:10px 14px;font-size:11.5px;color:#1E40AF;margin-top:14px;line-height:1.6}
+  .save-indicator{font-size:10.5px;color:var(--success);opacity:0;transition:opacity .3s}
+  .save-indicator.show{opacity:1}
+
+  @media print{
+    header,.hero,aside,.header-btns,.notice-box,footer{display:none !important}
+    .main{grid-template-columns:1fr;padding:0}
+    body{background:#fff}
+  }
+  @media (max-width:900px){.main{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute;" aria-hidden="true">
+  <defs>
+    <linearGradient id="cbmGradH" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#14B8A6"/><stop offset="100%" stop-color="#0B2A4A"/></linearGradient>
+    <linearGradient id="cbmGradF" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#2DD4BF"/><stop offset="100%" stop-color="#5B9EFF"/></linearGradient>
+  </defs>
+</svg>
+<header><div class="header-inner">
+  <a href="index.html" class="logo-mark"><svg width="28" height="28" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align:middle;margin-right:9px;flex-shrink:0;"><path d="M20 2.5L36.5 11.5V28.5L20 37.5L3.5 28.5V11.5L20 2.5Z" stroke="url(#cbmGradH)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M20 2.5V20M20 20L36.5 11.5M20 20L3.5 11.5" stroke="url(#cbmGradH)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/></svg><span style="font-family:'Montserrat','Space Grotesk',sans-serif;font-weight:800;letter-spacing:-0.8px;background:linear-gradient(90deg,#14B8A6 0%,#1E7A8C 45%,#0B2A4A 100%);-webkit-background-clip:text;background-clip:text;color:transparent;">CBMLab</span></a>
+  <div class="nav-right">
+    <a href="index.html" class="nav-link">← All Tools</a>
+    <a href="../index.html" class="lang-switch">🇰🇷 한국어</a>
+  </div>
+</div></header>
+
+<section class="hero"><div class="hero-inner">
+  <h1>Kraljic Matrix Tool</h1>
+  <p>Drag and drop your suppliers or purchasing categories onto the classic Kraljic Portfolio Matrix by <strong>Supply Risk</strong> and <strong>Profit Impact</strong>. Bubble size reflects annual spend. Instantly see which quadrant each one falls into and get a recommended sourcing strategy.</p>
+  <div class="hero-tags"><span class="tag">Supplier Segmentation</span><span class="tag">Category Management</span><span class="tag">Strategic Sourcing</span><span class="tag">Drag &amp; Drop</span></div>
+</div></section>
+
+<div class="main">
+  <section>
+    <div class="card">
+      <div class="card-header">
+        <div class="card-title">Matrix View <span class="save-indicator" id="saveIndicator">✓ saved</span></div>
+        <div class="header-btns">
+          <button class="btn-icon" onclick="window.print()">🖨️ Print</button>
+          <button class="btn-icon" onclick="clearAll()">🗑️ Clear all</button>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="matrix-wrap" id="matrixWrap">
+          <div class="matrix-inner" id="matrixInner">
+            <div class="quadrant q-strategic" style="top:0;right:0;">
+              <div class="q-title">STRATEGIC</div>
+              <div class="q-sub">High risk · High impact</div>
+            </div>
+            <div class="quadrant q-leverage" style="top:0;left:0;">
+              <div class="q-title">LEVERAGE</div>
+              <div class="q-sub">Low risk · High impact</div>
+            </div>
+            <div class="quadrant q-bottleneck" style="bottom:0;right:0;">
+              <div class="q-title">BOTTLENECK</div>
+              <div class="q-sub">High risk · Low impact</div>
+            </div>
+            <div class="quadrant q-noncritical" style="bottom:0;left:0;">
+              <div class="q-title">NON-CRITICAL</div>
+              <div class="q-sub">Low risk · Low impact</div>
+            </div>
+            <div id="gridlines"></div>
+            <div class="axis-label-x">Supply Risk →</div>
+            <div class="axis-label-y">Profit Impact →</div>
+            <div id="dotsContainer"></div>
+            <div class="dot-tooltip" id="dotTooltip"></div>
+          </div>
+        </div>
+        <div class="notice-box">💡 <strong>Drag any bubble</strong> to reposition it instantly, or click it to edit exact values and strategy. Bubble size = annual spend (optional). This is a strategic planning aid based on the classic 1983 Kraljic Portfolio Model — real sourcing decisions should also weigh contract terms and market conditions.</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header"><div class="card-title">Items / Suppliers (<span id="itemCount">0</span>)</div></div>
+      <div class="card-body">
+        <div id="itemList"></div>
+      </div>
+    </div>
+  </section>
+
+  <aside>
+    <div class="card">
+      <div class="card-header"><div class="card-title" id="formTitle">Add Item or Category</div></div>
+      <div class="card-body">
+        <div class="field-group" style="margin-bottom:10px;">
+          <label class="field-label">Item / Supplier / Category Name</label>
+          <input class="inp" id="itemName" placeholder="e.g. Aluminum Extrusion Supplier">
+        </div>
+        <div class="field-group" style="margin-bottom:6px;">
+          <label class="field-label">Supply Risk (1 = low risk, 10 = high risk)</label>
+          <div class="field-sub">Consider: number of qualified suppliers, switching cost, lead time, single-source dependency</div>
+          <input type="range" id="riskInput" min="1" max="10" step="0.1" value="5" oninput="document.getElementById('riskVal').textContent=parseFloat(this.value).toFixed(1)">
+          <div class="range-value">Value: <span id="riskVal">5.0</span></div>
+        </div>
+        <div class="field-group" style="margin-bottom:6px;">
+          <label class="field-label">Profit / Value Impact (1 = low, 10 = high)</label>
+          <div class="field-sub">Consider: % of total spend, effect on product cost, effect on revenue/quality</div>
+          <input type="range" id="impactInput" min="1" max="10" step="0.1" value="5" oninput="document.getElementById('impactVal').textContent=parseFloat(this.value).toFixed(1)">
+          <div class="range-value">Value: <span id="impactVal">5.0</span></div>
+        </div>
+        <div class="field-group" style="margin-bottom:10px;">
+          <label class="field-label">Annual Spend (optional — sets bubble size)</label>
+          <input class="inp" id="spendInput" type="number" min="0" placeholder="e.g. 250000">
+        </div>
+        <button class="btn-add" id="submitBtn" onclick="submitForm()">+ Add to Matrix</button>
+        <button class="btn-cancel-edit" id="cancelEditBtn" onclick="cancelEdit()">Cancel edit</button>
+      </div>
+    </div>
+
+    <div class="card" id="strategyCard" style="display:none;">
+      <div class="card-header"><div class="card-title">Recommended Strategy</div></div>
+      <div class="card-body" id="strategyBody"></div>
+    </div>
+
+    <div class="card">
+      <div class="card-header"><div class="card-title">The 4 Quadrants, Explained</div></div>
+      <div class="card-body" style="font-size:11.5px;color:var(--slate-600);line-height:1.7;">
+        <p style="margin-bottom:8px;"><b style="color:var(--purple);">Strategic:</b> High spend impact and high supply risk. Requires deep, long-term partnerships and joint planning.</p>
+        <p style="margin-bottom:8px;"><b style="color:var(--success);">Leverage:</b> High spend impact but low supply risk — many suppliers available. Use competitive bidding to drive price down.</p>
+        <p style="margin-bottom:8px;"><b style="color:var(--warning);">Bottleneck:</b> Low spend but high supply risk. Focus on securing continuity of supply, not price.</p>
+        <p><b style="color:var(--slate-600);">Non-Critical:</b> Low spend, low risk, widely available. Simplify and automate the buying process to reduce administrative cost.</p>
+      </div>
+    </div>
+  </aside>
+</div>
+
+<div style="max-width:1300px;margin:0 auto;padding:0 24px 30px;">
+  <div class="card">
+    <div class="card-header"><div class="card-title">Why Use a Kraljic Matrix?</div></div>
+    <div class="card-body" style="font-size:12.5px;color:var(--slate-600);line-height:1.7;">
+      <p>Treating every supplier or category the same way wastes negotiation effort on low-value purchases and under-manages the few relationships that actually carry risk. The Kraljic Matrix (developed by Peter Kraljic, published in Harvard Business Review, 1983) gives procurement teams a simple, defensible way to prioritize where to spend their time.</p>
+      <p style="margin-top:8px;"><b>How to use it in practice:</b> Score each major category or supplier on the two axes, drag it into position, and use the quadrant to decide your approach — aggressive price negotiation for Leverage items, supply continuity planning for Bottleneck items, and executive-level relationship management for Strategic items. Revisit the matrix periodically, since a category's position can shift as markets and your own volume change. Your data is saved automatically in this browser only — nothing is sent to a server.</p>
+    </div>
+  </div>
+</div>
+
+<footer style="background:#0F172A;color:#94A3B8;padding:24px;font-size:12px;">
+  <div style="max-width:1300px;margin:0 auto;display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;">
+    <div style="font-size:15px;font-weight:800;color:#fff;"><svg width="24" height="24" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align:middle;margin-right:9px;flex-shrink:0;"><path d="M20 2.5L36.5 11.5V28.5L20 37.5L3.5 28.5V11.5L20 2.5Z" stroke="url(#cbmGradF)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M20 2.5V20M20 20L36.5 11.5M20 20L3.5 11.5" stroke="url(#cbmGradF)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/></svg>CBM<span style="color:#2563EB;">Lab</span></div>
+    <nav><a href="index.html" style="color:#94A3B8;text-decoration:none;font-size:11px;margin-right:14px;">All Tools</a><a href="privacy.html" style="color:#94A3B8;text-decoration:none;font-size:11px;">Privacy Policy</a></nav>
+  </div>
+</footer>
+
+<script src="https://cdn.amplitude.com/script/d4aa9301e01f4600b5eeb018e160aa7c.js"></script>
+<script>
+  window.amplitude.init("d4aa9301e01f4600b5eeb018e160aa7c", { fetchRemoteConfig: true, autocapture: true });
+</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-W1YBL5BGGK"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-W1YBL5BGGK');
+</script>
+
+<script>
+let items = [];
+let itemCounter = 0;
+let selectedItemId = null;
+let editingItemId = null;
+
+const STRATEGIES = {
+  strategic: {
+    label: 'Strategic', cls: 'strategic',
+    text: 'This item sits in the Strategic quadrant: high impact on your business and high supply risk. Build a long-term partnership rather than treating this as a transactional purchase. Consider joint product development, multi-year agreements, and involving senior stakeholders in the relationship. Where feasible, qualify a second source to reduce dependency — but expect this to take time and investment.'
+  },
+  leverage: {
+    label: 'Leverage', cls: 'leverage',
+    text: 'This item sits in the Leverage quadrant: high spend impact, but supply risk is low because multiple qualified suppliers exist. This is where competitive bidding and price negotiation deliver the most value. Run periodic RFQs, consolidate volume across business units to increase your buying power, and don\u2019t be afraid to switch suppliers if terms are not competitive.'
+  },
+  bottleneck: {
+    label: 'Bottleneck', cls: 'bottleneck',
+    text: 'This item sits in the Bottleneck quadrant: relatively low spend, but high supply risk (few suppliers, long lead times, or single-source dependency). Price negotiation is not the priority here \u2014 supply continuity is. Maintain safety stock, qualify backup suppliers even if they are more expensive, and monitor this relationship closely despite its low dollar value.'
+  },
+  noncritical: {
+    label: 'Non-Critical', cls: 'noncritical',
+    text: 'This item sits in the Non-Critical quadrant: low spend impact and low supply risk, widely available from many sources. The goal here is efficiency, not negotiation effort. Use catalog buying, purchasing cards, or e-procurement tools to minimize the administrative cost of processing these orders, and avoid spending excessive time managing these relationships.'
+  }
+};
+const COLOR_MAP = { strategic:'#7C3AED', leverage:'#0F766E', bottleneck:'#B45309', noncritical:'#64748B' };
+
+function getQuadrant(risk, impact){
+  const highRisk = risk > 5.5;
+  const highImpact = impact > 5.5;
+  if(highRisk && highImpact) return 'strategic';
+  if(!highRisk && highImpact) return 'leverage';
+  if(highRisk && !highImpact) return 'bottleneck';
+  return 'noncritical';
+}
+
+function clamp(v, min, max){ return Math.max(min, Math.min(max, v)); }
+
+// ===== Gridlines (1-10 ticks) =====
+function renderGridlines(){
+  const el = document.getElementById('gridlines');
+  let html = '';
+  for(let i=1;i<10;i++){
+    const pct = (i/10)*100;
+    html += `<div class="gridline v" style="left:${pct}%;"></div>`;
+    html += `<div class="gridline h" style="bottom:${pct}%;"></div>`;
+  }
+  el.innerHTML = html;
+}
+
+// ===== Bubble size from spend =====
+function bubbleSize(spend){
+  if(!spend || spend <= 0) return 24;
+  const spends = items.map(i=>i.spend||0).filter(s=>s>0);
+  const maxSpend = Math.max(...spends, spend, 1);
+  const minSize = 20, maxSize = 46;
+  return minSize + (Math.sqrt(spend)/Math.sqrt(maxSpend)) * (maxSize-minSize);
+}
+
+// ===== Form handling (add / edit) =====
+function submitForm(){
+  const name = document.getElementById('itemName').value.trim();
+  if(!name){ alert('Please enter an item or supplier name.'); return; }
+  const risk = parseFloat(document.getElementById('riskInput').value);
+  const impact = parseFloat(document.getElementById('impactInput').value);
+  const spend = parseFloat(document.getElementById('spendInput').value) || 0;
+
+  if(editingItemId){
+    const it = items.find(i=>i.id===editingItemId);
+    if(it){ it.name=name; it.risk=risk; it.impact=impact; it.spend=spend; }
+    selectedItemId = editingItemId;
+    cancelEdit(false);
+  } else {
+    itemCounter++;
+    items.push({ id: itemCounter, name, risk, impact, spend });
+    selectedItemId = itemCounter;
+    document.getElementById('itemName').value = '';
+    document.getElementById('spendInput').value = '';
+  }
+  render();
+  saveState();
+}
+
+function loadItemIntoForm(id){
+  const it = items.find(i=>i.id===id);
+  if(!it) return;
+  editingItemId = id;
+  document.getElementById('itemName').value = it.name;
+  document.getElementById('riskInput').value = it.risk;
+  document.getElementById('riskVal').textContent = it.risk.toFixed(1);
+  document.getElementById('impactInput').value = it.impact;
+  document.getElementById('impactVal').textContent = it.impact.toFixed(1);
+  document.getElementById('spendInput').value = it.spend || '';
+  document.getElementById('formTitle').textContent = 'Edit: ' + it.name;
+  document.getElementById('submitBtn').textContent = '✓ Update Item';
+  document.getElementById('submitBtn').classList.add('editing');
+  document.getElementById('cancelEditBtn').classList.add('show');
+  selectedItemId = id;
+  render();
+  document.getElementById('formTitle').scrollIntoView({behavior:'smooth', block:'center'});
+}
+
+function cancelEdit(doRender){
+  editingItemId = null;
+  document.getElementById('formTitle').textContent = 'Add Item or Category';
+  document.getElementById('submitBtn').textContent = '+ Add to Matrix';
+  document.getElementById('submitBtn').classList.remove('editing');
+  document.getElementById('cancelEditBtn').classList.remove('show');
+  document.getElementById('itemName').value = '';
+  document.getElementById('spendInput').value = '';
+  if(doRender !== false) render();
+}
+
+function removeItem(id, evt){
+  if(evt) evt.stopPropagation();
+  items = items.filter(i=>i.id!==id);
+  if(selectedItemId===id) selectedItemId = null;
+  if(editingItemId===id) cancelEdit(false);
+  render();
+  saveState();
+}
+
+function selectItem(id){
+  selectedItemId = id;
+  render();
+}
+
+function clearAll(){
+  if(items.length===0) return;
+  if(confirm('Remove all items from the matrix? This cannot be undone.')){
+    items = [];
+    selectedItemId = null;
+    cancelEdit(false);
+    render();
+    saveState();
+  }
+}
+
+// ===== Render =====
+function render(){
+  const dotsContainer = document.getElementById('dotsContainer');
+  dotsContainer.innerHTML = items.map((it, idx)=>{
+    const xPct = ((it.risk-1)/9)*100;
+    const yPct = ((it.impact-1)/9)*100;
+    const quad = getQuadrant(it.risk, it.impact);
+    const size = bubbleSize(it.spend);
+    const isSelected = selectedItemId === it.id;
+    return `<div class="item-dot ${isSelected?'selected':''}" data-id="${it.id}"
+      style="left:${xPct}%; bottom:${yPct}%; width:${size}px; height:${size}px; background:${COLOR_MAP[quad]};">${idx+1}</div>`;
+  }).join('');
+
+  // attach drag handlers
+  dotsContainer.querySelectorAll('.item-dot').forEach(dot=>{
+    dot.addEventListener('pointerdown', onDotPointerDown);
+    dot.addEventListener('click', onDotClick);
+    dot.addEventListener('mouseenter', ()=>showTooltip(dot));
+    dot.addEventListener('mouseleave', hideTooltip);
+  });
+
+  document.getElementById('itemCount').textContent = items.length;
+
+  const listEl = document.getElementById('itemList');
+  if(items.length===0){
+    listEl.innerHTML = '<p style="font-size:12.5px;color:var(--slate-400);">No items yet. Add your first supplier or category using the form on the right, or click a preset below.</p>';
+  } else {
+    listEl.innerHTML = items.map((it, idx)=>{
+      const quad = getQuadrant(it.risk, it.impact);
+      return `<div class="item-row">
+        <span class="dot-mini" style="background:${COLOR_MAP[quad]};">${idx+1}</span>
+        <span class="item-name" onclick="loadItemIntoForm(${it.id})" title="Click to edit">${it.name}${it.spend ? ' <span style=\"color:var(--slate-400);font-weight:400;\">($'+Number(it.spend).toLocaleString()+')</span>' : ''}</span>
+        <span class="item-quad quad-badge ${quad}">${STRATEGIES[quad].label}</span>
+        <button class="item-del" onclick="removeItem(${it.id}, event)">✕</button>
+      </div>`;
+    }).join('');
+  }
+
+  const strategyCard = document.getElementById('strategyCard');
+  if(selectedItemId){
+    const it = items.find(i=>i.id===selectedItemId);
+    if(it){
+      const quad = getQuadrant(it.risk, it.impact);
+      const s = STRATEGIES[quad];
+      strategyCard.style.display = 'block';
+      document.getElementById('strategyBody').innerHTML = `
+        <div class="strategy-box ${s.cls}">
+          <h4>${it.name} — ${s.label} Item</h4>
+          <p>${s.text}</p>
+        </div>
+      `;
+    } else {
+      strategyCard.style.display = 'none';
+    }
+  } else {
+    strategyCard.style.display = 'none';
+  }
+}
+
+// ===== Drag & drop on matrix =====
+let dragState = null;
+let suppressNextClick = false;
+
+function onDotPointerDown(e){
+  e.preventDefault();
+  const dot = e.currentTarget;
+  const id = parseInt(dot.dataset.id);
+  dot.setPointerCapture(e.pointerId);
+  dot.classList.add('dragging');
+  dragState = { id, dot, moved:false };
+  hideTooltip();
+
+  const onMove = (ev) => {
+    dragState.moved = true;
+    const wrap = document.getElementById('matrixInner');
+    const rect = wrap.getBoundingClientRect();
+    let xPct = ((ev.clientX - rect.left) / rect.width) * 100;
+    let yPct = 100 - ((ev.clientY - rect.top) / rect.height) * 100;
+    xPct = clamp(xPct, 0, 100);
+    yPct = clamp(yPct, 0, 100);
+    const risk = clamp(1 + (xPct/100)*9, 1, 10);
+    const impact = clamp(1 + (yPct/100)*9, 1, 10);
+    const it = items.find(i=>i.id===id);
+    if(it){ it.risk = risk; it.impact = impact; }
+    dot.style.left = xPct + '%';
+    dot.style.bottom = yPct + '%';
+    const quad = getQuadrant(risk, impact);
+    dot.style.background = COLOR_MAP[quad];
+  };
+
+  const onUp = (ev) => {
+    dot.classList.remove('dragging');
+    dot.releasePointerCapture(ev.pointerId);
+    window.removeEventListener('pointermove', onMove);
+    window.removeEventListener('pointerup', onUp);
+    if(dragState && dragState.moved){
+      suppressNextClick = true; // prevent the click event that follows pointerup from opening the edit form
+      selectedItemId = id;
+      render();
+      saveState();
+    }
+    dragState = null;
+  };
+
+  window.addEventListener('pointermove', onMove);
+  window.addEventListener('pointerup', onUp);
+}
+
+function onDotClick(e){
+  if(suppressNextClick){ suppressNextClick = false; return; }
+  const id = parseInt(e.currentTarget.dataset.id);
+  loadItemIntoForm(id);
+}
+
+function showTooltip(dot){
+  const id = parseInt(dot.dataset.id);
+  const it = items.find(i=>i.id===id);
+  if(!it) return;
+  const tip = document.getElementById('dotTooltip');
+  tip.textContent = `${it.name} — Risk ${it.risk.toFixed(1)}, Impact ${it.impact.toFixed(1)}`;
+  tip.style.left = dot.style.left;
+  tip.style.bottom = dot.style.bottom;
+  tip.style.display = 'block';
+}
+function hideTooltip(){
+  document.getElementById('dotTooltip').style.display = 'none';
+}
+
+// ===== Auto-save (localStorage) =====
+let saveTimeout;
+function saveState(){
+  clearTimeout(saveTimeout);
+  saveTimeout = setTimeout(()=>{
+    try{
+      localStorage.setItem('cbmlab_kraljic', JSON.stringify({ items, itemCounter }));
+      const ind = document.getElementById('saveIndicator');
+      ind.classList.add('show');
+      setTimeout(()=>ind.classList.remove('show'), 1200);
+    }catch(e){}
+  }, 300);
+}
+function restoreState(){
+  try{
+    const raw = localStorage.getItem('cbmlab_kraljic');
+    if(!raw) return false;
+    const state = JSON.parse(raw);
+    if(state.items && state.items.length){
+      items = state.items;
+      itemCounter = state.itemCounter || items.length;
+      return true;
+    }
+  }catch(e){}
+  return false;
+}
+
+// ===== Init =====
+renderGridlines();
+const restored = restoreState();
+if(!restored){
+  items.push({id:++itemCounter, name:'Office Supplies', risk:2, impact:2, spend:8000});
+  items.push({id:++itemCounter, name:'Custom PCB Assembly', risk:8, impact:8, spend:420000});
+  items.push({id:++itemCounter, name:'Standard Fasteners', risk:2, impact:7, spend:180000});
+  items.push({id:++itemCounter, name:'Rare Earth Magnet', risk:9, impact:3, spend:35000});
+}
+render();
+</script>
+</body>
+</html>
