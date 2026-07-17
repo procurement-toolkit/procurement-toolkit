@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Compare trade payment terms — T/T, L/C, D/P, D/A — by risk exposure, cash flow, and when each is appropriate. Includes a practical checklist before choosing terms with a new trading partner.">
+<meta name="keywords" content="trade payment terms, T/T vs L/C, letter of credit basics, D/P D/A meaning, international trade finance">
+<title>Payment Terms Guide (T/T, L/C, D/P, D/A) — CBM Lab</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@800;900&display=swap" rel="stylesheet">
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  :root{--accent:#2563EB;--accent-light:#DBEAFE;--accent-dark:#1D4ED8;--slate-50:#F8FAFC;--slate-100:#F1F5F9;--slate-200:#E2E8F0;--slate-400:#94A3B8;--slate-500:#64748B;--slate-600:#475569;--slate-700:#334155;--slate-800:#1E293B;--slate-900:#0F172A;--seller:#0F766E;--seller-light:#CCFBF1;--buyer:#B45309;--buyer-light:#FEF3C7;--radius:8px;--radius-lg:12px;--shadow-sm:0 1px 2px rgba(0,0,0,.05);font-family:'Inter','Pretendard',system-ui,-apple-system,sans-serif}
+  body{background:var(--slate-50);color:var(--slate-800);font-size:14px;line-height:1.6}
+  header{background:#fff;border-bottom:1px solid var(--slate-200)}
+  .header-inner{max-width:1100px;margin:0 auto;padding:16px 24px;display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}
+  .logo-mark{font-size:20px;font-weight:800;color:var(--slate-900);text-decoration:none;font-family:'Space Grotesk','Inter',sans-serif;letter-spacing:-0.4px;}
+  .nav-right{display:flex;align-items:center;gap:10px}
+  .nav-link{font-size:13px;font-weight:600;color:var(--slate-500);text-decoration:none;padding:7px 12px;border-radius:6px}
+  .nav-link:hover{background:var(--slate-100)}
+  .lang-switch{font-size:12px;font-weight:700;color:var(--accent);text-decoration:none;padding:6px 12px;border:1px solid var(--accent-light);border-radius:999px;background:var(--accent-light)}
+  .lang-switch:hover{background:#BFDBFE}
+  .hero{background:#fff;border-bottom:1px solid var(--slate-200);padding:28px 24px 24px}
+  .hero-inner{max-width:1100px;margin:0 auto}
+  .hero h1{font-size:22px;font-weight:700;color:var(--slate-900);margin-bottom:6px}
+  .hero p{font-size:14px;color:var(--slate-500);max-width:640px}
+  .main{max-width:1100px;margin:0 auto;padding:28px 24px 60px}
+  .card{background:#fff;border:1px solid var(--slate-200);border-radius:var(--radius-lg);box-shadow:var(--shadow-sm);margin-bottom:20px}
+  .card-header{padding:16px 20px;border-bottom:1px solid var(--slate-100)}
+  .card-title{font-size:14px;font-weight:600;color:var(--slate-800)}
+  .card-body{padding:20px}
+  .risk-slider{position:relative;height:36px;background:linear-gradient(90deg, var(--buyer-light), var(--slate-100) 50%, var(--seller-light));border-radius:8px;margin:20px 0 30px;}
+  .term-marker{position:absolute;top:-8px;transform:translateX(-50%);text-align:center;}
+  .term-marker .dot{width:14px;height:14px;border-radius:50%;background:var(--accent);margin:0 auto 4px;border:2px solid #fff;box-shadow:0 1px 3px rgba(0,0,0,.2);}
+  .term-marker .label{font-size:11px;font-weight:700;color:var(--slate-700);white-space:nowrap;}
+  .payment-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+  .payment-card{border:1px solid var(--slate-200);border-radius:var(--radius);padding:16px 18px}
+  .payment-card h3{font-size:14px;font-weight:700;color:var(--slate-900);margin-bottom:8px}
+  .payment-card ul{padding-left:18px;font-size:12px;color:var(--slate-600);line-height:1.7}
+  .payment-card .risk-tag{display:inline-block;font-size:10.5px;font-weight:700;padding:2px 8px;border-radius:999px;margin-bottom:8px}
+  .risk-tag.seller-risk{background:var(--buyer-light);color:var(--buyer)}
+  .risk-tag.buyer-risk{background:var(--seller-light);color:var(--seller)}
+  .risk-tag.balanced{background:var(--accent-light);color:var(--accent-dark)}
+  .checklist{list-style:none}
+  .checklist li{display:flex;gap:8px;padding:8px 0;border-bottom:1px solid var(--slate-100);font-size:13px}
+  .checklist li::before{content:'☐';color:var(--accent);font-size:15px;flex-shrink:0}
+  .notice-box{background:var(--accent-light);border:1px solid #BFDBFE;border-radius:var(--radius);padding:10px 14px;font-size:12px;color:#1E40AF;margin-top:14px}
+  @media (max-width:768px){.payment-grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute;" aria-hidden="true">
+  <defs>
+    <linearGradient id="cbmGradH" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#14B8A6"/><stop offset="100%" stop-color="#0B2A4A"/></linearGradient>
+    <linearGradient id="cbmGradF" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#2DD4BF"/><stop offset="100%" stop-color="#5B9EFF"/></linearGradient>
+  </defs>
+</svg>
+<header><div class="header-inner">
+  <a href="index.html" class="logo-mark"><svg width="28" height="28" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align:middle;margin-right:9px;flex-shrink:0;"><path d="M20 2.5L36.5 11.5V28.5L20 37.5L3.5 28.5V11.5L20 2.5Z" stroke="url(#cbmGradH)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M20 2.5V20M20 20L36.5 11.5M20 20L3.5 11.5" stroke="url(#cbmGradH)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/></svg><span style="font-family:'Montserrat','Space Grotesk',sans-serif;font-weight:800;letter-spacing:-0.8px;background:linear-gradient(90deg,#14B8A6 0%,#1E7A8C 45%,#0B2A4A 100%);-webkit-background-clip:text;background-clip:text;color:transparent;">CBMLab</span></a>
+  <div class="nav-right">
+    <a href="index.html" class="nav-link">← All Tools</a>
+    <a href="../index.html" class="lang-switch">KOR</a>
+  </div>
+</div></header>
+
+<section class="hero"><div class="hero-inner">
+  <h1>Payment Terms Guide (T/T, L/C, D/P, D/A)</h1>
+  <p>Every payment term shifts risk toward either the seller (exporter) or the buyer (importer). See at a glance which side each term favors.</p>
+</div></section>
+
+<div class="main">
+  <div class="card">
+    <div class="card-header"><div class="card-title">Risk Spectrum</div></div>
+    <div class="card-body">
+      <div class="risk-slider">
+        <div class="term-marker" style="left:8%;"><div class="dot"></div><div class="label">T/T Advance</div></div>
+        <div class="term-marker" style="left:35%;"><div class="dot"></div><div class="label">L/C</div></div>
+        <div class="term-marker" style="left:60%;"><div class="dot"></div><div class="label">D/P</div></div>
+        <div class="term-marker" style="left:80%;"><div class="dot"></div><div class="label">D/A</div></div>
+        <div class="term-marker" style="left:95%;"><div class="dot"></div><div class="label">Open Account</div></div>
+      </div>
+      <div style="display:flex;justify-content:space-between;font-size:11.5px;color:var(--slate-500);margin-top:-8px;">
+        <span>← Safer for Seller (Exporter)</span>
+        <span>Safer for Buyer (Importer) →</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header"><div class="card-title">Term-by-Term Breakdown</div></div>
+    <div class="card-body">
+      <div class="payment-grid">
+        <div class="payment-card">
+          <span class="risk-tag seller-risk">Favors Buyer</span>
+          <h3>T/T (Telegraphic Transfer)</h3>
+          <ul>
+            <li>Simple bank-to-bank wire transfer</li>
+            <li>Can be combined flexibly — advance, on delivery, or installments</li>
+            <li>Simple process, low fees</li>
+            <li>Can be risky with a new counterparty with no trust history</li>
+          </ul>
+        </div>
+        <div class="payment-card">
+          <span class="risk-tag balanced">Balanced — Bank Guarantees Payment</span>
+          <h3>L/C (Letter of Credit)</h3>
+          <ul>
+            <li>The buyer's bank guarantees payment</li>
+            <li>Bank commits to pay once documents (B/L, invoice, etc.) match</li>
+            <li>Common safeguard for large transactions with new counterparties</li>
+            <li>Issuance fees apply, and strict documentary requirements add work</li>
+          </ul>
+        </div>
+        <div class="payment-card">
+          <span class="risk-tag seller-risk">Favors Seller</span>
+          <h3>D/P (Documents against Payment)</h3>
+          <ul>
+            <li>Buyer must pay before receiving shipping documents</li>
+            <li>Bank handles the documents but does not guarantee payment</li>
+            <li>If the buyer doesn't pay, they cannot claim the goods</li>
+          </ul>
+        </div>
+        <div class="payment-card">
+          <span class="risk-tag buyer-risk">Risk to Seller</span>
+          <h3>D/A (Documents against Acceptance)</h3>
+          <ul>
+            <li>Buyer only needs to accept a bill of exchange (a promise to pay later) to get documents</li>
+            <li>Buyer receives the goods before payment is due</li>
+            <li>Recommended only with a buyer whose creditworthiness is verified</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header"><div class="card-title">Checklist Before Choosing Payment Terms</div></div>
+    <div class="card-body">
+      <ul class="checklist">
+        <li>Do you have a trading history with this counterparty, or is it a new relationship?</li>
+        <li>Is the transaction large enough to warrant a bank payment guarantee (L/C)?</li>
+        <li>What is the foreign exchange or political risk in the counterparty's country?</li>
+        <li>If using L/C, does the buyer have sufficient credit line headroom to open it?</li>
+        <li>Do you know the process for handling a documentary discrepancy?</li>
+        <li>Does the cash recovery timing under these terms fit your cash flow plan?</li>
+      </ul>
+      <div class="notice-box">This guide is a general reference to help you understand the concepts. For actual contract terms or interpreting specific L/C clauses, consult your bank's trade finance team or a qualified professional.</div>
+    </div>
+  </div>
+</div>
+
+<footer style="background:#0F172A;color:#94A3B8;padding:24px;font-size:12px;">
+  <div style="max-width:1100px;margin:0 auto;display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;">
+    <div style="font-size:15px;font-weight:800;color:#fff;"><svg width="24" height="24" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align:middle;margin-right:9px;flex-shrink:0;"><path d="M20 2.5L36.5 11.5V28.5L20 37.5L3.5 28.5V11.5L20 2.5Z" stroke="url(#cbmGradF)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M20 2.5V20M20 20L36.5 11.5M20 20L3.5 11.5" stroke="url(#cbmGradF)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/></svg>CBM<span style="color:#2563EB;">Lab</span></div>
+    <nav><a href="index.html" style="color:#94A3B8;text-decoration:none;font-size:11px;margin-right:14px;">All Tools</a><a href="privacy.html" style="color:#94A3B8;text-decoration:none;font-size:11px;">Privacy Policy</a></nav>
+  </div>
+</footer>
+
+<script src="https://cdn.amplitude.com/script/d4aa9301e01f4600b5eeb018e160aa7c.js"></script>
+<script>window.amplitude.init("d4aa9301e01f4600b5eeb018e160aa7c", { fetchRemoteConfig: true, autocapture: true });</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-W1YBL5BGGK"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-W1YBL5BGGK');
+</script>
+</body>
+</html>
