@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Free Incoterms 2020 guide and comparison chart. Compare all 11 terms (EXW, FCA, FAS, FOB, CFR, CIF, CPT, CIP, DAP, DPU, DDP) side by side — who pays freight, insurance, and import duty, and where risk transfers from seller to buyer.">
+<meta name="keywords" content="Incoterms 2020, Incoterms chart, FOB vs CIF, EXW vs FOB, Incoterms comparison, shipping terms">
+<title>Incoterms 2020 Guide &amp; Comparison Chart — CBM Lab</title>
+<link rel="alternate" hreflang="ko" href="https://procurement-toolkit-eight.vercel.app/incoterms-guide.html">
+<link rel="alternate" hreflang="en" href="https://procurement-toolkit-eight.vercel.app/en/incoterms-guide.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@800;900&display=swap" rel="stylesheet">
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  :root{--accent:#2563EB;--accent-light:#DBEAFE;--accent-dark:#1D4ED8;--slate-50:#F8FAFC;--slate-100:#F1F5F9;--slate-200:#E2E8F0;--slate-300:#CBD5E1;--slate-400:#94A3B8;--slate-500:#64748B;--slate-600:#475569;--slate-700:#334155;--slate-800:#1E293B;--slate-900:#0F172A;--success:#0F766E;--success-light:#CCFBF1;--warning:#B45309;--warning-light:#FEF3C7;--radius:8px;--radius-lg:12px;--shadow-sm:0 1px 2px rgba(0,0,0,.05);font-family:'Inter','Pretendard',system-ui,-apple-system,sans-serif}
+  body{background:var(--slate-50);color:var(--slate-800);font-size:14px;line-height:1.6}
+  header{background:#fff;border-bottom:1px solid var(--slate-200)}
+  .header-inner{max-width:1200px;margin:0 auto;padding:16px 24px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+  .logo-mark{font-size:20px;font-weight:800;color:var(--slate-900);text-decoration:none;font-family:'Space Grotesk','Inter',sans-serif;letter-spacing:-0.4px;}
+  .nav-right{display:flex;align-items:center;gap:10px}
+  .nav-link{font-size:13px;font-weight:600;color:var(--slate-500);text-decoration:none;padding:7px 12px;border-radius:6px}
+  .nav-link:hover{background:var(--slate-100)}
+  .lang-switch{font-size:12px;font-weight:700;color:var(--accent);text-decoration:none;padding:6px 12px;border:1px solid var(--accent-light);border-radius:999px;background:var(--accent-light)}
+  .lang-switch:hover{background:#BFDBFE}
+  .hero{background:#fff;border-bottom:1px solid var(--slate-200);padding:28px 24px 24px}
+  .hero-inner{max-width:1200px;margin:0 auto}
+  .hero h1{font-size:22px;font-weight:700;color:var(--slate-900);margin-bottom:6px}
+  .hero p{font-size:14px;color:var(--slate-500);max-width:700px}
+  .hero-tags{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}
+  .tag{background:var(--slate-100);color:var(--slate-600);font-size:11px;font-weight:500;padding:3px 10px;border-radius:4px;border:1px solid var(--slate-200)}
+  .main{max-width:1200px;margin:0 auto;padding:28px 24px 60px}
+  .filter-bar{display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap}
+  .filter-btn{padding:7px 14px;border:1px solid var(--slate-200);background:#fff;border-radius:999px;font-size:12px;font-weight:700;color:var(--slate-500);cursor:pointer}
+  .filter-btn.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+  .card{background:#fff;border:1px solid var(--slate-200);border-radius:var(--radius-lg);box-shadow:var(--shadow-sm);margin-bottom:20px;overflow:hidden}
+  .card-header{padding:16px 20px;border-bottom:1px solid var(--slate-100)}
+  .card-title{font-size:14px;font-weight:600;color:var(--slate-800)}
+  .table-wrap{overflow-x:auto}
+  .incoterms-table{width:100%;min-width:820px;border-collapse:collapse;font-size:12.5px}
+  .incoterms-table th{padding:10px 12px;text-align:left;font-size:10.5px;font-weight:700;color:var(--slate-400);text-transform:uppercase;background:var(--slate-50);border-bottom:1px solid var(--slate-200);white-space:nowrap}
+  .incoterms-table td{padding:11px 12px;border-bottom:1px solid var(--slate-100);vertical-align:top}
+  .incoterms-table tr:last-child td{border-bottom:none}
+  .incoterms-table tr:hover td{background:var(--slate-50)}
+  .term-code{font-weight:800;color:var(--accent-dark);font-family:'Space Grotesk',sans-serif;font-size:14px}
+  .term-name{font-size:11px;color:var(--slate-500)}
+  .mode-badge{font-size:10px;font-weight:700;padding:2px 8px;border-radius:999px;white-space:nowrap}
+  .mode-badge.any{background:var(--success-light);color:var(--success)}
+  .mode-badge.sea{background:var(--warning-light);color:var(--warning)}
+  .yes{color:var(--success);font-weight:700}
+  .no{color:var(--slate-300)}
+  .card-body{padding:20px;font-size:12.5px;color:var(--slate-600);line-height:1.7}
+  .card-body p{margin-bottom:8px}
+  .card-body p:last-child{margin-bottom:0}
+  @media (max-width:768px){.hero h1{font-size:19px}}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute;" aria-hidden="true">
+  <defs>
+    <linearGradient id="cbmGradH" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#14B8A6"/><stop offset="100%" stop-color="#0B2A4A"/></linearGradient>
+    <linearGradient id="cbmGradF" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#2DD4BF"/><stop offset="100%" stop-color="#5B9EFF"/></linearGradient>
+  </defs>
+</svg>
+<header><div class="header-inner">
+  <a href="index.html" class="logo-mark"><svg width="28" height="28" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align:middle;margin-right:9px;flex-shrink:0;"><path d="M20 2.5L36.5 11.5V28.5L20 37.5L3.5 28.5V11.5L20 2.5Z" stroke="url(#cbmGradH)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M20 2.5V20M20 20L36.5 11.5M20 20L3.5 11.5" stroke="url(#cbmGradH)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/></svg><span style="font-family:'Montserrat','Space Grotesk',sans-serif;font-weight:800;letter-spacing:-0.8px;background:linear-gradient(90deg,#14B8A6 0%,#1E7A8C 45%,#0B2A4A 100%);-webkit-background-clip:text;background-clip:text;color:transparent;">CBMLab</span></a>
+  <div class="nav-right">
+    <a href="index.html" class="nav-link">← All Tools</a>
+    <a href="../index.html" class="lang-switch">KOR</a>
+  </div>
+</div></header>
+
+<section class="hero"><div class="hero-inner">
+  <h1>Incoterms 2020 Guide &amp; Comparison Chart</h1>
+  <p>All 11 Incoterms® 2020 rules in one table — who pays for freight, insurance, and import duty, and exactly where risk passes from seller to buyer. Filter by transport mode to compare only the terms relevant to your shipment.</p>
+  <div class="hero-tags"><span class="tag">FOB vs CIF</span><span class="tag">EXW vs FCA</span><span class="tag">Risk Transfer</span><span class="tag">ICC Rules</span></div>
+</div></section>
+
+<div class="main">
+  <div class="filter-bar">
+    <button class="filter-btn active" data-mode="all" onclick="filterMode('all')">All 11 terms</button>
+    <button class="filter-btn" data-mode="any" onclick="filterMode('any')">Any mode of transport (7)</button>
+    <button class="filter-btn" data-mode="sea" onclick="filterMode('sea')">Sea &amp; inland waterway only (4)</button>
+  </div>
+
+  <div class="card">
+    <div class="card-header"><div class="card-title">Comparison Table</div></div>
+    <div class="table-wrap">
+      <table class="incoterms-table">
+        <thead><tr>
+          <th>Term</th><th>Mode</th><th>Risk Transfers At</th><th>Freight</th><th>Insurance</th><th>Import Duty</th>
+        </tr></thead>
+        <tbody id="tbody"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header"><div class="card-title">Quick Notes for Buyers</div></div>
+    <div class="card-body">
+      <p><b>EXW</b> gives the seller the least responsibility and the buyer the most — you handle everything from the seller's door onward, including export clearance, which can be a real burden if you don't have a local agent.</p>
+      <p><b>FOB</b> is the most commonly used term for ocean freight in practice, even though Incoterms 2020 technically recommends <b>FCA</b> for containerized cargo (FOB was originally designed for break-bulk/loose cargo loaded directly onto a vessel, not for cargo handed to a container terminal).</p>
+      <p><b>CIF</b> and <b>CFR</b> are sea/inland-waterway-only terms — for containerized shipments where the carrier takes custody at a terminal rather than alongside the ship, <b>CIP</b> and <b>CPT</b> are the more precise modern equivalents.</p>
+      <p><b>DDP</b> gives the buyer the least responsibility — the seller handles import clearance and duty in your country, which can be a compliance issue in some jurisdictions since a foreign seller may not be authorized to act as importer of record.</p>
+    </div>
+  </div>
+</div>
+
+<div style="max-width:1200px;margin:0 auto;padding:0 24px 30px;">
+  <div class="card">
+    <div class="card-header"><div class="card-title">Why Incoterms Matter</div></div>
+    <div class="card-body" style="font-size:12.5px;color:var(--slate-600);line-height:1.7;">
+      <p>Incoterms don't determine who owns the goods or the price — they define exactly where cost and risk transfer from seller to buyer, and who is responsible for each step in between. Getting the wrong term into a purchase order can mean paying for freight or insurance you thought was included, or being uninsured during transit without realizing it.</p>
+      <p style="margin-top:8px;"><b>How to use this guide:</b> Before finalizing a purchase order, confirm which Incoterm the quote is based on, and cross-check who is actually responsible for freight, insurance, and import duty using the table above. If you're negotiating and want a cost calculation, use the <a href="landed-cost-calculator.html" style="color:var(--accent);">Landed Cost Calculator</a> to see how the total cost changes across different terms.</p>
+    </div>
+  </div>
+</div>
+
+<footer style="background:#0F172A;color:#94A3B8;padding:24px;font-size:12px;">
+  <div style="max-width:1200px;margin:0 auto;display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;">
+    <div style="font-size:15px;font-weight:800;color:#fff;"><svg width="24" height="24" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align:middle;margin-right:9px;flex-shrink:0;"><path d="M20 2.5L36.5 11.5V28.5L20 37.5L3.5 28.5V11.5L20 2.5Z" stroke="url(#cbmGradF)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M20 2.5V20M20 20L36.5 11.5M20 20L3.5 11.5" stroke="url(#cbmGradF)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/></svg>CBM<span style="color:#2563EB;">Lab</span></div>
+    <nav><a href="index.html" style="color:#94A3B8;text-decoration:none;font-size:11px;margin-right:14px;">All Tools</a><a href="privacy.html" style="color:#94A3B8;text-decoration:none;font-size:11px;">Privacy Policy</a></nav>
+  </div>
+</footer>
+
+<script src="https://cdn.amplitude.com/script/d4aa9301e01f4600b5eeb018e160aa7c.js"></script>
+<script>window.amplitude.init("d4aa9301e01f4600b5eeb018e160aa7c", { fetchRemoteConfig: true, autocapture: true });</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-W1YBL5BGGK"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-W1YBL5BGGK');
+</script>
+
+<script>
+const TERMS = [
+  { code:'EXW', name:'Ex Works', mode:'any', risk:'Seller\'s premises (before loading)', freight:'Buyer', insurance:'Buyer', duty:'Buyer (both export &amp; import)' },
+  { code:'FCA', name:'Free Carrier', mode:'any', risk:'Named place (handed to carrier)', freight:'Buyer', insurance:'Buyer', duty:'Buyer (import); Seller (export)' },
+  { code:'CPT', name:'Carriage Paid To', mode:'any', risk:'Handed to first carrier', freight:'Seller (to destination)', insurance:'Buyer', duty:'Buyer (import); Seller (export)' },
+  { code:'CIP', name:'Carriage &amp; Insurance Paid To', mode:'any', risk:'Handed to first carrier', freight:'Seller (to destination)', insurance:'Seller (min. 110% CIF, Institute Cargo Clause A)', duty:'Buyer (import); Seller (export)' },
+  { code:'DAP', name:'Delivered At Place', mode:'any', risk:'Named destination (before unloading)', freight:'Seller', insurance:'Seller\'s discretion', duty:'Buyer (import); Seller (export)' },
+  { code:'DPU', name:'Delivered at Place Unloaded', mode:'any', risk:'Named destination (after unloading)', freight:'Seller', insurance:'Seller\'s discretion', duty:'Buyer (import); Seller (export)' },
+  { code:'DDP', name:'Delivered Duty Paid', mode:'any', risk:'Named destination (before unloading)', freight:'Seller', insurance:'Seller\'s discretion', duty:'Seller (both export &amp; import)' },
+  { code:'FAS', name:'Free Alongside Ship', mode:'sea', risk:'Alongside vessel at port', freight:'Buyer', insurance:'Buyer', duty:'Buyer (import); Seller (export)' },
+  { code:'FOB', name:'Free On Board', mode:'sea', risk:'On board the vessel', freight:'Buyer', insurance:'Buyer', duty:'Buyer (import); Seller (export)' },
+  { code:'CFR', name:'Cost and Freight', mode:'sea', risk:'On board the vessel', freight:'Seller (to destination port)', insurance:'Buyer', duty:'Buyer (import); Seller (export)' },
+  { code:'CIF', name:'Cost, Insurance and Freight', mode:'sea', risk:'On board the vessel', freight:'Seller (to destination port)', insurance:'Seller (min. 110% CIF, Institute Cargo Clause C)', duty:'Buyer (import); Seller (export)' }
+];
+
+let currentFilter = 'all';
+function filterMode(mode){
+  currentFilter = mode;
+  document.querySelectorAll('.filter-btn').forEach(b=>b.classList.toggle('active', b.dataset.mode===mode));
+  render();
+}
+function render(){
+  const list = TERMS.filter(t=>currentFilter==='all' || t.mode===currentFilter);
+  document.getElementById('tbody').innerHTML = list.map(t=>`
+    <tr>
+      <td><span class="term-code">${t.code}</span><div class="term-name">${t.name}</div></td>
+      <td><span class="mode-badge ${t.mode}">${t.mode==='any' ? 'Any mode' : 'Sea/waterway'}</span></td>
+      <td>${t.risk}</td>
+      <td>${t.freight}</td>
+      <td>${t.insurance}</td>
+      <td>${t.duty}</td>
+    </tr>
+  `).join('');
+}
+render();
+</script>
+</body>
+</html>

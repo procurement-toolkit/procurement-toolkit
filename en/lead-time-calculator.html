@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Free lead time calculator for procurement and import planning. Add production time, transit time, and customs clearance time to get an accurate expected arrival date.">
+<meta name="keywords" content="lead time calculator, delivery date calculator, procurement lead time, shipping transit time calculator">
+<title>Lead Time &amp; Delivery Date Calculator — CBM Lab</title>
+<link rel="alternate" hreflang="ko" href="https://procurement-toolkit-eight.vercel.app/leadtime-calculator.html">
+<link rel="alternate" hreflang="en" href="https://procurement-toolkit-eight.vercel.app/en/lead-time-calculator.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@800;900&display=swap" rel="stylesheet">
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  :root{--accent:#2563EB;--accent-light:#DBEAFE;--accent-dark:#1D4ED8;--slate-50:#F8FAFC;--slate-100:#F1F5F9;--slate-200:#E2E8F0;--slate-300:#CBD5E1;--slate-400:#94A3B8;--slate-500:#64748B;--slate-600:#475569;--slate-700:#334155;--slate-800:#1E293B;--slate-900:#0F172A;--radius:8px;--radius-lg:12px;--shadow-sm:0 1px 2px rgba(0,0,0,.05);font-family:'Inter','Pretendard',system-ui,-apple-system,sans-serif}
+  body{background:var(--slate-50);color:var(--slate-800);font-size:14px;line-height:1.6}
+  header{background:#fff;border-bottom:1px solid var(--slate-200)}
+  .header-inner{max-width:1100px;margin:0 auto;padding:16px 24px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+  .logo-mark{font-size:20px;font-weight:800;color:var(--slate-900);text-decoration:none;font-family:'Space Grotesk','Inter',sans-serif;letter-spacing:-0.4px;}
+  .nav-right{display:flex;align-items:center;gap:10px}
+  .nav-link{font-size:13px;font-weight:600;color:var(--slate-500);text-decoration:none;padding:7px 12px;border-radius:6px}
+  .nav-link:hover{background:var(--slate-100)}
+  .lang-switch{font-size:12px;font-weight:700;color:var(--accent);text-decoration:none;padding:6px 12px;border:1px solid var(--accent-light);border-radius:999px;background:var(--accent-light)}
+  .lang-switch:hover{background:#BFDBFE}
+  .hero{background:#fff;border-bottom:1px solid var(--slate-200);padding:28px 24px 24px}
+  .hero-inner{max-width:1100px;margin:0 auto}
+  .hero h1{font-size:22px;font-weight:700;color:var(--slate-900);margin-bottom:6px}
+  .hero p{font-size:14px;color:var(--slate-500);max-width:680px}
+  .main{max-width:1100px;margin:0 auto;padding:28px 24px 60px;display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:start}
+  .card{background:#fff;border:1px solid var(--slate-200);border-radius:var(--radius-lg);box-shadow:var(--shadow-sm);margin-bottom:20px}
+  .card-header{padding:16px 20px;border-bottom:1px solid var(--slate-100)}
+  .card-title{font-size:14px;font-weight:600;color:var(--slate-800)}
+  .card-body{padding:20px}
+  .field-group{margin-bottom:14px}
+  .field-label{font-size:12px;font-weight:600;color:var(--slate-600);margin-bottom:6px;display:block}
+  .field-sub{font-size:10.5px;color:var(--slate-400);margin-top:-4px;margin-bottom:6px}
+  .inp{width:100%;border:1px solid var(--slate-200);border-radius:6px;padding:9px 11px;font-size:13px;font-family:inherit}
+  .inp:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px rgba(37,99,235,.1)}
+  .timeline{margin-top:6px}
+  .timeline-step{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px dashed var(--slate-200)}
+  .timeline-step:last-child{border-bottom:none}
+  .timeline-dot{width:10px;height:10px;border-radius:50%;background:var(--accent);flex-shrink:0}
+  .timeline-label{font-size:12.5px;color:var(--slate-600);flex:1}
+  .timeline-days{font-size:12.5px;font-weight:700;color:var(--slate-800)}
+  .result-total{background:var(--accent-light);border:1px solid #BFDBFE;border-radius:var(--radius);padding:16px 18px;margin-top:14px;text-align:center}
+  .result-total .label{font-size:11px;font-weight:700;color:var(--accent-dark);text-transform:uppercase;margin-bottom:4px}
+  .result-total .value{font-size:22px;font-weight:800;color:var(--accent-dark)}
+  .notice-box{background:var(--accent-light);border:1px solid #BFDBFE;border-radius:var(--radius);padding:10px 14px;font-size:12px;color:#1E40AF;margin-top:14px;line-height:1.6}
+  @media (max-width:900px){.main{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute;" aria-hidden="true">
+  <defs>
+    <linearGradient id="cbmGradH" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#14B8A6"/><stop offset="100%" stop-color="#0B2A4A"/></linearGradient>
+    <linearGradient id="cbmGradF" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#2DD4BF"/><stop offset="100%" stop-color="#5B9EFF"/></linearGradient>
+  </defs>
+</svg>
+<header><div class="header-inner">
+  <a href="index.html" class="logo-mark"><svg width="28" height="28" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align:middle;margin-right:9px;flex-shrink:0;"><path d="M20 2.5L36.5 11.5V28.5L20 37.5L3.5 28.5V11.5L20 2.5Z" stroke="url(#cbmGradH)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M20 2.5V20M20 20L36.5 11.5M20 20L3.5 11.5" stroke="url(#cbmGradH)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/></svg><span style="font-family:'Montserrat','Space Grotesk',sans-serif;font-weight:800;letter-spacing:-0.8px;background:linear-gradient(90deg,#14B8A6 0%,#1E7A8C 45%,#0B2A4A 100%);-webkit-background-clip:text;background-clip:text;color:transparent;">CBMLab</span></a>
+  <div class="nav-right">
+    <a href="index.html" class="nav-link">← All Tools</a>
+    <a href="../index.html" class="lang-switch">KOR</a>
+  </div>
+</div></header>
+
+<section class="hero"><div class="hero-inner">
+  <h1>Lead Time &amp; Delivery Date Calculator</h1>
+  <p>Add order date, production time, transit time, and customs clearance time to get an accurate expected arrival date — instead of guessing and disappointing your customer.</p>
+</div></section>
+
+<div class="main">
+  <section>
+    <div class="card">
+      <div class="card-header"><div class="card-title">Inputs</div></div>
+      <div class="card-body">
+        <div class="field-group">
+          <label class="field-label">Order Date</label>
+          <input class="inp" type="date" id="orderDate" oninput="calc()">
+        </div>
+        <div class="field-group">
+          <label class="field-label">Production Time (days)</label>
+          <input class="inp" type="number" id="prodDays" value="20" oninput="calc()">
+        </div>
+        <div class="field-group">
+          <label class="field-label">Inland Transport to Port (days)</label>
+          <input class="inp" type="number" id="inlandDays" value="2" oninput="calc()">
+        </div>
+        <div class="field-group">
+          <label class="field-label">Ocean/Air Transit Time (days)</label>
+          <input class="inp" type="number" id="transitDays" value="25" oninput="calc()">
+        </div>
+        <div class="field-group">
+          <label class="field-label">Customs Clearance (days)</label>
+          <input class="inp" type="number" id="customsDays" value="3" oninput="calc()">
+        </div>
+        <div class="field-group">
+          <label class="field-label">Inland Delivery to Warehouse (days)</label>
+          <input class="inp" type="number" id="destDays" value="2" oninput="calc()">
+        </div>
+        <div class="field-group">
+          <label class="field-label">Buffer / Contingency (days)</label>
+          <div class="field-sub">Recommended: add extra days during peak season</div>
+          <input class="inp" type="number" id="bufferDays" value="5" oninput="calc()">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <aside>
+    <div class="card">
+      <div class="card-header"><div class="card-title">Timeline</div></div>
+      <div class="card-body">
+        <div class="timeline" id="timeline"></div>
+        <div class="result-total">
+          <div class="label">Expected Arrival Date</div>
+          <div class="value" id="arrivalDate">-</div>
+        </div>
+        <div class="notice-box">This is a planning estimate. Actual transit time varies by carrier, route, and season — confirm with your forwarder before committing to a customer delivery date.</div>
+      </div>
+    </div>
+  </aside>
+</div>
+
+<div style="max-width:1100px;margin:0 auto;padding:0 24px 30px;">
+  <div class="card">
+    <div class="card-header"><div class="card-title">Why Calculate Lead Time in Advance</div></div>
+    <div class="card-body" style="font-size:12.5px;color:var(--slate-600);line-height:1.7;">
+      <p>Quoting a delivery date without adding up every stage — production, inland transport, ocean/air transit, and customs — often leads to missed promises or unplanned stockouts.</p>
+      <p style="margin-top:8px;"><b>How to use it in practice:</b> Calculate the expected arrival date before confirming a new order, and recalculate with a larger buffer during peak shipping season when transit times typically increase.</p>
+    </div>
+  </div>
+</div>
+
+<footer style="background:#0F172A;color:#94A3B8;padding:24px;font-size:12px;">
+  <div style="max-width:1100px;margin:0 auto;display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;">
+    <div style="font-size:15px;font-weight:800;color:#fff;"><svg width="24" height="24" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align:middle;margin-right:9px;flex-shrink:0;"><path d="M20 2.5L36.5 11.5V28.5L20 37.5L3.5 28.5V11.5L20 2.5Z" stroke="url(#cbmGradF)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M20 2.5V20M20 20L36.5 11.5M20 20L3.5 11.5" stroke="url(#cbmGradF)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/></svg>CBM<span style="color:#2563EB;">Lab</span></div>
+    <nav><a href="index.html" style="color:#94A3B8;text-decoration:none;font-size:11px;margin-right:14px;">All Tools</a><a href="privacy.html" style="color:#94A3B8;text-decoration:none;font-size:11px;">Privacy Policy</a></nav>
+  </div>
+</footer>
+
+<script src="https://cdn.amplitude.com/script/d4aa9301e01f4600b5eeb018e160aa7c.js"></script>
+<script>window.amplitude.init("d4aa9301e01f4600b5eeb018e160aa7c", { fetchRemoteConfig: true, autocapture: true });</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-W1YBL5BGGK"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-W1YBL5BGGK');
+</script>
+
+<script>
+function calc(){
+  const orderDateStr = document.getElementById('orderDate').value;
+  const steps = [
+    { label:'Production', days: parseFloat(document.getElementById('prodDays').value)||0 },
+    { label:'Inland transport to port', days: parseFloat(document.getElementById('inlandDays').value)||0 },
+    { label:'Ocean/Air transit', days: parseFloat(document.getElementById('transitDays').value)||0 },
+    { label:'Customs clearance', days: parseFloat(document.getElementById('customsDays').value)||0 },
+    { label:'Inland delivery to warehouse', days: parseFloat(document.getElementById('destDays').value)||0 },
+    { label:'Buffer / contingency', days: parseFloat(document.getElementById('bufferDays').value)||0 }
+  ];
+  const totalDays = steps.reduce((a,s)=>a+s.days,0);
+
+  document.getElementById('timeline').innerHTML = steps.map(s=>`
+    <div class="timeline-step"><span class="timeline-dot"></span><span class="timeline-label">${s.label}</span><span class="timeline-days">${s.days} days</span></div>
+  `).join('') + `<div class="timeline-step"><span class="timeline-dot" style="background:var(--slate-800);"></span><span class="timeline-label" style="font-weight:700;">Total Lead Time</span><span class="timeline-days">${totalDays} days</span></div>`;
+
+  if(orderDateStr){
+    const orderDate = new Date(orderDateStr+'T00:00:00');
+    const arrival = new Date(orderDate.getTime() + totalDays*86400000);
+    document.getElementById('arrivalDate').textContent = arrival.toLocaleDateString('en-US', {year:'numeric', month:'long', day:'numeric'});
+  } else {
+    document.getElementById('arrivalDate').textContent = `${totalDays} days from order date`;
+  }
+}
+document.getElementById('orderDate').valueAsDate = new Date();
+calc();
+</script>
+</body>
+</html>

@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Free EOQ (Economic Order Quantity), safety stock, and reorder point calculator for inventory planning. Get a data-backed ordering rule instead of guessing order quantities.">
+<meta name="keywords" content="EOQ calculator, economic order quantity, safety stock calculator, reorder point calculator, inventory planning">
+<title>EOQ, Safety Stock &amp; Reorder Point Calculator — CBM Lab</title>
+<link rel="alternate" hreflang="ko" href="https://procurement-toolkit-eight.vercel.app/inventory-planning-calculator.html">
+<link rel="alternate" hreflang="en" href="https://procurement-toolkit-eight.vercel.app/en/eoq-safety-stock-calculator.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@800;900&display=swap" rel="stylesheet">
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  :root{--accent:#2563EB;--accent-light:#DBEAFE;--accent-dark:#1D4ED8;--slate-50:#F8FAFC;--slate-100:#F1F5F9;--slate-200:#E2E8F0;--slate-300:#CBD5E1;--slate-400:#94A3B8;--slate-500:#64748B;--slate-600:#475569;--slate-700:#334155;--slate-800:#1E293B;--slate-900:#0F172A;--radius:8px;--radius-lg:12px;--shadow-sm:0 1px 2px rgba(0,0,0,.05);font-family:'Inter','Pretendard',system-ui,-apple-system,sans-serif}
+  body{background:var(--slate-50);color:var(--slate-800);font-size:14px;line-height:1.6}
+  header{background:#fff;border-bottom:1px solid var(--slate-200)}
+  .header-inner{max-width:1100px;margin:0 auto;padding:16px 24px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+  .logo-mark{font-size:20px;font-weight:800;color:var(--slate-900);text-decoration:none;font-family:'Space Grotesk','Inter',sans-serif;letter-spacing:-0.4px;}
+  .nav-right{display:flex;align-items:center;gap:10px}
+  .nav-link{font-size:13px;font-weight:600;color:var(--slate-500);text-decoration:none;padding:7px 12px;border-radius:6px}
+  .nav-link:hover{background:var(--slate-100)}
+  .lang-switch{font-size:12px;font-weight:700;color:var(--accent);text-decoration:none;padding:6px 12px;border:1px solid var(--accent-light);border-radius:999px;background:var(--accent-light)}
+  .lang-switch:hover{background:#BFDBFE}
+  .hero{background:#fff;border-bottom:1px solid var(--slate-200);padding:28px 24px 24px}
+  .hero-inner{max-width:1100px;margin:0 auto}
+  .hero h1{font-size:22px;font-weight:700;color:var(--slate-900);margin-bottom:6px}
+  .hero p{font-size:14px;color:var(--slate-500);max-width:680px}
+  .main{max-width:1100px;margin:0 auto;padding:28px 24px 60px;display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:start}
+  .card{background:#fff;border:1px solid var(--slate-200);border-radius:var(--radius-lg);box-shadow:var(--shadow-sm);margin-bottom:20px}
+  .card-header{padding:16px 20px;border-bottom:1px solid var(--slate-100);display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+  .card-title{font-size:14px;font-weight:600;color:var(--slate-800)}
+  .card-body{padding:20px}
+  .field-group{margin-bottom:14px}
+  .field-label{font-size:12px;font-weight:600;color:var(--slate-600);margin-bottom:6px;display:block}
+  .field-sub{font-size:10.5px;color:var(--slate-400);margin-top:-4px;margin-bottom:6px}
+  .inp,select.inp{width:100%;border:1px solid var(--slate-200);border-radius:6px;padding:9px 11px;font-size:13px;font-family:inherit}
+  .inp:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px rgba(37,99,235,.1)}
+  .result-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .result-item{background:var(--slate-50);border:1px solid var(--slate-100);border-radius:var(--radius);padding:14px;text-align:center}
+  .result-item .r-label{font-size:10.5px;font-weight:700;color:var(--slate-400);text-transform:uppercase}
+  .result-item .r-value{font-size:20px;font-weight:800;color:var(--accent-dark);margin-top:4px}
+  .notice-box{background:var(--accent-light);border:1px solid #BFDBFE;border-radius:var(--radius);padding:10px 14px;font-size:12px;color:#1E40AF;margin-top:14px;line-height:1.6}
+  @media (max-width:900px){.main{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute;" aria-hidden="true">
+  <defs>
+    <linearGradient id="cbmGradH" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#14B8A6"/><stop offset="100%" stop-color="#0B2A4A"/></linearGradient>
+    <linearGradient id="cbmGradF" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#2DD4BF"/><stop offset="100%" stop-color="#5B9EFF"/></linearGradient>
+  </defs>
+</svg>
+<header><div class="header-inner">
+  <a href="index.html" class="logo-mark"><svg width="28" height="28" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align:middle;margin-right:9px;flex-shrink:0;"><path d="M20 2.5L36.5 11.5V28.5L20 37.5L3.5 28.5V11.5L20 2.5Z" stroke="url(#cbmGradH)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M20 2.5V20M20 20L36.5 11.5M20 20L3.5 11.5" stroke="url(#cbmGradH)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/></svg><span style="font-family:'Montserrat','Space Grotesk',sans-serif;font-weight:800;letter-spacing:-0.8px;background:linear-gradient(90deg,#14B8A6 0%,#1E7A8C 45%,#0B2A4A 100%);-webkit-background-clip:text;background-clip:text;color:transparent;">CBMLab</span></a>
+  <div class="nav-right">
+    <a href="index.html" class="nav-link">← All Tools</a>
+    <a href="../index.html" class="lang-switch">KOR</a>
+  </div>
+</div></header>
+
+<section class="hero"><div class="hero-inner">
+  <h1>EOQ, Safety Stock &amp; Reorder Point Calculator</h1>
+  <p>Stop guessing order quantities. Calculate your Economic Order Quantity (EOQ), safety stock, and reorder point in one place, based on demand, lead time, and cost inputs.</p>
+</div></section>
+
+<div class="main">
+  <section>
+    <div class="card">
+      <div class="card-header"><div class="card-title">Inputs</div></div>
+      <div class="card-body">
+        <div class="field-group">
+          <label class="field-label">Annual Demand (units/year)</label>
+          <input class="inp" type="number" id="annualDemand" value="12000" oninput="calc()">
+        </div>
+        <div class="field-group">
+          <label class="field-label">Order Cost (per order)</label>
+          <div class="field-sub">Cost to place one order: admin, shipping setup, etc.</div>
+          <input class="inp" type="number" id="orderCost" value="150" oninput="calc()">
+        </div>
+        <div class="field-group">
+          <label class="field-label">Holding Cost (per unit per year)</label>
+          <div class="field-sub">Cost to store/carry one unit for a year</div>
+          <input class="inp" type="number" id="holdingCost" value="4" oninput="calc()">
+        </div>
+        <div class="field-group">
+          <label class="field-label">Average Daily Demand (units/day)</label>
+          <input class="inp" type="number" id="avgDailyDemand" value="33" oninput="calc()">
+        </div>
+        <div class="field-group">
+          <label class="field-label">Lead Time (days)</label>
+          <input class="inp" type="number" id="leadTime" value="21" oninput="calc()">
+        </div>
+        <div class="field-group">
+          <label class="field-label">Demand Variability (standard deviation, units/day)</label>
+          <div class="field-sub">Higher variability → higher safety stock needed</div>
+          <input class="inp" type="number" id="demandStdDev" value="8" oninput="calc()">
+        </div>
+        <div class="field-group">
+          <label class="field-label">Service Level</label>
+          <select class="inp" id="serviceLevel" onchange="calc()">
+            <option value="1.28">90% (Z=1.28)</option>
+            <option value="1.65" selected>95% (Z=1.65)</option>
+            <option value="2.05">98% (Z=2.05)</option>
+            <option value="2.33">99% (Z=2.33)</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <aside>
+    <div class="card">
+      <div class="card-header"><div class="card-title">Results</div></div>
+      <div class="card-body">
+        <div class="result-grid">
+          <div class="result-item"><div class="r-label">EOQ</div><div class="r-value" id="eoqResult">-</div></div>
+          <div class="result-item"><div class="r-label">Orders per Year</div><div class="r-value" id="freqResult">-</div></div>
+          <div class="result-item"><div class="r-label">Safety Stock</div><div class="r-value" id="ssResult">-</div></div>
+          <div class="result-item"><div class="r-label">Reorder Point</div><div class="r-value" id="ropResult">-</div></div>
+        </div>
+        <div class="notice-box">
+          <b>EOQ</b> = √(2 × Annual Demand × Order Cost ÷ Holding Cost)<br>
+          <b>Safety Stock</b> = Z × Demand Std Dev × √(Lead Time)<br>
+          <b>Reorder Point</b> = (Avg Daily Demand × Lead Time) + Safety Stock
+        </div>
+      </div>
+    </div>
+  </aside>
+</div>
+
+<div style="max-width:1100px;margin:0 auto;padding:0 24px 30px;">
+  <div class="card">
+    <div class="card-header"><div class="card-title">Why an Ordering Rule Matters</div></div>
+    <div class="card-body" style="font-size:12.5px;color:var(--slate-600);line-height:1.7;">
+      <p>Ordering by gut feel usually means tying up cash in excess inventory, or running out and halting production. EOQ, safety stock, and reorder point turn that judgment call into a defensible, repeatable rule.</p>
+      <p style="margin-top:8px;"><b>How to use it in practice:</b> Use it when setting up ordering rules for a new SKU, or when re-checking safety stock for a seasonal item with volatile demand. Revisit the numbers whenever lead time or demand variability changes meaningfully.</p>
+    </div>
+  </div>
+</div>
+
+<footer style="background:#0F172A;color:#94A3B8;padding:24px;font-size:12px;">
+  <div style="max-width:1100px;margin:0 auto;display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;">
+    <div style="font-size:15px;font-weight:800;color:#fff;"><svg width="24" height="24" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align:middle;margin-right:9px;flex-shrink:0;"><path d="M20 2.5L36.5 11.5V28.5L20 37.5L3.5 28.5V11.5L20 2.5Z" stroke="url(#cbmGradF)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M20 2.5V20M20 20L36.5 11.5M20 20L3.5 11.5" stroke="url(#cbmGradF)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/></svg>CBM<span style="color:#2563EB;">Lab</span></div>
+    <nav><a href="index.html" style="color:#94A3B8;text-decoration:none;font-size:11px;margin-right:14px;">All Tools</a><a href="privacy.html" style="color:#94A3B8;text-decoration:none;font-size:11px;">Privacy Policy</a></nav>
+  </div>
+</footer>
+
+<script src="https://cdn.amplitude.com/script/d4aa9301e01f4600b5eeb018e160aa7c.js"></script>
+<script>window.amplitude.init("d4aa9301e01f4600b5eeb018e160aa7c", { fetchRemoteConfig: true, autocapture: true });</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-W1YBL5BGGK"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-W1YBL5BGGK');
+</script>
+
+<script>
+function fmt(n){ return Math.round(n||0).toLocaleString('en-US'); }
+function calc(){
+  const D = parseFloat(document.getElementById('annualDemand').value)||0;
+  const S = parseFloat(document.getElementById('orderCost').value)||0;
+  const H = parseFloat(document.getElementById('holdingCost').value)||1;
+  const avgDaily = parseFloat(document.getElementById('avgDailyDemand').value)||0;
+  const leadTime = parseFloat(document.getElementById('leadTime').value)||0;
+  const stdDev = parseFloat(document.getElementById('demandStdDev').value)||0;
+  const z = parseFloat(document.getElementById('serviceLevel').value)||1.65;
+
+  const eoq = Math.sqrt((2*D*S)/H);
+  const freq = eoq>0 ? D/eoq : 0;
+  const safetyStock = z * stdDev * Math.sqrt(leadTime);
+  const rop = (avgDaily*leadTime) + safetyStock;
+
+  document.getElementById('eoqResult').textContent = fmt(eoq) + ' units';
+  document.getElementById('ssResult').textContent = fmt(safetyStock) + ' units';
+  document.getElementById('ropResult').textContent = fmt(rop) + ' units';
+  document.getElementById('freqResult').textContent = fmt(freq) + ' / year';
+}
+calc();
+</script>
+</body>
+</html>

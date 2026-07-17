@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Free landed cost calculator for importers and procurement teams. Calculate total import cost from EXW, FOB, CFR, or CIF terms including freight, insurance, customs duty, and VAT/tax — with correct duty-basis handling for US (FOB-based) vs most other countries (CIF-based).">
+<meta name="keywords" content="landed cost calculator, import cost calculator, FOB CIF calculator, total landed cost, duty calculator, customs value calculator">
+<title>Landed Cost Calculator (Import Cost, FOB/CIF/EXW/DDP) — CBM Lab</title>
+<link rel="alternate" hreflang="ko" href="https://procurement-toolkit-eight.vercel.app/fob-cif.html">
+<link rel="alternate" hreflang="en" href="https://procurement-toolkit-eight.vercel.app/en/landed-cost-calculator.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@800;900&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --accent: #2563EB; --accent-light: #DBEAFE; --accent-dark: #1D4ED8;
+    --slate-50: #F8FAFC; --slate-100: #F1F5F9; --slate-200: #E2E8F0; --slate-300: #CBD5E1;
+    --slate-400: #94A3B8; --slate-500: #64748B; --slate-600: #475569; --slate-700: #334155;
+    --slate-800: #1E293B; --slate-900: #0F172A;
+    --success: #0F766E; --success-light: #CCFBF1; --warning: #B45309; --warning-light: #FEF3C7;
+    --danger: #DC2626; --radius: 8px; --radius-lg: 12px; --shadow-sm: 0 1px 2px rgba(0,0,0,.05);
+    font-family: 'Inter','Pretendard',system-ui,-apple-system,sans-serif;
+  }
+  body { background: var(--slate-50); color: var(--slate-800); font-size: 14px; line-height: 1.6; }
+  header { background: #fff; border-bottom: 1px solid var(--slate-200); }
+  .header-inner { max-width: 1200px; margin: 0 auto; padding: 16px 24px; display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+  .logo-mark { font-size: 20px; font-weight: 800; color: var(--slate-900); text-decoration: none; font-family:'Space Grotesk','Inter',sans-serif; letter-spacing:-0.4px; }
+  .nav-right { display:flex; align-items:center; gap:10px; }
+  .nav-link { font-size: 13px; font-weight: 600; color: var(--slate-500); text-decoration: none; padding: 7px 12px; border-radius: 6px; }
+  .nav-link:hover { background: var(--slate-100); }
+  .lang-switch { font-size:12px; font-weight:700; color:var(--accent); text-decoration:none; padding:6px 12px; border:1px solid var(--accent-light); border-radius:999px; background:var(--accent-light); }
+  .lang-switch:hover { background:#BFDBFE; }
+
+  .hero { background: #fff; border-bottom: 1px solid var(--slate-200); padding: 28px 24px 24px; }
+  .hero-inner { max-width: 1200px; margin: 0 auto; }
+  .hero h1 { font-size: 22px; font-weight: 700; color: var(--slate-900); margin-bottom: 6px; }
+  .hero p { font-size: 14px; color: var(--slate-500); max-width: 680px; }
+  .hero-tags { display: flex; gap: 8px; margin-top: 12px; flex-wrap: wrap; }
+  .tag { background: var(--slate-100); color: var(--slate-600); font-size: 11px; font-weight: 500; padding: 3px 10px; border-radius: 4px; border: 1px solid var(--slate-200); }
+
+  .main { max-width: 1200px; margin: 0 auto; padding: 28px 24px 60px; display: grid; grid-template-columns: 1fr 380px; gap: 24px; align-items: start; }
+  .card { background: #fff; border: 1px solid var(--slate-200); border-radius: var(--radius-lg); box-shadow: var(--shadow-sm); margin-bottom: 20px; }
+  .card-header { padding: 16px 20px; border-bottom: 1px solid var(--slate-100); display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap; }
+  .card-title { font-size: 14px; font-weight: 600; color: var(--slate-800); }
+  .card-body { padding: 20px; }
+
+  .incoterm-group { display: flex; background: var(--slate-100); border-radius: 8px; padding: 3px; gap: 2px; flex-wrap: wrap; }
+  .incoterm-btn { flex: 1; min-width: 56px; padding: 8px 6px; border: none; background: transparent; border-radius: 6px; font-size: 12.5px; font-weight: 700; color: var(--slate-500); cursor: pointer; }
+  .incoterm-btn.active { background: #fff; color: var(--accent); box-shadow: var(--shadow-sm); }
+  .incoterm-desc { margin-top: 10px; font-size: 12px; color: var(--slate-500); background: var(--slate-50); border: 1px solid var(--slate-100); border-radius: 6px; padding: 8px 12px; line-height: 1.5; }
+  .incoterm-desc strong { color: var(--slate-700); }
+
+  .duty-basis-toggle { display:flex; gap:6px; margin-bottom:10px; }
+  .duty-basis-btn { padding:7px 14px; border:1px solid var(--slate-200); background:#fff; border-radius:999px; font-size:11.5px; font-weight:700; color:var(--slate-500); cursor:pointer; }
+  .duty-basis-btn.active { background: var(--accent); color:#fff; border-color: var(--accent); }
+  .duty-basis-note { font-size:11px; color:var(--slate-400); margin-bottom:12px; }
+
+  .item-table-wrap { overflow-x: auto; margin: 0 -20px; padding: 0 20px; }
+  .item-table { width: 100%; min-width: 480px; border-collapse: collapse; }
+  .item-table thead th { padding: 8px 10px; text-align: left; font-size: 11px; font-weight: 600; color: var(--slate-400); text-transform: uppercase; white-space: nowrap; background: var(--slate-50); border-top: 1px solid var(--slate-100); border-bottom: 1px solid var(--slate-100); }
+  .item-table thead th:last-child { text-align: center; }
+  .item-table tbody tr { border-bottom: 1px solid var(--slate-100); }
+  .item-table tbody tr:last-child { border-bottom: none; }
+  .item-table tbody tr:hover { background: var(--slate-50); }
+  .item-table tbody td { padding: 8px 6px; }
+  .row-num { font-size: 11px; font-weight: 600; color: var(--slate-400); }
+  .row-subtotal { font-size: 12.5px; font-weight: 600; color: var(--slate-600); font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .inp { width: 100%; border: 1px solid var(--slate-200); border-radius: 6px; padding: 7px 10px; font-size: 13px; color: var(--slate-800); background: #fff; font-family: inherit; font-variant-numeric: tabular-nums; }
+  .inp:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1); }
+  .inp-qty { max-width: 64px; } .inp-price { max-width: 100px; } .inp-name { min-width: 110px; }
+  .btn-del { width: 28px; height: 28px; border: 1px solid var(--slate-200); border-radius: 6px; background: #fff; color: var(--slate-400); cursor: pointer; display: inline-flex; align-items: center; justify-content: center; }
+  .btn-del:hover { border-color: var(--danger); color: var(--danger); }
+  .btn-del:disabled { opacity: 0.3; pointer-events: none; }
+  .btn-add-row { display: flex; align-items: center; gap: 6px; padding: 9px 16px; border: 1px dashed var(--slate-300); border-radius: var(--radius); background: transparent; color: var(--slate-500); font-size: 13px; font-weight: 500; cursor: pointer; width: 100%; margin-top: 12px; font-family: inherit; }
+  .btn-add-row:hover { border-color: var(--accent); color: var(--accent); background: var(--accent-light); }
+
+  .field-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .field.hidden { display: none; }
+  .field-label { font-size: 12px; font-weight: 600; color: var(--slate-600); margin-bottom: 6px; display: flex; align-items: center; gap: 4px; }
+  .field-suffix { font-size: 11px; color: var(--slate-400); font-weight: 400; }
+  .field-input-wrap { position: relative; }
+  .field-input-wrap .inp { padding-right: 44px; }
+  .field-unit-badge { position: absolute; right: 8px; top:50%; transform:translateY(-50%); font-size: 11px; font-weight: 600; color: var(--slate-400); }
+
+  .result-section { display: flex; flex-direction: column; gap: 16px; }
+  .result-line { display: flex; justify-content: space-between; align-items: baseline; padding: 9px 0; border-bottom: 1px solid var(--slate-100); font-size: 13px; }
+  .result-line:last-child { border-bottom: none; }
+  .result-line .label { color: var(--slate-500); }
+  .result-line .value { font-weight: 600; color: var(--slate-800); font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .result-line.add .value::before { content: '+ '; color: var(--slate-400); font-weight: 400; }
+  .result-total { background: var(--accent-light); border: 1px solid #BFDBFE; border-radius: var(--radius); padding: 16px 18px; }
+  .result-total .label { font-size: 11px; font-weight: 700; color: var(--accent-dark); letter-spacing: 0.4px; text-transform: uppercase; margin-bottom: 4px; }
+  .result-total .value { font-size: 26px; font-weight: 800; color: var(--accent-dark); letter-spacing: -0.8px; }
+  .result-perunit { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 4px; }
+  .result-item { background: var(--slate-50); border: 1px solid var(--slate-100); border-radius: var(--radius); padding: 12px 14px; }
+  .result-item .result-label { font-size: 10.5px; font-weight: 600; color: var(--slate-400); letter-spacing: 0.4px; text-transform: uppercase; margin-bottom: 4px; }
+  .result-item .result-value { font-size: 18px; font-weight: 700; color: var(--slate-900); }
+
+  .vat-toggle-row { display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--slate-500); margin-top: 10px; padding-top: 10px; border-top: 1px dashed var(--slate-200); }
+  .vat-toggle-row input { accent-color: var(--accent); width: 15px; height: 15px; }
+
+  .notice-box { background: var(--accent-light); border: 1px solid #BFDBFE; border-radius: var(--radius); padding: 10px 14px; font-size: 12px; color: #1E40AF; line-height: 1.5; }
+  .warn-box { background: var(--warning-light); border: 1px solid #FDE68A; border-radius: var(--radius); padding: 10px 14px; font-size: 11.5px; color: #78350F; line-height: 1.6; margin-top: 12px; }
+
+  .ad-placeholder { border: 1px dashed var(--slate-300); border-radius: var(--radius); background: var(--slate-50); padding: 20px; text-align: center; color: var(--slate-400); font-size: 12px; }
+  .ad-main-box { border: 1px dashed var(--slate-300); border-radius: var(--radius); background: #fff; height: 90px; display: flex; flex-direction: column; align-items: center; justify-content: center; color: var(--slate-400); font-size: 12px; gap: 4px; }
+
+  .disclaimer { max-width: 1200px; margin: 0 auto; padding: 0 24px 20px; font-size: 11px; color: var(--slate-400); line-height: 1.6; }
+
+  @media (max-width: 900px) { .main { grid-template-columns: 1fr; } }
+  @media (max-width: 640px) { .field-grid { grid-template-columns: 1fr; } .result-perunit { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute;" aria-hidden="true">
+  <defs>
+    <linearGradient id="cbmGradH" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#14B8A6"/><stop offset="100%" stop-color="#0B2A4A"/></linearGradient>
+    <linearGradient id="cbmGradF" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#2DD4BF"/><stop offset="100%" stop-color="#5B9EFF"/></linearGradient>
+  </defs>
+</svg>
+<header><div class="header-inner">
+  <a href="index.html" class="logo-mark"><svg width="28" height="28" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align:middle;margin-right:9px;flex-shrink:0;"><path d="M20 2.5L36.5 11.5V28.5L20 37.5L3.5 28.5V11.5L20 2.5Z" stroke="url(#cbmGradH)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M20 2.5V20M20 20L36.5 11.5M20 20L3.5 11.5" stroke="url(#cbmGradH)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/></svg><span style="font-family:'Montserrat','Space Grotesk',sans-serif;font-weight:800;letter-spacing:-0.8px;background:linear-gradient(90deg,#14B8A6 0%,#1E7A8C 45%,#0B2A4A 100%);-webkit-background-clip:text;background-clip:text;color:transparent;">CBMLab</span></a>
+  <div class="nav-right">
+    <a href="index.html" class="nav-link">← All Tools</a>
+    <a href="../index.html" class="lang-switch">KOR</a>
+  </div>
+</div></header>
+
+<section class="hero"><div class="hero-inner">
+  <h1>Landed Cost Calculator</h1>
+  <p>Calculate the true total cost of an import — not just the supplier's quoted price. Choose your Incoterm (EXW, FOB, CFR, CIF, DDP), add freight, insurance, duty and tax, and see the real per-unit landed cost.</p>
+  <div class="hero-tags"><span class="tag">FOB / CIF</span><span class="tag">Import Duty</span><span class="tag">Total Landed Cost</span><span class="tag">Per-Unit Cost</span></div>
+</div></section>
+
+<div class="main">
+  <section aria-label="Cost inputs">
+    <div class="card">
+      <div class="card-header"><div class="card-title">Incoterm</div></div>
+      <div class="card-body">
+        <div class="incoterm-group" role="group">
+          <button class="incoterm-btn" data-term="EXW" onclick="setIncoterm('EXW')">EXW</button>
+          <button class="incoterm-btn active" data-term="FOB" onclick="setIncoterm('FOB')">FOB</button>
+          <button class="incoterm-btn" data-term="CFR" onclick="setIncoterm('CFR')">CFR</button>
+          <button class="incoterm-btn" data-term="CIF" onclick="setIncoterm('CIF')">CIF</button>
+          <button class="incoterm-btn" data-term="DDP" onclick="setIncoterm('DDP')">DDP</button>
+        </div>
+        <div class="incoterm-desc" id="incoterm-desc"></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <div class="card-title">Goods (priced in <span id="term-value-label">FOB</span> terms)</div>
+        <select class="inp" id="currencySelect" onchange="setCurrency(this.value)" style="width:auto;padding:5px 8px;font-size:11px;">
+          <option value="USD">Currency: USD</option>
+          <option value="KRW">Currency: KRW</option>
+          <option value="CNY">Currency: CNY</option>
+          <option value="JPY">Currency: JPY</option>
+          <option value="EUR">Currency: EUR</option>
+          <option value="GBP">Currency: GBP</option>
+        </select>
+      </div>
+      <div class="card-body">
+        <div class="item-table-wrap">
+          <table class="item-table">
+            <thead><tr>
+              <th style="width:28px">#</th><th>Item</th><th style="width:70px">Qty</th>
+              <th style="width:100px">Unit Price</th><th style="width:90px">Subtotal</th><th style="width:40px">Del</th>
+            </tr></thead>
+            <tbody id="item-tbody"></tbody>
+          </table>
+        </div>
+        <button class="btn-add-row" onclick="addItemRow()">
+          <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/></svg>
+          Add item
+        </button>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header"><div class="card-title">Freight, Insurance &amp; Duty</div></div>
+      <div class="card-body">
+        <div class="field-grid">
+          <div class="field" id="field-inlandOrigin">
+            <div class="field-label">Inland freight to port <span class="field-suffix">(origin country)</span></div>
+            <div class="field-input-wrap"><input type="number" class="inp" id="inlandOrigin" value="0" min="0" oninput="calc()"></div>
+          </div>
+          <div class="field" id="field-freight">
+            <div class="field-label">International freight <span class="field-suffix">(ocean/air)</span></div>
+            <div class="field-input-wrap"><input type="number" class="inp" id="freight" value="0" min="0" oninput="calc()"></div>
+          </div>
+          <div class="field" id="field-insurance">
+            <div class="field-label">Cargo insurance</div>
+            <div class="field-input-wrap"><input type="number" class="inp" id="insurance" value="0" min="0" oninput="calc()"></div>
+          </div>
+          <div class="field" id="field-dutyRate">
+            <div class="field-label">Duty rate <span class="field-suffix">(by HS code)</span></div>
+            <div class="field-input-wrap"><input type="number" class="inp" id="dutyRate" value="8" min="0" step="0.1" oninput="calc()"><span class="field-unit-badge">%</span></div>
+          </div>
+          <div class="field" id="field-vatRate">
+            <div class="field-label">VAT / Sales Tax rate</div>
+            <div class="field-input-wrap"><input type="number" class="inp" id="vatRate" value="0" min="0" step="0.1" oninput="calc()"><span class="field-unit-badge">%</span></div>
+          </div>
+          <div class="field" id="field-customsFee">
+            <div class="field-label">Customs broker fee <span class="field-suffix">(destination currency)</span></div>
+            <div class="field-input-wrap"><input type="number" class="inp" id="customsFee" value="0" min="0" oninput="calc()"></div>
+          </div>
+          <div class="field" id="field-inlandDest">
+            <div class="field-label">Inland delivery <span class="field-suffix">(port to warehouse)</span></div>
+            <div class="field-input-wrap"><input type="number" class="inp" id="inlandDest" value="0" min="0" oninput="calc()"></div>
+          </div>
+          <div class="field">
+            <div class="field-label">Exchange rate <span class="field-suffix">(1 unit → destination currency, optional)</span></div>
+            <div class="field-input-wrap"><input type="number" class="inp" id="fxRate" value="1" min="0" step="0.0001" oninput="calc()"></div>
+          </div>
+        </div>
+
+        <div class="duty-basis-toggle" style="margin-top:16px;">
+          <button class="duty-basis-btn active" id="btn-basis-fob" onclick="setDutyBasis('fob')">US-style: duty on FOB value</button>
+          <button class="duty-basis-btn" id="btn-basis-cif" onclick="setDutyBasis('cif')">Most countries: duty on CIF value</button>
+        </div>
+        <div class="duty-basis-note" id="dutyBasisNote"></div>
+
+        <div class="vat-toggle-row">
+          <input type="checkbox" id="includeVat" onchange="calc()">
+          <label for="includeVat">Include VAT/sales tax in total landed cost (many VAT-registered businesses can reclaim it, so it's excluded by default)</label>
+        </div>
+
+        <div class="notice-box" style="margin-top:14px;">
+          <strong>Why the duty basis matters:</strong> U.S. Customs assesses duty on the <strong>FOB (goods-only) value</strong>, excluding international freight and insurance. Most other countries (UK, EU, most of Asia) assess duty on the <strong>CIF value</strong> (goods + freight + insurance). Using the wrong basis can meaningfully over- or under-estimate your duty. Toggle above to match your destination country's rule.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <aside aria-label="Results">
+    <div class="result-section">
+      <div class="card">
+        <div class="card-header"><div class="card-title">Landed Cost Result</div></div>
+        <div class="card-body">
+          <div id="result-lines"></div>
+          <div class="result-total" style="margin-top:10px;">
+            <div class="label">Total Landed Cost</div>
+            <div class="value" id="totalCost">0.00</div>
+          </div>
+          <div class="result-perunit">
+            <div class="result-item">
+              <div class="result-label">Total Qty</div>
+              <div class="result-value" id="totalQty">0</div>
+            </div>
+            <div class="result-item">
+              <div class="result-label">Per-Unit Landed Cost</div>
+              <div class="result-value" id="unitCost">0.00</div>
+            </div>
+          </div>
+          <div class="warn-box" id="deMinimisWarn" style="display:none;"></div>
+        </div>
+      </div>
+
+      <div class="ad-placeholder"><strong style="display:block;font-size:11px;text-transform:uppercase;color:var(--slate-300);margin-bottom:4px;">Advertisement</strong>300 × 250</div>
+    </div>
+  </aside>
+</div>
+
+<div class="ad-main-box" style="max-width:1200px;margin:0 auto 28px;"><strong style="font-size:11px;text-transform:uppercase;color:var(--slate-300);">Advertisement</strong>728 × 90 leaderboard</div>
+
+<div class="disclaimer"><strong>Disclaimer:</strong> This calculator provides an estimate for planning purposes only. Actual duty rates depend on your product's HS code, applicable trade agreements, and destination country regulations. De minimis thresholds (e.g., $800 in the US, £135 in the UK) and additional fees (e.g., U.S. Merchandise Processing Fee, Harbor Maintenance Fee) are not automatically applied — verify with your customs broker or national customs authority before making commercial decisions.</div>
+
+<footer style="background:#0F172A;color:#94A3B8;padding:24px;font-size:12px;">
+  <div style="max-width:1200px;margin:0 auto;display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;">
+    <div style="font-size:15px;font-weight:800;color:#fff;"><svg width="24" height="24" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align:middle;margin-right:9px;flex-shrink:0;"><path d="M20 2.5L36.5 11.5V28.5L20 37.5L3.5 28.5V11.5L20 2.5Z" stroke="url(#cbmGradF)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M20 2.5V20M20 20L36.5 11.5M20 20L3.5 11.5" stroke="url(#cbmGradF)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/></svg>CBM<span style="color:#2563EB;">Lab</span></div>
+    <nav><a href="index.html" style="color:#94A3B8;text-decoration:none;font-size:11px;margin-right:14px;">All Tools</a><a href="privacy.html" style="color:#94A3B8;text-decoration:none;font-size:11px;">Privacy Policy</a></nav>
+  </div>
+</footer>
+
+<script src="https://cdn.amplitude.com/script/d4aa9301e01f4600b5eeb018e160aa7c.js"></script>
+<script>window.amplitude.init("d4aa9301e01f4600b5eeb018e160aa7c", { fetchRemoteConfig: true, autocapture: true });</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-W1YBL5BGGK"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-W1YBL5BGGK');
+</script>
+
+<script>
+  let items = [];
+  let itemCounter = 0;
+  let currentTerm = 'FOB';
+  let dutyBasis = 'fob'; // 'fob' | 'cif'
+
+  const CURRENCIES = { USD:{symbol:'$'}, KRW:{symbol:'₩'}, CNY:{symbol:'¥'}, JPY:{symbol:'¥'}, EUR:{symbol:'€'}, GBP:{symbol:'£'} };
+  let currentCurrency = 'USD';
+  function curSym(){ return CURRENCIES[currentCurrency].symbol; }
+  function setCurrency(code){ currentCurrency = code; calc(); }
+
+  const TERM_INFO = {
+    EXW: { label:'EXW (Ex Works)', desc:'<strong>EXW:</strong> The buyer arranges and pays for everything from the seller\'s factory door — inland transport, export clearance, freight, insurance, duty, and delivery.', show:['inlandOrigin','freight','insurance','dutyRate','vatRate','customsFee','inlandDest'] },
+    FOB: { label:'FOB (Free On Board)', desc:'<strong>FOB:</strong> The goods price already includes inland transport to the export port and loading onto the vessel. The buyer pays for international freight and insurance onward.', show:['freight','insurance','dutyRate','vatRate','customsFee','inlandDest'] },
+    CFR: { label:'CFR (Cost and Freight)', desc:'<strong>CFR:</strong> The goods price already includes international freight. The buyer only needs to add insurance.', show:['insurance','dutyRate','vatRate','customsFee','inlandDest'] },
+    CIF: { label:'CIF (Cost, Insurance, Freight)', desc:'<strong>CIF:</strong> The goods price already includes freight and insurance. Add only duty, tax, and destination handling.', show:['dutyRate','vatRate','customsFee','inlandDest'] },
+    DDP: { label:'DDP (Delivered Duty Paid)', desc:'<strong>DDP:</strong> The seller has already paid duty, tax, and handling and delivers to your named place. Little or nothing left for the buyer to add.', show:[] }
+  };
+  const ALL_FIELDS = ['inlandOrigin','freight','insurance','dutyRate','vatRate','customsFee','inlandDest'];
+
+  function setIncoterm(term){
+    currentTerm = term;
+    document.querySelectorAll('.incoterm-btn').forEach(b=>b.classList.toggle('active', b.dataset.term===term));
+    document.getElementById('incoterm-desc').innerHTML = TERM_INFO[term].desc;
+    document.getElementById('term-value-label').textContent = term;
+    const visible = TERM_INFO[term].show;
+    ALL_FIELDS.forEach(f=>{
+      const el = document.getElementById('field-'+f);
+      if(el) el.classList.toggle('hidden', !visible.includes(f));
+    });
+    calc();
+  }
+
+  function setDutyBasis(basis){
+    dutyBasis = basis;
+    document.getElementById('btn-basis-fob').classList.toggle('active', basis==='fob');
+    document.getElementById('btn-basis-cif').classList.toggle('active', basis==='cif');
+    document.getElementById('dutyBasisNote').textContent = basis==='fob'
+      ? 'Duty will be calculated on the FOB (goods-only) value — matches U.S. Customs rules.'
+      : 'Duty will be calculated on the CIF value (goods + freight + insurance) — matches most non-U.S. customs rules.';
+    calc();
+  }
+
+  function addItemRow(name, qty, price){
+    itemCounter++;
+    items.push({ id:itemCounter, name:name||'', qty:qty??1, price:price??0 });
+    renderItems();
+  }
+  function removeItemRow(id){
+    items = items.filter(i=>i.id!==id);
+    if(items.length===0) addItemRow(); else renderItems();
+  }
+  function updateItem(id, field, value){
+    const item = items.find(i=>i.id===id); if(!item) return;
+    if(field==='name') item.name = value;
+    else if(field==='qty') item.qty = parseFloat(value)||0;
+    else if(field==='price') item.price = parseFloat(value)||0;
+    calc();
+  }
+  function renderItems(){
+    const tbody = document.getElementById('item-tbody');
+    tbody.innerHTML = '';
+    items.forEach((item, idx)=>{
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td><span class="row-num">${idx+1}</span></td>
+        <td><input type="text" class="inp inp-name" placeholder="Product name" value="${item.name}" oninput="updateItem(${item.id},'name',this.value)"></td>
+        <td><input type="number" class="inp inp-qty" min="0" value="${item.qty}" oninput="updateItem(${item.id},'qty',this.value)"></td>
+        <td><input type="number" class="inp inp-price" min="0" step="0.01" value="${item.price}" oninput="updateItem(${item.id},'price',this.value)"></td>
+        <td><span class="row-subtotal" id="sub-${item.id}">${curSym()}0.00</span></td>
+        <td><button class="btn-del" onclick="removeItemRow(${item.id})" ${items.length<=1?'disabled':''}>
+          <svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+        </button></td>`;
+      tbody.appendChild(tr);
+    });
+    calc();
+  }
+
+  function fmt(v, digits=2){
+    if(typeof v !== 'number' || isNaN(v)) return '0';
+    return v.toLocaleString('en-US', { minimumFractionDigits:digits, maximumFractionDigits:digits });
+  }
+
+  function calc(){
+    let goodsValue = 0, totalQty = 0;
+    items.forEach(item=>{
+      const sub = item.qty * item.price;
+      goodsValue += sub; totalQty += item.qty;
+      const el = document.getElementById('sub-'+item.id);
+      if(el) el.textContent = curSym()+fmt(sub,2);
+    });
+
+    const inlandOrigin = parseFloat(document.getElementById('inlandOrigin').value)||0;
+    const freight = parseFloat(document.getElementById('freight').value)||0;
+    const insurance = parseFloat(document.getElementById('insurance').value)||0;
+    const dutyRate = parseFloat(document.getElementById('dutyRate').value)||0;
+    const vatRate = parseFloat(document.getElementById('vatRate').value)||0;
+    const customsFee = parseFloat(document.getElementById('customsFee').value)||0;
+    const inlandDest = parseFloat(document.getElementById('inlandDest').value)||0;
+    const fxRate = parseFloat(document.getElementById('fxRate').value)||1;
+    const includeVat = document.getElementById('includeVat').checked;
+
+    const lines = [];
+    let cifValue, fobEquivalent;
+
+    if(currentTerm === 'DDP'){
+      cifValue = goodsValue; fobEquivalent = goodsValue;
+      lines.push({ label:'DDP goods value (all-inclusive)', value: curSym()+fmt(goodsValue,2) });
+    } else {
+      let base = goodsValue;
+      fobEquivalent = goodsValue; // running FOB-equivalent (goods + inland-to-port only)
+      lines.push({ label:`Goods value (${currentTerm} terms)`, value: curSym()+fmt(goodsValue,2) });
+
+      if(TERM_INFO[currentTerm].show.includes('inlandOrigin') && inlandOrigin>0){
+        base += inlandOrigin; fobEquivalent += inlandOrigin;
+        lines.push({ label:'Inland freight to port', value: curSym()+fmt(inlandOrigin,2), add:true });
+      }
+      if(TERM_INFO[currentTerm].show.includes('freight') && freight>0){
+        base += freight;
+        lines.push({ label:'International freight', value: curSym()+fmt(freight,2), add:true });
+      }
+      if(TERM_INFO[currentTerm].show.includes('insurance') && insurance>0){
+        base += insurance;
+        lines.push({ label:'Cargo insurance', value: curSym()+fmt(insurance,2), add:true });
+      }
+      cifValue = base;
+      lines.push({ label:'CIF value (customs value, most countries)', value: curSym()+fmt(cifValue,2) });
+      lines.push({ label:'FOB-equivalent value (customs value, U.S.)', value: curSym()+fmt(fobEquivalent,2) });
+    }
+
+    let dutyAmount=0, vatAmount=0, landedForeign=cifValue;
+
+    if(currentTerm !== 'DDP'){
+      const dutyBase = dutyBasis==='fob' ? fobEquivalent : cifValue;
+      dutyAmount = dutyBase * (dutyRate/100);
+      lines.push({ label:`Import duty (${dutyRate}% on ${dutyBasis==='fob'?'FOB':'CIF'} value)`, value: curSym()+fmt(dutyAmount,2), add:true });
+      landedForeign += dutyAmount;
+
+      vatAmount = (cifValue + dutyAmount) * (vatRate/100);
+      lines.push({ label:`VAT/Sales Tax (${vatRate}%)${includeVat?'':' — excluded, for reference'}`, value: curSym()+fmt(vatAmount,2) });
+      if(includeVat) landedForeign += vatAmount;
+    }
+
+    let landedConverted = landedForeign * fxRate;
+    if(currentTerm !== 'DDP'){
+      if(customsFee>0) landedConverted += customsFee;
+      if(inlandDest>0) landedConverted += inlandDest;
+    }
+
+    const linesHtml = lines.map(l=>`
+      <div class="result-line ${l.add?'add':''}">
+        <span class="label">${l.label}</span>
+        <span class="value">${l.value}</span>
+      </div>`).join('');
+
+    let extraHtml = '';
+    if(currentTerm !== 'DDP' && (customsFee>0 || inlandDest>0)){
+      if(customsFee>0) extraHtml += `<div class="result-line add"><span class="label">Customs broker fee</span><span class="value">${fmt(customsFee)}</span></div>`;
+      if(inlandDest>0) extraHtml += `<div class="result-line add"><span class="label">Inland delivery</span><span class="value">${fmt(inlandDest)}</span></div>`;
+    }
+
+    document.getElementById('result-lines').innerHTML = linesHtml + extraHtml;
+    document.getElementById('totalCost').textContent = (fxRate!==1 ? '' : curSym()) + fmt(landedConverted);
+    document.getElementById('totalQty').textContent = fmt(totalQty,0);
+
+    const unitCost = totalQty>0 ? landedConverted/totalQty : 0;
+    document.getElementById('unitCost').textContent = (fxRate!==1 ? '' : curSym()) + fmt(unitCost);
+
+    // simple de minimis heads-up (informational only, not auto-applied)
+    const warnEl = document.getElementById('deMinimisWarn');
+    if(currentCurrency==='USD' && goodsValue <= 800 && goodsValue > 0){
+      warnEl.style.display = 'block';
+      warnEl.innerHTML = `ℹ️ This shipment's goods value ($${fmt(goodsValue)}) is under the common U.S. de minimis threshold of $800. Many low-value shipments qualify for duty-free entry under Section 321 — check current rules, as thresholds and eligibility can change.`;
+    } else {
+      warnEl.style.display = 'none';
+    }
+  }
+
+  addItemRow('Product A', 100, 5.00);
+  setIncoterm('FOB');
+  setDutyBasis('fob');
+</script>
+</body>
+</html>

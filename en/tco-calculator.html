@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="설비·장비 구매 시 구매가, 설치비, 유지보수, 에너지 비용, 다운타임, 처분비용까지 포함한 총소유비용(TCO)을 계산하고, 두 옵션을 비교해 실제로 더 저렴한 선택을 확인합니다.">
-<meta name="keywords" content="TCO 계산기, Total Cost of Ownership, 설비 구매 비교, CAPEX 분석">
-<title>TCO 계산기 (총소유비용) — CBM Lab</title>
+<meta name="description" content="Free Total Cost of Ownership (TCO) calculator for equipment and capital purchases. Include purchase price, installation, maintenance, energy, downtime, and disposal costs, then compare two options side by side.">
+<meta name="keywords" content="TCO calculator, total cost of ownership calculator, equipment TCO, CAPEX comparison, capital expenditure calculator">
+<title>TCO Calculator (Total Cost of Ownership) — CBM Lab</title>
 <link rel="alternate" hreflang="ko" href="https://procurement-toolkit-eight.vercel.app/tco-calculator.html">
 <link rel="alternate" hreflang="en" href="https://procurement-toolkit-eight.vercel.app/en/tco-calculator.html">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -14,13 +14,16 @@
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@800;900&display=swap" rel="stylesheet">
 <style>
   *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-  :root{--accent:#2563EB;--accent-light:#DBEAFE;--accent-dark:#1D4ED8;--slate-50:#F8FAFC;--slate-100:#F1F5F9;--slate-200:#E2E8F0;--slate-300:#CBD5E1;--slate-400:#94A3B8;--slate-500:#64748B;--slate-600:#475569;--slate-700:#334155;--slate-800:#1E293B;--slate-900:#0F172A;--success:#0F766E;--success-light:#CCFBF1;--radius:8px;--radius-lg:12px;--shadow-sm:0 1px 2px rgba(0,0,0,.05);font-family:'Pretendard','Apple SD Gothic Neo',system-ui,-apple-system,sans-serif}
+  :root{--accent:#2563EB;--accent-light:#DBEAFE;--accent-dark:#1D4ED8;--slate-50:#F8FAFC;--slate-100:#F1F5F9;--slate-200:#E2E8F0;--slate-300:#CBD5E1;--slate-400:#94A3B8;--slate-500:#64748B;--slate-600:#475569;--slate-700:#334155;--slate-800:#1E293B;--slate-900:#0F172A;--success:#0F766E;--success-light:#CCFBF1;--radius:8px;--radius-lg:12px;--shadow-sm:0 1px 2px rgba(0,0,0,.05);font-family:'Inter','Pretendard',system-ui,-apple-system,sans-serif}
   body{background:var(--slate-50);color:var(--slate-800);font-size:14px;line-height:1.6}
   header{background:#fff;border-bottom:1px solid var(--slate-200)}
   .header-inner{max-width:1300px;margin:0 auto;padding:16px 24px;display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}
-  .logo-mark{font-size:20px;font-weight:800;color:var(--slate-900);text-decoration:none;font-family:'Space Grotesk','Pretendard',sans-serif;letter-spacing:-0.4px;}
+  .logo-mark{font-size:20px;font-weight:800;color:var(--slate-900);text-decoration:none;font-family:'Space Grotesk','Inter',sans-serif;letter-spacing:-0.4px;}
+  .nav-right{display:flex;align-items:center;gap:10px}
   .nav-link{font-size:13px;font-weight:600;color:var(--slate-500);text-decoration:none;padding:7px 12px;border-radius:6px}
   .nav-link:hover{background:var(--slate-100)}
+  .lang-switch{font-size:12px;font-weight:700;color:var(--accent);text-decoration:none;padding:6px 12px;border:1px solid var(--accent-light);border-radius:999px;background:var(--accent-light)}
+  .lang-switch:hover{background:#BFDBFE}
   .hero{background:#fff;border-bottom:1px solid var(--slate-200);padding:28px 24px 24px}
   .hero-inner{max-width:1300px;margin:0 auto}
   .hero h1{font-size:22px;font-weight:700;color:var(--slate-900);margin-bottom:6px}
@@ -39,12 +42,10 @@
   .card-body{padding:18px}
   .field-group{margin-bottom:12px}
   .field-label{font-size:11.5px;font-weight:600;color:var(--slate-600);margin-bottom:5px;display:block}
-  .field-sub{font-size:10px;color:var(--slate-400);margin-top:-3px;margin-bottom:5px;}
   .inp{width:100%;border:1px solid var(--slate-200);border-radius:6px;padding:8px 10px;font-size:12.5px;font-family:inherit}
   .inp:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px rgba(37,99,235,.1)}
   .section-divider{font-size:10.5px;font-weight:700;color:var(--slate-400);text-transform:uppercase;letter-spacing:.4px;margin:16px 0 8px;padding-top:10px;border-top:1px dashed var(--slate-200)}
   .section-divider:first-child{margin-top:0;padding-top:0;border-top:none}
-
   .result-line{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--slate-100);font-size:12.5px}
   .result-line:last-child{border-bottom:none}
   .result-line .label{color:var(--slate-500)}
@@ -53,11 +54,8 @@
   .result-total .label{font-size:11px;font-weight:700;color:var(--accent-dark);text-transform:uppercase;margin-bottom:4px}
   .result-total .value{font-size:24px;font-weight:800;color:var(--accent-dark)}
   .result-total .sub{font-size:11px;color:var(--accent);margin-top:3px;font-weight:600}
-
   .winner-badge{text-align:center;background:var(--success-light);border:1px solid #99F6E4;border-radius:var(--radius);padding:14px;margin-top:20px;font-size:13.5px;font-weight:700;color:var(--success)}
-
   .notice-box{background:var(--accent-light);border:1px solid #BFDBFE;border-radius:var(--radius);padding:10px 14px;font-size:11.5px;color:#1E40AF;margin-top:14px;line-height:1.6}
-
   @media (max-width:900px){.option-grid.dual{grid-template-columns:1fr}}
 </style>
 </head>
@@ -70,54 +68,44 @@
 </svg>
 <header><div class="header-inner">
   <a href="index.html" class="logo-mark"><svg width="28" height="28" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align:middle;margin-right:9px;flex-shrink:0;"><path d="M20 2.5L36.5 11.5V28.5L20 37.5L3.5 28.5V11.5L20 2.5Z" stroke="url(#cbmGradH)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M20 2.5V20M20 20L36.5 11.5M20 20L3.5 11.5" stroke="url(#cbmGradH)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/></svg><span style="font-family:'Montserrat','Space Grotesk',sans-serif;font-weight:800;letter-spacing:-0.8px;background:linear-gradient(90deg,#14B8A6 0%,#1E7A8C 45%,#0B2A4A 100%);-webkit-background-clip:text;background-clip:text;color:transparent;">CBMLab</span></a>
-  <a href="index.html" class="nav-link">← 전체 도구 보기</a>
+  <div class="nav-right">
+    <a href="index.html" class="nav-link">← All Tools</a>
+    <a href="../index.html" class="lang-switch">KOR</a>
+  </div>
 </div></header>
 
 <section class="hero"><div class="hero-inner">
-  <h1>TCO 계산기 (총소유비용)</h1>
-  <p>설비·장비는 구매가만 보면 저렴해 보여도, 유지보수·에너지·다운타임·처분비용까지 더하면 총소유비용(TCO)이 역전되는 경우가 많습니다. 두 옵션을 나란히 비교해서 실제로 더 저렴한 선택을 확인하세요.</p>
-  <div class="hero-tags"><span class="tag">TCO</span><span class="tag">CAPEX 비교</span><span class="tag">설비 구매 의사결정</span></div>
+  <h1>TCO Calculator (Total Cost of Ownership)</h1>
+  <p>The cheapest purchase price isn't always the cheapest option once you add maintenance, energy, downtime, and disposal costs. Compare two options side by side to see which one is actually cheaper over its full lifetime.</p>
+  <div class="hero-tags"><span class="tag">TCO</span><span class="tag">CAPEX Comparison</span><span class="tag">Equipment Purchase Decision</span></div>
 </div></section>
 
 <div class="main">
-  <div class="compare-toggle">
-    <select class="inp" id="currencySelect" onchange="setCurrency(this.value)" style="width:auto;padding:7px 10px;font-size:12px;margin-right:8px;">
-      <option value="USD">통화: 달러(USD)</option>
-      <option value="KRW">통화: 원화(KRW)</option>
-      <option value="CNY">통화: 위안화(CNY)</option>
-      <option value="JPY">통화: 엔화(JPY)</option>
-      <option value="EUR">통화: 유로(EUR)</option>
-    </select>
-    <button class="btn-compare" onclick="toggleCompare()" id="compareBtn">+ 다른 옵션과 비교하기</button>
-  </div>
+  <div class="compare-toggle"><button class="btn-compare" onclick="toggleCompare()" id="compareBtn">+ Compare with another option</button></div>
   <div class="option-grid" id="optionGrid"></div>
-
   <div class="winner-badge" id="winnerBadge" style="display:none;"></div>
-  <div class="notice-box">본 계산기는 입력하신 가정치를 바탕으로 한 참고용 추정입니다. 실제 유지보수 비용, 가동률, 잔존가치는 계약 조건과 실사용 환경에 따라 달라질 수 있습니다.</div>
+  <div class="notice-box">This calculator produces an estimate based on your assumptions. Actual maintenance cost, utilization, and resale value depend on your contract terms and real-world usage.</div>
 </div>
-
 
 <div style="max-width:1300px;margin:0 auto;padding:0 24px 30px;">
   <div class="card">
-    <div class="card-header"><div class="card-title">왜 구매가만 보면 안 되는가</div></div>
+    <div class="card-header"><div class="card-title">Why Purchase Price Isn't the Whole Story</div></div>
     <div class="card-body" style="font-size:12.5px;color:var(--slate-600);line-height:1.7;">
-<p>설비나 장비를 구매할 때 초기 구매가만 비교하면, 실제로는 유지보수비가 비싸거나 에너지 효율이 낮은 장비를 선택하는 실수를 할 수 있습니다. 총소유비용(TCO)은 도입부터 폐기까지 전체 비용을 합산해서 진짜 저렴한 선택이 무엇인지 보여줍니다.</p>
-<p><b>실무 활용법:</b> 설비 투자 품의서를 작성할 때 두 개 이상의 견적을 TCO 기준으로 비교하거나, 초기 구매가는 비싸지만 유지보수·에너지 비용이 낮은 장비와 저렴하지만 운영비가 높은 장비 중 어느 쪽이 장기적으로 유리한지 판단할 때 활용하세요.</p>
-</div>
+      <p>Comparing equipment purely on sticker price can lead you to buy something with cheap upfront cost but expensive maintenance or poor energy efficiency. Total Cost of Ownership adds up every cost from acquisition to disposal so you see the true, full-lifecycle cost of each option.</p>
+      <p style="margin-top:8px;"><b>How to use it in practice:</b> Use it when writing a capital expenditure justification, comparing two vendor quotes, or deciding between a cheaper machine with higher running costs and a pricier one that is more efficient long-term.</p>
+    </div>
   </div>
 </div>
 
 <footer style="background:#0F172A;color:#94A3B8;padding:24px;font-size:12px;">
   <div style="max-width:1300px;margin:0 auto;display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;">
     <div style="font-size:15px;font-weight:800;color:#fff;"><svg width="24" height="24" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align:middle;margin-right:9px;flex-shrink:0;"><path d="M20 2.5L36.5 11.5V28.5L20 37.5L3.5 28.5V11.5L20 2.5Z" stroke="url(#cbmGradF)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M20 2.5V20M20 20L36.5 11.5M20 20L3.5 11.5" stroke="url(#cbmGradF)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/></svg>CBM<span style="color:#2563EB;">Lab</span></div>
-    <nav><a href="index.html" style="color:#94A3B8;text-decoration:none;font-size:11px;margin-right:14px;">전체 도구</a><a href="privacy.html" style="color:#94A3B8;text-decoration:none;font-size:11px;">개인정보 처리방침</a></nav>
+    <nav><a href="index.html" style="color:#94A3B8;text-decoration:none;font-size:11px;margin-right:14px;">All Tools</a><a href="privacy.html" style="color:#94A3B8;text-decoration:none;font-size:11px;">Privacy Policy</a></nav>
   </div>
 </footer>
 
 <script src="https://cdn.amplitude.com/script/d4aa9301e01f4600b5eeb018e160aa7c.js"></script>
-<script>
-  window.amplitude.init("d4aa9301e01f4600b5eeb018e160aa7c", { fetchRemoteConfig: true, autocapture: true });
-</script>
+<script>window.amplitude.init("d4aa9301e01f4600b5eeb018e160aa7c", { fetchRemoteConfig: true, autocapture: true });</script>
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-W1YBL5BGGK"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
@@ -128,127 +116,90 @@
 
 <script>
 let compareMode = false;
-
 const FIELDS = [
-  {section:'초기 비용 (Upfront)'},
-  {id:'purchase', label:'구매가 (Purchase Price)', def:100000},
-  {id:'install', label:'설치·시운전비 (Installation)', def:8000},
-  {id:'training', label:'교육·트레이닝 비용', def:2000},
-  {section:'운영 기간 및 연간 비용'},
-  {id:'lifespan', label:'예상 내용연수 (년)', def:10},
-  {id:'maintenance', label:'연간 유지보수비', def:6000},
-  {id:'energy', label:'연간 에너지/운영비', def:4000},
-  {id:'downtimeHours', label:'연간 예상 다운타임 (시간)', def:20},
-  {id:'downtimeCost', label:'다운타임 시간당 손실 비용', def:150},
-  {section:'종료 시점'},
-  {id:'disposal', label:'처분/철거 비용', def:1500},
-  {id:'salvage', label:'잔존가치 (매각 시 회수 가능액)', def:5000}
+  {section:'Upfront Costs'},
+  {id:'purchase', label:'Purchase Price', def:100000},
+  {id:'install', label:'Installation / Commissioning', def:8000},
+  {id:'training', label:'Training', def:2000},
+  {section:'Operating Period & Annual Costs'},
+  {id:'lifespan', label:'Expected Lifespan (years)', def:10},
+  {id:'maintenance', label:'Annual Maintenance', def:6000},
+  {id:'energy', label:'Annual Energy / Operating Cost', def:4000},
+  {id:'downtimeHours', label:'Expected Annual Downtime (hours)', def:20},
+  {id:'downtimeCost', label:'Downtime Cost per Hour', def:150},
+  {section:'End of Life'},
+  {id:'disposal', label:'Disposal / Decommissioning Cost', def:1500},
+  {id:'salvage', label:'Salvage Value (resale)', def:5000}
 ];
 
-const CUR_SYMBOLS = { USD:'$', KRW:'₩', CNY:'¥', JPY:'¥', EUR:'€' };
-let currentCurrency = 'USD';
-function setCurrency(code){ currentCurrency = code; calc(); }
-function fmt(n){ return CUR_SYMBOLS[currentCurrency] + Math.round(n||0).toLocaleString('en-US'); }
+function fmt(n){ return '$' + Math.round(n||0).toLocaleString('en-US'); }
 
 function buildOptionHTML(id, title){
-  let html = `<div class="card" data-option="${id}">
-    <div class="card-header"><div class="card-title">${title}</div></div>
-    <div class="card-body">`;
+  let html = `<div class="card" data-option="${id}"><div class="card-header"><div class="card-title">${title}</div></div><div class="card-body">`;
   FIELDS.forEach(f=>{
-    if(f.section){
-      html += `<div class="section-divider">${f.section}</div>`;
-    } else {
-      html += `<div class="field-group">
-        <label class="field-label">${f.label}</label>
-        <input class="inp" type="number" id="${f.id}-${id}" value="${f.def}" oninput="calc()">
-      </div>`;
-    }
+    if(f.section){ html += `<div class="section-divider">${f.section}</div>`; }
+    else { html += `<div class="field-group"><label class="field-label">${f.label}</label><input class="inp" type="number" id="${f.id}-${id}" value="${f.def}" oninput="calc()"></div>`; }
   });
   html += `
       <div id="resultLines-${id}"></div>
       <div class="result-total">
-        <div class="label">총소유비용 (TCO, ${title})</div>
+        <div class="label">Total Cost of Ownership (${title})</div>
         <div class="value" id="tcoValue-${id}">$0</div>
         <div class="sub" id="tcoPerYear-${id}"></div>
       </div>
-    </div>
-  </div>`;
+    </div></div>`;
   return html;
 }
-
 function render(){
   const grid = document.getElementById('optionGrid');
   grid.className = 'option-grid' + (compareMode ? ' dual' : '');
-  if(compareMode){
-    grid.innerHTML = buildOptionHTML('a', '옵션 A') + buildOptionHTML('b', '옵션 B');
-  } else {
-    grid.innerHTML = buildOptionHTML('a', '설비/장비 정보');
-  }
+  grid.innerHTML = compareMode ? buildOptionHTML('a','Option A') + buildOptionHTML('b','Option B') : buildOptionHTML('a','Equipment Details');
   calc();
 }
-
 function toggleCompare(){
   compareMode = !compareMode;
-  document.getElementById('compareBtn').textContent = compareMode ? '✕ 비교 닫기' : '+ 다른 옵션과 비교하기';
+  document.getElementById('compareBtn').textContent = compareMode ? '✕ Close comparison' : '+ Compare with another option';
   render();
 }
-
 function v(id){ return parseFloat(document.getElementById(id)?.value) || 0; }
-
 function calcOption(id){
-  const purchase = v('purchase-'+id);
-  const install = v('install-'+id);
-  const training = v('training-'+id);
-  const lifespan = v('lifespan-'+id) || 1;
-  const maintenance = v('maintenance-'+id);
-  const energy = v('energy-'+id);
-  const downtimeHours = v('downtimeHours-'+id);
-  const downtimeCost = v('downtimeCost-'+id);
-  const disposal = v('disposal-'+id);
-  const salvage = v('salvage-'+id);
-
-  const annualCost = maintenance + energy + (downtimeHours * downtimeCost);
-  const totalAnnual = annualCost * lifespan;
-  const upfront = purchase + install + training;
-  const tco = upfront + totalAnnual + disposal - salvage;
-  const perYear = tco / lifespan;
-
+  const purchase=v('purchase-'+id), install=v('install-'+id), training=v('training-'+id);
+  const lifespan=v('lifespan-'+id)||1, maintenance=v('maintenance-'+id), energy=v('energy-'+id);
+  const downtimeHours=v('downtimeHours-'+id), downtimeCost=v('downtimeCost-'+id);
+  const disposal=v('disposal-'+id), salvage=v('salvage-'+id);
+  const annualCost = maintenance + energy + (downtimeHours*downtimeCost);
+  const totalAnnual = annualCost*lifespan;
+  const upfront = purchase+install+training;
+  const tco = upfront+totalAnnual+disposal-salvage;
+  const perYear = tco/lifespan;
   const lines = document.getElementById('resultLines-'+id);
   if(lines){
     lines.innerHTML = `
-      <div class="result-line"><span class="label">초기 비용 합계</span><span class="value">${fmt(upfront)}</span></div>
-      <div class="result-line"><span class="label">연간 운영비 (유지보수+에너지+다운타임)</span><span class="value">${fmt(annualCost)}</span></div>
-      <div class="result-line"><span class="label">${lifespan}년 운영비 총합</span><span class="value">${fmt(totalAnnual)}</span></div>
-      <div class="result-line"><span class="label">처분비용</span><span class="value">${fmt(disposal)}</span></div>
-      <div class="result-line"><span class="label">잔존가치 (차감)</span><span class="value">-${fmt(salvage)}</span></div>
+      <div class="result-line"><span class="label">Total Upfront Cost</span><span class="value">${fmt(upfront)}</span></div>
+      <div class="result-line"><span class="label">Annual Operating Cost (maint.+energy+downtime)</span><span class="value">${fmt(annualCost)}</span></div>
+      <div class="result-line"><span class="label">${lifespan}-Year Operating Total</span><span class="value">${fmt(totalAnnual)}</span></div>
+      <div class="result-line"><span class="label">Disposal Cost</span><span class="value">${fmt(disposal)}</span></div>
+      <div class="result-line"><span class="label">Salvage Value (deducted)</span><span class="value">-${fmt(salvage)}</span></div>
     `;
   }
   document.getElementById('tcoValue-'+id).textContent = fmt(tco);
-  document.getElementById('tcoPerYear-'+id).textContent = `연간 환산: ${fmt(perYear)}/년`;
-
+  document.getElementById('tcoPerYear-'+id).textContent = `Annualized: ${fmt(perYear)}/year`;
   return { tco, perYear };
 }
-
 function calc(){
   const resultA = calcOption('a');
   const winnerBadge = document.getElementById('winnerBadge');
-
   if(compareMode){
     const resultB = calcOption('b');
     winnerBadge.style.display = 'block';
     const diff = Math.abs(resultA.tco - resultB.tco);
-    if(resultA.tco < resultB.tco){
-      winnerBadge.textContent = `옵션 A가 ${resultB.lifespan_note||''}총소유비용 기준으로 ${fmt(diff)} 더 저렴합니다.`;
-    } else if(resultB.tco < resultA.tco) {
-      winnerBadge.textContent = `옵션 B가 총소유비용 기준으로 ${fmt(diff)} 더 저렴합니다.`;
-    } else {
-      winnerBadge.textContent = `두 옵션의 총소유비용이 동일합니다.`;
-    }
+    if(resultA.tco < resultB.tco) winnerBadge.textContent = `Option A is cheaper by ${fmt(diff)} over its lifetime (Total Cost of Ownership).`;
+    else if(resultB.tco < resultA.tco) winnerBadge.textContent = `Option B is cheaper by ${fmt(diff)} over its lifetime (Total Cost of Ownership).`;
+    else winnerBadge.textContent = `Both options have the same Total Cost of Ownership.`;
   } else {
     winnerBadge.style.display = 'none';
   }
 }
-
 render();
 </script>
 </body>

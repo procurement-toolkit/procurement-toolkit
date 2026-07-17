@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Free CBM calculator and volumetric (dimensional) weight calculator for sea and air freight. Enter multiple carton sizes, get total CBM, chargeable weight, and container capacity estimate instantly.">
+<meta name="keywords" content="CBM calculator, volumetric weight calculator, dimensional weight calculator, freight calculator, chargeable weight, cubic meter calculator">
+<title>CBM &amp; Volumetric Weight Calculator (Sea &amp; Air Freight) — CBM Lab</title>
+<link rel="alternate" hreflang="ko" href="https://procurement-toolkit-eight.vercel.app/cbm.html">
+<link rel="alternate" hreflang="en" href="https://procurement-toolkit-eight.vercel.app/en/cbm-calculator.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@800;900&display=swap" rel="stylesheet">
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  :root{--accent:#2563EB;--accent-light:#DBEAFE;--accent-dark:#1D4ED8;--slate-50:#F8FAFC;--slate-100:#F1F5F9;--slate-200:#E2E8F0;--slate-300:#CBD5E1;--slate-400:#94A3B8;--slate-500:#64748B;--slate-600:#475569;--slate-700:#334155;--slate-800:#1E293B;--slate-900:#0F172A;--success:#0F766E;--success-light:#CCFBF1;--radius:8px;--radius-lg:12px;--shadow-sm:0 1px 2px rgba(0,0,0,.05);font-family:'Inter','Pretendard',system-ui,-apple-system,sans-serif}
+  body{background:var(--slate-50);color:var(--slate-800);font-size:14px;line-height:1.6}
+  header{background:#fff;border-bottom:1px solid var(--slate-200)}
+  .header-inner{max-width:1200px;margin:0 auto;padding:16px 24px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+  .logo-mark{font-size:20px;font-weight:800;color:var(--slate-900);text-decoration:none;font-family:'Space Grotesk','Inter',sans-serif;letter-spacing:-0.4px;}
+  .nav-right{display:flex;align-items:center;gap:10px}
+  .nav-link{font-size:13px;font-weight:600;color:var(--slate-500);text-decoration:none;padding:7px 12px;border-radius:6px}
+  .nav-link:hover{background:var(--slate-100)}
+  .lang-switch{font-size:12px;font-weight:700;color:var(--accent);text-decoration:none;padding:6px 12px;border:1px solid var(--accent-light);border-radius:999px;background:var(--accent-light)}
+  .lang-switch:hover{background:#BFDBFE}
+  .hero{background:#fff;border-bottom:1px solid var(--slate-200);padding:28px 24px 24px}
+  .hero-inner{max-width:1200px;margin:0 auto}
+  .hero h1{font-size:22px;font-weight:700;color:var(--slate-900);margin-bottom:6px}
+  .hero p{font-size:14px;color:var(--slate-500);max-width:680px}
+  .hero-tags{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}
+  .tag{background:var(--slate-100);color:var(--slate-600);font-size:11px;font-weight:500;padding:3px 10px;border-radius:4px;border:1px solid var(--slate-200)}
+  .main{max-width:1200px;margin:0 auto;padding:28px 24px 60px;display:grid;grid-template-columns:1fr 380px;gap:24px;align-items:start}
+  .card{background:#fff;border:1px solid var(--slate-200);border-radius:var(--radius-lg);box-shadow:var(--shadow-sm);margin-bottom:20px}
+  .card-header{padding:16px 20px;border-bottom:1px solid var(--slate-100);display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
+  .card-title{font-size:14px;font-weight:600;color:var(--slate-800);display:flex;align-items:center;gap:8px}
+  .card-body{padding:20px}
+  .toggle-group{display:flex;gap:6px;align-items:center}
+  .toggle-label{font-size:11px;color:var(--slate-400);font-weight:600;margin-right:2px}
+  .toggle-btns{display:flex;background:var(--slate-100);border-radius:6px;padding:2px}
+  .toggle-btn{padding:5px 10px;border:none;background:transparent;border-radius:5px;font-size:11.5px;font-weight:700;color:var(--slate-500);cursor:pointer}
+  .toggle-btn.active{background:#fff;color:var(--accent);box-shadow:var(--shadow-sm)}
+  .carton-table-wrap{overflow-x:auto;margin:0 -20px;padding:0 20px}
+  .carton-table{width:100%;min-width:520px;border-collapse:collapse}
+  .carton-table thead th{padding:8px 6px;text-align:left;font-size:10.5px;font-weight:600;color:var(--slate-400);text-transform:uppercase;background:var(--slate-50);border-top:1px solid var(--slate-100);border-bottom:1px solid var(--slate-100);white-space:nowrap}
+  .carton-table tbody tr{border-bottom:1px solid var(--slate-100)}
+  .carton-table tbody td{padding:6px}
+  .inp{width:100%;border:1px solid var(--slate-200);border-radius:6px;padding:7px 9px;font-size:13px;font-family:inherit}
+  .inp:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px rgba(37,99,235,.1)}
+  .inp-qty{max-width:56px}
+  .btn-del{width:26px;height:26px;border:1px solid var(--slate-200);border-radius:6px;background:#fff;color:var(--slate-400);cursor:pointer}
+  .btn-del:hover{border-color:#DC2626;color:#DC2626}
+  .btn-del:disabled{opacity:.3;pointer-events:none}
+  .btn-add-row{display:flex;align-items:center;gap:6px;padding:9px 16px;border:1px dashed var(--slate-300);border-radius:var(--radius);background:transparent;color:var(--slate-500);font-size:13px;font-weight:500;cursor:pointer;width:100%;margin-top:12px;font-family:inherit}
+  .btn-add-row:hover{border-color:var(--accent);color:var(--accent);background:var(--accent-light)}
+  .notice-box{background:var(--accent-light);border:1px solid #BFDBFE;border-radius:var(--radius);padding:10px 14px;font-size:12px;color:#1E40AF;line-height:1.6;margin-top:14px}
+  .result-line{display:flex;justify-content:space-between;padding:9px 0;border-bottom:1px solid var(--slate-100);font-size:13px}
+  .result-line:last-child{border-bottom:none}
+  .result-line .label{color:var(--slate-500)}
+  .result-line .value{font-weight:600;color:var(--slate-800);font-variant-numeric:tabular-nums}
+  .result-total{background:var(--accent-light);border:1px solid #BFDBFE;border-radius:var(--radius);padding:16px 18px;margin-top:6px}
+  .result-total .label{font-size:11px;font-weight:700;color:var(--accent-dark);text-transform:uppercase;margin-bottom:4px}
+  .result-total .value{font-size:24px;font-weight:800;color:var(--accent-dark)}
+  .chargeable-badge{display:inline-block;font-size:10.5px;font-weight:700;padding:2px 9px;border-radius:999px;margin-left:8px}
+  .chargeable-badge.sea{background:var(--success-light);color:var(--success)}
+  .chargeable-badge.air{background:#FEF3C7;color:#B45309}
+  .container-row{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid var(--slate-100);font-size:12.5px}
+  .container-row:last-child{border-bottom:none}
+  .container-row .c-name{font-weight:700;color:var(--slate-800)}
+  .container-row .c-fit{font-size:11px;color:var(--slate-500)}
+  .util-bar-track{width:70px;height:6px;background:var(--slate-100);border-radius:999px;overflow:hidden}
+  .util-bar-fill{height:100%;background:var(--accent)}
+  .empty-result{text-align:center;padding:30px 10px;color:var(--slate-300)}
+  .empty-result p{font-size:12.5px;color:var(--slate-400);margin-top:8px}
+  @media (max-width:900px){.main{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute;" aria-hidden="true">
+  <defs>
+    <linearGradient id="cbmGradH" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#14B8A6"/><stop offset="100%" stop-color="#0B2A4A"/></linearGradient>
+    <linearGradient id="cbmGradF" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#2DD4BF"/><stop offset="100%" stop-color="#5B9EFF"/></linearGradient>
+  </defs>
+</svg>
+<header><div class="header-inner">
+  <a href="index.html" class="logo-mark"><svg width="28" height="28" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align:middle;margin-right:9px;flex-shrink:0;"><path d="M20 2.5L36.5 11.5V28.5L20 37.5L3.5 28.5V11.5L20 2.5Z" stroke="url(#cbmGradH)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M20 2.5V20M20 20L36.5 11.5M20 20L3.5 11.5" stroke="url(#cbmGradH)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/></svg><span style="font-family:'Montserrat','Space Grotesk',sans-serif;font-weight:800;letter-spacing:-0.8px;background:linear-gradient(90deg,#14B8A6 0%,#1E7A8C 45%,#0B2A4A 100%);-webkit-background-clip:text;background-clip:text;color:transparent;">CBMLab</span></a>
+  <div class="nav-right">
+    <a href="index.html" class="nav-link">← All Tools</a>
+    <a href="../index.html" class="lang-switch">KOR</a>
+  </div>
+</div></header>
+
+<section class="hero"><div class="hero-inner">
+  <h1>CBM &amp; Volumetric Weight Calculator</h1>
+  <p>Enter your carton dimensions to instantly get total CBM, sea and air volumetric (dimensional) weight, and the chargeable weight your carrier will actually bill. Supports multiple carton sizes in one shipment.</p>
+  <div class="hero-tags"><span class="tag">Sea Freight</span><span class="tag">Air Freight</span><span class="tag">Dimensional Weight</span><span class="tag">Container Capacity</span></div>
+</div></section>
+
+<div class="main">
+  <section aria-label="Carton input">
+    <div class="card">
+      <div class="card-header">
+        <div class="card-title">Carton Details</div>
+        <div class="toggle-group">
+          <span class="toggle-label">Dimensions</span>
+          <div class="toggle-btns"><button class="toggle-btn active" id="btn-cm" onclick="setDimUnit('cm')">cm</button><button class="toggle-btn" id="btn-inch" onclick="setDimUnit('inch')">inch</button></div>
+          <span class="toggle-label">Weight</span>
+          <div class="toggle-btns"><button class="toggle-btn active" id="btn-kg" onclick="setWgtUnit('kg')">kg</button><button class="toggle-btn" id="btn-lb" onclick="setWgtUnit('lb')">lb</button></div>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="carton-table-wrap">
+          <table class="carton-table">
+            <thead><tr>
+              <th style="width:28px">#</th><th style="width:70px">Qty (CTN)</th>
+              <th><span id="th-w">Length (cm)</span></th><th><span id="th-h">Width (cm)</span></th><th><span id="th-d">Height (cm)</span></th>
+              <th><span id="th-wgt">Weight (kg)</span></th><th style="width:40px">Del</th>
+            </tr></thead>
+            <tbody id="carton-tbody"></tbody>
+          </table>
+        </div>
+        <button class="btn-add-row" onclick="addRow()">
+          <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/></svg>
+          Add row
+        </button>
+        <div class="notice-box">
+          <strong>How this is calculated:</strong><br>
+          Sea volumetric weight = CBM × 1,000 kg/m³ &nbsp;|&nbsp; Air volumetric weight (IATA) = (L×W×H in cm) ÷ 6,000<br>
+          Chargeable weight = max(actual weight, volumetric weight). Always confirm the exact rate basis with your forwarder — some couriers use a 5,000 divisor instead of 6,000.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <aside aria-label="Results">
+    <div class="card">
+      <div class="card-header"><div class="card-title">Result</div></div>
+      <div class="card-body"><div id="result-content">
+        <div class="empty-result">
+          <svg width="36" height="36" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.2"><path stroke-linecap="round" stroke-linejoin="round" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 10V11"/></svg>
+          <p>Enter carton details to see results</p>
+        </div>
+      </div></div>
+    </div>
+
+    <div class="card" id="container-card" style="display:none;">
+      <div class="card-header"><div class="card-title">Container Capacity Estimate</div></div>
+      <div class="card-body" id="container-body"></div>
+    </div>
+  </aside>
+</div>
+
+<div style="max-width:1200px;margin:0 auto;padding:0 24px 30px;">
+  <div class="card">
+    <div class="card-header"><div class="card-title">Why CBM &amp; Volumetric Weight Matter</div></div>
+    <div class="card-body" style="font-size:12.5px;color:var(--slate-600);line-height:1.7;">
+      <p>Carriers bill whichever is higher: your shipment's actual weight, or its volumetric (dimensional) weight. Light but bulky cargo — think foam displays, inflatables, or bulky packaging — can cost far more than its actual weight suggests once volumetric weight is applied. Estimating CBM before you book helps you avoid surprise freight bills and pick the right container size.</p>
+      <p style="margin-top:8px;"><b>How to use it in practice:</b> Before confirming a booking, enter every carton size in your shipment (mixed cartons are supported) to see total CBM, both sea and air chargeable weight, and how many 20ft/40ft containers you'd need. If air freight chargeable weight is much higher than actual weight, ask your forwarder whether sea freight is more economical for this shipment.</p>
+    </div>
+  </div>
+</div>
+
+<footer style="background:#0F172A;color:#94A3B8;padding:24px;font-size:12px;">
+  <div style="max-width:1200px;margin:0 auto;display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;">
+    <div style="font-size:15px;font-weight:800;color:#fff;"><svg width="24" height="24" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align:middle;margin-right:9px;flex-shrink:0;"><path d="M20 2.5L36.5 11.5V28.5L20 37.5L3.5 28.5V11.5L20 2.5Z" stroke="url(#cbmGradF)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M20 2.5V20M20 20L36.5 11.5M20 20L3.5 11.5" stroke="url(#cbmGradF)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/></svg>CBM<span style="color:#2563EB;">Lab</span></div>
+    <nav><a href="index.html" style="color:#94A3B8;text-decoration:none;font-size:11px;margin-right:14px;">All Tools</a><a href="privacy.html" style="color:#94A3B8;text-decoration:none;font-size:11px;">Privacy Policy</a></nav>
+  </div>
+</footer>
+
+<script src="https://cdn.amplitude.com/script/d4aa9301e01f4600b5eeb018e160aa7c.js"></script>
+<script>window.amplitude.init("d4aa9301e01f4600b5eeb018e160aa7c", { fetchRemoteConfig: true, autocapture: true });</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-W1YBL5BGGK"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-W1YBL5BGGK');
+</script>
+
+<script>
+const CONTAINERS = [
+  { name:'20ft Standard', cbm: 33.2, kg: 28200 },
+  { name:'40ft Standard', cbm: 67.7, kg: 28800 },
+  { name:'40ft High Cube', cbm: 76.4, kg: 28600 }
+];
+
+let rows = [];
+let rowCounter = 0;
+let dimUnit = 'cm';
+let wgtUnit = 'kg';
+
+function addRow(qty, l, w, h, wgt){
+  rowCounter++;
+  rows.push({ id: rowCounter, qty: qty??1, l: l??0, w: w??0, h: h??0, wgt: wgt??0 });
+  renderRows();
+}
+function removeRow(id){
+  rows = rows.filter(r=>r.id!==id);
+  if(rows.length===0) addRow(); else renderRows();
+}
+function updateRow(id, field, val){
+  const r = rows.find(x=>x.id===id); if(!r) return;
+  r[field] = parseFloat(val)||0;
+  calculate();
+}
+
+function setDimUnit(u){
+  dimUnit = u;
+  document.getElementById('btn-cm').classList.toggle('active', u==='cm');
+  document.getElementById('btn-inch').classList.toggle('active', u==='inch');
+  const label = u==='cm' ? 'cm' : 'inch';
+  document.getElementById('th-w').textContent = 'Length ('+label+')';
+  document.getElementById('th-h').textContent = 'Width ('+label+')';
+  document.getElementById('th-d').textContent = 'Height ('+label+')';
+  calculate();
+}
+function setWgtUnit(u){
+  wgtUnit = u;
+  document.getElementById('btn-kg').classList.toggle('active', u==='kg');
+  document.getElementById('btn-lb').classList.toggle('active', u==='lb');
+  document.getElementById('th-wgt').textContent = 'Weight ('+(u==='kg'?'kg':'lb')+')';
+  calculate();
+}
+
+function renderRows(){
+  document.getElementById('carton-tbody').innerHTML = rows.map((r,idx)=>`
+    <tr>
+      <td style="font-size:11px;color:var(--slate-400);">${idx+1}</td>
+      <td><input class="inp inp-qty" type="number" min="1" value="${r.qty}" oninput="updateRow(${r.id},'qty',this.value)"></td>
+      <td><input class="inp" type="number" min="0" step="0.1" value="${r.l}" oninput="updateRow(${r.id},'l',this.value)"></td>
+      <td><input class="inp" type="number" min="0" step="0.1" value="${r.w}" oninput="updateRow(${r.id},'w',this.value)"></td>
+      <td><input class="inp" type="number" min="0" step="0.1" value="${r.h}" oninput="updateRow(${r.id},'h',this.value)"></td>
+      <td><input class="inp" type="number" min="0" step="0.1" value="${r.wgt}" oninput="updateRow(${r.id},'wgt',this.value)"></td>
+      <td><button class="btn-del" onclick="removeRow(${r.id})" ${rows.length<=1?'disabled':''}>✕</button></td>
+    </tr>
+  `).join('');
+  calculate();
+}
+
+function fmt(n, d=2){ return (n||0).toLocaleString('en-US', {minimumFractionDigits:d, maximumFractionDigits:d}); }
+
+function calculate(){
+  const cmFactor = dimUnit==='cm' ? 1 : 2.54;
+  const kgFactor = wgtUnit==='kg' ? 1 : 0.453592;
+
+  let totalCbm = 0, totalActualKg = 0, totalCtn = 0;
+  rows.forEach(r=>{
+    const lCm = r.l*cmFactor, wCm = r.w*cmFactor, hCm = r.h*cmFactor;
+    const cbmEach = (lCm*wCm*hCm)/1000000;
+    totalCbm += cbmEach * r.qty;
+    totalActualKg += (r.wgt*kgFactor) * r.qty;
+    totalCtn += r.qty;
+  });
+
+  const seaVolKg = totalCbm * 1000;
+  const airVolKg = rows.reduce((sum, r)=>{
+    const lCm = r.l*cmFactor, wCm = r.w*cmFactor, hCm = r.h*cmFactor;
+    return sum + ((lCm*wCm*hCm)/6000) * r.qty;
+  }, 0);
+
+  const seaChargeable = Math.max(totalActualKg, seaVolKg);
+  const airChargeable = Math.max(totalActualKg, airVolKg);
+
+  const resultEl = document.getElementById('result-content');
+  if(totalCbm<=0 && totalActualKg<=0){
+    resultEl.innerHTML = `<div class="empty-result">
+      <svg width="36" height="36" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.2"><path stroke-linecap="round" stroke-linejoin="round" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 10V11"/></svg>
+      <p>Enter carton details to see results</p></div>`;
+    document.getElementById('container-card').style.display = 'none';
+    return;
+  }
+
+  resultEl.innerHTML = `
+    <div class="result-line"><span class="label">Total Cartons</span><span class="value">${fmt(totalCtn,0)}</span></div>
+    <div class="result-line"><span class="label">Total CBM</span><span class="value">${fmt(totalCbm,3)} m³</span></div>
+    <div class="result-line"><span class="label">Total Actual Weight</span><span class="value">${fmt(totalActualKg)} kg</span></div>
+    <div class="result-line"><span class="label">Sea Volumetric Weight</span><span class="value">${fmt(seaVolKg)} kg</span></div>
+    <div class="result-line"><span class="label">Air Volumetric Weight (IATA)</span><span class="value">${fmt(airVolKg)} kg</span></div>
+    <div class="result-total">
+      <div class="label">Sea Freight Chargeable Weight<span class="chargeable-badge sea">${seaVolKg>totalActualKg?'VOL WT':'ACTUAL'}</span></div>
+      <div class="value">${fmt(seaChargeable)} kg</div>
+    </div>
+    <div class="result-total" style="margin-top:10px;">
+      <div class="label">Air Freight Chargeable Weight<span class="chargeable-badge air">${airVolKg>totalActualKg?'VOL WT':'ACTUAL'}</span></div>
+      <div class="value">${fmt(airChargeable)} kg</div>
+    </div>
+  `;
+
+  renderContainers(totalCbm, totalActualKg);
+}
+
+function renderContainers(cbm, kg){
+  if(cbm<=0){ document.getElementById('container-card').style.display='none'; return; }
+  document.getElementById('container-card').style.display = 'block';
+  document.getElementById('container-body').innerHTML = CONTAINERS.map(c=>{
+    const byVol = Math.ceil(cbm / (c.cbm*0.92)); // ~92% practical loading efficiency
+    const byWgt = Math.ceil(kg / c.kg);
+    const needed = Math.max(byVol, byWgt, 1);
+    const utilPct = Math.min(100, (cbm / (needed*c.cbm)) * 100);
+    return `<div class="container-row">
+      <div><div class="c-name">${c.name}</div><div class="c-fit">${needed} unit(s) needed (max ${fmt(c.cbm,1)} m³ / ${fmt(c.kg,0)} kg each)</div></div>
+      <div style="text-align:right;">
+        <div class="util-bar-track"><div class="util-bar-fill" style="width:${utilPct}%;"></div></div>
+        <div style="font-size:10.5px;color:var(--slate-400);margin-top:3px;">${fmt(utilPct,0)}% util.</div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+addRow(1, 60, 40, 40, 15);
+</script>
+</body>
+</html>
