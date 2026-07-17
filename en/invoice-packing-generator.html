@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="커머셜 인보이스와 패킹리스트를 무료로 자동 생성하세요. 인코텀즈, 원산지, HS Code까지 포함한 무역 실무용 서식을 즉시 만들고 인쇄할 수 있습니다.">
-<meta name="keywords" content="커머셜 인보이스 양식, 패킹리스트 양식, commercial invoice generator, packing list template">
-<title>커머셜 인보이스 &amp; 패킹리스트 생성기 — CBM Lab</title>
+<meta name="description" content="Free commercial invoice and packing list generator. Create trade-ready documents including Incoterms, country of origin, and HS Code, then print or save as PDF instantly.">
+<meta name="keywords" content="commercial invoice generator, packing list template, commercial invoice template, export documents generator">
+<title>Commercial Invoice &amp; Packing List Generator — CBM Lab</title>
 <link rel="alternate" hreflang="ko" href="https://procurement-toolkit-eight.vercel.app/invoice-packing-generator.html">
 <link rel="alternate" hreflang="en" href="https://procurement-toolkit-eight.vercel.app/en/invoice-packing-generator.html">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -14,11 +14,11 @@
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@800;900&display=swap" rel="stylesheet">
 <style>
   *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-  :root{--accent:#2563EB;--accent-light:#DBEAFE;--accent-dark:#1D4ED8;--slate-50:#F8FAFC;--slate-100:#F1F5F9;--slate-200:#E2E8F0;--slate-300:#CBD5E1;--slate-400:#94A3B8;--slate-500:#64748B;--slate-600:#475569;--slate-700:#334155;--slate-800:#1E293B;--slate-900:#0F172A;--radius:8px;--radius-lg:12px;--shadow-sm:0 1px 2px rgba(0,0,0,.05);font-family:'Pretendard','Apple SD Gothic Neo',system-ui,-apple-system,sans-serif}
+  :root{--accent:#2563EB;--accent-light:#DBEAFE;--accent-dark:#1D4ED8;--slate-50:#F8FAFC;--slate-100:#F1F5F9;--slate-200:#E2E8F0;--slate-300:#CBD5E1;--slate-400:#94A3B8;--slate-500:#64748B;--slate-600:#475569;--slate-700:#334155;--slate-800:#1E293B;--slate-900:#0F172A;--radius:8px;--radius-lg:12px;--shadow-sm:0 1px 2px rgba(0,0,0,.05);font-family:'Inter','Pretendard',system-ui,-apple-system,sans-serif}
   body{background:var(--slate-50);color:var(--slate-800);font-size:14px;line-height:1.6}
   header{background:#fff;border-bottom:1px solid var(--slate-200)}
   .header-inner{max-width:1300px;margin:0 auto;padding:16px 24px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
-  .logo-mark{font-size:20px;font-weight:800;color:var(--slate-900);text-decoration:none;font-family:'Space Grotesk','Pretendard',sans-serif;letter-spacing:-0.4px;}
+  .logo-mark{font-size:20px;font-weight:800;color:var(--slate-900);text-decoration:none;font-family:'Space Grotesk','Inter',sans-serif;letter-spacing:-0.4px;}
   .logo-mark span{color:var(--accent);font-weight:500}
   .nav-link{font-size:13px;font-weight:600;color:var(--slate-500);text-decoration:none;padding:7px 12px;border-radius:6px}
   .nav-link:hover{background:var(--slate-100)}
@@ -64,7 +64,7 @@
   .notice-box{background:var(--accent-light);border:1px solid #BFDBFE;border-radius:var(--radius);padding:10px 14px;font-size:12px;color:#1E40AF;margin-top:14px}
   footer{background:var(--slate-900);color:var(--slate-400);padding:24px;font-size:12px}
   .footer-inner{max-width:1300px;margin:0 auto;display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
-  .footer-logo{font-size:15px;font-weight:800;color:#fff;font-family:'Space Grotesk','Pretendard',sans-serif;letter-spacing:-0.4px;}
+  .footer-logo{font-size:15px;font-weight:800;color:#fff;font-family:'Space Grotesk','Inter',sans-serif;letter-spacing:-0.4px;}
   .footer-logo span{color:var(--accent);font-weight:500}
   .footer-link{color:var(--slate-500);text-decoration:none;font-size:11px;margin-right:14px}
   @media print{ header,.hero,.left-col,.doc-tabs,.btn-print,footer{display:none !important} .main{padding:0;display:block} .doc-preview{border:none;padding:0} }
@@ -101,18 +101,18 @@
 
 <header><div class="header-inner">
   <a href="index.html" class="logo-mark"><svg width="28" height="28" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align:middle;margin-right:9px;flex-shrink:0;"><path d="M20 2.5L36.5 11.5V28.5L20 37.5L3.5 28.5V11.5L20 2.5Z" stroke="url(#cbmGradH)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M20 2.5V20M20 20L36.5 11.5M20 20L3.5 11.5" stroke="url(#cbmGradH)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/></svg><span style="font-family:'Montserrat','Space Grotesk',sans-serif;font-weight:800;letter-spacing:-0.8px;background:linear-gradient(90deg,#14B8A6 0%,#1E7A8C 45%,#0B2A4A 100%);-webkit-background-clip:text;background-clip:text;color:transparent;">CBMLab</span></a>
-  <a href="index.html" class="nav-link">← 전체 도구 보기</a>
+  <a href="index.html" class="nav-link">← All Tools</a>
 </div></header>
 
 <section class="hero"><div class="hero-inner">
-  <h1>커머셜 인보이스 &amp; 패킹리스트 생성기</h1>
-  <p>일반 인보이스 양식과 달리, 인코텀즈·원산지·HS Code까지 포함한 무역 실무 전용 서식입니다. 한 번 입력하면 인보이스와 패킹리스트가 동시에 생성됩니다.</p>
+  <h1>Commercial Invoice &amp; Packing List Generator</h1>
+  <p>Unlike a generic invoice template, this covers the fields trade actually requires — Incoterm, country of origin, HS Code. Fill in the details once and get both the invoice and packing list.</p>
 </div></section>
 
 <div class="main">
   <section class="left-col">
     <div class="card">
-      <div class="card-header"><div class="card-title">기본 정보</div></div>
+      <div class="card-header"><div class="card-title">Basic Information</div></div>
       <div class="card-body">
         <div class="field-grid">
           <div><label class="field-label">Invoice No.</label><input class="inp" id="invNo" value="INV-2026-001" oninput="render()"></div>
@@ -134,7 +134,7 @@
     </div>
 
     <div class="card">
-      <div class="card-header"><div class="card-title">Shipper (수출자)</div></div>
+      <div class="card-header"><div class="card-title">Shipper (Exporter)</div></div>
       <div class="card-body">
         <textarea class="inp" id="shipper" rows="3" oninput="render()">Our Company Co., Ltd.
 123 Trade St., Seoul, Korea
@@ -142,35 +142,35 @@ Tel: +82-2-000-0000</textarea>
       </div>
     </div>
     <div class="card">
-      <div class="card-header"><div class="card-title">Consignee (수입자)</div></div>
+      <div class="card-header"><div class="card-title">Consignee (Importer)</div></div>
       <div class="card-body">
         <textarea class="inp" id="consignee" rows="3" placeholder="ABC Trading Co., Ltd.&#10;123 Main St., City, Country&#10;Attn: Mr. John Smith" oninput="render()"></textarea>
       </div>
     </div>
 
     <div class="card">
-      <div class="card-header"><div class="card-title">전체 특이사항 (선택)</div></div>
+      <div class="card-header"><div class="card-title">Special Instructions (optional)</div></div>
       <div class="card-body">
         <textarea class="inp" id="specialNote" rows="2" placeholder="예: This shipment contains samples with no commercial value. / Contains dangerous goods (Class 9). / Goods returned for repair and re-export." oninput="render()"></textarea>
-        <div style="font-size:11px;color:#94A3B8;margin-top:6px;">전체 선적 건에 대한 코멘트입니다. 개별 품목에 대한 메모는 아래 품목 내역의 각 항목 밑 "비고" 칸에 따로 입력하세요.</div>
+        <div style="font-size:11px;color:#94A3B8;margin-top:6px;">This applies to the whole shipment. For notes on a specific item, use the "Remarks" field under that item in the table below.</div>
       </div>
     </div>
 
     <div class="card">
       <div class="card-header">
-        <div class="card-title">품목 내역</div>
+        <div class="card-title">Item Details</div>
         <select class="inp" id="currencySelect" onchange="setCurrency(this.value)" style="width:auto;padding:5px 8px;font-size:11px;">
-          <option value="USD">통화: 달러(USD)</option>
-          <option value="KRW">통화: 원화(KRW)</option>
-          <option value="CNY">통화: 위안화(CNY)</option>
-          <option value="JPY">통화: 엔화(JPY)</option>
-          <option value="EUR">통화: 유로(EUR)</option>
+          <option value="USD">Currency: USD</option>
+          <option value="KRW">Currency: KRW</option>
+          <option value="CNY">Currency: CNY</option>
+          <option value="JPY">Currency: JPY</option>
+          <option value="EUR">Currency: EUR</option>
         </select>
       </div>
       <div class="card-body">
-        <div class="col-labels"><span>Description</span><span>HS Code</span><span>Qty</span><span id="unitPriceLabel">단가(USD)</span><span>순중량(kg)</span><span>총중량(kg)</span><span></span></div>
+        <div class="col-labels"><span>Description</span><span>HS Code</span><span>Qty</span><span id="unitPriceLabel">Unit Price (USD)</span><span>Net Wt (kg)</span><span>Gross Wt (kg)</span><span></span></div>
         <div id="items"></div>
-        <button class="btn-add" onclick="addItem()">+ 품목 추가</button>
+        <button class="btn-add" onclick="addItem()">+ Add item</button>
       </div>
     </div>
   </section>
@@ -181,25 +181,25 @@ Tel: +82-2-000-0000</textarea>
       <button class="doc-tab" id="tab-packing" onclick="switchDoc('packing')">Packing List</button>
     </div>
     <div class="doc-preview" id="preview"></div>
-    <button class="btn-print" onclick="window.print()">🖨️ 인쇄 / PDF로 저장</button>
-    <div class="notice-box">브라우저의 "인쇄" 기능에서 대상을 "PDF로 저장"으로 선택하면 파일로도 저장할 수 있습니다.</div>
+    <button class="btn-print" onclick="window.print()">🖨️ Print / Save as PDF</button>
+    <div class="notice-box">In your browser's print dialog, choose "Save as PDF" as the destination to download a file instead of printing.</div>
   </aside>
 </div>
 
 
 <div class="main" style="max-width:1100px;margin:0 auto;padding:0 24px 40px;">
   <div class="card">
-    <div class="card-header"><div class="card-title">왜 전용 서식이 필요한가</div></div>
+    <div class="card-header"><div class="card-title">Why a Dedicated Template Matters</div></div>
     <div class="card-body" style="font-size:12.5px;color:var(--slate-600);line-height:1.7;">
-<p>일반 인보이스 양식에는 인코텀즈, 원산지, HS Code 같은 무역 실무 필수 항목이 빠져있는 경우가 많아 매번 서식을 손보게 됩니다. 선적 서류에 오류가 있으면 통관 지연으로 이어질 수 있습니다.</p>
-<p><b>실무 활용법:</b> 선적할 때마다 반복되는 인보이스와 패킹리스트를 품목 입력 한 번으로 동시에 생성하고, 샘플·위험물처럼 특이사항이 있는 화물은 비고란에 기록해 통관 시 참고 자료로 활용할 수 있습니다.</p>
+<p>Generic invoice templates often miss fields that trade actually requires — Incoterm, country of origin, HS Code — forcing you to rebuild the format every time. Errors on shipping documents can delay customs clearance.</p>
+<p><b>How to use it in practice:</b> Generate both the invoice and packing list from a single item entry for every shipment, and record special cases — samples, dangerous goods — in the remarks field for customs reference.</p>
 </div>
   </div>
 </div>
 
 <footer><div class="footer-inner">
   <div class="footer-logo"><svg width="24" height="24" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align:middle;margin-right:9px;flex-shrink:0;"><path d="M20 2.5L36.5 11.5V28.5L20 37.5L3.5 28.5V11.5L20 2.5Z" stroke="url(#cbmGradF)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M20 2.5V20M20 20L36.5 11.5M20 20L3.5 11.5" stroke="url(#cbmGradF)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/></svg>CBM<span>Lab</span></div>
-  <nav><a href="index.html" class="footer-link">전체 도구</a><a href="privacy.html" class="footer-link">개인정보 처리방침</a></nav>
+  <nav><a href="index.html" class="footer-link">All Tools</a><a href="privacy.html" class="footer-link">Privacy Policy</a></nav>
 </div></footer>
 
 <script>
@@ -233,7 +233,7 @@ function renderItems(){
         <button class="btn-del" onclick="removeItem(${it.id})">✕</button>
       </div>
       <div class="item-remark-row">
-        <input class="inp" placeholder="비고 (예: Sample, no commercial value / Dangerous goods - Class 9 / Repair &amp; re-export)" value="${it.remark}" oninput="updateItem(${it.id},'remark',this.value)">
+        <input class="inp" placeholder="Remarks (e.g. Sample, no commercial value / Dangerous goods - Class 9 / Repair &amp; re-export)" value="${it.remark}" oninput="updateItem(${it.id},'remark',this.value)">
         <span></span>
       </div>
     `;
@@ -252,7 +252,7 @@ const CURRENCIES = { USD:'USD', KRW:'KRW', CNY:'CNY', JPY:'JPY', EUR:'EUR' };
 let currentCurrency = 'USD';
 function setCurrency(code){
   currentCurrency = code;
-  document.getElementById('unitPriceLabel').textContent = '단가(' + code + ')';
+  document.getElementById('unitPriceLabel').textContent = 'Unit Price (' + code + ')';
   render();
 }
 

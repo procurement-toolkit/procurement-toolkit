@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Free cost structure calculator. Understand the difference between Prime Cost, Manufacturing Cost (COGM), Total Cost, and Landed/Acquisition Cost, and see exactly how Markup and Margin pricing differ.">
+<meta name="keywords" content="cost structure calculator, COGM calculator, prime cost, manufacturing cost, markup vs margin, landed cost breakdown">
+<title>Cost Structure Calculator (COGM, Total Cost, Markup vs Margin) — CBM Lab</title>
+<link rel="alternate" hreflang="ko" href="https://procurement-toolkit-eight.vercel.app/cost-structure-calculator.html">
+<link rel="alternate" hreflang="en" href="https://procurement-toolkit-eight.vercel.app/en/cost-structure-calculator.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@800;900&display=swap" rel="stylesheet">
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  :root{--accent:#2563EB;--accent-light:#DBEAFE;--accent-dark:#1D4ED8;--slate-50:#F8FAFC;--slate-100:#F1F5F9;--slate-200:#E2E8F0;--slate-300:#CBD5E1;--slate-400:#94A3B8;--slate-500:#64748B;--slate-600:#475569;--slate-700:#334155;--slate-800:#1E293B;--slate-900:#0F172A;--success:#0F766E;--success-light:#CCFBF1;--warning:#B45309;--warning-light:#FEF3C7;--radius:8px;--radius-lg:12px;--shadow-sm:0 1px 2px rgba(0,0,0,.05);font-family:'Inter','Pretendard',system-ui,-apple-system,sans-serif}
+  body{background:var(--slate-50);color:var(--slate-800);font-size:14px;line-height:1.6}
+  header{background:#fff;border-bottom:1px solid var(--slate-200)}
+  .header-inner{max-width:1100px;margin:0 auto;padding:16px 24px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+  .logo-mark{font-size:20px;font-weight:800;color:var(--slate-900);text-decoration:none;font-family:'Space Grotesk','Inter',sans-serif;letter-spacing:-0.4px;}
+  .nav-right{display:flex;align-items:center;gap:10px}
+  .nav-link{font-size:13px;font-weight:600;color:var(--slate-500);text-decoration:none;padding:7px 12px;border-radius:6px}
+  .nav-link:hover{background:var(--slate-100)}
+  .lang-switch{font-size:12px;font-weight:700;color:var(--accent);text-decoration:none;padding:6px 12px;border:1px solid var(--accent-light);border-radius:999px;background:var(--accent-light)}
+  .lang-switch:hover{background:#BFDBFE}
+  .hero{background:#fff;border-bottom:1px solid var(--slate-200);padding:28px 24px 24px}
+  .hero-inner{max-width:1100px;margin:0 auto}
+  .hero h1{font-size:22px;font-weight:700;color:var(--slate-900);margin-bottom:6px}
+  .hero p{font-size:14px;color:var(--slate-500);max-width:680px}
+  .hero-tags{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}
+  .tag{background:var(--slate-100);color:var(--slate-600);font-size:11px;font-weight:500;padding:3px 10px;border-radius:4px;border:1px solid var(--slate-200)}
+  .main{max-width:1100px;margin:0 auto;padding:28px 24px 60px}
+  .card{background:#fff;border:1px solid var(--slate-200);border-radius:var(--radius-lg);box-shadow:var(--shadow-sm);margin-bottom:20px}
+  .card-header{padding:16px 20px;border-bottom:1px solid var(--slate-100);display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+  .card-title{font-size:14px;font-weight:600;color:var(--slate-800)}
+  .card-body{padding:20px}
+  .type-toggle{display:flex;background:var(--slate-100);border-radius:8px;padding:3px;gap:2px;max-width:420px}
+  .type-btn{flex:1;padding:8px 10px;border:none;background:transparent;border-radius:6px;font-size:12px;font-weight:700;color:var(--slate-500);cursor:pointer}
+  .type-btn.active{background:#fff;color:var(--accent);box-shadow:var(--shadow-sm)}
+  .compare-btn{font-size:12px;font-weight:700;color:var(--accent);background:var(--accent-light);border:1px solid #BFDBFE;padding:7px 14px;border-radius:6px;cursor:pointer}
+  .compare-btn:hover{background:#BFDBFE}
+  .scenario-grid{display:grid;grid-template-columns:1fr;gap:20px}
+  .scenario-grid.dual{grid-template-columns:1fr 1fr}
+  .step-row{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid var(--slate-100);gap:10px}
+  .step-info{flex:1}
+  .step-en{font-size:12.5px;font-weight:700;color:var(--slate-800)}
+  .step-desc{font-size:11px;color:var(--slate-400);margin-top:1px}
+  .inp{width:100px;border:1px solid var(--slate-200);border-radius:6px;padding:8px 10px;font-size:13px;text-align:right;font-family:inherit}
+  .subtotal-row{display:flex;justify-content:space-between;align-items:center;background:var(--slate-50);border:1px solid var(--slate-100);border-radius:6px;padding:10px 14px;margin:8px 0}
+  .st-label{font-size:12px;font-weight:700;color:var(--slate-600)}
+  .st-value{font-size:15px;font-weight:800;color:var(--slate-800)}
+  .subtotal-row.final{background:var(--accent-light);border-color:#BFDBFE}
+  .subtotal-row.final .st-value{color:var(--accent-dark);font-size:18px}
+  .margin-box{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:16px}
+  .margin-card{background:var(--slate-50);border:1px solid var(--slate-100);border-radius:8px;padding:12px}
+  .margin-card h4{font-size:11.5px;font-weight:700;color:var(--slate-600);margin-bottom:4px}
+  .margin-card .en{font-size:10px;color:var(--slate-400);margin-bottom:8px}
+  .margin-card input{width:60px;border:1px solid var(--slate-200);border-radius:5px;padding:5px 7px;font-size:12.5px;text-align:right}
+  .margin-result{font-size:13px;font-weight:700;color:var(--accent-dark);margin-top:8px}
+  .diff-notice{background:var(--warning-light);border:1px solid #FDE68A;border-radius:8px;padding:10px 14px;font-size:11.5px;color:#78350F;margin-top:14px;line-height:1.6}
+  .save-indicator{font-size:10.5px;color:var(--success);opacity:0;transition:opacity .3s}
+  .save-indicator.show{opacity:1}
+  @media (max-width:900px){.scenario-grid.dual{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute;" aria-hidden="true">
+  <defs>
+    <linearGradient id="cbmGradH" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#14B8A6"/><stop offset="100%" stop-color="#0B2A4A"/></linearGradient>
+    <linearGradient id="cbmGradF" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#2DD4BF"/><stop offset="100%" stop-color="#5B9EFF"/></linearGradient>
+  </defs>
+</svg>
+<header><div class="header-inner">
+  <a href="index.html" class="logo-mark"><svg width="28" height="28" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align:middle;margin-right:9px;flex-shrink:0;"><path d="M20 2.5L36.5 11.5V28.5L20 37.5L3.5 28.5V11.5L20 2.5Z" stroke="url(#cbmGradH)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M20 2.5V20M20 20L36.5 11.5M20 20L3.5 11.5" stroke="url(#cbmGradH)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/></svg><span style="font-family:'Montserrat','Space Grotesk',sans-serif;font-weight:800;letter-spacing:-0.8px;background:linear-gradient(90deg,#14B8A6 0%,#1E7A8C 45%,#0B2A4A 100%);-webkit-background-clip:text;background-clip:text;color:transparent;">CBMLab</span></a>
+  <div class="nav-right">
+    <a href="index.html" class="nav-link">← All Tools</a>
+    <a href="../index.html" class="lang-switch">KOR</a>
+  </div>
+</div></header>
+
+<section class="hero"><div class="hero-inner">
+  <h1>Cost Structure Calculator</h1>
+  <p>Prime Cost, Manufacturing Cost (COGM), Total Cost, Landed/Acquisition Cost — these terms sound similar but cover different scopes. Build them up step by step, and see exactly how Markup vs Margin pricing differ.</p>
+  <div class="hero-tags"><span class="tag">Prime Cost</span><span class="tag">COGM</span><span class="tag">Markup vs Margin</span></div>
+</div></section>
+
+<div class="main">
+  <div class="card">
+    <div class="card-header">
+      <div class="type-toggle" role="group">
+        <button class="type-btn active" data-type="mfg" onclick="setType('mfg')">Manufacturing (Production Cost)</button>
+        <button class="type-btn" data-type="trade" onclick="setType('trade')">Trading / Import (Acquisition Cost)</button>
+      </div>
+      <div style="display:flex;align-items:center;gap:10px;">
+        <span class="save-indicator" id="saveIndicator">✓ Saved</span>
+        <button class="compare-btn" onclick="toggleCompare()" id="compareBtn">+ Compare two scenarios</button>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="scenario-grid" id="scenarioGrid"></div>
+    </div>
+  </div>
+</div>
+
+<div style="max-width:1100px;margin:0 auto;padding:0 24px 30px;">
+  <div class="card">
+    <div class="card-header"><div class="card-title">Why These Terms Matter</div></div>
+    <div class="card-body" style="font-size:12.5px;color:var(--slate-600);line-height:1.7;">
+      <p>Prime Cost, Manufacturing Cost, and Total Cost cover progressively wider scopes — mixing them up during a cost or margin negotiation can lead to a real pricing error. The same confusion applies to Markup vs Margin: a "30%" markup and a "30%" margin produce different sell prices for the same cost base.</p>
+      <p style="margin-top:8px;"><b>How to use it in practice:</b> If you manufacture, build up from Direct Material and Direct Labor to Manufacturing Overhead and SG&amp;A to see your full Total Cost. If you import/trade, start from Purchase Price and add incidental costs (duty, freight, insurance) to get your Landed/Acquisition Cost before adding SG&amp;A.</p>
+    </div>
+  </div>
+</div>
+
+<footer style="background:#0F172A;color:#94A3B8;padding:24px;font-size:12px;">
+  <div style="max-width:1100px;margin:0 auto;display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;">
+    <div style="font-size:15px;font-weight:800;color:#fff;"><svg width="24" height="24" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align:middle;margin-right:9px;flex-shrink:0;"><path d="M20 2.5L36.5 11.5V28.5L20 37.5L3.5 28.5V11.5L20 2.5Z" stroke="url(#cbmGradF)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M20 2.5V20M20 20L36.5 11.5M20 20L3.5 11.5" stroke="url(#cbmGradF)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/></svg>CBM<span style="color:#2563EB;">Lab</span></div>
+    <nav><a href="index.html" style="color:#94A3B8;text-decoration:none;font-size:11px;margin-right:14px;">All Tools</a><a href="privacy.html" style="color:#94A3B8;text-decoration:none;font-size:11px;">Privacy Policy</a></nav>
+  </div>
+</footer>
+
+<script src="https://cdn.amplitude.com/script/d4aa9301e01f4600b5eeb018e160aa7c.js"></script>
+<script>window.amplitude.init("d4aa9301e01f4600b5eeb018e160aa7c", { fetchRemoteConfig: true, autocapture: true });</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-W1YBL5BGGK"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-W1YBL5BGGK');
+</script>
+
+<script>
+const MFG_STEPS = [
+  {id:'dm', en:'Direct Material Cost (DM)', desc:'Raw materials directly used in production', def:100},
+  {id:'dl', en:'Direct Labor Cost (DL)', desc:'Labor directly involved in production', def:40},
+  {id:'__subtotal_prime', label:'Prime Cost = DM + DL'},
+  {id:'moh', en:'Manufacturing Overhead (MOH)', desc:'Factory rent, utilities, depreciation, and other indirect production costs', def:30},
+  {id:'__subtotal_cogm', label:'Manufacturing Cost (COGM) = Prime Cost + MOH'},
+  {id:'sga', en:'SG&A (Selling, General &amp; Administrative)', desc:'Sales, marketing, and admin costs incurred after production', def:25},
+  {id:'__subtotal_total', label:'Total Cost = Manufacturing Cost + SG&A'}
+];
+const TRADE_STEPS = [
+  {id:'purchase', en:'Purchase Price', desc:'Price actually paid to the supplier (based on Incoterm)', def:100},
+  {id:'incidental', en:'Incidental Purchase Costs', desc:'Duty, international freight, insurance, customs brokerage, etc.', def:35},
+  {id:'__subtotal_acq', label:'Acquisition / Landed Cost = Purchase + Incidental Costs'},
+  {id:'sga', en:'SG&A (Selling, General &amp; Administrative)', desc:'Warehousing, sales/marketing, admin costs before resale', def:20},
+  {id:'__subtotal_total', label:'Total Cost = Acquisition Cost + SG&A'}
+];
+
+let currentType = 'mfg';
+let compareMode = false;
+function getSteps(type){ return type==='mfg' ? MFG_STEPS : TRADE_STEPS; }
+
+function buildScenarioHTML(scenarioId, type){
+  const steps = getSteps(type);
+  let html = `<div class="scenario-col" data-scenario="${scenarioId}">`;
+  steps.forEach(s=>{
+    if(s.id.startsWith('__subtotal')){
+      html += `<div class="subtotal-row ${s.id==='__subtotal_total'?'final':''}" data-sub="${s.id}-${scenarioId}">
+        <span class="st-label">${s.label}</span>
+        <span class="st-value" id="val-${s.id}-${scenarioId}">0</span>
+      </div>`;
+    } else {
+      html += `<div class="step-row">
+        <div class="step-info">
+          <div class="step-en">${s.en}</div>
+          <div class="step-desc">${s.desc}</div>
+        </div>
+        <input type="number" class="inp" id="in-${s.id}-${scenarioId}" value="${s.def}" min="0" oninput="calc('${scenarioId}')">
+      </div>`;
+    }
+  });
+  html += `
+    <div class="margin-box">
+      <div class="margin-card">
+        <h4>Markup (on Cost)</h4>
+        <div class="en">Profit ÷ Cost × 100</div>
+        <input type="number" id="markup-${scenarioId}" value="30" min="0" oninput="calc('${scenarioId}')"> %
+        <div class="margin-result" id="markupResult-${scenarioId}">-</div>
+      </div>
+      <div class="margin-card">
+        <h4>Margin (on Sell Price)</h4>
+        <div class="en">Profit ÷ Sell Price × 100</div>
+        <input type="number" id="margin-${scenarioId}" value="30" min="0" oninput="calc('${scenarioId}')"> %
+        <div class="margin-result" id="marginResult-${scenarioId}">-</div>
+      </div>
+    </div>
+    <div class="diff-notice">⚠️ <strong>A common point of confusion:</strong> The same "30%" produces different results for Markup (on cost) vs Margin (on sell price). At a cost of 100, a 30% Markup gives a sell price of 130 (profit 30), while a 30% Margin gives a sell price of about 143 (profit 43). Try changing the numbers above to see the difference for yourself.</div>
+  `;
+  html += `</div>`;
+  return html;
+}
+
+function render(){
+  const grid = document.getElementById('scenarioGrid');
+  grid.className = 'scenario-grid' + (compareMode ? ' dual' : '');
+  grid.innerHTML = compareMode
+    ? buildScenarioHTML('a', currentType) + buildScenarioHTML('b', currentType)
+    : buildScenarioHTML('a', currentType);
+  calc('a');
+  if(compareMode) calc('b');
+}
+function setType(type){
+  currentType = type;
+  document.querySelectorAll('.type-btn').forEach(b=>b.classList.toggle('active', b.dataset.type===type));
+  render();
+  saveState();
+}
+function toggleCompare(){
+  compareMode = !compareMode;
+  document.getElementById('compareBtn').textContent = compareMode ? '✕ Close comparison' : '+ Compare two scenarios';
+  render();
+  saveState();
+}
+function fmt(n){ return (n||0).toLocaleString('en-US', {maximumFractionDigits:1}); }
+
+function calc(scenarioId){
+  const steps = getSteps(currentType);
+  let running = 0;
+  steps.forEach(s=>{
+    if(s.id.startsWith('__subtotal')){
+      const el = document.getElementById('val-'+s.id+'-'+scenarioId);
+      if(el) el.textContent = fmt(running);
+    } else {
+      const inp = document.getElementById('in-'+s.id+'-'+scenarioId);
+      const val = inp ? (parseFloat(inp.value)||0) : 0;
+      running += val;
+    }
+  });
+  const totalCost = running;
+  const markupPct = parseFloat(document.getElementById('markup-'+scenarioId)?.value)||0;
+  const marginPct = parseFloat(document.getElementById('margin-'+scenarioId)?.value)||0;
+  const sellFromMarkup = totalCost * (1+markupPct/100);
+  const sellFromMargin = marginPct<100 ? totalCost/(1-marginPct/100) : totalCost;
+  const mk = document.getElementById('markupResult-'+scenarioId);
+  const mg = document.getElementById('marginResult-'+scenarioId);
+  if(mk) mk.textContent = `Sell Price: ${fmt(sellFromMarkup)} (Profit: ${fmt(sellFromMarkup-totalCost)})`;
+  if(mg) mg.textContent = `Sell Price: ${fmt(sellFromMargin)} (Profit: ${fmt(sellFromMargin-totalCost)})`;
+  saveState();
+}
+
+let saveTimeout;
+function saveState(){
+  clearTimeout(saveTimeout);
+  saveTimeout = setTimeout(()=>{
+    try{
+      const state = { type: currentType, compare: compareMode, values: {} };
+      document.querySelectorAll('input').forEach(inp=>{ state.values[inp.id] = inp.value; });
+      localStorage.setItem('cbmlab_cost_calc_en', JSON.stringify(state));
+      const ind = document.getElementById('saveIndicator');
+      ind.classList.add('show');
+      setTimeout(()=>ind.classList.remove('show'), 1200);
+    }catch(e){}
+  }, 400);
+}
+(function init(){
+  try{
+    const raw = localStorage.getItem('cbmlab_cost_calc_en');
+    if(raw){
+      const state = JSON.parse(raw);
+      if(state.type) currentType = state.type;
+      if(state.compare) compareMode = state.compare;
+    }
+  }catch(e){}
+  document.querySelectorAll('.type-btn').forEach(b=>b.classList.toggle('active', b.dataset.type===currentType));
+  document.getElementById('compareBtn').textContent = compareMode ? '✕ Close comparison' : '+ Compare two scenarios';
+  render();
+
+  try{
+    const raw = localStorage.getItem('cbmlab_cost_calc_en');
+    if(raw){
+      const state = JSON.parse(raw);
+      if(state.values){
+        Object.keys(state.values).forEach(id=>{
+          const el = document.getElementById(id);
+          if(el) el.value = state.values[id];
+        });
+        calc('a'); if(compareMode) calc('b');
+      }
+    }
+  }catch(e){}
+})();
+</script>
+</body>
+</html>
