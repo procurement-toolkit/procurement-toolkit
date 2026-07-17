@@ -127,11 +127,20 @@
             </select>
           </div>
           <div>
-            <label class="field-label">물품가액 (USD, 배송비 제외)</label>
+            <label class="field-label">물품가액 통화</label>
+            <select class="inp" id="currencySelect" onchange="setCurrency(this.value)">
+              <option value="USD">달러 (USD)</option>
+              <option value="CNY">위안화 (CNY)</option>
+              <option value="JPY">엔화 (JPY)</option>
+              <option value="EUR">유로 (EUR)</option>
+            </select>
+          </div>
+          <div>
+            <label class="field-label">물품가액 (<span id="curLabel">USD</span>, 배송비 제외)</label>
             <input type="number" class="inp" id="value" value="120" min="0" oninput="calc()">
           </div>
           <div>
-            <label class="field-label">적용 환율 (1 USD = ? KRW)</label>
+            <label class="field-label">적용 환율 (1<span id="curLabel2">USD</span> = ? KRW)</label>
             <input type="number" class="inp" id="fx" value="1380" min="0" oninput="calc()">
           </div>
         </div>
@@ -178,6 +187,16 @@
 </div></footer>
 
 <script>
+const CURRENCIES = { USD:{symbol:'$'}, CNY:{symbol:'¥'}, JPY:{symbol:'¥'}, EUR:{symbol:'€'} };
+let currentCurrency = 'USD';
+function curSym(){ return CURRENCIES[currentCurrency].symbol; }
+function setCurrency(code){
+  currentCurrency = code;
+  document.getElementById('curLabel').textContent = code;
+  document.getElementById('curLabel2').textContent = code;
+  calc();
+}
+
 function fmt(v,d=0){return (v||0).toLocaleString('ko-KR',{minimumFractionDigits:d,maximumFractionDigits:d});}
 function calc(){
   const threshold = parseFloat(document.getElementById('country').value);
@@ -188,6 +207,10 @@ function calc(){
   const wrap = document.getElementById('result-total-wrap');
   const lines = document.getElementById('result-lines');
   const headroom = document.getElementById('headroom');
+  const sym = curSym();
+  const currencyNote = currentCurrency !== 'USD'
+    ? `<div class="notice-box" style="margin-top:8px;">⚠ 관세청 면세한도($150/$200)는 <strong>미화(USD) 기준</strong>입니다. 현재 ${currentCurrency} 금액을 그대로 비교하고 있으니, 정확한 한도 판단은 USD 환산 금액으로 다시 확인하세요.</div>`
+    : '';
 
   if(!selfUse){
     wrap.innerHTML = `<div class="result-total"><div class="label">주의</div><div class="value" style="font-size:15px;">판매 목적 구매는 별도 수입신고 대상입니다</div></div>`;
@@ -198,25 +221,25 @@ function calc(){
 
   if(value <= threshold){
     wrap.innerHTML = `<div class="result-total free"><div class="label">예상 세액</div><div class="value">면세 (0원)</div></div>`;
-    lines.innerHTML = `<div class="result-line"><span class="label">물품가액</span><span class="value">$${fmt(value,2)}</span></div>
+    lines.innerHTML = `<div class="result-line"><span class="label">물품가액</span><span class="value">${sym}${fmt(value,2)}</span></div>
       <div class="result-line"><span class="label">면세한도</span><span class="value">$${fmt(threshold)}</span></div>`;
     const remain = threshold - value;
-    headroom.innerHTML = `면세한도까지 <strong>$${fmt(remain,2)}</strong> 더 구매하셔도 면세 범위입니다. (단, 같은 날 여러 건 합산 시 초과될 수 있습니다)`;
+    headroom.innerHTML = `면세한도까지 <strong>${sym}${fmt(remain,2)}</strong> 더 구매하셔도 면세 범위입니다. (단, 같은 날 여러 건 합산 시 초과될 수 있습니다)${currencyNote}`;
   } else {
     const duty = value * (dutyRate/100);
     const vatBase = value + duty;
     const vat = vatBase * 0.10;
-    const totalUsd = duty + vat;
-    const totalKrw = totalUsd * fx;
+    const totalForeign = duty + vat;
+    const totalKrw = totalForeign * fx;
 
     wrap.innerHTML = `<div class="result-total"><div class="label">예상 총 세액</div><div class="value">₩${fmt(totalKrw)}</div></div>`;
     lines.innerHTML = `
-      <div class="result-line"><span class="label">물품가액</span><span class="value">$${fmt(value,2)}</span></div>
-      <div class="result-line"><span class="label">관세 (${dutyRate}%)</span><span class="value">$${fmt(duty,2)}</span></div>
-      <div class="result-line"><span class="label">부가세 (10%)</span><span class="value">$${fmt(vat,2)}</span></div>
+      <div class="result-line"><span class="label">물품가액</span><span class="value">${sym}${fmt(value,2)}</span></div>
+      <div class="result-line"><span class="label">관세 (${dutyRate}%)</span><span class="value">${sym}${fmt(duty,2)}</span></div>
+      <div class="result-line"><span class="label">부가세 (10%)</span><span class="value">${sym}${fmt(vat,2)}</span></div>
     `;
     const over = value - threshold;
-    headroom.innerHTML = `면세한도(<strong>$${fmt(threshold)}</strong>)를 <strong>$${fmt(over,2)}</strong> 초과했습니다. 다음엔 한도 이하로 나눠서 주문하면 면세 가능합니다.`;
+    headroom.innerHTML = `면세한도($${fmt(threshold)})를 <strong>${sym}${fmt(over,2)}</strong> 초과했습니다. 다음엔 한도 이하로 나눠서 주문하면 면세 가능합니다.${currencyNote}`;
   }
 }
 calc();

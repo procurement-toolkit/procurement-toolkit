@@ -155,9 +155,18 @@ Tel: +82-2-000-0000</textarea>
     </div>
 
     <div class="card">
-      <div class="card-header"><div class="card-title">품목 내역</div></div>
+      <div class="card-header">
+        <div class="card-title">품목 내역</div>
+        <select class="inp" id="currencySelect" onchange="setCurrency(this.value)" style="width:auto;padding:5px 8px;font-size:11px;">
+          <option value="USD">통화: 달러(USD)</option>
+          <option value="KRW">통화: 원화(KRW)</option>
+          <option value="CNY">통화: 위안화(CNY)</option>
+          <option value="JPY">통화: 엔화(JPY)</option>
+          <option value="EUR">통화: 유로(EUR)</option>
+        </select>
+      </div>
       <div class="card-body">
-        <div class="col-labels"><span>Description</span><span>HS Code</span><span>Qty</span><span>단가(USD)</span><span>순중량(kg)</span><span>총중량(kg)</span><span></span></div>
+        <div class="col-labels"><span>Description</span><span>HS Code</span><span>Qty</span><span id="unitPriceLabel">단가(USD)</span><span>순중량(kg)</span><span>총중량(kg)</span><span></span></div>
         <div id="items"></div>
         <button class="btn-add" onclick="addItem()">+ 품목 추가</button>
       </div>
@@ -237,6 +246,14 @@ function switchDoc(doc){
   render();
 }
 function v(id){ return document.getElementById(id).value.trim(); }
+const CURRENCIES = { USD:'USD', KRW:'KRW', CNY:'CNY', JPY:'JPY', EUR:'EUR' };
+let currentCurrency = 'USD';
+function setCurrency(code){
+  currentCurrency = code;
+  document.getElementById('unitPriceLabel').textContent = '단가(' + code + ')';
+  render();
+}
+
 function fmt(n,d=2){ return (n||0).toLocaleString('en-US',{minimumFractionDigits:d,maximumFractionDigits:d}); }
 
 function render(){
@@ -271,9 +288,9 @@ function render(){
         <div class="box"><b>Port of Discharge</b>${v('pod')||'-'}</div>
       </div>
       <table>
-        <thead><tr><th>Description</th><th>HS Code</th><th>Qty</th><th>Unit Price (USD)</th><th>Amount (USD)</th><th>Remarks</th></tr></thead>
+        <thead><tr><th>Description</th><th>HS Code</th><th>Qty</th><th>Unit Price (${currentCurrency})</th><th>Amount (${currentCurrency})</th><th>Remarks</th></tr></thead>
         <tbody>${rows.map(r=>`<tr><td>${r.desc||'-'}</td><td>${r.hs||'-'}</td><td>${r.qty}</td><td>${fmt(r.price)}</td><td>${fmt(r.amt)}</td><td style="font-size:10px;color:#475569;">${r.remark||'-'}</td></tr>`).join('')}</tbody>
-        <tfoot><tr><td colspan="4" style="text-align:right;font-weight:700;">TOTAL</td><td style="font-weight:700;">USD ${fmt(subtotal)}</td><td></td></tr></tfoot>
+        <tfoot><tr><td colspan="4" style="text-align:right;font-weight:700;">TOTAL</td><td style="font-weight:700;">${currentCurrency} ${fmt(subtotal)}</td><td></td></tr></tfoot>
       </table>
       ${noteBlock}
       </div>

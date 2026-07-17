@@ -26,7 +26,7 @@
   .hero p{font-size:14px;color:var(--slate-500);max-width:640px}
   .main{max-width:1100px;margin:0 auto;padding:28px 24px 60px;display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:start}
   .card{background:#fff;border:1px solid var(--slate-200);border-radius:var(--radius-lg);box-shadow:var(--shadow-sm);margin-bottom:20px}
-  .card-header{padding:16px 20px;border-bottom:1px solid var(--slate-100)}
+  .card-header{padding:16px 20px;border-bottom:1px solid var(--slate-100);display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
   .card-title{font-size:14px;font-weight:600;color:var(--slate-800)}
   .card-body{padding:20px}
   .field-label{font-size:12px;font-weight:600;color:var(--slate-600);margin-bottom:6px;display:block}
@@ -91,19 +91,29 @@
 <div class="main">
   <section>
     <div class="card">
-      <div class="card-header"><div class="card-title">기본 정보 입력</div></div>
+      <div class="card-header">
+        <div class="card-title">기본 정보 입력</div>
+        <select class="inp" id="currencySelect" onchange="setCurrency(this.value)" style="width:auto;padding:5px 8px;font-size:11px;">
+          <option value="">통화 미지정 (숫자만)</option>
+          <option value="KRW">원화(₩)</option>
+          <option value="USD">달러($)</option>
+          <option value="CNY">위안화(¥)</option>
+          <option value="JPY">엔화(¥)</option>
+          <option value="EUR">유로(€)</option>
+        </select>
+      </div>
       <div class="card-body">
         <div class="field-group">
           <label class="field-label">연간 수요량 (Annual Demand, D)</label>
           <input type="number" class="inp" id="demand" value="12000" oninput="calc()">
         </div>
         <div class="field-group">
-          <label class="field-label">1회 발주비용 (Order Cost, S)</label>
+          <label class="field-label">1회 발주비용 <span id="curLabelOrder"></span> (Order Cost, S)</label>
           <div class="field-sub">발주 처리, 통관, 검수 등 1회 주문당 고정 비용</div>
           <input type="number" class="inp" id="orderCost" value="80000" oninput="calc()">
         </div>
         <div class="field-group">
-          <label class="field-label">단위당 연간 보관비용 (Holding Cost, H)</label>
+          <label class="field-label">단위당 연간 보관비용 <span id="curLabelHold"></span> (Holding Cost, H)</label>
           <div class="field-sub">보통 단위원가의 15~30%로 추정</div>
           <input type="number" class="inp" id="holdCost" value="2500" oninput="calc()">
         </div>
@@ -175,6 +185,15 @@
 </div></footer>
 
 <script>
+const CUR_SYMBOLS = { '':'', KRW:'₩', USD:'$', CNY:'¥', JPY:'¥', EUR:'€' };
+let currentCurrency = '';
+function setCurrency(code){
+  currentCurrency = code;
+  const sym = CUR_SYMBOLS[code] || '금액';
+  document.getElementById('curLabelOrder').textContent = sym;
+  document.getElementById('curLabelHold').textContent = sym;
+  calc();
+}
 function fmt(n){ return Math.round(n||0).toLocaleString('ko-KR'); }
 function calc(){
   const D = parseFloat(document.getElementById('demand').value)||0;

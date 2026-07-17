@@ -191,7 +191,15 @@
           <div><label class="field-label">Incoterm (희망)</label><input class="inp" id="incoterm" placeholder="e.g. FOB Shanghai" oninput="render()"></div>
           <div><label class="field-label">Payment Terms (희망 결제조건)</label><input class="inp" id="paymentTerms" placeholder="e.g. T/T 30 days after B/L" oninput="render()"></div>
           <div><label class="field-label">Quotation Validity (견적 유효기간)</label><input class="inp" id="validity" placeholder="e.g. 30 days from submission" oninput="render()"></div>
-          <div><label class="field-label">Currency (통화)</label><input class="inp" id="currency" value="USD" oninput="render()"></div>
+          <div><label class="field-label">Currency (통화)</label>
+            <select class="inp" id="currency" onchange="render()">
+              <option value="USD">USD (달러)</option>
+              <option value="KRW">KRW (원화)</option>
+              <option value="CNY">CNY (위안화)</option>
+              <option value="JPY">JPY (엔화)</option>
+              <option value="EUR">EUR (유로)</option>
+            </select>
+          </div>
         </div>
       </div>
     </div>

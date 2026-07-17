@@ -133,6 +133,14 @@
         <button class="type-btn" data-type="trade" onclick="setType('trade')">무역·수입업 (매입원가)</button>
       </div>
       <div style="display:flex;align-items:center;gap:10px;">
+        <select class="inp" id="currencySelect" onchange="setCurrency(this.value)" style="width:auto;padding:6px 8px;font-size:11px;">
+          <option value="">통화 미지정 (숫자만)</option>
+          <option value="KRW">원화(₩)</option>
+          <option value="USD">달러($)</option>
+          <option value="CNY">위안화(¥)</option>
+          <option value="JPY">엔화(¥)</option>
+          <option value="EUR">유로(€)</option>
+        </select>
         <span class="save-indicator" id="saveIndicator">✓ 자동 저장됨</span>
         <button class="compare-btn" onclick="toggleCompare()" id="compareBtn">+ 다른 시나리오와 비교하기</button>
       </div>
@@ -184,7 +192,10 @@ const TRADE_STEPS = [
 let currentType = 'mfg';
 let compareMode = false;
 
-function fmt(n){ return (n||0).toLocaleString('ko-KR', {maximumFractionDigits:1}); }
+const CUR_SYMBOLS = { '':'', KRW:'₩', USD:'$', CNY:'¥', JPY:'¥', EUR:'€' };
+let currentCurrency = '';
+function setCurrency(code){ currentCurrency = code; calc(); }
+function fmt(n){ return CUR_SYMBOLS[currentCurrency] + (n||0).toLocaleString('ko-KR', {maximumFractionDigits:1}); }
 
 function getSteps(type){ return type==='mfg' ? MFG_STEPS : TRADE_STEPS; }
 
@@ -290,7 +301,7 @@ function saveState(){
   clearTimeout(saveTimeout);
   saveTimeout = setTimeout(()=>{
     try{
-      const state = { type: currentType, compare: compareMode, values: {} };
+      const state = { type: currentType, compare: compareMode, currency: currentCurrency, values: {} };
       document.querySelectorAll('input').forEach(inp=>{ state.values[inp.id] = inp.value; });
       localStorage.setItem('cbmlab_cost_calc', JSON.stringify(state));
       const ind = document.getElementById('saveIndicator');
@@ -314,7 +325,7 @@ function restoreState(){
   }catch(e){}
 }
 
-// 최초 로드시 저장된 타입/비교모드 복원
+// 최초 로드시 저장된 타입/비교모드/통화 복원
 (function init(){
   try{
     const raw = localStorage.getItem('cbmlab_cost_calc');
@@ -322,10 +333,12 @@ function restoreState(){
       const state = JSON.parse(raw);
       if(state.type) currentType = state.type;
       if(state.compare) compareMode = state.compare;
+      if(state.currency !== undefined) currentCurrency = state.currency;
     }
   }catch(e){}
   document.querySelectorAll('.type-btn').forEach(b=>b.classList.toggle('active', b.dataset.type===currentType));
   document.getElementById('compareBtn').textContent = compareMode ? '✕ 비교 닫기' : '+ 다른 시나리오와 비교하기';
+  document.getElementById('currencySelect').value = currentCurrency;
   render();
 })();
 </script>

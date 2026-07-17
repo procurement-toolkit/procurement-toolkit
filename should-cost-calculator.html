@@ -111,7 +111,16 @@
 <div class="main">
   <section>
     <div class="card">
-      <div class="card-header"><div class="card-title">1. BOM (원재료 내역)</div></div>
+      <div class="card-header">
+        <div class="card-title">1. BOM (원재료 내역)</div>
+        <select class="inp" id="currencySelect" onchange="setCurrency(this.value)" style="width:auto;padding:5px 8px;font-size:11px;">
+          <option value="USD">통화: 달러(USD)</option>
+          <option value="KRW">통화: 원화(KRW)</option>
+          <option value="CNY">통화: 위안화(CNY)</option>
+          <option value="JPY">통화: 엔화(JPY)</option>
+          <option value="EUR">통화: 유로(EUR)</option>
+        </select>
+      </div>
       <div class="card-body">
         <div class="item-table-wrap">
           <table class="item-table">
@@ -130,7 +139,7 @@
         <div class="region-presets" id="regionPresets"></div>
         <div class="item-table-wrap">
           <table class="item-table">
-            <thead><tr><th>공정명</th><th style="width:90px">사이클타임(초)</th><th style="width:70px">투입인원</th><th style="width:110px">시급(USD)</th><th style="width:90px">인건비/개</th><th></th></tr></thead>
+            <thead><tr><th>공정명</th><th style="width:90px">사이클타임(초)</th><th style="width:70px">투입인원</th><th style="width:110px">시급(<span id="curLabelRate">USD</span>)</th><th style="width:90px">인건비/개</th><th></th></tr></thead>
             <tbody id="procBody"></tbody>
           </table>
         </div>
@@ -188,7 +197,7 @@
     <div class="card">
       <div class="card-header"><div class="card-title">5. 공급업체 견적과 비교 (선택)</div></div>
       <div class="card-body">
-        <label class="field-label">공급업체 제시 견적 단가 (USD)</label>
+        <label class="field-label">공급업체 제시 견적 단가 (<span id="curLabelQuote">USD</span>)</label>
         <input class="inp" type="number" id="supplierQuote" placeholder="예: 4.80" oninput="calc()">
       </div>
     </div>
@@ -327,7 +336,15 @@ function applyRegion(rate){
   renderProc();
 }
 
-function fmt(n, d=2){ return '$' + (n||0).toLocaleString('en-US', {minimumFractionDigits:d, maximumFractionDigits:d}); }
+const CUR_SYMBOLS = { USD:'$', KRW:'₩', CNY:'¥', JPY:'¥', EUR:'€' };
+let currentCurrency = 'USD';
+function setCurrency(code){
+  currentCurrency = code;
+  const rl = document.getElementById('curLabelRate'); if(rl) rl.textContent = code;
+  const ql = document.getElementById('curLabelQuote'); if(ql) ql.textContent = code;
+  calc();
+}
+function fmt(n, d=2){ return CUR_SYMBOLS[currentCurrency] + (n||0).toLocaleString('en-US', {minimumFractionDigits:d, maximumFractionDigits:d}); }
 
 function calc(){
   // BOM

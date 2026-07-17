@@ -565,7 +565,13 @@
             <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 10V11"/></svg>
             상품 내역 (<span id="term-value-label">FOB</span> 단가 기준)
           </div>
-          <span style="font-size:11px;color:var(--slate-400)">통화: USD</span>
+          <select class="inp" id="currencySelect" onchange="setCurrency(this.value)" style="width:auto;padding:4px 8px;font-size:11px;">
+            <option value="USD">통화: 달러(USD)</option>
+            <option value="KRW">통화: 원화(KRW)</option>
+            <option value="CNY">통화: 위안화(CNY)</option>
+            <option value="JPY">통화: 엔화(JPY)</option>
+            <option value="EUR">통화: 유로(EUR)</option>
+          </select>
         </div>
         <div class="card-body">
           <div class="duty-mode-toggle" style="display:flex;gap:6px;margin-bottom:6px;">
@@ -852,7 +858,7 @@
         <td><input type="text" class="inp inp-name" placeholder="품목명" value="${item.name}" oninput="updateItem(${item.id},'name',this.value)"></td>
         <td><input type="number" class="inp inp-qty" min="0" value="${item.qty}" oninput="updateItem(${item.id},'qty',this.value)"></td>
         <td><input type="number" class="inp inp-price" min="0" step="0.01" value="${item.price}" oninput="updateItem(${item.id},'price',this.value)"></td>
-        <td><span class="row-subtotal" id="sub-${item.id}">$0.00</span></td>
+        <td><span class="row-subtotal" id="sub-${item.id}">${curSym()}0.00</span></td>
         <td class="duty-col"><input type="number" class="inp inp-duty" min="0" step="0.1" value="${item.dutyRate}" oninput="updateItem(${item.id},'dutyRate',this.value)"></td>
         <td><button class="btn-del" onclick="removeItemRow(${item.id})" aria-label="행 삭제" ${items.length <= 1 ? 'disabled' : ''}>
           <svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
@@ -862,6 +868,12 @@
     });
     calc();
   }
+
+
+  const CURRENCIES = { USD:{symbol:'$',decimals:2}, KRW:{symbol:'₩',decimals:0}, CNY:{symbol:'¥',decimals:2}, JPY:{symbol:'¥',decimals:0}, EUR:{symbol:'€',decimals:2} };
+  let currentCurrency = 'USD';
+  function curSym(){ return CURRENCIES[currentCurrency].symbol; }
+  function setCurrency(code){ currentCurrency = code; calc(); }
 
   function fmt(v, digits = 0) {
     if (typeof v !== 'number' || isNaN(v)) return '0';
@@ -876,7 +888,7 @@
       goodsValue += sub;
       totalQty += item.qty;
       const el = document.getElementById('sub-' + item.id);
-      if (el) el.textContent = '$' + fmt(sub, 2);
+      if (el) el.textContent = curSym() + fmt(sub, 2);
     });
 
     const inlandOrigin = parseFloat(document.getElementById('inlandOrigin').value) || 0;
@@ -893,25 +905,25 @@
 
     if (currentTerm === 'DDP') {
       cifValue = goodsValue;
-      lines.push({ label: 'DDP 상품가액 (전체 포함)', value: '$' + fmt(goodsValue, 2) });
+      lines.push({ label: 'DDP 상품가액 (전체 포함)', value: curSym() + fmt(goodsValue, 2) });
     } else {
       let base = goodsValue;
-      lines.push({ label: `상품가액 (${currentTerm} 기준)`, value: '$' + fmt(goodsValue, 2) });
+      lines.push({ label: `상품가액 (${currentTerm} 기준)`, value: curSym() + fmt(goodsValue, 2) });
 
       if (TERM_INFO[currentTerm].show.includes('inlandOrigin') && inlandOrigin > 0) {
         base += inlandOrigin;
-        lines.push({ label: '내륙운송비 (공장→항구)', value: '$' + fmt(inlandOrigin, 2), add: true });
+        lines.push({ label: '내륙운송비 (공장→항구)', value: curSym() + fmt(inlandOrigin, 2), add: true });
       }
       if (TERM_INFO[currentTerm].show.includes('freight') && freight > 0) {
         base += freight;
-        lines.push({ label: '국제 운임', value: '$' + fmt(freight, 2), add: true });
+        lines.push({ label: '국제 운임', value: curSym() + fmt(freight, 2), add: true });
       }
       if (TERM_INFO[currentTerm].show.includes('insurance') && insurance > 0) {
         base += insurance;
-        lines.push({ label: '적하보험료', value: '$' + fmt(insurance, 2), add: true });
+        lines.push({ label: '적하보험료', value: curSym() + fmt(insurance, 2), add: true });
       }
       cifValue = base;
-      lines.push({ label: 'CIF 과세가격 (관세 부과 기준)', value: '$' + fmt(cifValue, 2), strong: true });
+      lines.push({ label: 'CIF 과세가격 (관세 부과 기준)', value: curSym() + fmt(cifValue, 2), strong: true });
     }
 
     let dutyAmount = 0, vatAmount = 0;
@@ -929,20 +941,20 @@
           const itemDuty = itemCif * (item.dutyRate / 100);
           dutyAmount += itemDuty;
           if (itemGoods > 0) {
-            dutyDetailLines.push({ label: `　ㄴ ${item.name || '(품목명 없음)'} (${item.dutyRate}%)`, value: '$' + fmt(itemDuty, 2), add: true, sub2: true });
+            dutyDetailLines.push({ label: `　ㄴ ${item.name || '(품목명 없음)'} (${item.dutyRate}%)`, value: curSym() + fmt(itemDuty, 2), add: true, sub2: true });
           }
         });
-        lines.push({ label: `관세 (품목별 적용, 합계)`, value: '$' + fmt(dutyAmount, 2), add: true, strong: true });
+        lines.push({ label: `관세 (품목별 적용, 합계)`, value: curSym() + fmt(dutyAmount, 2), add: true, strong: true });
         lines.push(...dutyDetailLines);
       } else {
         const dutyRate = parseFloat(document.getElementById('dutyRate').value) || 0;
         dutyAmount = cifValue * (dutyRate / 100);
-        lines.push({ label: `관세 (일괄 ${dutyRate}%)`, value: '$' + fmt(dutyAmount, 2), add: true });
+        lines.push({ label: `관세 (일괄 ${dutyRate}%)`, value: curSym() + fmt(dutyAmount, 2), add: true });
       }
       landedUsd += dutyAmount;
 
       vatAmount = (cifValue + dutyAmount) * (vatRate / 100);
-      lines.push({ label: `부가가치세 (${vatRate}%)${includeVat ? '' : ' — 미포함, 참고용'}`, value: '$' + fmt(vatAmount, 2), sub: !includeVat });
+      lines.push({ label: `부가가치세 (${vatRate}%)${includeVat ? '' : ' — 미포함, 참고용'}`, value: curSym() + fmt(vatAmount, 2), sub: !includeVat });
       if (includeVat) landedUsd += vatAmount;
     }
 
@@ -969,7 +981,7 @@
 
     document.getElementById('result-lines').innerHTML = linesHtml + extraHtml;
     document.getElementById('totalKrw').textContent = '₩' + fmt(landedKrw);
-    document.getElementById('totalUsd').textContent = '$' + fmt(landedUsd, 2) + ' (부대비용 KRW 별도 가산)';
+    document.getElementById('totalUsd').textContent = curSym() + fmt(landedUsd, 2) + ' (부대비용 KRW 별도 가산)';
     document.getElementById('totalQty').textContent = fmt(totalQty);
 
     const unitCostKrw = totalQty > 0 ? landedKrw / totalQty : 0;

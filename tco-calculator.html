@@ -78,7 +78,16 @@
 </div></section>
 
 <div class="main">
-  <div class="compare-toggle"><button class="btn-compare" onclick="toggleCompare()" id="compareBtn">+ 다른 옵션과 비교하기</button></div>
+  <div class="compare-toggle">
+    <select class="inp" id="currencySelect" onchange="setCurrency(this.value)" style="width:auto;padding:7px 10px;font-size:12px;margin-right:8px;">
+      <option value="USD">통화: 달러(USD)</option>
+      <option value="KRW">통화: 원화(KRW)</option>
+      <option value="CNY">통화: 위안화(CNY)</option>
+      <option value="JPY">통화: 엔화(JPY)</option>
+      <option value="EUR">통화: 유로(EUR)</option>
+    </select>
+    <button class="btn-compare" onclick="toggleCompare()" id="compareBtn">+ 다른 옵션과 비교하기</button>
+  </div>
   <div class="option-grid" id="optionGrid"></div>
 
   <div class="winner-badge" id="winnerBadge" style="display:none;"></div>
@@ -134,7 +143,10 @@ const FIELDS = [
   {id:'salvage', label:'잔존가치 (매각 시 회수 가능액)', def:5000}
 ];
 
-function fmt(n){ return '$' + Math.round(n||0).toLocaleString('en-US'); }
+const CUR_SYMBOLS = { USD:'$', KRW:'₩', CNY:'¥', JPY:'¥', EUR:'€' };
+let currentCurrency = 'USD';
+function setCurrency(code){ currentCurrency = code; calc(); }
+function fmt(n){ return CUR_SYMBOLS[currentCurrency] + Math.round(n||0).toLocaleString('en-US'); }
 
 function buildOptionHTML(id, title){
   let html = `<div class="card" data-option="${id}">
