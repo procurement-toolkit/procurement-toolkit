@@ -110,7 +110,7 @@
 </svg>
 
 <header><div class="header-inner">
-  <a href="index.html" class="logo-mark"><svg width="28" height="28" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align:middle;margin-right:9px;flex-shrink:0;"><path d="M20 2.5L36.5 11.5V28.5L20 37.5L3.5 28.5V11.5L20 2.5Z" stroke="url(#cbmGradH)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M20 2.5V20M20 20L36.5 11.5M20 20L3.5 11.5" stroke="url(#cbmGradH)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/></svg><span style="font-family:'Montserrat','Space Grotesk',sans-serif;font-weight:800;letter-spacing:-0.8px;background:linear-gradient(90deg,#14B8A6 0%,#1E7A8C 45%,#0B2A4A 100%);-webkit-background-clip:text;background-clip:text;color:transparent;">CBMLab</span></a>
+  <a href="index.html" class="logo-mark"><svg width="26" height="26" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align:middle;margin-right:8px;flex-shrink:0;"><path d="M20 2.5L36.5 11.5V28.5L20 37.5L3.5 28.5V11.5L20 2.5Z" stroke="url(#cbmGradH)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M20 2.5V20M20 20L36.5 11.5M20 20L3.5 11.5" stroke="url(#cbmGradH)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/></svg><span style="font-family:'Montserrat','Space Grotesk',sans-serif;font-weight:800;letter-spacing:-1.1px;background:linear-gradient(90deg,#14B8A6 0%,#1E7A8C 45%,#0B2A4A 100%);-webkit-background-clip:text;background-clip:text;color:transparent;">CBMLab</span></a>
   <a href="index.html" class="nav-link">← 전체 도구 보기</a>
 </div></header>
 
@@ -216,6 +216,9 @@ function setCurrency(code){
 }
 
 function fmt(v,d=0){return (v||0).toLocaleString('ko-KR',{minimumFractionDigits:d,maximumFractionDigits:d});}
+// 면세한도는 관세청 기준 미화(USD)로 고정되어 있습니다. 물품가액을 다른 통화로 입력한 경우,
+// 입력하신 환율(통화→KRW)을 참고 환율(USD→KRW, 약 1,380원)로 재환산해 USD 기준으로 한도를 비교합니다.
+const USD_KRW_REF = 1380;
 function calc(){
   const threshold = parseFloat(document.getElementById('country').value);
   const dutyRate = parseFloat(document.getElementById('category').value);
@@ -226,8 +229,9 @@ function calc(){
   const lines = document.getElementById('result-lines');
   const headroom = document.getElementById('headroom');
   const sym = curSym();
+  const valueInUsd = currentCurrency === 'USD' ? value : (fx > 0 ? (value * fx) / USD_KRW_REF : value);
   const currencyNote = currentCurrency !== 'USD'
-    ? `<div class="notice-box" style="margin-top:8px;">⚠ 관세청 면세한도($150/$200)는 <strong>미화(USD) 기준</strong>입니다. 현재 ${currentCurrency} 금액을 그대로 비교하고 있으니, 정확한 한도 판단은 USD 환산 금액으로 다시 확인하세요.</div>`
+    ? `<div class="notice-box" style="margin-top:8px;">⚠ 관세청 면세한도($150/$200)는 <strong>미화(USD) 기준</strong>입니다. 입력하신 환율을 참고 환율(1USD≈${fmt(USD_KRW_REF)}원)로 재환산해 약 <strong>$${fmt(valueInUsd,2)}</strong> 기준으로 판단했습니다. 정확한 한도 판단은 실제 결제 시점의 USD 환산 금액으로 다시 확인하세요.</div>`
     : '';
 
   if(!selfUse){
@@ -237,18 +241,18 @@ function calc(){
     return;
   }
 
-  if(value <= threshold){
+  if(valueInUsd <= threshold){
     wrap.innerHTML = `<div class="result-total free"><div class="label">예상 세액</div><div class="value">면세 (0원)</div></div>`;
     lines.innerHTML = `<div class="result-line"><span class="label">물품가액</span><span class="value">${sym}${fmt(value,2)}</span></div>
       <div class="result-line"><span class="label">면세한도</span><span class="value">$${fmt(threshold)}</span></div>`;
-    const remain = threshold - value;
-    headroom.innerHTML = `면세한도까지 <strong>${sym}${fmt(remain,2)}</strong> 더 구매하셔도 면세 범위입니다. (단, 같은 날 여러 건 합산 시 초과될 수 있습니다)${currencyNote}`;
+    const remain = threshold - valueInUsd;
+    headroom.innerHTML = `면세한도까지 <strong>$${fmt(remain,2)}</strong> 더(원화 약 ${fmt(remain*USD_KRW_REF)}원) 구매하셔도 면세 범위입니다. (단, 같은 날 여러 건 합산 시 초과될 수 있습니다)${currencyNote}`;
   } else {
     const duty = value * (dutyRate/100);
     const vatBase = value + duty;
     const vat = vatBase * 0.10;
     const totalForeign = duty + vat;
-    const totalKrw = totalForeign * fx;
+    const totalKrw = totalForeign * (currentCurrency === 'USD' ? fx : fx);
 
     wrap.innerHTML = `<div class="result-total"><div class="label">예상 총 세액</div><div class="value">₩${fmt(totalKrw)}</div></div>`;
     lines.innerHTML = `
@@ -256,8 +260,8 @@ function calc(){
       <div class="result-line"><span class="label">관세 (${dutyRate}%)</span><span class="value">${sym}${fmt(duty,2)}</span></div>
       <div class="result-line"><span class="label">부가세 (10%)</span><span class="value">${sym}${fmt(vat,2)}</span></div>
     `;
-    const over = value - threshold;
-    headroom.innerHTML = `면세한도($${fmt(threshold)})를 <strong>${sym}${fmt(over,2)}</strong> 초과했습니다. 다음엔 한도 이하로 나눠서 주문하면 면세 가능합니다.${currencyNote}`;
+    const over = valueInUsd - threshold;
+    headroom.innerHTML = `면세한도($${fmt(threshold)})를 <strong>$${fmt(over,2)}</strong> 초과했습니다. 다음엔 한도 이하로 나눠서 주문하면 면세 가능합니다.${currencyNote}`;
   }
 }
 calc();

@@ -59,13 +59,13 @@
   .toggle-btn{padding:5px 10px;border:none;background:transparent;border-radius:5px;font-size:11.5px;font-weight:700;color:var(--slate-500);cursor:pointer}
   .toggle-btn.active{background:#fff;color:var(--accent);box-shadow:var(--shadow-sm)}
   .carton-table-wrap{overflow-x:auto;margin:0 -20px;padding:0 20px}
-  .carton-table{width:100%;min-width:520px;border-collapse:collapse}
+  .carton-table{width:100%;min-width:680px;border-collapse:collapse}
   .carton-table thead th{padding:8px 6px;text-align:left;font-size:10.5px;font-weight:600;color:var(--slate-400);text-transform:uppercase;background:var(--slate-50);border-top:1px solid var(--slate-100);border-bottom:1px solid var(--slate-100);white-space:nowrap}
   .carton-table tbody tr{border-bottom:1px solid var(--slate-100)}
   .carton-table tbody td{padding:6px}
   .inp{width:100%;border:1px solid var(--slate-200);border-radius:6px;padding:7px 9px;font-size:13px;font-family:inherit}
   .inp:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px rgba(37,99,235,.1)}
-  .inp-qty{max-width:56px}
+  .inp-qty{max-width:70px}
   .btn-del{width:26px;height:26px;border:1px solid var(--slate-200);border-radius:6px;background:#fff;color:var(--slate-400);cursor:pointer}
   .btn-del:hover{border-color:#DC2626;color:#DC2626}
   .btn-del:disabled{opacity:.3;pointer-events:none}
@@ -91,6 +91,11 @@
   .empty-result{text-align:center;padding:30px 10px;color:var(--slate-300)}
   .empty-result p{font-size:12.5px;color:var(--slate-400);margin-top:8px}
   @media (max-width:900px){.main{grid-template-columns:1fr}}
+
+  .ad-area-main{max-width:1200px;margin:24px auto 0;padding:0 24px 28px}
+  .ad-main-box{border:1px dashed #CBD5E1;border-radius:var(--radius,10px);background:#fff;height:90px;display:flex;flex-direction:column;align-items:center;justify-content:center;color:var(--slate-400,#94A3B8);font-size:12px;gap:4px}
+  .ad-main-box strong{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:#94A3B8}
+  @media (max-width:640px){.ad-area-main{padding:0 16px 20px}}
 </style>
 </head>
 <body>
@@ -101,7 +106,7 @@
   </defs>
 </svg>
 <header><div class="header-inner">
-  <a href="index.html" class="logo-mark"><svg width="28" height="28" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align:middle;margin-right:9px;flex-shrink:0;"><path d="M20 2.5L36.5 11.5V28.5L20 37.5L3.5 28.5V11.5L20 2.5Z" stroke="url(#cbmGradH)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M20 2.5V20M20 20L36.5 11.5M20 20L3.5 11.5" stroke="url(#cbmGradH)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/></svg><span style="font-family:'Montserrat','Space Grotesk',sans-serif;font-weight:800;letter-spacing:-0.8px;background:linear-gradient(90deg,#14B8A6 0%,#1E7A8C 45%,#0B2A4A 100%);-webkit-background-clip:text;background-clip:text;color:transparent;">CBMLab</span></a>
+  <a href="index.html" class="logo-mark"><svg width="26" height="26" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align:middle;margin-right:8px;flex-shrink:0;"><path d="M20 2.5L36.5 11.5V28.5L20 37.5L3.5 28.5V11.5L20 2.5Z" stroke="url(#cbmGradH)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M20 2.5V20M20 20L36.5 11.5M20 20L3.5 11.5" stroke="url(#cbmGradH)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/></svg><span style="font-family:'Montserrat','Space Grotesk',sans-serif;font-weight:800;letter-spacing:-1.1px;background:linear-gradient(90deg,#14B8A6 0%,#1E7A8C 45%,#0B2A4A 100%);-webkit-background-clip:text;background-clip:text;color:transparent;">CBMLab</span></a>
   <div class="nav-right">
     <a href="index.html" class="nav-link">← All Tools</a>
     <a href="../index.html" class="lang-switch">KOR</a>
@@ -178,12 +183,21 @@
   </div>
 </div>
 
+<!-- AD (bottom banner) -->
+<div class="ad-area-main" role="complementary" aria-label="Advertisement area">
+  <div class="ad-main-box">
+    <strong>Advertisement</strong>
+    Google AdSense — 728 × 90 leaderboard
+  </div>
+</div>
+
 <footer style="background:#0F172A;color:#94A3B8;padding:24px;font-size:12px;">
   <div style="max-width:1200px;margin:0 auto;display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;">
     <div style="font-size:15px;font-weight:800;color:#fff;"><svg width="24" height="24" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align:middle;margin-right:9px;flex-shrink:0;"><path d="M20 2.5L36.5 11.5V28.5L20 37.5L3.5 28.5V11.5L20 2.5Z" stroke="url(#cbmGradF)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M20 2.5V20M20 20L36.5 11.5M20 20L3.5 11.5" stroke="url(#cbmGradF)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/></svg>CBM<span style="color:#2563EB;">Lab</span></div>
     <nav><a href="index.html" style="color:#94A3B8;text-decoration:none;font-size:11px;margin-right:14px;">All Tools</a><a href="privacy.html" style="color:#94A3B8;text-decoration:none;font-size:11px;">Privacy Policy</a></nav>
   </div>
 </footer>
+
 
 <script src="https://cdn.amplitude.com/script/d4aa9301e01f4600b5eeb018e160aa7c.js"></script>
 <script>window.amplitude.init("d4aa9301e01f4600b5eeb018e160aa7c", { fetchRemoteConfig: true, autocapture: true });</script>

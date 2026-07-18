@@ -838,7 +838,7 @@
 <header>
   <div class="header-inner">
     <a href="index.html" class="logo" style="text-decoration:none;">
-      <div class="logo-mark"><svg width="28" height="28" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align:middle;margin-right:9px;flex-shrink:0;"><path d="M20 2.5L36.5 11.5V28.5L20 37.5L3.5 28.5V11.5L20 2.5Z" stroke="url(#cbmGradH)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M20 2.5V20M20 20L36.5 11.5M20 20L3.5 11.5" stroke="url(#cbmGradH)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/></svg><span style="font-family:'Montserrat','Space Grotesk',sans-serif;font-weight:800;letter-spacing:-0.8px;background:linear-gradient(90deg,#14B8A6 0%,#1E7A8C 45%,#0B2A4A 100%);-webkit-background-clip:text;background-clip:text;color:transparent;">CBMLab</span></div>
+      <div class="logo-mark"><svg width="26" height="26" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align:middle;margin-right:8px;flex-shrink:0;"><path d="M20 2.5L36.5 11.5V28.5L20 37.5L3.5 28.5V11.5L20 2.5Z" stroke="url(#cbmGradH)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M20 2.5V20M20 20L36.5 11.5M20 20L3.5 11.5" stroke="url(#cbmGradH)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/></svg><span style="font-family:'Montserrat','Space Grotesk',sans-serif;font-weight:800;letter-spacing:-1.1px;background:linear-gradient(90deg,#14B8A6 0%,#1E7A8C 45%,#0B2A4A 100%);-webkit-background-clip:text;background-clip:text;color:transparent;">CBMLab</span></div>
       <div class="logo-sub">해상/항공 화물 부피 계산기</div>
     </a>
     <a href="index.html" class="nav-link">← 전체 도구 보기</a>
@@ -873,6 +873,11 @@
             카톤 정보 입력
           </div>
           <div class="unit-toggle-group">
+            <span class="unit-toggle-label">운송</span>
+            <div class="toggle-btn-group" role="group" aria-label="해상/항공 선택">
+              <button class="toggle-btn active" id="btn-sea" onclick="setFreightMode('sea')" aria-pressed="true">해상</button>
+              <button class="toggle-btn" id="btn-air" onclick="setFreightMode('air')" aria-pressed="false">항공</button>
+            </div>
             <span class="unit-toggle-label">단위</span>
             <div class="toggle-btn-group" role="group" aria-label="치수 단위 선택">
               <button class="toggle-btn active" id="btn-cm" onclick="setDimUnit('cm')" aria-pressed="true">cm</button>
@@ -1040,6 +1045,7 @@
   // =====================
   let dimUnit = 'cm';   // 'cm' | 'inch'
   let wgtUnit = 'kg';   // 'kg' | 'lb'
+  let freightMode = 'sea';   // 'sea' | 'air'
   let rowCounter = 0;
 
   const CONTAINERS = [
@@ -1188,6 +1194,16 @@
     calculate();
   }
 
+  function setFreightMode(mode) {
+    if (freightMode === mode) return;
+    freightMode = mode;
+    document.getElementById('btn-sea').classList.toggle('active', mode === 'sea');
+    document.getElementById('btn-sea').setAttribute('aria-pressed', mode === 'sea');
+    document.getElementById('btn-air').classList.toggle('active', mode === 'air');
+    document.getElementById('btn-air').setAttribute('aria-pressed', mode === 'air');
+    calculate();
+  }
+
   function setWgtUnit(unit) {
     if (wgtUnit === unit) return;
     wgtUnit = unit;
@@ -1256,7 +1272,8 @@
       return;
     }
 
-    const volWeightKg = totalCbm * 1000; // 해상 기준
+    // 해상: CBM x 1,000 kg/m3 (revenue ton 관행) | 항공: cm3 ÷ 6,000 (IATA 표준, = CBM x 166.67)
+    const volWeightKg = freightMode === 'air' ? totalCbm * 1000000 / 6000 : totalCbm * 1000;
     const chargeableKg = Math.max(totalKg, volWeightKg);
 
     renderResult({
@@ -1316,12 +1333,12 @@
             볼륨 무게
             <span class="tooltip-wrap">
               <span class="tooltip-icon">?</span>
-              <span class="tooltip-text">해상 기준: CBM x 1,000 kg/m3</span>
+              <span class="tooltip-text">${freightMode === 'air' ? '항공 기준: cm3 ÷ 6,000' : '해상 기준: CBM x 1,000 kg/m3'}</span>
             </span>
             ${!isHeavy ? '<span style="color:var(--warning);font-size:10px;font-weight:700;margin-left:4px;">적용</span>' : ''}
           </div>
           <div class="result-value">${fmt(displayVolKg, 1)}</div>
-          <div class="result-unit">${wgtLabel} (해상 기준)</div>
+          <div class="result-unit">${wgtLabel} (${freightMode === 'air' ? '항공' : '해상'} 기준)</div>
         </div>
         <div class="result-item full" id="ri-chg" style="background:var(--slate-800);border-color:var(--slate-700)">
           <div class="result-label" style="color:var(--slate-400)">청구 적용 무게</div>
@@ -1400,7 +1417,7 @@
       '총 카톤 수: ' + fmt(d.totalCtns, 0) + ' CTN',
       '총 CBM: ' + fmt(d.totalCbm, 3) + ' m3',
       '총 실제 무게: ' + fmt(displayTotalKg, 1) + ' ' + wgtLabel,
-      '볼륨 무게 (해상): ' + fmt(displayVolKg, 1) + ' ' + wgtLabel,
+      '볼륨 무게 (' + (freightMode === 'air' ? '항공' : '해상') + '): ' + fmt(displayVolKg, 1) + ' ' + wgtLabel,
       '청구 적용 무게: ' + fmt(displayChgKg, 1) + ' ' + wgtLabel,
       '',
       '[ 컨테이너 적재율 ]',
