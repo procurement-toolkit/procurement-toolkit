@@ -1,43 +1,40 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="한국 기준 미국, 유럽, 중국 등 주요 거래국의 현재 시간과 시차를 실시간으로 확인하고, 통화 가능한 업무시간대까지 한눈에 볼 수 있습니다.">
-<meta name="keywords" content="세계시간, 시차 계산기, 무역 거래국 시간, 해외 업무시간">
-<title>세계시간 &amp; 시차 계산기 — CBM Lab</title>
-<link rel="icon" href="favicon.ico" sizes="any">
-<link rel="icon" href="favicon.ico" type="image/x-icon">
-<link rel="apple-touch-icon" href="apple-touch-icon.png">
-<link rel="canonical" href="https://procurement-toolkit-eight.vercel.app/worldclock.html">
+<meta name="description" content="Live world clock for major trade hubs — check current local time, UTC offset, and whether each city is currently within typical business hours (09:00–18:00 local).">
+<meta name="keywords" content="world clock, time zone converter, trade time difference, international business hours">
+<title>World Clock &amp; Time Zone Converter for Trade — CBM Lab</title>
+<link rel="icon" href="../favicon.ico" sizes="any">
+<link rel="icon" href="../favicon.ico" type="image/x-icon">
+<link rel="apple-touch-icon" href="../apple-touch-icon.png">
+<link rel="canonical" href="https://procurement-toolkit-eight.vercel.app/en/worldclock.html">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="CBM Lab">
-<meta property="og:locale" content="ko_KR">
-<meta property="og:title" content="세계시간 &amp; 시차 계산기 — CBM Lab">
-<meta property="og:description" content="한국 기준 미국, 유럽, 중국 등 주요 거래국의 현재 시간과 시차를 실시간으로 확인하고, 통화 가능한 업무시간대까지 한눈에 볼 수 있습니다.">
-<meta property="og:url" content="https://procurement-toolkit-eight.vercel.app/worldclock.html">
+<meta property="og:locale" content="en_US">
+<meta property="og:title" content="World Clock &amp; Time Zone Converter for Trade — CBM Lab">
+<meta property="og:description" content="Live world clock for major trade hubs — check current local time, UTC offset, and whether each city is currently within typical business hours (09:00–18:00 local).">
+<meta property="og:url" content="https://procurement-toolkit-eight.vercel.app/en/worldclock.html">
 <meta property="og:image" content="https://procurement-toolkit-eight.vercel.app/assets/hero-team.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="세계시간 &amp; 시차 계산기 — CBM Lab">
-<meta name="twitter:description" content="한국 기준 미국, 유럽, 중국 등 주요 거래국의 현재 시간과 시차를 실시간으로 확인하고, 통화 가능한 업무시간대까지 한눈에 볼 수 있습니다.">
+<meta name="twitter:title" content="World Clock &amp; Time Zone Converter for Trade — CBM Lab">
+<meta name="twitter:description" content="Live world clock for major trade hubs — check current local time, UTC offset, and whether each city is currently within typical business hours (09:00–18:00 local).">
 <meta name="twitter:image" content="https://procurement-toolkit-eight.vercel.app/assets/hero-team.jpg">
 
-<link rel="alternate" hreflang="ko" href="https://procurement-toolkit-eight.vercel.app/worldclock.html">
-<link rel="alternate" hreflang="en" href="https://procurement-toolkit-eight.vercel.app/en/worldclock.html">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700;800&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@800;900&display=swap" rel="stylesheet">
 <style>
   *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-  :root{--accent:#2563EB;--accent-light:#DBEAFE;--accent-dark:#1D4ED8;--slate-50:#F8FAFC;--slate-100:#F1F5F9;--slate-200:#E2E8F0;--slate-400:#94A3B8;--slate-500:#64748B;--slate-600:#475569;--slate-700:#334155;--slate-800:#1E293B;--slate-900:#0F172A;--success:#0F766E;--success-light:#CCFBF1;--danger:#DC2626;--danger-light:#FEE2E2;--radius:8px;--radius-lg:12px;--shadow-sm:0 1px 2px rgba(0,0,0,.05);font-family:'Pretendard','Apple SD Gothic Neo',system-ui,-apple-system,sans-serif}
+  :root{--accent:#2563EB;--accent-light:#DBEAFE;--accent-dark:#1D4ED8;--slate-50:#F8FAFC;--slate-100:#F1F5F9;--slate-200:#E2E8F0;--slate-400:#94A3B8;--slate-500:#64748B;--slate-600:#475569;--slate-700:#334155;--slate-800:#1E293B;--slate-900:#0F172A;--success:#0F766E;--success-light:#CCFBF1;--danger:#DC2626;--danger-light:#FEE2E2;--radius:8px;--radius-lg:12px;--shadow-sm:0 1px 2px rgba(0,0,0,.05);font-family:'Inter','Pretendard',system-ui,-apple-system,sans-serif}
   body{background:var(--slate-50);color:var(--slate-800);font-size:14px;line-height:1.6}
   header{background:#fff;border-bottom:1px solid var(--slate-200)}
   .header-inner{max-width:1100px;margin:0 auto;padding:16px 24px;display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}
-  .logo-mark{font-size:20px;font-weight:800;color:var(--slate-900);text-decoration:none;font-family:'Space Grotesk','Pretendard',sans-serif;letter-spacing:-0.4px;}
-  .logo-mark span{color:var(--accent);font-weight:500}
+  .logo-mark{font-size:20px;font-weight:800;color:var(--slate-900);text-decoration:none;font-family:'Space Grotesk','Inter',sans-serif;letter-spacing:-0.4px;}
   .nav-link{font-size:13px;font-weight:600;color:var(--slate-500);text-decoration:none;padding:7px 12px;border-radius:6px}
   .nav-link:hover{background:var(--slate-100)}
   .hero{background:#fff;border-bottom:1px solid var(--slate-200);padding:28px 24px 24px}
@@ -47,7 +44,6 @@
   .main{max-width:1100px;margin:0 auto;padding:28px 24px 60px}
   .clock-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
   .clock-card{background:#fff;border:1px solid var(--slate-200);border-radius:var(--radius-lg);padding:18px 20px;box-shadow:var(--shadow-sm);position:relative}
-  .clock-card.home{border-color:var(--accent);background:var(--accent-light);}
   .clock-city{font-size:14px;font-weight:700;color:var(--slate-900)}
   .clock-country{font-size:11px;color:var(--slate-400);margin-bottom:10px}
   .clock-time{font-size:28px;font-weight:800;color:var(--slate-900);letter-spacing:-1px;font-variant-numeric:tabular-nums}
@@ -57,11 +53,14 @@
   .badge.open{background:var(--success-light);color:var(--success)}
   .badge.closed{background:var(--danger-light);color:var(--danger)}
   .notice-box{background:var(--accent-light);border:1px solid #BFDBFE;border-radius:var(--radius);padding:10px 14px;font-size:12px;color:#1E40AF;margin-top:20px}
-  footer{background:var(--slate-900);color:var(--slate-400);padding:24px;font-size:12px}
+  .card{background:#fff;border:1px solid var(--slate-200);border-radius:var(--radius-lg);box-shadow:var(--shadow-sm);margin-bottom:20px}
+  .card-header{padding:16px 20px;border-bottom:1px solid var(--slate-100)}
+  .card-title{font-size:14px;font-weight:600;color:var(--slate-800)}
+  .card-body{padding:20px}
+  footer{background:#0F172A;color:#94A3B8;padding:24px;font-size:12px}
   .footer-inner{max-width:1100px;margin:0 auto;display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
-  .footer-logo{font-size:15px;font-weight:800;color:#fff;font-family:'Space Grotesk','Pretendard',sans-serif;letter-spacing:-0.4px;}
-  .footer-logo span{color:var(--accent);font-weight:500}
-  .footer-link{color:var(--slate-500);text-decoration:none;font-size:11px;margin-right:14px}
+  .footer-logo{font-size:15px;font-weight:800;color:#fff;font-family:'Space Grotesk','Inter',sans-serif;letter-spacing:-0.4px;}
+  .footer-link{color:#94A3B8;text-decoration:none;font-size:11px;margin-right:14px}
   @media (max-width:900px){.clock-grid{grid-template-columns:1fr 1fr}}
   @media (max-width:560px){.clock-grid{grid-template-columns:1fr}}
 
@@ -104,86 +103,92 @@
 
 <header><div class="header-inner">
   <a href="index.html" class="logo-mark"><svg width="26" height="26" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align:middle;margin-right:8px;flex-shrink:0;"><path d="M20 2.5L36.5 11.5V28.5L20 37.5L3.5 28.5V11.5L20 2.5Z" stroke="url(#cbmGradH)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M20 2.5V20M20 20L36.5 11.5M20 20L3.5 11.5" stroke="url(#cbmGradH)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/></svg><span style="font-family:'Montserrat','Space Grotesk',sans-serif;font-weight:800;letter-spacing:-1.1px;background:linear-gradient(90deg,#14B8A6 0%,#1E7A8C 45%,#0B2A4A 100%);-webkit-background-clip:text;background-clip:text;color:transparent;">CBMLab</span></a>
-  <div style="display:flex;align-items:center;gap:10px"><a href="index.html" class="nav-link">← 전체 도구 보기</a><a href="en/worldclock.html" class="nav-link" style="font-size:12px;font-weight:700;color:var(--accent);padding:6px 12px;border:1px solid var(--accent-light);border-radius:999px;background:var(--accent-light);">EN</a></div>
+  <a href="index.html" class="nav-link">← All Tools</a>
 </div></header>
 
 <section class="hero"><div class="hero-inner">
-  <h1>세계시간 &amp; 시차 계산기</h1>
-  <p>주요 거래국의 현재 시각을 실시간으로 확인하세요. 초록 배지는 현지 업무시간(09:00~18:00)입니다.</p>
+  <h1>World Clock &amp; Time Zone Converter</h1>
+  <p>Check the current local time in major trade hubs at a glance. The green badge means the city is currently within typical business hours (09:00–18:00 local).</p>
 </div></section>
 
 <div class="main">
   <div class="clock-grid" id="clocks"></div>
-  <div class="notice-box">업무시간 배지는 평일 09:00~18:00(현지 시각) 기준 단순 추정치이며, 실제 공휴일이나 회사별 근무시간과는 다를 수 있습니다.</div>
+  <div class="notice-box">The business-hours badge is a simple estimate based on weekdays, 09:00–18:00 local time. It doesn't account for public holidays or company-specific working hours.</div>
 </div>
-
 
 <div class="main" style="max-width:1100px;margin:0 auto;padding:0 24px 40px;">
   <div class="card">
-    <div class="card-header"><div class="card-title">왜 시차 확인이 필요한가</div></div>
+    <div class="card-header"><div class="card-title">Why time zone awareness matters</div></div>
     <div class="card-body" style="font-size:12.5px;color:var(--slate-600);line-height:1.7;">
-<p>해외 거래처와 통화나 화상회의를 잡을 때 시차를 매번 계산하다 보면, 상대방의 새벽 시간에 연락하는 실수를 하기 쉽습니다. 여러 국가와 동시에 거래한다면 이런 실수가 더 자주 발생합니다.</p>
-<p><b>실무 활용법:</b> 미팅을 잡기 전 거래국의 현재 시각과 업무시간 여부를 먼저 확인하거나, 여러 지역 담당자와 공통으로 연락 가능한 시간대를 찾을 때 활용할 수 있습니다.</p>
+<p>When you're scheduling a call or video meeting with an overseas partner, it's easy to miscalculate the time difference and end up reaching out in the middle of their night. This mistake gets more common the more countries you deal with at once.</p>
+<p><b>How to use this:</b> Check a trade partner's current local time and whether they're within business hours before scheduling a meeting, or use it to find an overlapping window when coordinating with contacts across several regions.</p>
 </div>
   </div>
 </div>
 
-<!-- AD (하단 배너) -->
-<div class="ad-area-main" role="complementary" aria-label="하단 광고 영역">
+<!-- AD (bottom banner) -->
+<div class="ad-area-main" role="complementary" aria-label="Advertisement area">
   <div class="ad-main-box">
     <strong>Advertisement</strong>
-    광고 영역 (Google AdSense) — 728 × 90 리더보드
+    Google AdSense — 728 × 90 leaderboard
   </div>
 </div>
 
 <footer><div class="footer-inner">
-  <div class="footer-logo"><svg width="24" height="24" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align:middle;margin-right:9px;flex-shrink:0;"><path d="M20 2.5L36.5 11.5V28.5L20 37.5L3.5 28.5V11.5L20 2.5Z" stroke="url(#cbmGradF)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M20 2.5V20M20 20L36.5 11.5M20 20L3.5 11.5" stroke="url(#cbmGradF)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/></svg>CBM<span>Lab</span></div>
-  <nav><a href="index.html" class="footer-link">전체 도구</a><a href="privacy.html" class="footer-link">개인정보 처리방침</a></nav>
+  <div class="footer-logo"><svg width="24" height="24" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align:middle;margin-right:9px;flex-shrink:0;"><path d="M20 2.5L36.5 11.5V28.5L20 37.5L3.5 28.5V11.5L20 2.5Z" stroke="url(#cbmGradF)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M20 2.5V20M20 20L36.5 11.5M20 20L3.5 11.5" stroke="url(#cbmGradF)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/></svg>CBM<span style="color:#2563EB;">Lab</span></div>
+  <nav><a href="index.html" class="footer-link">All Tools</a><a href="privacy.html" class="footer-link">Privacy Policy</a></nav>
 </div></footer>
 
 <script>
 const CITIES = [
-  {city:'서울', country:'대한민국', tz:'Asia/Seoul', home:true},
-  {city:'뉴욕', country:'미국 (동부)', tz:'America/New_York'},
-  {city:'로스앤젤레스', country:'미국 (서부)', tz:'America/Los_Angeles'},
-  {city:'런던', country:'영국', tz:'Europe/London'},
-  {city:'프랑크푸르트', country:'독일', tz:'Europe/Berlin'},
-  {city:'상하이', country:'중국', tz:'Asia/Shanghai'},
-  {city:'호치민', country:'베트남', tz:'Asia/Ho_Chi_Minh'},
-  {city:'두바이', country:'아랍에미리트', tz:'Asia/Dubai'},
-  {city:'도쿄', country:'일본', tz:'Asia/Tokyo'},
-  {city:'뉴델리', country:'인도', tz:'Asia/Kolkata'},
-  {city:'요하네스버그', country:'남아프리카공화국', tz:'Africa/Johannesburg'}
+  {city:'New York', country:'United States (East)', tz:'America/New_York'},
+  {city:'Los Angeles', country:'United States (West)', tz:'America/Los_Angeles'},
+  {city:'London', country:'United Kingdom', tz:'Europe/London'},
+  {city:'Frankfurt', country:'Germany', tz:'Europe/Berlin'},
+  {city:'Shanghai', country:'China', tz:'Asia/Shanghai'},
+  {city:'Ho Chi Minh City', country:'Vietnam', tz:'Asia/Ho_Chi_Minh'},
+  {city:'Dubai', country:'United Arab Emirates', tz:'Asia/Dubai'},
+  {city:'Seoul', country:'South Korea', tz:'Asia/Seoul'},
+  {city:'Tokyo', country:'Japan', tz:'Asia/Tokyo'},
+  {city:'New Delhi', country:'India', tz:'Asia/Kolkata'},
+  {city:'Johannesburg', country:'South Africa', tz:'Africa/Johannesburg'}
 ];
 
 function render(){
   const grid = document.getElementById('clocks');
   const now = new Date();
   grid.innerHTML = CITIES.map(c=>{
-    const timeStr = now.toLocaleTimeString('ko-KR', {timeZone:c.tz, hour:'2-digit', minute:'2-digit', second:'2-digit', hour12:false});
-    const dateStr = now.toLocaleDateString('ko-KR', {timeZone:c.tz, month:'long', day:'numeric', weekday:'short'});
+    const timeStr = now.toLocaleTimeString('en-US', {timeZone:c.tz, hour:'2-digit', minute:'2-digit', second:'2-digit', hour12:false});
+    const dateStr = now.toLocaleDateString('en-US', {timeZone:c.tz, month:'short', day:'numeric', weekday:'short'});
     const hour = parseInt(now.toLocaleString('en-US', {timeZone:c.tz, hour:'2-digit', hour12:false}));
     const weekday = now.toLocaleString('en-US', {timeZone:c.tz, weekday:'short'});
     const isWeekday = !['Sat','Sun'].includes(weekday);
     const isOpen = isWeekday && hour>=9 && hour<18;
 
-    // 시차 계산 (서울 기준)
-    const seoulHourStr = now.toLocaleString('en-US', {timeZone:'Asia/Seoul', hour:'2-digit', hour12:false, hourCycle:'h23'});
-    const localHourStr = now.toLocaleString('en-US', {timeZone:c.tz, hour:'2-digit', hour12:false, hourCycle:'h23'});
-    let diff = parseInt(localHourStr) - parseInt(seoulHourStr);
-    if(diff > 12) diff -= 24; if(diff < -12) diff += 24;
-    const diffLabel = c.home ? '기준 시간' : (diff===0 ? '시차 없음' : `서울보다 ${diff>0?'+':''}${diff}시간`);
+    // UTC offset
+    const utcOffset = getUtcOffset(c.tz, now);
 
-    return `<div class="clock-card ${c.home?'home':''}">
-      <span class="badge ${isOpen?'open':'closed'}">${isOpen?'업무중':'업무시간 외'}</span>
+    return `<div class="clock-card">
+      <span class="badge ${isOpen?'open':'closed'}">${isOpen?'Open':'Closed'}</span>
       <div class="clock-city">${c.city}</div>
       <div class="clock-country">${c.country}</div>
       <div class="clock-time">${timeStr}</div>
       <div class="clock-date">${dateStr}</div>
-      <div class="clock-diff">${diffLabel}</div>
+      <div class="clock-diff">UTC ${utcOffset}</div>
     </div>`;
   }).join('');
 }
+
+function getUtcOffset(tz, date){
+  const dtf = new Intl.DateTimeFormat('en-US', {timeZone:tz, timeZoneName:'shortOffset'});
+  const parts = dtf.formatToParts(date);
+  const tzPart = parts.find(p=>p.type==='timeZoneName');
+  if(tzPart && tzPart.value){
+    return tzPart.value.replace('GMT','').trim() ? tzPart.value.replace('GMT','') : '+0';
+  }
+  return '';
+}
+
 render();
 setInterval(render, 1000);
 </script>

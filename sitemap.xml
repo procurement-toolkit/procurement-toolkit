@@ -18,6 +18,11 @@
   <url><loc>https://procurement-toolkit-eight.vercel.app/en/courier-guide.html</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
   <url><loc>https://procurement-toolkit-eight.vercel.app/en/payment-terms-guide.html</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
   <url><loc>https://procurement-toolkit-eight.vercel.app/en/fta-guide.html</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/en/email-generator.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/en/market-index-hub.html</loc><changefreq>monthly</changefreq><priority>0.5</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/en/exam-calendar.html</loc><changefreq>monthly</changefreq><priority>0.4</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/en/worldclock.html</loc><changefreq>monthly</changefreq><priority>0.5</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/en/consulting.html</loc><changefreq>monthly</changefreq><priority>0.4</priority></url>
   <url><loc>https://procurement-toolkit-eight.vercel.app/en/privacy.html</loc><changefreq>yearly</changefreq><priority>0.3</priority></url>
   <url><loc>https://procurement-toolkit-eight.vercel.app/cbm.html</loc><changefreq>monthly</changefreq><priority>0.9</priority></url>
   <url><loc>https://procurement-toolkit-eight.vercel.app/fob-cif.html</loc><changefreq>monthly</changefreq><priority>0.9</priority></url>

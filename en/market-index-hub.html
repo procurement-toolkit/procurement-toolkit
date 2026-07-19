@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="PMI, LME base metals, global steel prices, the Baltic Dry Index (BDI), FX rates, and World Bank commodity data — key indicators for procurement and logistics professionals, linked straight to the official sources.">
+<meta name="keywords" content="PMI index, LME prices, steel price trends, Baltic Dry Index, commodity price trends">
+<title>Global Raw Material &amp; Economic Indicator Hub — CBM Lab</title>
+<link rel="icon" href="../favicon.ico" sizes="any">
+<link rel="icon" href="../favicon.ico" type="image/x-icon">
+<link rel="apple-touch-icon" href="../apple-touch-icon.png">
+<link rel="canonical" href="https://procurement-toolkit-eight.vercel.app/en/market-index-hub.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="CBM Lab">
+<meta property="og:locale" content="en_US">
+<meta property="og:title" content="Global Raw Material &amp; Economic Indicator Hub — CBM Lab">
+<meta property="og:description" content="PMI, LME base metals, global steel prices, the Baltic Dry Index (BDI), FX rates, and World Bank commodity data — key indicators for procurement and logistics professionals, linked straight to the official sources.">
+<meta property="og:url" content="https://procurement-toolkit-eight.vercel.app/en/market-index-hub.html">
+<meta property="og:image" content="https://procurement-toolkit-eight.vercel.app/assets/hero-team.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Global Raw Material &amp; Economic Indicator Hub — CBM Lab">
+<meta name="twitter:description" content="PMI, LME base metals, global steel prices, the Baltic Dry Index (BDI), FX rates, and World Bank commodity data — key indicators for procurement and logistics professionals, linked straight to the official sources.">
+<meta name="twitter:image" content="https://procurement-toolkit-eight.vercel.app/assets/hero-team.jpg">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@800;900&display=swap" rel="stylesheet">
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  :root{--accent:#2563EB;--accent-light:#DBEAFE;--accent-dark:#1D4ED8;--slate-50:#F8FAFC;--slate-100:#F1F5F9;--slate-200:#E2E8F0;--slate-400:#94A3B8;--slate-500:#64748B;--slate-600:#475569;--slate-700:#334155;--slate-800:#1E293B;--slate-900:#0F172A;--radius:8px;--radius-lg:12px;--shadow-sm:0 1px 2px rgba(0,0,0,.05);font-family:'Inter','Pretendard',system-ui,-apple-system,sans-serif}
+  body{background:var(--slate-50);color:var(--slate-800);font-size:14px;line-height:1.6}
+  header{background:#fff;border-bottom:1px solid var(--slate-200)}
+  .header-inner{max-width:1100px;margin:0 auto;padding:16px 24px;display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}
+  .logo-mark{font-size:20px;font-weight:800;color:var(--slate-900);text-decoration:none;font-family:'Space Grotesk','Inter',sans-serif;letter-spacing:-0.4px;}
+  .nav-link{font-size:13px;font-weight:600;color:var(--slate-500);text-decoration:none;padding:7px 12px;border-radius:6px}
+  .nav-link:hover{background:var(--slate-100)}
+  .hero{background:#fff;border-bottom:1px solid var(--slate-200);padding:28px 24px 24px}
+  .hero-inner{max-width:1100px;margin:0 auto}
+  .hero h1{font-size:22px;font-weight:700;color:var(--slate-900);margin-bottom:6px}
+  .hero p{font-size:14px;color:var(--slate-500);max-width:680px}
+  .main{max-width:1100px;margin:0 auto;padding:28px 24px 60px}
+  .idx-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+  .idx-card{background:#fff;border:1px solid var(--slate-200);border-radius:var(--radius-lg);padding:18px 20px;box-shadow:var(--shadow-sm)}
+  .idx-card h3{font-size:14.5px;font-weight:700;color:var(--slate-900);margin-bottom:6px}
+  .idx-card .idx-desc{font-size:12.5px;color:var(--slate-500);line-height:1.6;margin-bottom:12px}
+  .idx-card .idx-why{font-size:11.5px;color:var(--slate-600);background:var(--slate-50);border:1px solid var(--slate-100);border-radius:6px;padding:8px 10px;margin-bottom:12px}
+  .idx-card .idx-why b{color:var(--slate-800)}
+  .idx-link{display:inline-block;font-size:12px;font-weight:700;color:#fff;background:var(--accent);padding:7px 14px;border-radius:6px;text-decoration:none}
+  .idx-link:hover{background:var(--accent-dark)}
+  .notice-box{background:var(--accent-light);border:1px solid #BFDBFE;border-radius:var(--radius);padding:10px 14px;font-size:12px;color:#1E40AF;margin-top:20px}
+  footer{background:#0F172A;color:#94A3B8;padding:24px;font-size:12px}
+  .footer-inner{max-width:1100px;margin:0 auto;display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
+  .footer-logo{font-size:15px;font-weight:800;color:#fff;font-family:'Space Grotesk','Inter',sans-serif;letter-spacing:-0.4px;}
+  .footer-link{color:#94A3B8;text-decoration:none;font-size:11px;margin-right:14px}
+  @media (max-width:768px){.idx-grid{grid-template-columns:1fr}}
+
+  .ad-area-main{max-width:1200px;margin:24px auto 0;padding:0 24px 28px}
+  .ad-main-box{border:1px dashed #CBD5E1;border-radius:var(--radius,10px);background:#fff;height:90px;display:flex;flex-direction:column;align-items:center;justify-content:center;color:var(--slate-400,#94A3B8);font-size:12px;gap:4px}
+  .ad-main-box strong{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:#94A3B8}
+  @media (max-width:640px){.ad-area-main{padding:0 16px 20px}}
+
+  @media print{.ad-area-main,.ad-main-box,.ad-placeholder{display:none !important}}
+</style>
+
+<script src="https://cdn.amplitude.com/script/d4aa9301e01f4600b5eeb018e160aa7c.js"></script>
+<script>
+  window.amplitude.init("d4aa9301e01f4600b5eeb018e160aa7c", {
+    fetchRemoteConfig: true,
+    autocapture: true,
+  });
+</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-W1YBL5BGGK"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-W1YBL5BGGK');
+</script>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute;" aria-hidden="true">
+  <defs>
+    <linearGradient id="cbmGradH" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#14B8A6"/>
+      <stop offset="100%" stop-color="#0B2A4A"/>
+    </linearGradient>
+    <linearGradient id="cbmGradF" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#2DD4BF"/>
+      <stop offset="100%" stop-color="#5B9EFF"/>
+    </linearGradient>
+  </defs>
+</svg>
+
+<header><div class="header-inner">
+  <a href="index.html" class="logo-mark"><svg width="26" height="26" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align:middle;margin-right:8px;flex-shrink:0;"><path d="M20 2.5L36.5 11.5V28.5L20 37.5L3.5 28.5V11.5L20 2.5Z" stroke="url(#cbmGradH)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M20 2.5V20M20 20L36.5 11.5M20 20L3.5 11.5" stroke="url(#cbmGradH)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/></svg><span style="font-family:'Montserrat','Space Grotesk',sans-serif;font-weight:800;letter-spacing:-1.1px;background:linear-gradient(90deg,#14B8A6 0%,#1E7A8C 45%,#0B2A4A 100%);-webkit-background-clip:text;background-clip:text;color:transparent;">CBMLab</span></a>
+  <a href="index.html" class="nav-link">← All Tools</a>
+</div></header>
+
+<section class="hero"><div class="hero-inner">
+  <h1>Global Raw Material &amp; Economic Indicator Hub</h1>
+  <p>A curated set of indicators procurement and logistics professionals should keep an eye on, linked directly to each official source. Check the linked sites for real-time figures.</p>
+</div></section>
+
+<div class="main">
+  <div class="idx-grid">
+    <div class="idx-card">
+      <h3>PMI (Purchasing Managers' Index)</h3>
+      <div class="idx-desc">A leading economic indicator based on surveys of purchasing managers in manufacturing and services. Above 50 signals expansion; below 50 signals contraction.</div>
+      <div class="idx-why"><b>Why it matters:</b> A turn in major economies' PMI often precedes a shift in demand and order volume a few months later, making it a useful leading signal for inventory and order planning.</div>
+      <a class="idx-link" href="https://www.ismworld.org/supply-management-news-and-reports/reports/ism-report-on-business/" target="_blank" rel="noopener">ISM PMI →</a>
+    </div>
+
+    <div class="idx-card">
+      <h3>LME Base Metal Prices</h3>
+      <div class="idx-desc">International benchmark prices for copper, aluminum, zinc, and other base metals traded on the London Metal Exchange (LME).</div>
+      <div class="idx-why"><b>Why it matters:</b> These directly affect the cost of wiring, piping, electronic components, and other metal-based inputs — worth checking before a quote negotiation.</div>
+      <a class="idx-link" href="https://www.lme.com/metals" target="_blank" rel="noopener">LME Metal Prices →</a>
+    </div>
+
+    <div class="idx-card">
+      <h3>Global Steel Price Trends</h3>
+      <div class="idx-desc">Reference pricing for hot-rolled coil, cold-rolled coil, rebar, and other steel products across major markets.</div>
+      <div class="idx-why"><b>Why it matters:</b> Useful supporting data when negotiating cost or pricing adjustments on steel-intensive products.</div>
+      <a class="idx-link" href="https://steelbenchmarker.com" target="_blank" rel="noopener">SteelBenchmarker →</a>
+    </div>
+
+    <div class="idx-card">
+      <h3>BDI (Baltic Dry Index)</h3>
+      <div class="idx-desc">A benchmark index for international dry bulk shipping rates, reflecting freight cost trends for raw materials and grain.</div>
+      <div class="idx-why"><b>Why it matters:</b> Spotting a rising freight-rate cycle early can help with timing shipments or negotiating freight rates.</div>
+      <a class="idx-link" href="https://www.balticexchange.com" target="_blank" rel="noopener">Baltic Exchange →</a>
+    </div>
+
+    <div class="idx-card">
+      <h3>Exchange Rates</h3>
+      <div class="idx-desc">Live foreign exchange rates across major currency pairs.</div>
+      <div class="idx-why"><b>Why it matters:</b> FX movement directly affects landed cost and margin — worth checking periodically around your payment dates.</div>
+      <a class="idx-link" href="https://www.xe.com/currencytables/" target="_blank" rel="noopener">XE Exchange Rates →</a>
+    </div>
+
+    <div class="idx-card">
+      <h3>World Bank Commodity Price Data</h3>
+      <div class="idx-desc">Monthly and annual price data across energy, metals, agriculture, and fertilizer commodities (the "Pink Sheet"), published by the World Bank.</div>
+      <div class="idx-why"><b>Why it matters:</b> A widely cited, free reference point for commodity price trends — useful supporting data for cost negotiations and forecasting.</div>
+      <a class="idx-link" href="https://www.worldbank.org/en/research/commodity-markets" target="_blank" rel="noopener">World Bank Commodity Markets →</a>
+    </div>
+  </div>
+
+  <div class="notice-box">These links go to each source's live data page. This page exists to explain what to watch and why — it doesn't provide the figures directly. Always check the linked official source for current numbers.</div>
+</div>
+
+<!-- AD (bottom banner) -->
+<div class="ad-area-main" role="complementary" aria-label="Advertisement area">
+  <div class="ad-main-box">
+    <strong>Advertisement</strong>
+    Google AdSense — 728 × 90 leaderboard
+  </div>
+</div>
+
+<footer><div class="footer-inner">
+  <div class="footer-logo"><svg width="24" height="24" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align:middle;margin-right:9px;flex-shrink:0;"><path d="M20 2.5L36.5 11.5V28.5L20 37.5L3.5 28.5V11.5L20 2.5Z" stroke="url(#cbmGradF)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M20 2.5V20M20 20L36.5 11.5M20 20L3.5 11.5" stroke="url(#cbmGradF)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/></svg>CBM<span style="color:#2563EB;">Lab</span></div>
+  <nav><a href="index.html" class="footer-link">All Tools</a><a href="privacy.html" class="footer-link">Privacy Policy</a></nav>
+</div></footer>
+</body>
+</html>

@@ -1,31 +1,29 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="견적 요청, 주문 확인, 납기 지연 문의, 샘플 요청, 클레임 등 무역 실무에 바로 쓰는 영문 이메일을 무료로 생성하세요. 항목만 입력하면 비즈니스 영어 이메일이 자동 완성됩니다.">
-<meta name="keywords" content="영문 이메일 생성기, 무역 영어, 비즈니스 영어 이메일, 견적요청 이메일, RFQ 템플릿, 구매 이메일">
-<title>영문 구매 이메일 생성기 — CBM Lab</title>
-<link rel="icon" href="favicon.ico" sizes="any">
-<link rel="icon" href="favicon.ico" type="image/x-icon">
-<link rel="apple-touch-icon" href="apple-touch-icon.png">
-<link rel="canonical" href="https://procurement-toolkit-eight.vercel.app/email-generator.html">
+<meta name="description" content="Free tool to generate professional business emails for RFQs, purchase order confirmations, delivery delay follow-ups, sample requests, and quality claims — just fill in the fields.">
+<meta name="keywords" content="procurement email generator, RFQ email template, business English email, purchase order email, sample request email">
+<title>Procurement Email Generator — CBM Lab</title>
+<link rel="icon" href="../favicon.ico" sizes="any">
+<link rel="icon" href="../favicon.ico" type="image/x-icon">
+<link rel="apple-touch-icon" href="../apple-touch-icon.png">
+<link rel="canonical" href="https://procurement-toolkit-eight.vercel.app/en/email-generator.html">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="CBM Lab">
-<meta property="og:locale" content="ko_KR">
-<meta property="og:title" content="영문 구매 이메일 생성기 — CBM Lab">
-<meta property="og:description" content="견적 요청, 주문 확인, 납기 지연 문의, 샘플 요청, 클레임 등 무역 실무에 바로 쓰는 영문 이메일을 무료로 생성하세요. 항목만 입력하면 비즈니스 영어 이메일이 자동 완성됩니다.">
-<meta property="og:url" content="https://procurement-toolkit-eight.vercel.app/email-generator.html">
+<meta property="og:locale" content="en_US">
+<meta property="og:title" content="Procurement Email Generator — CBM Lab">
+<meta property="og:description" content="Free tool to generate professional business emails for RFQs, purchase order confirmations, delivery delay follow-ups, sample requests, and quality claims — just fill in the fields.">
+<meta property="og:url" content="https://procurement-toolkit-eight.vercel.app/en/email-generator.html">
 <meta property="og:image" content="https://procurement-toolkit-eight.vercel.app/assets/hero-team.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="영문 구매 이메일 생성기 — CBM Lab">
-<meta name="twitter:description" content="견적 요청, 주문 확인, 납기 지연 문의, 샘플 요청, 클레임 등 무역 실무에 바로 쓰는 영문 이메일을 무료로 생성하세요. 항목만 입력하면 비즈니스 영어 이메일이 자동 완성됩니다.">
+<meta name="twitter:title" content="Procurement Email Generator — CBM Lab">
+<meta name="twitter:description" content="Free tool to generate professional business emails for RFQs, purchase order confirmations, delivery delay follow-ups, sample requests, and quality claims — just fill in the fields.">
 <meta name="twitter:image" content="https://procurement-toolkit-eight.vercel.app/assets/hero-team.jpg">
 
-<link rel="alternate" hreflang="ko" href="https://procurement-toolkit-eight.vercel.app/email-generator.html">
-<link rel="alternate" hreflang="en" href="https://procurement-toolkit-eight.vercel.app/en/email-generator.html">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700;800&display=swap" rel="stylesheet">
@@ -53,7 +51,7 @@
     --radius: 8px;
     --radius-lg: 12px;
     --shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
-    font-family: 'Pretendard', 'Apple SD Gothic Neo', system-ui, -apple-system, sans-serif;
+    font-family: 'Inter', 'Pretendard', system-ui, -apple-system, sans-serif;
   }
 
   html { scroll-behavior: smooth; }
@@ -190,44 +188,44 @@
   <div class="header-inner">
     <a href="index.html" class="logo">
       <div class="logo-mark"><svg width="26" height="26" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align:middle;margin-right:8px;flex-shrink:0;"><path d="M20 2.5L36.5 11.5V28.5L20 37.5L3.5 28.5V11.5L20 2.5Z" stroke="url(#cbmGradH)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M20 2.5V20M20 20L36.5 11.5M20 20L3.5 11.5" stroke="url(#cbmGradH)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/></svg><span style="font-family:'Montserrat','Space Grotesk',sans-serif;font-weight:800;letter-spacing:-1.1px;background:linear-gradient(90deg,#14B8A6 0%,#1E7A8C 45%,#0B2A4A 100%);-webkit-background-clip:text;background-clip:text;color:transparent;">CBMLab</span></div>
-      <div class="logo-sub">영문 구매 이메일 생성기</div>
+      <div class="logo-sub">Procurement Email Generator</div>
     </a>
-    <div style="display:flex;align-items:center;gap:10px"><a href="index.html" class="nav-link">← 전체 도구 보기</a><a href="en/email-generator.html" class="nav-link" style="font-size:12px;font-weight:700;color:var(--accent);padding:6px 12px;border:1px solid var(--accent-light);border-radius:999px;background:var(--accent-light);">EN</a></div>
+    <a href="index.html" class="nav-link">← All Tools</a>
   </div>
 </header>
 
 <main>
-  <section class="hero" aria-label="서비스 소개">
+  <section class="hero" aria-label="Service introduction">
     <div class="hero-inner">
-      <h1>영문 구매 이메일 생성기</h1>
-      <p>견적 요청, 주문 확인, 납기 지연 문의, 샘플 요청, 클레임 제기까지 — 항목만 입력하면 무역 실무에 바로 쓸 수 있는 비즈니스 영어 이메일이 완성됩니다.</p>
+      <h1>Procurement Email Generator</h1>
+      <p>RFQs, purchase order confirmations, delivery delay follow-ups, sample requests, quality claims — fill in the fields and get a ready-to-send professional business email.</p>
       <div class="hero-tags">
         <span class="tag">RFQ</span>
-        <span class="tag">주문 확인</span>
-        <span class="tag">납기 문의</span>
-        <span class="tag">샘플 요청</span>
-        <span class="tag">클레임</span>
+        <span class="tag">Order Confirmation</span>
+        <span class="tag">Delay Follow-up</span>
+        <span class="tag">Sample Request</span>
+        <span class="tag">Claim</span>
       </div>
     </div>
   </section>
 
   <div class="main">
     <!-- LEFT: INPUT -->
-    <section aria-label="이메일 정보 입력">
+    <section aria-label="Email information input">
       <div class="card">
         <div class="card-header">
           <div class="card-title">
             <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
-            이메일 종류
+            Email Type
           </div>
         </div>
         <div class="card-body">
           <div class="template-group" id="template-group">
-            <button class="template-btn active" data-t="rfq">견적 요청 (RFQ)</button>
-            <button class="template-btn" data-t="order">주문 확인 (PO)</button>
-            <button class="template-btn" data-t="delay">납기 지연 문의</button>
-            <button class="template-btn" data-t="sample">샘플 요청</button>
-            <button class="template-btn" data-t="claim">품질 클레임</button>
+            <button class="template-btn active" data-t="rfq">Request for Quotation (RFQ)</button>
+            <button class="template-btn" data-t="order">Order Confirmation (PO)</button>
+            <button class="template-btn" data-t="delay">Delivery Delay Follow-up</button>
+            <button class="template-btn" data-t="sample">Sample Request</button>
+            <button class="template-btn" data-t="claim">Quality Claim</button>
           </div>
         </div>
       </div>
@@ -236,46 +234,46 @@
         <div class="card-header">
           <div class="card-title">
             <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
-            기본 정보
+            Basic Information
           </div>
         </div>
         <div class="card-body">
           <div class="field-row">
             <div class="field-group">
-              <label class="field-label">받는 분 성함 / 직함</label>
+              <label class="field-label">Recipient Name / Title</label>
               <input class="inp" id="toName" placeholder="Mr. John Smith, Purchasing Manager" oninput="generate()">
             </div>
             <div class="field-group">
-              <label class="field-label">상대 회사명</label>
+              <label class="field-label">Recipient Company</label>
               <input class="inp" id="toCompany" placeholder="ABC Trading Co., Ltd." oninput="generate()">
             </div>
           </div>
           <div class="field-row">
             <div class="field-group">
-              <label class="field-label">보내는 분 성함</label>
+              <label class="field-label">Your Name</label>
               <input class="inp" id="fromName" placeholder="Jaehui Park" oninput="generate()">
             </div>
             <div class="field-group">
-              <label class="field-label">보내는 회사명</label>
+              <label class="field-label">Your Company</label>
               <input class="inp" id="fromCompany" placeholder="Our Company Co., Ltd." oninput="generate()">
             </div>
           </div>
           <div class="field-group">
-            <label class="field-label">품목명</label>
+            <label class="field-label">Product Name</label>
             <input class="inp" id="product" placeholder="Model XR-200 Widget" oninput="generate()">
           </div>
           <div class="field-row">
             <div class="field-group">
-              <label class="field-label">수량</label>
+              <label class="field-label">Quantity</label>
               <input class="inp" id="qty" placeholder="5,000 units" oninput="generate()">
             </div>
             <div class="field-group" id="extraDateWrap">
-              <label class="field-label" id="extraDateLabel">희망 납기</label>
+              <label class="field-label" id="extraDateLabel">Requested Delivery</label>
               <input class="inp" id="extraDate" placeholder="within 4 weeks / by Aug 30" oninput="generate()">
             </div>
           </div>
           <div class="field-group" id="extraNoteWrap">
-            <label class="field-label" id="extraNoteLabel">추가 참고 사항 (선택)</label>
+            <label class="field-label" id="extraNoteLabel">Additional Notes (optional)</label>
             <textarea class="txa" id="extraNote" placeholder="Please include unit price, MOQ, lead time and payment terms." oninput="generate()"></textarea>
           </div>
         </div>
@@ -283,49 +281,49 @@
     </section>
 
     <!-- RIGHT: OUTPUT -->
-    <aside aria-label="생성된 이메일">
+    <aside aria-label="Generated Email">
       <div class="card">
         <div class="card-header">
           <div class="card-title">
             <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
-            생성된 이메일
+            Generated Email
           </div>
         </div>
         <div class="card-body">
           <div class="output-box" id="output"></div>
-          <button class="btn-copy" id="btn-copy" onclick="copyOutput()">이메일 전체 복사</button>
+          <button class="btn-copy" id="btn-copy" onclick="copyOutput()">Copy Full Email</button>
           <div class="notice-box">
-            생성된 문장은 기본 템플릿입니다. 실제 발송 전에는 받는 분 이름·직함·회사명 철자, 그리고 거래 조건(가격, 결제조건 등)을 다시 한번 확인하시기 바랍니다.
+            This is a standard template. Before sending, double-check the recipient's name, title, and company spelling, as well as trade terms (price, payment terms, etc.).
           </div>
         </div>
       </div>
 
-      <div class="ad-placeholder" role="complementary" aria-label="광고 영역">
+      <div class="ad-placeholder" role="complementary" aria-label="Advertisement area">
         <strong>Advertisement</strong>
-        광고 영역 (Google AdSense)<br>300 × 250 권장
+        Google AdSense<br>300 × 250 recommended
       </div>
     </aside>
   </div>
 
-  <div class="ad-area-main" role="complementary" aria-label="하단 광고 영역">
+  <div class="ad-area-main" role="complementary" aria-label="Advertisement area">
     <div class="ad-main-box">
       <strong>Advertisement</strong>
-      광고 영역 (Google AdSense) — 728 × 90 리더보드
+      Google AdSense — 728 × 90 leaderboard
     </div>
   </div>
 
   <div class="disclaimer">
-    <strong>안내:</strong> 본 도구는 정형화된 비즈니스 이메일 템플릿을 생성해 드립니다. 계약, 클레임, 법적 분쟁과 관련된 내용은 반드시 담당자 검토 및 필요 시 법률 자문을 거쳐 발송하시기 바랍니다.
+    <strong>Note:</strong> This tool generates a standard business email template. Content related to contracts, claims, or legal disputes should be reviewed internally and, if needed, by legal counsel before sending.
   </div>
 </main>
 
 
 <div class="main" style="max-width:1100px;margin:0 auto;padding:0 24px 40px;">
   <div class="card">
-    <div class="card-header"><div class="card-title">왜 템플릿이 필요한가</div></div>
+    <div class="card-header"><div class="card-title">Why use a template</div></div>
     <div class="card-body" style="font-size:12.5px;color:var(--slate-600);line-height:1.7;">
-<p>영어로 업무 메일을 쓸 때마다 문장을 새로 고민하면 시간이 오래 걸리고, 상황에 안 맞는 표현으로 오해가 생기기도 합니다. 견적 요청, 클레임 제기처럼 상황별로 관례적인 표현이 있는 경우가 많습니다.</p>
-<p><b>실무 활용법:</b> 신규 공급업체에 견적을 요청하거나 납기 지연 시 정중하면서도 명확하게 문의하는 메일이 필요할 때 활용하면, 상황에 맞는 기본 틀을 빠르게 만들고 세부 내용만 다듬어 바로 발송할 수 있습니다.</p>
+<p>Composing a business email from scratch every time takes time, and mismatched phrasing can create misunderstandings. Situations like RFQs or quality claims tend to follow conventional patterns of wording.</p>
+<p><b>How to use this:</b> Use it when you need to request a quote from a new supplier, or send a polite but clear follow-up on a delayed shipment — get a solid first draft in seconds and just fine-tune the details before sending.</p>
 </div>
   </div>
 </div>
@@ -334,22 +332,22 @@
   <div class="footer-inner">
     <div>
       <div class="footer-logo"><svg width="24" height="24" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align:middle;margin-right:9px;flex-shrink:0;"><path d="M20 2.5L36.5 11.5V28.5L20 37.5L3.5 28.5V11.5L20 2.5Z" stroke="url(#cbmGradF)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M20 2.5V20M20 20L36.5 11.5M20 20L3.5 11.5" stroke="url(#cbmGradF)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/></svg>CBM<span>Lab</span></div>
-      <div class="footer-desc">무역·구매 실무자를 위한 무료 도구 모음. 외부 서버 없이 브라우저에서 직접 처리합니다.</div>
+      <div class="footer-desc">Free tools for procurement and trade professionals. Everything runs in your browser — nothing is sent to a server.</div>
     </div>
-    <nav class="footer-links"><a href="index.html" class="footer-link">전체 도구</a><a href="privacy.html" class="footer-link">개인정보 처리방침</a></nav>
+    <nav class="footer-links"><a href="index.html" class="footer-link">All Tools</a><a href="privacy.html" class="footer-link">Privacy Policy</a></nav>
   </div>
-  <div class="footer-copy">&copy; 2026 CBM Lab. 본 도구는 교육/참고 목적으로 제공됩니다.</div>
+  <div class="footer-copy">&copy; 2026 CBM Lab. This tool is provided for educational and reference purposes.</div>
 </footer>
 
 <script>
   let currentTemplate = 'rfq';
 
   const EXTRA_LABELS = {
-    rfq: { date: '견적 회신 희망일', note: '추가 참고 사항 (선택)', notePlaceholder: 'Please include unit price, MOQ, lead time and payment terms.' },
-    order: { date: '희망 납기일', note: '결제/배송 조건 (선택)', notePlaceholder: 'Payment: 30% T/T advance, 70% before shipment. Shipping: FOB Busan.' },
-    delay: { date: '원래 약속했던 납기일', note: '지연으로 인한 영향/요청 사항 (선택)', notePlaceholder: 'Please provide an updated shipping schedule as soon as possible.' },
-    sample: { date: '샘플 필요 시기', note: '샘플 관련 추가 요청 (선택)', notePlaceholder: 'Please also share the certificate of material composition if available.' },
-    claim: { date: '발생일자 / PO 번호', note: '문제 상세 내용', notePlaceholder: 'We found that 120 out of 5,000 units had a cracked housing upon inspection.' }
+    rfq: { date: 'Requested Quote Reply Date', note: 'Additional Notes (optional)', notePlaceholder: 'Please include unit price, MOQ, lead time and payment terms.' },
+    order: { date: 'Requested Delivery Date', note: 'Payment/Shipping Terms (optional)', notePlaceholder: 'Payment: 30% T/T advance, 70% before shipment. Shipping: FOB Busan.' },
+    delay: { date: 'Originally Agreed Delivery Date', note: 'Impact of Delay / Request (optional)', notePlaceholder: 'Please provide an updated shipping schedule as soon as possible.' },
+    sample: { date: 'Sample Needed By', note: 'Additional Sample Request (optional)', notePlaceholder: 'Please also share the certificate of material composition if available.' },
+    claim: { date: 'Date Occurred / PO Number', note: 'Issue Details', notePlaceholder: 'We found that 120 out of 5,000 units had a cracked housing upon inspection.' }
   };
 
   document.getElementById('template-group').addEventListener('click', (e) => {
@@ -438,7 +436,7 @@
     navigator.clipboard.writeText(text).then(() => {
       const btn = document.getElementById('btn-copy');
       const original = btn.textContent;
-      btn.textContent = '복사 완료!';
+      btn.textContent = 'Copied!';
       btn.classList.add('copied');
       setTimeout(() => { btn.textContent = original; btn.classList.remove('copied'); }, 1800);
     });

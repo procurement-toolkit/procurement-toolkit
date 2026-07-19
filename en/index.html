@@ -160,6 +160,7 @@
   <div class="footer-inner">
     <div class="footer-logo"><svg width="24" height="24" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align:middle;margin-right:9px;flex-shrink:0;"><path d="M20 2.5L36.5 11.5V28.5L20 37.5L3.5 28.5V11.5L20 2.5Z" stroke="#5B9EFF" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M20 2.5V20M20 20L36.5 11.5M20 20L3.5 11.5" stroke="#5B9EFF" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/></svg>CBM<span>Lab</span></div>
     <nav>
+      <a href="consulting.html" class="footer-link">Consulting</a>
       <a href="privacy.html" class="footer-link">Privacy Policy</a>
       <a href="../index.html" class="footer-link">KOR</a>
     </nav>
@@ -207,11 +208,15 @@ const TOOLS = [
   {cat:'guide', icon:'incoterm', title:'Incoterms 2020 Guide &amp; Comparison Chart', desc:'All 11 Incoterms® 2020 rules compared — who pays freight, insurance, and duty, and where risk transfers.', href:'incoterms-guide.html', kw:'incoterms 2020 fob cif comparison'},
   {cat:'guide', icon:'truck', title:'International Courier Comparison &amp; Tracking', desc:'Compare DHL, FedEx, UPS, and USPS side by side, with direct links to official tracking pages.', href:'courier-guide.html', kw:'dhl fedex ups usps courier comparison tracking'},
   {cat:'guide', icon:'wallet', title:'Payment Terms Guide (T/T, L/C, D/P, D/A)', desc:'Compare trade payment terms by risk exposure and cash flow, with a checklist before choosing terms with a new partner.', href:'payment-terms-guide.html', kw:'tt lc dp da payment terms letter of credit'},
-  {cat:'guide', icon:'doc', title:'Certificate of Origin &amp; FTA Guide', desc:'Self-certification vs authority-issued C/O, how preferential tariffs work under USMCA, EU agreements, RCEP, CPTPP, and ASEAN, plus a pre-issuance checklist.', href:'fta-guide.html', kw:'certificate of origin fta preferential tariff rules of origin'}
+  {cat:'guide', icon:'doc', title:'Certificate of Origin &amp; FTA Guide', desc:'Self-certification vs authority-issued C/O, how preferential tariffs work under USMCA, EU agreements, RCEP, CPTPP, and ASEAN, plus a pre-issuance checklist.', href:'fta-guide.html', kw:'certificate of origin fta preferential tariff rules of origin'},
+  {cat:'gen', icon:'doc', title:'Procurement Email Generator', desc:'RFQs, order confirmations, delivery delay follow-ups, sample requests, and quality claims — fill in the fields and get a ready-to-send professional email.', href:'email-generator.html', kw:'procurement email rfq template generator'},
+  {cat:'guide', icon:'coin', title:'Global Raw Material &amp; Economic Indicator Hub', desc:'PMI, LME base metals, global steel prices, the Baltic Dry Index, FX rates, and World Bank commodity data — linked straight to the official sources.', href:'market-index-hub.html', kw:'pmi lme steel price baltic dry index commodity'},
+  {cat:'guide', icon:'star', title:'Global Procurement &amp; Supply Chain Certification Guide', desc:'CSCP, CPIM, CLTD, CPSM, and CIPS — how each credential is typically tested, with links to the official certifying body.', href:'exam-calendar.html', kw:'cscp cpsm cips certification supply chain'},
+  {cat:'live', icon:'clock', title:'World Clock &amp; Time Zone Converter', desc:'Check current local time and business-hours status for major trade hubs in real time.', href:'worldclock.html', kw:'world clock time zone converter business hours'}
 ];
 
-const CAT_LABEL = {calc:'Calculators', gen:'Generators', guide:'Guides'};
-const CAT_COLOR = {calc:'var(--route)', gen:'var(--beacon)', guide:'var(--teal)'};
+const CAT_LABEL = {calc:'Calculators', gen:'Generators', guide:'Guides', live:'Live Tools'};
+const CAT_COLOR = {calc:'var(--route)', gen:'var(--beacon)', guide:'var(--teal)', live:'var(--live)'};
 
 function renderTools(){
   const q = document.getElementById('searchInput').value.trim().toLowerCase();

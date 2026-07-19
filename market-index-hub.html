@@ -24,6 +24,8 @@
 <meta name="twitter:description" content="PMI, LME 비철금속, 철강 가격, 발틱운임지수(BDI) 등 구매·물류 담당자가 챙겨야 할 원자재/경기지표를 한곳에 모아 공식 출처로 바로 연결합니다.">
 <meta name="twitter:image" content="https://procurement-toolkit-eight.vercel.app/assets/hero-team.jpg">
 
+<link rel="alternate" hreflang="ko" href="https://procurement-toolkit-eight.vercel.app/market-index-hub.html">
+<link rel="alternate" hreflang="en" href="https://procurement-toolkit-eight.vercel.app/en/market-index-hub.html">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700;800&display=swap" rel="stylesheet">
@@ -63,6 +65,8 @@
   .ad-main-box{border:1px dashed #CBD5E1;border-radius:var(--radius,10px);background:#fff;height:90px;display:flex;flex-direction:column;align-items:center;justify-content:center;color:var(--slate-400,#94A3B8);font-size:12px;gap:4px}
   .ad-main-box strong{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:#94A3B8}
   @media (max-width:640px){.ad-area-main{padding:0 16px 20px}}
+
+  @media print{.ad-area-main,.ad-main-box,.ad-placeholder{display:none !important}}
 </style>
 
 <script src="https://cdn.amplitude.com/script/d4aa9301e01f4600b5eeb018e160aa7c.js"></script>
@@ -96,7 +100,7 @@
 
 <header><div class="header-inner">
   <a href="index.html" class="logo-mark"><svg width="26" height="26" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align:middle;margin-right:8px;flex-shrink:0;"><path d="M20 2.5L36.5 11.5V28.5L20 37.5L3.5 28.5V11.5L20 2.5Z" stroke="url(#cbmGradH)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M20 2.5V20M20 20L36.5 11.5M20 20L3.5 11.5" stroke="url(#cbmGradH)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/></svg><span style="font-family:'Montserrat','Space Grotesk',sans-serif;font-weight:800;letter-spacing:-1.1px;background:linear-gradient(90deg,#14B8A6 0%,#1E7A8C 45%,#0B2A4A 100%);-webkit-background-clip:text;background-clip:text;color:transparent;">CBMLab</span></a>
-  <a href="index.html" class="nav-link">← 전체 도구 보기</a>
+  <div style="display:flex;align-items:center;gap:10px"><a href="index.html" class="nav-link">← 전체 도구 보기</a><a href="en/market-index-hub.html" class="nav-link" style="font-size:12px;font-weight:700;color:var(--accent);padding:6px 12px;border:1px solid var(--accent-light);border-radius:999px;background:var(--accent-light);">EN</a></div>
 </div></header>
 
 <section class="hero"><div class="hero-inner">
