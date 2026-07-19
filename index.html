@@ -393,6 +393,19 @@ const TOOLS = [
 const CAT_LABEL = {calc:'계산기', gen:'생성기', guide:'가이드·정보', live:'실시간 도구'};
 let currentFilter = 'all';
 
+function updatePillCounts(){
+  const counts = {all: TOOLS.length, calc:0, gen:0, guide:0, live:0};
+  TOOLS.forEach(t => { if(counts[t.cat] !== undefined) counts[t.cat]++; });
+  document.querySelectorAll('.pill').forEach(btn => {
+    const cat = btn.dataset.filter;
+    const dot = btn.querySelector('.dot');
+    const label = cat === 'all' ? '전체' : (cat === 'guide' ? '가이드·정보' : (cat === 'live' ? '실시간' : CAT_LABEL[cat]));
+    btn.innerHTML = '';
+    if(dot) btn.appendChild(dot);
+    btn.appendChild(document.createTextNode(label + ' ' + counts[cat]));
+  });
+}
+
 function renderTools(){
   const q = document.getElementById('searchInput').value.trim().toLowerCase();
   const grid = document.getElementById('toolGrid');
@@ -430,6 +443,7 @@ function setPill(cat){
   renderTools();
 }
 
+updatePillCounts();
 renderTools();
 </script>
 
