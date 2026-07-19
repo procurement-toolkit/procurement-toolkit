@@ -68,12 +68,11 @@
   .opt-btn.active .sub{color:var(--accent)}
 
   .cat-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
-  .cat-btn{border:2px solid var(--slate-200);border-radius:12px;padding:16px 8px;background:#fff;cursor:pointer;text-align:center;transition:.12s}
-  .cat-icon{width:30px;height:30px;color:var(--slate-500);display:block;margin:0 auto 8px}
+  .cat-btn{border:2px solid var(--slate-200);border-radius:12px;padding:14px 8px 12px;background:#fff;cursor:pointer;text-align:center;transition:.14s}
+  .cat-icon3d{width:52px;height:52px;display:block;margin:0 auto 6px}
   .cat-btn .label{font-size:14px;font-weight:700;color:var(--slate-700);line-height:1.3}
-  .cat-btn:hover{border-color:var(--accent-light);background:var(--slate-50)}
-  .cat-btn.active{border-color:var(--accent);background:var(--accent-light)}
-  .cat-btn.active .cat-icon{color:var(--accent)}
+  .cat-btn:hover{border-color:var(--slate-300);transform:translateY(-1px)}
+  .cat-btn.active{border-color:var(--accent);background:var(--accent-light);box-shadow:0 0 0 2px var(--accent-light)}
   .cat-btn.active .label{color:var(--accent-dark)}
 
   .qty-box{margin-top:14px;padding:14px;background:var(--warn-light);border:1px solid var(--warn-border);border-radius:10px;display:none}
@@ -199,6 +198,17 @@
       <stop offset="0%" stop-color="#2DD4BF"/>
       <stop offset="100%" stop-color="#5B9EFF"/>
     </linearGradient>
+    <linearGradient id="bg-box" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#93C5FD"/><stop offset="100%" stop-color="#2563EB"/></linearGradient>
+    <linearGradient id="bg-shirt" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#86EFAC"/><stop offset="100%" stop-color="#16A34A"/></linearGradient>
+    <linearGradient id="bg-lipstick" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#F9A8D4"/><stop offset="100%" stop-color="#DB2777"/></linearGradient>
+    <linearGradient id="bg-bag" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#FCD34D"/><stop offset="100%" stop-color="#D97706"/></linearGradient>
+    <linearGradient id="bg-phone" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#A5B4FC"/><stop offset="100%" stop-color="#4F46E5"/></linearGradient>
+    <linearGradient id="bg-pill" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#FDBA74"/><stop offset="100%" stop-color="#EA580C"/></linearGradient>
+    <linearGradient id="bg-wine" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#D8B4FE"/><stop offset="100%" stop-color="#9333EA"/></linearGradient>
+    <linearGradient id="bg-gift" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#5EEAD4"/><stop offset="100%" stop-color="#0D9488"/></linearGradient>
+    <filter id="icon3dShadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="2" stdDeviation="1.6" flood-color="#000000" flood-opacity="0.28"/>
+    </filter>
   </defs>
 </svg>
 
@@ -227,14 +237,14 @@
   <div class="step">
     <div class="step-title"><span class="step-num">2</span>무엇을 구매하셨나요?</div>
     <div class="cat-grid">
-      <button type="button" class="cat-btn active" data-rate="8" data-excl="0" onclick="selectCategory(this)"><svg class="cat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M21 8L12 3 3 8v8l9 5 9-5V8z"/><path d="M3 8l9 5 9-5M12 13v8"/></svg><span class="label">일반 제품</span></button>
-      <button type="button" class="cat-btn" data-rate="13" data-excl="0" onclick="selectCategory(this)"><svg class="cat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M8 4L4 7v4h3v9h10v-9h3V7l-4-3-3 3h-2z"/></svg><span class="label">의류·신발</span></button>
-      <button type="button" class="cat-btn" data-rate="6.5" data-excl="partial" onclick="selectCategory(this)"><svg class="cat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3h4l1 3-2 2v13H10V8L8 6l1-3z"/><path d="M6 22h9"/></svg><span class="label">화장품</span></button>
-      <button type="button" class="cat-btn" data-rate="8" data-excl="0" onclick="selectCategory(this)"><svg class="cat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8h12l1 13H5L6 8z"/><path d="M9 8V6a3 3 0 016 0v2"/></svg><span class="label">가방·잡화</span></button>
-      <button type="button" class="cat-btn" data-rate="0" data-excl="partial" onclick="selectCategory(this)"><svg class="cat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="2.5" width="12" height="19" rx="2.2"/><path d="M11 19h2"/></svg><span class="label">전자기기</span></button>
-      <button type="button" class="cat-btn" data-rate="8" data-excl="1" onclick="selectCategory(this)" id="btn-supplement"><svg class="cat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="10.5" width="18" height="7" rx="3.5" transform="rotate(-45 12 14)"/><line x1="9.5" y1="16.5" x2="14.5" y2="11.5"/></svg><span class="label">영양제·건기식</span></button>
-      <button type="button" class="cat-btn" data-rate="20" data-excl="1" onclick="selectCategory(this)"><svg class="cat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3h8l-1 8a3 3 0 01-6 0L8 3z"/><path d="M12 15v6M8 21h8"/></svg><span class="label">주류</span></button>
-      <button type="button" class="cat-btn" data-rate="8" data-excl="0" onclick="selectCategory(this)"><svg class="cat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="9" width="18" height="12" rx="1.5"/><path d="M12 9v12M3 13h18"/><path d="M8 9c-1.5 0-2.5-1-2.5-2.2S6.5 4.5 8 4.5c2 0 4 3 4 4.5 0-1.5 2-4.5 4-4.5 1.5 0 2.5 1 2.5 2.3S17.5 9 16 9"/></svg><span class="label">기타</span></button>
+      <button type="button" class="cat-btn active" data-rate="8" data-excl="0" onclick="selectCategory(this)"><svg class="cat-icon3d" viewBox="0 0 100 100"><rect x="6" y="6" width="88" height="88" rx="24" fill="url(#bg-box)"/><ellipse cx="35" cy="28" rx="22" ry="12" fill="white" opacity="0.18"/><svg x="24" y="24" width="52" height="52" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" filter="url(#icon3dShadow)"><path d="M21 8L12 3 3 8v8l9 5 9-5V8z"/><path d="M3 8l9 5 9-5M12 13v8"/></svg></svg><span class="label">일반 제품</span></button>
+      <button type="button" class="cat-btn" data-rate="13" data-excl="0" onclick="selectCategory(this)"><svg class="cat-icon3d" viewBox="0 0 100 100"><rect x="6" y="6" width="88" height="88" rx="24" fill="url(#bg-shirt)"/><ellipse cx="35" cy="28" rx="22" ry="12" fill="white" opacity="0.18"/><svg x="24" y="24" width="52" height="52" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" filter="url(#icon3dShadow)"><path d="M20.38 3.46L16 2a4 4 0 01-8 0L3.62 3.46a2 2 0 00-1.34 2.23l.58 3.47a1 1 0 00.99.84H6v10c0 .55.45 1 1 1h10c.55 0 1-.45 1-1V10h2.15a1 1 0 00.99-.84l.58-3.47a2 2 0 00-1.34-2.23z"/></svg></svg><span class="label">의류·신발</span></button>
+      <button type="button" class="cat-btn" data-rate="6.5" data-excl="partial" onclick="selectCategory(this)"><svg class="cat-icon3d" viewBox="0 0 100 100"><rect x="6" y="6" width="88" height="88" rx="24" fill="url(#bg-lipstick)"/><ellipse cx="35" cy="28" rx="22" ry="12" fill="white" opacity="0.18"/><svg x="24" y="24" width="52" height="52" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" filter="url(#icon3dShadow)"><path d="M9 2h6v4H9z"/><path d="M9 6h6v4l-1.3 10.2a1.7 1.7 0 01-3.4 0L9 10V6z"/></svg></svg><span class="label">화장품</span></button>
+      <button type="button" class="cat-btn" data-rate="8" data-excl="0" onclick="selectCategory(this)"><svg class="cat-icon3d" viewBox="0 0 100 100"><rect x="6" y="6" width="88" height="88" rx="24" fill="url(#bg-bag)"/><ellipse cx="35" cy="28" rx="22" ry="12" fill="white" opacity="0.18"/><svg x="24" y="24" width="52" height="52" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" filter="url(#icon3dShadow)"><path d="M6 8h12l1 13H5L6 8z"/><path d="M9 8V6a3 3 0 016 0v2"/></svg></svg><span class="label">가방·잡화</span></button>
+      <button type="button" class="cat-btn" data-rate="0" data-excl="partial" onclick="selectCategory(this)"><svg class="cat-icon3d" viewBox="0 0 100 100"><rect x="6" y="6" width="88" height="88" rx="24" fill="url(#bg-phone)"/><ellipse cx="35" cy="28" rx="22" ry="12" fill="white" opacity="0.18"/><svg x="24" y="24" width="52" height="52" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" filter="url(#icon3dShadow)"><rect x="6" y="2.5" width="12" height="19" rx="2.2"/><path d="M11 19h2"/></svg></svg><span class="label">전자기기</span></button>
+      <button type="button" class="cat-btn" data-rate="8" data-excl="1" onclick="selectCategory(this)" id="btn-supplement"><svg class="cat-icon3d" viewBox="0 0 100 100"><rect x="6" y="6" width="88" height="88" rx="24" fill="url(#bg-pill)"/><ellipse cx="35" cy="28" rx="22" ry="12" fill="white" opacity="0.18"/><svg x="24" y="24" width="52" height="52" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" filter="url(#icon3dShadow)"><rect x="3" y="8.5" width="18" height="7" rx="3.5"/><line x1="12" y1="8.5" x2="12" y2="15.5"/></svg></svg><span class="label">영양제·건기식</span></button>
+      <button type="button" class="cat-btn" data-rate="20" data-excl="1" onclick="selectCategory(this)"><svg class="cat-icon3d" viewBox="0 0 100 100"><rect x="6" y="6" width="88" height="88" rx="24" fill="url(#bg-wine)"/><ellipse cx="35" cy="28" rx="22" ry="12" fill="white" opacity="0.18"/><svg x="24" y="24" width="52" height="52" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" filter="url(#icon3dShadow)"><path d="M8 3h8l-1 8a3 3 0 01-6 0L8 3z"/><path d="M12 15v6M8 21h8"/></svg></svg><span class="label">주류</span></button>
+      <button type="button" class="cat-btn" data-rate="8" data-excl="0" onclick="selectCategory(this)"><svg class="cat-icon3d" viewBox="0 0 100 100"><rect x="6" y="6" width="88" height="88" rx="24" fill="url(#bg-gift)"/><ellipse cx="35" cy="28" rx="22" ry="12" fill="white" opacity="0.18"/><svg x="24" y="24" width="52" height="52" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" filter="url(#icon3dShadow)"><rect x="3" y="9" width="18" height="12" rx="1.5"/><path d="M12 9v12M3 13h18"/><path d="M8 9c-1.5 0-2.5-1-2.5-2.2S6.5 4.5 8 4.5c2 0 4 3 4 4.5 0-1.5 2-4.5 4-4.5 1.5 0 2.5 1 2.5 2.3S17.5 9 16 9"/></svg></svg><span class="label">기타</span></button>
     </div>
 
     <div class="qty-box" id="qtyBox">
