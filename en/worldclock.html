@@ -24,6 +24,8 @@
 <meta name="twitter:description" content="Live world clock for major trade hubs — check current local time, UTC offset, and whether each city is currently within typical business hours (09:00–18:00 local).">
 <meta name="twitter:image" content="https://procurement-toolkit-eight.vercel.app/assets/hero-team.jpg">
 
+<link rel="alternate" hreflang="ko" href="https://procurement-toolkit-eight.vercel.app/worldclock.html">
+<link rel="alternate" hreflang="en" href="https://procurement-toolkit-eight.vercel.app/en/worldclock.html">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700;800&display=swap" rel="stylesheet">
@@ -163,15 +165,17 @@
 const CITIES = [
   {city:'New York', country:'United States (East)', tz:'America/New_York'},
   {city:'Los Angeles', country:'United States (West)', tz:'America/Los_Angeles'},
+  {city:'Mexico City', country:'Mexico', tz:'America/Mexico_City'},
+  {city:'São Paulo', country:'Brazil', tz:'America/Sao_Paulo'},
   {city:'London', country:'United Kingdom', tz:'Europe/London'},
   {city:'Frankfurt', country:'Germany', tz:'Europe/Berlin'},
+  {city:'Dubai', country:'United Arab Emirates', tz:'Asia/Dubai'},
+  {city:'Johannesburg', country:'South Africa', tz:'Africa/Johannesburg'},
+  {city:'New Delhi', country:'India', tz:'Asia/Kolkata'},
   {city:'Shanghai', country:'China', tz:'Asia/Shanghai'},
   {city:'Ho Chi Minh City', country:'Vietnam', tz:'Asia/Ho_Chi_Minh'},
-  {city:'Dubai', country:'United Arab Emirates', tz:'Asia/Dubai'},
   {city:'Seoul', country:'South Korea', tz:'Asia/Seoul'},
-  {city:'Tokyo', country:'Japan', tz:'Asia/Tokyo'},
-  {city:'New Delhi', country:'India', tz:'Asia/Kolkata'},
-  {city:'Johannesburg', country:'South Africa', tz:'Africa/Johannesburg'}
+  {city:'Tokyo', country:'Japan', tz:'Asia/Tokyo'}
 ];
 
 function render(){
