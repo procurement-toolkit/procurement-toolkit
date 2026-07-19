@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="해외직구 관부가세 계산기 - 물품가액, 배송비, 카테고리를 입력하면 예상 관세와 부가세, 면세한도까지 남은 금액을 바로 계산합니다. 영양제·건강기능식품 6병 기준까지 반영, 실시간 환율 조회 지원. 영양제·건강기능식품 6병 기준까지 반영, 실시간 환율 조회 지원.">
+<meta name="description" content="해외직구 관부가세 계산기 - 물품가격만 입력하면 관세와 부가세, 면세한도까지 남은 금액을 바로 계산합니다. 영양제·건강기능식품 6병 기준까지 반영, 실시간 환율 조회 지원.">
 <meta name="keywords" content="해외직구 관부가세 계산기, 관세 계산, 면세한도, 해외직구 세금, 영양제 직구 관세, 아이허브 관부가세">
 <title>해외직구 관부가세 계산기 — CBM Lab</title>
 <link rel="icon" href="favicon.ico" sizes="any">
@@ -14,83 +14,159 @@
 <meta property="og:site_name" content="CBM Lab">
 <meta property="og:locale" content="ko_KR">
 <meta property="og:title" content="해외직구 관부가세 계산기 — CBM Lab">
-<meta property="og:description" content="해외직구 관부가세 계산기 - 물품가액, 배송비, 카테고리를 입력하면 예상 관세와 부가세, 면세한도까지 남은 금액을 바로 계산합니다. 영양제·건강기능식품 6병 기준까지 반영, 실시간 환율 조회 지원.">
+<meta property="og:description" content="해외직구 관부가세 계산기 - 물품가격만 입력하면 관세와 부가세, 면세한도까지 남은 금액을 바로 계산합니다. 영양제·건강기능식품 6병 기준까지 반영, 실시간 환율 조회 지원.">
 <meta property="og:url" content="https://procurement-toolkit-eight.vercel.app/personal-duty-calculator.html">
 <meta property="og:image" content="https://procurement-toolkit-eight.vercel.app/assets/hero-team.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="해외직구 관부가세 계산기 — CBM Lab">
-<meta name="twitter:description" content="해외직구 관부가세 계산기 - 물품가액, 배송비, 카테고리를 입력하면 예상 관세와 부가세, 면세한도까지 남은 금액을 바로 계산합니다. 영양제·건강기능식품 6병 기준까지 반영, 실시간 환율 조회 지원.">
+<meta name="twitter:description" content="해외직구 관부가세 계산기 - 물품가격만 입력하면 관세와 부가세, 면세한도까지 남은 금액을 바로 계산합니다. 영양제·건강기능식품 6병 기준까지 반영, 실시간 환율 조회 지원.">
 <meta name="twitter:image" content="https://procurement-toolkit-eight.vercel.app/assets/hero-team.jpg">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@600;700;800&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@800;900&display=swap" rel="stylesheet">
 <style>
   *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-  :root{--accent:#2563EB;--accent-light:#DBEAFE;--accent-dark:#1D4ED8;--slate-50:#F8FAFC;--slate-100:#F1F5F9;--slate-200:#E2E8F0;--slate-300:#CBD5E1;--slate-400:#94A3B8;--slate-500:#64748B;--slate-600:#475569;--slate-700:#334155;--slate-800:#1E293B;--slate-900:#0F172A;--success:#0F766E;--success-light:#CCFBF1;--danger:#DC2626;--radius:8px;--radius-lg:12px;--shadow-sm:0 1px 2px rgba(0,0,0,.05);font-family:'Pretendard','Apple SD Gothic Neo',system-ui,-apple-system,sans-serif}
-  body{background:var(--slate-50);color:var(--slate-800);font-size:14px;line-height:1.6}
+  :root{
+    --accent:#2563EB;--accent-light:#DBEAFE;--accent-dark:#1D4ED8;
+    --slate-50:#F8FAFC;--slate-100:#F1F5F9;--slate-200:#E2E8F0;--slate-300:#CBD5E1;
+    --slate-400:#94A3B8;--slate-500:#64748B;--slate-600:#475569;--slate-700:#334155;
+    --slate-800:#1E293B;--slate-900:#0F172A;
+    --success:#0F766E;--success-light:#D1FAE5;--success-border:#6EE7B7;
+    --warn:#B45309;--warn-light:#FEF3C7;--warn-border:#FCD34D;
+    --danger:#B91C1C;--danger-light:#FEE2E2;--danger-border:#FCA5A5;
+    --radius:14px;--shadow:0 2px 10px rgba(15,23,42,.06);
+    font-family:'Pretendard','Apple SD Gothic Neo',system-ui,-apple-system,sans-serif;
+  }
+  html{-webkit-text-size-adjust:100%}
+  body{background:var(--slate-50);color:var(--slate-800);font-size:17px;line-height:1.65}
+
   header{background:#fff;border-bottom:1px solid var(--slate-200)}
-  .header-inner{max-width:1200px;margin:0 auto;padding:16px 24px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+  .header-inner{max-width:760px;margin:0 auto;padding:16px 20px;display:flex;align-items:center;justify-content:space-between;gap:16px}
   .logo-mark{font-size:20px;font-weight:800;color:var(--slate-900);text-decoration:none;font-family:'Space Grotesk','Pretendard',sans-serif;letter-spacing:-0.4px;}
-  .logo-mark span{color:var(--accent);font-weight:500}
-  .nav-link{font-size:13px;font-weight:600;color:var(--slate-500);text-decoration:none;padding:7px 12px;border-radius:6px}
+  .nav-link{font-size:15px;font-weight:600;color:var(--slate-500);text-decoration:none;padding:8px 12px;border-radius:8px}
   .nav-link:hover{background:var(--slate-100)}
-  .hero{background:#fff;border-bottom:1px solid var(--slate-200);padding:28px 24px 24px}
-  .hero-inner{max-width:1200px;margin:0 auto}
-  .hero h1{font-size:22px;font-weight:700;color:var(--slate-900);margin-bottom:6px}
-  .hero p{font-size:14px;color:var(--slate-500);max-width:640px}
-  .hero-tags{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}
-  .tag{background:var(--slate-100);color:var(--slate-600);font-size:11px;font-weight:500;padding:3px 10px;border-radius:4px;border:1px solid var(--slate-200)}
-  .main{max-width:1200px;margin:0 auto;padding:28px 24px 60px;display:grid;grid-template-columns:1fr 380px;gap:24px;align-items:start}
-  .card{background:#fff;border:1px solid var(--slate-200);border-radius:var(--radius-lg);box-shadow:var(--shadow-sm);margin-bottom:20px}
-  .card:last-child{margin-bottom:0}
-  .card-header{padding:18px 20px;border-bottom:1px solid var(--slate-100)}
-  .card-title{font-size:14px;font-weight:600;color:var(--slate-800)}
-  .card-body{padding:20px}
-  .field-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-  .field-label{font-size:12px;font-weight:600;color:var(--slate-600);margin-bottom:6px;display:block}
-  .inp,select.inp{width:100%;border:1px solid var(--slate-200);border-radius:6px;padding:8px 11px;font-size:13px;color:var(--slate-800);background:#fff;font-family:inherit}
-  .inp:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px rgba(37,99,235,.1)}
-  .check-row{display:flex;align-items:center;gap:8px;font-size:12.5px;color:var(--slate-600);margin-top:14px}
-  .check-row input{accent-color:var(--accent);width:15px;height:15px}
-  .result-line{display:flex;justify-content:space-between;padding:9px 0;border-bottom:1px solid var(--slate-100);font-size:13px}
-  .result-line:last-child{border-bottom:none}
-  .result-line .label{color:var(--slate-500)}
-  .result-line .value{font-weight:600;color:var(--slate-800);font-variant-numeric:tabular-nums}
-  .result-total{background:var(--accent-light);border:1px solid #BFDBFE;border-radius:var(--radius);padding:16px 18px;margin-top:10px}
-  .result-total .label{font-size:11px;font-weight:700;color:var(--accent-dark);letter-spacing:.4px;text-transform:uppercase;margin-bottom:4px}
-  .result-total .value{font-size:24px;font-weight:800;color:var(--accent-dark);letter-spacing:-.6px}
-  .result-total.free{background:var(--success-light);border-color:#99F6E4}
-  .result-total.free .label,.result-total.free .value{color:var(--success)}
-  .headroom-box{background:var(--slate-50);border:1px solid var(--slate-100);border-radius:var(--radius);padding:12px 14px;margin-top:12px;font-size:12.5px;color:var(--slate-600)}
-  .headroom-box strong{color:var(--slate-800)}
-  .notice-box{background:var(--accent-light);border:1px solid #BFDBFE;border-radius:var(--radius);padding:10px 14px;font-size:12px;color:#1E40AF;line-height:1.5;margin-top:14px}
-  .ad-placeholder{border:1px dashed var(--slate-300);border-radius:var(--radius);background:var(--slate-50);padding:20px;text-align:center;color:var(--slate-400);font-size:12px}
-  .ad-placeholder strong{display:block;font-size:11px;font-weight:600;text-transform:uppercase;color:var(--slate-300);margin-bottom:4px}
-  .disclaimer{max-width:1200px;margin:0 auto;padding:0 24px 20px;font-size:11px;color:var(--slate-400);line-height:1.6}
-  footer{background:var(--slate-900);color:var(--slate-400);padding:24px;font-size:12px}
-  .footer-inner{max-width:1200px;margin:0 auto;display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
-  .footer-logo{font-size:15px;font-weight:800;color:#fff;font-family:'Space Grotesk','Pretendard',sans-serif;letter-spacing:-0.4px;}
-  .footer-logo span{color:var(--accent);font-weight:500}
-  .footer-link{color:var(--slate-500);text-decoration:none;font-size:11px;margin-right:14px}
-  .footer-link:hover{color:var(--slate-200)}
-  @media (max-width:900px){.main{grid-template-columns:1fr}}
-  @media (max-width:640px){.field-grid{grid-template-columns:1fr}.hero h1{font-size:18px}}
 
-  @media print{.ad-area-main,.ad-main-box,.ad-placeholder{display:none !important}}
+  .wrap{max-width:760px;margin:0 auto;padding:28px 20px 60px}
 
-  .faq-wrap{max-width:1100px;margin:20px auto 0;padding:0 24px}
-  .faq-item{border-bottom:1px solid var(--slate-100);padding:12px 0}
+  .hero{text-align:center;margin-bottom:26px}
+  .hero h1{font-size:28px;font-weight:800;color:var(--slate-900);margin-bottom:10px;letter-spacing:-.3px}
+  .hero p{font-size:16px;color:var(--slate-500);max-width:520px;margin:0 auto}
+
+  .step{background:#fff;border:1px solid var(--slate-200);border-radius:var(--radius);box-shadow:var(--shadow);padding:22px 22px 24px;margin-bottom:16px}
+  .step-title{display:flex;align-items:center;gap:10px;font-size:18px;font-weight:800;color:var(--slate-900);margin-bottom:16px}
+  .step-num{width:28px;height:28px;border-radius:50%;background:var(--accent);color:#fff;font-size:14px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+
+  .btn-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .opt-btn{border:2px solid var(--slate-200);border-radius:12px;padding:16px 14px;background:#fff;font-size:16px;font-weight:700;color:var(--slate-700);cursor:pointer;text-align:center;line-height:1.4;transition:.12s}
+  .opt-btn .sub{display:block;font-size:13px;font-weight:500;color:var(--slate-400);margin-top:3px}
+  .opt-btn:hover{border-color:var(--accent-light);background:var(--slate-50)}
+  .opt-btn.active{border-color:var(--accent);background:var(--accent-light);color:var(--accent-dark)}
+  .opt-btn.active .sub{color:var(--accent)}
+
+  .cat-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
+  .cat-btn{border:2px solid var(--slate-200);border-radius:12px;padding:14px 8px;background:#fff;cursor:pointer;text-align:center;transition:.12s}
+  .cat-btn .emoji{font-size:26px;display:block;margin-bottom:6px}
+  .cat-btn .label{font-size:14px;font-weight:700;color:var(--slate-700);line-height:1.3}
+  .cat-btn:hover{border-color:var(--accent-light);background:var(--slate-50)}
+  .cat-btn.active{border-color:var(--accent);background:var(--accent-light)}
+  .cat-btn.active .label{color:var(--accent-dark)}
+
+  .qty-box{margin-top:14px;padding:14px;background:var(--warn-light);border:1px solid var(--warn-border);border-radius:10px;display:none}
+  .qty-box.show{display:block}
+  .qty-box label{display:block;font-size:14.5px;font-weight:700;color:var(--warn);margin-bottom:8px}
+  .qty-stepper{display:flex;align-items:center;gap:0;max-width:180px}
+  .qty-stepper button{width:44px;height:44px;border:1.5px solid var(--slate-300);background:#fff;font-size:20px;font-weight:700;color:var(--slate-600);cursor:pointer}
+  .qty-stepper button:first-child{border-radius:10px 0 0 10px}
+  .qty-stepper button:last-child{border-radius:0 10px 10px 0}
+  .qty-stepper input{width:70px;height:44px;text-align:center;border:1.5px solid var(--slate-300);border-left:none;border-right:none;font-size:17px;font-weight:700;color:var(--slate-800)}
+
+  .price-row{display:flex;gap:10px;align-items:stretch}
+  .currency-pills{display:flex;gap:6px;margin-bottom:12px;flex-wrap:wrap}
+  .cur-pill{border:2px solid var(--slate-200);border-radius:999px;padding:9px 16px;background:#fff;font-size:15px;font-weight:700;color:var(--slate-600);cursor:pointer}
+  .cur-pill.active{border-color:var(--accent);background:var(--accent);color:#fff}
+
+  .big-input{width:100%;font-size:24px;font-weight:800;color:var(--slate-900);border:2px solid var(--slate-200);border-radius:12px;padding:16px 18px;font-family:inherit}
+  .big-input:focus{outline:none;border-color:var(--accent)}
+  .input-label{font-size:14.5px;font-weight:600;color:var(--slate-500);margin-bottom:8px;display:block}
+
+  .fx-row{display:flex;gap:8px;margin-top:16px}
+  .fx-row .big-input{font-size:17px;font-weight:700;padding:12px 14px}
+  .fx-btn{white-space:nowrap;padding:0 16px;border:2px solid var(--accent-light);border-radius:12px;background:var(--accent-light);color:var(--accent-dark);font-size:14.5px;font-weight:700;cursor:pointer}
+  .fx-status{font-size:13px;color:var(--slate-400);margin-top:8px}
+
+  .check-row{display:flex;align-items:center;gap:10px;margin-top:16px;padding:12px 14px;background:var(--slate-50);border-radius:10px}
+  .check-row input{width:22px;height:22px;accent-color:var(--accent);flex-shrink:0}
+  .check-row label{font-size:15px;color:var(--slate-600);font-weight:600}
+
+  .result-card{border-radius:var(--radius);padding:26px 24px;text-align:center;margin-bottom:14px;border:2px solid}
+  .result-card.free{background:var(--success-light);border-color:var(--success-border)}
+  .result-card.tax{background:var(--warn-light);border-color:var(--warn-border)}
+  .result-card.warn{background:var(--danger-light);border-color:var(--danger-border)}
+  .result-status{font-size:15px;font-weight:700;margin-bottom:6px}
+  .result-card.free .result-status{color:var(--success)}
+  .result-card.tax .result-status{color:var(--warn)}
+  .result-card.warn .result-status{color:var(--danger)}
+  .result-amount{font-size:38px;font-weight:800;color:var(--slate-900);letter-spacing:-.5px}
+  .result-sub{font-size:14.5px;color:var(--slate-500);margin-top:10px;line-height:1.6}
+
+  .clearance-line{display:flex;align-items:center;gap:8px;font-size:14px;font-weight:700;padding:10px 14px;border-radius:10px;margin-bottom:14px}
+  .clearance-line.ok{background:var(--success-light);color:var(--success)}
+  .clearance-line.mid{background:var(--accent-light);color:var(--accent-dark)}
+  .clearance-line.excl{background:var(--warn-light);color:var(--warn)}
+
+  .breakdown{background:#fff;border:1px solid var(--slate-200);border-radius:12px;padding:4px 18px;margin-bottom:14px}
+  .breakdown-row{display:flex;justify-content:space-between;padding:12px 0;font-size:15px;border-bottom:1px solid var(--slate-100)}
+  .breakdown-row:last-child{border-bottom:none}
+  .breakdown-row .k{color:var(--slate-500)}
+  .breakdown-row .v{font-weight:700;color:var(--slate-800)}
+
+  .action-btns{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:20px}
+  .action-btn{padding:14px;border-radius:12px;border:2px solid var(--slate-200);background:#fff;font-size:15px;font-weight:700;color:var(--slate-600);cursor:pointer;text-align:center}
+  .action-btn.primary{border-color:var(--accent);background:var(--accent-light);color:var(--accent-dark)}
+
+  details.more{background:#fff;border:1px solid var(--slate-200);border-radius:var(--radius);margin-bottom:14px;overflow:hidden}
+  details.more summary{padding:18px 22px;font-size:16px;font-weight:700;color:var(--slate-700);cursor:pointer;list-style:none;display:flex;align-items:center;justify-content:space-between}
+  details.more summary::-webkit-details-marker{display:none}
+  details.more summary::after{content:'더 보기 ＋';color:var(--accent);font-size:14px;font-weight:700}
+  details.more[open] summary::after{content:'접기 －'}
+  details.more .more-body{padding:0 22px 20px;font-size:14.5px;color:var(--slate-600);line-height:1.75}
+  details.more .more-body p{margin-bottom:12px}
+  details.more .more-body p:last-child{margin-bottom:0}
+
+  .faq-item{border-bottom:1px solid var(--slate-100);padding:14px 0}
   .faq-item:last-child{border-bottom:none}
-  .faq-item summary{cursor:pointer;font-weight:700;font-size:13px;color:var(--slate-800);list-style:none;outline:none}
+  .faq-item summary{cursor:pointer;font-weight:700;font-size:15px;color:var(--slate-800);list-style:none;outline:none}
   .faq-item summary::-webkit-details-marker{display:none}
   .faq-item summary::before{content:'Q. ';color:var(--accent)}
-  .faq-item p{margin-top:8px;font-size:12.5px;color:var(--slate-600);line-height:1.7;padding-left:2px}
-  @media (max-width:640px){.faq-wrap{padding:0 16px}}
+  .faq-item p{margin-top:8px;font-size:14.5px;color:var(--slate-600);line-height:1.7;padding-left:2px}
+
+  .ad-area-main{max-width:760px;margin:20px auto 0;padding:0 20px}
+  .ad-main-box{border:1px dashed #CBD5E1;border-radius:10px;background:#fff;height:90px;display:flex;flex-direction:column;align-items:center;justify-content:center;color:var(--slate-400);font-size:12px;gap:4px}
+  .ad-main-box strong{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:#94A3B8}
+
+  .disclaimer{max-width:760px;margin:20px auto 0;padding:0 20px;font-size:12.5px;color:var(--slate-400);line-height:1.6;text-align:center}
+
+  footer{background:#0F172A;color:#94A3B8;padding:24px 20px;font-size:12px;margin-top:30px}
+  .footer-inner{max-width:760px;margin:0 auto;display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
+  .footer-logo{font-size:15px;font-weight:800;color:#fff;font-family:'Space Grotesk','Pretendard',sans-serif;}
+  .footer-link{color:#94A3B8;text-decoration:none;font-size:11px;margin-right:14px}
+
+  @media print{.ad-area-main,.ad-main-box,.action-btns,header,footer,.disclaimer{display:none !important}}
+
+  @media (max-width:480px){
+    body{font-size:16px}
+    .hero h1{font-size:24px}
+    .cat-grid{grid-template-columns:1fr 1fr}
+    .result-amount{font-size:30px}
+    .step{padding:18px}
+  }
 </style>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <script src="https://cdn.amplitude.com/script/d4aa9301e01f4600b5eeb018e160aa7c.js"></script>
 <script>
   window.amplitude.init("d4aa9301e01f4600b5eeb018e160aa7c", {
@@ -107,301 +183,322 @@
 </script>
 </head>
 <body>
-<svg width="0" height="0" style="position:absolute;" aria-hidden="true">
-  <defs>
-    <linearGradient id="cbmGradH" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#14B8A6"/>
-      <stop offset="100%" stop-color="#0B2A4A"/>
-    </linearGradient>
-    <linearGradient id="cbmGradF" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#2DD4BF"/>
-      <stop offset="100%" stop-color="#5B9EFF"/>
-    </linearGradient>
-  </defs>
-</svg>
 
 <header><div class="header-inner">
-  <a href="index.html" class="logo-mark"><svg width="26" height="26" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align:middle;margin-right:8px;flex-shrink:0;"><path d="M20 2.5L36.5 11.5V28.5L20 37.5L3.5 28.5V11.5L20 2.5Z" stroke="url(#cbmGradH)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M20 2.5V20M20 20L36.5 11.5M20 20L3.5 11.5" stroke="url(#cbmGradH)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/></svg><span style="font-family:'Montserrat','Space Grotesk',sans-serif;font-weight:800;letter-spacing:-1.1px;background:linear-gradient(90deg,#14B8A6 0%,#1E7A8C 45%,#0B2A4A 100%);-webkit-background-clip:text;background-clip:text;color:transparent;">CBMLab</span></a>
-  <a href="index.html" class="nav-link">← 전체 도구 보기</a>
+  <a href="index.html" class="logo-mark">CBMLab</a>
+  <a href="index.html" class="nav-link">← 전체 도구</a>
 </div></header>
 
-<section class="hero"><div class="hero-inner">
-  <h1>해외직구 관부가세 계산기</h1>
-  <p>해외 쇼핑몰에서 직구할 때 발생할 수 있는 관세와 부가세를 미리 확인하세요. 면세한도까지 얼마나 남았는지도 함께 계산해 드립니다.</p>
-  <div class="hero-tags"><span class="tag">면세한도</span><span class="tag">관세·부가세</span><span class="tag">자가사용</span></div>
-</div></section>
+<div class="wrap">
 
-<div class="main" style="max-width:1100px;margin:0 auto;padding:20px 24px 0;">
-  <div class="card">
-    <div class="card-header"><div class="card-title">📋 계산 전에 이것부터 확인하세요</div></div>
-    <div class="card-body" style="font-size:12.5px;color:var(--slate-600);line-height:1.8;">
-      <p><strong>1) 물품가격은 어디서 확인하나요?</strong><br>주문 확인 이메일이나 결제 내역에서 <strong>상품 금액만</strong> 확인하세요. 배송비·보험료는 보통 제외되지만, 쇼핑몰에 따라 상품가에 합쳐서 표시되는 경우도 있으니 항목을 나눠서 확인하는 것이 정확합니다.</p>
-      <p><strong>2) 오늘 같은 사이트에서 다른 것도 주문했나요?</strong><br>같은 날 같은 사람 앞으로 여러 건이 도착하면 금액이 합산되어 과세될 수 있습니다(합산과세). 이번 계산은 한 건 기준이므로, 여러 건이라면 합산 금액으로 다시 확인하세요.</p>
-      <p><strong>3) 영양제·의약품인가요?</strong><br>가격이 낮아도 6병을 초과하면 별도 규정이 적용됩니다. 이 계산기에서 카테고리를 "영양제/건강기능식품"으로 선택하면 자동으로 반영됩니다.</p>
+  <div class="hero">
+    <h1>해외직구 관부가세 계산기</h1>
+    <p>세 가지만 입력하면, 세금을 내야 하는지 바로 알려드려요.</p>
+  </div>
+
+  <!-- STEP 1: 국가 -->
+  <div class="step">
+    <div class="step-title"><span class="step-num">1</span>어느 나라에서 구매하셨나요?</div>
+    <div class="btn-grid">
+      <button type="button" class="opt-btn" data-threshold="200" onclick="selectCountry(this)">미국<span class="sub">면세한도 $200</span></button>
+      <button type="button" class="opt-btn active" data-threshold="150" onclick="selectCountry(this)">그 외 나라<span class="sub">중국·일본·유럽 등 · 면세한도 $150</span></button>
     </div>
   </div>
-</div>
 
-<div class="main">
-  <section>
-    <div class="card">
-      <div class="card-header"><div class="card-title">구매 정보 입력</div></div>
-      <div class="card-body">
-        <div class="field-grid">
-          <div>
-            <label class="field-label">발송 국가</label>
-            <select class="inp" id="country" onchange="calc()">
-              <option value="150">미국 외 국가 (면세한도 $150)</option>
-              <option value="200">미국 (면세한도 $200)</option>
-            </select>
-          </div>
-          <div>
-            <label class="field-label">물품 카테고리</label>
-            <select class="inp" id="category" onchange="calc()">
-              <option value="8" data-excl="0">일반 공산품 (약 8%)</option>
-              <option value="13" data-excl="0">의류/신발 (약 13%)</option>
-              <option value="6.5" data-excl="partial">화장품 (약 6.5%)</option>
-              <option value="8" data-excl="0">가방/잡화 (약 8%)</option>
-              <option value="0" data-excl="partial">전자기기 일부 (약 0~8%, 품목별 상이)</option>
-              <option value="20" data-excl="1">주류 (약 20%+주세, 별도 계산 필요)</option>
-              <option value="SUPPLEMENT" data-excl="1">영양제/건강기능식품 (약 8%, 품목별 상이)</option>
-            </select>
-          </div>
-          <div>
-            <label class="field-label">물품가액 통화</label>
-            <select class="inp" id="currencySelect" onchange="setCurrency(this.value)">
-              <option value="USD">달러 (USD)</option>
-              <option value="CNY">위안화 (CNY)</option>
-              <option value="JPY">엔화 (JPY)</option>
-              <option value="EUR">유로 (EUR)</option>
-            </select>
-          </div>
-          <div>
-            <label class="field-label">물품가액 (<span id="curLabel">USD</span>, 배송비 제외)</label>
-            <input type="number" class="inp" id="value" value="120" min="0" oninput="calc()">
-          </div>
-          <div>
-            <label class="field-label">적용 환율 (1<span id="curLabel2">USD</span> = ? KRW)</label>
-            <div style="display:flex;gap:6px;">
-              <input type="number" class="inp" id="fx" value="1380" min="0" oninput="calc()">
-              <button type="button" id="fxFetchBtn" onclick="fetchLiveRate()" style="white-space:nowrap;padding:0 12px;border:1px solid var(--slate-200);border-radius:6px;background:#fff;color:var(--accent);font-size:12px;font-weight:700;cursor:pointer;">실시간 조회</button>
-            </div>
-            <div id="fxStatus" style="font-size:11px;color:var(--slate-400);margin-top:4px;"></div>
-          </div>
-        </div>
-        <div id="supplementQtyRow" style="display:none;margin-top:12px;">
-          <label class="field-label">구매 수량 (병) — 영양제/건기식은 자가사용 인정 기준이 <strong>6병 이내</strong>입니다</label>
-          <input type="number" class="inp" id="supplementQty" value="1" min="1" step="1" oninput="calc()" style="max-width:160px;">
-        </div>
-        <div class="check-row">
-          <input type="checkbox" id="selfUse" checked onchange="calc()">
-          <label for="selfUse">자가사용 목적 구매입니다 (판매 목적이 아님)</label>
-        </div>
-        <div class="notice-box">
-          면세한도는 <strong>물품가격(운임 제외)</strong> 기준이며, 미국발은 $200, 그 외 국가는 $150입니다. 같은 날 같은 사람 앞으로 여러 건이 오면 금액이 합산되어 과세될 수 있습니다(합산과세).
-        </div>
-        <div class="notice-box" id="supplementNotice" style="display:none;margin-top:8px;">
-          ⚠ 영양제·건강기능식품은 가격이 면세한도 이하여도 <strong>6병을 초과하면 자가사용으로 인정되지 않아</strong> 정식 수입요건 확인 대상이 될 수 있습니다 (의약품 등의 자가사용 인정기준, 「수입통관 사무처리에 관한 고시」 별표 11).
-        </div>
+  <!-- STEP 2: 카테고리 -->
+  <div class="step">
+    <div class="step-title"><span class="step-num">2</span>무엇을 구매하셨나요?</div>
+    <div class="cat-grid">
+      <button type="button" class="cat-btn active" data-rate="8" data-excl="0" onclick="selectCategory(this)"><span class="emoji">📦</span><span class="label">일반 제품</span></button>
+      <button type="button" class="cat-btn" data-rate="13" data-excl="0" onclick="selectCategory(this)"><span class="emoji">👕</span><span class="label">의류·신발</span></button>
+      <button type="button" class="cat-btn" data-rate="6.5" data-excl="partial" onclick="selectCategory(this)"><span class="emoji">💄</span><span class="label">화장품</span></button>
+      <button type="button" class="cat-btn" data-rate="8" data-excl="0" onclick="selectCategory(this)"><span class="emoji">👜</span><span class="label">가방·잡화</span></button>
+      <button type="button" class="cat-btn" data-rate="0" data-excl="partial" onclick="selectCategory(this)"><span class="emoji">📱</span><span class="label">전자기기</span></button>
+      <button type="button" class="cat-btn" data-rate="8" data-excl="1" onclick="selectCategory(this)" id="btn-supplement"><span class="emoji">💊</span><span class="label">영양제·건기식</span></button>
+      <button type="button" class="cat-btn" data-rate="20" data-excl="1" onclick="selectCategory(this)"><span class="emoji">🍷</span><span class="label">주류</span></button>
+      <button type="button" class="cat-btn" data-rate="8" data-excl="0" onclick="selectCategory(this)"><span class="emoji">🧸</span><span class="label">기타</span></button>
+    </div>
+
+    <div class="qty-box" id="qtyBox">
+      <label>⚠ 영양제·건기식은 몇 병 사셨나요? (6병까지만 면세 가능)</label>
+      <div class="qty-stepper">
+        <button type="button" onclick="changeQty(-1)">−</button>
+        <input type="number" id="supplementQty" value="1" min="1" oninput="calc()">
+        <button type="button" onclick="changeQty(1)">＋</button>
       </div>
     </div>
-  </section>
+  </div>
 
-  <aside>
-    <div class="card" id="resultCard">
-      <div class="card-header"><div class="card-title">예상 세액</div></div>
-      <div class="card-body">
-        <div id="clearanceType"></div>
-        <div id="result-total-wrap"></div>
-        <div id="result-lines"></div>
-        <div class="headroom-box" id="headroom"></div>
-      </div>
+  <!-- STEP 3: 가격 -->
+  <div class="step">
+    <div class="step-title"><span class="step-num">3</span>얼마짜리인가요?</div>
+    <span class="input-label">결제 통화</span>
+    <div class="currency-pills" id="currencyPills">
+      <button type="button" class="cur-pill active" data-cur="USD" onclick="selectCurrency(this)">달러 $</button>
+      <button type="button" class="cur-pill" data-cur="CNY" onclick="selectCurrency(this)">위안 ¥</button>
+      <button type="button" class="cur-pill" data-cur="JPY" onclick="selectCurrency(this)">엔화 ¥</button>
+      <button type="button" class="cur-pill" data-cur="EUR" onclick="selectCurrency(this)">유로 €</button>
     </div>
-    <button type="button" onclick="saveResultImage()" style="width:100%;margin-top:8px;padding:10px;border:1px solid var(--slate-200);border-radius:8px;background:#fff;color:var(--slate-600);font-size:12.5px;font-weight:700;cursor:pointer;">📥 계산 결과 이미지로 저장</button>
-    <button type="button" id="shareBtn" onclick="shareResult()" style="width:100%;margin-top:8px;padding:10px;border:1px solid var(--accent-light);border-radius:8px;background:var(--accent-light);color:var(--accent);font-size:12.5px;font-weight:700;cursor:pointer;">🔗 계산 결과 공유하기 (카카오톡·링크)</button>
-    <div class="ad-placeholder"><strong>Advertisement</strong>광고 영역 (Google AdSense)<br>300 × 250 권장</div>
-  </aside>
-</div>
 
-<div class="disclaimer"><strong>안내:</strong> 본 계산기는 개략적인 참고용 추정치이며, 실제 세액은 품목의 정확한 HS Code 분류, FTA 협정 적용 여부, 통관 시점 환율에 따라 달라질 수 있습니다. 정확한 금액은 관세청 홈페이지 또는 관세청 콜센터(125)를 통해 확인하시기 바랍니다.</div>
+    <span class="input-label">물건 가격 (배송비 제외, 상품 금액만)</span>
+    <input type="number" class="big-input" id="value" value="120" min="0" oninput="calc()" placeholder="예: 120">
 
-<div class="main" style="max-width:1100px;margin:0 auto;padding:20px 24px 0;">
-  <div class="card">
-    <div class="card-header"><div class="card-title">✅ 계산 후, 다음엔 뭘 해야 하나요?</div></div>
-    <div class="card-body" style="font-size:12.5px;color:var(--slate-600);line-height:1.8;">
-      <p><strong>면세 범위라면?</strong><br>별도로 할 일은 없습니다. 목록통관 가능 품목이라면 통관목록 제출만으로 처리되어 그대로 배송을 기다리시면 됩니다. 단, 같은 날 추가 주문 시 합산과세될 수 있다는 점만 유의하세요.</p>
-      <p><strong>세금이 나온다면?</strong><br>배송대행지·구매대행을 이용했다면 보통 업체가 관세사를 통해 대신 통관을 진행하고, 관부가세를 별도로 청구하거나 착불로 안내합니다. 직접 수입신고를 해야 하는 경우(예: 6병 초과 영양제)에는 <strong>개인통관고유부호</strong>(관세청 유니패스에서 무료 발급)가 필요하고, 필요 시 관세사에게 수입신고를 위임하는 것이 일반적입니다.</p>
-      <p><strong>진행 상황이 궁금하다면?</strong><br>관세청 유니패스(unipass.customs.go.kr)에서 통관 진행 상황을 조회할 수 있습니다. 목록통관 품목이라도 세관 심사에 따라 일반통관으로 전환될 수 있으니, 예상보다 배송이 지연된다면 확인해보세요.</p>
+    <div class="fx-row" id="fxRow" style="display:none">
+      <input type="number" class="big-input" id="fx" value="1380" min="0" oninput="calc()">
+      <button type="button" class="fx-btn" id="fxFetchBtn" onclick="fetchLiveRate()">실시간 환율</button>
+    </div>
+    <div class="fx-status" id="fxStatus"></div>
+
+    <div class="check-row">
+      <input type="checkbox" id="selfUse" checked onchange="calc()">
+      <label for="selfUse">제가 직접 쓰려고 산 거예요 (되팔 목적 아님)</label>
     </div>
   </div>
-</div>
 
-
-<div class="main" style="max-width:1100px;margin:0 auto;padding:0 24px 40px;">
-  <div class="card">
-    <div class="card-header"><div class="card-title">왜 미리 확인해야 하는가</div></div>
-    <div class="card-body" style="font-size:12.5px;color:var(--slate-600);line-height:1.7;">
-<p>해외직구 시 면세한도(150불·미국 200불)를 넘기면 예상치 못한 관세·부가세가 발생합니다. 같은 날 여러 건을 주문하면 합산과세가 적용될 수 있어, 결제 전 확인 없이는 통관 단계에서 당황하기 쉽습니다.</p>
-<p><b>실무 활용법:</b> 장바구니 금액이 면세한도에 가까울 때 얼마나 여유가 남았는지 확인하고, 초과가 예상되면 결제를 나눠서 진행하는 식으로 활용할 수 있습니다. 카테고리별로 관세율이 다르므로 정확한 품목 선택이 중요합니다.</p>
-</div>
+  <!-- 결과 -->
+  <div id="resultCard">
+    <div id="clearanceType"></div>
+    <div id="resultCardInner"></div>
+    <div id="breakdownWrap"></div>
   </div>
-</div>
 
+  <div class="action-btns">
+    <button type="button" class="action-btn" onclick="saveResultImage()">📥 이미지로 저장</button>
+    <button type="button" class="action-btn primary" id="shareBtn" onclick="shareResult()">🔗 결과 공유하기</button>
+  </div>
 
-<div class="faq-wrap">
-  <div class="card">
-    <div class="card-header"><div class="card-title">자주 묻는 질문</div></div>
-    <div class="card-body">
-      <details class="faq-item"><summary>해외직구 면세한도는 얼마이고, 왜 나라마다 다른가요?</summary><p>한국 관세청 기준으로 미국발 물품은 200달러, 그 외 국가는 150달러까지 면세됩니다(물품가격 기준, 배송비 제외). 미국이 예외적으로 더 높은 이유는 한-미 FTA 협정에 따른 것입니다.</p></details>
-      <details class="faq-item"><summary>같은 날 여러 건 주문하면 왜 세금이 붙을 수 있나요?</summary><p>같은 날 같은 사람 앞으로 도착하는 여러 건의 화물은 합산해서 과세하는 '합산과세' 규정이 적용됩니다. 면세한도를 피하려고 결제를 여러 번 나눠도, 같은 날 도착하면 합산되어 초과분에 과세될 수 있습니다.</p></details>
-      <details class="faq-item"><summary>자가사용으로 인정받으려면 어떤 조건이 필요한가요?</summary><p>동일 품목을 대량으로 반복 구매하거나 재판매 목적이 의심되는 경우 자가사용으로 인정되지 않고 정식 수입신고 대상이 될 수 있습니다. 통상적인 개인 소비 범위(수량·빈도)를 벗어나지 않는 것이 중요합니다.</p></details>
-      <details class="faq-item"><summary>해외 결제 통화가 달러가 아니면 면세한도 계산이 달라지나요?</summary><p>면세한도 자체는 미화(USD) 기준으로 고정되어 있습니다. 위안화·엔화·유로로 결제했다면 결제 시점의 환율로 USD 환산 금액을 기준으로 판단해야 하며, 이 계산기에서도 입력하신 환율로 USD 환산 후 비교합니다.</p></details>
-      <details class="faq-item"><summary>영양제는 가격이 면세한도 이하면 무조건 면세인가요?</summary><p>아니요. 영양제·건강기능식품은 가격 조건(150·200달러 이하)과 별개로 <strong>자가사용 인정 기준이 6병 이내</strong>로 정해져 있습니다. 가격이 한도 이내라도 7병 이상 구매하면 정식 수입요건 확인 대상이 될 수 있습니다.</p></details>
+  <!-- 더 알아보기 (접힘) -->
+  <details class="more">
+    <summary>📋 계산 전에 확인할 것</summary>
+    <div class="more-body">
+      <p><strong>물건 가격은 어디서 보나요?</strong> 주문 확인 메일이나 결제내역에서 <strong>상품 금액만</strong> 보시면 됩니다. 배송비는 대부분 빼고 계산해요.</p>
+      <p><strong>오늘 같은 사이트에서 또 주문했나요?</strong> 같은 날 도착하는 여러 건은 금액을 합쳐서 계산해요. 나눠서 주문해도 같은 날 오면 소용없어요.</p>
     </div>
-  </div>
+  </details>
+
+  <details class="more">
+    <summary>✅ 계산 후에는 뭘 하나요?</summary>
+    <div class="more-body">
+      <p><strong>면세라면</strong> 아무것도 안 하셔도 됩니다. 그냥 배송을 기다리시면 돼요.</p>
+      <p><strong>세금이 나온다면</strong> 배송대행지·구매대행을 이용했다면 업체가 알아서 처리해서 청구해줍니다. 직접 처리해야 한다면 관세청 유니패스(unipass.customs.go.kr)에서 개인통관고유부호를 무료로 발급받고, 필요하면 관세사에게 맡기시면 됩니다.</p>
+      <p><strong>배송이 늦어진다면</strong> 관세청 유니패스에서 통관 진행상황을 조회해보세요.</p>
+    </div>
+  </details>
+
+  <details class="more">
+    <summary>❓ 자주 묻는 질문</summary>
+    <div class="more-body" style="padding-top:4px">
+      <details class="faq-item"><summary>면세한도는 얼마인가요?</summary><p>미국에서 산 물건은 200달러, 그 외 나라는 150달러까지 세금이 없습니다. 물건 가격 기준이고, 배송비는 포함 안 됩니다.</p></details>
+      <details class="faq-item"><summary>같은 날 여러 번 주문하면 어떻게 되나요?</summary><p>같은 날 같은 사람에게 도착하는 물건들은 금액을 합쳐서 계산합니다. 결제를 나눠도 같은 날 도착하면 합쳐진다는 점, 꼭 기억하세요.</p></details>
+      <details class="faq-item"><summary>제가 쓰려고 산 게 맞다는 걸 어떻게 증명하나요?</summary><p>같은 물건을 대량으로 반복해서 사지 않으면 보통 문제없습니다. 평범한 개인 소비 수준이면 걱정 안 하셔도 됩니다.</p></details>
+      <details class="faq-item"><summary>결제를 원화가 아닌 다른 돈으로 했어요. 그래도 계산되나요?</summary><p>네, 됩니다. 위안화·엔화·유로로 내셨어도 그 시점 환율로 달러 기준 금액을 계산해서 면세한도와 비교해드립니다.</p></details>
+    </div>
+  </details>
+
 </div>
+
+<!-- AD -->
+<div class="ad-area-main" role="complementary" aria-label="광고 영역">
+  <div class="ad-main-box"><strong>Advertisement</strong>광고 영역 (Google AdSense)</div>
+</div>
+
+<div class="disclaimer">이 계산기는 참고용 추정치입니다. 실제 세액은 품목의 정확한 분류와 통관 시점 환율에 따라 달라질 수 있습니다. 정확한 금액은 관세청 콜센터(125)에서 확인하세요.</div>
 
 <footer><div class="footer-inner">
-  <div class="footer-logo"><svg width="24" height="24" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align:middle;margin-right:9px;flex-shrink:0;"><path d="M20 2.5L36.5 11.5V28.5L20 37.5L3.5 28.5V11.5L20 2.5Z" stroke="url(#cbmGradF)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M20 2.5V20M20 20L36.5 11.5M20 20L3.5 11.5" stroke="url(#cbmGradF)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/></svg>CBM<span>Lab</span></div>
+  <div class="footer-logo">CBMLab</div>
   <nav><a href="index.html" class="footer-link">전체 도구</a><a href="privacy.html" class="footer-link">개인정보 처리방침</a></nav>
 </div></footer>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "면세한도는 얼마인가요?",
+      "acceptedAnswer": {"@type": "Answer", "text": "미국에서 산 물건은 200달러, 그 외 나라는 150달러까지 세금이 없습니다. 물건 가격 기준이고, 배송비는 포함되지 않습니다."}
+    },
+    {
+      "@type": "Question",
+      "name": "같은 날 여러 번 주문하면 어떻게 되나요?",
+      "acceptedAnswer": {"@type": "Answer", "text": "같은 날 같은 사람에게 도착하는 물건들은 금액을 합쳐서 계산합니다. 결제를 나눠도 같은 날 도착하면 합산됩니다."}
+    },
+    {
+      "@type": "Question",
+      "name": "제가 쓰려고 산 게 맞다는 걸 어떻게 증명하나요?",
+      "acceptedAnswer": {"@type": "Answer", "text": "같은 물건을 대량으로 반복해서 구매하지 않으면 보통 자가사용으로 인정됩니다."}
+    },
+    {
+      "@type": "Question",
+      "name": "결제를 원화가 아닌 다른 통화로 했어요. 그래도 계산되나요?",
+      "acceptedAnswer": {"@type": "Answer", "text": "네, 위안화·엔화·유로로 결제했어도 해당 시점 환율로 달러 기준 금액을 환산해 면세한도와 비교합니다."}
+    }
+  ]
+}
+</script>
+
 <script>
-const CURRENCIES = { USD:{symbol:'$'}, CNY:{symbol:'¥'}, JPY:{symbol:'¥'}, EUR:{symbol:'€'} };
+let threshold = 150;
+let dutyRate = 8;
+let categoryExcl = '0';
 let currentCurrency = 'USD';
-function curSym(){ return CURRENCIES[currentCurrency].symbol; }
-function setCurrency(code){
-  currentCurrency = code;
-  document.getElementById('curLabel').textContent = code;
-  document.getElementById('curLabel2').textContent = code;
+const CURRENCIES = { USD:{symbol:'$'}, CNY:{symbol:'¥'}, JPY:{symbol:'¥'}, EUR:{symbol:'€'} };
+const USD_KRW_REF = 1380;
+
+function selectCountry(btn){
+  document.querySelectorAll('.btn-grid .opt-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  threshold = parseFloat(btn.dataset.threshold);
+  calc();
+}
+
+function selectCategory(btn){
+  document.querySelectorAll('.cat-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  dutyRate = parseFloat(btn.dataset.rate);
+  categoryExcl = btn.dataset.excl;
+  const isSupplement = btn.id === 'btn-supplement';
+  document.getElementById('qtyBox').classList.toggle('show', isSupplement);
+  calc();
+}
+
+function changeQty(delta){
+  const input = document.getElementById('supplementQty');
+  let v = (parseInt(input.value)||1) + delta;
+  if(v < 1) v = 1;
+  input.value = v;
+  calc();
+}
+
+function selectCurrency(btn){
+  document.querySelectorAll('.cur-pill').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  currentCurrency = btn.dataset.cur;
+  document.getElementById('fxRow').style.display = currentCurrency === 'USD' ? 'none' : 'flex';
   document.getElementById('fxStatus').textContent = '';
   calc();
 }
+
+function curSym(){ return CURRENCIES[currentCurrency].symbol; }
+function fmt(v,d=0){return (v||0).toLocaleString('ko-KR',{minimumFractionDigits:d,maximumFractionDigits:d});}
 
 async function fetchLiveRate(){
   const status = document.getElementById('fxStatus');
   const btn = document.getElementById('fxFetchBtn');
   btn.disabled = true;
   btn.textContent = '조회 중...';
-  status.textContent = '';
   try{
     const res = await fetch(`https://api.frankfurter.dev/v1/latest?base=${currentCurrency}&symbols=KRW`);
-    if(!res.ok) throw new Error('API error');
+    if(!res.ok) throw new Error();
     const data = await res.json();
     const rate = data.rates && data.rates.KRW;
-    if(!rate) throw new Error('No rate');
+    if(!rate) throw new Error();
     document.getElementById('fx').value = Math.round(rate);
-    status.textContent = `✓ ${data.date} 기준 실시간 환율 적용 (ECB 참고환율)`;
-    status.style.color = 'var(--success, #0F766E)';
+    status.textContent = `✓ ${data.date} 기준 실시간 환율 적용`;
+    status.style.color = 'var(--success)';
     calc();
   }catch(e){
-    status.textContent = '환율 조회에 실패했습니다. 직접 입력해주세요.';
-    status.style.color = 'var(--danger, #DC2626)';
+    status.textContent = '환율 조회 실패. 직접 입력해주세요.';
+    status.style.color = 'var(--danger)';
   }finally{
     btn.disabled = false;
-    btn.textContent = '실시간 조회';
+    btn.textContent = '실시간 환율';
   }
 }
 
-function fmt(v,d=0){return (v||0).toLocaleString('ko-KR',{minimumFractionDigits:d,maximumFractionDigits:d});}
-// 면세한도는 관세청 기준 미화(USD)로 고정되어 있습니다. 물품가액을 다른 통화로 입력한 경우,
-// 입력하신 환율(통화→KRW)을 참고 환율(USD→KRW, 약 1,380원)로 재환산해 USD 기준으로 한도를 비교합니다.
-const USD_KRW_REF = 1380;
 function calc(){
-  const threshold = parseFloat(document.getElementById('country').value);
-  const categoryValue = document.getElementById('category').value;
-  const isSupplement = categoryValue === 'SUPPLEMENT';
-  const dutyRate = isSupplement ? 8 : parseFloat(categoryValue);
   const value = parseFloat(document.getElementById('value').value)||0;
-  const fx = parseFloat(document.getElementById('fx').value)||0;
+  const fx = currentCurrency === 'USD' ? USD_KRW_REF : (parseFloat(document.getElementById('fx').value)||0);
   const selfUse = document.getElementById('selfUse').checked;
-  const wrap = document.getElementById('result-total-wrap');
-  const lines = document.getElementById('result-lines');
-  const headroom = document.getElementById('headroom');
   const sym = curSym();
   const valueInUsd = currentCurrency === 'USD' ? value : (fx > 0 ? (value * fx) / USD_KRW_REF : value);
-  const currencyNote = currentCurrency !== 'USD'
-    ? `<div class="notice-box" style="margin-top:8px;">⚠ 관세청 면세한도($150/$200)는 <strong>미화(USD) 기준</strong>입니다. 입력하신 환율을 참고 환율(1USD≈${fmt(USD_KRW_REF)}원)로 재환산해 약 <strong>$${fmt(valueInUsd,2)}</strong> 기준으로 판단했습니다. 정확한 한도 판단은 실제 결제 시점의 USD 환산 금액으로 다시 확인하세요.</div>`
-    : '';
 
-  // 영양제/건기식 전용 입력칸 표시 여부 및 6병 기준 체크
-  document.getElementById('supplementQtyRow').style.display = isSupplement ? 'block' : 'none';
+  const isSupplement = document.getElementById('btn-supplement').classList.contains('active');
   const supplementQty = isSupplement ? (parseInt(document.getElementById('supplementQty').value)||1) : 0;
   const overQty = isSupplement && supplementQty > 6;
-  document.getElementById('supplementNotice').style.display = overQty ? 'block' : 'none';
 
-  // 통관유형 배지 (목록통관 / 일반수입신고 배제품목)
-  const catSelect = document.getElementById('category');
-  const excl = catSelect.selectedOptions[0].dataset.excl;
   const clearanceEl = document.getElementById('clearanceType');
-  if(excl === '1'){
-    clearanceEl.innerHTML = `<div class="notice-box" style="margin-bottom:10px;background:#FEF3C7;border-color:#FDE68A;color:#92400E;">📦 <strong>목록통관 배제 품목</strong> — 가격이 면세한도 이내여도 목록통관이 아닌 <strong>일반(정식) 수입신고</strong> 절차를 거칩니다. 세금 유무는 아래 계산과 동일하게 판단되지만, 통관 시간이 더 걸리고 관세사를 통해 진행되는 경우가 많습니다.</div>`;
-  } else if(excl === 'partial'){
-    clearanceEl.innerHTML = `<div class="notice-box" style="margin-bottom:10px;">ℹ 이 카테고리는 <strong>세부 품목에 따라 목록통관 가능 여부가 갈립니다</strong> (예: 기능성 화장품, 특정 전자기기는 배제). 일반 품목이면 목록통관, 요건확인 대상이면 정식 수입신고로 진행됩니다.</div>`;
+  if(categoryExcl === '1'){
+    clearanceEl.innerHTML = `<div class="clearance-line excl">📦 세금 여부와 별개로, 정식 수입신고 절차를 거치는 품목이에요</div>`;
+  } else if(categoryExcl === 'partial'){
+    clearanceEl.innerHTML = `<div class="clearance-line mid">ℹ️ 세부 품목에 따라 통관 방식이 다를 수 있어요</div>`;
   } else {
-    clearanceEl.innerHTML = `<div class="notice-box" style="margin-bottom:10px;background:#ECFDF5;border-color:#A7F3D0;color:#065F46;">✅ <strong>목록통관 가능 품목</strong> — 면세한도 이내면 별도 수입신고 없이 통관목록 제출만으로 처리됩니다.</div>`;
+    clearanceEl.innerHTML = `<div class="clearance-line ok">✅ 면세한도 이내면 간단한 절차로 바로 통관돼요</div>`;
   }
 
+  const resultInner = document.getElementById('resultCardInner');
+  const breakdownWrap = document.getElementById('breakdownWrap');
+
   if(!selfUse){
-    wrap.innerHTML = `<div class="result-total"><div class="label">주의</div><div class="value" style="font-size:15px;">판매 목적 구매는 별도 수입신고 대상입니다</div></div>`;
-    lines.innerHTML = '';
-    headroom.innerHTML = '판매 목적(리셀 등)의 구매는 자가사용 면세 규정이 적용되지 않으며, 정식 수입신고 절차가 필요합니다.';
+    resultInner.innerHTML = `<div class="result-card warn">
+      <div class="result-status">주의</div>
+      <div class="result-amount" style="font-size:22px;">되팔 목적 구매는 정식 수입신고 대상이에요</div>
+    </div>`;
+    breakdownWrap.innerHTML = '';
     return;
   }
 
   if(overQty){
-    wrap.innerHTML = `<div class="result-total"><div class="label">주의</div><div class="value" style="font-size:15px;">요건확인 대상 (6병 초과)</div></div>`;
-    lines.innerHTML = `<div class="result-line"><span class="label">물품가액</span><span class="value">${sym}${fmt(value,2)}</span></div>
-      <div class="result-line"><span class="label">구매 수량</span><span class="value">${supplementQty}병</span></div>`;
-    headroom.innerHTML = `영양제·건강기능식품은 가격이 면세한도 이하여도 <strong>6병을 초과</strong>하면 자가사용으로 인정되지 않아, 관세사를 통한 정식 수입신고와 수입요건 확인이 필요합니다. 6병 이내로 나눠서 주문하시면 면세 가능성이 높아집니다.`;
+    resultInner.innerHTML = `<div class="result-card warn">
+      <div class="result-status">6병 초과</div>
+      <div class="result-amount" style="font-size:22px;">요건 확인이 필요해요</div>
+      <div class="result-sub">영양제·건기식은 가격이 낮아도 <strong>6병까지만</strong> 자가사용으로 인정돼요. ${supplementQty}병 이내로 나눠 주문하면 면세 가능성이 높아집니다.</div>
+    </div>`;
+    breakdownWrap.innerHTML = '';
     return;
   }
 
+  const currencyNote = currentCurrency !== 'USD'
+    ? `<div class="result-sub">입력하신 환율로 약 $${fmt(valueInUsd,2)} 기준으로 계산했어요.</div>` : '';
+
   if(valueInUsd <= threshold){
-    wrap.innerHTML = `<div class="result-total free"><div class="label">예상 세액</div><div class="value">면세 (0원)</div></div>`;
-    lines.innerHTML = `<div class="result-line"><span class="label">물품가액</span><span class="value">${sym}${fmt(value,2)}</span></div>
-      <div class="result-line"><span class="label">면세한도</span><span class="value">$${fmt(threshold)}</span></div>`;
     const remain = threshold - valueInUsd;
-    headroom.innerHTML = `면세한도까지 <strong>$${fmt(remain,2)}</strong> 더(원화 약 ${fmt(remain*USD_KRW_REF)}원) 구매하셔도 면세 범위입니다. (단, 같은 날 여러 건 합산 시 초과될 수 있습니다)${currencyNote}`;
+    resultInner.innerHTML = `<div class="result-card free">
+      <div class="result-status">축하합니다</div>
+      <div class="result-amount">면세 · 0원</div>
+      <div class="result-sub">면세한도까지 <strong>$${fmt(remain,2)}</strong> (약 ${fmt(remain*USD_KRW_REF)}원) 더 사도 괜찮아요.${currencyNote}</div>
+    </div>`;
+    breakdownWrap.innerHTML = `<div class="breakdown">
+      <div class="breakdown-row"><span class="k">물건 가격</span><span class="v">${sym}${fmt(value,2)}</span></div>
+      <div class="breakdown-row"><span class="k">면세한도</span><span class="v">$${fmt(threshold)}</span></div>
+    </div>`;
   } else {
     const duty = value * (dutyRate/100);
-    const vatBase = value + duty;
-    const vat = vatBase * 0.10;
-    const totalForeign = duty + vat;
-    const totalKrw = totalForeign * (currentCurrency === 'USD' ? fx : fx);
-
-    wrap.innerHTML = `<div class="result-total"><div class="label">예상 총 세액</div><div class="value">₩${fmt(totalKrw)}</div></div>`;
-    lines.innerHTML = `
-      <div class="result-line"><span class="label">물품가액</span><span class="value">${sym}${fmt(value,2)}</span></div>
-      <div class="result-line"><span class="label">관세 (${dutyRate}%)</span><span class="value">${sym}${fmt(duty,2)}</span></div>
-      <div class="result-line"><span class="label">부가세 (10%)</span><span class="value">${sym}${fmt(vat,2)}</span></div>
-    `;
+    const vat = (value + duty) * 0.10;
+    const totalKrw = (duty + vat) * fx;
     const over = valueInUsd - threshold;
-    headroom.innerHTML = `면세한도($${fmt(threshold)})를 <strong>$${fmt(over,2)}</strong> 초과했습니다. 다음엔 한도 이하로 나눠서 주문하면 면세 가능합니다.${currencyNote}`;
+    resultInner.innerHTML = `<div class="result-card tax">
+      <div class="result-status">예상 세금</div>
+      <div class="result-amount">₩${fmt(totalKrw)}</div>
+      <div class="result-sub">면세한도를 <strong>$${fmt(over,2)}</strong> 초과했어요. 다음엔 한도 이내로 나눠 사면 면세돼요.${currencyNote}</div>
+    </div>`;
+    breakdownWrap.innerHTML = `<div class="breakdown">
+      <div class="breakdown-row"><span class="k">물건 가격</span><span class="v">${sym}${fmt(value,2)}</span></div>
+      <div class="breakdown-row"><span class="k">관세 (${dutyRate}%)</span><span class="v">${sym}${fmt(duty,2)}</span></div>
+      <div class="breakdown-row"><span class="k">부가세 (10%)</span><span class="v">${sym}${fmt(vat,2)}</span></div>
+    </div>`;
   }
 }
-calc();
 
 function saveResultImage(){
   const el = document.getElementById('resultCard');
-  html2canvas(el, {backgroundColor:'#ffffff', scale:2}).then(canvas=>{
+  html2canvas(el, {backgroundColor:'#F8FAFC', scale:2}).then(canvas=>{
     const link = document.createElement('a');
     link.download = 'CBMLab-관부가세-계산결과.png';
     link.href = canvas.toDataURL('image/png');
     link.click();
   }).catch(()=>{
-    alert('이미지 저장에 실패했습니다. 브라우저 인쇄(Ctrl+P) 후 PDF로 저장하는 방법도 이용하실 수 있습니다.');
+    alert('이미지 저장에 실패했습니다. 브라우저 인쇄(Ctrl+P) 후 PDF로 저장하는 방법도 있어요.');
   });
 }
 
 function buildShareText(){
-  const totalEl = document.querySelector('#result-total-wrap .value');
+  const totalEl = document.querySelector('#resultCardInner .result-amount');
   const totalText = totalEl ? totalEl.textContent.trim() : '';
-  const catText = document.getElementById('category').selectedOptions[0].text;
   const value = document.getElementById('value').value;
   const sym = curSym();
-  return `해외직구 관부가세 계산 결과\n물품가액: ${sym}${value} (${catText})\n예상 세액: ${totalText}\n\n무료 계산기로 직접 확인해보세요 → CBM Lab`;
+  return `해외직구 관부가세 계산 결과\n물건 가격: ${sym}${value}\n결과: ${totalText}\n\n무료 계산기로 직접 확인해보세요 → CBM Lab`;
 }
 
 async function shareResult(){
@@ -414,68 +511,20 @@ async function shareResult(){
       await navigator.share({ title: 'CBM Lab 관부가세 계산기', text: shareText, url: shareUrl });
       return;
     }catch(e){
-      if(e.name === 'AbortError') return; // 사용자가 공유창을 닫은 경우
+      if(e.name === 'AbortError') return;
     }
   }
-
-  // Web Share API 미지원 환경(대부분 PC) → 클립보드 복사로 대체
   try{
     await navigator.clipboard.writeText(`${shareText}\n${shareUrl}`);
     const original = btn.textContent;
-    btn.textContent = '✓ 복사 완료! 카카오톡 등에 붙여넣기 하세요';
-    setTimeout(()=>{ btn.textContent = original; }, 3000);
+    btn.textContent = '✓ 복사 완료!';
+    setTimeout(()=>{ btn.textContent = original; }, 2500);
   }catch(e){
     alert(`아래 내용을 복사해서 공유해주세요:\n\n${shareText}\n${shareUrl}`);
   }
 }
-</script>
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "FAQPage",
-  "mainEntity": [
-    {
-      "@type": "Question",
-      "name": "해외직구 면세한도는 얼마이고, 왜 나라마다 다른가요?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "한국 관세청 기준으로 미국발 물품은 200달러, 그 외 국가는 150달러까지 면세됩니다(물품가격 기준, 배송비 제외). 미국이 예외적으로 더 높은 이유는 한-미 FTA 협정에 따른 것입니다."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "같은 날 여러 건 주문하면 왜 세금이 붙을 수 있나요?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "같은 날 같은 사람 앞으로 도착하는 여러 건의 화물은 합산해서 과세하는 '합산과세' 규정이 적용됩니다. 면세한도를 피하려고 결제를 여러 번 나눠도, 같은 날 도착하면 합산되어 초과분에 과세될 수 있습니다."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "자가사용으로 인정받으려면 어떤 조건이 필요한가요?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "동일 품목을 대량으로 반복 구매하거나 재판매 목적이 의심되는 경우 자가사용으로 인정되지 않고 정식 수입신고 대상이 될 수 있습니다. 통상적인 개인 소비 범위(수량·빈도)를 벗어나지 않는 것이 중요합니다."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "해외 결제 통화가 달러가 아니면 면세한도 계산이 달라지나요?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "면세한도 자체는 미화(USD) 기준으로 고정되어 있습니다. 위안화·엔화·유로로 결제했다면 결제 시점의 환율로 USD 환산 금액을 기준으로 판단해야 하며, 이 계산기에서도 입력하신 환율로 USD 환산 후 비교합니다."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "영양제는 가격이 면세한도 이하면 무조건 면세인가요?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "아니요. 영양제·건강기능식품은 가격 조건(150·200달러 이하)과 별개로 자가사용 인정 기준이 6병 이내로 정해져 있습니다. 가격이 한도 이내라도 7병 이상 구매하면 정식 수입요건 확인 대상이 될 수 있습니다."
-      }
-    }
-  ]
-}
+
+calc();
 </script>
 </body>
 </html>
