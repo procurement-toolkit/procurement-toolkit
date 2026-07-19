@@ -65,7 +65,8 @@
   .item-table tbody td{padding:5px 4px}
   .item-table tbody td:last-child{text-align:center}
   .item-table input{width:100%;border:1px solid var(--slate-200);border-radius:5px;padding:7px 6px;font-size:12.5px;font-family:inherit;font-variant-numeric:tabular-nums}
-  .item-table input.name-inp{min-width:64px}
+  .item-table tbody td:first-child{display:flex;align-items:center;gap:5px}
+  .item-table input.name-inp{width:auto;flex:1;min-width:0}
   .item-table input.dim-inp{width:100%;min-width:44px;text-align:center}
   .item-table tr.row-error input{border-color:var(--danger);background:var(--danger-light)}
   .color-dot{display:inline-block;width:11px;height:11px;border-radius:50%;margin-right:4px;vertical-align:middle;flex-shrink:0}
@@ -89,7 +90,8 @@
 
   .scene{width:100%;height:340px;perspective:1100px;display:flex;align-items:center;justify-content:center;cursor:grab;touch-action:none;background:linear-gradient(180deg,#EEF2F7,#F8FAFC);border-radius:8px;overflow:hidden}
   .scene:active{cursor:grabbing}
-  .rig{position:relative;transform-style:preserve-3d;width:0;height:0}
+  .rig{position:relative;width:90%;height:90%;max-width:420px}
+  .rig svg{display:block;width:100%;height:100%;overflow:visible}
   .edge{position:absolute;background:#334155;top:0;left:0}
   .cube-group{position:absolute;top:0;left:0;transform-style:preserve-3d}
   .face{position:absolute;top:0;left:0;backface-visibility:hidden}
@@ -302,6 +304,7 @@ let items = [];
 let itemCounter = 0;
 let currentView = '2d';
 let rotY = -32, rotX = 24;
+let lastContainer = null, lastResult = null;
 let currentResult = null;
 
 function addItem(name, l, w, h, qty){
@@ -429,6 +432,7 @@ function calc(){
   renderCompareTable(containerKey);
 
   // 시각화 (미리보기 + 3D 둘 다 같은 렌더러 사용)
+  lastContainer = container; lastResult = result;
   renderScene('rigPreview', 'legendPreview', container, result, false);
   renderScene('rig3d', 'legend3d', container, result, true);
 }
@@ -487,8 +491,7 @@ function setView(v){
 function applyRotation(){
   rotY = parseFloat(document.getElementById('rotY').value);
   rotX = parseFloat(document.getElementById('rotX').value);
-  const rig = document.getElementById('rig3d');
-  if(rig) rig.style.transform = `rotateX(${rotX}deg) rotateY(${rotY}deg)`;
+  renderScene('rig3d', 'legend3d', lastContainer, lastResult, true);
 }
 
 function shade(hex, factor){
@@ -497,26 +500,62 @@ function shade(hex, factor){
   r=Math.min(255,Math.round(r*factor)); g=Math.min(255,Math.round(g*factor)); b=Math.min(255,Math.round(b*factor));
   return `rgb(${r},${g},${b})`;
 }
-function buildSolidCuboid(w,h,d,color){
-  const top=shade(color,1.35), front=shade(color,1.0), side=shade(color,0.8), back=shade(color,0.65), bottom=shade(color,0.55);
-  return `
-    <div class="face" style="width:${w}px;height:${h}px;background:${front};border:1px solid rgba(0,0,0,.25);transform:translate3d(-${w/2}px,-${h/2}px,${d/2}px)"></div>
-    <div class="face" style="width:${w}px;height:${h}px;background:${back};border:1px solid rgba(0,0,0,.25);transform:translate3d(-${w/2}px,-${h/2}px,-${d/2}px) rotateY(180deg)"></div>
-    <div class="face" style="width:${d}px;height:${h}px;background:${side};border:1px solid rgba(0,0,0,.25);transform:translate3d(-${d/2}px,-${h/2}px,${w/2}px) rotateY(90deg)"></div>
-    <div class="face" style="width:${d}px;height:${h}px;background:${side};border:1px solid rgba(0,0,0,.25);transform:translate3d(-${d/2}px,-${h/2}px,-${w/2}px) rotateY(-90deg)"></div>
-    <div class="face" style="width:${w}px;height:${d}px;background:${top};border:1px solid rgba(0,0,0,.25);transform:translate3d(-${w/2}px,-${d/2}px,${h/2}px) rotateX(90deg)"></div>
-    <div class="face" style="width:${w}px;height:${d}px;background:${bottom};border:1px solid rgba(0,0,0,.25);transform:translate3d(-${w/2}px,-${d/2}px,-${h/2}px) rotateX(-90deg)"></div>
-  `;
-}
-function buildWireframe(w,h,d){
-  const t=2; let html='';
-  [[-1,-1],[-1,1],[1,-1],[1,1]].forEach(([sy,sz])=>{ html += `<div class="edge" style="width:${w}px;height:${t}px;transform:translate3d(-${w/2}px, ${sy*h/2-t/2}px, ${sz*d/2}px)"></div>`; });
-  [[-1,-1],[-1,1],[1,-1],[1,1]].forEach(([sx,sz])=>{ html += `<div class="edge" style="width:${t}px;height:${h}px;transform:translate3d(${sx*w/2-t/2}px, -${h/2}px, ${sz*d/2}px)"></div>`; });
-  [[-1,-1],[-1,1],[1,-1],[1,1]].forEach(([sx,sy])=>{ html += `<div class="edge" style="width:${d}px;height:${t}px;transform:translate3d(${sx*w/2}px, ${sy*h/2-t/2}px, -${d/2}px) rotateY(90deg)"></div>`; });
-  return html;
+
+// ===== 3D → 2D 투상(등각) 수학 =====
+// 월드 좌표계: X=길이방향, Y=높이(위가 +), Z=폭/깊이방향. 컨테이너 중심이 원점.
+function deg2rad(d){ return d*Math.PI/180; }
+function rotatePoint(x,y,z,rotXdeg,rotYdeg){
+  const ry = deg2rad(rotYdeg), rx = deg2rad(rotXdeg);
+  const x1 = x*Math.cos(ry) + z*Math.sin(ry);
+  const z1 = -x*Math.sin(ry) + z*Math.cos(ry);
+  const y2 = y*Math.cos(rx) - z1*Math.sin(rx);
+  const z2 = y*Math.sin(rx) + z1*Math.cos(rx);
+  return [x1, y2, z2];
 }
 
-// 표시할 개별 박스들의 좌표 목록(cm 단위, 컨테이너 좌측/바닥/앞면 기준)을 계산
+const FACE_DEFS = [
+  {n:[0,0,1],  key:'front',  c:(w,h,d)=>[[-w/2,-h/2,d/2],[w/2,-h/2,d/2],[w/2,h/2,d/2],[-w/2,h/2,d/2]]},
+  {n:[0,0,-1], key:'back',   c:(w,h,d)=>[[w/2,-h/2,-d/2],[-w/2,-h/2,-d/2],[-w/2,h/2,-d/2],[w/2,h/2,-d/2]]},
+  {n:[1,0,0],  key:'side',   c:(w,h,d)=>[[w/2,-h/2,d/2],[w/2,-h/2,-d/2],[w/2,h/2,-d/2],[w/2,h/2,d/2]]},
+  {n:[-1,0,0], key:'side',   c:(w,h,d)=>[[-w/2,-h/2,-d/2],[-w/2,-h/2,d/2],[-w/2,h/2,d/2],[-w/2,h/2,-d/2]]},
+  {n:[0,1,0],  key:'top',    c:(w,h,d)=>[[-w/2,h/2,d/2],[w/2,h/2,d/2],[w/2,h/2,-d/2],[-w/2,h/2,-d/2]]},
+  {n:[0,-1,0], key:'bottom', c:(w,h,d)=>[[-w/2,-h/2,-d/2],[w/2,-h/2,-d/2],[w/2,-h/2,d/2],[-w/2,-h/2,d/2]]}
+];
+
+// 박스 하나(중심 cx,cy,cz / 크기 w,h,d)의 보이는 면들을 계산 (백페이스 컬링 포함)
+function buildFacesForBox(cx,cy,cz,w,h,d,color,rotXdeg,rotYdeg){
+  const shades = {front:shade(color,1.0), back:shade(color,0.55), side:shade(color,0.72), top:shade(color,1.32), bottom:shade(color,0.42)};
+  const faces = [];
+  FACE_DEFS.forEach(fd=>{
+    const rn = rotatePoint(fd.n[0],fd.n[1],fd.n[2],rotXdeg,rotYdeg);
+    if(rn[2] >= -0.001) return; // 카메라 반대쪽을 향한 면은 그리지 않음
+    const pts = fd.c(w,h,d).map(([lx,ly,lz])=>{
+      const [rx,ry,rz] = rotatePoint(lx+cx, ly+cy, lz+cz, rotXdeg, rotYdeg);
+      return {sx:rx, sy:-ry, z:rz};
+    });
+    const avgZ = pts.reduce((s,p)=>s+p.z,0)/pts.length;
+    faces.push({pointsStr: pts.map(p=>`${p.sx.toFixed(1)},${p.sy.toFixed(1)}`).join(' '), depth:avgZ, fill:shades[fd.key]});
+  });
+  return faces;
+}
+
+// 컨테이너 외곽 와이어프레임의 12개 모서리를 회전·투상
+function buildWireEdges(L,H,D,rotXdeg,rotYdeg){
+  const c = [-1,1];
+  const corners3 = {};
+  c.forEach(sx=>c.forEach(sy=>c.forEach(sz=>{
+    const key = `${sx}${sy}${sz}`;
+    const [rx,ry,rz] = rotatePoint(sx*L/2, sy*H/2, sz*D/2, rotXdeg, rotYdeg);
+    corners3[key] = {sx:rx, sy:-ry, z:rz};
+  })));
+  const pairs = [
+    ['-1-1-1','1-1-1'],['-1-11','1-11'],['-111','111'],['-11-1','11-1'],
+    ['-1-1-1','-1-11'],['1-1-1','1-11'],['-11-1','-111'],['11-1','111'],
+    ['-1-1-1','-11-1'],['1-1-1','11-1'],['-1-11','-111'],['1-11','111']
+  ];
+  return pairs.map(([a,b])=>({p1:corners3[a], p2:corners3[b], depth:(corners3[a].z+corners3[b].z)/2}));
+}
+
 function buildBoxList(container, result){
   const totalPlaced = result.sections.reduce((a,s)=>a+(s.error?0:s.placedQty),0);
   const budget = Math.min(MAX_TOTAL_BOXES, totalPlaced || 1);
@@ -539,7 +578,6 @@ function buildBoxList(container, result){
           boxes.push({
             color: s.color,
             l: s.item.l, w: s.item.w, h: s.item.h,
-            // 위치(cm): X=길이방향 시작지점 기준, Y=바닥기준 층, Z=앞면기준 깊이
             xCm: s.startLengthCm + c*s.item.l + s.item.l/2,
             layerIdx: l, rowIdx: r
           });
@@ -551,31 +589,51 @@ function buildBoxList(container, result){
   return { boxes, overflowNote, totalPlaced, rendered: boxes.length };
 }
 
-function renderScene(rigId, legendId, container, result, interactive){
+function renderScene(rigId, legendId, container, result, useSliderRotation){
   const rig = document.getElementById(rigId);
   if(!rig) return;
   const maxDim = Math.max(container.l, container.w, container.h);
-  const scale = 230 / maxDim;
-  const contW = container.l*scale, contH = container.h*scale, contD = container.w*scale;
-
-  let html = `<div class="cube-group">${buildWireframe(contW, contH, contD)}</div>`;
+  const scale = 100 / maxDim;
+  const L = container.l*scale, H = container.h*scale, D = container.w*scale;
+  const rX = useSliderRotation ? rotX : 22, rY = useSliderRotation ? rotY : -30;
 
   const { boxes, overflowNote } = buildBoxList(container, result);
-  boxes.forEach(b=>{
-    const bw = b.l*scale, bh = b.h*scale, bd = b.w*scale;
-    const offX = -contW/2 + b.xCm*scale;
-    const offY = contH/2 - (b.layerIdx+0.5)*bh;
-    const offZ = contD/2 - (b.rowIdx+0.5)*bd;
-    html += `<div class="cube-group" style="transform:translate3d(${offX}px,${offY}px,${offZ}px)">${buildSolidCuboid(bw, bh, bd, b.color)}</div>`;
+
+  // 박스별 깊이(중심 z') 계산 후 먼 것부터 정렬 (Painter's algorithm)
+  const withDepth = boxes.map(b=>{
+    const bw=b.l*scale, bh=b.h*scale, bd=b.w*scale;
+    const offX = -L/2 + b.xCm*scale;
+    const offY = H/2 - (b.layerIdx+0.5)*bh;
+    const offZ = D/2 - (b.rowIdx+0.5)*bd;
+    const [,,cz] = rotatePoint(offX,offY,offZ,rX,rY);
+    return {bw,bh,bd,offX,offY,offZ,color:b.color,depth:cz};
+  }).sort((a,b)=>b.depth-a.depth);
+
+  let allFaces = [];
+  withDepth.forEach(b=>{
+    allFaces = allFaces.concat(buildFacesForBox(b.offX,b.offY,b.offZ,b.bw,b.bh,b.bd,b.color,rX,rY));
   });
 
-  rig.innerHTML = html;
+  const edges = buildWireEdges(L,H,D,rX,rY);
 
-  if(interactive){
-    applyRotation();
-  } else {
-    rig.style.transform = 'rotateX(20deg) rotateY(-28deg)';
-  }
+  // 화면 범위 계산 (모든 점 기준으로 여백 포함해 자동 맞춤)
+  let minX=Infinity,maxX=-Infinity,minY=Infinity,maxY=-Infinity;
+  const track=(sx,sy)=>{ if(sx<minX)minX=sx; if(sx>maxX)maxX=sx; if(sy<minY)minY=sy; if(sy>maxY)maxY=sy; };
+  edges.forEach(e=>{ track(e.p1.sx,e.p1.sy); track(e.p2.sx,e.p2.sy); });
+  allFaces.forEach(f=>{ f.pointsStr.split(' ').forEach(pt=>{ const [x,y]=pt.split(',').map(Number); track(x,y); }); });
+  if(!isFinite(minX)){ minX=-100; maxX=100; minY=-100; maxY=100; }
+  const pad = 24;
+  const vw = (maxX-minX)+pad*2, vh = (maxY-minY)+pad*2;
+
+  let svg = `<svg viewBox="${minX-pad} ${minY-pad} ${vw} ${vh}" width="100%" height="100%" preserveAspectRatio="xMidYMid meet">`;
+  edges.forEach(e=>{
+    svg += `<line x1="${e.p1.sx.toFixed(1)}" y1="${e.p1.sy.toFixed(1)}" x2="${e.p2.sx.toFixed(1)}" y2="${e.p2.sy.toFixed(1)}" stroke="#94A3B8" stroke-width="1.2" stroke-dasharray="3 3"/>`;
+  });
+  allFaces.forEach(f=>{
+    svg += `<polygon points="${f.pointsStr}" fill="${f.fill}" stroke="rgba(15,23,42,.35)" stroke-width="1" stroke-linejoin="round"/>`;
+  });
+  svg += `</svg>`;
+  rig.innerHTML = svg;
 
   const legend = document.getElementById(legendId);
   if(legend){
