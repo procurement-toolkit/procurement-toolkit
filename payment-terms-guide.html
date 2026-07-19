@@ -79,6 +79,15 @@
   @media (max-width:640px){.ad-area-main{padding:0 16px 20px}}
 
   @media print{.ad-area-main,.ad-main-box,.ad-placeholder{display:none !important}}
+
+  .faq-wrap{max-width:1100px;margin:20px auto 0;padding:0 24px}
+  .faq-item{border-bottom:1px solid var(--slate-100);padding:12px 0}
+  .faq-item:last-child{border-bottom:none}
+  .faq-item summary{cursor:pointer;font-weight:700;font-size:13px;color:var(--slate-800);list-style:none;outline:none}
+  .faq-item summary::-webkit-details-marker{display:none}
+  .faq-item summary::before{content:'Q. ';color:var(--accent)}
+  .faq-item p{margin-top:8px;font-size:12.5px;color:var(--slate-600);line-height:1.7;padding-left:2px}
+  @media (max-width:640px){.faq-wrap{padding:0 16px}}
 </style>
 
 <script src="https://cdn.amplitude.com/script/d4aa9301e01f4600b5eeb018e160aa7c.js"></script>
@@ -201,6 +210,17 @@
 </div>
 
 <!-- AD (하단 배너) -->
+
+<div class="faq-wrap">
+  <div class="card">
+    <div class="card-header"><div class="card-title">자주 묻는 질문</div></div>
+    <div class="card-body">
+      <details class="faq-item"><summary>T/T와 L/C는 리스크 측면에서 어떻게 다른가요?</summary><p>T/T(전신송금)는 절차가 간단하지만 은행의 지급보증이 없어 상대적으로 리스크가 큽니다. L/C(신용장)는 은행이 지급을 보증하므로 안전하지만, 서류 작업이 복잡하고 은행 수수료가 발생합니다.</p></details>
+      <details class="faq-item"><summary>신규 거래처와는 어떤 결제조건이 안전한가요?</summary><p>처음 거래하는 상대라면 선금 일부(예: 30% T/T advance)와 잔금을 선적 전 또는 L/C로 받는 조합이 일반적으로 안전한 편입니다. 신뢰가 쌓인 이후에 점진적으로 조건을 완화하는 것이 리스크 관리에 유리합니다.</p></details>
+    </div>
+  </div>
+</div>
+
 <div class="ad-area-main" role="complementary" aria-label="하단 광고 영역">
   <div class="ad-main-box">
     <strong>Advertisement</strong>
@@ -212,5 +232,29 @@
   <div class="footer-logo"><svg width="24" height="24" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align:middle;margin-right:9px;flex-shrink:0;"><path d="M20 2.5L36.5 11.5V28.5L20 37.5L3.5 28.5V11.5L20 2.5Z" stroke="url(#cbmGradF)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M20 2.5V20M20 20L36.5 11.5M20 20L3.5 11.5" stroke="url(#cbmGradF)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/></svg>CBM<span>Lab</span></div>
   <nav><a href="index.html" class="footer-link">전체 도구</a><a href="privacy.html" class="footer-link">개인정보 처리방침</a></nav>
 </div></footer>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "T/T와 L/C는 리스크 측면에서 어떻게 다른가요?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "T/T(전신송금)는 절차가 간단하지만 은행의 지급보증이 없어 상대적으로 리스크가 큽니다. L/C(신용장)는 은행이 지급을 보증하므로 안전하지만, 서류 작업이 복잡하고 은행 수수료가 발생합니다."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "신규 거래처와는 어떤 결제조건이 안전한가요?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "처음 거래하는 상대라면 선금 일부(예: 30% T/T advance)와 잔금을 선적 전 또는 L/C로 받는 조합이 일반적으로 안전한 편입니다. 신뢰가 쌓인 이후에 점진적으로 조건을 완화하는 것이 리스크 관리에 유리합니다."
+      }
+    }
+  ]
+}
+</script>
 </body>
 </html>

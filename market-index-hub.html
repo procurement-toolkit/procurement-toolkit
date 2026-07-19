@@ -67,6 +67,15 @@
   @media (max-width:640px){.ad-area-main{padding:0 16px 20px}}
 
   @media print{.ad-area-main,.ad-main-box,.ad-placeholder{display:none !important}}
+
+  .faq-wrap{max-width:1100px;margin:20px auto 0;padding:0 24px}
+  .faq-item{border-bottom:1px solid var(--slate-100);padding:12px 0}
+  .faq-item:last-child{border-bottom:none}
+  .faq-item summary{cursor:pointer;font-weight:700;font-size:13px;color:var(--slate-800);list-style:none;outline:none}
+  .faq-item summary::-webkit-details-marker{display:none}
+  .faq-item summary::before{content:'Q. ';color:var(--accent)}
+  .faq-item p{margin-top:8px;font-size:12.5px;color:var(--slate-600);line-height:1.7;padding-left:2px}
+  @media (max-width:640px){.faq-wrap{padding:0 16px}}
 </style>
 
 <script src="https://cdn.amplitude.com/script/d4aa9301e01f4600b5eeb018e160aa7c.js"></script>
@@ -157,6 +166,17 @@
 </div>
 
 <!-- AD (하단 배너) -->
+
+<div class="faq-wrap">
+  <div class="card">
+    <div class="card-header"><div class="card-title">자주 묻는 질문</div></div>
+    <div class="card-body">
+      <details class="faq-item"><summary>PMI 지수가 50 아래로 떨어지면 무엇을 의미하나요?</summary><p>PMI(구매관리자지수)는 50을 기준으로 그 이상이면 경기 확장, 미만이면 위축 국면을 의미합니다. 주요국 PMI가 지속적으로 50 아래를 유지하면, 몇 달 뒤 실제 발주량 감소로 이어지는 경우가 많아 선행지표로 활용됩니다.</p></details>
+      <details class="faq-item"><summary>원자재 가격 동향을 구매 실무자가 왜 챙겨야 하나요?</summary><p>원자재 가격은 공급업체 견적의 근거가 되는 경우가 많습니다. 시세를 미리 파악하고 있으면 견적이 실제 시장 상황을 반영한 합리적인 수준인지 판단하고, 협상에서 구체적인 근거로 활용할 수 있습니다.</p></details>
+    </div>
+  </div>
+</div>
+
 <div class="ad-area-main" role="complementary" aria-label="하단 광고 영역">
   <div class="ad-main-box">
     <strong>Advertisement</strong>
@@ -168,5 +188,29 @@
   <div class="footer-logo"><svg width="24" height="24" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align:middle;margin-right:9px;flex-shrink:0;"><path d="M20 2.5L36.5 11.5V28.5L20 37.5L3.5 28.5V11.5L20 2.5Z" stroke="url(#cbmGradF)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M20 2.5V20M20 20L36.5 11.5M20 20L3.5 11.5" stroke="url(#cbmGradF)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/></svg>CBM<span>Lab</span></div>
   <nav><a href="index.html" class="footer-link">전체 도구</a><a href="privacy.html" class="footer-link">개인정보 처리방침</a></nav>
 </div></footer>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "PMI 지수가 50 아래로 떨어지면 무엇을 의미하나요?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "PMI(구매관리자지수)는 50을 기준으로 그 이상이면 경기 확장, 미만이면 위축 국면을 의미합니다. 주요국 PMI가 지속적으로 50 아래를 유지하면, 몇 달 뒤 실제 발주량 감소로 이어지는 경우가 많아 선행지표로 활용됩니다."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "원자재 가격 동향을 구매 실무자가 왜 챙겨야 하나요?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "원자재 가격은 공급업체 견적의 근거가 되는 경우가 많습니다. 시세를 미리 파악하고 있으면 견적이 실제 시장 상황을 반영한 합리적인 수준인지 판단하고, 협상에서 구체적인 근거로 활용할 수 있습니다."
+      }
+    }
+  ]
+}
+</script>
 </body>
 </html>

@@ -153,6 +153,15 @@
   }
 
   @media print{.ad-area-main,.ad-main-box,.ad-placeholder{display:none !important}}
+
+  .faq-wrap{max-width:1100px;margin:20px auto 0;padding:0 24px}
+  .faq-item{border-bottom:1px solid var(--slate-100);padding:12px 0}
+  .faq-item:last-child{border-bottom:none}
+  .faq-item summary{cursor:pointer;font-weight:700;font-size:13px;color:var(--slate-800);list-style:none;outline:none}
+  .faq-item summary::-webkit-details-marker{display:none}
+  .faq-item summary::before{content:'Q. ';color:var(--accent)}
+  .faq-item p{margin-top:8px;font-size:12.5px;color:var(--slate-600);line-height:1.7;padding-left:2px}
+  @media (max-width:640px){.faq-wrap{padding:0 16px}}
 </style>
 <script src="https://cdn.amplitude.com/script/d4aa9301e01f4600b5eeb018e160aa7c.js"></script>
 <script>
@@ -305,7 +314,19 @@
     </aside>
   </div>
 
-  <div class="ad-area-main" role="complementary" aria-label="Advertisement area">
+  
+<div class="faq-wrap">
+  <div class="card">
+    <div class="card-header"><div class="card-title">Frequently Asked Questions</div></div>
+    <div class="card-body">
+      <details class="faq-item"><summary>How do I open a business email when I don't know the recipient's name?</summary><p>'Dear Sir/Madam,' is a safe, standard choice when you don't have a name. If you know the name but not the title, 'Dear Mr./Ms. [Last Name],' is the common convention.</p></details>
+      <details class="faq-item"><summary>How do I follow up on a delivery delay without damaging the relationship?</summary><p>Frame it as a status request rather than an accusation. A phrasing like 'Could you please confirm the current status and provide an updated shipping schedule?' is direct but stays professional and collaborative.</p></details>
+      <details class="faq-item"><summary>What should a quality claim email always include?</summary><p>Be specific about the quantity or percentage affected, when the issue was discovered, and the resolution you're requesting (replacement, refund, or credit note). Mentioning that supporting photos or documents are available usually speeds up the supplier's response.</p></details>
+    </div>
+  </div>
+</div>
+
+<div class="ad-area-main" role="complementary" aria-label="Advertisement area">
     <div class="ad-main-box">
       <strong>Advertisement</strong>
       Google AdSense — 728 × 90 leaderboard
@@ -445,5 +466,37 @@
   generate();
 </script>
 
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "How do I open a business email when I don't know the recipient's name?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "'Dear Sir/Madam,' is a safe, standard choice when you don't have a name. If you know the name but not the title, 'Dear Mr./Ms. [Last Name],' is the common convention."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How do I follow up on a delivery delay without damaging the relationship?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Frame it as a status request rather than an accusation. A phrasing like 'Could you please confirm the current status and provide an updated shipping schedule?' is direct but stays professional and collaborative."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What should a quality claim email always include?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Be specific about the quantity or percentage affected, when the issue was discovered, and the resolution you're requesting (replacement, refund, or credit note). Mentioning that supporting photos or documents are available usually speeds up the supplier's response."
+      }
+    }
+  ]
+}
+</script>
 </body>
 </html>

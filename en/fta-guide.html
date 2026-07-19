@@ -82,6 +82,15 @@
   @media (max-width:640px){.ad-area-main{padding:0 16px 20px}}
 
   @media print{.ad-area-main,.ad-main-box,.ad-placeholder{display:none !important}}
+
+  .faq-wrap{max-width:1100px;margin:20px auto 0;padding:0 24px}
+  .faq-item{border-bottom:1px solid var(--slate-100);padding:12px 0}
+  .faq-item:last-child{border-bottom:none}
+  .faq-item summary{cursor:pointer;font-weight:700;font-size:13px;color:var(--slate-800);list-style:none;outline:none}
+  .faq-item summary::-webkit-details-marker{display:none}
+  .faq-item summary::before{content:'Q. ';color:var(--accent)}
+  .faq-item p{margin-top:8px;font-size:12.5px;color:var(--slate-600);line-height:1.7;padding-left:2px}
+  @media (max-width:640px){.faq-wrap{padding:0 16px}}
 </style>
 
 <script src="https://cdn.amplitude.com/script/d4aa9301e01f4600b5eeb018e160aa7c.js"></script>
@@ -187,6 +196,17 @@
 </div>
 
 <!-- AD (bottom banner) -->
+
+<div class="faq-wrap">
+  <div class="card">
+    <div class="card-header"><div class="card-title">Frequently Asked Questions</div></div>
+    <div class="card-body">
+      <details class="faq-item"><summary>What's the practical difference between self-certification and authority-issued Certificates of Origin?</summary><p>Self-certification lets the exporter prepare and sign the C/O directly, which is faster but puts the burden of proof on the exporter if customs later audits the claim. Authority-issued certification involves a government body or chamber of commerce reviewing documents before issuing the C/O — slower, but generally more readily accepted by the importing customs authority.</p></details>
+      <details class="faq-item"><summary>How long is a Certificate of Origin typically valid?</summary><p>It varies by agreement, but 12 months from the issue date is common. Always confirm the specific validity period for the agreement you're using, and plan issuance timing so the C/O reaches the importer while still valid.</p></details>
+    </div>
+  </div>
+</div>
+
 <div class="ad-area-main" role="complementary" aria-label="Advertisement area">
   <div class="ad-main-box">
     <strong>Advertisement</strong>
@@ -198,5 +218,29 @@
   <div class="footer-logo"><svg width="24" height="24" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align:middle;margin-right:9px;flex-shrink:0;"><path d="M20 2.5L36.5 11.5V28.5L20 37.5L3.5 28.5V11.5L20 2.5Z" stroke="url(#cbmGradF)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M20 2.5V20M20 20L36.5 11.5M20 20L3.5 11.5" stroke="url(#cbmGradF)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/></svg>CBM<span style="color:#2563EB;">Lab</span></div>
   <nav><a href="index.html" class="footer-link">All Tools</a><a href="privacy.html" class="footer-link">Privacy Policy</a></nav>
 </div></footer>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What's the practical difference between self-certification and authority-issued Certificates of Origin?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Self-certification lets the exporter prepare and sign the C/O directly, which is faster but puts the burden of proof on the exporter if customs later audits the claim. Authority-issued certification involves a government body or chamber of commerce reviewing documents before issuing the C/O — slower, but generally more readily accepted by the importing customs authority."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How long is a Certificate of Origin typically valid?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "It varies by agreement, but 12 months from the issue date is common. Always confirm the specific validity period for the agreement you're using, and plan issuance timing so the C/O reaches the importer while still valid."
+      }
+    }
+  ]
+}
+</script>
 </body>
 </html>

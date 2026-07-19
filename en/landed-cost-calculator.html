@@ -131,6 +131,15 @@
   @media (max-width: 640px) { .field-grid { grid-template-columns: 1fr; } .result-perunit { grid-template-columns: 1fr; } }
 
   @media print{.ad-area-main,.ad-main-box,.ad-placeholder{display:none !important}}
+
+  .faq-wrap{max-width:1100px;margin:20px auto 0;padding:0 24px}
+  .faq-item{border-bottom:1px solid var(--slate-100);padding:12px 0}
+  .faq-item:last-child{border-bottom:none}
+  .faq-item summary{cursor:pointer;font-weight:700;font-size:13px;color:var(--slate-800);list-style:none;outline:none}
+  .faq-item summary::-webkit-details-marker{display:none}
+  .faq-item summary::before{content:'Q. ';color:var(--accent)}
+  .faq-item p{margin-top:8px;font-size:12.5px;color:var(--slate-600);line-height:1.7;padding-left:2px}
+  @media (max-width:640px){.faq-wrap{padding:0 16px}}
 </style>
 </head>
 <body>
@@ -287,6 +296,19 @@
 <div class="ad-main-box" style="max-width:1200px;margin:0 auto 28px;"><strong style="font-size:11px;text-transform:uppercase;color:var(--slate-300);">Advertisement</strong>728 × 90 leaderboard</div>
 
 <div class="disclaimer"><strong>Disclaimer:</strong> This calculator provides an estimate for planning purposes only. Actual duty rates depend on your product's HS code, applicable trade agreements, and destination country regulations. De minimis thresholds (e.g., $800 in the US, £135 in the UK) and additional fees (e.g., U.S. Merchandise Processing Fee, Harbor Maintenance Fee) are not automatically applied — verify with your customs broker or national customs authority before making commercial decisions.</div>
+
+
+<div class="faq-wrap">
+  <div class="card">
+    <div class="card-header"><div class="card-title">Frequently Asked Questions</div></div>
+    <div class="card-body">
+      <details class="faq-item"><summary>What's the practical difference between FOB and CIF in cost calculations?</summary><p>Under FOB, the seller's cost ends once goods are loaded onto the vessel at the origin port; freight and insurance to the destination are the buyer's separate cost. Under CIF, the seller's quoted price already includes freight and insurance to the destination port. Comparing FOB and CIF unit prices directly without adjusting for this is a common mistake.</p></details>
+      <details class="faq-item"><summary>Is customs duty calculated on FOB value or CIF value?</summary><p>It depends on the importing country. Most countries (EU, most of Asia, etc.) assess duty on the CIF value (goods + freight + insurance), while the United States is a notable exception and assesses duty on the FOB value. Always check the specific rule for your destination country.</p></details>
+      <details class="faq-item"><summary>What exactly does 'landed cost' include?</summary><p>Landed cost is the true total cost of getting goods into your warehouse: goods value, international freight, insurance, customs duty, VAT/sales tax, customs broker fees, and inland transportation. Looking at the goods price alone often overstates your actual margin.</p></details>
+      <details class="faq-item"><summary>Why is VAT/sales tax calculated on top of the duty-inclusive amount rather than the goods price?</summary><p>In most jurisdictions, import VAT is assessed on (customs value + duty), not on the goods price alone. This means a higher duty rate also indirectly increases the VAT amount, compounding the cost impact.</p></details>
+    </div>
+  </div>
+</div>
 
 <footer style="background:#0F172A;color:#94A3B8;padding:24px;font-size:12px;">
   <div style="max-width:1200px;margin:0 auto;display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;">
@@ -486,6 +508,46 @@
   addItemRow('Product A', 100, 5.00);
   setIncoterm('FOB');
   setDutyBasis('fob');
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What's the practical difference between FOB and CIF in cost calculations?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Under FOB, the seller's cost ends once goods are loaded onto the vessel at the origin port; freight and insurance to the destination are the buyer's separate cost. Under CIF, the seller's quoted price already includes freight and insurance to the destination port. Comparing FOB and CIF unit prices directly without adjusting for this is a common mistake."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Is customs duty calculated on FOB value or CIF value?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "It depends on the importing country. Most countries (EU, most of Asia, etc.) assess duty on the CIF value (goods + freight + insurance), while the United States is a notable exception and assesses duty on the FOB value. Always check the specific rule for your destination country."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What exactly does 'landed cost' include?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Landed cost is the true total cost of getting goods into your warehouse: goods value, international freight, insurance, customs duty, VAT/sales tax, customs broker fees, and inland transportation. Looking at the goods price alone often overstates your actual margin."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Why is VAT/sales tax calculated on top of the duty-inclusive amount rather than the goods price?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "In most jurisdictions, import VAT is assessed on (customs value + duty), not on the goods price alone. This means a higher duty rate also indirectly increases the VAT amount, compounding the cost impact."
+      }
+    }
+  ]
+}
 </script>
 </body>
 </html>

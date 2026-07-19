@@ -70,6 +70,15 @@
   @media (max-width:640px){.ad-area-main{padding:0 16px 20px}}
 
   @media print{.ad-area-main,.ad-main-box,.ad-placeholder{display:none !important}}
+
+  .faq-wrap{max-width:1100px;margin:20px auto 0;padding:0 24px}
+  .faq-item{border-bottom:1px solid var(--slate-100);padding:12px 0}
+  .faq-item:last-child{border-bottom:none}
+  .faq-item summary{cursor:pointer;font-weight:700;font-size:13px;color:var(--slate-800);list-style:none;outline:none}
+  .faq-item summary::-webkit-details-marker{display:none}
+  .faq-item summary::before{content:'Q. ';color:var(--accent)}
+  .faq-item p{margin-top:8px;font-size:12.5px;color:var(--slate-600);line-height:1.7;padding-left:2px}
+  @media (max-width:640px){.faq-wrap{padding:0 16px}}
 </style>
 
 <script src="https://cdn.amplitude.com/script/d4aa9301e01f4600b5eeb018e160aa7c.js"></script>
@@ -127,6 +136,17 @@
 </div>
 
 <!-- AD (bottom banner) -->
+
+<div class="faq-wrap">
+  <div class="card">
+    <div class="card-header"><div class="card-title">Frequently Asked Questions</div></div>
+    <div class="card-body">
+      <details class="faq-item"><summary>How do I find a good time to call an overseas partner?</summary><p>Look for the overlap between both parties' typical business hours (usually 09:00-18:00 local). For large time zone gaps (e.g., Korea and the US East Coast), the overlap may be very short or nonexistent, in which case email tends to work better than trying to schedule a live call.</p></details>
+      <details class="faq-item"><summary>Does the business-hours badge account for public holidays?</summary><p>No — it's a simple estimate based on weekday and time only (09:00-18:00 local). It doesn't account for local public holidays or company-specific working hours, so double-check before an important meeting.</p></details>
+    </div>
+  </div>
+</div>
+
 <div class="ad-area-main" role="complementary" aria-label="Advertisement area">
   <div class="ad-main-box">
     <strong>Advertisement</strong>
@@ -191,6 +211,30 @@ function getUtcOffset(tz, date){
 
 render();
 setInterval(render, 1000);
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "How do I find a good time to call an overseas partner?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Look for the overlap between both parties' typical business hours (usually 09:00-18:00 local). For large time zone gaps (e.g., Korea and the US East Coast), the overlap may be very short or nonexistent, in which case email tends to work better than trying to schedule a live call."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Does the business-hours badge account for public holidays?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No — it's a simple estimate based on weekday and time only (09:00-18:00 local). It doesn't account for local public holidays or company-specific working hours, so double-check before an important meeting."
+      }
+    }
+  ]
+}
 </script>
 </body>
 </html>

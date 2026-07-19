@@ -117,6 +117,15 @@
   @media (max-width:640px){.ad-area-main{padding:0 16px 20px}}
 
   @media print{.ad-area-main,.ad-main-box,.ad-placeholder{display:none !important}}
+
+  .faq-wrap{max-width:1100px;margin:20px auto 0;padding:0 24px}
+  .faq-item{border-bottom:1px solid var(--slate-100);padding:12px 0}
+  .faq-item:last-child{border-bottom:none}
+  .faq-item summary{cursor:pointer;font-weight:700;font-size:13px;color:var(--slate-800);list-style:none;outline:none}
+  .faq-item summary::-webkit-details-marker{display:none}
+  .faq-item summary::before{content:'Q. ';color:var(--accent)}
+  .faq-item p{margin-top:8px;font-size:12.5px;color:var(--slate-600);line-height:1.7;padding-left:2px}
+  @media (max-width:640px){.faq-wrap{padding:0 16px}}
 </style>
 </head>
 <body>
@@ -192,6 +201,17 @@
 </div>
 
 <!-- AD (bottom banner) -->
+
+<div class="faq-wrap">
+  <div class="card">
+    <div class="card-header"><div class="card-title">Frequently Asked Questions</div></div>
+    <div class="card-body">
+      <details class="faq-item"><summary>What categories should a supplier evaluation cover?</summary><p>Common categories are quality (defect rate), on-time delivery performance, price competitiveness, responsiveness/communication, and financial stability. Evaluating on price alone tends to miss significant operational risk.</p></details>
+      <details class="faq-item"><summary>How often should new vs. established suppliers be reviewed?</summary><p>New suppliers are often reviewed quarterly during the first year, then shifted to a semi-annual or annual cadence once performance stabilizes. Paying close attention to the first two or three orders is especially valuable for catching quality or delivery issues early.</p></details>
+    </div>
+  </div>
+</div>
+
 <div class="ad-area-main" role="complementary" aria-label="Advertisement area">
   <div class="ad-main-box">
     <strong>Advertisement</strong>
@@ -415,6 +435,30 @@ function updateReportMeta(vendorTotals){
 document.getElementById('metaDate').valueAsDate = new Date();
 renderLibrary();
 renderTable();
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What categories should a supplier evaluation cover?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Common categories are quality (defect rate), on-time delivery performance, price competitiveness, responsiveness/communication, and financial stability. Evaluating on price alone tends to miss significant operational risk."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How often should new vs. established suppliers be reviewed?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "New suppliers are often reviewed quarterly during the first year, then shifted to a semi-annual or annual cadence once performance stabilizes. Paying close attention to the first two or three orders is especially valuable for catching quality or delivery issues early."
+      }
+    }
+  ]
+}
 </script>
 </body>
 </html>

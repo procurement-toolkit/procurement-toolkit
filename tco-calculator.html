@@ -84,6 +84,15 @@
   @media (max-width:640px){.ad-area-main{padding:0 16px 20px}}
 
   @media print{.ad-area-main,.ad-main-box,.ad-placeholder{display:none !important}}
+
+  .faq-wrap{max-width:1100px;margin:20px auto 0;padding:0 24px}
+  .faq-item{border-bottom:1px solid var(--slate-100);padding:12px 0}
+  .faq-item:last-child{border-bottom:none}
+  .faq-item summary{cursor:pointer;font-weight:700;font-size:13px;color:var(--slate-800);list-style:none;outline:none}
+  .faq-item summary::-webkit-details-marker{display:none}
+  .faq-item summary::before{content:'Q. ';color:var(--accent)}
+  .faq-item p{margin-top:8px;font-size:12.5px;color:var(--slate-600);line-height:1.7;padding-left:2px}
+  @media (max-width:640px){.faq-wrap{padding:0 16px}}
 </style>
 </head>
 <body>
@@ -133,6 +142,17 @@
 </div>
 
 <!-- AD (하단 배너) -->
+
+<div class="faq-wrap">
+  <div class="card">
+    <div class="card-header"><div class="card-title">자주 묻는 질문</div></div>
+    <div class="card-body">
+      <details class="faq-item"><summary>TCO(총소유비용)는 왜 구매가만 보면 안 되는 이유가 되나요?</summary><p>구매가는 전체 비용의 일부일 뿐입니다. 설치비, 유지보수비, 에너지 소비, 다운타임 비용, 폐기비용까지 합산하면, 초기 구매가가 저렴한 장비가 장기적으로는 더 비쌀 수 있습니다.</p></details>
+      <details class="faq-item"><summary>두 견적을 TCO로 비교할 때 가장 자주 놓치는 항목은 무엇인가요?</summary><p>에너지 효율(전력 소비량)과 다운타임(고장으로 인한 생산 중단 손실)이 자주 간과됩니다. 특히 다운타임 비용은 정량화하기 어렵다는 이유로 아예 빼고 비교하는 경우가 많은데, 실제로는 총비용 차이를 가장 크게 만드는 요인 중 하나입니다.</p></details>
+    </div>
+  </div>
+</div>
+
 <div class="ad-area-main" role="complementary" aria-label="하단 광고 영역">
   <div class="ad-main-box">
     <strong>Advertisement</strong>
@@ -284,6 +304,30 @@ function calc(){
 }
 
 render();
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "TCO(총소유비용)는 왜 구매가만 보면 안 되는 이유가 되나요?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "구매가는 전체 비용의 일부일 뿐입니다. 설치비, 유지보수비, 에너지 소비, 다운타임 비용, 폐기비용까지 합산하면, 초기 구매가가 저렴한 장비가 장기적으로는 더 비쌀 수 있습니다."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "두 견적을 TCO로 비교할 때 가장 자주 놓치는 항목은 무엇인가요?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "에너지 효율(전력 소비량)과 다운타임(고장으로 인한 생산 중단 손실)이 자주 간과됩니다. 특히 다운타임 비용은 정량화하기 어렵다는 이유로 아예 빼고 비교하는 경우가 많은데, 실제로는 총비용 차이를 가장 크게 만드는 요인 중 하나입니다."
+      }
+    }
+  ]
+}
 </script>
 </body>
 </html>

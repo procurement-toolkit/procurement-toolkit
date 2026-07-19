@@ -143,6 +143,15 @@
   @media (max-width:640px){.ad-area-main{padding:0 16px 20px}}
 
   @media print{.ad-area-main,.ad-main-box,.ad-placeholder{display:none !important}}
+
+  .faq-wrap{max-width:1100px;margin:20px auto 0;padding:0 24px}
+  .faq-item{border-bottom:1px solid var(--slate-100);padding:12px 0}
+  .faq-item:last-child{border-bottom:none}
+  .faq-item summary{cursor:pointer;font-weight:700;font-size:13px;color:var(--slate-800);list-style:none;outline:none}
+  .faq-item summary::-webkit-details-marker{display:none}
+  .faq-item summary::before{content:'Q. ';color:var(--accent)}
+  .faq-item p{margin-top:8px;font-size:12.5px;color:var(--slate-600);line-height:1.7;padding-left:2px}
+  @media (max-width:640px){.faq-wrap{padding:0 16px}}
 </style>
 </head>
 <body>
@@ -271,6 +280,17 @@
 </div>
 
 <!-- AD (bottom banner) -->
+
+<div class="faq-wrap">
+  <div class="card">
+    <div class="card-header"><div class="card-title">Frequently Asked Questions</div></div>
+    <div class="card-body">
+      <details class="faq-item"><summary>What are the four quadrants of the Kraljic Matrix, and what does each mean?</summary><p>The matrix plots supply risk against profit impact. Non-critical items (low risk, low impact) call for efficient process automation. Leverage items (low risk, high impact) call for competitive bidding and negotiation leverage. Bottleneck items (high risk, low impact) call for securing supply continuity. Strategic items (high risk, high impact) call for close partnership and joint planning with the supplier.</p></details>
+      <details class="faq-item"><summary>How often should a Kraljic classification be re-evaluated?</summary><p>Annually at minimum, and sooner if there's a major shift — a new supplier entering the market, a shortage affecting supply risk, or a significant change in a category's spend. A category's classification isn't permanent and can move between quadrants over time.</p></details>
+    </div>
+  </div>
+</div>
+
 <div class="ad-area-main" role="complementary" aria-label="Advertisement area">
   <div class="ad-main-box">
     <strong>Advertisement</strong>
@@ -600,6 +620,30 @@ if(!restored){
   items.push({id:++itemCounter, name:'Rare Earth Magnet', risk:9, impact:3, spend:35000});
 }
 render();
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What are the four quadrants of the Kraljic Matrix, and what does each mean?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "The matrix plots supply risk against profit impact. Non-critical items (low risk, low impact) call for efficient process automation. Leverage items (low risk, high impact) call for competitive bidding and negotiation leverage. Bottleneck items (high risk, low impact) call for securing supply continuity. Strategic items (high risk, high impact) call for close partnership and joint planning with the supplier."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How often should a Kraljic classification be re-evaluated?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Annually at minimum, and sooner if there's a major shift — a new supplier entering the market, a shortage affecting supply risk, or a significant change in a category's spend. A category's classification isn't permanent and can move between quadrants over time."
+      }
+    }
+  ]
+}
 </script>
 </body>
 </html>

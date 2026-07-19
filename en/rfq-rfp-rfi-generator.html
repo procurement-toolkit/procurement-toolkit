@@ -102,6 +102,15 @@
   @media (max-width:640px){.ad-area-main{padding:0 16px 20px}}
 
   @media print{.ad-area-main,.ad-main-box,.ad-placeholder{display:none !important}}
+
+  .faq-wrap{max-width:1100px;margin:20px auto 0;padding:0 24px}
+  .faq-item{border-bottom:1px solid var(--slate-100);padding:12px 0}
+  .faq-item:last-child{border-bottom:none}
+  .faq-item summary{cursor:pointer;font-weight:700;font-size:13px;color:var(--slate-800);list-style:none;outline:none}
+  .faq-item summary::-webkit-details-marker{display:none}
+  .faq-item summary::before{content:'Q. ';color:var(--accent)}
+  .faq-item p{margin-top:8px;font-size:12.5px;color:var(--slate-600);line-height:1.7;padding-left:2px}
+  @media (max-width:640px){.faq-wrap{padding:0 16px}}
 </style>
 </head>
 <body>
@@ -237,6 +246,17 @@
 </div>
 
 <!-- AD (bottom banner) -->
+
+<div class="faq-wrap">
+  <div class="card">
+    <div class="card-header"><div class="card-title">Frequently Asked Questions</div></div>
+    <div class="card-body">
+      <details class="faq-item"><summary>When should I use an RFI vs an RFP vs an RFQ?</summary><p>Use an RFI (Request for Information) early on, to gather market intelligence before you've narrowed down suppliers. Use an RFP (Request for Proposal) when you want suppliers to propose a solution approach. Use an RFQ (Request for Quotation) once specifications are fixed and you just need to compare price.</p></details>
+      <details class="faq-item"><summary>How do I get accurate, comparable quotes back from an RFQ?</summary><p>Specify quantity, exact specifications, delivery timeline, payment terms, and Incoterm as precisely as possible. Vague requirements lead suppliers to quote against different assumptions, making the quotes impossible to compare apples-to-apples.</p></details>
+    </div>
+  </div>
+</div>
+
 <div class="ad-area-main" role="complementary" aria-label="Advertisement area">
   <div class="ad-main-box">
     <strong>Advertisement</strong>
@@ -436,6 +456,30 @@ addItem('Aluminum Extrusion Profile', '6063-T5, 3.0mm thickness', 5000, 'PCS', '
 document.getElementById('issueDate').valueAsDate = new Date();
 setDocType('RFI');
 applyCategoryDefaults();
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "When should I use an RFI vs an RFP vs an RFQ?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Use an RFI (Request for Information) early on, to gather market intelligence before you've narrowed down suppliers. Use an RFP (Request for Proposal) when you want suppliers to propose a solution approach. Use an RFQ (Request for Quotation) once specifications are fixed and you just need to compare price."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How do I get accurate, comparable quotes back from an RFQ?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Specify quantity, exact specifications, delivery timeline, payment terms, and Incoterm as precisely as possible. Vague requirements lead suppliers to quote against different assumptions, making the quotes impossible to compare apples-to-apples."
+      }
+    }
+  ]
+}
 </script>
 </body>
 </html>

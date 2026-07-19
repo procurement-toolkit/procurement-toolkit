@@ -155,6 +155,15 @@
   }
 
   @media print{.ad-area-main,.ad-main-box,.ad-placeholder{display:none !important}}
+
+  .faq-wrap{max-width:1100px;margin:20px auto 0;padding:0 24px}
+  .faq-item{border-bottom:1px solid var(--slate-100);padding:12px 0}
+  .faq-item:last-child{border-bottom:none}
+  .faq-item summary{cursor:pointer;font-weight:700;font-size:13px;color:var(--slate-800);list-style:none;outline:none}
+  .faq-item summary::-webkit-details-marker{display:none}
+  .faq-item summary::before{content:'Q. ';color:var(--accent)}
+  .faq-item p{margin-top:8px;font-size:12.5px;color:var(--slate-600);line-height:1.7;padding-left:2px}
+  @media (max-width:640px){.faq-wrap{padding:0 16px}}
 </style>
 <script src="https://cdn.amplitude.com/script/d4aa9301e01f4600b5eeb018e160aa7c.js"></script>
 <script>
@@ -307,7 +316,19 @@
     </aside>
   </div>
 
-  <div class="ad-area-main" role="complementary" aria-label="하단 광고 영역">
+  
+<div class="faq-wrap">
+  <div class="card">
+    <div class="card-header"><div class="card-title">자주 묻는 질문</div></div>
+    <div class="card-body">
+      <details class="faq-item"><summary>영문 비즈니스 이메일 인사말은 상대를 모를 때 어떻게 써야 하나요?</summary><p>받는 사람 이름을 모른다면 'Dear Sir/Madam,'이 무난합니다. 이름은 알지만 직함을 모른다면 'Dear Mr./Ms. [성],'으로 쓰는 것이 일반적입니다.</p></details>
+      <details class="faq-item"><summary>납기 지연 문의 이메일은 어떻게 써야 관계를 해치지 않나요?</summary><p>상대를 비난하는 어조 대신, 현재 상황을 묻고 향후 일정을 확인하는 방식으로 접근하는 것이 좋습니다. 예: 'Could you please confirm the current status and provide an updated shipping schedule?'처럼 요청형 문장을 쓰면 정중하면서도 명확하게 전달됩니다.</p></details>
+      <details class="faq-item"><summary>클레임 이메일을 쓸 때 꼭 포함해야 할 내용은 무엇인가요?</summary><p>문제가 발생한 구체적인 수량·비율, 발견 시점, 그리고 원하는 해결 방안(교체/환불/크레딧 등)을 명시하는 것이 중요합니다. 근거자료(사진 등)를 제공할 수 있다는 점을 언급하면 상대가 더 신속하게 대응하는 경우가 많습니다.</p></details>
+    </div>
+  </div>
+</div>
+
+<div class="ad-area-main" role="complementary" aria-label="하단 광고 영역">
     <div class="ad-main-box">
       <strong>Advertisement</strong>
       광고 영역 (Google AdSense) — 728 × 90 리더보드
@@ -447,5 +468,37 @@
   generate();
 </script>
 
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "영문 비즈니스 이메일 인사말은 상대를 모를 때 어떻게 써야 하나요?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "받는 사람 이름을 모른다면 'Dear Sir/Madam,'이 무난합니다. 이름은 알지만 직함을 모른다면 'Dear Mr./Ms. [성],'으로 쓰는 것이 일반적입니다."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "납기 지연 문의 이메일은 어떻게 써야 관계를 해치지 않나요?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "상대를 비난하는 어조 대신, 현재 상황을 묻고 향후 일정을 확인하는 방식으로 접근하는 것이 좋습니다. 예: 'Could you please confirm the current status and provide an updated shipping schedule?'처럼 요청형 문장을 쓰면 정중하면서도 명확하게 전달됩니다."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "클레임 이메일을 쓸 때 꼭 포함해야 할 내용은 무엇인가요?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "문제가 발생한 구체적인 수량·비율, 발견 시점, 그리고 원하는 해결 방안(교체/환불/크레딧 등)을 명시하는 것이 중요합니다. 근거자료(사진 등)를 제공할 수 있다는 점을 언급하면 상대가 더 신속하게 대응하는 경우가 많습니다."
+      }
+    }
+  ]
+}
+</script>
 </body>
 </html>

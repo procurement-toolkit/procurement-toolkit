@@ -71,6 +71,15 @@
   @media (max-width:640px){.ad-area-main{padding:0 16px 20px}}
 
   @media print{.ad-area-main,.ad-main-box,.ad-placeholder{display:none !important}}
+
+  .faq-wrap{max-width:1100px;margin:20px auto 0;padding:0 24px}
+  .faq-item{border-bottom:1px solid var(--slate-100);padding:12px 0}
+  .faq-item:last-child{border-bottom:none}
+  .faq-item summary{cursor:pointer;font-weight:700;font-size:13px;color:var(--slate-800);list-style:none;outline:none}
+  .faq-item summary::-webkit-details-marker{display:none}
+  .faq-item summary::before{content:'Q. ';color:var(--accent)}
+  .faq-item p{margin-top:8px;font-size:12.5px;color:var(--slate-600);line-height:1.7;padding-left:2px}
+  @media (max-width:640px){.faq-wrap{padding:0 16px}}
 </style>
 
 <script src="https://cdn.amplitude.com/script/d4aa9301e01f4600b5eeb018e160aa7c.js"></script>
@@ -129,6 +138,17 @@
 </div>
 
 <!-- AD (하단 배너) -->
+
+<div class="faq-wrap">
+  <div class="card">
+    <div class="card-header"><div class="card-title">자주 묻는 질문</div></div>
+    <div class="card-body">
+      <details class="faq-item"><summary>해외 거래처와 통화하기 좋은 시간대는 어떻게 찾나요?</summary><p>양쪽 지역의 업무시간(보통 09:00~18:00 현지 시각)이 겹치는 구간을 찾아야 합니다. 시차가 큰 지역(예: 한국-미국 동부)은 겹치는 시간이 짧거나 아예 없을 수 있어, 이메일 위주로 소통하고 통화는 미리 일정을 잡는 것이 효율적입니다.</p></details>
+      <details class="faq-item"><summary>업무시간 배지(초록/빨강)는 공휴일도 반영하나요?</summary><p>아니요, 단순히 요일(평일)과 시간(09:00~18:00)만 기준으로 한 추정치입니다. 현지 공휴일이나 회사별 근무시간은 반영되지 않으므로, 중요한 미팅 전에는 별도로 확인하는 것이 안전합니다.</p></details>
+    </div>
+  </div>
+</div>
+
 <div class="ad-area-main" role="complementary" aria-label="하단 광고 영역">
   <div class="ad-main-box">
     <strong>Advertisement</strong>
@@ -186,6 +206,30 @@ function render(){
 }
 render();
 setInterval(render, 1000);
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "해외 거래처와 통화하기 좋은 시간대는 어떻게 찾나요?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "양쪽 지역의 업무시간(보통 09:00~18:00 현지 시각)이 겹치는 구간을 찾아야 합니다. 시차가 큰 지역(예: 한국-미국 동부)은 겹치는 시간이 짧거나 아예 없을 수 있어, 이메일 위주로 소통하고 통화는 미리 일정을 잡는 것이 효율적입니다."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "업무시간 배지(초록/빨강)는 공휴일도 반영하나요?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "아니요, 단순히 요일(평일)과 시간(09:00~18:00)만 기준으로 한 추정치입니다. 현지 공휴일이나 회사별 근무시간은 반영되지 않으므로, 중요한 미팅 전에는 별도로 확인하는 것이 안전합니다."
+      }
+    }
+  ]
+}
 </script>
 </body>
 </html>

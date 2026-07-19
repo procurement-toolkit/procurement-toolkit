@@ -107,6 +107,15 @@
   @media (max-width:640px){.ad-area-main{padding:0 16px 20px}}
 
   @media print{.ad-area-main,.ad-main-box,.ad-placeholder{display:none !important}}
+
+  .faq-wrap{max-width:1100px;margin:20px auto 0;padding:0 24px}
+  .faq-item{border-bottom:1px solid var(--slate-100);padding:12px 0}
+  .faq-item:last-child{border-bottom:none}
+  .faq-item summary{cursor:pointer;font-weight:700;font-size:13px;color:var(--slate-800);list-style:none;outline:none}
+  .faq-item summary::-webkit-details-marker{display:none}
+  .faq-item summary::before{content:'Q. ';color:var(--accent)}
+  .faq-item p{margin-top:8px;font-size:12.5px;color:var(--slate-600);line-height:1.7;padding-left:2px}
+  @media (max-width:640px){.faq-wrap{padding:0 16px}}
 </style>
 </head>
 <body>
@@ -231,6 +240,17 @@
 </div>
 
 <!-- AD (bottom banner) -->
+
+<div class="faq-wrap">
+  <div class="card">
+    <div class="card-header"><div class="card-title">Frequently Asked Questions</div></div>
+    <div class="card-body">
+      <details class="faq-item"><summary>What is Should Cost analysis, and how is it different from just reviewing a quote?</summary><p>Should Cost analysis builds an independent cost estimate — materials, processing, overhead, margin — instead of taking a supplier's quote at face value. It gives you a concrete, defensible reference point for negotiation rather than a gut-feel judgment.</p></details>
+      <details class="faq-item"><summary>How do I negotiate when a supplier's quote is significantly above my Should Cost estimate?</summary><p>Point to the specific cost category driving the gap (materials, labor, overhead, or margin) and ask the supplier to walk through their assumptions for that line. This tends to get a more concrete response than a general request to 'lower the price.'</p></details>
+    </div>
+  </div>
+</div>
+
 <div class="ad-area-main" role="complementary" aria-label="Advertisement area">
   <div class="ad-main-box">
     <strong>Advertisement</strong>
@@ -423,6 +443,30 @@ addBom('Fastener Set', 4, 'EA', 0.15);
 addProcess('CNC Machining', 45, 1, 28);
 addProcess('Surface Treatment', 20, 1, 28);
 calc();
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What is Should Cost analysis, and how is it different from just reviewing a quote?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Should Cost analysis builds an independent cost estimate — materials, processing, overhead, margin — instead of taking a supplier's quote at face value. It gives you a concrete, defensible reference point for negotiation rather than a gut-feel judgment."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How do I negotiate when a supplier's quote is significantly above my Should Cost estimate?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Point to the specific cost category driving the gap (materials, labor, overhead, or margin) and ask the supplier to walk through their assumptions for that line. This tends to get a more concrete response than a general request to 'lower the price.'"
+      }
+    }
+  ]
+}
 </script>
 </body>
 </html>

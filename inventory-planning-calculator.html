@@ -75,6 +75,15 @@
   @media (max-width:640px){.ad-area-main{padding:0 16px 20px}}
 
   @media print{.ad-area-main,.ad-main-box,.ad-placeholder{display:none !important}}
+
+  .faq-wrap{max-width:1100px;margin:20px auto 0;padding:0 24px}
+  .faq-item{border-bottom:1px solid var(--slate-100);padding:12px 0}
+  .faq-item:last-child{border-bottom:none}
+  .faq-item summary{cursor:pointer;font-weight:700;font-size:13px;color:var(--slate-800);list-style:none;outline:none}
+  .faq-item summary::-webkit-details-marker{display:none}
+  .faq-item summary::before{content:'Q. ';color:var(--accent)}
+  .faq-item p{margin-top:8px;font-size:12.5px;color:var(--slate-600);line-height:1.7;padding-left:2px}
+  @media (max-width:640px){.faq-wrap{padding:0 16px}}
 </style>
 
 <script src="https://cdn.amplitude.com/script/d4aa9301e01f4600b5eeb018e160aa7c.js"></script>
@@ -208,6 +217,18 @@
 </div>
 
 <!-- AD (하단 배너) -->
+
+<div class="faq-wrap">
+  <div class="card">
+    <div class="card-header"><div class="card-title">자주 묻는 질문</div></div>
+    <div class="card-body">
+      <details class="faq-item"><summary>EOQ(경제적 발주량)는 왜 무조건 재고를 줄이는 게 아닌가요?</summary><p>EOQ는 발주비용과 재고보관비용의 합이 최소가 되는 지점을 찾는 공식입니다. 발주를 너무 자주 하면 발주비용이 늘고, 너무 드물게 하면 보관비용과 재고 리스크가 늘어나므로, 무조건 적게 시키는 게 아니라 총비용이 최소인 지점을 찾는 것이 목적입니다.</p></details>
+      <details class="faq-item"><summary>안전재고는 어떤 기준으로 정해야 하나요?</summary><p>수요 변동성, 리드타임의 불확실성, 그리고 목표 서비스 수준(품절 허용 확률)을 기준으로 계산합니다. 리드타임이 길고 불안정한 해외 소싱일수록 안전재고를 더 넉넉히 잡아야 품절 리스크를 줄일 수 있습니다.</p></details>
+      <details class="faq-item"><summary>재주문점(Reorder Point)과 안전재고는 어떻게 다른가요?</summary><p>재주문점은 '이 수량 이하로 재고가 떨어지면 발주를 시작해야 하는 시점'이고, 안전재고는 그 재주문점을 계산할 때 포함되는 여유분입니다. 재주문점 = (일평균 수요 × 리드타임) + 안전재고로 계산합니다.</p></details>
+    </div>
+  </div>
+</div>
+
 <div class="ad-area-main" role="complementary" aria-label="하단 광고 영역">
   <div class="ad-main-box">
     <strong>Advertisement</strong>
@@ -251,6 +272,38 @@ function calc(){
   document.getElementById('freqResult').textContent = fmt(freq) + ' 회/년';
 }
 calc();
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "EOQ(경제적 발주량)는 왜 무조건 재고를 줄이는 게 아닌가요?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "EOQ는 발주비용과 재고보관비용의 합이 최소가 되는 지점을 찾는 공식입니다. 발주를 너무 자주 하면 발주비용이 늘고, 너무 드물게 하면 보관비용과 재고 리스크가 늘어나므로, 무조건 적게 시키는 게 아니라 총비용이 최소인 지점을 찾는 것이 목적입니다."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "안전재고는 어떤 기준으로 정해야 하나요?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "수요 변동성, 리드타임의 불확실성, 그리고 목표 서비스 수준(품절 허용 확률)을 기준으로 계산합니다. 리드타임이 길고 불안정한 해외 소싱일수록 안전재고를 더 넉넉히 잡아야 품절 리스크를 줄일 수 있습니다."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "재주문점(Reorder Point)과 안전재고는 어떻게 다른가요?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "재주문점은 '이 수량 이하로 재고가 떨어지면 발주를 시작해야 하는 시점'이고, 안전재고는 그 재주문점을 계산할 때 포함되는 여유분입니다. 재주문점 = (일평균 수요 × 리드타임) + 안전재고로 계산합니다."
+      }
+    }
+  ]
+}
 </script>
 </body>
 </html>

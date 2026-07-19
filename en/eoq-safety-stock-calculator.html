@@ -69,6 +69,15 @@
   @media (max-width:640px){.ad-area-main{padding:0 16px 20px}}
 
   @media print{.ad-area-main,.ad-main-box,.ad-placeholder{display:none !important}}
+
+  .faq-wrap{max-width:1100px;margin:20px auto 0;padding:0 24px}
+  .faq-item{border-bottom:1px solid var(--slate-100);padding:12px 0}
+  .faq-item:last-child{border-bottom:none}
+  .faq-item summary{cursor:pointer;font-weight:700;font-size:13px;color:var(--slate-800);list-style:none;outline:none}
+  .faq-item summary::-webkit-details-marker{display:none}
+  .faq-item summary::before{content:'Q. ';color:var(--accent)}
+  .faq-item p{margin-top:8px;font-size:12.5px;color:var(--slate-600);line-height:1.7;padding-left:2px}
+  @media (max-width:640px){.faq-wrap{padding:0 16px}}
 </style>
 </head>
 <body>
@@ -167,6 +176,18 @@
 </div>
 
 <!-- AD (bottom banner) -->
+
+<div class="faq-wrap">
+  <div class="card">
+    <div class="card-header"><div class="card-title">Frequently Asked Questions</div></div>
+    <div class="card-body">
+      <details class="faq-item"><summary>Does EOQ always mean ordering less?</summary><p>No — EOQ finds the order quantity that minimizes the combined cost of ordering and holding inventory. Ordering too frequently increases ordering costs; ordering too rarely increases holding costs and stockout risk. EOQ is about minimizing total cost, not simply minimizing order size.</p></details>
+      <details class="faq-item"><summary>What factors should determine safety stock levels?</summary><p>Demand variability, lead time uncertainty, and your target service level (acceptable stockout probability) are the key inputs. Longer, less predictable overseas lead times generally call for higher safety stock to avoid running out.</p></details>
+      <details class="faq-item"><summary>How is Reorder Point different from safety stock?</summary><p>Reorder Point is the inventory level that triggers a new order; safety stock is the buffer built into that calculation. Reorder Point = (average daily demand x lead time) + safety stock.</p></details>
+    </div>
+  </div>
+</div>
+
 <div class="ad-area-main" role="complementary" aria-label="Advertisement area">
   <div class="ad-main-box">
     <strong>Advertisement</strong>
@@ -214,6 +235,38 @@ function calc(){
   document.getElementById('freqResult').textContent = fmt(freq) + ' / year';
 }
 calc();
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Does EOQ always mean ordering less?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No — EOQ finds the order quantity that minimizes the combined cost of ordering and holding inventory. Ordering too frequently increases ordering costs; ordering too rarely increases holding costs and stockout risk. EOQ is about minimizing total cost, not simply minimizing order size."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What factors should determine safety stock levels?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Demand variability, lead time uncertainty, and your target service level (acceptable stockout probability) are the key inputs. Longer, less predictable overseas lead times generally call for higher safety stock to avoid running out."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How is Reorder Point different from safety stock?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Reorder Point is the inventory level that triggers a new order; safety stock is the buffer built into that calculation. Reorder Point = (average daily demand x lead time) + safety stock."
+      }
+    }
+  ]
+}
 </script>
 </body>
 </html>

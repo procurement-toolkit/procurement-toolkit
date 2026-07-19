@@ -98,6 +98,15 @@
   @media (max-width:640px){.ad-area-main{padding:0 16px 20px}}
 
   @media print{.ad-area-main,.ad-main-box,.ad-placeholder{display:none !important}}
+
+  .faq-wrap{max-width:1100px;margin:20px auto 0;padding:0 24px}
+  .faq-item{border-bottom:1px solid var(--slate-100);padding:12px 0}
+  .faq-item:last-child{border-bottom:none}
+  .faq-item summary{cursor:pointer;font-weight:700;font-size:13px;color:var(--slate-800);list-style:none;outline:none}
+  .faq-item summary::-webkit-details-marker{display:none}
+  .faq-item summary::before{content:'Q. ';color:var(--accent)}
+  .faq-item p{margin-top:8px;font-size:12.5px;color:var(--slate-600);line-height:1.7;padding-left:2px}
+  @media (max-width:640px){.faq-wrap{padding:0 16px}}
 </style>
 </head>
 <body>
@@ -186,6 +195,19 @@
 </div>
 
 <!-- AD (bottom banner) -->
+
+<div class="faq-wrap">
+  <div class="card">
+    <div class="card-header"><div class="card-title">Frequently Asked Questions</div></div>
+    <div class="card-body">
+      <details class="faq-item"><summary>What exactly is CBM and how is it calculated?</summary><p>CBM (Cubic Meter) measures the volume of a shipment in cubic meters. Multiply length x width x height (in meters) for one carton, then multiply by quantity. For example, 100 cartons at 50x40x30cm each equals 0.5 x 0.4 x 0.3 x 100 = 6 CBM.</p></details>
+      <details class="faq-item"><summary>Why do sea freight and air freight use different volumetric weight formulas?</summary><p>Carriers price cargo based on how dense it is relative to their vehicle's capacity. Sea freight conventionally uses CBM x 1,000 kg/m3 (roughly 1 CBM = 1 ton), while air freight uses the IATA standard of volume (cm3) divided by 6,000. The same shipment can have a very different chargeable weight depending on the mode of transport.</p></details>
+      <details class="faq-item"><summary>How much can actually fit in a 20ft vs 40ft container?</summary><p>Theoretical internal capacity is about 33 m3 for a 20ft container and 67 m3 for a 40ft container, but in practice only around 85-92% of that is usable due to pallet gaps and irregular cargo shapes. A safer planning figure is roughly 28 m3 for 20ft and 58 m3 for 40ft.</p></details>
+      <details class="faq-item"><summary>How is chargeable weight different from actual weight?</summary><p>Chargeable weight is whichever is greater: actual weight or volumetric weight. Bulky but lightweight cargo (like products with a lot of padding) often has a higher volumetric weight than actual weight, which can make freight cost more than you'd expect from the physical weight alone.</p></details>
+    </div>
+  </div>
+</div>
+
 <div class="ad-area-main" role="complementary" aria-label="Advertisement area">
   <div class="ad-main-box">
     <strong>Advertisement</strong>
@@ -342,6 +364,46 @@ function renderContainers(cbm, kg){
 }
 
 addRow(1, 60, 40, 40, 15);
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What exactly is CBM and how is it calculated?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "CBM (Cubic Meter) measures the volume of a shipment in cubic meters. Multiply length x width x height (in meters) for one carton, then multiply by quantity. For example, 100 cartons at 50x40x30cm each equals 0.5 x 0.4 x 0.3 x 100 = 6 CBM."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Why do sea freight and air freight use different volumetric weight formulas?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Carriers price cargo based on how dense it is relative to their vehicle's capacity. Sea freight conventionally uses CBM x 1,000 kg/m3 (roughly 1 CBM = 1 ton), while air freight uses the IATA standard of volume (cm3) divided by 6,000. The same shipment can have a very different chargeable weight depending on the mode of transport."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How much can actually fit in a 20ft vs 40ft container?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Theoretical internal capacity is about 33 m3 for a 20ft container and 67 m3 for a 40ft container, but in practice only around 85-92% of that is usable due to pallet gaps and irregular cargo shapes. A safer planning figure is roughly 28 m3 for 20ft and 58 m3 for 40ft."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How is chargeable weight different from actual weight?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Chargeable weight is whichever is greater: actual weight or volumetric weight. Bulky but lightweight cargo (like products with a lot of padding) often has a higher volumetric weight than actual weight, which can make freight cost more than you'd expect from the physical weight alone."
+      }
+    }
+  ]
+}
 </script>
 </body>
 </html>

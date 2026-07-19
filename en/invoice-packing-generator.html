@@ -94,6 +94,15 @@
   @media (max-width:640px){.ad-area-main{padding:0 16px 20px}}
 
   @media print{.ad-area-main,.ad-main-box,.ad-placeholder{display:none !important}}
+
+  .faq-wrap{max-width:1100px;margin:20px auto 0;padding:0 24px}
+  .faq-item{border-bottom:1px solid var(--slate-100);padding:12px 0}
+  .faq-item:last-child{border-bottom:none}
+  .faq-item summary{cursor:pointer;font-weight:700;font-size:13px;color:var(--slate-800);list-style:none;outline:none}
+  .faq-item summary::-webkit-details-marker{display:none}
+  .faq-item summary::before{content:'Q. ';color:var(--accent)}
+  .faq-item p{margin-top:8px;font-size:12.5px;color:var(--slate-600);line-height:1.7;padding-left:2px}
+  @media (max-width:640px){.faq-wrap{padding:0 16px}}
 </style>
 
 <script src="https://cdn.amplitude.com/script/d4aa9301e01f4600b5eeb018e160aa7c.js"></script>
@@ -224,6 +233,17 @@ Tel: +82-2-000-0000</textarea>
 </div>
 
 <!-- AD (bottom banner) -->
+
+<div class="faq-wrap">
+  <div class="card">
+    <div class="card-header"><div class="card-title">Frequently Asked Questions</div></div>
+    <div class="card-body">
+      <details class="faq-item"><summary>What's the difference between a commercial invoice and a packing list?</summary><p>A commercial invoice is the commercial document that proves the transaction value and terms — customs uses it as the basis for duty assessment. A packing list documents the physical details of the shipment (packaging units, weight, dimensions). Customs typically cross-checks both documents together.</p></details>
+      <details class="faq-item"><summary>What fields are essential on a commercial invoice?</summary><p>Exporter and importer details, the Incoterm used, item description and HS code, quantity, unit price, total value, and country of origin are the core fields. Missing any of these is a common cause of customs clearance delays.</p></details>
+    </div>
+  </div>
+</div>
+
 <div class="ad-area-main" role="complementary" aria-label="Advertisement area">
   <div class="ad-main-box">
     <strong>Advertisement</strong>
@@ -356,6 +376,30 @@ function render(){
 
 document.getElementById('invDate').valueAsDate = new Date();
 addItem('Model XR-200 Widget','8471.30',100,5.00,1.2,1.5);
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What's the difference between a commercial invoice and a packing list?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "A commercial invoice is the commercial document that proves the transaction value and terms — customs uses it as the basis for duty assessment. A packing list documents the physical details of the shipment (packaging units, weight, dimensions). Customs typically cross-checks both documents together."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What fields are essential on a commercial invoice?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Exporter and importer details, the Incoterm used, item description and HS code, quantity, unit price, total value, and country of origin are the core fields. Missing any of these is a common cause of customs clearance delays."
+      }
+    }
+  ]
+}
 </script>
 </body>
 </html>

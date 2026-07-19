@@ -108,6 +108,15 @@
   @media (max-width:640px){.ad-area-main{padding:0 16px 20px}}
 
   @media print{.ad-area-main,.ad-main-box,.ad-placeholder{display:none !important}}
+
+  .faq-wrap{max-width:1100px;margin:20px auto 0;padding:0 24px}
+  .faq-item{border-bottom:1px solid var(--slate-100);padding:12px 0}
+  .faq-item:last-child{border-bottom:none}
+  .faq-item summary{cursor:pointer;font-weight:700;font-size:13px;color:var(--slate-800);list-style:none;outline:none}
+  .faq-item summary::-webkit-details-marker{display:none}
+  .faq-item summary::before{content:'Q. ';color:var(--accent)}
+  .faq-item p{margin-top:8px;font-size:12.5px;color:var(--slate-600);line-height:1.7;padding-left:2px}
+  @media (max-width:640px){.faq-wrap{padding:0 16px}}
 </style>
 </head>
 <body>
@@ -267,6 +276,17 @@
 </div>
 
 <!-- AD (하단 배너) -->
+
+<div class="faq-wrap">
+  <div class="card">
+    <div class="card-header"><div class="card-title">자주 묻는 질문</div></div>
+    <div class="card-body">
+      <details class="faq-item"><summary>RFQ, RFP, RFI는 각각 언제 사용해야 하나요?</summary><p>RFI(Request for Information)는 아직 후보군을 좁히기 전, 시장 정보를 수집하는 단계에서 사용합니다. RFP(Request for Proposal)는 구체적인 솔루션 제안을 요청할 때, RFQ(Request for Quotation)는 사양이 명확히 정해진 상태에서 가격만 비교할 때 사용합니다.</p></details>
+      <details class="faq-item"><summary>RFQ를 보낼 때 공급업체가 정확한 견적을 주게 하려면 무엇이 필요한가요?</summary><p>수량, 사양, 납기, 결제조건, 인코텀즈까지 최대한 구체적으로 명시해야 합니다. 조건이 모호하면 공급업체마다 서로 다른 전제로 견적을 내서, 나중에 비교 자체가 어려워집니다.</p></details>
+    </div>
+  </div>
+</div>
+
 <div class="ad-area-main" role="complementary" aria-label="하단 광고 영역">
   <div class="ad-main-box">
     <strong>Advertisement</strong>
@@ -517,6 +537,30 @@ addItem('Aluminum Extrusion Profile', '6063-T5, 3.0mm thickness', 5000, 'PCS', '
 document.getElementById('issueDate').valueAsDate = new Date();
 setDocType('RFI');
 applyCategoryDefaults();
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "RFQ, RFP, RFI는 각각 언제 사용해야 하나요?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "RFI(Request for Information)는 아직 후보군을 좁히기 전, 시장 정보를 수집하는 단계에서 사용합니다. RFP(Request for Proposal)는 구체적인 솔루션 제안을 요청할 때, RFQ(Request for Quotation)는 사양이 명확히 정해진 상태에서 가격만 비교할 때 사용합니다."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "RFQ를 보낼 때 공급업체가 정확한 견적을 주게 하려면 무엇이 필요한가요?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "수량, 사양, 납기, 결제조건, 인코텀즈까지 최대한 구체적으로 명시해야 합니다. 조건이 모호하면 공급업체마다 서로 다른 전제로 견적을 내서, 나중에 비교 자체가 어려워집니다."
+      }
+    }
+  ]
+}
 </script>
 </body>
 </html>

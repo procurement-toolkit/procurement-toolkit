@@ -133,6 +133,15 @@
   @media (max-width:640px){.ad-area-main{padding:0 16px 20px}}
 
   @media print{.ad-area-main,.ad-main-box,.ad-placeholder{display:none !important}}
+
+  .faq-wrap{max-width:1100px;margin:20px auto 0;padding:0 24px}
+  .faq-item{border-bottom:1px solid var(--slate-100);padding:12px 0}
+  .faq-item:last-child{border-bottom:none}
+  .faq-item summary{cursor:pointer;font-weight:700;font-size:13px;color:var(--slate-800);list-style:none;outline:none}
+  .faq-item summary::-webkit-details-marker{display:none}
+  .faq-item summary::before{content:'Q. ';color:var(--accent)}
+  .faq-item p{margin-top:8px;font-size:12.5px;color:var(--slate-600);line-height:1.7;padding-left:2px}
+  @media (max-width:640px){.faq-wrap{padding:0 16px}}
 </style>
 </head>
 <body>
@@ -256,6 +265,18 @@
 </div>
 
 <!-- AD (하단 배너) -->
+
+<div class="faq-wrap">
+  <div class="card">
+    <div class="card-header"><div class="card-title">자주 묻는 질문</div></div>
+    <div class="card-body">
+      <details class="faq-item"><summary>컨테이너 실제 적재율은 이론상 최대치와 왜 차이가 나나요?</summary><p>이론적 용적은 컨테이너 내부 치수를 그대로 곱한 값이지만, 실제로는 파렛트 사이 공간, 화물 형태의 불규칙성, 적입 작업 여유공간 때문에 보통 85~92% 정도만 실질적으로 활용됩니다.</p></details>
+      <details class="faq-item"><summary>20피트와 40피트 중 어떤 컨테이너를 선택해야 하나요?</summary><p>부피가 크지 않은데 무거운 화물(중량화물)은 20피트가 유리하고, 부피는 큰데 가벼운 화물은 40피트가 공간 효율이 좋습니다. 컨테이너당 최대 적재 중량 한도도 있으므로 부피와 중량을 함께 계산해서 비교해야 합니다.</p></details>
+      <details class="faq-item"><summary>여러 품목을 섞어 실을 때 적재 순서가 왜 중요한가요?</summary><p>무겁고 부피가 큰 화물을 바닥과 안쪽에 먼저 배치해야 무게중심이 안정되고, 남는 공간을 작은 화물로 채워야 전체 활용률이 올라갑니다. 순서를 잘못 잡으면 이론상 들어갈 수 있는 화물도 실제로는 다 못 싣는 경우가 생깁니다.</p></details>
+    </div>
+  </div>
+</div>
+
 <div class="ad-area-main" role="complementary" aria-label="하단 광고 영역">
   <div class="ad-main-box">
     <strong>Advertisement</strong>
@@ -589,6 +610,38 @@ addItem('박스 A', 60, 40, 40, 2);
 addItem('박스 B', 60, 100, 40, 2);
 addItem('박스 C', 100, 40, 100, 1);
 addItem('박스 D', 100, 40, 40, 2);
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "컨테이너 실제 적재율은 이론상 최대치와 왜 차이가 나나요?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "이론적 용적은 컨테이너 내부 치수를 그대로 곱한 값이지만, 실제로는 파렛트 사이 공간, 화물 형태의 불규칙성, 적입 작업 여유공간 때문에 보통 85~92% 정도만 실질적으로 활용됩니다."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "20피트와 40피트 중 어떤 컨테이너를 선택해야 하나요?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "부피가 크지 않은데 무거운 화물(중량화물)은 20피트가 유리하고, 부피는 큰데 가벼운 화물은 40피트가 공간 효율이 좋습니다. 컨테이너당 최대 적재 중량 한도도 있으므로 부피와 중량을 함께 계산해서 비교해야 합니다."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "여러 품목을 섞어 실을 때 적재 순서가 왜 중요한가요?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "무겁고 부피가 큰 화물을 바닥과 안쪽에 먼저 배치해야 무게중심이 안정되고, 남는 공간을 작은 화물로 채워야 전체 활용률이 올라갑니다. 순서를 잘못 잡으면 이론상 들어갈 수 있는 화물도 실제로는 다 못 싣는 경우가 생깁니다."
+      }
+    }
+  ]
+}
 </script>
 </body>
 </html>

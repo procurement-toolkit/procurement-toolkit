@@ -73,6 +73,15 @@
   @media (max-width:640px){.ad-area-main{padding:0 16px 20px}}
 
   @media print{.ad-area-main,.ad-main-box,.ad-placeholder{display:none !important}}
+
+  .faq-wrap{max-width:1100px;margin:20px auto 0;padding:0 24px}
+  .faq-item{border-bottom:1px solid var(--slate-100);padding:12px 0}
+  .faq-item:last-child{border-bottom:none}
+  .faq-item summary{cursor:pointer;font-weight:700;font-size:13px;color:var(--slate-800);list-style:none;outline:none}
+  .faq-item summary::-webkit-details-marker{display:none}
+  .faq-item summary::before{content:'Q. ';color:var(--accent)}
+  .faq-item p{margin-top:8px;font-size:12.5px;color:var(--slate-600);line-height:1.7;padding-left:2px}
+  @media (max-width:640px){.faq-wrap{padding:0 16px}}
 </style>
 </head>
 <body>
@@ -176,6 +185,17 @@
 </div>
 
 <!-- AD (bottom banner) -->
+
+<div class="faq-wrap">
+  <div class="card">
+    <div class="card-header"><div class="card-title">Frequently Asked Questions</div></div>
+    <div class="card-body">
+      <details class="faq-item"><summary>How do T/T and L/C compare in terms of risk?</summary><p>T/T (wire transfer) is simple and fast but carries no bank guarantee, making it riskier for the paying or receiving party depending on timing. L/C (Letter of Credit) has a bank guarantee behind it, which is safer but comes with more paperwork and bank fees.</p></details>
+      <details class="faq-item"><summary>What payment terms are safest with a brand-new supplier?</summary><p>A common approach is a partial advance payment (e.g., 30% T/T advance) with the balance due before shipment or secured via L/C. As trust builds over repeated transactions, terms can gradually be relaxed.</p></details>
+    </div>
+  </div>
+</div>
+
 <div class="ad-area-main" role="complementary" aria-label="Advertisement area">
   <div class="ad-main-box">
     <strong>Advertisement</strong>
@@ -199,6 +219,30 @@
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
   gtag('config', 'G-W1YBL5BGGK');
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "How do T/T and L/C compare in terms of risk?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "T/T (wire transfer) is simple and fast but carries no bank guarantee, making it riskier for the paying or receiving party depending on timing. L/C (Letter of Credit) has a bank guarantee behind it, which is safer but comes with more paperwork and bank fees."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What payment terms are safest with a brand-new supplier?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "A common approach is a partial advance payment (e.g., 30% T/T advance) with the balance due before shipment or secured via L/C. As trust builds over repeated transactions, terms can gradually be relaxed."
+      }
+    }
+  ]
+}
 </script>
 </body>
 </html>

@@ -500,6 +500,15 @@
   .result-total.flash { animation: flashUpdate 0.5s ease; }
 
   @media print{.ad-area-main,.ad-main-box,.ad-placeholder{display:none !important}}
+
+  .faq-wrap{max-width:1100px;margin:20px auto 0;padding:0 24px}
+  .faq-item{border-bottom:1px solid var(--slate-100);padding:12px 0}
+  .faq-item:last-child{border-bottom:none}
+  .faq-item summary{cursor:pointer;font-weight:700;font-size:13px;color:var(--slate-800);list-style:none;outline:none}
+  .faq-item summary::-webkit-details-marker{display:none}
+  .faq-item summary::before{content:'Q. ';color:var(--accent)}
+  .faq-item p{margin-top:8px;font-size:12.5px;color:var(--slate-600);line-height:1.7;padding-left:2px}
+  @media (max-width:640px){.faq-wrap{padding:0 16px}}
 </style>
 <script src="https://cdn.amplitude.com/script/d4aa9301e01f4600b5eeb018e160aa7c.js"></script>
 <script>
@@ -748,7 +757,20 @@
     </aside>
   </div>
 
-  <div class="ad-area-main" role="complementary" aria-label="하단 광고 영역">
+  
+<div class="faq-wrap">
+  <div class="card">
+    <div class="card-header"><div class="card-title">자주 묻는 질문</div></div>
+    <div class="card-body">
+      <details class="faq-item"><summary>FOB와 CIF는 원가 계산에서 어떻게 다른가요?</summary><p>FOB(Free On Board)는 수출항 선적 시점까지 판매자가 비용을 부담하고, 그 이후 해상운임·보험료는 구매자가 별도로 부담합니다. CIF(Cost, Insurance and Freight)는 판매자가 목적항까지의 운임과 보험료까지 포함해서 가격을 제시합니다. 즉 CIF 단가에는 이미 운임·보험료가 녹아 있어 두 조건의 단가를 그대로 비교하면 안 됩니다.</p></details>
+      <details class="faq-item"><summary>관세는 정확히 어떤 금액을 기준으로 부과되나요?</summary><p>한국을 포함한 대부분 국가는 CIF 과세가격(상품가+운임+보험료의 합)을 기준으로 관세를 부과합니다. FOB 조건으로 수입하더라도 관세 계산 시에는 운임·보험료를 더해 CIF 상당액으로 환산해서 과세하는 것이 일반적입니다.</p></details>
+      <details class="faq-item"><summary>랜디드 코스트(Landed Cost)란 정확히 무엇을 포함하나요?</summary><p>랜디드 코스트는 상품이 최종적으로 내 창고에 들어오기까지 발생하는 모든 비용의 합입니다. 상품가, 국제운임, 보험료, 관세, 부가세, 통관수수료, 국내 운송비까지 포함해야 실제 원가를 정확히 알 수 있습니다. 상품가만 보고 원가를 판단하면 실제 마진이 예상보다 낮아지는 경우가 많습니다.</p></details>
+      <details class="faq-item"><summary>부가세는 왜 상품가가 아니라 관세를 더한 금액에 부과되나요?</summary><p>부가세는 '과세가격 + 관세'를 기준으로 부과되는 것이 원칙입니다. 관세를 낸 이후의 금액에 다시 부가세가 붙는 구조라, 관세율이 높을수록 부가세 부담도 함께 늘어납니다.</p></details>
+    </div>
+  </div>
+</div>
+
+<div class="ad-area-main" role="complementary" aria-label="하단 광고 영역">
     <div class="ad-main-box">
       <strong>Advertisement</strong>
       광고 영역 (Google AdSense) — 728 × 90 리더보드
@@ -1034,5 +1056,45 @@
   setIncoterm('FOB');
 </script>
 
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "FOB와 CIF는 원가 계산에서 어떻게 다른가요?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "FOB(Free On Board)는 수출항 선적 시점까지 판매자가 비용을 부담하고, 그 이후 해상운임·보험료는 구매자가 별도로 부담합니다. CIF(Cost, Insurance and Freight)는 판매자가 목적항까지의 운임과 보험료까지 포함해서 가격을 제시합니다. 즉 CIF 단가에는 이미 운임·보험료가 녹아 있어 두 조건의 단가를 그대로 비교하면 안 됩니다."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "관세는 정확히 어떤 금액을 기준으로 부과되나요?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "한국을 포함한 대부분 국가는 CIF 과세가격(상품가+운임+보험료의 합)을 기준으로 관세를 부과합니다. FOB 조건으로 수입하더라도 관세 계산 시에는 운임·보험료를 더해 CIF 상당액으로 환산해서 과세하는 것이 일반적입니다."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "랜디드 코스트(Landed Cost)란 정확히 무엇을 포함하나요?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "랜디드 코스트는 상품이 최종적으로 내 창고에 들어오기까지 발생하는 모든 비용의 합입니다. 상품가, 국제운임, 보험료, 관세, 부가세, 통관수수료, 국내 운송비까지 포함해야 실제 원가를 정확히 알 수 있습니다. 상품가만 보고 원가를 판단하면 실제 마진이 예상보다 낮아지는 경우가 많습니다."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "부가세는 왜 상품가가 아니라 관세를 더한 금액에 부과되나요?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "부가세는 '과세가격 + 관세'를 기준으로 부과되는 것이 원칙입니다. 관세를 낸 이후의 금액에 다시 부가세가 붙는 구조라, 관세율이 높을수록 부가세 부담도 함께 늘어납니다."
+      }
+    }
+  ]
+}
+</script>
 </body>
 </html>

@@ -806,6 +806,15 @@
   .result-item.accent.flash { animation: none; }
 
   @media print{.ad-area-main,.ad-main-box,.ad-placeholder{display:none !important}}
+
+  .faq-wrap{max-width:1100px;margin:20px auto 0;padding:0 24px}
+  .faq-item{border-bottom:1px solid var(--slate-100);padding:12px 0}
+  .faq-item:last-child{border-bottom:none}
+  .faq-item summary{cursor:pointer;font-weight:700;font-size:13px;color:var(--slate-800);list-style:none;outline:none}
+  .faq-item summary::-webkit-details-marker{display:none}
+  .faq-item summary::before{content:'Q. ';color:var(--accent)}
+  .faq-item p{margin-top:8px;font-size:12.5px;color:var(--slate-600);line-height:1.7;padding-left:2px}
+  @media (max-width:640px){.faq-wrap{padding:0 16px}}
 </style>
 <script src="https://cdn.amplitude.com/script/d4aa9301e01f4600b5eeb018e160aa7c.js"></script>
 <script>
@@ -1002,7 +1011,20 @@
   </div>
 
   <!-- AD (하단 배너) -->
-  <div class="ad-area-main" role="complementary" aria-label="하단 광고 영역">
+  
+<div class="faq-wrap">
+  <div class="card">
+    <div class="card-header"><div class="card-title">자주 묻는 질문</div></div>
+    <div class="card-body">
+      <details class="faq-item"><summary>CBM이 정확히 무엇이고 어떻게 계산하나요?</summary><p>CBM(Cubic Meter)은 화물의 부피를 세제곱미터(㎥) 단위로 나타낸 값입니다. 카톤의 가로×세로×높이(m)를 곱한 값에 수량을 곱해서 구합니다. 예를 들어 50×40×30cm 박스 100개라면 0.5×0.4×0.3×100 = 6 CBM이 됩니다.</p></details>
+      <details class="faq-item"><summary>해상 볼륨 무게와 항공 볼륨 무게는 왜 계산식이 다른가요?</summary><p>선사·항공사가 화물칸의 무게 대비 부피 밀도를 다르게 보기 때문입니다. 해상 화물은 관행적으로 CBM × 1,000kg/㎥(1CBM=1톤)을 쓰고, 항공 화물은 IATA 기준으로 부피(cm³)를 6,000으로 나눠서 계산합니다. 같은 화물이라도 운송 수단에 따라 청구 무게가 크게 달라질 수 있습니다.</p></details>
+      <details class="faq-item"><summary>20피트·40피트 컨테이너에는 각각 몇 CBM까지 실을 수 있나요?</summary><p>이론상 내부 용적은 20피트가 약 33㎥, 40피트가 약 67㎥이지만, 실제로는 파렛트 배치·화물 형태에 따라 약 85~92% 정도만 활용 가능합니다. 실무적으로는 20피트 약 28㎥, 40피트 약 58㎥ 전후를 안전한 기준으로 잡는 경우가 많습니다.</p></details>
+      <details class="faq-item"><summary>청구 적용 무게(Chargeable Weight)는 실제 무게와 뭐가 다른가요?</summary><p>청구 적용 무게는 실제 무게와 볼륨 무게 중 더 큰 값을 기준으로 운임을 매기는 방식입니다. 부피는 큰데 가벼운 화물(예: 완충재가 많은 제품)은 실제 무게보다 볼륨 무게가 더 커서, 운임이 예상보다 비싸질 수 있습니다.</p></details>
+    </div>
+  </div>
+</div>
+
+<div class="ad-area-main" role="complementary" aria-label="하단 광고 영역">
     <div class="ad-main-box">
       <strong>Advertisement</strong>
       광고 영역 (Google AdSense) — 728 × 90 리더보드
@@ -1500,5 +1522,45 @@
   document.head.appendChild(style);
 </script>
 
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "CBM이 정확히 무엇이고 어떻게 계산하나요?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "CBM(Cubic Meter)은 화물의 부피를 세제곱미터(㎥) 단위로 나타낸 값입니다. 카톤의 가로×세로×높이(m)를 곱한 값에 수량을 곱해서 구합니다. 예를 들어 50×40×30cm 박스 100개라면 0.5×0.4×0.3×100 = 6 CBM이 됩니다."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "해상 볼륨 무게와 항공 볼륨 무게는 왜 계산식이 다른가요?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "선사·항공사가 화물칸의 무게 대비 부피 밀도를 다르게 보기 때문입니다. 해상 화물은 관행적으로 CBM × 1,000kg/㎥(1CBM=1톤)을 쓰고, 항공 화물은 IATA 기준으로 부피(cm³)를 6,000으로 나눠서 계산합니다. 같은 화물이라도 운송 수단에 따라 청구 무게가 크게 달라질 수 있습니다."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "20피트·40피트 컨테이너에는 각각 몇 CBM까지 실을 수 있나요?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "이론상 내부 용적은 20피트가 약 33㎥, 40피트가 약 67㎥이지만, 실제로는 파렛트 배치·화물 형태에 따라 약 85~92% 정도만 활용 가능합니다. 실무적으로는 20피트 약 28㎥, 40피트 약 58㎥ 전후를 안전한 기준으로 잡는 경우가 많습니다."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "청구 적용 무게(Chargeable Weight)는 실제 무게와 뭐가 다른가요?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "청구 적용 무게는 실제 무게와 볼륨 무게 중 더 큰 값을 기준으로 운임을 매기는 방식입니다. 부피는 큰데 가벼운 화물(예: 완충재가 많은 제품)은 실제 무게보다 볼륨 무게가 더 커서, 운임이 예상보다 비싸질 수 있습니다."
+      }
+    }
+  ]
+}
+</script>
 </body>
 </html>

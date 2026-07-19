@@ -108,6 +108,15 @@
   @media (max-width:640px){.ad-area-main{padding:0 16px 20px}}
 
   @media print{.ad-area-main,.ad-main-box,.ad-placeholder{display:none !important}}
+
+  .faq-wrap{max-width:1100px;margin:20px auto 0;padding:0 24px}
+  .faq-item{border-bottom:1px solid var(--slate-100);padding:12px 0}
+  .faq-item:last-child{border-bottom:none}
+  .faq-item summary{cursor:pointer;font-weight:700;font-size:13px;color:var(--slate-800);list-style:none;outline:none}
+  .faq-item summary::-webkit-details-marker{display:none}
+  .faq-item summary::before{content:'Q. ';color:var(--accent)}
+  .faq-item p{margin-top:8px;font-size:12.5px;color:var(--slate-600);line-height:1.7;padding-left:2px}
+  @media (max-width:640px){.faq-wrap{padding:0 16px}}
 </style>
 </head>
 <body>
@@ -204,6 +213,18 @@
 </div>
 
 <!-- AD (bottom banner) -->
+
+<div class="faq-wrap">
+  <div class="card">
+    <div class="card-header"><div class="card-title">Frequently Asked Questions</div></div>
+    <div class="card-body">
+      <details class="faq-item"><summary>Why is actual container utilization lower than the theoretical maximum?</summary><p>Theoretical capacity is just the container's internal dimensions multiplied out, but real-world loading loses space to pallet gaps and irregular cargo shapes. Practical utilization is typically 85-92% of theoretical capacity.</p></details>
+      <details class="faq-item"><summary>Should I choose a 20ft or 40ft container?</summary><p>Heavy but compact cargo often fits better in a 20ft container (which hits its weight limit before running out of space), while bulky but lightweight cargo makes better use of a 40ft container's extra volume. Compare both volume and weight limits, not just one.</p></details>
+      <details class="faq-item"><summary>Why does loading order matter when mixing multiple SKUs in one container?</summary><p>Placing heavy, bulky items first (on the floor and toward the back) keeps the load stable, then filling remaining gaps with smaller items maximizes space use. Poor sequencing can mean cargo that should theoretically fit doesn't actually fit.</p></details>
+    </div>
+  </div>
+</div>
+
 <div class="ad-area-main" role="complementary" aria-label="Advertisement area">
   <div class="ad-main-box">
     <strong>Advertisement</strong>
@@ -455,6 +476,38 @@ function renderScene(rigId, legendId, container, result, interactive){
 })();
 
 addItem('Box A', 60, 40, 40, 80);
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Why is actual container utilization lower than the theoretical maximum?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Theoretical capacity is just the container's internal dimensions multiplied out, but real-world loading loses space to pallet gaps and irregular cargo shapes. Practical utilization is typically 85-92% of theoretical capacity."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Should I choose a 20ft or 40ft container?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Heavy but compact cargo often fits better in a 20ft container (which hits its weight limit before running out of space), while bulky but lightweight cargo makes better use of a 40ft container's extra volume. Compare both volume and weight limits, not just one."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Why does loading order matter when mixing multiple SKUs in one container?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Placing heavy, bulky items first (on the floor and toward the back) keeps the load stable, then filling remaining gaps with smaller items maximizes space use. Poor sequencing can mean cargo that should theoretically fit doesn't actually fit."
+      }
+    }
+  ]
+}
 </script>
 </body>
 </html>

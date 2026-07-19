@@ -87,6 +87,15 @@
   @media (max-width:640px){.ad-area-main{padding:0 16px 20px}}
 
   @media print{.ad-area-main,.ad-main-box,.ad-placeholder{display:none !important}}
+
+  .faq-wrap{max-width:1100px;margin:20px auto 0;padding:0 24px}
+  .faq-item{border-bottom:1px solid var(--slate-100);padding:12px 0}
+  .faq-item:last-child{border-bottom:none}
+  .faq-item summary{cursor:pointer;font-weight:700;font-size:13px;color:var(--slate-800);list-style:none;outline:none}
+  .faq-item summary::-webkit-details-marker{display:none}
+  .faq-item summary::before{content:'Q. ';color:var(--accent)}
+  .faq-item p{margin-top:8px;font-size:12.5px;color:var(--slate-600);line-height:1.7;padding-left:2px}
+  @media (max-width:640px){.faq-wrap{padding:0 16px}}
 </style>
 </head>
 <body>
@@ -139,6 +148,18 @@
 </div>
 
 <!-- AD (bottom banner) -->
+
+<div class="faq-wrap">
+  <div class="card">
+    <div class="card-header"><div class="card-title">Frequently Asked Questions</div></div>
+    <div class="card-body">
+      <details class="faq-item"><summary>What's the difference between Prime Cost, Manufacturing Cost (COGM), and Total Cost?</summary><p>Prime Cost includes only direct materials and direct labor. Manufacturing Cost (COGM) adds manufacturing overhead (factory operating costs). Total Cost adds selling and administrative expenses on top of that — it's the full cost of getting a product ready and sold.</p></details>
+      <details class="faq-item"><summary>Why do Markup and Margin get confused so often?</summary><p>Markup is profit divided by cost; Margin is profit divided by selling price. The same dollar amount of profit produces two different percentages depending on which base you use, which is a frequent source of miscommunication in quotes and negotiations.</p></details>
+      <details class="faq-item"><summary>How can I verify a supplier's claimed cost breakdown?</summary><p>Cross-check material costs against known commodity or market pricing, and compare labor costs to the country's minimum wage or industry benchmarks. If overhead looks unusually high relative to direct costs, ask the supplier to justify that specific line item.</p></details>
+    </div>
+  </div>
+</div>
+
 <div class="ad-area-main" role="complementary" aria-label="Advertisement area">
   <div class="ad-main-box">
     <strong>Advertisement</strong>
@@ -315,6 +336,38 @@ function saveState(){
     }
   }catch(e){}
 })();
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What's the difference between Prime Cost, Manufacturing Cost (COGM), and Total Cost?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Prime Cost includes only direct materials and direct labor. Manufacturing Cost (COGM) adds manufacturing overhead (factory operating costs). Total Cost adds selling and administrative expenses on top of that — it's the full cost of getting a product ready and sold."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Why do Markup and Margin get confused so often?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Markup is profit divided by cost; Margin is profit divided by selling price. The same dollar amount of profit produces two different percentages depending on which base you use, which is a frequent source of miscommunication in quotes and negotiations."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How can I verify a supplier's claimed cost breakdown?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Cross-check material costs against known commodity or market pricing, and compare labor costs to the country's minimum wage or industry benchmarks. If overhead looks unusually high relative to direct costs, ask the supplier to justify that specific line item."
+      }
+    }
+  ]
+}
 </script>
 </body>
 </html>

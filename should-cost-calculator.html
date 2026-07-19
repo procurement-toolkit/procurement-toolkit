@@ -115,6 +115,15 @@
   @media (max-width:640px){.ad-area-main{padding:0 16px 20px}}
 
   @media print{.ad-area-main,.ad-main-box,.ad-placeholder{display:none !important}}
+
+  .faq-wrap{max-width:1100px;margin:20px auto 0;padding:0 24px}
+  .faq-item{border-bottom:1px solid var(--slate-100);padding:12px 0}
+  .faq-item:last-child{border-bottom:none}
+  .faq-item summary{cursor:pointer;font-weight:700;font-size:13px;color:var(--slate-800);list-style:none;outline:none}
+  .faq-item summary::-webkit-details-marker{display:none}
+  .faq-item summary::before{content:'Q. ';color:var(--accent)}
+  .faq-item p{margin-top:8px;font-size:12.5px;color:var(--slate-600);line-height:1.7;padding-left:2px}
+  @media (max-width:640px){.faq-wrap{padding:0 16px}}
 </style>
 </head>
 <body>
@@ -272,6 +281,17 @@
 </div>
 
 <!-- AD (하단 배너) -->
+
+<div class="faq-wrap">
+  <div class="card">
+    <div class="card-header"><div class="card-title">자주 묻는 질문</div></div>
+    <div class="card-body">
+      <details class="faq-item"><summary>Should Cost 분석이란 무엇이고 견적 검토와 뭐가 다른가요?</summary><p>Should Cost는 공급업체 견적을 그대로 받아들이는 대신, 재료비·가공비·간접비·마진을 각각 추정해서 '이 정도면 합리적인 가격'을 직접 계산해보는 방법입니다. 견적서만 보고 판단하는 것보다 협상에서 구체적인 근거를 가질 수 있습니다.</p></details>
+      <details class="faq-item"><summary>공급업체 견적이 Should Cost보다 훨씬 높으면 어떻게 협상하나요?</summary><p>차이가 큰 항목(재료비인지 가공비인지 마진인지)을 구체적으로 짚어서 근거를 요청하는 것이 효과적입니다. 막연히 '가격을 낮춰달라'는 요청보다, 항목별 데이터를 제시하며 논의하면 공급업체도 구체적으로 대응하기 쉬워집니다.</p></details>
+    </div>
+  </div>
+</div>
+
 <div class="ad-area-main" role="complementary" aria-label="하단 광고 영역">
   <div class="ad-main-box">
     <strong>Advertisement</strong>
@@ -521,6 +541,30 @@ addBom('Fastener Set', 4, 'EA', 0.15);
 addProcess('CNC Machining', 45, 1, 18);
 addProcess('Surface Treatment', 20, 1, 18);
 calc();
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Should Cost 분석이란 무엇이고 견적 검토와 뭐가 다른가요?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Should Cost는 공급업체 견적을 그대로 받아들이는 대신, 재료비·가공비·간접비·마진을 각각 추정해서 '이 정도면 합리적인 가격'을 직접 계산해보는 방법입니다. 견적서만 보고 판단하는 것보다 협상에서 구체적인 근거를 가질 수 있습니다."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "공급업체 견적이 Should Cost보다 훨씬 높으면 어떻게 협상하나요?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "차이가 큰 항목(재료비인지 가공비인지 마진인지)을 구체적으로 짚어서 근거를 요청하는 것이 효과적입니다. 막연히 '가격을 낮춰달라'는 요청보다, 항목별 데이터를 제시하며 논의하면 공급업체도 구체적으로 대응하기 쉬워집니다."
+      }
+    }
+  ]
+}
 </script>
 </body>
 </html>

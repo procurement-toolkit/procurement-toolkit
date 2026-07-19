@@ -106,6 +106,15 @@
   @media (max-width:640px){.step-row{grid-template-columns:1fr}}
 
   @media print{.ad-area-main,.ad-main-box,.ad-placeholder{display:none !important}}
+
+  .faq-wrap{max-width:1100px;margin:20px auto 0;padding:0 24px}
+  .faq-item{border-bottom:1px solid var(--slate-100);padding:12px 0}
+  .faq-item:last-child{border-bottom:none}
+  .faq-item summary{cursor:pointer;font-weight:700;font-size:13px;color:var(--slate-800);list-style:none;outline:none}
+  .faq-item summary::-webkit-details-marker{display:none}
+  .faq-item summary::before{content:'Q. ';color:var(--accent)}
+  .faq-item p{margin-top:8px;font-size:12.5px;color:var(--slate-600);line-height:1.7;padding-left:2px}
+  @media (max-width:640px){.faq-wrap{padding:0 16px}}
 </style>
 <script src="https://cdn.amplitude.com/script/d4aa9301e01f4600b5eeb018e160aa7c.js"></script>
 <script>
@@ -183,6 +192,18 @@
 <p>직접원가, 제조원가, 매입원가, 총원가처럼 비슷해 보이는 용어가 실제로는 다른 범위를 가리켜서, 이를 혼동하면 원가 협상이나 마진 계산에서 큰 오류로 이어질 수 있습니다.</p>
 <p><b>실무 활용법:</b> 제조업이라면 원재료비부터 제조간접비까지 쌓아가며 총원가를 확인하고, 무역·수입업이라면 매입가에 관세·운임을 더한 취득원가를 기준으로 판매가를 정할 때 활용하면, Markup과 Margin 방식의 차이까지 한 번에 이해할 수 있습니다.</p>
 </div>
+  </div>
+</div>
+
+
+<div class="faq-wrap">
+  <div class="card">
+    <div class="card-header"><div class="card-title">자주 묻는 질문</div></div>
+    <div class="card-body">
+      <details class="faq-item"><summary>직접원가, 제조원가, 총원가는 각각 무엇을 포함하나요?</summary><p>직접원가(Prime Cost)는 직접재료비+직접노무비만 포함합니다. 제조원가(COGM)는 여기에 제조간접비(공장 운영비 등)를 더한 값이고, 총원가는 제조원가에 판매비와 관리비까지 더한, 실제 판매를 위해 들어간 모든 비용의 합입니다.</p></details>
+      <details class="faq-item"><summary>Markup과 Margin은 왜 자주 헷갈리나요?</summary><p>Markup은 원가 대비 이윤 비율(이윤÷원가)이고, Margin은 판매가 대비 이윤 비율(이윤÷판매가)입니다. 같은 숫자라도 두 방식으로 계산하면 값이 다르게 나와서, 협상이나 견적서에서 기준을 명확히 하지 않으면 오해가 생기기 쉽습니다.</p></details>
+      <details class="faq-item"><summary>공급업체가 제시한 원가 구조를 어떻게 검증하나요?</summary><p>재료비는 시세 데이터와 대조하고, 인건비는 해당 국가 최저임금·업종 평균과 비교해볼 수 있습니다. 간접비 비중이 지나치게 높게 잡혀 있다면 그 근거를 구체적으로 요청하는 것이 협상에 도움이 됩니다.</p></details>
+    </div>
   </div>
 </div>
 
@@ -363,6 +384,38 @@ function restoreState(){
   document.getElementById('currencySelect').value = currentCurrency;
   render();
 })();
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "직접원가, 제조원가, 총원가는 각각 무엇을 포함하나요?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "직접원가(Prime Cost)는 직접재료비+직접노무비만 포함합니다. 제조원가(COGM)는 여기에 제조간접비(공장 운영비 등)를 더한 값이고, 총원가는 제조원가에 판매비와 관리비까지 더한, 실제 판매를 위해 들어간 모든 비용의 합입니다."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Markup과 Margin은 왜 자주 헷갈리나요?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Markup은 원가 대비 이윤 비율(이윤÷원가)이고, Margin은 판매가 대비 이윤 비율(이윤÷판매가)입니다. 같은 숫자라도 두 방식으로 계산하면 값이 다르게 나와서, 협상이나 견적서에서 기준을 명확히 하지 않으면 오해가 생기기 쉽습니다."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "공급업체가 제시한 원가 구조를 어떻게 검증하나요?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "재료비는 시세 데이터와 대조하고, 인건비는 해당 국가 최저임금·업종 평균과 비교해볼 수 있습니다. 간접비 비중이 지나치게 높게 잡혀 있다면 그 근거를 구체적으로 요청하는 것이 협상에 도움이 됩니다."
+      }
+    }
+  ]
+}
 </script>
 </body>
 </html>

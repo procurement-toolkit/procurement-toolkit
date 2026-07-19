@@ -81,6 +81,15 @@
   @media (max-width:640px){.field-grid{grid-template-columns:1fr}.hero h1{font-size:18px}}
 
   @media print{.ad-area-main,.ad-main-box,.ad-placeholder{display:none !important}}
+
+  .faq-wrap{max-width:1100px;margin:20px auto 0;padding:0 24px}
+  .faq-item{border-bottom:1px solid var(--slate-100);padding:12px 0}
+  .faq-item:last-child{border-bottom:none}
+  .faq-item summary{cursor:pointer;font-weight:700;font-size:13px;color:var(--slate-800);list-style:none;outline:none}
+  .faq-item summary::-webkit-details-marker{display:none}
+  .faq-item summary::before{content:'Q. ';color:var(--accent)}
+  .faq-item p{margin-top:8px;font-size:12.5px;color:var(--slate-600);line-height:1.7;padding-left:2px}
+  @media (max-width:640px){.faq-wrap{padding:0 16px}}
 </style>
 <script src="https://cdn.amplitude.com/script/d4aa9301e01f4600b5eeb018e160aa7c.js"></script>
 <script>
@@ -201,6 +210,19 @@
   </div>
 </div>
 
+
+<div class="faq-wrap">
+  <div class="card">
+    <div class="card-header"><div class="card-title">자주 묻는 질문</div></div>
+    <div class="card-body">
+      <details class="faq-item"><summary>해외직구 면세한도는 얼마이고, 왜 나라마다 다른가요?</summary><p>한국 관세청 기준으로 미국발 물품은 200달러, 그 외 국가는 150달러까지 면세됩니다(물품가격 기준, 배송비 제외). 미국이 예외적으로 더 높은 이유는 한-미 FTA 협정에 따른 것입니다.</p></details>
+      <details class="faq-item"><summary>같은 날 여러 건 주문하면 왜 세금이 붙을 수 있나요?</summary><p>같은 날 같은 사람 앞으로 도착하는 여러 건의 화물은 합산해서 과세하는 '합산과세' 규정이 적용됩니다. 면세한도를 피하려고 결제를 여러 번 나눠도, 같은 날 도착하면 합산되어 초과분에 과세될 수 있습니다.</p></details>
+      <details class="faq-item"><summary>자가사용으로 인정받으려면 어떤 조건이 필요한가요?</summary><p>동일 품목을 대량으로 반복 구매하거나 재판매 목적이 의심되는 경우 자가사용으로 인정되지 않고 정식 수입신고 대상이 될 수 있습니다. 통상적인 개인 소비 범위(수량·빈도)를 벗어나지 않는 것이 중요합니다.</p></details>
+      <details class="faq-item"><summary>해외 결제 통화가 달러가 아니면 면세한도 계산이 달라지나요?</summary><p>면세한도 자체는 미화(USD) 기준으로 고정되어 있습니다. 위안화·엔화·유로로 결제했다면 결제 시점의 환율로 USD 환산 금액을 기준으로 판단해야 하며, 이 계산기에서도 입력하신 환율로 USD 환산 후 비교합니다.</p></details>
+    </div>
+  </div>
+</div>
+
 <footer><div class="footer-inner">
   <div class="footer-logo"><svg width="24" height="24" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align:middle;margin-right:9px;flex-shrink:0;"><path d="M20 2.5L36.5 11.5V28.5L20 37.5L3.5 28.5V11.5L20 2.5Z" stroke="url(#cbmGradF)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M20 2.5V20M20 20L36.5 11.5M20 20L3.5 11.5" stroke="url(#cbmGradF)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/></svg>CBM<span>Lab</span></div>
   <nav><a href="index.html" class="footer-link">전체 도구</a><a href="privacy.html" class="footer-link">개인정보 처리방침</a></nav>
@@ -267,6 +289,46 @@ function calc(){
   }
 }
 calc();
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "해외직구 면세한도는 얼마이고, 왜 나라마다 다른가요?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "한국 관세청 기준으로 미국발 물품은 200달러, 그 외 국가는 150달러까지 면세됩니다(물품가격 기준, 배송비 제외). 미국이 예외적으로 더 높은 이유는 한-미 FTA 협정에 따른 것입니다."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "같은 날 여러 건 주문하면 왜 세금이 붙을 수 있나요?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "같은 날 같은 사람 앞으로 도착하는 여러 건의 화물은 합산해서 과세하는 '합산과세' 규정이 적용됩니다. 면세한도를 피하려고 결제를 여러 번 나눠도, 같은 날 도착하면 합산되어 초과분에 과세될 수 있습니다."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "자가사용으로 인정받으려면 어떤 조건이 필요한가요?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "동일 품목을 대량으로 반복 구매하거나 재판매 목적이 의심되는 경우 자가사용으로 인정되지 않고 정식 수입신고 대상이 될 수 있습니다. 통상적인 개인 소비 범위(수량·빈도)를 벗어나지 않는 것이 중요합니다."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "해외 결제 통화가 달러가 아니면 면세한도 계산이 달라지나요?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "면세한도 자체는 미화(USD) 기준으로 고정되어 있습니다. 위안화·엔화·유로로 결제했다면 결제 시점의 환율로 USD 환산 금액을 기준으로 판단해야 하며, 이 계산기에서도 입력하신 환율로 USD 환산 후 비교합니다."
+      }
+    }
+  ]
+}
 </script>
 </body>
 </html>
