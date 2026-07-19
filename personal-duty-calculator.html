@@ -68,11 +68,12 @@
   .opt-btn.active .sub{color:var(--accent)}
 
   .cat-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
-  .cat-btn{border:2px solid var(--slate-200);border-radius:12px;padding:14px 8px;background:#fff;cursor:pointer;text-align:center;transition:.12s}
-  .cat-btn .emoji{font-size:26px;display:block;margin-bottom:6px}
+  .cat-btn{border:2px solid var(--slate-200);border-radius:12px;padding:16px 8px;background:#fff;cursor:pointer;text-align:center;transition:.12s}
+  .cat-icon{width:30px;height:30px;color:var(--slate-500);display:block;margin:0 auto 8px}
   .cat-btn .label{font-size:14px;font-weight:700;color:var(--slate-700);line-height:1.3}
   .cat-btn:hover{border-color:var(--accent-light);background:var(--slate-50)}
   .cat-btn.active{border-color:var(--accent);background:var(--accent-light)}
+  .cat-btn.active .cat-icon{color:var(--accent)}
   .cat-btn.active .label{color:var(--accent-dark)}
 
   .qty-box{margin-top:14px;padding:14px;background:var(--warn-light);border:1px solid var(--warn-border);border-radius:10px;display:none}
@@ -124,9 +125,14 @@
   .breakdown-row .k{color:var(--slate-500)}
   .breakdown-row .v{font-weight:700;color:var(--slate-800)}
 
+  .explain-box{background:#fff;border:1.5px dashed var(--slate-300);border-radius:12px;padding:16px 18px;margin-bottom:14px}
+  .explain-title{font-size:14.5px;font-weight:800;color:var(--slate-800);margin-bottom:8px}
+  .explain-box p{font-size:14px;color:var(--slate-600);line-height:1.7}
+
   .action-btns{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:20px}
-  .action-btn{padding:14px;border-radius:12px;border:2px solid var(--slate-200);background:#fff;font-size:15px;font-weight:700;color:var(--slate-600);cursor:pointer;text-align:center}
+  .action-btn{padding:14px;border-radius:12px;border:2px solid var(--slate-200);background:#fff;font-size:15px;font-weight:700;color:var(--slate-600);cursor:pointer;text-align:center;display:flex;align-items:center;justify-content:center;gap:8px}
   .action-btn.primary{border-color:var(--accent);background:var(--accent-light);color:var(--accent-dark)}
+  .btn-icon{width:19px;height:19px;flex-shrink:0}
 
   details.more{background:#fff;border:1px solid var(--slate-200);border-radius:var(--radius);margin-bottom:14px;overflow:hidden}
   details.more summary{padding:18px 22px;font-size:16px;font-weight:700;color:var(--slate-700);cursor:pointer;list-style:none;display:flex;align-items:center;justify-content:space-between}
@@ -183,9 +189,21 @@
 </script>
 </head>
 <body>
+<svg width="0" height="0" style="position:absolute;" aria-hidden="true">
+  <defs>
+    <linearGradient id="cbmGradH" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#14B8A6"/>
+      <stop offset="100%" stop-color="#0B2A4A"/>
+    </linearGradient>
+    <linearGradient id="cbmGradF" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#2DD4BF"/>
+      <stop offset="100%" stop-color="#5B9EFF"/>
+    </linearGradient>
+  </defs>
+</svg>
 
 <header><div class="header-inner">
-  <a href="index.html" class="logo-mark">CBMLab</a>
+  <a href="index.html" class="logo-mark"><svg width="26" height="26" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align:middle;margin-right:8px;flex-shrink:0;"><path d="M20 2.5L36.5 11.5V28.5L20 37.5L3.5 28.5V11.5L20 2.5Z" stroke="url(#cbmGradH)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M20 2.5V20M20 20L36.5 11.5M20 20L3.5 11.5" stroke="url(#cbmGradH)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/></svg><span style="font-family:'Montserrat','Space Grotesk',sans-serif;font-weight:800;letter-spacing:-1.1px;background:linear-gradient(90deg,#14B8A6 0%,#1E7A8C 45%,#0B2A4A 100%);-webkit-background-clip:text;background-clip:text;color:transparent;">CBMLab</span></a>
   <a href="index.html" class="nav-link">← 전체 도구</a>
 </div></header>
 
@@ -209,14 +227,14 @@
   <div class="step">
     <div class="step-title"><span class="step-num">2</span>무엇을 구매하셨나요?</div>
     <div class="cat-grid">
-      <button type="button" class="cat-btn active" data-rate="8" data-excl="0" onclick="selectCategory(this)"><span class="emoji">📦</span><span class="label">일반 제품</span></button>
-      <button type="button" class="cat-btn" data-rate="13" data-excl="0" onclick="selectCategory(this)"><span class="emoji">👕</span><span class="label">의류·신발</span></button>
-      <button type="button" class="cat-btn" data-rate="6.5" data-excl="partial" onclick="selectCategory(this)"><span class="emoji">💄</span><span class="label">화장품</span></button>
-      <button type="button" class="cat-btn" data-rate="8" data-excl="0" onclick="selectCategory(this)"><span class="emoji">👜</span><span class="label">가방·잡화</span></button>
-      <button type="button" class="cat-btn" data-rate="0" data-excl="partial" onclick="selectCategory(this)"><span class="emoji">📱</span><span class="label">전자기기</span></button>
-      <button type="button" class="cat-btn" data-rate="8" data-excl="1" onclick="selectCategory(this)" id="btn-supplement"><span class="emoji">💊</span><span class="label">영양제·건기식</span></button>
-      <button type="button" class="cat-btn" data-rate="20" data-excl="1" onclick="selectCategory(this)"><span class="emoji">🍷</span><span class="label">주류</span></button>
-      <button type="button" class="cat-btn" data-rate="8" data-excl="0" onclick="selectCategory(this)"><span class="emoji">🧸</span><span class="label">기타</span></button>
+      <button type="button" class="cat-btn active" data-rate="8" data-excl="0" onclick="selectCategory(this)"><svg class="cat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M21 8L12 3 3 8v8l9 5 9-5V8z"/><path d="M3 8l9 5 9-5M12 13v8"/></svg><span class="label">일반 제품</span></button>
+      <button type="button" class="cat-btn" data-rate="13" data-excl="0" onclick="selectCategory(this)"><svg class="cat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M8 4L4 7v4h3v9h10v-9h3V7l-4-3-3 3h-2z"/></svg><span class="label">의류·신발</span></button>
+      <button type="button" class="cat-btn" data-rate="6.5" data-excl="partial" onclick="selectCategory(this)"><svg class="cat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3h4l1 3-2 2v13H10V8L8 6l1-3z"/><path d="M6 22h9"/></svg><span class="label">화장품</span></button>
+      <button type="button" class="cat-btn" data-rate="8" data-excl="0" onclick="selectCategory(this)"><svg class="cat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8h12l1 13H5L6 8z"/><path d="M9 8V6a3 3 0 016 0v2"/></svg><span class="label">가방·잡화</span></button>
+      <button type="button" class="cat-btn" data-rate="0" data-excl="partial" onclick="selectCategory(this)"><svg class="cat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="2.5" width="12" height="19" rx="2.2"/><path d="M11 19h2"/></svg><span class="label">전자기기</span></button>
+      <button type="button" class="cat-btn" data-rate="8" data-excl="1" onclick="selectCategory(this)" id="btn-supplement"><svg class="cat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="10.5" width="18" height="7" rx="3.5" transform="rotate(-45 12 14)"/><line x1="9.5" y1="16.5" x2="14.5" y2="11.5"/></svg><span class="label">영양제·건기식</span></button>
+      <button type="button" class="cat-btn" data-rate="20" data-excl="1" onclick="selectCategory(this)"><svg class="cat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3h8l-1 8a3 3 0 01-6 0L8 3z"/><path d="M12 15v6M8 21h8"/></svg><span class="label">주류</span></button>
+      <button type="button" class="cat-btn" data-rate="8" data-excl="0" onclick="selectCategory(this)"><svg class="cat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="9" width="18" height="12" rx="1.5"/><path d="M12 9v12M3 13h18"/><path d="M8 9c-1.5 0-2.5-1-2.5-2.2S6.5 4.5 8 4.5c2 0 4 3 4 4.5 0-1.5 2-4.5 4-4.5 1.5 0 2.5 1 2.5 2.3S17.5 9 16 9"/></svg><span class="label">기타</span></button>
     </div>
 
     <div class="qty-box" id="qtyBox">
@@ -263,8 +281,8 @@
   </div>
 
   <div class="action-btns">
-    <button type="button" class="action-btn" onclick="saveResultImage()">📥 이미지로 저장</button>
-    <button type="button" class="action-btn primary" id="shareBtn" onclick="shareResult()">🔗 결과 공유하기</button>
+    <button type="button" class="action-btn" onclick="saveResultImage()"><svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="M7 10l5 5 5-5"/><path d="M5 19h14"/></svg>이미지 저장</button>
+    <button type="button" class="action-btn primary" id="shareBtn" onclick="shareResult()"><svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.6 13.5l6.8 3.9M15.4 6.6L8.6 10.5"/></svg>결과 공유하기</button>
   </div>
 
   <!-- 더 알아보기 (접힘) -->
@@ -472,6 +490,11 @@ function calc(){
       <div class="result-status">예상 세금</div>
       <div class="result-amount">₩${fmt(totalKrw)}</div>
       <div class="result-sub">면세한도를 <strong>$${fmt(over,2)}</strong> 초과했어요. 다음엔 한도 이내로 나눠 사면 면세돼요.${currencyNote}</div>
+    </div>
+    <div class="explain-box">
+      <div class="explain-title">💡 왜 초과분이 아니라 이렇게 많이 나오나요?</div>
+      <p>면세한도를 넘으면 <strong>넘은 만큼만</strong>이 아니라 <strong>물건 가격 전체</strong>에 세금이 붙어요. $${fmt(threshold)}을 단 $1만 넘어도 물건 값 전부가 과세 대상이 되는 거예요. 그래서 한도 근처에서는 조금만 낮춰도 세금이 확 줄어듭니다.</p>
+      <p style="margin-top:8px">참고로 세금이 부과될 땐 관세 계산 시 <strong>국제배송비·보험료도 포함</strong>돼요. 이 계산기는 물건 가격만 반영하므로, 실제 세금은 여기 나온 금액보다 조금 더 나올 수 있습니다.</p>
     </div>`;
     breakdownWrap.innerHTML = `<div class="breakdown">
       <div class="breakdown-row"><span class="k">물건 가격</span><span class="v">${sym}${fmt(value,2)}</span></div>
