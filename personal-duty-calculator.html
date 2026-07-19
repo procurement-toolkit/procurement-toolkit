@@ -218,6 +218,7 @@
       </div>
     </div>
     <button type="button" onclick="saveResultImage()" style="width:100%;margin-top:8px;padding:10px;border:1px solid var(--slate-200);border-radius:8px;background:#fff;color:var(--slate-600);font-size:12.5px;font-weight:700;cursor:pointer;">📥 계산 결과 이미지로 저장</button>
+    <button type="button" id="shareBtn" onclick="shareResult()" style="width:100%;margin-top:8px;padding:10px;border:1px solid var(--accent-light);border-radius:8px;background:var(--accent-light);color:var(--accent);font-size:12.5px;font-weight:700;cursor:pointer;">🔗 계산 결과 공유하기 (카카오톡·링크)</button>
     <div class="ad-placeholder"><strong>Advertisement</strong>광고 영역 (Google AdSense)<br>300 × 250 권장</div>
   </aside>
 </div>
@@ -392,6 +393,40 @@ function saveResultImage(){
   }).catch(()=>{
     alert('이미지 저장에 실패했습니다. 브라우저 인쇄(Ctrl+P) 후 PDF로 저장하는 방법도 이용하실 수 있습니다.');
   });
+}
+
+function buildShareText(){
+  const totalEl = document.querySelector('#result-total-wrap .value');
+  const totalText = totalEl ? totalEl.textContent.trim() : '';
+  const catText = document.getElementById('category').selectedOptions[0].text;
+  const value = document.getElementById('value').value;
+  const sym = curSym();
+  return `해외직구 관부가세 계산 결과\n물품가액: ${sym}${value} (${catText})\n예상 세액: ${totalText}\n\n무료 계산기로 직접 확인해보세요 → CBM Lab`;
+}
+
+async function shareResult(){
+  const btn = document.getElementById('shareBtn');
+  const shareText = buildShareText();
+  const shareUrl = window.location.href.split('?')[0];
+
+  if(navigator.share){
+    try{
+      await navigator.share({ title: 'CBM Lab 관부가세 계산기', text: shareText, url: shareUrl });
+      return;
+    }catch(e){
+      if(e.name === 'AbortError') return; // 사용자가 공유창을 닫은 경우
+    }
+  }
+
+  // Web Share API 미지원 환경(대부분 PC) → 클립보드 복사로 대체
+  try{
+    await navigator.clipboard.writeText(`${shareText}\n${shareUrl}`);
+    const original = btn.textContent;
+    btn.textContent = '✓ 복사 완료! 카카오톡 등에 붙여넣기 하세요';
+    setTimeout(()=>{ btn.textContent = original; }, 3000);
+  }catch(e){
+    alert(`아래 내용을 복사해서 공유해주세요:\n\n${shareText}\n${shareUrl}`);
+  }
 }
 </script>
 <script type="application/ld+json">
