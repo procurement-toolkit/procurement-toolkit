@@ -88,9 +88,9 @@
 
   .elevation-svg-wrap{width:100%;overflow-x:auto}
 
-  .scene{width:100%;height:340px;perspective:1100px;display:flex;align-items:center;justify-content:center;cursor:grab;touch-action:none;background:linear-gradient(180deg,#EEF2F7,#F8FAFC);border-radius:8px;overflow:hidden}
+  .scene{width:100%;height:442px;perspective:1100px;display:flex;align-items:center;justify-content:center;cursor:grab;touch-action:none;background:linear-gradient(180deg,#EEF2F7,#F8FAFC);border-radius:8px;overflow:hidden}
   .scene:active{cursor:grabbing}
-  .rig{position:relative;width:90%;height:90%;max-width:420px}
+  .rig{position:relative;width:90%;height:90%;max-width:546px}
   .rig svg{display:block;width:100%;height:100%;overflow:visible}
   .edge{position:absolute;background:#334155;top:0;left:0}
   .cube-group{position:absolute;top:0;left:0;transform-style:preserve-3d}
@@ -531,7 +531,7 @@ function buildFacesForBox(cx,cy,cz,w,h,d,color,rotXdeg,rotYdeg){
     if(rn[2] >= -0.001) return; // 카메라 반대쪽을 향한 면은 그리지 않음
     const pts = fd.c(w,h,d).map(([lx,ly,lz])=>{
       const [rx,ry,rz] = rotatePoint(lx+cx, ly+cy, lz+cz, rotXdeg, rotYdeg);
-      return {sx:rx, sy:-ry, z:rz};
+      return {sx:rx, sy:ry, z:rz};
     });
     const avgZ = pts.reduce((s,p)=>s+p.z,0)/pts.length;
     faces.push({pointsStr: pts.map(p=>`${p.sx.toFixed(1)},${p.sy.toFixed(1)}`).join(' '), depth:avgZ, fill:shades[fd.key]});
@@ -546,7 +546,7 @@ function buildWireEdges(L,H,D,rotXdeg,rotYdeg){
   c.forEach(sx=>c.forEach(sy=>c.forEach(sz=>{
     const key = `${sx}${sy}${sz}`;
     const [rx,ry,rz] = rotatePoint(sx*L/2, sy*H/2, sz*D/2, rotXdeg, rotYdeg);
-    corners3[key] = {sx:rx, sy:-ry, z:rz};
+    corners3[key] = {sx:rx, sy:ry, z:rz};
   })));
   const pairs = [
     ['-1-1-1','1-1-1'],['-1-11','1-11'],['-111','111'],['-11-1','11-1'],
@@ -627,7 +627,7 @@ function renderScene(rigId, legendId, container, result, useSliderRotation){
 
   let svg = `<svg viewBox="${minX-pad} ${minY-pad} ${vw} ${vh}" width="100%" height="100%" preserveAspectRatio="xMidYMid meet">`;
   edges.forEach(e=>{
-    svg += `<line x1="${e.p1.sx.toFixed(1)}" y1="${e.p1.sy.toFixed(1)}" x2="${e.p2.sx.toFixed(1)}" y2="${e.p2.sy.toFixed(1)}" stroke="#94A3B8" stroke-width="1.2" stroke-dasharray="3 3"/>`;
+    svg += `<line x1="${e.p1.sx.toFixed(1)}" y1="${e.p1.sy.toFixed(1)}" x2="${e.p2.sx.toFixed(1)}" y2="${e.p2.sy.toFixed(1)}" stroke="#94A3B8" stroke-width="0.6" stroke-dasharray="1.5 1.5"/>`;
   });
   allFaces.forEach(f=>{
     svg += `<polygon points="${f.pointsStr}" fill="${f.fill}" stroke="rgba(15,23,42,.35)" stroke-width="1" stroke-linejoin="round"/>`;
