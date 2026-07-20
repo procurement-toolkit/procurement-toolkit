@@ -93,7 +93,7 @@
   .big-input:focus{outline:none;border-color:var(--accent)}
   .input-label{font-size:14.5px;font-weight:600;color:var(--slate-500);margin-bottom:8px;display:block}
 
-  .fx-row{display:flex;gap:8px;margin-top:16px}
+  .fx-row{display:flex;gap:8px;margin-top:16px;align-items:flex-end}
   .fx-row .big-input{font-size:17px;font-weight:700;padding:12px 14px}
   .fx-btn{white-space:nowrap;padding:0 16px;border:2px solid var(--accent-light);border-radius:12px;background:var(--accent-light);color:var(--accent-dark);font-size:14.5px;font-weight:700;cursor:pointer}
   .fx-status{font-size:13px;color:var(--slate-400);margin-top:8px}
@@ -289,8 +289,11 @@
     <span class="input-label">물건 가격 (배송비 제외, 상품 금액만)</span>
     <input type="number" class="big-input" id="value" value="120" min="0" oninput="calc()" placeholder="예: 120">
 
-    <div class="fx-row" id="fxRow" style="display:none">
-      <input type="number" class="big-input" id="fx" value="1380" min="0" oninput="calc()">
+    <div class="fx-row" id="fxRow">
+      <div style="flex:1;">
+        <span class="mini-label" id="fxLabel">1USD = ? KRW</span>
+        <input type="number" class="big-input" id="fx" value="1380" min="0" oninput="calc()">
+      </div>
       <button type="button" class="fx-btn" id="fxFetchBtn" onclick="fetchLiveRate()">실시간 환율</button>
     </div>
     <div class="fx-status" id="fxStatus"></div>
@@ -467,7 +470,7 @@ function selectCurrency(btn){
   document.querySelectorAll('.cur-pill').forEach(b=>b.classList.remove('active'));
   btn.classList.add('active');
   currentCurrency = btn.dataset.cur;
-  document.getElementById('fxRow').style.display = currentCurrency === 'USD' ? 'none' : 'flex';
+  document.getElementById('fxLabel').textContent = `1${currentCurrency} = ? KRW`;
   document.getElementById('fxStatus').textContent = '';
   calc();
 }
@@ -504,7 +507,7 @@ function calc(){
   const localTax = parseFloat(document.getElementById('localTax').value)||0;
   const localShip = parseFloat(document.getElementById('localShip').value)||0;
   const intlShip = parseFloat(document.getElementById('intlShip').value)||0;
-  const fx = currentCurrency === 'USD' ? USD_KRW_REF : (parseFloat(document.getElementById('fx').value)||0);
+  const fx = parseFloat(document.getElementById('fx').value)||0;
   const selfUse = document.getElementById('selfUse').checked;
   const sym = curSym();
 
