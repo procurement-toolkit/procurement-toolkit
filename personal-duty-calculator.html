@@ -97,6 +97,21 @@
   .fx-row .big-input{font-size:17px;font-weight:700;padding:12px 14px}
   .fx-btn{white-space:nowrap;padding:0 16px;border:2px solid var(--accent-light);border-radius:12px;background:var(--accent-light);color:var(--accent-dark);font-size:14.5px;font-weight:700;cursor:pointer}
   .fx-status{font-size:13px;color:var(--slate-400);margin-top:8px}
+  .fx-note{font-size:12.5px;color:var(--slate-500);background:var(--slate-50);border:1px solid var(--slate-100);border-radius:8px;padding:10px 12px;margin-top:10px;line-height:1.6}
+  .fx-note a{color:var(--accent);font-weight:700;text-decoration:none}
+
+  details.more-inline{margin-top:16px;border-top:1px dashed var(--slate-200);padding-top:14px}
+  details.more-inline summary{cursor:pointer;font-size:14px;font-weight:700;color:var(--accent-dark);list-style:none;outline:none}
+  details.more-inline summary::-webkit-details-marker{display:none}
+  .more-inline-body{margin-top:12px}
+  .more-hint{font-size:12.5px;color:var(--slate-500);line-height:1.6;margin-bottom:12px}
+  .mini-field-grid{display:flex;flex-direction:column;gap:10px}
+  .mini-label{display:block;font-size:12.5px;font-weight:600;color:var(--slate-600);margin-bottom:5px}
+  .mini-input{width:100%;font-size:15px;font-weight:600;color:var(--slate-800);border:2px solid var(--slate-200);border-radius:10px;padding:10px 12px;font-family:inherit}
+  .mini-input:focus{outline:none;border-color:var(--accent)}
+  .conv-row{display:flex;align-items:flex-end;gap:10px}
+  .conv-field{flex:1}
+  .conv-eq{font-size:16px;color:var(--slate-300);padding-bottom:10px}
 
   .check-row{display:flex;align-items:center;gap:10px;margin-top:16px;padding:12px 14px;background:var(--slate-50);border-radius:10px}
   .check-row input{width:22px;height:22px;accent-color:var(--accent);flex-shrink:0}
@@ -279,11 +294,24 @@
       <button type="button" class="fx-btn" id="fxFetchBtn" onclick="fetchLiveRate()">실시간 환율</button>
     </div>
     <div class="fx-status" id="fxStatus"></div>
+    <div class="fx-note">💡 세금 계산은 <a href="https://unipass.customs.go.kr/csp/index.do?tgMenuId=MYC_MNU_00000339" target="_blank" rel="noopener">관세청 고시환율</a>(매주 금요일 발표, 일~토 적용) 기준입니다. 여기서 조회되는 실시간 환율과는 다를 수 있어, 참고용으로만 활용하고 정확한 금액은 통관일 기준 고시환율로 다시 확인하세요.</div>
 
     <div class="check-row">
       <input type="checkbox" id="selfUse" checked onchange="calc()">
       <label for="selfUse">제가 직접 쓰려고 산 거예요 (되팔 목적 아님)</label>
     </div>
+
+    <details class="more-inline">
+      <summary>🎯 더 정확하게 계산하기 (선택)</summary>
+      <div class="more-inline-body">
+        <p class="more-hint">관세청 기준으로는 물품가격뿐 아니라 <b>현지세금·현지배송료</b>까지 포함해서 면세한도를 판단하고, 한도를 넘으면 <b>한국행 국제배송비</b>까지 더해서 관세를 계산합니다. 모르면 비워두셔도 괜찮아요 (0으로 계산돼요).</p>
+        <div class="mini-field-grid">
+          <div><span class="mini-label">현지세금 (구매국 내 세금)</span><input type="number" class="mini-input" id="localTax" value="0" min="0" oninput="calc()"></div>
+          <div><span class="mini-label">현지배송료 (구매국 내 배송)</span><input type="number" class="mini-input" id="localShip" value="0" min="0" oninput="calc()"></div>
+          <div><span class="mini-label">한국행 국제배송비</span><input type="number" class="mini-input" id="intlShip" value="0" min="0" oninput="calc()"></div>
+        </div>
+      </div>
+    </details>
   </div>
 
   <!-- 결과 -->
@@ -297,6 +325,22 @@
     <button type="button" class="action-btn" onclick="saveResultImage()"><svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="M7 10l5 5 5-5"/><path d="M5 19h14"/></svg>이미지 저장</button>
     <button type="button" class="action-btn primary" id="shareBtn" onclick="shareResult()"><svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.6 13.5l6.8 3.9M15.4 6.6L8.6 10.5"/></svg>결과 공유하기</button>
   </div>
+
+  <details class="more">
+    <summary>📏 무게·길이 단위 변환기</summary>
+    <div class="more-body">
+      <div class="conv-row">
+        <div class="conv-field"><span class="mini-label">kg (킬로그램)</span><input type="number" class="mini-input" id="convKg" oninput="convFrom('kg')" placeholder="0"></div>
+        <span class="conv-eq">⇄</span>
+        <div class="conv-field"><span class="mini-label">lb (파운드)</span><input type="number" class="mini-input" id="convLb" oninput="convFrom('lb')" placeholder="0"></div>
+      </div>
+      <div class="conv-row" style="margin-top:12px;">
+        <div class="conv-field"><span class="mini-label">cm (센티미터)</span><input type="number" class="mini-input" id="convCm" oninput="convFrom('cm')" placeholder="0"></div>
+        <span class="conv-eq">⇄</span>
+        <div class="conv-field"><span class="mini-label">inch (인치)</span><input type="number" class="mini-input" id="convIn" oninput="convFrom('in')" placeholder="0"></div>
+      </div>
+    </div>
+  </details>
 
   <!-- 더 알아보기 (접힘) -->
   <details class="more">
@@ -323,6 +367,7 @@
       <details class="faq-item"><summary>같은 날 여러 번 주문하면 어떻게 되나요?</summary><p>같은 날 같은 사람에게 도착하는 물건들은 금액을 합쳐서 계산합니다. 결제를 나눠도 같은 날 도착하면 합쳐진다는 점, 꼭 기억하세요.</p></details>
       <details class="faq-item"><summary>제가 쓰려고 산 게 맞다는 걸 어떻게 증명하나요?</summary><p>같은 물건을 대량으로 반복해서 사지 않으면 보통 문제없습니다. 평범한 개인 소비 수준이면 걱정 안 하셔도 됩니다.</p></details>
       <details class="faq-item"><summary>결제를 원화가 아닌 다른 돈으로 했어요. 그래도 계산되나요?</summary><p>네, 됩니다. 위안화·엔화·유로로 내셨어도 그 시점 환율로 달러 기준 금액을 계산해서 면세한도와 비교해드립니다.</p></details>
+      <details class="faq-item"><summary>관세청 고시환율과 실시간 환율은 뭐가 다른가요?</summary><p>관세청은 실시간 시장환율이 아니라 <strong>매주 금요일에 발표하는 주간 고시환율</strong>을 씁니다(일~토 적용, 물건을 산 날이 아니라 한국 통관일 기준). 이 계산기의 "실시간 조회"는 참고용 ECB 환율이라 실제 관세청 환율과 다를 수 있으니, 정확한 금액은 유니패스에서 통관 예정일의 고시환율로 다시 확인하는 게 안전합니다.</p></details>
     </div>
   </details>
 
@@ -375,6 +420,11 @@
       "@type": "Question",
       "name": "결제를 원화가 아닌 다른 통화로 했어요. 그래도 계산되나요?",
       "acceptedAnswer": {"@type": "Answer", "text": "네, 위안화·엔화·유로로 결제했어도 해당 시점 환율로 달러 기준 금액을 환산해 면세한도와 비교합니다."}
+    },
+    {
+      "@type": "Question",
+      "name": "관세청 고시환율과 실시간 환율은 뭐가 다른가요?",
+      "acceptedAnswer": {"@type": "Answer", "text": "관세청은 매주 금요일 발표하는 주간 고시환율을 사용하며, 물건을 산 날이 아니라 한국 통관일 기준으로 적용됩니다. 실시간 환율은 참고용이며, 정확한 금액은 통관 예정일의 고시환율로 다시 확인해야 합니다."}
     }
   ]
 }
@@ -451,10 +501,16 @@ async function fetchLiveRate(){
 
 function calc(){
   const value = parseFloat(document.getElementById('value').value)||0;
+  const localTax = parseFloat(document.getElementById('localTax').value)||0;
+  const localShip = parseFloat(document.getElementById('localShip').value)||0;
+  const intlShip = parseFloat(document.getElementById('intlShip').value)||0;
   const fx = currentCurrency === 'USD' ? USD_KRW_REF : (parseFloat(document.getElementById('fx').value)||0);
   const selfUse = document.getElementById('selfUse').checked;
   const sym = curSym();
-  const valueInUsd = currentCurrency === 'USD' ? value : (fx > 0 ? (value * fx) / USD_KRW_REF : value);
+
+  // 관세청 기준: 면세한도 판정 = 물품가 + 현지세금 + 현지배송료 (한국행 배송비는 제외)
+  const thresholdBase = value + localTax + localShip;
+  const valueInUsd = currentCurrency === 'USD' ? thresholdBase : (fx > 0 ? (thresholdBase * fx) / USD_KRW_REF : thresholdBase);
 
   const isSupplement = document.getElementById('btn-supplement').classList.contains('active');
   const supplementQty = isSupplement ? (parseInt(document.getElementById('supplementQty').value)||1) : 0;
@@ -493,35 +549,42 @@ function calc(){
 
   const currencyNote = currentCurrency !== 'USD'
     ? `<div class="result-sub">입력하신 환율로 약 $${fmt(valueInUsd,2)} 기준으로 계산했어요.</div>` : '';
+  const extraNote = (localTax>0||localShip>0)
+    ? `<div class="result-sub">물건 가격에 현지세금·배송료를 더한 <strong>${sym}${fmt(thresholdBase,2)}</strong> 기준으로 판정했어요.</div>` : '';
 
   if(valueInUsd <= threshold){
     const remain = threshold - valueInUsd;
     resultInner.innerHTML = `<div class="result-card free">
       <div class="result-status">축하합니다</div>
       <div class="result-amount">면세 · 0원</div>
-      <div class="result-sub">면세한도까지 <strong>$${fmt(remain,2)}</strong> (약 ${fmt(remain*USD_KRW_REF)}원) 더 사도 괜찮아요.${currencyNote}</div>
+      <div class="result-sub">면세한도까지 <strong>$${fmt(remain,2)}</strong> (약 ${fmt(remain*USD_KRW_REF)}원) 더 사도 괜찮아요.${currencyNote}${extraNote}</div>
     </div>`;
     breakdownWrap.innerHTML = `<div class="breakdown">
       <div class="breakdown-row"><span class="k">물건 가격</span><span class="v">${sym}${fmt(value,2)}</span></div>
+      ${(localTax>0||localShip>0)?`<div class="breakdown-row"><span class="k">현지세금+배송료</span><span class="v">${sym}${fmt(localTax+localShip,2)}</span></div>`:''}
       <div class="breakdown-row"><span class="k">면세한도</span><span class="v">$${fmt(threshold)}</span></div>
     </div>`;
   } else {
-    const duty = value * (dutyRate/100);
-    const vat = (value + duty) * 0.10;
+    // 관세청 기준: 과세대상 시 관세의 과세가격 = 면세판정 기준액 + 한국행 국제배송비·보험료
+    const dutyBase = thresholdBase + intlShip;
+    const duty = dutyBase * (dutyRate/100);
+    const vat = (dutyBase + duty) * 0.10;
     const totalKrw = (duty + vat) * fx;
     const over = valueInUsd - threshold;
     resultInner.innerHTML = `<div class="result-card tax">
       <div class="result-status">예상 세금</div>
       <div class="result-amount">₩${fmt(totalKrw)}</div>
-      <div class="result-sub">면세한도를 <strong>$${fmt(over,2)}</strong> 초과했어요. 다음엔 한도 이내로 나눠 사면 면세돼요.${currencyNote}</div>
+      <div class="result-sub">면세한도를 <strong>$${fmt(over,2)}</strong> 초과했어요. 다음엔 한도 이내로 나눠 사면 면세돼요.${currencyNote}${extraNote}</div>
     </div>
     <div class="explain-box">
       <div class="explain-title">💡 왜 초과분이 아니라 이렇게 많이 나오나요?</div>
       <p>면세한도를 넘으면 <strong>넘은 만큼만</strong>이 아니라 <strong>물건 가격 전체</strong>에 세금이 붙어요. $${fmt(threshold)}을 단 $1만 넘어도 물건 값 전부가 과세 대상이 되는 거예요. 그래서 한도 근처에서는 조금만 낮춰도 세금이 확 줄어듭니다.</p>
+      ${intlShip>0 ? `<p style="margin-top:8px">한국행 국제배송비(${sym}${fmt(intlShip,2)})까지 포함한 <strong>${sym}${fmt(dutyBase,2)}</strong>을 과세가격으로 계산했어요. 관세청은 세금이 부과될 때는 국제배송비까지 포함해서 계산하기 때문이에요.</p>` : ''}
       <p style="margin-top:8px">참고로 세금이 부과될 땐 관세 계산 시 <strong>국제배송비·보험료도 포함</strong>돼요. 이 계산기는 물건 가격만 반영하므로, 실제 세금은 여기 나온 금액보다 조금 더 나올 수 있습니다.</p>
     </div>`;
     breakdownWrap.innerHTML = `<div class="breakdown">
       <div class="breakdown-row"><span class="k">물건 가격</span><span class="v">${sym}${fmt(value,2)}</span></div>
+      ${(localTax>0||localShip>0||intlShip>0)?`<div class="breakdown-row"><span class="k">과세가격 (배송비·세금 포함)</span><span class="v">${sym}${fmt(dutyBase,2)}</span></div>`:''}
       <div class="breakdown-row"><span class="k">관세 (${dutyRate}%)</span><span class="v">${sym}${fmt(duty,2)}</span></div>
       <div class="breakdown-row"><span class="k">부가세 (10%)</span><span class="v">${sym}${fmt(vat,2)}</span></div>
     </div>`;
@@ -572,6 +635,15 @@ async function shareResult(){
 }
 
 calc();
+
+function convFrom(src){
+  const kgEl=document.getElementById('convKg'), lbEl=document.getElementById('convLb');
+  const cmEl=document.getElementById('convCm'), inEl=document.getElementById('convIn');
+  if(src==='kg'){ const v=parseFloat(kgEl.value); lbEl.value = isNaN(v)?'':(v*2.20462).toFixed(2); }
+  if(src==='lb'){ const v=parseFloat(lbEl.value); kgEl.value = isNaN(v)?'':(v/2.20462).toFixed(2); }
+  if(src==='cm'){ const v=parseFloat(cmEl.value); inEl.value = isNaN(v)?'':(v/2.54).toFixed(2); }
+  if(src==='in'){ const v=parseFloat(inEl.value); cmEl.value = isNaN(v)?'':(v*2.54).toFixed(2); }
+}
 </script>
 </body>
 </html>
