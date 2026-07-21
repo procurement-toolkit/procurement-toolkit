@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Free global supply chain holiday calendar. Chinese New Year, Golden Week, Diwali, US Thanksgiving and other events that actually disrupt logistics — with recommended order-by dates. Download as .ics calendar file.">
+<meta name="keywords" content="global supply chain holiday calendar, chinese new year factory shutdown, china golden week, diwali shipping delay, supply chain holiday schedule">
+<title>Global Supply Chain Holiday Calendar — CBM Lab</title>
+<link rel="icon" href="../favicon.ico" sizes="any">
+<link rel="icon" href="../favicon.ico" type="image/x-icon">
+<link rel="apple-touch-icon" href="../apple-touch-icon.png">
+<link rel="canonical" href="https://procurement-toolkit-eight.vercel.app/en/global-holiday-calendar.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="CBM Lab">
+<meta property="og:locale" content="en_US">
+<meta property="og:title" content="Global Supply Chain Holiday Calendar — CBM Lab">
+<meta property="og:description" content="Free global supply chain holiday calendar. Chinese New Year, Golden Week, Diwali, US Thanksgiving and other events that actually disrupt logistics — with recommended order-by dates.">
+<meta property="og:url" content="https://procurement-toolkit-eight.vercel.app/en/global-holiday-calendar.html">
+<meta property="og:image" content="https://procurement-toolkit-eight.vercel.app/assets/hero-team.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Global Supply Chain Holiday Calendar — CBM Lab">
+<meta name="twitter:description" content="Free global supply chain holiday calendar. Chinese New Year, Golden Week, Diwali, US Thanksgiving and other events that actually disrupt logistics — with recommended order-by dates.">
+<meta name="twitter:image" content="https://procurement-toolkit-eight.vercel.app/assets/hero-team.jpg">
+
+<link rel="alternate" hreflang="ko" href="https://procurement-toolkit-eight.vercel.app/global-holiday-calendar.html">
+<link rel="alternate" hreflang="en" href="https://procurement-toolkit-eight.vercel.app/en/global-holiday-calendar.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@800;900&display=swap" rel="stylesheet">
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  :root{--accent:#2563EB;--accent-light:#DBEAFE;--accent-dark:#1D4ED8;--slate-50:#F8FAFC;--slate-100:#F1F5F9;--slate-200:#E2E8F0;--slate-300:#CBD5E1;--slate-400:#94A3B8;--slate-500:#64748B;--slate-600:#475569;--slate-700:#334155;--slate-800:#1E293B;--slate-900:#0F172A;--success:#0F766E;--success-light:#D1FAE5;--warn:#B45309;--warn-light:#FEF3C7;--danger:#B91C1C;--danger-light:#FEE2E2;--radius:8px;--radius-lg:12px;--shadow-sm:0 1px 2px rgba(0,0,0,.05);font-family:'Inter','Pretendard',system-ui,-apple-system,sans-serif}
+  body{background:var(--slate-50);color:var(--slate-800);font-size:14px;line-height:1.65}
+  header{background:#fff;border-bottom:1px solid var(--slate-200)}
+  .header-inner{max-width:900px;margin:0 auto;padding:16px 24px;display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}
+  .logo-mark{font-size:20px;font-weight:800;color:var(--slate-900);text-decoration:none;font-family:'Space Grotesk','Pretendard',sans-serif;letter-spacing:-0.4px;}
+  .nav-links{display:flex;align-items:center;gap:6px}
+  .nav-link{font-size:13px;font-weight:600;color:var(--slate-500);text-decoration:none;padding:7px 12px;border-radius:6px}
+  .nav-link:hover{background:var(--slate-100)}
+  .lang-switch{font-size:12px;font-weight:700;color:var(--accent);text-decoration:none;padding:6px 12px;border:1px solid var(--accent-light);border-radius:999px;background:var(--accent-light)}
+  .lang-switch:hover{background:#BFDBFE}
+
+  .hero{background:#fff;border-bottom:1px solid var(--slate-200);padding:28px 24px 24px}
+  .hero-inner{max-width:900px;margin:0 auto}
+  .hero h1{font-size:24px;font-weight:700;color:var(--slate-900);margin-bottom:6px;letter-spacing:-0.3px}
+  .hero p{font-size:14px;color:var(--slate-500);max-width:680px}
+  .hero-tags{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}
+  .tag{background:var(--slate-100);color:var(--slate-600);font-size:11px;font-weight:500;padding:3px 10px;border-radius:4px;border:1px solid var(--slate-200)}
+
+  .main{max-width:900px;margin:0 auto;padding:28px 24px 60px}
+  .card{background:#fff;border:1px solid var(--slate-200);border-radius:var(--radius-lg);box-shadow:var(--shadow-sm);margin-bottom:20px}
+  .card-header{padding:16px 20px;border-bottom:1px solid var(--slate-100);display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+  .card-title{font-size:15px;font-weight:700;color:var(--slate-800)}
+  .card-body{padding:8px 20px 20px}
+
+  .next-banner{background:var(--slate-900);color:#fff;border-radius:var(--radius-lg);padding:20px 24px;margin-bottom:20px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+  .next-banner .label{font-size:11.5px;color:var(--slate-400);text-transform:uppercase;letter-spacing:.4px;margin-bottom:4px}
+  .next-banner .name{font-size:18px;font-weight:800}
+  .next-banner .dday{font-size:30px;font-weight:800;color:#5EEAD4}
+
+  .event-item{padding:16px 0;border-bottom:1px solid var(--slate-100)}
+  .event-item:last-child{border-bottom:none}
+  .event-top{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-bottom:6px}
+  .event-name{font-size:14.5px;font-weight:800;color:var(--slate-900)}
+  .severity-pill{font-size:10.5px;font-weight:700;padding:3px 10px;border-radius:999px;white-space:nowrap}
+  .severity-pill.critical{background:var(--danger-light);color:var(--danger)}
+  .severity-pill.high{background:var(--warn-light);color:var(--warn)}
+  .severity-pill.medium{background:var(--accent-light);color:var(--accent-dark)}
+  .event-dates{font-size:12px;color:var(--slate-500);margin-bottom:6px}
+  .event-desc{font-size:13px;color:var(--slate-600);line-height:1.65;margin-bottom:6px}
+  .event-order-by{font-size:12.5px;font-weight:700;color:var(--danger);background:var(--danger-light);display:inline-block;padding:4px 10px;border-radius:6px}
+
+  .btn-add{width:100%;padding:12px;border:none;border-radius:8px;background:var(--accent);color:#fff;font-size:13.5px;font-weight:700;cursor:pointer}
+  .btn-add:hover{background:var(--accent-dark)}
+
+  .warn-box{background:var(--warn-light);border:1px solid #FDE68A;border-radius:var(--radius);padding:12px 14px;font-size:12.5px;color:#78350F;margin-bottom:14px;line-height:1.65}
+  .notice-box{background:var(--accent-light);border:1px solid #BFDBFE;border-radius:var(--radius);padding:10px 14px;font-size:12px;color:#1E40AF;margin-top:14px;line-height:1.6}
+
+  .faq-item{border-bottom:1px solid var(--slate-100);padding:12px 0}
+  .faq-item:last-child{border-bottom:none}
+  .faq-item summary{cursor:pointer;font-weight:700;font-size:13px;color:var(--slate-800);list-style:none;outline:none}
+  .faq-item summary::-webkit-details-marker{display:none}
+  .faq-item summary::before{content:'Q. ';color:var(--accent)}
+  .faq-item p{margin-top:8px;font-size:12.5px;color:var(--slate-600);line-height:1.7;padding-left:2px}
+
+  .ad-area-main{max-width:900px;margin:20px auto 0;padding:0 24px 28px}
+  .ad-main-box{border:1px dashed #CBD5E1;border-radius:10px;background:#fff;height:90px;display:flex;flex-direction:column;align-items:center;justify-content:center;color:var(--slate-400);font-size:12px;gap:4px}
+  .ad-main-box strong{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:#94A3B8}
+  .faq-wrap{max-width:800px;margin:20px auto 0;padding:0 24px}
+
+  footer{background:#0F172A;color:#94A3B8;padding:24px;font-size:12px}
+  .footer-inner{max-width:900px;margin:0 auto;display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
+  .footer-logo{font-size:15px;font-weight:800;color:#fff;font-family:'Space Grotesk','Pretendard',sans-serif;}
+  .footer-link{color:#94A3B8;text-decoration:none;font-size:11px;margin-right:14px}
+
+  @media print{.ad-area-main,.ad-main-box,header,footer{display:none !important}}
+  @media (max-width:640px){.ad-area-main{padding:0 16px 20px}.faq-wrap{padding:0 16px}}
+</style>
+
+<script src="https://cdn.amplitude.com/script/d4aa9301e01f4600b5eeb018e160aa7c.js"></script>
+<script>
+  window.amplitude.init("d4aa9301e01f4600b5eeb018e160aa7c", { fetchRemoteConfig: true, autocapture: true });
+  window.amplitude.track('CBM Page View', {category: 'calc', page: 'global-holiday-calendar', lang: 'en'});
+</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-W1YBL5BGGK"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-W1YBL5BGGK');
+</script>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute;" aria-hidden="true">
+  <defs>
+    <linearGradient id="cbmGradH" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#14B8A6"/><stop offset="100%" stop-color="#0B2A4A"/></linearGradient>
+    <linearGradient id="cbmGradF" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#2DD4BF"/><stop offset="100%" stop-color="#5B9EFF"/></linearGradient>
+  </defs>
+</svg>
+<header><div class="header-inner">
+  <a href="index.html" class="logo-mark"><svg width="26" height="26" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align:middle;margin-right:8px;flex-shrink:0;"><path d="M20 2.5L36.5 11.5V28.5L20 37.5L3.5 28.5V11.5L20 2.5Z" stroke="url(#cbmGradH)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M20 2.5V20M20 20L36.5 11.5M20 20L3.5 11.5" stroke="url(#cbmGradH)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/></svg><span style="font-family:'Montserrat','Space Grotesk',sans-serif;font-weight:800;letter-spacing:-1.1px;background:linear-gradient(90deg,#14B8A6 0%,#1E7A8C 45%,#0B2A4A 100%);-webkit-background-clip:text;background-clip:text;color:transparent;">CBMLab</span></a>
+  <div class="nav-links">
+    <a href="index.html" class="nav-link">← All Tools</a>
+    <a href="../global-holiday-calendar.html" class="lang-switch">KOR</a>
+  </div>
+</div></header>
+
+<section class="hero"><div class="hero-inner">
+  <h1>Global Supply Chain Holiday Calendar</h1>
+  <p>This isn't just a list of public holidays. We've picked only the events that actually stop factories, ports, and logistics — with the practical impact window and a recommended order-by date for each.</p>
+  <div class="hero-tags"><span class="tag">Supply Chain Risk</span><span class="tag">Order Deadline Alerts</span><span class="tag">.ics Calendar File</span></div>
+</div></section>
+
+<div class="main">
+
+  <div class="next-banner">
+    <div>
+      <div class="label">Next Major Event</div>
+      <div class="name" id="nextEventName">Loading...</div>
+    </div>
+    <div class="dday" id="nextEventDday">-</div>
+  </div>
+
+  <div class="card">
+    <div class="card-header"><div class="card-title">Major Supply Chain Events</div></div>
+    <div class="card-body" id="eventList"></div>
+  </div>
+
+  <button class="btn-add" onclick="downloadICS()" style="margin-bottom:20px;">📅 Download Full Calendar (.ics)</button>
+
+  <div class="warn-box">⚠ Dates are compiled from official government and institutional announcements, but Islamic calendar-based events (Ramadan, Eid, etc.) can shift by a day or two each year based on moon sighting. Always re-verify against the latest official notice before finalizing critical order schedules.</div>
+
+  <div class="card">
+    <div class="card-header"><div class="card-title">How to Use This Calendar</div></div>
+    <div class="card-body" style="padding-top:12px;">
+      <p style="font-size:13px;color:var(--slate-600);line-height:1.75;margin-bottom:10px;">The "practical impact window" is almost always much longer than the official holiday. Chinese New Year, for example, is an 8-day official holiday, but it actually takes 4-6 weeks for factory output to fully normalize. This calendar calculates the "recommended order-by date" based on that practical window, not just the public holiday dates.</p>
+      <p style="font-size:13px;color:var(--slate-600);line-height:1.75;">Ordering after the recommended date doesn't mean you won't receive your goods — it's a signal that your <strong>supplier lead time is likely to run much longer than usual.</strong></p>
+      <div class="notice-box">🔄 Need to calculate your actual lead time? Use the <a href="lead-time-calculator.html" style="color:#1E40AF;font-weight:700;">Lead Time Calculator</a>. Wondering how much extra safety stock to hold? Check the <a href="eoq-safety-stock-calculator.html" style="color:#1E40AF;font-weight:700;">EOQ &amp; Safety Stock Calculator</a>.</div>
+    </div>
+  </div>
+
+</div>
+
+<!-- AD -->
+<div class="ad-area-main" role="complementary" aria-label="Advertisement area">
+  <div class="ad-main-box"><strong>Advertisement</strong>Google AdSense</div>
+</div>
+
+<div class="faq-wrap">
+  <div class="card">
+    <div class="card-header"><div class="card-title">Frequently Asked Questions</div></div>
+    <div class="card-body" style="padding-top:12px;">
+      <details class="faq-item"><summary>How is the "recommended order-by date" calculated?</summary><p>It's based on when each event's practical supply chain impact actually begins, which is often 1-3 weeks earlier than the official holiday. For an exact lead time, always confirm directly with your supplier or carrier.</p></details>
+      <details class="faq-item"><summary>Why doesn't this include every country's public holidays?</summary><p>This calendar only includes events that cause a genuinely significant supply chain disruption. Rather than every one-day holiday, it focuses on events like Chinese New Year and Golden Week that halt logistics for days or weeks at a time.</p></details>
+      <details class="faq-item"><summary>Does this include dates beyond 2027?</summary><p>Major events with an already-confirmed date, like the next Chinese New Year (February 2027), are included. However, since most governments only officially announce next year's holidays in the second half of the prior year, earlier estimates will be updated once confirmed.</p></details>
+    </div>
+  </div>
+</div>
+
+<footer><div class="footer-inner">
+  <div class="footer-logo"><svg width="24" height="24" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align:middle;margin-right:9px;flex-shrink:0;"><path d="M20 2.5L36.5 11.5V28.5L20 37.5L3.5 28.5V11.5L20 2.5Z" stroke="url(#cbmGradF)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M20 2.5V20M20 20L36.5 11.5M20 20L3.5 11.5" stroke="url(#cbmGradF)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/></svg>CBM<span style="color:#2563EB;">Lab</span></div>
+  <nav><a href="index.html" class="footer-link">All Tools</a><a href="privacy.html" class="footer-link">Privacy Policy</a></nav>
+</div></footer>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {"@type":"Question","name":"How is the recommended order-by date calculated?","acceptedAnswer":{"@type":"Answer","text":"It is based on when each event's practical supply chain impact begins, and exact lead times should be confirmed directly with your supplier or carrier."}},
+    {"@type":"Question","name":"Why doesn't this include every country's public holidays?","acceptedAnswer":{"@type":"Answer","text":"This calendar only includes events with genuinely significant supply chain impact, focusing on multi-day or multi-week disruptions rather than single-day holidays."}},
+    {"@type":"Question","name":"Does this include dates beyond 2027?","acceptedAnswer":{"@type":"Answer","text":"Major events with an already-confirmed date are included, but earlier estimates will be updated once each government's official announcement is made."}}
+  ]
+}
+</script>
+
+<script>
+// Verified dates as of July 2026. Islamic calendar events shift year to year.
+const EVENTS = [
+  {
+    name: 'European Summer Shutdown',
+    start: '2026-08-01', end: '2026-08-31',
+    orderBy: '2026-07-15',
+    severity: 'high',
+    desc: 'Many European manufacturers in Italy, France, and Germany close entirely for August, especially the two weeks around Aug 15 (Ferragosto in Italy). Affects European sourcing, inspection, and shipping schedules.'
+  },
+  {
+    name: 'Chuseok (Korea) / Mid-Autumn Festival (China)',
+    start: '2026-09-25', end: '2026-09-27',
+    orderBy: '2026-09-11',
+    severity: 'medium',
+    desc: 'A 3-day holiday in both Korea and China delays logistics and customs processing. In years close to Golden Week, the impact can overlap.'
+  },
+  {
+    name: 'China National Day Golden Week',
+    start: '2026-10-01', end: '2026-10-07',
+    orderBy: '2026-09-17',
+    severity: 'critical',
+    desc: 'A 7-day official holiday across all of China. Factories, ports, and customs effectively stop entirely, and the resulting logistics backlog commonly extends 1-2 weeks beyond the holiday itself.'
+  },
+  {
+    name: 'Diwali (India)',
+    start: '2026-11-06', end: '2026-11-10',
+    orderBy: '2026-10-23',
+    severity: 'high',
+    desc: 'India\'s biggest festival. If you have India-based sourcing volume, plan for 1-2 weeks of production and logistics delay around this window.'
+  },
+  {
+    name: 'US Thanksgiving',
+    start: '2026-11-26', end: '2026-11-27',
+    orderBy: '2026-11-12',
+    severity: 'medium',
+    desc: 'The official holiday is short, but US warehouse and trucking capacity gets absorbed by Black Friday volume, easily delaying regular freight processing.'
+  },
+  {
+    name: 'Christmas & Year-End Holidays (Western)',
+    start: '2026-12-24', end: '2027-01-02',
+    orderBy: '2026-12-10',
+    severity: 'critical',
+    desc: 'Europe and the Americas effectively shut down for nearly two weeks. Client responsiveness, customs, and port operations can all slow down across Western markets.'
+  },
+  {
+    name: 'Chinese New Year / Vietnamese Tet',
+    start: '2027-02-05', end: '2027-02-11',
+    orderBy: '2026-12-25',
+    severity: 'critical',
+    desc: 'The single biggest logistics gap of the year. The official holiday is 8 days, but the practical impact spans 4-6 weeks from mid-January to mid-March. Orders overlapping this window should be placed at least 6-8 weeks in advance.'
+  }
+];
+
+function daysUntil(dateStr){
+  const today = new Date(); today.setHours(0,0,0,0);
+  const target = new Date(dateStr); target.setHours(0,0,0,0);
+  return Math.round((target-today)/86400000);
+}
+
+function fmtDate(d){
+  const dt = new Date(d);
+  return `${dt.getFullYear()}.${String(dt.getMonth()+1).padStart(2,'0')}.${String(dt.getDate()).padStart(2,'0')}`;
+}
+
+const SEVERITY_LABEL = {critical:'Critical', high:'High', medium:'Medium'};
+
+function render(){
+  const today = new Date(); today.setHours(0,0,0,0);
+  const upcoming = EVENTS.filter(e => new Date(e.end) >= today).sort((a,b)=> new Date(a.start)-new Date(b.start));
+
+  if(upcoming.length){
+    const next = upcoming[0];
+    document.getElementById('nextEventName').textContent = next.name;
+    const d = daysUntil(next.orderBy);
+    document.getElementById('nextEventDday').textContent = d > 0 ? `D-${d}` : (d===0 ? 'D-DAY' : 'Deadline passed');
+  }
+
+  const list = document.getElementById('eventList');
+  list.innerHTML = upcoming.map(e => `
+    <div class="event-item">
+      <div class="event-top">
+        <span class="event-name">${e.name}</span>
+        <span class="severity-pill ${e.severity}">Impact: ${SEVERITY_LABEL[e.severity]}</span>
+      </div>
+      <div class="event-dates">${fmtDate(e.start)} ~ ${fmtDate(e.end)}</div>
+      <div class="event-desc">${e.desc}</div>
+      <span class="event-order-by">📌 Recommended order-by: ${fmtDate(e.orderBy)}</span>
+    </div>
+  `).join('');
+}
+
+function pad(n){ return n<10 ? '0'+n : ''+n; }
+
+function downloadICS(){
+  let ics = 'BEGIN:VCALENDAR\r\nVERSION:2.0\r\nPRODID:-//CBM Lab//Global Holiday Calendar//EN\r\nCALSCALE:GREGORIAN\r\n';
+  const now = new Date();
+  const stamp = `${now.getFullYear()}${pad(now.getMonth()+1)}${pad(now.getDate())}T${pad(now.getHours())}${pad(now.getMinutes())}${pad(now.getSeconds())}Z`;
+  EVENTS.forEach((e, i)=>{
+    const orderDate = e.orderBy.replace(/-/g,'');
+    const startDate = e.start.replace(/-/g,'');
+    const endDateObj = new Date(e.end); endDateObj.setDate(endDateObj.getDate()+1);
+    const endDate = `${endDateObj.getFullYear()}${pad(endDateObj.getMonth()+1)}${pad(endDateObj.getDate())}`;
+
+    ics += 'BEGIN:VEVENT\r\n';
+    ics += `UID:cbmlab-holiday-${i}-order@cbmlab\r\n`;
+    ics += `DTSTAMP:${stamp}\r\n`;
+    ics += `DTSTART;VALUE=DATE:${orderDate}\r\n`;
+    ics += `SUMMARY:[Recommended Order-By] ${e.name}\r\n`;
+    ics += `DESCRIPTION:${e.desc}\r\n`;
+    ics += 'END:VEVENT\r\n';
+
+    ics += 'BEGIN:VEVENT\r\n';
+    ics += `UID:cbmlab-holiday-${i}-event@cbmlab\r\n`;
+    ics += `DTSTAMP:${stamp}\r\n`;
+    ics += `DTSTART;VALUE=DATE:${startDate}\r\n`;
+    ics += `DTEND;VALUE=DATE:${endDate}\r\n`;
+    ics += `SUMMARY:${e.name}\r\n`;
+    ics += `DESCRIPTION:${e.desc}\r\n`;
+    ics += 'END:VEVENT\r\n';
+  });
+  ics += 'END:VCALENDAR\r\n';
+
+  const blob = new Blob([ics], {type:'text/calendar;charset=utf-8'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'CBMLab-GlobalHolidayCalendar.ics';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
+
+render();
+</script>
+</body>
+</html>
