@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="HS Code 조회와 관세율 확인 방법 총정리. 국가별 관세청 공식 조회 도구로 바로 연결하고, HS Code 구조와 정확하게 검색하는 요령, 자주 하는 실수까지 정리했습니다.">
+<meta name="keywords" content="HS Code 조회, 품목분류, 관세율 조회, 관세법령정보포털, 유니패스 품목분류포털">
+<title>HS Code 조회 & 관세율 확인 가이드 — CBM Lab</title>
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="icon" href="favicon.ico" type="image/x-icon">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="canonical" href="https://procurement-toolkit-eight.vercel.app/hs-code-guide.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="CBM Lab">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:title" content="HS Code 조회 & 관세율 확인 가이드 — CBM Lab">
+<meta property="og:description" content="HS Code 조회와 관세율 확인 방법 총정리. 국가별 관세청 공식 조회 도구로 바로 연결하고, HS Code 구조와 정확하게 검색하는 요령, 자주 하는 실수까지 정리했습니다.">
+<meta property="og:url" content="https://procurement-toolkit-eight.vercel.app/hs-code-guide.html">
+<meta property="og:image" content="https://procurement-toolkit-eight.vercel.app/assets/hero-team.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="HS Code 조회 & 관세율 확인 가이드 — CBM Lab">
+<meta name="twitter:description" content="HS Code 조회와 관세율 확인 방법 총정리. 국가별 관세청 공식 조회 도구로 바로 연결하고, HS Code 구조와 정확하게 검색하는 요령, 자주 하는 실수까지 정리했습니다.">
+<meta name="twitter:image" content="https://procurement-toolkit-eight.vercel.app/assets/hero-team.jpg">
+
+<link rel="alternate" hreflang="ko" href="https://procurement-toolkit-eight.vercel.app/hs-code-guide.html">
+<link rel="alternate" hreflang="en" href="https://procurement-toolkit-eight.vercel.app/en/hs-code-guide.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@800;900&display=swap" rel="stylesheet">
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  :root{--accent:#2563EB;--accent-light:#DBEAFE;--accent-dark:#1D4ED8;--slate-50:#F8FAFC;--slate-100:#F1F5F9;--slate-200:#E2E8F0;--slate-300:#CBD5E1;--slate-400:#94A3B8;--slate-500:#64748B;--slate-600:#475569;--slate-700:#334155;--slate-800:#1E293B;--slate-900:#0F172A;--warn:#B45309;--warn-light:#FEF3C7;--radius:8px;--radius-lg:12px;--shadow-sm:0 1px 2px rgba(0,0,0,.05);font-family:'Pretendard','Apple SD Gothic Neo',system-ui,-apple-system,sans-serif}
+  body{background:var(--slate-50);color:var(--slate-800);font-size:14px;line-height:1.65}
+  header{background:#fff;border-bottom:1px solid var(--slate-200)}
+  .header-inner{max-width:1000px;margin:0 auto;padding:16px 24px;display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}
+  .logo-mark{font-size:20px;font-weight:800;color:var(--slate-900);text-decoration:none;font-family:'Space Grotesk','Pretendard',sans-serif;letter-spacing:-0.4px;}
+  .nav-right{display:flex;align-items:center;gap:10px}
+  .nav-link{font-size:13px;font-weight:600;color:var(--slate-500);text-decoration:none;padding:7px 12px;border-radius:6px}
+  .nav-link:hover{background:var(--slate-100)}
+  .lang-switch{font-size:12px;font-weight:700;color:var(--accent);text-decoration:none;padding:6px 12px;border:1px solid var(--accent-light);border-radius:999px;background:var(--accent-light)}
+  .lang-switch:hover{background:#BFDBFE}
+
+  .hero{background:#fff;border-bottom:1px solid var(--slate-200);padding:28px 24px 24px}
+  .hero-inner{max-width:1000px;margin:0 auto}
+  .hero h1{font-size:24px;font-weight:700;color:var(--slate-900);margin-bottom:6px;letter-spacing:-0.3px}
+  .hero p{font-size:14px;color:var(--slate-500);max-width:700px}
+  .hero-tags{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}
+  .tag{background:var(--slate-100);color:var(--slate-600);font-size:11px;font-weight:500;padding:3px 10px;border-radius:4px;border:1px solid var(--slate-200)}
+
+  .main{max-width:1000px;margin:0 auto;padding:28px 24px 60px}
+  .card{background:#fff;border:1px solid var(--slate-200);border-radius:var(--radius-lg);box-shadow:var(--shadow-sm);margin-bottom:20px}
+  .card-header{padding:16px 20px;border-bottom:1px solid var(--slate-100)}
+  .card-title{font-size:14.5px;font-weight:700;color:var(--slate-800)}
+  .card-body{padding:20px}
+  .card-body p{font-size:13.5px;color:var(--slate-600);line-height:1.75;margin-bottom:12px}
+  .card-body p:last-child{margin-bottom:0}
+
+  .official-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .official-card{border:1px solid var(--slate-200);border-radius:10px;padding:16px 18px;display:flex;flex-direction:column;gap:8px}
+  .official-card h3{font-size:14px;font-weight:800;color:var(--slate-900)}
+  .official-card p{font-size:12.5px;color:var(--slate-500);line-height:1.6;margin:0;flex:1}
+  .official-link{display:inline-flex;align-items:center;gap:6px;background:var(--accent);color:#fff;font-size:12.5px;font-weight:700;padding:9px 14px;border-radius:7px;text-decoration:none;align-self:flex-start}
+
+  .step-list{counter-reset:step}
+  .step-item{display:flex;gap:14px;padding:13px 0;border-bottom:1px solid var(--slate-100)}
+  .step-item:last-child{border-bottom:none}
+  .step-num{counter-increment:step;flex-shrink:0;width:26px;height:26px;border-radius:50%;background:var(--accent);color:#fff;font-size:12.5px;font-weight:800;display:flex;align-items:center;justify-content:center}
+  .step-num::before{content:counter(step)}
+  .step-body h4{font-size:13.5px;font-weight:700;color:var(--slate-800);margin-bottom:3px}
+  .step-body p{font-size:12.5px;color:var(--slate-600);line-height:1.65}
+
+  .mistake-item{border:1px solid #FCA5A5;background:#FEF2F2;border-radius:10px;padding:14px 16px;margin-bottom:10px}
+  .mistake-item:last-child{margin-bottom:0}
+  .mistake-title{font-size:13px;font-weight:800;color:#B91C1C;margin-bottom:5px}
+  .mistake-item p{font-size:12.5px;color:#7F1D1D;line-height:1.65;margin:0}
+
+  .warn-box{background:var(--warn-light);border:1px solid #FDE68A;border-radius:var(--radius);padding:12px 14px;font-size:12.5px;color:#78350F;margin-bottom:14px;line-height:1.65}
+
+  .faq-item{border-bottom:1px solid var(--slate-100);padding:12px 0}
+  .faq-item:last-child{border-bottom:none}
+  .faq-item summary{cursor:pointer;font-weight:700;font-size:13px;color:var(--slate-800);list-style:none;outline:none}
+  .faq-item summary::-webkit-details-marker{display:none}
+  .faq-item summary::before{content:'Q. ';color:var(--accent)}
+  .faq-item p{margin-top:8px;font-size:12.5px;color:var(--slate-600);line-height:1.7;padding-left:2px}
+
+  .cta-box{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;background:var(--slate-900);border-radius:var(--radius-lg);padding:20px 22px;color:#fff;margin-bottom:18px}
+  .cta-box h4{font-size:15px;font-weight:800;margin-bottom:4px}
+  .cta-box p{font-size:12.5px;color:var(--slate-400)}
+  .cta-btn{background:var(--accent);color:#fff;font-size:13px;font-weight:700;padding:10px 18px;border-radius:8px;text-decoration:none;white-space:nowrap}
+
+  .ad-area-main{max-width:1000px;margin:24px auto 0;padding:0 24px 28px}
+  .ad-main-box{border:1px dashed #CBD5E1;border-radius:10px;background:#fff;height:90px;display:flex;flex-direction:column;align-items:center;justify-content:center;color:var(--slate-400);font-size:12px;gap:4px}
+  .ad-main-box strong{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:#94A3B8}
+  .faq-wrap{max-width:900px;margin:20px auto 0;padding:0 24px}
+
+  footer{background:#0F172A;color:#94A3B8;padding:24px;font-size:12px}
+  .footer-inner{max-width:1000px;margin:0 auto;display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
+  .footer-logo{font-size:15px;font-weight:800;color:#fff;font-family:'Space Grotesk','Pretendard',sans-serif;}
+  .footer-link{color:#94A3B8;text-decoration:none;font-size:11px;margin-right:14px}
+
+  @media print{.ad-area-main,.ad-main-box,header,footer{display:none !important}}
+  @media (max-width:640px){.official-grid{grid-template-columns:1fr}.ad-area-main{padding:0 16px 20px}.faq-wrap{padding:0 16px}.cta-box{flex-direction:column;align-items:flex-start}}
+</style>
+
+<script src="https://cdn.amplitude.com/script/d4aa9301e01f4600b5eeb018e160aa7c.js"></script>
+<script>
+  window.amplitude.init("d4aa9301e01f4600b5eeb018e160aa7c", { fetchRemoteConfig: true, autocapture: true });
+</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-W1YBL5BGGK"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-W1YBL5BGGK');
+</script>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute;" aria-hidden="true">
+  <defs>
+    <linearGradient id="cbmGradH" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#14B8A6"/><stop offset="100%" stop-color="#0B2A4A"/></linearGradient>
+    <linearGradient id="cbmGradF" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#2DD4BF"/><stop offset="100%" stop-color="#5B9EFF"/></linearGradient>
+  </defs>
+</svg>
+<header><div class="header-inner">
+  <a href="index.html" class="logo-mark"><svg width="26" height="26" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align:middle;margin-right:8px;flex-shrink:0;"><path d="M20 2.5L36.5 11.5V28.5L20 37.5L3.5 28.5V11.5L20 2.5Z" stroke="url(#cbmGradH)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M20 2.5V20M20 20L36.5 11.5M20 20L3.5 11.5" stroke="url(#cbmGradH)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/></svg><span style="font-family:'Montserrat','Space Grotesk',sans-serif;font-weight:800;letter-spacing:-1.1px;background:linear-gradient(90deg,#14B8A6 0%,#1E7A8C 45%,#0B2A4A 100%);-webkit-background-clip:text;background-clip:text;color:transparent;">CBMLab</span></a>
+  <div class="nav-right">
+    <a href="index.html" class="nav-link">← 전체 도구</a>
+    <a href="en/hs-code-guide.html" class="lang-switch">EN</a>
+  </div>
+</div></header>
+
+<section class="hero"><div class="hero-inner">
+  <h1>HS Code 조회 & 관세율 확인 가이드</h1>
+  <p>HS Code를 잘못 찾으면 관세 과오납, 통관 지연, 심하면 추징까지 이어질 수 있습니다. 저희가 직접 코드나 세율을 알려드리는 대신, <strong>각국 관세당국의 공식 조회 도구로 바로 연결</strong>해드리고, 정확하게 검색하는 요령을 정리했습니다.</p>
+  <div class="hero-tags"><span class="tag">품목분류</span><span class="tag">공식 데이터 연결</span><span class="tag">관세율 조회</span></div>
+</div></section>
+
+<div class="main">
+
+  <div class="warn-box">⚠ HS Code 분류는 전문 분류업체의 AI 도구조차 정확도가 70~80%대에 머무를 만큼 까다로운 영역입니다. 이 페이지는 직접 코드를 판정해드리지 않고, <strong>공식 관세당국 데이터로 바로 연결</strong>해드립니다. 고액 거래나 중요한 판정은 반드시 관세사와 상담하세요.</div>
+
+  <div class="card">
+    <div class="card-header"><div class="card-title">국가별 공식 조회 도구</div></div>
+    <div class="card-body">
+      <div class="official-grid">
+        <div class="official-card">
+          <h3>🇰🇷 한국 — 관세법령정보포털(CLIP)</h3>
+          <p>관세청이 직접 운영하는 품목분류·관세율표 공식 조회 시스템입니다. HS Code 검색, 관세율표, 세계 HS 사례까지 확인 가능합니다.</p>
+          <a class="official-link" href="https://unipass.customs.go.kr/clip/index.do" target="_blank" rel="noopener">CLIP 바로가기 →</a>
+        </div>
+        <div class="official-card">
+          <h3>🇺🇸 미국 — USITC HTS Search</h3>
+          <p>미국 국제무역위원회(USITC)가 운영하는 공식 관세율표(HTS) 검색 도구입니다. 10자리 HTS 코드와 일반·특혜 세율을 확인할 수 있습니다.</p>
+          <a class="official-link" href="https://hts.usitc.gov/search" target="_blank" rel="noopener">USITC HTS Search →</a>
+        </div>
+      </div>
+      <div class="warn-box" style="margin-top:14px;margin-bottom:0;">💡 이 두 곳 외 다른 나라도 대부분 자국 관세청이 무료 공식 조회 시스템을 운영합니다 ("[국가명] customs tariff search" 등으로 검색하면 찾을 수 있어요). 민간 사이트보다는 정부 공식 도메인(.gov, .go.kr 등)을 우선 이용하세요.</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header"><div class="card-title">HS Code, 이렇게 구성됩니다</div></div>
+    <div class="card-body">
+      <p>HS Code는 세계관세기구(WCO)가 정한 <strong>앞 6자리 국제 공통 코드</strong>에, 각 나라가 자국 통계·관세 목적으로 자릿수를 추가하는 구조입니다.</p>
+      <p><strong>예: 8471.30</strong> (노트북 컴퓨터, 앞 6자리는 전 세계 공통)<br>
+      → 미국은 여기에 4자리를 더해 <strong>10자리 HTS 코드</strong>로 확장<br>
+      → EU는 8자리 CN(Combined Nomenclature) 코드 사용<br>
+      → 한국은 10자리 HSK(HS of Korea) 코드 사용</p>
+      <p>즉 앞 6자리만 맞으면 국제적으로 같은 대분류지만, 정확한 세율 적용을 위해서는 수입국 기준의 전체 자릿수까지 확인해야 합니다.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header"><div class="card-title">정확하게 검색하는 3단계</div></div>
+    <div class="card-body">
+      <div class="step-list">
+        <div class="step-item">
+          <div class="step-num"></div>
+          <div class="step-body"><h4>제품명 + 재질 + 용도로 검색</h4><p>단순히 "가방"이 아니라 "가죽 핸드백" 또는 "폴리에스터 백팩"처럼 재질과 용도를 함께 넣으면 검색 범위가 좁혀집니다.</p></div>
+        </div>
+        <div class="step-item">
+          <div class="step-num"></div>
+          <div class="step-body"><h4>국내사례 검색으로 교차 확인</h4><p>유니패스 CLIP의 "국내사례" 메뉴에서 비슷한 물품이 실제로 어떤 코드로 신고됐는지 과거 사례를 확인하면 정확도가 올라갑니다.</p></div>
+        </div>
+        <div class="step-item">
+          <div class="step-num"></div>
+          <div class="step-body"><h4>애매하면 관세평가분류원에 사전심사 요청</h4><p>애매한 품목은 관세청 관세평가분류원에 품목분류 사전심사를 신청하면 공식적으로 확정된 코드를 받을 수 있습니다 (수수료 있음, 처리에 시간 소요).</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header"><div class="card-title">자주 하는 실수</div></div>
+    <div class="card-body">
+      <div class="mistake-item">
+        <div class="mistake-title">용도에 따른 분류 오류</div>
+        <p>같은 "유리컵"이라도 장식용인지 주방용인지에 따라 코드가 달라질 수 있습니다.</p>
+      </div>
+      <div class="mistake-item">
+        <div class="mistake-title">재질 판단 착오</div>
+        <p>가죽 가방인 줄 알았는데 합성피혁이었던 경우처럼, 재질 하나 차이로 관세율이 달라져 추징 대상이 될 수 있습니다.</p>
+      </div>
+      <div class="mistake-item">
+        <div class="mistake-title">FTA 세번변경기준 미확인</div>
+        <p>FTA 특혜관세를 받으려면 HS Code가 실제로 바뀔 만큼의 가공이 이루어졌는지 확인해야 하는데, 이를 안 하고 협정세율을 적용했다가 사후 심사에서 적발되는 경우가 많습니다.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="cta-box">
+    <div><h4>FTA 특혜관세를 받으려면 원산지 기준도 충족해야 해요</h4><p>Build-up·Build-down 방식으로 역내부가가치(RVC)를 미리 계산해보세요.</p></div>
+    <a href="rvc-calculator.html" class="cta-btn">RVC 계산기 열기 →</a>
+  </div>
+
+</div>
+
+<!-- AD -->
+<div class="ad-area-main" role="complementary" aria-label="하단 광고 영역">
+  <div class="ad-main-box"><strong>Advertisement</strong>광고 영역 (Google AdSense) — 728 × 90 리더보드</div>
+</div>
+
+<div class="faq-wrap">
+  <div class="card">
+    <div class="card-header"><div class="card-title">자주 묻는 질문</div></div>
+    <div class="card-body">
+      <details class="faq-item"><summary>HS Code를 잘못 신고하면 어떻게 되나요?</summary><p>관세 과오납(더 내거나 덜 내거나), 통관 지연, 심한 경우 세관 사후 심사에서 적발되어 가산세와 함께 추징될 수 있습니다. 애매한 품목은 사전심사를 받는 것이 안전합니다.</p></details>
+      <details class="faq-item"><summary>수출용 코드와 수입용 코드가 다른가요?</summary><p>네, 나라에 따라 다를 수 있습니다. 예를 들어 미국은 수입 시 10자리 HTS 코드, 수출 시에는 별도의 Schedule B 코드(역시 10자리)를 사용하며, 앞 6자리는 서로 같습니다.</p></details>
+      <details class="faq-item"><summary>같은 HS Code라도 나라마다 관세율이 다른가요?</summary><p>네, HS Code 앞 6자리가 같아도 실제 적용되는 관세율은 수입국, 원산지, FTA 체결 여부에 따라 크게 달라질 수 있습니다. 코드 확인 후 반드시 수입국 기준 관세율표를 따로 확인해야 합니다.</p></details>
+    </div>
+  </div>
+</div>
+
+<footer><div class="footer-inner">
+  <div class="footer-logo"><svg width="24" height="24" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align:middle;margin-right:9px;flex-shrink:0;"><path d="M20 2.5L36.5 11.5V28.5L20 37.5L3.5 28.5V11.5L20 2.5Z" stroke="url(#cbmGradF)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M20 2.5V20M20 20L36.5 11.5M20 20L3.5 11.5" stroke="url(#cbmGradF)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/></svg>CBM<span style="color:#2563EB;">Lab</span></div>
+  <nav><a href="index.html" class="footer-link">전체 도구</a><a href="privacy.html" class="footer-link">개인정보 처리방침</a></nav>
+</div></footer>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {"@type":"Question","name":"HS Code를 잘못 신고하면 어떻게 되나요?","acceptedAnswer":{"@type":"Answer","text":"관세 과오납, 통관 지연, 세관 사후 심사에서 적발되어 가산세와 함께 추징될 수 있습니다. 애매한 품목은 사전심사를 받는 것이 안전합니다."}},
+    {"@type":"Question","name":"수출용 코드와 수입용 코드가 다른가요?","acceptedAnswer":{"@type":"Answer","text":"나라에 따라 다를 수 있습니다. 미국은 수입 시 10자리 HTS 코드, 수출 시 별도의 Schedule B 코드를 사용하며 앞 6자리는 동일합니다."}},
+    {"@type":"Question","name":"같은 HS Code라도 나라마다 관세율이 다른가요?","acceptedAnswer":{"@type":"Answer","text":"네, 앞 6자리가 같아도 실제 적용 관세율은 수입국, 원산지, FTA 체결 여부에 따라 달라질 수 있어 수입국 기준 관세율표를 별도로 확인해야 합니다."}}
+  ]
+}
+</script>
+</body>
+</html>

@@ -88,26 +88,26 @@
   .hero-stat .n{font-family:var(--font-display);font-size:18px;font-weight:700;color:#fff}
   .hero-stat .l{font-size:10.5px;color:#7C8AA3}
 
-  .pillbar{max-width:1180px;margin:0 auto;padding:20px 24px 0;display:flex;gap:8px;flex-wrap:wrap}
+  .pillbar{max-width:1180px;margin:0 auto;padding:14px 24px 0;display:flex;gap:8px;flex-wrap:wrap}
   .pill{font-family:var(--font-display);font-size:12.5px;font-weight:600;color:var(--muted);background:var(--paper-card);border:1px solid var(--line);padding:7px 15px;border-radius:999px;cursor:pointer;transition:all .15s;display:flex;align-items:center;gap:6px}
   .pill:hover{border-color:var(--route);color:var(--route)}
   .pill.active{background:var(--ink);color:#fff;border-color:var(--ink)}
   .pill .dot{width:7px;height:7px;border-radius:50%}
 
-  .tools{max-width:1180px;margin:0 auto;padding:28px 24px 12px}
+  .tools{max-width:1180px;margin:0 auto;padding:22px 24px 8px}
   .no-result{display:none;text-align:center;padding:60px 20px;color:var(--faint);font-size:13.5px}
-  .tool-grid{display:grid;grid-template-columns:repeat(auto-fill, minmax(268px, 1fr));gap:16px}
+  .tool-grid{display:grid;grid-template-columns:repeat(auto-fill, minmax(250px, 1fr));gap:12px}
 
   .tool-card{background:var(--paper-card);border:1px solid var(--line);border-radius:var(--radius-lg);overflow:hidden;text-decoration:none;color:inherit;display:flex;flex-direction:column;transition:transform .15s, box-shadow .15s;position:relative}
   .tool-card:hover{transform:translateY(-3px);box-shadow:var(--shadow)}
-  .tool-accent{height:4px;width:100%}
+  .tool-accent{height:3px;width:100%}
   .tool-accent.cat-calc{background:var(--route)}
   .tool-accent.cat-gen{background:var(--beacon)}
   .tool-accent.cat-guide{background:var(--teal)}
   .tool-accent.cat-live{background:var(--live)}
-  .tool-body{padding:20px 20px 18px;display:flex;flex-direction:column;gap:10px;flex:1}
+  .tool-body{padding:14px 16px 12px;display:flex;flex-direction:column;gap:6px;flex:1}
   .tool-top{display:flex;align-items:center;justify-content:space-between;gap:10px}
-  .tool-icon{width:38px;height:38px;border-radius:9px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+  .tool-icon{width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
   .tool-icon.cat-calc{background:var(--route-dim);color:var(--route)}
   .tool-icon.cat-gen{background:var(--beacon-dim);color:var(--beacon)}
   .tool-icon.cat-guide{background:var(--teal-dim);color:var(--teal)}
@@ -117,28 +117,28 @@
   .tool-cat-label.cat-gen{color:var(--beacon)}
   .tool-cat-label.cat-guide{color:var(--teal)}
   .tool-cat-label.cat-live{color:var(--live)}
-  .tool-card h3{font-size:15px;font-weight:700;color:var(--ink);letter-spacing:-.2px}
-  .tool-card p{font-size:12.5px;color:var(--muted);line-height:1.55;flex:1}
-  .tool-go{font-family:var(--font-display);font-size:12.5px;font-weight:600;color:var(--ink);display:flex;align-items:center;gap:5px;margin-top:2px}
+  .tool-card h3{font-size:14px;font-weight:700;color:var(--ink);letter-spacing:-.2px;line-height:1.3}
+  .tool-card p{font-size:12px;color:var(--muted);line-height:1.5;flex:1}
+  .tool-go{font-family:var(--font-display);font-size:12px;font-weight:600;color:var(--ink);display:flex;align-items:center;gap:5px;margin-top:1px}
   .tool-card:hover .tool-go{color:var(--route)}
   .tool-go svg{transition:transform .15s}
   .tool-card:hover .tool-go svg{transform:translateX(3px)}
 
-  .about{max-width:1180px;margin:36px auto 0;padding:0 24px}
-  .about-card{display:flex;gap:24px;align-items:center;background:var(--paper-card);border:1px solid var(--line);border-radius:var(--radius-lg);padding:26px 30px;flex-wrap:wrap}
-  .about-icon{flex-shrink:0;width:52px;height:52px;border-radius:13px;background:var(--ink);color:#fff;display:flex;align-items:center;justify-content:center}
-  .about-text h3{font-size:15px;font-weight:700;color:var(--ink);margin-bottom:6px}
-  .about-text p{font-size:12.5px;color:var(--muted);line-height:1.65;max-width:660px}
-  .about-chips{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+  .about{max-width:1180px;margin:22px auto 0;padding:0 24px}
+  .about-card{display:flex;gap:24px;align-items:center;background:var(--paper-card);border:1px solid var(--line);border-radius:var(--radius-lg);padding:18px 24px;flex-wrap:wrap}
+  .about-icon{flex-shrink:0;width:44px;height:44px;border-radius:11px;background:var(--ink);color:#fff;display:flex;align-items:center;justify-content:center}
+  .about-text h3{font-size:14px;font-weight:700;color:var(--ink);margin-bottom:5px}
+  .about-text p{font-size:12px;color:var(--muted);line-height:1.6;max-width:660px}
+  .about-chips{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
   .about-chip{font-family:var(--font-display);font-size:10.5px;font-weight:600;color:var(--route-deep);background:var(--route-dim);padding:4px 11px;border-radius:999px}
 
-  .why{max-width:1180px;margin:0 auto;padding:40px 24px 60px}
-  .section-title{font-family:var(--font-display);font-size:19px;font-weight:700;color:var(--ink);letter-spacing:-.3px;margin-bottom:20px}
-  .why-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
-  .why-item{border-top:2px solid var(--line);padding-top:14px}
-  .why-item .num{font-family:var(--font-display);font-size:11px;font-weight:700;color:var(--route);margin-bottom:6px}
-  .why-item h4{font-size:13.5px;font-weight:700;color:var(--ink);margin-bottom:5px}
-  .why-item p{font-size:12px;color:var(--muted);line-height:1.6}
+  .why{max-width:1180px;margin:0 auto;padding:28px 24px 40px}
+  .section-title{font-family:var(--font-display);font-size:18px;font-weight:700;color:var(--ink);letter-spacing:-.3px;margin-bottom:16px}
+  .why-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+  .why-item{border-top:2px solid var(--line);padding-top:12px}
+  .why-item .num{font-family:var(--font-display);font-size:11px;font-weight:700;color:var(--route);margin-bottom:5px}
+  .why-item h4{font-size:13px;font-weight:700;color:var(--ink);margin-bottom:4px}
+  .why-item p{font-size:11.5px;color:var(--muted);line-height:1.55}
 
   .ad-area-main{max-width:1180px;margin:0 auto;padding:0 24px 40px}
   .ad-main-box{border:1px dashed var(--line);border-radius:var(--radius);background:var(--paper-card);height:90px;display:flex;flex-direction:column;align-items:center;justify-content:center;color:var(--faint);font-size:12px;gap:4px}
@@ -206,7 +206,7 @@
       <div class="search-box">
         <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3" stroke-linecap="round"/></svg>
         <input type="text" id="searchInput" placeholder="예: 관세, FOB, 인보이스, 재고..." oninput="filterTools()" autocomplete="off">
-        <span class="search-kbd">20개 도구 검색</span>
+        <span class="search-kbd" id="searchKbd">도구 검색</span>
       </div>
       <div class="search-hint">찾으시는 게 명확하지 않으면 <b>아래 카테고리</b>에서 둘러보세요.</div>
     </div>
@@ -371,11 +371,13 @@ const TOOLS = [
   {cat:'gen', icon:'mail', title:'영문 구매 이메일 생성기', desc:'견적 요청, 주문 확인, 납기 문의, 샘플 요청, 클레임까지 — 항목만 입력하면 완성됩니다.', href:'email-generator.html', cta:'생성기 열기', kw:'영문 이메일 rfq 견적'},
   {cat:'gen', icon:'doc', title:'인보이스 & 패킹리스트 생성기', desc:'인코텀즈, 원산지, HS Code까지 포함한 무역 실무용 서식을 입력만으로 완성하고 인쇄합니다.', href:'invoice-packing-generator.html', cta:'생성기 열기', kw:'인보이스 패킹리스트 서식'},
   {cat:'gen', icon:'star', title:'공급업체 평가 스코어카드 생성기', desc:'가중치와 항목별 점수를 입력하면 여러 공급업체의 종합 점수를 자동 계산하고 인쇄까지 가능합니다.', href:'supplier-scorecard.html', cta:'생성기 열기', kw:'공급업체 벤더 평가 스코어카드'},
+  {cat:'calc', icon:'clock', title:'계약 갱신 캘린더', desc:'계약 만료일과 통지기한을 등록하면 우선순위대로 정리하고, 구글 캘린더에 바로 넣는 알림 파일(.ics)을 만들어 줍니다.', href:'contract-renewal-calendar.html', cta:'캘린더 열기', kw:'계약 갱신 캘린더 만료일 알림'},
   {cat:'gen', icon:'doc', title:'RFI·RFP·RFQ 영문 템플릿 생성기', desc:'원료 조달, 원료 개발, 설비/공사, 기획 등에서 공용으로 쓸 수 있는 영문 정보요청·제안요청·견적요청서를 작성합니다.', href:'rfx-generator.html', cta:'생성기 열기', kw:'rfi rfp rfq 템플릿 견적요청서 제안요청서'},
 
   {cat:'guide', icon:'incoterm', title:'인코텀즈 2020 가이드', desc:'EXW부터 DDP까지 11개 조건별로 운임·보험·통관·위험 이전 시점을 표로 한눈에 비교합니다.', href:'incoterms-guide.html', cta:'가이드 보기', kw:'인코텀즈 fob cif 뜻'},
   {cat:'guide', icon:'cert', title:'원산지증명서(FTA) 가이드', desc:'자율발급·기관발급 차이와 주요 FTA 협정국 비교, 발급 전 체크리스트를 정리했습니다.', href:'fta-guide.html', cta:'가이드 보기', kw:'원산지증명서 fta co'},
   {cat:'calc', icon:'cert', title:'원산지 규정(RVC) 계산기', desc:'Build-down·Build-up 방식으로 역내부가가치(RVC)를 계산하고 FTA 특혜관세 자격 기준과 비교합니다.', href:'rvc-calculator.html', cta:'계산기 열기', kw:'원산지 규정 rvc 계산 역내부가가치'},
+  {cat:'guide', icon:'cert', title:'HS Code 조회 & 관세율 확인 가이드', desc:'국가별 관세청 공식 조회 도구로 바로 연결하고, HS Code 구조와 정확하게 검색하는 요령을 정리했습니다.', href:'hs-code-guide.html', cta:'가이드 보기', kw:'hs code 조회 품목분류 관세율'},
   {cat:'guide', icon:'truck', title:'국제특송사 비교 허브', desc:'DHL·FedEx·UPS·EMS 특징 비교와 공식 배송조회 페이지 바로가기를 모았습니다.', href:'courier-guide.html', cta:'허브 보기', kw:'dhl fedex ups ems 배송조회'},
   {cat:'guide', icon:'chart', title:'원자재 & 경기지표 허브', desc:'PMI, LME, 철강가격, BDI 등 구매·물류 담당자가 챙겨야 할 지표와 공식 출처를 정리했습니다.', href:'market-index-hub.html', cta:'허브 보기', kw:'pmi lme 철강 bdi 지표'},
   {cat:'guide', icon:'cert', title:'무역 자격시험 일정 가이드', desc:'관세사, 국제무역사, 무역영어 등 자격시험의 일반적인 시행 주기와 공식 접수처를 정리했습니다.', href:'exam-calendar.html', cta:'가이드 보기', kw:'관세사 국제무역사 자격시험'},
@@ -407,6 +409,8 @@ function updatePillCounts(){
     if(dot) btn.appendChild(dot);
     btn.appendChild(document.createTextNode(label + ' ' + counts[cat]));
   });
+  const searchKbd = document.getElementById('searchKbd');
+  if(searchKbd) searchKbd.textContent = TOOLS.length + '개 도구 검색';
 }
 
 function renderTools(){

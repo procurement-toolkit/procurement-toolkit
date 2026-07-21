@@ -72,32 +72,32 @@
   .search-box input{flex:1;background:transparent;border:none;outline:none;color:#fff;font-size:14.5px;font-family:inherit}
   .search-box input::placeholder{color:#6B7690}
 
-  .tools{max-width:1180px;margin:0 auto;padding:40px 24px 20px}
-  .cat-heading{display:flex;align-items:center;gap:10px;margin-bottom:16px;margin-top:36px}
+  .tools{max-width:1180px;margin:0 auto;padding:24px 24px 10px}
+  .cat-heading{display:flex;align-items:center;gap:10px;margin-bottom:12px;margin-top:22px}
   .cat-heading:first-child{margin-top:0}
   .cat-dot{width:9px;height:9px;border-radius:50%}
   .cat-title{font-size:14px;font-weight:700;color:var(--ink);letter-spacing:.2px}
   .cat-count{font-size:11.5px;color:var(--faint);font-weight:500}
-  .tool-grid{display:grid;grid-template-columns:repeat(auto-fill, minmax(268px, 1fr));gap:16px}
+  .tool-grid{display:grid;grid-template-columns:repeat(auto-fill, minmax(250px, 1fr));gap:12px}
 
   .tool-card{background:var(--paper-card);border:1px solid var(--line);border-radius:var(--radius-lg);overflow:hidden;text-decoration:none;color:inherit;display:flex;flex-direction:column;transition:transform .15s, box-shadow .15s;position:relative}
   .tool-card:hover{transform:translateY(-3px);box-shadow:var(--shadow)}
-  .tool-accent{height:4px;width:100%}
+  .tool-accent{height:3px;width:100%}
   .tool-accent.calc{background:var(--route)}
   .tool-accent.gen{background:var(--beacon)}
   .tool-accent.guide{background:var(--teal)}
-  .tool-body{padding:20px;display:flex;flex-direction:column;gap:10px;flex:1}
-  .tool-icon{width:38px;height:38px;border-radius:9px;display:flex;align-items:center;justify-content:center}
+  .tool-body{padding:14px 16px 12px;display:flex;flex-direction:column;gap:6px;flex:1}
+  .tool-icon{width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center}
   .tool-icon.calc{background:var(--route-dim);color:var(--route)}
   .tool-icon.gen{background:var(--beacon-dim);color:var(--beacon)}
   .tool-icon.guide{background:var(--teal-dim);color:var(--teal)}
-  .tool-card h3{font-size:15px;font-weight:700;color:var(--ink);letter-spacing:-.2px}
-  .tool-card p{font-size:12.5px;color:var(--muted);line-height:1.55;flex:1}
-  .tool-go{font-family:var(--font-display);font-size:12.5px;font-weight:600;color:var(--ink)}
+  .tool-card h3{font-size:14px;font-weight:700;color:var(--ink);letter-spacing:-.2px;line-height:1.3}
+  .tool-card p{font-size:12px;color:var(--muted);line-height:1.5;flex:1}
+  .tool-go{font-family:var(--font-display);font-size:12px;font-weight:600;color:var(--ink)}
   .tool-card:hover .tool-go{color:var(--route)}
   .badge-new{position:absolute;top:14px;right:14px;background:var(--beacon);color:#fff;font-size:9.5px;font-weight:800;padding:2px 8px;border-radius:999px;letter-spacing:.4px;z-index:2}
 
-  .notice{max-width:1180px;margin:20px auto 0;padding:0 24px 60px;font-size:12.5px;color:var(--muted);text-align:center}
+  .notice{max-width:1180px;margin:14px auto 0;padding:0 24px 32px;font-size:12.5px;color:var(--muted);text-align:center}
 
   footer{background:var(--ink);color:#8B94A3;padding:24px}
   .footer-inner{max-width:1180px;margin:0 auto;display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;align-items:center}
@@ -113,7 +113,7 @@
     .hero-photo-fade{background:linear-gradient(180deg, rgba(11,20,36,.15), var(--ink) 92%)}
     .hero-photo-fade-bottom{display:none}
     .hero h1{font-size:24px}
-    .tools{padding:32px 16px 10px}
+    .tools{padding:18px 16px 8px}
   }
   .ad-area-main{max-width:1180px;margin:0 auto;padding:0 24px 40px}
   .ad-main-box{border:1px dashed #CBD5E1;border-radius:10px;background:#fff;height:90px;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#94A3B8;font-size:12px;gap:4px}
@@ -201,6 +201,7 @@ const ICONS = {
 
 const TOOLS = [
   {cat:'calc', icon:'matrix', title:'Kraljic Matrix Tool', desc:'Drag and drop suppliers or categories by supply risk and profit impact. Get instant quadrant classification and recommended sourcing strategy.', href:'kraljic-matrix.html', isNew:true, kw:'kraljic matrix supplier segmentation category management'},
+  {cat:'calc', icon:'matrix', title:'Directional Policy Matrix (DPM) Tool', desc:'A finer 3x3 grid version of the Kraljic Matrix. Plot suppliers by supply market attractiveness and your relative strength for an Invest, Selective, or Harvest policy.', href:'directional-policy-matrix.html', isNew:true, kw:'directional policy matrix ge mckinsey nine box procurement'},
   {cat:'calc', icon:'matrix', title:'Supplier Preferencing Matrix Tool', desc:'The companion to the Kraljic Matrix — see how your suppliers likely view you, based on account value and attractiveness.', href:'supplier-preferencing-matrix.html', isNew:true, kw:'supplier preferencing matrix account attractiveness steele court'},
   {cat:'calc', icon:'matrix', title:'Supplier Risk Matrix Tool', desc:'Plot suppliers by probability of disruption and impact if disrupted to see which need urgent action, a contingency plan, routine management, or just monitoring.', href:'supplier-risk-matrix.html', isNew:true, kw:'supplier risk matrix supply chain risk assessment probability impact'},
   {cat:'calc', icon:'coin', title:'Landed Cost Calculator', desc:'Calculate total import cost from EXW, FOB, CFR, or CIF terms — with correct duty-basis handling for US (FOB) vs most other countries (CIF).', href:'landed-cost-calculator.html', kw:'landed cost fob cif import duty calculator'},
@@ -215,6 +216,7 @@ const TOOLS = [
 
   {cat:'gen', icon:'doc', title:'RFI, RFP &amp; RFQ Template Generator', desc:'A shared template for sourcing, development, CAPEX, and strategic sourcing projects — fill in the fields and get a ready-to-send document.', href:'rfq-rfp-rfi-generator.html', kw:'rfq rfp rfi template generator'},
   {cat:'gen', icon:'star', title:'Supplier &amp; Vendor Scorecard Generator', desc:'Pick from 30+ objective criteria with 1/3/5-point rubrics, get an automatic weighted score, and print a professional report.', href:'supplier-scorecard.html', kw:'supplier scorecard vendor evaluation'},
+  {cat:'calc', icon:'clock', title:'Contract Renewal Calendar', desc:'Register contract expiry dates and notice periods to get them prioritized by urgency, and export a calendar file (.ics) for Google Calendar or Outlook.', href:'contract-renewal-calendar.html', kw:'contract renewal calendar expiration tracker reminder'},
   {cat:'gen', icon:'doc', title:'Commercial Invoice &amp; Packing List Generator', desc:'Generate trade-ready commercial invoice and packing list documents from a single item entry — including Incoterm, origin, and HS Code.', href:'invoice-packing-generator.html', kw:'commercial invoice packing list generator'},
 
   {cat:'guide', icon:'incoterm', title:'Incoterms 2020 Guide &amp; Comparison Chart', desc:'All 11 Incoterms® 2020 rules compared — who pays freight, insurance, and duty, and where risk transfers.', href:'incoterms-guide.html', kw:'incoterms 2020 fob cif comparison'},
@@ -222,6 +224,7 @@ const TOOLS = [
   {cat:'guide', icon:'wallet', title:'Payment Terms Guide (T/T, L/C, D/P, D/A)', desc:'Compare trade payment terms by risk exposure and cash flow, with a checklist before choosing terms with a new partner.', href:'payment-terms-guide.html', kw:'tt lc dp da payment terms letter of credit'},
   {cat:'guide', icon:'doc', title:'Certificate of Origin &amp; FTA Guide', desc:'Self-certification vs authority-issued C/O, how preferential tariffs work under USMCA, EU agreements, RCEP, CPTPP, and ASEAN, plus a pre-issuance checklist.', href:'fta-guide.html', kw:'certificate of origin fta preferential tariff rules of origin'},
   {cat:'calc', icon:'doc', title:'Regional Value Content (RVC) Calculator', desc:'Use the build-up or build-down method to calculate RVC and check it against the FTA preferential tariff threshold.', href:'rvc-calculator.html', kw:'regional value content calculator rvc rules of origin'},
+  {cat:'guide', icon:'doc', title:'HS Code Lookup &amp; Tariff Rate Guide', desc:'Direct links to official customs lookup tools by country, how HS code structure works, and the most common classification mistakes.', href:'hs-code-guide.html', kw:'hs code lookup hts code search tariff classification'},
   {cat:'guide', icon:'doc', title:'Global De Minimis Threshold Guide 2026', desc:'The US $800 exemption suspension, the EU 150 euro duty phase-out, the UK planned repeal, and where Canada, Australia, Japan, and Korea currently stand.', href:'global-de-minimis-guide.html', kw:'de minimis threshold by country us de minimis suspended eu de minimis'},
   {cat:'gen', icon:'doc', title:'Procurement Email Generator', desc:'RFQs, order confirmations, delivery delay follow-ups, sample requests, and quality claims — fill in the fields and get a ready-to-send professional email.', href:'email-generator.html', kw:'procurement email rfq template generator'},
   {cat:'guide', icon:'coin', title:'Global Raw Material &amp; Economic Indicator Hub', desc:'PMI, LME base metals, global steel prices, the Baltic Dry Index, FX rates, and World Bank commodity data — linked straight to the official sources.', href:'market-index-hub.html', kw:'pmi lme steel price baltic dry index commodity'},

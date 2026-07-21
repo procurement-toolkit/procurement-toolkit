@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="How to look up HS/HTS codes and check tariff rates correctly. Direct links to official customs lookup tools by country, how HS code structure works, and the most common classification mistakes.">
+<meta name="keywords" content="HS code lookup, HTS code search, tariff classification, USITC HTS search, harmonized tariff schedule">
+<title>HS Code Lookup &amp; Tariff Rate Guide — CBM Lab</title>
+<link rel="icon" href="../favicon.ico" sizes="any">
+<link rel="icon" href="../favicon.ico" type="image/x-icon">
+<link rel="apple-touch-icon" href="../apple-touch-icon.png">
+<link rel="canonical" href="https://procurement-toolkit-eight.vercel.app/en/hs-code-guide.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="CBM Lab">
+<meta property="og:locale" content="en_US">
+<meta property="og:title" content="HS Code Lookup &amp; Tariff Rate Guide — CBM Lab">
+<meta property="og:description" content="How to look up HS/HTS codes and check tariff rates correctly. Direct links to official customs lookup tools by country, how HS code structure works, and the most common classification mistakes.">
+<meta property="og:url" content="https://procurement-toolkit-eight.vercel.app/en/hs-code-guide.html">
+<meta property="og:image" content="https://procurement-toolkit-eight.vercel.app/assets/hero-team.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="HS Code Lookup &amp; Tariff Rate Guide — CBM Lab">
+<meta name="twitter:description" content="How to look up HS/HTS codes and check tariff rates correctly. Direct links to official customs lookup tools by country, how HS code structure works, and the most common classification mistakes.">
+<meta name="twitter:image" content="https://procurement-toolkit-eight.vercel.app/assets/hero-team.jpg">
+
+<link rel="alternate" hreflang="ko" href="https://procurement-toolkit-eight.vercel.app/hs-code-guide.html">
+<link rel="alternate" hreflang="en" href="https://procurement-toolkit-eight.vercel.app/en/hs-code-guide.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@800;900&display=swap" rel="stylesheet">
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  :root{--accent:#2563EB;--accent-light:#DBEAFE;--accent-dark:#1D4ED8;--slate-50:#F8FAFC;--slate-100:#F1F5F9;--slate-200:#E2E8F0;--slate-300:#CBD5E1;--slate-400:#94A3B8;--slate-500:#64748B;--slate-600:#475569;--slate-700:#334155;--slate-800:#1E293B;--slate-900:#0F172A;--warn:#B45309;--warn-light:#FEF3C7;--radius:8px;--radius-lg:12px;--shadow-sm:0 1px 2px rgba(0,0,0,.05);font-family:'Inter','Pretendard',system-ui,-apple-system,sans-serif}
+  body{background:var(--slate-50);color:var(--slate-800);font-size:14px;line-height:1.65}
+  header{background:#fff;border-bottom:1px solid var(--slate-200)}
+  .header-inner{max-width:1000px;margin:0 auto;padding:16px 24px;display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}
+  .logo-mark{font-size:20px;font-weight:800;color:var(--slate-900);text-decoration:none;font-family:'Space Grotesk','Pretendard',sans-serif;letter-spacing:-0.4px;}
+  .nav-right{display:flex;align-items:center;gap:10px}
+  .nav-link{font-size:13px;font-weight:600;color:var(--slate-500);text-decoration:none;padding:7px 12px;border-radius:6px}
+  .nav-link:hover{background:var(--slate-100)}
+  .lang-switch{font-size:12px;font-weight:700;color:var(--accent);text-decoration:none;padding:6px 12px;border:1px solid var(--accent-light);border-radius:999px;background:var(--accent-light)}
+  .lang-switch:hover{background:#BFDBFE}
+
+  .hero{background:#fff;border-bottom:1px solid var(--slate-200);padding:28px 24px 24px}
+  .hero-inner{max-width:1000px;margin:0 auto}
+  .hero h1{font-size:24px;font-weight:700;color:var(--slate-900);margin-bottom:6px;letter-spacing:-0.3px}
+  .hero p{font-size:14px;color:var(--slate-500);max-width:700px}
+  .hero-tags{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}
+  .tag{background:var(--slate-100);color:var(--slate-600);font-size:11px;font-weight:500;padding:3px 10px;border-radius:4px;border:1px solid var(--slate-200)}
+
+  .main{max-width:1000px;margin:0 auto;padding:28px 24px 60px}
+  .card{background:#fff;border:1px solid var(--slate-200);border-radius:var(--radius-lg);box-shadow:var(--shadow-sm);margin-bottom:20px}
+  .card-header{padding:16px 20px;border-bottom:1px solid var(--slate-100)}
+  .card-title{font-size:14.5px;font-weight:700;color:var(--slate-800)}
+  .card-body{padding:20px}
+  .card-body p{font-size:13.5px;color:var(--slate-600);line-height:1.75;margin-bottom:12px}
+  .card-body p:last-child{margin-bottom:0}
+
+  .official-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .official-card{border:1px solid var(--slate-200);border-radius:10px;padding:16px 18px;display:flex;flex-direction:column;gap:8px}
+  .official-card h3{font-size:14px;font-weight:800;color:var(--slate-900)}
+  .official-card p{font-size:12.5px;color:var(--slate-500);line-height:1.6;margin:0;flex:1}
+  .official-link{display:inline-flex;align-items:center;gap:6px;background:var(--accent);color:#fff;font-size:12.5px;font-weight:700;padding:9px 14px;border-radius:7px;text-decoration:none;align-self:flex-start}
+
+  .step-list{counter-reset:step}
+  .step-item{display:flex;gap:14px;padding:13px 0;border-bottom:1px solid var(--slate-100)}
+  .step-item:last-child{border-bottom:none}
+  .step-num{counter-increment:step;flex-shrink:0;width:26px;height:26px;border-radius:50%;background:var(--accent);color:#fff;font-size:12.5px;font-weight:800;display:flex;align-items:center;justify-content:center}
+  .step-num::before{content:counter(step)}
+  .step-body h4{font-size:13.5px;font-weight:700;color:var(--slate-800);margin-bottom:3px}
+  .step-body p{font-size:12.5px;color:var(--slate-600);line-height:1.65}
+
+  .mistake-item{border:1px solid #FCA5A5;background:#FEF2F2;border-radius:10px;padding:14px 16px;margin-bottom:10px}
+  .mistake-item:last-child{margin-bottom:0}
+  .mistake-title{font-size:13px;font-weight:800;color:#B91C1C;margin-bottom:5px}
+  .mistake-item p{font-size:12.5px;color:#7F1D1D;line-height:1.65;margin:0}
+
+  .warn-box{background:var(--warn-light);border:1px solid #FDE68A;border-radius:var(--radius);padding:12px 14px;font-size:12.5px;color:#78350F;margin-bottom:14px;line-height:1.65}
+
+  .faq-item{border-bottom:1px solid var(--slate-100);padding:12px 0}
+  .faq-item:last-child{border-bottom:none}
+  .faq-item summary{cursor:pointer;font-weight:700;font-size:13px;color:var(--slate-800);list-style:none;outline:none}
+  .faq-item summary::-webkit-details-marker{display:none}
+  .faq-item summary::before{content:'Q. ';color:var(--accent)}
+  .faq-item p{margin-top:8px;font-size:12.5px;color:var(--slate-600);line-height:1.7;padding-left:2px}
+
+  .cta-box{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;background:var(--slate-900);border-radius:var(--radius-lg);padding:20px 22px;color:#fff;margin-bottom:18px}
+  .cta-box h4{font-size:15px;font-weight:800;margin-bottom:4px}
+  .cta-box p{font-size:12.5px;color:var(--slate-400)}
+  .cta-btn{background:var(--accent);color:#fff;font-size:13px;font-weight:700;padding:10px 18px;border-radius:8px;text-decoration:none;white-space:nowrap}
+
+  .ad-area-main{max-width:1000px;margin:24px auto 0;padding:0 24px 28px}
+  .ad-main-box{border:1px dashed #CBD5E1;border-radius:10px;background:#fff;height:90px;display:flex;flex-direction:column;align-items:center;justify-content:center;color:var(--slate-400);font-size:12px;gap:4px}
+  .ad-main-box strong{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:#94A3B8}
+  .faq-wrap{max-width:900px;margin:20px auto 0;padding:0 24px}
+
+  footer{background:#0F172A;color:#94A3B8;padding:24px;font-size:12px}
+  .footer-inner{max-width:1000px;margin:0 auto;display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
+  .footer-logo{font-size:15px;font-weight:800;color:#fff;font-family:'Space Grotesk','Pretendard',sans-serif;}
+  .footer-link{color:#94A3B8;text-decoration:none;font-size:11px;margin-right:14px}
+
+  @media print{.ad-area-main,.ad-main-box,header,footer{display:none !important}}
+  @media (max-width:640px){.official-grid{grid-template-columns:1fr}.ad-area-main{padding:0 16px 20px}.faq-wrap{padding:0 16px}.cta-box{flex-direction:column;align-items:flex-start}}
+</style>
+
+<script src="https://cdn.amplitude.com/script/d4aa9301e01f4600b5eeb018e160aa7c.js"></script>
+<script>
+  window.amplitude.init("d4aa9301e01f4600b5eeb018e160aa7c", { fetchRemoteConfig: true, autocapture: true });
+</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-W1YBL5BGGK"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-W1YBL5BGGK');
+</script>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute;" aria-hidden="true">
+  <defs>
+    <linearGradient id="cbmGradH" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#14B8A6"/><stop offset="100%" stop-color="#0B2A4A"/></linearGradient>
+    <linearGradient id="cbmGradF" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#2DD4BF"/><stop offset="100%" stop-color="#5B9EFF"/></linearGradient>
+  </defs>
+</svg>
+<header><div class="header-inner">
+  <a href="index.html" class="logo-mark"><svg width="26" height="26" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align:middle;margin-right:8px;flex-shrink:0;"><path d="M20 2.5L36.5 11.5V28.5L20 37.5L3.5 28.5V11.5L20 2.5Z" stroke="url(#cbmGradH)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M20 2.5V20M20 20L36.5 11.5M20 20L3.5 11.5" stroke="url(#cbmGradH)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/></svg><span style="font-family:'Montserrat','Space Grotesk',sans-serif;font-weight:800;letter-spacing:-1.1px;background:linear-gradient(90deg,#14B8A6 0%,#1E7A8C 45%,#0B2A4A 100%);-webkit-background-clip:text;background-clip:text;color:transparent;">CBMLab</span></a>
+  <div class="nav-right">
+    <a href="index.html" class="nav-link">← All Tools</a>
+    <a href="../hs-code-guide.html" class="lang-switch">KOR</a>
+  </div>
+</div></header>
+
+<section class="hero"><div class="hero-inner">
+  <h1>HS Code Lookup &amp; Tariff Rate Guide</h1>
+  <p>An incorrect HS code can lead to overpaid or underpaid duty, customs delays, or an assessment down the line. Instead of guessing a code or rate ourselves, we link you directly to <strong>official customs authority lookup tools</strong> and show you how to search them accurately.</p>
+  <div class="hero-tags"><span class="tag">Tariff Classification</span><span class="tag">Official Data Sources</span><span class="tag">Duty Rate Lookup</span></div>
+</div></section>
+
+<div class="main">
+
+  <div class="warn-box">⚠ HS classification is difficult enough that even dedicated AI classification companies plateau around 70-80% accuracy. This page doesn't attempt to classify products itself — it links you directly to <strong>official customs authority data</strong>. For high-value transactions or binding decisions, always consult a licensed customs broker.</div>
+
+  <div class="card">
+    <div class="card-header"><div class="card-title">Official Lookup Tools by Country</div></div>
+    <div class="card-body">
+      <div class="official-grid">
+        <div class="official-card">
+          <h3>🇰🇷 South Korea — CLIP (Customs Law Information Portal)</h3>
+          <p>The official classification and tariff schedule search system run directly by Korea Customs Service, covering HS code search, tariff schedules, and international HS case records.</p>
+          <a class="official-link" href="https://unipass.customs.go.kr/clip/index.do" target="_blank" rel="noopener">Open CLIP →</a>
+        </div>
+        <div class="official-card">
+          <h3>🇺🇸 United States — USITC HTS Search</h3>
+          <p>The official Harmonized Tariff Schedule (HTS) search tool run by the U.S. International Trade Commission. Look up 10-digit HTS codes along with general and preferential duty rates.</p>
+          <a class="official-link" href="https://hts.usitc.gov/search" target="_blank" rel="noopener">Open USITC HTS Search →</a>
+        </div>
+      </div>
+      <div class="warn-box" style="margin-top:14px;margin-bottom:0;">💡 Beyond these two, most countries' customs authorities run their own free official lookup systems (searching "[country name] customs tariff search" will usually find it). Prefer official government domains (.gov, etc.) over third-party sites.</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header"><div class="card-title">How HS Code Structure Works</div></div>
+    <div class="card-body">
+      <p>An HS code consists of a <strong>6-digit international code</strong> set by the World Customs Organization (WCO), with each country adding further digits for its own statistical and tariff purposes.</p>
+      <p><strong>Example: 8471.30</strong> (portable computers, the first 6 digits are globally standardized)<br>
+      → The US extends this to a <strong>10-digit HTS code</strong><br>
+      → The EU uses an 8-digit CN (Combined Nomenclature) code<br>
+      → South Korea uses a 10-digit HSK (HS of Korea) code</p>
+      <p>So matching the first 6 digits gets you the same broad international category, but you need the destination country's full-length code to determine the exact applicable duty rate.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header"><div class="card-title">3 Steps to a More Accurate Search</div></div>
+    <div class="card-body">
+      <div class="step-list">
+        <div class="step-item">
+          <div class="step-num"></div>
+          <div class="step-body"><h4>Search with product + material + function</h4><p>Instead of just "bag," search "leather handbag" or "polyester backpack" — including material and intended use narrows the results significantly.</p></div>
+        </div>
+        <div class="step-item">
+          <div class="step-num"></div>
+          <div class="step-body"><h4>Cross-check with past classification cases</h4><p>Many official portals (like Korea's CLIP) let you search how similar products were actually classified in past declarations — checking this improves accuracy.</p></div>
+        </div>
+        <div class="step-item">
+          <div class="step-num"></div>
+          <div class="step-body"><h4>Request a binding ruling if it's ambiguous</h4><p>For genuinely ambiguous products, most customs authorities (like CBP's ruling requests, or Korea's pre-classification review) let you request an official, binding classification determination — usually with a fee and processing time.</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header"><div class="card-title">Common Mistakes</div></div>
+    <div class="card-body">
+      <div class="mistake-item">
+        <div class="mistake-title">Misclassifying by intended use</div>
+        <p>The same "glass cup" can fall under a different code depending on whether it's decorative or for kitchen use.</p>
+      </div>
+      <div class="mistake-item">
+        <div class="mistake-title">Misjudging material composition</div>
+        <p>Thinking a bag is genuine leather when it's actually synthetic (or vice versa) can change the duty rate enough to trigger a retroactive assessment.</p>
+      </div>
+      <div class="mistake-item">
+        <div class="mistake-title">Not verifying the tariff-shift rule for FTA claims</div>
+        <p>Claiming a preferential FTA rate requires the HS code to actually shift as a result of processing — skipping this check is a common reason exporters get flagged in a post-entry audit.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="cta-box">
+    <div><h4>Claiming an FTA rate? You also need to meet the origin criteria</h4><p>Calculate Regional Value Content (RVC) using the build-up or build-down method.</p></div>
+    <a href="rvc-calculator.html" class="cta-btn">Open RVC Calculator →</a>
+  </div>
+
+</div>
+
+<!-- AD -->
+<div class="ad-area-main" role="complementary" aria-label="Advertisement area">
+  <div class="ad-main-box"><strong>Advertisement</strong>Google AdSense — 728 × 90 leaderboard</div>
+</div>
+
+<div class="faq-wrap">
+  <div class="card">
+    <div class="card-header"><div class="card-title">Frequently Asked Questions</div></div>
+    <div class="card-body">
+      <details class="faq-item"><summary>What happens if I misclassify an HS code?</summary><p>You could overpay or underpay duty, face customs delays, or get flagged in a post-entry audit with penalties and retroactive assessment. For ambiguous products, requesting a binding ruling in advance is the safer path.</p></details>
+      <details class="faq-item"><summary>Are export codes different from import codes?</summary><p>Yes, this can vary by country. The US, for example, uses a 10-digit HTS code for imports and a separate 10-digit Schedule B code for exports, though the first 6 digits are identical.</p></details>
+      <details class="faq-item"><summary>Does the duty rate differ by country even for the same HS code?</summary><p>Yes. Even with matching first-6-digit codes, the actual applicable duty rate can vary significantly depending on the importing country, country of origin, and whether an FTA applies. Always check the destination country's own tariff schedule separately.</p></details>
+    </div>
+  </div>
+</div>
+
+<footer><div class="footer-inner">
+  <div class="footer-logo"><svg width="24" height="24" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align:middle;margin-right:9px;flex-shrink:0;"><path d="M20 2.5L36.5 11.5V28.5L20 37.5L3.5 28.5V11.5L20 2.5Z" stroke="url(#cbmGradF)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M20 2.5V20M20 20L36.5 11.5M20 20L3.5 11.5" stroke="url(#cbmGradF)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/></svg>CBM<span style="color:#2563EB;">Lab</span></div>
+  <nav><a href="index.html" class="footer-link">All Tools</a><a href="privacy.html" class="footer-link">Privacy Policy</a></nav>
+</div></footer>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {"@type":"Question","name":"What happens if I misclassify an HS code?","acceptedAnswer":{"@type":"Answer","text":"You could overpay or underpay duty, face customs delays, or get flagged in a post-entry audit with penalties. Requesting a binding ruling in advance is safer for ambiguous products."}},
+    {"@type":"Question","name":"Are export codes different from import codes?","acceptedAnswer":{"@type":"Answer","text":"This can vary by country. The US uses a 10-digit HTS code for imports and a separate 10-digit Schedule B code for exports, with identical first 6 digits."}},
+    {"@type":"Question","name":"Does the duty rate differ by country for the same HS code?","acceptedAnswer":{"@type":"Answer","text":"Yes, even with matching first 6 digits, the actual duty rate can vary by importing country, origin, and FTA status, so the destination country's tariff schedule must be checked separately."}}
+  ]
+}
+</script>
+</body>
+</html>

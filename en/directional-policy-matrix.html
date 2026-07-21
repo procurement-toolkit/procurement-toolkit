@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Free interactive Directional Policy Matrix (DPM) tool for procurement. Plot suppliers or categories on a 3x3 grid by supply market attractiveness and your relative bargaining strength to get an Invest, Selective, or Harvest resource allocation policy.">
+<meta name="keywords" content="directional policy matrix, DPM procurement, GE McKinsey matrix, supply market attractiveness, nine box matrix procurement">
+<title>Directional Policy Matrix (DPM) Tool — CBM Lab</title>
+<link rel="icon" href="../favicon.ico" sizes="any">
+<link rel="icon" href="../favicon.ico" type="image/x-icon">
+<link rel="apple-touch-icon" href="../apple-touch-icon.png">
+<link rel="canonical" href="https://procurement-toolkit-eight.vercel.app/en/directional-policy-matrix.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="CBM Lab">
+<meta property="og:locale" content="en_US">
+<meta property="og:title" content="Directional Policy Matrix (DPM) Tool — CBM Lab">
+<meta property="og:description" content="Free interactive Directional Policy Matrix (DPM) tool for procurement. Plot suppliers or categories on a 3x3 grid by supply market attractiveness and your relative bargaining strength to get an Invest, Selective, or Harvest resource allocation policy.">
+<meta property="og:url" content="https://procurement-toolkit-eight.vercel.app/en/directional-policy-matrix.html">
+<meta property="og:image" content="https://procurement-toolkit-eight.vercel.app/assets/hero-team.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Directional Policy Matrix (DPM) Tool — CBM Lab">
+<meta name="twitter:description" content="Free interactive Directional Policy Matrix (DPM) tool for procurement. Plot suppliers or categories on a 3x3 grid by supply market attractiveness and your relative bargaining strength to get an Invest, Selective, or Harvest resource allocation policy.">
+<meta name="twitter:image" content="https://procurement-toolkit-eight.vercel.app/assets/hero-team.jpg">
+
+<link rel="alternate" hreflang="en" href="https://procurement-toolkit-eight.vercel.app/en/directional-policy-matrix.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@800;900&display=swap" rel="stylesheet">
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  :root{--accent:#2563EB;--accent-light:#DBEAFE;--accent-dark:#1D4ED8;--slate-50:#F8FAFC;--slate-100:#F1F5F9;--slate-200:#E2E8F0;--slate-300:#CBD5E1;--slate-400:#94A3B8;--slate-500:#64748B;--slate-600:#475569;--slate-700:#334155;--slate-800:#1E293B;--slate-900:#0F172A;--success:#0F766E;--success-light:#CCFBF1;--warning:#B45309;--warning-light:#FEF3C7;--danger:#DC2626;--danger-light:#FEE2E2;--radius:8px;--radius-lg:12px;--shadow-sm:0 1px 2px rgba(0,0,0,.05);font-family:'Inter','Pretendard',system-ui,-apple-system,sans-serif}
+  body{background:var(--slate-50);color:var(--slate-800);font-size:14px;line-height:1.6}
+  header{background:#fff;border-bottom:1px solid var(--slate-200)}
+  .header-inner{max-width:1300px;margin:0 auto;padding:16px 24px;display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}
+  .logo-mark{font-size:20px;font-weight:800;color:var(--slate-900);text-decoration:none;font-family:'Space Grotesk','Inter',sans-serif;letter-spacing:-0.4px;}
+  .nav-link{font-size:13px;font-weight:600;color:var(--slate-500);text-decoration:none;padding:7px 12px;border-radius:6px}
+  .nav-link:hover{background:var(--slate-100)}
+
+  .hero{background:#fff;border-bottom:1px solid var(--slate-200);padding:28px 24px 24px}
+  .hero-inner{max-width:1300px;margin:0 auto}
+  .hero h1{font-size:24px;font-weight:700;color:var(--slate-900);margin-bottom:6px;letter-spacing:-0.3px}
+  .hero p{font-size:14px;color:var(--slate-500);max-width:740px}
+  .hero-tags{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}
+  .tag{background:var(--slate-100);color:var(--slate-600);font-size:11px;font-weight:500;padding:3px 10px;border-radius:4px;border:1px solid var(--slate-200)}
+
+  .main{max-width:1300px;margin:0 auto;padding:28px 24px 60px;display:grid;grid-template-columns:1fr 380px;gap:24px;align-items:start}
+  .card{background:#fff;border:1px solid var(--slate-200);border-radius:var(--radius-lg);box-shadow:var(--shadow-sm);margin-bottom:20px}
+  .card-header{padding:16px 20px;border-bottom:1px solid var(--slate-100);display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+  .card-title{font-size:14px;font-weight:600;color:var(--slate-800)}
+  .card-body{padding:20px}
+
+  .grid-wrap{display:flex;gap:8px;align-items:stretch}
+  .y-axis-label{writing-mode:vertical-rl;transform:rotate(180deg);font-size:12px;font-weight:700;color:var(--slate-500);text-align:center;white-space:nowrap;padding:8px 0}
+  .grid-col{flex:1;display:flex;flex-direction:column;gap:0}
+  .dpm-grid{display:grid;grid-template-columns:1fr 1fr 1fr;grid-template-rows:1fr 1fr 1fr;gap:6px;aspect-ratio:1.15/1;width:100%}
+  .dpm-cell{border-radius:8px;padding:10px;display:flex;flex-direction:column;gap:4px;overflow:hidden}
+  .dpm-cell.invest{background:var(--success-light);border:1px solid #6EE7B7}
+  .dpm-cell.selective{background:var(--warning-light);border:1px solid #FDE68A}
+  .dpm-cell.harvest{background:var(--danger-light);border:1px solid #FCA5A5}
+  .cell-label{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.3px}
+  .dpm-cell.invest .cell-label{color:var(--success)}
+  .dpm-cell.selective .cell-label{color:var(--warning)}
+  .dpm-cell.harvest .cell-label{color:var(--danger)}
+  .cell-items{display:flex;flex-wrap:wrap;gap:4px;flex:1;align-content:flex-start}
+  .cell-chip{background:rgba(255,255,255,.75);border-radius:5px;padding:2px 6px;font-size:10.5px;font-weight:600;color:var(--slate-700);cursor:pointer;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .cell-chip:hover{background:#fff}
+  .x-axis-labels{display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin-top:6px}
+  .x-axis-labels span{text-align:center;font-size:11px;font-weight:700;color:var(--slate-500)}
+
+  .field-label{font-size:11.5px;font-weight:600;color:var(--slate-600);margin-bottom:5px;display:block}
+  .field-sub{font-size:10.5px;color:var(--slate-400);margin-bottom:5px}
+  .inp{width:100%;border:1px solid var(--slate-200);border-radius:8px;padding:9px 10px;font-size:13px;font-family:inherit}
+  .inp:focus{outline:none;border-color:var(--accent)}
+  .range-value{font-size:11.5px;color:var(--slate-500);margin-top:2px;text-align:right}
+  .btn-add{width:100%;padding:10px;border:none;border-radius:8px;background:var(--accent);color:#fff;font-size:13px;font-weight:700;cursor:pointer;margin-top:6px}
+  .btn-add:hover{background:var(--accent-dark)}
+  .btn-cancel-edit{width:100%;padding:8px;border:1px solid var(--slate-200);border-radius:8px;background:#fff;color:var(--slate-500);font-size:12px;font-weight:600;cursor:pointer;margin-top:6px;display:none}
+
+  .item-row{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--slate-100)}
+  .item-row:last-child{border-bottom:none}
+  .item-band{width:9px;height:9px;border-radius:50%;flex-shrink:0}
+  .item-band.invest{background:var(--success)}
+  .item-band.selective{background:var(--warning)}
+  .item-band.harvest{background:var(--danger)}
+  .item-name{flex:1;font-size:13px;font-weight:600;color:var(--slate-800);cursor:pointer}
+  .item-policy{font-size:11px;font-weight:700;text-transform:uppercase}
+  .item-policy.invest{color:var(--success)}
+  .item-policy.selective{color:var(--warning)}
+  .item-policy.harvest{color:var(--danger)}
+  .item-del{width:24px;height:24px;border:1px solid var(--slate-200);border-radius:6px;background:#fff;color:var(--slate-400);cursor:pointer;font-size:12px}
+  .item-del:hover{border-color:var(--danger);color:var(--danger)}
+
+  .notice-box{background:var(--accent-light);border:1px solid #BFDBFE;border-radius:var(--radius);padding:10px 14px;font-size:12px;color:#1E40AF;margin-top:14px;line-height:1.6}
+
+  .faq-item{border-bottom:1px solid var(--slate-100);padding:12px 0}
+  .faq-item:last-child{border-bottom:none}
+  .faq-item summary{cursor:pointer;font-weight:700;font-size:13px;color:var(--slate-800);list-style:none;outline:none}
+  .faq-item summary::-webkit-details-marker{display:none}
+  .faq-item summary::before{content:'Q. ';color:var(--accent)}
+  .faq-item p{margin-top:8px;font-size:12.5px;color:var(--slate-600);line-height:1.7;padding-left:2px}
+
+  .ad-area-main{max-width:1300px;margin:0 auto;padding:0 24px 28px}
+  .ad-main-box{border:1px dashed #CBD5E1;border-radius:10px;background:#fff;height:90px;display:flex;flex-direction:column;align-items:center;justify-content:center;color:var(--slate-400);font-size:12px;gap:4px}
+  .ad-main-box strong{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:#94A3B8}
+  .faq-wrap{max-width:1100px;margin:20px auto 0;padding:0 24px}
+
+  footer{background:#0F172A;color:#94A3B8;padding:24px;font-size:12px}
+  .footer-inner{max-width:1300px;margin:0 auto;display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
+  .footer-logo{font-size:15px;font-weight:800;color:#fff;font-family:'Space Grotesk','Inter',sans-serif;}
+  .footer-link{color:#94A3B8;text-decoration:none;font-size:11px;margin-right:14px}
+
+  @media print{.ad-area-main,.ad-main-box,header,footer{display:none !important}.main{grid-template-columns:1fr}}
+  @media (max-width:900px){.main{grid-template-columns:1fr}}
+  @media (max-width:640px){.ad-area-main{padding:0 16px 20px}.faq-wrap{padding:0 16px}}
+</style>
+
+<script src="https://cdn.amplitude.com/script/d4aa9301e01f4600b5eeb018e160aa7c.js"></script>
+<script>
+  window.amplitude.init("d4aa9301e01f4600b5eeb018e160aa7c", { fetchRemoteConfig: true, autocapture: true });
+</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-W1YBL5BGGK"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-W1YBL5BGGK');
+</script>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute;" aria-hidden="true">
+  <defs>
+    <linearGradient id="cbmGradH" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#14B8A6"/><stop offset="100%" stop-color="#0B2A4A"/></linearGradient>
+    <linearGradient id="cbmGradF" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#2DD4BF"/><stop offset="100%" stop-color="#5B9EFF"/></linearGradient>
+  </defs>
+</svg>
+<header><div class="header-inner">
+  <a href="index.html" class="logo-mark"><svg width="26" height="26" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align:middle;margin-right:8px;flex-shrink:0;"><path d="M20 2.5L36.5 11.5V28.5L20 37.5L3.5 28.5V11.5L20 2.5Z" stroke="url(#cbmGradH)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M20 2.5V20M20 20L36.5 11.5M20 20L3.5 11.5" stroke="url(#cbmGradH)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/></svg><span style="font-family:'Montserrat','Space Grotesk',sans-serif;font-weight:800;letter-spacing:-1.1px;background:linear-gradient(90deg,#14B8A6 0%,#1E7A8C 45%,#0B2A4A 100%);-webkit-background-clip:text;background-clip:text;color:transparent;">CBMLab</span></a>
+  <a href="index.html" class="nav-link">← All Tools</a>
+</div></header>
+
+<section class="hero"><div class="hero-inner">
+  <h1>Directional Policy Matrix (DPM) Tool</h1>
+  <p>A 3x3 extension of the Kraljic Matrix (also known as the GE-McKinsey nine-box matrix, adapted for procurement). Plot suppliers or categories by <strong>Supply Market Attractiveness</strong> and <strong>Your Relative Strength</strong> to get a clear Invest, Selective, or Harvest resource allocation policy.</p>
+  <div class="hero-tags"><span class="tag">Nine-Box Matrix</span><span class="tag">GE-McKinsey Adapted</span><span class="tag">Resource Allocation</span></div>
+</div></section>
+
+<div class="main">
+  <section>
+    <div class="card">
+      <div class="card-header"><div class="card-title">The Matrix</div></div>
+      <div class="card-body">
+        <div class="grid-wrap">
+          <div class="y-axis-label">Supply Market Attractiveness →</div>
+          <div class="grid-col">
+            <div class="dpm-grid" id="dpmGrid"></div>
+            <div class="x-axis-labels"><span>Low</span><span>Medium</span><span>High</span></div>
+          </div>
+        </div>
+        <div class="notice-box">💡 Click any item chip in the grid to load it back into the form for editing. Cells are colored by policy zone: <b style="color:var(--success);">green = Invest/Grow</b>, <b style="color:var(--warning);">amber = Selective/Hold</b>, <b style="color:var(--danger);">red = Harvest/Divest</b>.</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header"><div class="card-title">All Items (<span id="itemCount">0</span>)</div></div>
+      <div class="card-body" id="itemList"></div>
+    </div>
+  </section>
+
+  <aside>
+    <div class="card">
+      <div class="card-header"><div class="card-title" id="formTitle">Add a Supplier or Category</div></div>
+      <div class="card-body">
+        <div style="margin-bottom:12px;">
+          <label class="field-label">Name</label>
+          <input class="inp" id="itemName" placeholder="e.g. Regional Steel Supplier">
+        </div>
+        <div style="margin-bottom:12px;">
+          <label class="field-label">Supply Market Attractiveness (1–10)</label>
+          <div class="field-sub">Consider: number of qualified suppliers, market growth, technology pace, entry barriers, supplier profitability</div>
+          <input type="range" id="attractInput" min="1" max="10" step="0.1" value="5" oninput="document.getElementById('attractVal').textContent=parseFloat(this.value).toFixed(1)">
+          <div class="range-value">Value: <span id="attractVal">5.0</span></div>
+        </div>
+        <div style="margin-bottom:12px;">
+          <label class="field-label">Your Relative Strength (1–10)</label>
+          <div class="field-sub">Consider: your share of the supplier's business, your technical capability, switching cost, alternative sourcing options</div>
+          <input type="range" id="strengthInput" min="1" max="10" step="0.1" value="5" oninput="document.getElementById('strengthVal').textContent=parseFloat(this.value).toFixed(1)">
+          <div class="range-value">Value: <span id="strengthVal">5.0</span></div>
+        </div>
+        <button class="btn-add" id="submitBtn" onclick="submitForm()">+ Add to Matrix</button>
+        <button class="btn-cancel-edit" id="cancelEditBtn" onclick="cancelEdit()">Cancel edit</button>
+      </div>
+    </div>
+
+    <div class="card" id="strategyCard" style="display:none;">
+      <div class="card-header"><div class="card-title">Recommended Policy</div></div>
+      <div class="card-body" id="strategyBody"></div>
+    </div>
+
+    <div class="card">
+      <div class="card-header"><div class="card-title">The 3 Policy Zones</div></div>
+      <div class="card-body" style="font-size:11.5px;color:var(--slate-600);line-height:1.7;">
+        <p style="margin-bottom:8px;"><b style="color:var(--success);">Invest / Grow:</b> Attractive market, strong relative position. Commit resources, build the relationship, consider joint development.</p>
+        <p style="margin-bottom:8px;"><b style="color:var(--warning);">Selective / Hold:</b> Mixed signals \u2014 either the market is average or your position is average. Invest selectively, maintain the relationship, watch for shifts.</p>
+        <p><b style="color:var(--danger);">Harvest / Divest:</b> Unattractive market and/or weak position. Minimize new commitment, simplify, or plan an exit.</p>
+      </div>
+    </div>
+  </aside>
+</div>
+
+<div style="max-width:1300px;margin:0 auto;padding:0 24px 30px;">
+  <div class="notice-box" style="margin-bottom:18px;">
+    🔄 <strong>Use this alongside your other supplier tools.</strong> The <a href="kraljic-matrix.html" style="color:#1E40AF;font-weight:700;">Kraljic Matrix</a> is the simpler 2x2 version of this same idea. Check the <a href="supplier-preferencing-matrix.html" style="color:#1E40AF;font-weight:700;">Supplier Preferencing Matrix</a> for how suppliers view you back, or the <a href="supplier-risk-matrix.html" style="color:#1E40AF;font-weight:700;">Supplier Risk Matrix</a> for continuity risk.
+  </div>
+  <div class="card">
+    <div class="card-header"><div class="card-title">Why Use a Directional Policy Matrix?</div></div>
+    <div class="card-body" style="font-size:12.5px;color:var(--slate-600);line-height:1.7;">
+      <p>The Kraljic Matrix is a solid starting point, but its 2x2 grid forces every category into one of only four boxes, which can feel too coarse for a large or complex portfolio. The Directional Policy Matrix (a nine-box grid popularized by Shell and later refined by GE and McKinsey) uses the same underlying logic with finer granularity, letting you distinguish a category that's borderline-attractive from one that's clearly so, and plan resource allocation with more nuance.</p>
+      <p style="margin-top:8px;"><b>How to use it in practice:</b> Score each supplier or category on both axes using multiple weighted factors rather than a single guess, plot it, and use the resulting zone (Invest, Selective, or Harvest) to set your negotiation posture and time investment. Your data is saved automatically in this browser only — nothing is sent to a server.</p>
+    </div>
+  </div>
+</div>
+
+<!-- AD -->
+<div class="ad-area-main" role="complementary" aria-label="Advertisement area">
+  <div class="ad-main-box"><strong>Advertisement</strong>Google AdSense — 728 × 90 leaderboard</div>
+</div>
+
+<div class="faq-wrap">
+  <div class="card">
+    <div class="card-header"><div class="card-title">Frequently Asked Questions</div></div>
+    <div class="card-body">
+      <details class="faq-item"><summary>How is this different from the Kraljic Matrix?</summary><p>The Kraljic Matrix uses a simpler 2x2 grid (4 zones) based on supply risk and profit impact. The Directional Policy Matrix uses a finer 3x3 grid (9 cells, collapsed into 3 policy zones) based on supply market attractiveness and your relative strength, giving more nuanced positioning for a large portfolio.</p></details>
+      <details class="faq-item"><summary>What factors go into "Supply Market Attractiveness"?</summary><p>Common factors include the number of qualified suppliers, the market's growth rate, the pace of technological change, barriers to entry for new suppliers, and the profitability of suppliers in that market. Score these as a weighted composite rather than a single guess.</p></details>
+      <details class="faq-item"><summary>What if an item lands exactly on a cell boundary?</summary><p>Treat scores near a boundary as a signal to look more closely rather than a precise verdict — the matrix is a planning aid, not an exact formula. When in doubt, favor the more conservative (lower) zone for resource commitment decisions.</p></details>
+    </div>
+  </div>
+</div>
+
+<footer><div class="footer-inner">
+  <div class="footer-logo"><svg width="24" height="24" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align:middle;margin-right:9px;flex-shrink:0;"><path d="M20 2.5L36.5 11.5V28.5L20 37.5L3.5 28.5V11.5L20 2.5Z" stroke="url(#cbmGradF)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M20 2.5V20M20 20L36.5 11.5M20 20L3.5 11.5" stroke="url(#cbmGradF)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/></svg>CBM<span style="color:#2563EB;">Lab</span></div>
+  <nav><a href="index.html" class="footer-link">All Tools</a><a href="privacy.html" class="footer-link">Privacy Policy</a></nav>
+</div></footer>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {"@type":"Question","name":"How is this different from the Kraljic Matrix?","acceptedAnswer":{"@type":"Answer","text":"The Kraljic Matrix uses a simpler 2x2 grid based on supply risk and profit impact. The Directional Policy Matrix uses a finer 3x3 grid based on supply market attractiveness and relative strength, giving more nuanced positioning."}},
+    {"@type":"Question","name":"What factors go into Supply Market Attractiveness?","acceptedAnswer":{"@type":"Answer","text":"Common factors include the number of qualified suppliers, market growth rate, pace of technological change, entry barriers, and supplier profitability."}},
+    {"@type":"Question","name":"What if an item lands exactly on a cell boundary?","acceptedAnswer":{"@type":"Answer","text":"Treat it as a signal to look more closely rather than a precise verdict, and favor the more conservative zone for resource commitment decisions."}}
+  ]
+}
+</script>
+
+<script>
+let items = [];
+let itemCounter = 0;
+let editingId = null;
+
+const POLICY = {
+  invest: {label:'Invest / Grow', cls:'invest', text:'This item falls in the Invest/Grow zone: an attractive supply market where you also hold a strong relative position. Commit resources here \u2014 build a deeper partnership, consider joint development or multi-year agreements, and give this relationship priority attention.'},
+  selective: {label:'Selective / Hold', cls:'selective', text:'This item falls in the Selective/Hold zone: either the market or your position is middling rather than clearly strong or weak. Invest selectively rather than aggressively, maintain the current relationship, and watch for signals that would shift it toward Invest or Harvest.'},
+  harvest: {label:'Harvest / Divest', cls:'harvest', text:'This item falls in the Harvest/Divest zone: an unattractive market and/or a weak relative position. Minimize new commitment, simplify the relationship (fewer SKUs, standard terms), and consider whether this is a candidate to exit or consolidate elsewhere.'}
+};
+
+// 3x3 zone map: [attractivenessTier][strengthTier], tiers 0=low,1=med,2=high
+// Standard GE-McKinsey diagonal banding
+const ZONE_MAP = [
+  ['harvest',   'harvest',   'selective'], // low attractiveness row (strength: low, med, high)
+  ['harvest',   'selective', 'invest'],    // medium attractiveness row
+  ['selective', 'invest',    'invest']     // high attractiveness row
+];
+
+function tierOf(v){
+  if(v <= 3.33) return 0;
+  if(v <= 6.67) return 1;
+  return 2;
+}
+
+function zoneOf(attractiveness, strength){
+  const aTier = tierOf(attractiveness);
+  const sTier = tierOf(strength);
+  return ZONE_MAP[aTier][sTier];
+}
+
+function submitForm(){
+  const name = document.getElementById('itemName').value.trim();
+  const attractiveness = parseFloat(document.getElementById('attractInput').value);
+  const strength = parseFloat(document.getElementById('strengthInput').value);
+  if(!name){ alert('Please enter a name.'); return; }
+
+  if(editingId){
+    const it = items.find(i=>i.id===editingId);
+    if(it){ it.name=name; it.attractiveness=attractiveness; it.strength=strength; }
+  } else {
+    itemCounter++;
+    items.push({id: itemCounter, name, attractiveness, strength});
+  }
+  cancelEdit();
+  save();
+  render();
+}
+
+function loadItemIntoForm(id){
+  const it = items.find(i=>i.id===id);
+  if(!it) return;
+  editingId = id;
+  document.getElementById('itemName').value = it.name;
+  document.getElementById('attractInput').value = it.attractiveness;
+  document.getElementById('attractVal').textContent = it.attractiveness.toFixed(1);
+  document.getElementById('strengthInput').value = it.strength;
+  document.getElementById('strengthVal').textContent = it.strength.toFixed(1);
+  document.getElementById('formTitle').textContent = 'Edit: ' + it.name;
+  document.getElementById('submitBtn').textContent = '✓ Update Item';
+  document.getElementById('cancelEditBtn').style.display = 'block';
+  showStrategy(it);
+  document.getElementById('formTitle').scrollIntoView({behavior:'smooth', block:'center'});
+}
+
+function cancelEdit(){
+  editingId = null;
+  document.getElementById('itemName').value = '';
+  document.getElementById('formTitle').textContent = 'Add a Supplier or Category';
+  document.getElementById('submitBtn').textContent = '+ Add to Matrix';
+  document.getElementById('cancelEditBtn').style.display = 'none';
+}
+
+function removeItem(id){
+  items = items.filter(i=>i.id!==id);
+  if(editingId===id) cancelEdit();
+  save();
+  render();
+}
+
+function showStrategy(it){
+  const zone = zoneOf(it.attractiveness, it.strength);
+  const p = POLICY[zone];
+  const card = document.getElementById('strategyCard');
+  const body = document.getElementById('strategyBody');
+  card.style.display = 'block';
+  body.innerHTML = `<div style="font-size:12px;font-weight:800;text-transform:uppercase;color:var(--slate-400);margin-bottom:6px;">${it.name}</div>
+    <div style="font-size:15px;font-weight:800;margin-bottom:8px;" class="item-policy ${p.cls}">${p.label}</div>
+    <p style="font-size:12.5px;color:var(--slate-600);line-height:1.7;">${p.text}</p>`;
+}
+
+function render(){
+  // grid: build 9 cells, rows = attractiveness tier (2=high at top), cols = strength tier (0=low,1=med,2=high)
+  const grid = document.getElementById('dpmGrid');
+  let cellsHtml = '';
+  for(let aTier=2; aTier>=0; aTier--){
+    for(let sTier=0; sTier<=2; sTier++){
+      const zone = ZONE_MAP[aTier][sTier];
+      const cellItems = items.filter(it => tierOf(it.attractiveness)===aTier && tierOf(it.strength)===sTier);
+      const chips = cellItems.map(it=>`<span class="cell-chip" onclick="loadItemIntoForm(${it.id})" title="${it.name}">${it.name}</span>`).join('');
+      cellsHtml += `<div class="dpm-cell ${zone}"><div class="cell-label">${POLICY[zone].label}</div><div class="cell-items">${chips}</div></div>`;
+    }
+  }
+  grid.innerHTML = cellsHtml;
+
+  const list = document.getElementById('itemList');
+  document.getElementById('itemCount').textContent = items.length;
+  if(items.length === 0){
+    list.innerHTML = '<p style="font-size:12.5px;color:var(--slate-400);">No items yet. Add your first supplier or category using the form on the right.</p>';
+    return;
+  }
+  const order = {invest:0, selective:1, harvest:2};
+  const sorted = [...items].sort((a,b)=> order[zoneOf(a.attractiveness,a.strength)] - order[zoneOf(b.attractiveness,b.strength)]);
+  list.innerHTML = sorted.map(it=>{
+    const zone = zoneOf(it.attractiveness, it.strength);
+    return `<div class="item-row">
+      <span class="item-band ${zone}"></span>
+      <span class="item-name" onclick="loadItemIntoForm(${it.id})">${it.name}</span>
+      <span class="item-policy ${zone}">${POLICY[zone].label}</span>
+      <button class="item-del" onclick="removeItem(${it.id})">✕</button>
+    </div>`;
+  }).join('');
+}
+
+function save(){
+  try{ localStorage.setItem('cbmlab_dpm', JSON.stringify({items, itemCounter})); }catch(e){}
+}
+function load(){
+  try{
+    const raw = localStorage.getItem('cbmlab_dpm');
+    if(raw){
+      const data = JSON.parse(raw);
+      items = data.items || [];
+      itemCounter = data.itemCounter || 0;
+    } else {
+      items = [
+        {id:++itemCounter, name:'Sole-Source Precision Machining Partner', attractiveness:8, strength:8},
+        {id:++itemCounter, name:'Commodity Packaging Supplier', attractiveness:3, strength:6},
+        {id:++itemCounter, name:'Declining Legacy Component Vendor', attractiveness:2, strength:3},
+        {id:++itemCounter, name:'Emerging Regional Distributor', attractiveness:7, strength:4}
+      ];
+    }
+  }catch(e){}
+}
+
+load();
+render();
+</script>
+</body>
+</html>
