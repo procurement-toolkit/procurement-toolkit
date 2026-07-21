@@ -3,28 +3,28 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="Free interactive Kraljic Matrix tool. Drag and drop suppliers or purchasing categories onto the matrix by supply risk and profit impact, get instant quadrant classification (Strategic, Leverage, Bottleneck, Non-Critical) and a recommended sourcing strategy for each.">
-<meta name="keywords" content="Kraljic Matrix, Kraljic Matrix tool, supplier segmentation, procurement portfolio matrix, category management, strategic sourcing matrix, vendor segmentation tool">
-<title>Kraljic Matrix Tool — Supplier &amp; Category Segmentation | CBM Lab</title>
+<meta name="description" content="Free interactive Supplier Preferencing Matrix tool. Drag and drop your suppliers by account value and attractiveness to see how they likely view you as a customer, and get a recommended relationship strategy for each quadrant.">
+<meta name="keywords" content="Supplier Preferencing Matrix, supplier preferencing model, account attractiveness, Steele and Court matrix, supplier relationship management, buyer attractiveness">
+<title>Supplier Preferencing Matrix Tool — How Suppliers See You | CBM Lab</title>
 <link rel="icon" href="../favicon.ico" sizes="any">
 <link rel="icon" href="../favicon.ico" type="image/x-icon">
 <link rel="apple-touch-icon" href="../apple-touch-icon.png">
-<link rel="canonical" href="https://procurement-toolkit-eight.vercel.app/en/kraljic-matrix.html">
+<link rel="canonical" href="https://procurement-toolkit-eight.vercel.app/en/supplier-preferencing-matrix.html">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="CBM Lab">
 <meta property="og:locale" content="en_US">
-<meta property="og:title" content="Kraljic Matrix Tool — Supplier &amp; Category Segmentation | CBM Lab">
-<meta property="og:description" content="Free interactive Kraljic Matrix tool. Drag and drop suppliers or purchasing categories onto the matrix by supply risk and profit impact, get instant quadrant classification (Strategic, Leverage, Bottleneck, Non-Critical) and a recommended sourcing strategy for each.">
-<meta property="og:url" content="https://procurement-toolkit-eight.vercel.app/en/kraljic-matrix.html">
+<meta property="og:title" content="Supplier Preferencing Matrix Tool — How Suppliers See You | CBM Lab">
+<meta property="og:description" content="Free interactive Supplier Preferencing Matrix tool. Drag and drop your suppliers by account value and attractiveness to see how they likely view you as a customer, and get a recommended relationship strategy for each quadrant.">
+<meta property="og:url" content="https://procurement-toolkit-eight.vercel.app/en/supplier-preferencing-matrix.html">
 <meta property="og:image" content="https://procurement-toolkit-eight.vercel.app/assets/hero-team.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Kraljic Matrix Tool — Supplier &amp; Category Segmentation | CBM Lab">
-<meta name="twitter:description" content="Free interactive Kraljic Matrix tool. Drag and drop suppliers or purchasing categories onto the matrix by supply risk and profit impact, get instant quadrant classification (Strategic, Leverage, Bottleneck, Non-Critical) and a recommended sourcing strategy for each.">
+<meta name="twitter:title" content="Supplier Preferencing Matrix Tool — How Suppliers See You | CBM Lab">
+<meta name="twitter:description" content="Free interactive Supplier Preferencing Matrix tool. Drag and drop your suppliers by account value and attractiveness to see how they likely view you as a customer, and get a recommended relationship strategy for each quadrant.">
 <meta name="twitter:image" content="https://procurement-toolkit-eight.vercel.app/assets/hero-team.jpg">
 
-<link rel="alternate" hreflang="en" href="https://procurement-toolkit-eight.vercel.app/en/kraljic-matrix.html">
+<link rel="alternate" hreflang="en" href="https://procurement-toolkit-eight.vercel.app/en/supplier-preferencing-matrix.html">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700;800&display=swap" rel="stylesheet">
@@ -64,14 +64,14 @@
   .quadrant{position:absolute;width:50%;height:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:10px;border:1px solid var(--slate-200);pointer-events:none}
   .quadrant .q-title{font-size:12.5px;font-weight:800;letter-spacing:.3px}
   .quadrant .q-sub{font-size:10px;color:var(--slate-500);margin-top:2px}
-  .q-strategic{top:0;right:0;background:var(--purple-light)}
-  .q-strategic .q-title{color:var(--purple)}
-  .q-leverage{top:0;left:0;background:var(--success-light)}
-  .q-leverage .q-title{color:var(--success)}
-  .q-bottleneck{bottom:0;right:0;background:var(--warning-light)}
-  .q-bottleneck .q-title{color:var(--warning)}
-  .q-noncritical{bottom:0;left:0;background:var(--slate-100)}
-  .q-noncritical .q-title{color:var(--slate-600)}
+  .q-core{top:0;right:0;background:var(--purple-light)}
+  .q-core .q-title{color:var(--purple)}
+  .q-development{top:0;left:0;background:var(--success-light)}
+  .q-development .q-title{color:var(--success)}
+  .q-exploitable{bottom:0;right:0;background:var(--warning-light)}
+  .q-exploitable .q-title{color:var(--warning)}
+  .q-nuisance{bottom:0;left:0;background:var(--slate-100)}
+  .q-nuisance .q-title{color:var(--slate-600)}
 
   .gridline{position:absolute;background:rgba(15,23,42,.05);pointer-events:none}
   .gridline.v{width:1px;top:0;bottom:0}
@@ -113,17 +113,17 @@
   .item-row .item-del{width:22px;height:22px;border:1px solid var(--slate-200);border-radius:5px;background:#fff;color:var(--slate-400);cursor:pointer;font-size:10px;flex-shrink:0}
   .item-row .item-del:hover{border-color:var(--danger);color:var(--danger)}
 
-  .quad-badge.strategic{background:var(--purple-light);color:var(--purple)}
-  .quad-badge.leverage{background:var(--success-light);color:var(--success)}
-  .quad-badge.bottleneck{background:var(--warning-light);color:var(--warning)}
-  .quad-badge.noncritical{background:var(--slate-100);color:var(--slate-600)}
+  .quad-badge.core{background:var(--purple-light);color:var(--purple)}
+  .quad-badge.development{background:var(--success-light);color:var(--success)}
+  .quad-badge.exploitable{background:var(--warning-light);color:var(--warning)}
+  .quad-badge.nuisance{background:var(--slate-100);color:var(--slate-600)}
 
   .strategy-box{margin-top:16px;padding:14px 16px;border-radius:var(--radius);font-size:12px;line-height:1.6}
   .strategy-box h4{font-size:12.5px;font-weight:800;margin-bottom:6px}
-  .strategy-box.strategic{background:var(--purple-light);color:#4C1D95}
-  .strategy-box.leverage{background:var(--success-light);color:#134E4A}
-  .strategy-box.bottleneck{background:var(--warning-light);color:#78350F}
-  .strategy-box.noncritical{background:var(--slate-100);color:var(--slate-700)}
+  .strategy-box.core{background:var(--purple-light);color:#4C1D95}
+  .strategy-box.development{background:var(--success-light);color:#134E4A}
+  .strategy-box.exploitable{background:var(--warning-light);color:#78350F}
+  .strategy-box.nuisance{background:var(--slate-100);color:var(--slate-700)}
 
   .notice-box{background:var(--accent-light);border:1px solid #BFDBFE;border-radius:var(--radius);padding:10px 14px;font-size:11.5px;color:#1E40AF;margin-top:14px;line-height:1.6}
   .save-indicator{font-size:10.5px;color:var(--success);opacity:0;transition:opacity .3s}
@@ -166,9 +166,9 @@
 </div></header>
 
 <section class="hero"><div class="hero-inner">
-  <h1>Kraljic Matrix Tool</h1>
-  <p>Drag and drop your suppliers or purchasing categories onto the classic Kraljic Portfolio Matrix by <strong>Supply Risk</strong> and <strong>Profit Impact</strong>. Bubble size reflects annual spend. Instantly see which quadrant each one falls into and get a recommended sourcing strategy.</p>
-  <div class="hero-tags"><span class="tag">Supplier Segmentation</span><span class="tag">Category Management</span><span class="tag">Strategic Sourcing</span><span class="tag">Drag &amp; Drop</span></div>
+  <h1>Supplier Preferencing Matrix Tool</h1>
+  <p>The counterpart to the Kraljic Matrix — this one flips the view. Drag and drop your suppliers by <strong>Relative Value of Account</strong> (how much revenue you represent to them) and <strong>Account Attractiveness</strong> (how appealing your business is to them beyond the money) to see how each supplier likely perceives <em>you</em> as a customer.</p>
+  <div class="hero-tags"><span class="tag">Supplier Preferencing Model</span><span class="tag">Steele &amp; Court</span><span class="tag">Supplier Relationship Management</span><span class="tag">Drag &amp; Drop</span></div>
 </div></section>
 
 <div class="main">
@@ -184,35 +184,35 @@
       <div class="card-body">
         <div class="matrix-wrap" id="matrixWrap">
           <div class="matrix-inner" id="matrixInner">
-            <div class="quadrant q-strategic" style="top:0;right:0;">
-              <div class="q-title">STRATEGIC</div>
-              <div class="q-sub">High risk · High impact</div>
+            <div class="quadrant q-core" style="top:0;right:0;">
+              <div class="q-title">CORE</div>
+              <div class="q-sub">High value · High attractiveness</div>
             </div>
-            <div class="quadrant q-leverage" style="top:0;left:0;">
-              <div class="q-title">LEVERAGE</div>
-              <div class="q-sub">Low risk · High impact</div>
+            <div class="quadrant q-development" style="top:0;left:0;">
+              <div class="q-title">DEVELOPMENT</div>
+              <div class="q-sub">Low value · High attractiveness</div>
             </div>
-            <div class="quadrant q-bottleneck" style="bottom:0;right:0;">
-              <div class="q-title">BOTTLENECK</div>
-              <div class="q-sub">High risk · Low impact</div>
+            <div class="quadrant q-exploitable" style="bottom:0;right:0;">
+              <div class="q-title">EXPLOITABLE</div>
+              <div class="q-sub">High value · Low attractiveness</div>
             </div>
-            <div class="quadrant q-noncritical" style="bottom:0;left:0;">
-              <div class="q-title">NON-CRITICAL</div>
-              <div class="q-sub">Low risk · Low impact</div>
+            <div class="quadrant q-nuisance" style="bottom:0;left:0;">
+              <div class="q-title">NUISANCE</div>
+              <div class="q-sub">Low value · Low attractiveness</div>
             </div>
             <div id="gridlines"></div>
-            <div class="axis-label-x">Supply Risk →</div>
-            <div class="axis-label-y">Profit Impact →</div>
+            <div class="axis-label-x">Relative Value of Account →</div>
+            <div class="axis-label-y">Account Attractiveness →</div>
             <div id="dotsContainer"></div>
             <div class="dot-tooltip" id="dotTooltip"></div>
           </div>
         </div>
-        <div class="notice-box">💡 <strong>Drag any bubble</strong> to reposition it instantly, or click it to edit exact values and strategy. Bubble size = annual spend (optional). This is a strategic planning aid based on the classic 1983 Kraljic Portfolio Model — real sourcing decisions should also weigh contract terms and market conditions.</div>
+        <div class="notice-box">💡 <strong>Drag any bubble</strong> to reposition it instantly, or click it to edit exact values and strategy. Bubble size = annual spend (optional). This model (developed by Paul Steele and Brian Court, mid-1990s) is a companion to the Kraljic Matrix — it shows the relationship from the supplier's side, not yours.</div>
       </div>
     </div>
 
     <div class="card">
-      <div class="card-header"><div class="card-title">Items / Suppliers (<span id="itemCount">0</span>)</div></div>
+      <div class="card-header"><div class="card-title">Your Suppliers (<span id="itemCount">0</span>)</div></div>
       <div class="card-body">
         <div id="itemList"></div>
       </div>
@@ -221,23 +221,23 @@
 
   <aside>
     <div class="card">
-      <div class="card-header"><div class="card-title" id="formTitle">Add Item or Category</div></div>
+      <div class="card-header"><div class="card-title" id="formTitle">Add a Supplier</div></div>
       <div class="card-body">
         <div class="field-group" style="margin-bottom:10px;">
-          <label class="field-label">Item / Supplier / Category Name</label>
+          <label class="field-label">Supplier Name</label>
           <input class="inp" id="itemName" placeholder="e.g. Aluminum Extrusion Supplier">
         </div>
         <div class="field-group" style="margin-bottom:6px;">
-          <label class="field-label">Supply Risk (1 = low risk, 10 = high risk)</label>
-          <div class="field-sub">Consider: number of qualified suppliers, switching cost, lead time, single-source dependency</div>
-          <input type="range" id="riskInput" min="1" max="10" step="0.1" value="5" oninput="document.getElementById('riskVal').textContent=parseFloat(this.value).toFixed(1)">
-          <div class="range-value">Value: <span id="riskVal">5.0</span></div>
+          <label class="field-label">Relative Value of Account (1 = low value to them, 10 = high value)</label>
+          <div class="field-sub">Consider: your spend as a % of their total revenue, order volume, growth trajectory</div>
+          <input type="range" id="valueInput" min="1" max="10" step="0.1" value="5" oninput="document.getElementById('valueVal').textContent=parseFloat(this.value).toFixed(1)">
+          <div class="range-value">Value: <span id="valueVal">5.0</span></div>
         </div>
         <div class="field-group" style="margin-bottom:6px;">
-          <label class="field-label">Profit / Value Impact (1 = low, 10 = high)</label>
-          <div class="field-sub">Consider: % of total spend, effect on product cost, effect on revenue/quality</div>
-          <input type="range" id="impactInput" min="1" max="10" step="0.1" value="5" oninput="document.getElementById('impactVal').textContent=parseFloat(this.value).toFixed(1)">
-          <div class="range-value">Value: <span id="impactVal">5.0</span></div>
+          <label class="field-label">Account Attractiveness (1 = low, 10 = high)</label>
+          <div class="field-sub">Consider: payment reliability, reference value, ease of doing business, future growth potential</div>
+          <input type="range" id="attractInput" min="1" max="10" step="0.1" value="5" oninput="document.getElementById('attractVal').textContent=parseFloat(this.value).toFixed(1)">
+          <div class="range-value">Value: <span id="attractVal">5.0</span></div>
         </div>
         <div class="field-group" style="margin-bottom:10px;">
           <label class="field-label">Annual Spend (optional — sets bubble size)</label>
@@ -249,17 +249,17 @@
     </div>
 
     <div class="card" id="strategyCard" style="display:none;">
-      <div class="card-header"><div class="card-title">Recommended Strategy</div></div>
+      <div class="card-header"><div class="card-title">Recommended Approach</div></div>
       <div class="card-body" id="strategyBody"></div>
     </div>
 
     <div class="card">
       <div class="card-header"><div class="card-title">The 4 Quadrants, Explained</div></div>
       <div class="card-body" style="font-size:11.5px;color:var(--slate-600);line-height:1.7;">
-        <p style="margin-bottom:8px;"><b style="color:var(--purple);">Strategic:</b> High spend impact and high supply risk. Requires deep, long-term partnerships and joint planning.</p>
-        <p style="margin-bottom:8px;"><b style="color:var(--success);">Leverage:</b> High spend impact but low supply risk — many suppliers available. Use competitive bidding to drive price down.</p>
-        <p style="margin-bottom:8px;"><b style="color:var(--warning);">Bottleneck:</b> Low spend but high supply risk. Focus on securing continuity of supply, not price.</p>
-        <p><b style="color:var(--slate-600);">Non-Critical:</b> Low spend, low risk, widely available. Simplify and automate the buying process to reduce administrative cost.</p>
+        <p style="margin-bottom:8px;"><b style="color:var(--purple);">Core:</b> You represent significant value and the supplier finds you attractive. You likely get their best service and priority access.</p>
+        <p style="margin-bottom:8px;"><b style="color:var(--success);">Development:</b> Your current spend is modest, but the supplier sees strong growth potential in you. They may invest in the relationship hoping to grow it.</p>
+        <p style="margin-bottom:8px;"><b style="color:var(--warning);">Exploitable:</b> You spend a lot, but the supplier doesn't find the account particularly attractive beyond the revenue. Watch for being taken for granted.</p>
+        <p><b style="color:var(--slate-600);">Nuisance:</b> Low value and low attractiveness to the supplier. Expect slower response times and less flexibility.</p>
       </div>
     </div>
   </aside>
@@ -267,13 +267,13 @@
 
 <div style="max-width:1300px;margin:0 auto;padding:0 24px 30px;">
   <div class="notice-box" style="margin-bottom:18px;">
-    🔄 <strong>Use this alongside your other supplier tools.</strong> This matrix shows how you should treat a supplier; the <a href="supplier-preferencing-matrix.html" style="color:#1E40AF;font-weight:700;">Supplier Preferencing Matrix</a> shows how they likely treat you, and the <a href="supplier-risk-matrix.html" style="color:#1E40AF;font-weight:700;">Supplier Risk Matrix</a> assesses continuity risk rather than sourcing strategy. Track ongoing performance with the <a href="supplier-scorecard.html" style="color:#1E40AF;font-weight:700;">Supplier Scorecard</a>.
+    🔄 <strong>Use this alongside your other supplier tools.</strong> Plot the same supplier on the <a href="kraljic-matrix.html" style="color:#1E40AF;font-weight:700;">Kraljic Matrix</a> to see how you should treat them, and on the <a href="supplier-risk-matrix.html" style="color:#1E40AF;font-weight:700;">Supplier Risk Matrix</a> to assess continuity risk. Track ongoing performance with the <a href="supplier-scorecard.html" style="color:#1E40AF;font-weight:700;">Supplier Scorecard</a>.
   </div>
   <div class="card">
-    <div class="card-header"><div class="card-title">Why Use a Kraljic Matrix?</div></div>
+    <div class="card-header"><div class="card-title">Why Use a Supplier Preferencing Matrix?</div></div>
     <div class="card-body" style="font-size:12.5px;color:var(--slate-600);line-height:1.7;">
-      <p>Treating every supplier or category the same way wastes negotiation effort on low-value purchases and under-manages the few relationships that actually carry risk. The Kraljic Matrix (developed by Peter Kraljic, published in Harvard Business Review, 1983) gives procurement teams a simple, defensible way to prioritize where to spend their time.</p>
-      <p style="margin-top:8px;"><b>How to use it in practice:</b> Score each major category or supplier on the two axes, drag it into position, and use the quadrant to decide your approach — aggressive price negotiation for Leverage items, supply continuity planning for Bottleneck items, and executive-level relationship management for Strategic items. Revisit the matrix periodically, since a category's position can shift as markets and your own volume change. Your data is saved automatically in this browser only — nothing is sent to a server.</p>
+      <p>The Kraljic Matrix tells you how <em>you</em> should view a supplier. It doesn't tell you how that supplier views <em>you</em> — and that gap matters. A supplier who sees your account as a "Nuisance" will deprioritize you on service and innovation no matter how strategic they are to your business. The Supplier Preferencing Matrix (developed by Paul Steele and Brian Court, mid-1990s) fills that gap by mapping the relationship from the supplier's side.</p>
+      <p style="margin-top:8px;"><b>How to use it in practice:</b> For each key supplier, estimate the relative value of your account to them and how attractive you are as a customer beyond the money. Plot both this matrix and the Kraljic Matrix for the same supplier — a mismatch (e.g., you see them as Strategic, but they see you as Nuisance) is a warning sign that you may not get the partnership-level treatment you're expecting. Your data is saved automatically in this browser only — nothing is sent to a server.</p>
     </div>
   </div>
 </div>
@@ -284,8 +284,9 @@
   <div class="card">
     <div class="card-header"><div class="card-title">Frequently Asked Questions</div></div>
     <div class="card-body">
-      <details class="faq-item"><summary>What are the four quadrants of the Kraljic Matrix, and what does each mean?</summary><p>The matrix plots supply risk against profit impact. Non-critical items (low risk, low impact) call for efficient process automation. Leverage items (low risk, high impact) call for competitive bidding and negotiation leverage. Bottleneck items (high risk, low impact) call for securing supply continuity. Strategic items (high risk, high impact) call for close partnership and joint planning with the supplier.</p></details>
-      <details class="faq-item"><summary>How often should a Kraljic classification be re-evaluated?</summary><p>Annually at minimum, and sooner if there's a major shift — a new supplier entering the market, a shortage affecting supply risk, or a significant change in a category's spend. A category's classification isn't permanent and can move between quadrants over time.</p></details>
+      <details class="faq-item"><summary>What's the difference between the Kraljic Matrix and the Supplier Preferencing Matrix?</summary><p>The Kraljic Matrix maps how a buyer should view a supplier, based on supply risk and profit impact. The Supplier Preferencing Matrix flips the view: it maps how the supplier likely views the buyer, based on account value and attractiveness. Using both together gives a fuller picture of the relationship's power dynamic.</p></details>
+      <details class="faq-item"><summary>How do I estimate "Account Attractiveness" without asking the supplier directly?</summary><p>Look for indirect signals: how quickly they respond to your requests, whether they offer you preferential terms or early access to new products, whether they proactively suggest ways to grow the relationship, and how consistent and easy your payment and ordering process has been from their side.</p></details>
+      <details class="faq-item"><summary>What should I do if I'm in the Exploitable quadrant?</summary><p>This usually means you give the supplier significant revenue but they don't see much beyond the transaction. Consider consolidating more spend with them to increase leverage, diversifying to reduce dependency, or working to make the account more attractive (longer contracts, more predictable ordering, becoming a reference customer).</p></details>
     </div>
   </div>
 </div>
@@ -324,32 +325,32 @@ let selectedItemId = null;
 let editingItemId = null;
 
 const STRATEGIES = {
-  strategic: {
-    label: 'Strategic', cls: 'strategic',
-    text: 'This item sits in the Strategic quadrant: high impact on your business and high supply risk. Build a long-term partnership rather than treating this as a transactional purchase. Consider joint product development, multi-year agreements, and involving senior stakeholders in the relationship. Where feasible, qualify a second source to reduce dependency — but expect this to take time and investment.'
+  core: {
+    label: 'Core', cls: 'core',
+    text: 'This supplier likely sees you as a Core account: you represent significant value to them and they find your business attractive beyond the revenue. Expect priority service, access to their best resources, and openness to collaboration. Don\u2019t take this for granted, though \u2014 suppliers periodically reassess who counts as core, so keep the relationship healthy on both sides.'
   },
-  leverage: {
-    label: 'Leverage', cls: 'leverage',
-    text: 'This item sits in the Leverage quadrant: high spend impact, but supply risk is low because multiple qualified suppliers exist. This is where competitive bidding and price negotiation deliver the most value. Run periodic RFQs, consolidate volume across business units to increase your buying power, and don\u2019t be afraid to switch suppliers if terms are not competitive.'
+  development: {
+    label: 'Development', cls: 'development',
+    text: 'This supplier likely sees you as a Development account: your current spend is modest, but they see real growth potential in the relationship. This is a good position to negotiate from \u2014 the supplier has an incentive to invest in you, offer favorable terms, or pilot new capabilities with you, hoping to grow the account over time.'
   },
-  bottleneck: {
-    label: 'Bottleneck', cls: 'bottleneck',
-    text: 'This item sits in the Bottleneck quadrant: relatively low spend, but high supply risk (few suppliers, long lead times, or single-source dependency). Price negotiation is not the priority here \u2014 supply continuity is. Maintain safety stock, qualify backup suppliers even if they are more expensive, and monitor this relationship closely despite its low dollar value.'
+  exploitable: {
+    label: 'Exploitable', cls: 'exploitable',
+    text: 'This supplier likely sees you as an Exploitable account: you give them substantial revenue, but they don\u2019t find the relationship particularly attractive beyond that. Watch for being deprioritized on service, innovation, or flexibility despite your spend. Consider whether consolidating more volume with them, signing longer commitments, or diversifying to other suppliers would improve your position.'
   },
-  noncritical: {
-    label: 'Non-Critical', cls: 'noncritical',
-    text: 'This item sits in the Non-Critical quadrant: low spend impact and low supply risk, widely available from many sources. The goal here is efficiency, not negotiation effort. Use catalog buying, purchasing cards, or e-procurement tools to minimize the administrative cost of processing these orders, and avoid spending excessive time managing these relationships.'
+  nuisance: {
+    label: 'Nuisance', cls: 'nuisance',
+    text: 'This supplier likely sees you as a Nuisance account: low value and low attractiveness from their side. Expect slower response times, less flexibility on terms, and limited willingness to accommodate special requests. Either work to grow the account to become more attractive, or accept that this will remain a low-touch, transactional relationship.'
   }
 };
-const COLOR_MAP = { strategic:'#7C3AED', leverage:'#0F766E', bottleneck:'#B45309', noncritical:'#64748B' };
+const COLOR_MAP = { core:'#7C3AED', development:'#0F766E', exploitable:'#B45309', nuisance:'#64748B' };
 
-function getQuadrant(risk, impact){
-  const highRisk = risk > 5.5;
-  const highImpact = impact > 5.5;
-  if(highRisk && highImpact) return 'strategic';
-  if(!highRisk && highImpact) return 'leverage';
-  if(highRisk && !highImpact) return 'bottleneck';
-  return 'noncritical';
+function getQuadrant(value, attractiveness){
+  const highValue = value > 5.5;
+  const highAttract = attractiveness > 5.5;
+  if(highValue && highAttract) return 'core';
+  if(!highValue && highAttract) return 'development';
+  if(highValue && !highAttract) return 'exploitable';
+  return 'nuisance';
 }
 
 function clamp(v, min, max){ return Math.max(min, Math.min(max, v)); }
@@ -378,19 +379,19 @@ function bubbleSize(spend){
 // ===== Form handling (add / edit) =====
 function submitForm(){
   const name = document.getElementById('itemName').value.trim();
-  if(!name){ alert('Please enter an item or supplier name.'); return; }
-  const risk = parseFloat(document.getElementById('riskInput').value);
-  const impact = parseFloat(document.getElementById('impactInput').value);
+  if(!name){ alert('Please enter a supplier name.'); return; }
+  const risk = parseFloat(document.getElementById('valueInput').value);
+  const impact = parseFloat(document.getElementById('attractInput').value);
   const spend = parseFloat(document.getElementById('spendInput').value) || 0;
 
   if(editingItemId){
     const it = items.find(i=>i.id===editingItemId);
-    if(it){ it.name=name; it.risk=risk; it.impact=impact; it.spend=spend; }
+    if(it){ it.name=name; it.acctValue=risk; it.attractiveness=impact; it.spend=spend; }
     selectedItemId = editingItemId;
     cancelEdit(false);
   } else {
     itemCounter++;
-    items.push({ id: itemCounter, name, risk, impact, spend });
+    items.push({ id: itemCounter, name, acctValue: risk, attractiveness: impact, spend });
     selectedItemId = itemCounter;
     document.getElementById('itemName').value = '';
     document.getElementById('spendInput').value = '';
@@ -404,13 +405,13 @@ function loadItemIntoForm(id){
   if(!it) return;
   editingItemId = id;
   document.getElementById('itemName').value = it.name;
-  document.getElementById('riskInput').value = it.risk;
-  document.getElementById('riskVal').textContent = it.risk.toFixed(1);
-  document.getElementById('impactInput').value = it.impact;
-  document.getElementById('impactVal').textContent = it.impact.toFixed(1);
+  document.getElementById('valueInput').value = it.acctValue;
+  document.getElementById('valueVal').textContent = it.acctValue.toFixed(1);
+  document.getElementById('attractInput').value = it.attractiveness;
+  document.getElementById('attractVal').textContent = it.attractiveness.toFixed(1);
   document.getElementById('spendInput').value = it.spend || '';
   document.getElementById('formTitle').textContent = 'Edit: ' + it.name;
-  document.getElementById('submitBtn').textContent = '✓ Update Item';
+  document.getElementById('submitBtn').textContent = '✓ Update Supplier';
   document.getElementById('submitBtn').classList.add('editing');
   document.getElementById('cancelEditBtn').classList.add('show');
   selectedItemId = id;
@@ -420,7 +421,7 @@ function loadItemIntoForm(id){
 
 function cancelEdit(doRender){
   editingItemId = null;
-  document.getElementById('formTitle').textContent = 'Add Item or Category';
+  document.getElementById('formTitle').textContent = 'Add a Supplier';
   document.getElementById('submitBtn').textContent = '+ Add to Matrix';
   document.getElementById('submitBtn').classList.remove('editing');
   document.getElementById('cancelEditBtn').classList.remove('show');
@@ -458,9 +459,9 @@ function clearAll(){
 function render(){
   const dotsContainer = document.getElementById('dotsContainer');
   dotsContainer.innerHTML = items.map((it, idx)=>{
-    const xPct = ((it.risk-1)/9)*100;
-    const yPct = ((it.impact-1)/9)*100;
-    const quad = getQuadrant(it.risk, it.impact);
+    const xPct = ((it.acctValue-1)/9)*100;
+    const yPct = ((it.attractiveness-1)/9)*100;
+    const quad = getQuadrant(it.acctValue, it.attractiveness);
     const size = bubbleSize(it.spend);
     const isSelected = selectedItemId === it.id;
     return `<div class="item-dot ${isSelected?'selected':''}" data-id="${it.id}"
@@ -479,10 +480,10 @@ function render(){
 
   const listEl = document.getElementById('itemList');
   if(items.length===0){
-    listEl.innerHTML = '<p style="font-size:12.5px;color:var(--slate-400);">No items yet. Add your first supplier or category using the form on the right, or click a preset below.</p>';
+    listEl.innerHTML = '<p style="font-size:12.5px;color:var(--slate-400);">No suppliers yet. Add your first one using the form on the right.</p>';
   } else {
     listEl.innerHTML = items.map((it, idx)=>{
-      const quad = getQuadrant(it.risk, it.impact);
+      const quad = getQuadrant(it.acctValue, it.attractiveness);
       return `<div class="item-row">
         <span class="dot-mini" style="background:${COLOR_MAP[quad]};">${idx+1}</span>
         <span class="item-name" onclick="loadItemIntoForm(${it.id})" title="Click to edit">${it.name}${it.spend ? ' <span style=\"color:var(--slate-400);font-weight:400;\">($'+Number(it.spend).toLocaleString()+')</span>' : ''}</span>
@@ -496,7 +497,7 @@ function render(){
   if(selectedItemId){
     const it = items.find(i=>i.id===selectedItemId);
     if(it){
-      const quad = getQuadrant(it.risk, it.impact);
+      const quad = getQuadrant(it.acctValue, it.attractiveness);
       const s = STRATEGIES[quad];
       strategyCard.style.display = 'block';
       document.getElementById('strategyBody').innerHTML = `
@@ -537,7 +538,7 @@ function onDotPointerDown(e){
     const risk = clamp(1 + (xPct/100)*9, 1, 10);
     const impact = clamp(1 + (yPct/100)*9, 1, 10);
     const it = items.find(i=>i.id===id);
-    if(it){ it.risk = risk; it.impact = impact; }
+    if(it){ it.acctValue = risk; it.attractiveness = impact; }
     dot.style.left = xPct + '%';
     dot.style.bottom = yPct + '%';
     const quad = getQuadrant(risk, impact);
@@ -573,7 +574,7 @@ function showTooltip(dot){
   const it = items.find(i=>i.id===id);
   if(!it) return;
   const tip = document.getElementById('dotTooltip');
-  tip.textContent = `${it.name} — Risk ${it.risk.toFixed(1)}, Impact ${it.impact.toFixed(1)}`;
+  tip.textContent = `${it.name} — Value ${it.acctValue.toFixed(1)}, Attractiveness ${it.attractiveness.toFixed(1)}`;
   tip.style.left = dot.style.left;
   tip.style.bottom = dot.style.bottom;
   tip.style.display = 'block';
@@ -588,7 +589,7 @@ function saveState(){
   clearTimeout(saveTimeout);
   saveTimeout = setTimeout(()=>{
     try{
-      localStorage.setItem('cbmlab_kraljic', JSON.stringify({ items, itemCounter }));
+      localStorage.setItem('cbmlab_supplier_preferencing', JSON.stringify({ items, itemCounter }));
       const ind = document.getElementById('saveIndicator');
       ind.classList.add('show');
       setTimeout(()=>ind.classList.remove('show'), 1200);
@@ -597,7 +598,7 @@ function saveState(){
 }
 function restoreState(){
   try{
-    const raw = localStorage.getItem('cbmlab_kraljic');
+    const raw = localStorage.getItem('cbmlab_supplier_preferencing');
     if(!raw) return false;
     const state = JSON.parse(raw);
     if(state.items && state.items.length){
@@ -613,10 +614,10 @@ function restoreState(){
 renderGridlines();
 const restored = restoreState();
 if(!restored){
-  items.push({id:++itemCounter, name:'Office Supplies', risk:2, impact:2, spend:8000});
-  items.push({id:++itemCounter, name:'Custom PCB Assembly', risk:8, impact:8, spend:420000});
-  items.push({id:++itemCounter, name:'Standard Fasteners', risk:2, impact:7, spend:180000});
-  items.push({id:++itemCounter, name:'Rare Earth Magnet', risk:9, impact:3, spend:35000});
+  items.push({id:++itemCounter, name:'Small Local Print Shop', acctValue: 2, attractiveness: 2, spend:8000});
+  items.push({id:++itemCounter, name:'Primary Electronics Manufacturer', acctValue: 8, attractiveness: 8, spend:420000});
+  items.push({id:++itemCounter, name:'Emerging Regional Distributor', acctValue: 2, attractiveness: 7, spend:180000});
+  items.push({id:++itemCounter, name:'Legacy Component Supplier', acctValue: 9, attractiveness: 3, spend:35000});
 }
 render();
 </script>
@@ -627,18 +628,26 @@ render();
   "mainEntity": [
     {
       "@type": "Question",
-      "name": "What are the four quadrants of the Kraljic Matrix, and what does each mean?",
+      "name": "What's the difference between the Kraljic Matrix and the Supplier Preferencing Matrix?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "The matrix plots supply risk against profit impact. Non-critical items (low risk, low impact) call for efficient process automation. Leverage items (low risk, high impact) call for competitive bidding and negotiation leverage. Bottleneck items (high risk, low impact) call for securing supply continuity. Strategic items (high risk, high impact) call for close partnership and joint planning with the supplier."
+        "text": "The Kraljic Matrix maps how a buyer should view a supplier, based on supply risk and profit impact. The Supplier Preferencing Matrix flips the view: it maps how the supplier likely views the buyer, based on account value and attractiveness."
       }
     },
     {
       "@type": "Question",
-      "name": "How often should a Kraljic classification be re-evaluated?",
+      "name": "How do I estimate Account Attractiveness without asking the supplier directly?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Annually at minimum, and sooner if there's a major shift — a new supplier entering the market, a shortage affecting supply risk, or a significant change in a category's spend. A category's classification isn't permanent and can move between quadrants over time."
+        "text": "Look for indirect signals such as response speed, whether you get preferential terms or early access to new products, and how proactively the supplier suggests growing the relationship."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What should I do if I'm in the Exploitable quadrant?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Consider consolidating more spend with the supplier to increase leverage, diversifying to reduce dependency, or working to make the account more attractive through longer commitments or more predictable ordering."
       }
     }
   ]

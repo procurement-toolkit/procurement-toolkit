@@ -3,28 +3,28 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="Free interactive Kraljic Matrix tool. Drag and drop suppliers or purchasing categories onto the matrix by supply risk and profit impact, get instant quadrant classification (Strategic, Leverage, Bottleneck, Non-Critical) and a recommended sourcing strategy for each.">
-<meta name="keywords" content="Kraljic Matrix, Kraljic Matrix tool, supplier segmentation, procurement portfolio matrix, category management, strategic sourcing matrix, vendor segmentation tool">
-<title>Kraljic Matrix Tool — Supplier &amp; Category Segmentation | CBM Lab</title>
+<meta name="description" content="Free interactive Supplier Risk Matrix tool. Plot suppliers by probability of disruption and impact if disrupted to instantly see which ones need urgent attention, a contingency plan, routine management, or just monitoring.">
+<meta name="keywords" content="supplier risk matrix, supply chain risk assessment tool, risk probability impact matrix, supplier risk management, vendor risk assessment">
+<title>Supplier Risk Matrix Tool — Probability &amp; Impact Assessment | CBM Lab</title>
 <link rel="icon" href="../favicon.ico" sizes="any">
 <link rel="icon" href="../favicon.ico" type="image/x-icon">
 <link rel="apple-touch-icon" href="../apple-touch-icon.png">
-<link rel="canonical" href="https://procurement-toolkit-eight.vercel.app/en/kraljic-matrix.html">
+<link rel="canonical" href="https://procurement-toolkit-eight.vercel.app/en/supplier-risk-matrix.html">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="CBM Lab">
 <meta property="og:locale" content="en_US">
-<meta property="og:title" content="Kraljic Matrix Tool — Supplier &amp; Category Segmentation | CBM Lab">
-<meta property="og:description" content="Free interactive Kraljic Matrix tool. Drag and drop suppliers or purchasing categories onto the matrix by supply risk and profit impact, get instant quadrant classification (Strategic, Leverage, Bottleneck, Non-Critical) and a recommended sourcing strategy for each.">
-<meta property="og:url" content="https://procurement-toolkit-eight.vercel.app/en/kraljic-matrix.html">
+<meta property="og:title" content="Supplier Risk Matrix Tool — Probability &amp; Impact Assessment | CBM Lab">
+<meta property="og:description" content="Free interactive Supplier Risk Matrix tool. Plot suppliers by probability of disruption and impact if disrupted to instantly see which ones need urgent attention, a contingency plan, routine management, or just monitoring.">
+<meta property="og:url" content="https://procurement-toolkit-eight.vercel.app/en/supplier-risk-matrix.html">
 <meta property="og:image" content="https://procurement-toolkit-eight.vercel.app/assets/hero-team.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Kraljic Matrix Tool — Supplier &amp; Category Segmentation | CBM Lab">
-<meta name="twitter:description" content="Free interactive Kraljic Matrix tool. Drag and drop suppliers or purchasing categories onto the matrix by supply risk and profit impact, get instant quadrant classification (Strategic, Leverage, Bottleneck, Non-Critical) and a recommended sourcing strategy for each.">
+<meta name="twitter:title" content="Supplier Risk Matrix Tool — Probability &amp; Impact Assessment | CBM Lab">
+<meta name="twitter:description" content="Free interactive Supplier Risk Matrix tool. Plot suppliers by probability of disruption and impact if disrupted to instantly see which ones need urgent attention, a contingency plan, routine management, or just monitoring.">
 <meta name="twitter:image" content="https://procurement-toolkit-eight.vercel.app/assets/hero-team.jpg">
 
-<link rel="alternate" hreflang="en" href="https://procurement-toolkit-eight.vercel.app/en/kraljic-matrix.html">
+<link rel="alternate" hreflang="en" href="https://procurement-toolkit-eight.vercel.app/en/supplier-risk-matrix.html">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700;800&display=swap" rel="stylesheet">
@@ -64,14 +64,14 @@
   .quadrant{position:absolute;width:50%;height:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:10px;border:1px solid var(--slate-200);pointer-events:none}
   .quadrant .q-title{font-size:12.5px;font-weight:800;letter-spacing:.3px}
   .quadrant .q-sub{font-size:10px;color:var(--slate-500);margin-top:2px}
-  .q-strategic{top:0;right:0;background:var(--purple-light)}
-  .q-strategic .q-title{color:var(--purple)}
-  .q-leverage{top:0;left:0;background:var(--success-light)}
-  .q-leverage .q-title{color:var(--success)}
-  .q-bottleneck{bottom:0;right:0;background:var(--warning-light)}
-  .q-bottleneck .q-title{color:var(--warning)}
-  .q-noncritical{bottom:0;left:0;background:var(--slate-100)}
-  .q-noncritical .q-title{color:var(--slate-600)}
+  .q-critical{top:0;right:0;background:var(--purple-light)}
+  .q-critical .q-title{color:var(--purple)}
+  .q-contingency{top:0;left:0;background:var(--success-light)}
+  .q-contingency .q-title{color:var(--success)}
+  .q-manage{bottom:0;right:0;background:var(--warning-light)}
+  .q-manage .q-title{color:var(--warning)}
+  .q-monitor{bottom:0;left:0;background:var(--slate-100)}
+  .q-monitor .q-title{color:var(--slate-600)}
 
   .gridline{position:absolute;background:rgba(15,23,42,.05);pointer-events:none}
   .gridline.v{width:1px;top:0;bottom:0}
@@ -113,17 +113,17 @@
   .item-row .item-del{width:22px;height:22px;border:1px solid var(--slate-200);border-radius:5px;background:#fff;color:var(--slate-400);cursor:pointer;font-size:10px;flex-shrink:0}
   .item-row .item-del:hover{border-color:var(--danger);color:var(--danger)}
 
-  .quad-badge.strategic{background:var(--purple-light);color:var(--purple)}
-  .quad-badge.leverage{background:var(--success-light);color:var(--success)}
-  .quad-badge.bottleneck{background:var(--warning-light);color:var(--warning)}
-  .quad-badge.noncritical{background:var(--slate-100);color:var(--slate-600)}
+  .quad-badge.critical{background:var(--purple-light);color:var(--purple)}
+  .quad-badge.contingency{background:var(--success-light);color:var(--success)}
+  .quad-badge.manage{background:var(--warning-light);color:var(--warning)}
+  .quad-badge.monitor{background:var(--slate-100);color:var(--slate-600)}
 
   .strategy-box{margin-top:16px;padding:14px 16px;border-radius:var(--radius);font-size:12px;line-height:1.6}
   .strategy-box h4{font-size:12.5px;font-weight:800;margin-bottom:6px}
-  .strategy-box.strategic{background:var(--purple-light);color:#4C1D95}
-  .strategy-box.leverage{background:var(--success-light);color:#134E4A}
-  .strategy-box.bottleneck{background:var(--warning-light);color:#78350F}
-  .strategy-box.noncritical{background:var(--slate-100);color:var(--slate-700)}
+  .strategy-box.critical{background:var(--purple-light);color:#4C1D95}
+  .strategy-box.contingency{background:var(--success-light);color:#134E4A}
+  .strategy-box.manage{background:var(--warning-light);color:#78350F}
+  .strategy-box.monitor{background:var(--slate-100);color:var(--slate-700)}
 
   .notice-box{background:var(--accent-light);border:1px solid #BFDBFE;border-radius:var(--radius);padding:10px 14px;font-size:11.5px;color:#1E40AF;margin-top:14px;line-height:1.6}
   .save-indicator{font-size:10.5px;color:var(--success);opacity:0;transition:opacity .3s}
@@ -166,9 +166,9 @@
 </div></header>
 
 <section class="hero"><div class="hero-inner">
-  <h1>Kraljic Matrix Tool</h1>
-  <p>Drag and drop your suppliers or purchasing categories onto the classic Kraljic Portfolio Matrix by <strong>Supply Risk</strong> and <strong>Profit Impact</strong>. Bubble size reflects annual spend. Instantly see which quadrant each one falls into and get a recommended sourcing strategy.</p>
-  <div class="hero-tags"><span class="tag">Supplier Segmentation</span><span class="tag">Category Management</span><span class="tag">Strategic Sourcing</span><span class="tag">Drag &amp; Drop</span></div>
+  <h1>Supplier Risk Matrix Tool</h1>
+  <p>Drag and drop your suppliers onto the matrix by <strong>Probability of Disruption</strong> and <strong>Impact if Disrupted</strong>. Bubble size reflects annual spend. Instantly see which suppliers need urgent action, a contingency plan, routine management, or just monitoring.</p>
+  <div class="hero-tags"><span class="tag">Supplier Risk Assessment</span><span class="tag">Business Continuity</span><span class="tag">Probability &amp; Impact</span><span class="tag">Drag &amp; Drop</span></div>
 </div></section>
 
 <div class="main">
@@ -184,35 +184,35 @@
       <div class="card-body">
         <div class="matrix-wrap" id="matrixWrap">
           <div class="matrix-inner" id="matrixInner">
-            <div class="quadrant q-strategic" style="top:0;right:0;">
-              <div class="q-title">STRATEGIC</div>
-              <div class="q-sub">High risk · High impact</div>
+            <div class="quadrant q-critical" style="top:0;right:0;">
+              <div class="q-title">CRITICAL</div>
+              <div class="q-sub">High probability · High impact</div>
             </div>
-            <div class="quadrant q-leverage" style="top:0;left:0;">
-              <div class="q-title">LEVERAGE</div>
-              <div class="q-sub">Low risk · High impact</div>
+            <div class="quadrant q-contingency" style="top:0;left:0;">
+              <div class="q-title">CONTINGENCY</div>
+              <div class="q-sub">Low probability · High impact</div>
             </div>
-            <div class="quadrant q-bottleneck" style="bottom:0;right:0;">
-              <div class="q-title">BOTTLENECK</div>
-              <div class="q-sub">High risk · Low impact</div>
+            <div class="quadrant q-manage" style="bottom:0;right:0;">
+              <div class="q-title">MANAGE</div>
+              <div class="q-sub">High probability · Low impact</div>
             </div>
-            <div class="quadrant q-noncritical" style="bottom:0;left:0;">
-              <div class="q-title">NON-CRITICAL</div>
-              <div class="q-sub">Low risk · Low impact</div>
+            <div class="quadrant q-monitor" style="bottom:0;left:0;">
+              <div class="q-title">MONITOR</div>
+              <div class="q-sub">Low probability · Low impact</div>
             </div>
             <div id="gridlines"></div>
-            <div class="axis-label-x">Supply Risk →</div>
-            <div class="axis-label-y">Profit Impact →</div>
+            <div class="axis-label-x">Probability of Disruption →</div>
+            <div class="axis-label-y">Impact if Disrupted →</div>
             <div id="dotsContainer"></div>
             <div class="dot-tooltip" id="dotTooltip"></div>
           </div>
         </div>
-        <div class="notice-box">💡 <strong>Drag any bubble</strong> to reposition it instantly, or click it to edit exact values and strategy. Bubble size = annual spend (optional). This is a strategic planning aid based on the classic 1983 Kraljic Portfolio Model — real sourcing decisions should also weigh contract terms and market conditions.</div>
+        <div class="notice-box">💡 <strong>Drag any bubble</strong> to reposition it instantly, or click it to edit exact values and see the recommended response. Bubble size = annual spend (optional). This tool uses the standard probability-impact risk matrix technique widely used in supply chain and project risk management — real risk decisions should also weigh your organization's specific risk tolerance and contingency budget.</div>
       </div>
     </div>
 
     <div class="card">
-      <div class="card-header"><div class="card-title">Items / Suppliers (<span id="itemCount">0</span>)</div></div>
+      <div class="card-header"><div class="card-title">Supplier Risks (<span id="itemCount">0</span>)</div></div>
       <div class="card-body">
         <div id="itemList"></div>
       </div>
@@ -221,21 +221,21 @@
 
   <aside>
     <div class="card">
-      <div class="card-header"><div class="card-title" id="formTitle">Add Item or Category</div></div>
+      <div class="card-header"><div class="card-title" id="formTitle">Add a Supplier Risk</div></div>
       <div class="card-body">
         <div class="field-group" style="margin-bottom:10px;">
-          <label class="field-label">Item / Supplier / Category Name</label>
-          <input class="inp" id="itemName" placeholder="e.g. Aluminum Extrusion Supplier">
+          <label class="field-label">Supplier / Risk Name</label>
+          <input class="inp" id="itemName" placeholder="e.g. Sole Semiconductor Supplier">
         </div>
         <div class="field-group" style="margin-bottom:6px;">
-          <label class="field-label">Supply Risk (1 = low risk, 10 = high risk)</label>
-          <div class="field-sub">Consider: number of qualified suppliers, switching cost, lead time, single-source dependency</div>
+          <label class="field-label">Probability of Disruption (1 = unlikely, 10 = very likely)</label>
+          <div class="field-sub">Consider: supplier financial health, geopolitical exposure, single-source dependency, past disruption history</div>
           <input type="range" id="riskInput" min="1" max="10" step="0.1" value="5" oninput="document.getElementById('riskVal').textContent=parseFloat(this.value).toFixed(1)">
           <div class="range-value">Value: <span id="riskVal">5.0</span></div>
         </div>
         <div class="field-group" style="margin-bottom:6px;">
-          <label class="field-label">Profit / Value Impact (1 = low, 10 = high)</label>
-          <div class="field-sub">Consider: % of total spend, effect on product cost, effect on revenue/quality</div>
+          <label class="field-label">Impact if Disrupted (1 = low, 10 = severe)</label>
+          <div class="field-sub">Consider: effect on production downtime, revenue at risk, cost to find an alternative source quickly</div>
           <input type="range" id="impactInput" min="1" max="10" step="0.1" value="5" oninput="document.getElementById('impactVal').textContent=parseFloat(this.value).toFixed(1)">
           <div class="range-value">Value: <span id="impactVal">5.0</span></div>
         </div>
@@ -249,17 +249,17 @@
     </div>
 
     <div class="card" id="strategyCard" style="display:none;">
-      <div class="card-header"><div class="card-title">Recommended Strategy</div></div>
+      <div class="card-header"><div class="card-title">Recommended Response</div></div>
       <div class="card-body" id="strategyBody"></div>
     </div>
 
     <div class="card">
       <div class="card-header"><div class="card-title">The 4 Quadrants, Explained</div></div>
       <div class="card-body" style="font-size:11.5px;color:var(--slate-600);line-height:1.7;">
-        <p style="margin-bottom:8px;"><b style="color:var(--purple);">Strategic:</b> High spend impact and high supply risk. Requires deep, long-term partnerships and joint planning.</p>
-        <p style="margin-bottom:8px;"><b style="color:var(--success);">Leverage:</b> High spend impact but low supply risk — many suppliers available. Use competitive bidding to drive price down.</p>
-        <p style="margin-bottom:8px;"><b style="color:var(--warning);">Bottleneck:</b> Low spend but high supply risk. Focus on securing continuity of supply, not price.</p>
-        <p><b style="color:var(--slate-600);">Non-Critical:</b> Low spend, low risk, widely available. Simplify and automate the buying process to reduce administrative cost.</p>
+        <p style="margin-bottom:8px;"><b style="color:var(--purple);">Critical:</b> High probability and high impact. Needs urgent, active mitigation — this is where a disruption would hurt the most and is most likely to happen.</p>
+        <p style="margin-bottom:8px;"><b style="color:var(--success);">Contingency:</b> Low probability but high impact. Unlikely to happen, but severe if it does — build a contingency plan or insurance rather than active daily monitoring.</p>
+        <p style="margin-bottom:8px;"><b style="color:var(--warning);">Manage:</b> High probability but low impact. Likely to happen but manageable — handle with routine mitigation processes, not emergency plans.</p>
+        <p><b style="color:var(--slate-600);">Monitor:</b> Low probability and low impact. Keep an eye on it periodically, but it doesn’t warrant dedicated resources right now.</p>
       </div>
     </div>
   </aside>
@@ -267,13 +267,13 @@
 
 <div style="max-width:1300px;margin:0 auto;padding:0 24px 30px;">
   <div class="notice-box" style="margin-bottom:18px;">
-    🔄 <strong>Use this alongside your other supplier tools.</strong> This matrix shows how you should treat a supplier; the <a href="supplier-preferencing-matrix.html" style="color:#1E40AF;font-weight:700;">Supplier Preferencing Matrix</a> shows how they likely treat you, and the <a href="supplier-risk-matrix.html" style="color:#1E40AF;font-weight:700;">Supplier Risk Matrix</a> assesses continuity risk rather than sourcing strategy. Track ongoing performance with the <a href="supplier-scorecard.html" style="color:#1E40AF;font-weight:700;">Supplier Scorecard</a>.
+    🔄 <strong>Use this alongside your other supplier tools.</strong> Prioritize sourcing strategy with the <a href="kraljic-matrix.html" style="color:#1E40AF;font-weight:700;">Kraljic Matrix</a>, check how suppliers view you back with the <a href="supplier-preferencing-matrix.html" style="color:#1E40AF;font-weight:700;">Supplier Preferencing Matrix</a>, or track ongoing performance with the <a href="supplier-scorecard.html" style="color:#1E40AF;font-weight:700;">Supplier Scorecard</a>.
   </div>
   <div class="card">
-    <div class="card-header"><div class="card-title">Why Use a Kraljic Matrix?</div></div>
+    <div class="card-header"><div class="card-title">Why Use a Supplier Risk Matrix?</div></div>
     <div class="card-body" style="font-size:12.5px;color:var(--slate-600);line-height:1.7;">
-      <p>Treating every supplier or category the same way wastes negotiation effort on low-value purchases and under-manages the few relationships that actually carry risk. The Kraljic Matrix (developed by Peter Kraljic, published in Harvard Business Review, 1983) gives procurement teams a simple, defensible way to prioritize where to spend their time.</p>
-      <p style="margin-top:8px;"><b>How to use it in practice:</b> Score each major category or supplier on the two axes, drag it into position, and use the quadrant to decide your approach — aggressive price negotiation for Leverage items, supply continuity planning for Bottleneck items, and executive-level relationship management for Strategic items. Revisit the matrix periodically, since a category's position can shift as markets and your own volume change. Your data is saved automatically in this browser only — nothing is sent to a server.</p>
+      <p>Not every supplier risk deserves the same level of attention. A probability-impact risk matrix is a well-established risk management technique (used broadly across project management, insurance, and supply chain risk practice) that gives procurement and supply chain teams a simple, defensible way to decide where mitigation effort actually belongs.</p>
+      <p style="margin-top:8px;"><b>How to use it in practice:</b> Score each key supplier or risk on the two axes, drag it into position, and let the quadrant guide your response — urgent mitigation for Critical risks, a contingency plan or insurance for Contingency risks, routine process controls for Manage risks, and periodic review for Monitor risks. Revisit the matrix regularly, since probability and impact can shift as suppliers, markets, and geopolitical conditions change. Your data is saved automatically in this browser only — nothing is sent to a server.</p>
     </div>
   </div>
 </div>
@@ -284,8 +284,9 @@
   <div class="card">
     <div class="card-header"><div class="card-title">Frequently Asked Questions</div></div>
     <div class="card-body">
-      <details class="faq-item"><summary>What are the four quadrants of the Kraljic Matrix, and what does each mean?</summary><p>The matrix plots supply risk against profit impact. Non-critical items (low risk, low impact) call for efficient process automation. Leverage items (low risk, high impact) call for competitive bidding and negotiation leverage. Bottleneck items (high risk, low impact) call for securing supply continuity. Strategic items (high risk, high impact) call for close partnership and joint planning with the supplier.</p></details>
-      <details class="faq-item"><summary>How often should a Kraljic classification be re-evaluated?</summary><p>Annually at minimum, and sooner if there's a major shift — a new supplier entering the market, a shortage affecting supply risk, or a significant change in a category's spend. A category's classification isn't permanent and can move between quadrants over time.</p></details>
+      <details class="faq-item"><summary>What's the difference between this and the Kraljic Matrix?</summary><p>The Kraljic Matrix classifies purchases by supply risk and profit impact to set sourcing strategy. This Supplier Risk Matrix is a more general risk-management tool: it plots the probability that a disruption happens against how severe it would be, and applies to any supplier risk — financial, geopolitical, quality, or single-source dependency — not just sourcing strategy.</p></details>
+      <details class="faq-item"><summary>How often should a supplier risk assessment be updated?</summary><p>At least twice a year, and immediately after any major event — a supplier's financial trouble, a new geopolitical development in their region, or a quality incident. Probability and impact scores are not static and should shift as new information comes in.</p></details>
+      <details class="faq-item"><summary>What does a "contingency plan" actually look like for a low-probability, high-impact supplier?</summary><p>It typically means identifying (though not necessarily qualifying) a backup supplier in advance, holding extra safety stock for that specific item, or securing insurance or contractual protections against the disruption — without spending the ongoing management effort you'd give to a Critical-quadrant supplier.</p></details>
     </div>
   </div>
 </div>
@@ -324,32 +325,32 @@ let selectedItemId = null;
 let editingItemId = null;
 
 const STRATEGIES = {
-  strategic: {
-    label: 'Strategic', cls: 'strategic',
-    text: 'This item sits in the Strategic quadrant: high impact on your business and high supply risk. Build a long-term partnership rather than treating this as a transactional purchase. Consider joint product development, multi-year agreements, and involving senior stakeholders in the relationship. Where feasible, qualify a second source to reduce dependency — but expect this to take time and investment.'
+  critical: {
+    label: 'Critical', cls: 'critical',
+    text: 'This risk sits in the Critical quadrant: likely to happen and severe if it does. This deserves active, ongoing mitigation \u2014 not a one-time fix. Qualify a backup supplier now (not after the disruption), hold extra safety stock if feasible, escalate visibility to senior stakeholders, and review this risk on a short cycle (monthly, not annually).'
   },
-  leverage: {
-    label: 'Leverage', cls: 'leverage',
-    text: 'This item sits in the Leverage quadrant: high spend impact, but supply risk is low because multiple qualified suppliers exist. This is where competitive bidding and price negotiation deliver the most value. Run periodic RFQs, consolidate volume across business units to increase your buying power, and don\u2019t be afraid to switch suppliers if terms are not competitive.'
+  contingency: {
+    label: 'Contingency', cls: 'contingency',
+    text: 'This risk sits in the Contingency quadrant: unlikely to happen, but severe if it does \u2014 think single-source suppliers in a politically unstable region, or a supplier with concentrated key-person dependency. You don\u2019t need daily management here, but you do need a plan on the shelf: an identified (if not fully qualified) backup source, insurance where applicable, or contractual protections, ready to activate if the event occurs.'
   },
-  bottleneck: {
-    label: 'Bottleneck', cls: 'bottleneck',
-    text: 'This item sits in the Bottleneck quadrant: relatively low spend, but high supply risk (few suppliers, long lead times, or single-source dependency). Price negotiation is not the priority here \u2014 supply continuity is. Maintain safety stock, qualify backup suppliers even if they are more expensive, and monitor this relationship closely despite its low dollar value.'
+  manage: {
+    label: 'Manage', cls: 'manage',
+    text: 'This risk sits in the Manage quadrant: fairly likely to happen, but the impact is limited \u2014 think minor, recoverable delays from a secondary supplier. Handle this with routine process controls (standard lead-time buffers, normal quality checks) rather than emergency planning. Don\u2019t over-invest management time here relative to the actual damage a disruption would cause.'
   },
-  noncritical: {
-    label: 'Non-Critical', cls: 'noncritical',
-    text: 'This item sits in the Non-Critical quadrant: low spend impact and low supply risk, widely available from many sources. The goal here is efficiency, not negotiation effort. Use catalog buying, purchasing cards, or e-procurement tools to minimize the administrative cost of processing these orders, and avoid spending excessive time managing these relationships.'
+  monitor: {
+    label: 'Monitor', cls: 'monitor',
+    text: 'This risk sits in the Monitor quadrant: unlikely to happen and low impact if it does. A light-touch periodic review is enough \u2014 revisit it at your regular risk review cycle, but it doesn\u2019t warrant dedicated resources or a formal contingency plan right now.'
   }
 };
-const COLOR_MAP = { strategic:'#7C3AED', leverage:'#0F766E', bottleneck:'#B45309', noncritical:'#64748B' };
+const COLOR_MAP = { critical:'#7C3AED', contingency:'#0F766E', manage:'#B45309', monitor:'#64748B' };
 
 function getQuadrant(risk, impact){
   const highRisk = risk > 5.5;
   const highImpact = impact > 5.5;
-  if(highRisk && highImpact) return 'strategic';
-  if(!highRisk && highImpact) return 'leverage';
-  if(highRisk && !highImpact) return 'bottleneck';
-  return 'noncritical';
+  if(highRisk && highImpact) return 'critical';
+  if(!highRisk && highImpact) return 'contingency';
+  if(highRisk && !highImpact) return 'manage';
+  return 'monitor';
 }
 
 function clamp(v, min, max){ return Math.max(min, Math.min(max, v)); }
@@ -378,7 +379,7 @@ function bubbleSize(spend){
 // ===== Form handling (add / edit) =====
 function submitForm(){
   const name = document.getElementById('itemName').value.trim();
-  if(!name){ alert('Please enter an item or supplier name.'); return; }
+  if(!name){ alert('Please enter a supplier or risk name.'); return; }
   const risk = parseFloat(document.getElementById('riskInput').value);
   const impact = parseFloat(document.getElementById('impactInput').value);
   const spend = parseFloat(document.getElementById('spendInput').value) || 0;
@@ -410,7 +411,7 @@ function loadItemIntoForm(id){
   document.getElementById('impactVal').textContent = it.impact.toFixed(1);
   document.getElementById('spendInput').value = it.spend || '';
   document.getElementById('formTitle').textContent = 'Edit: ' + it.name;
-  document.getElementById('submitBtn').textContent = '✓ Update Item';
+  document.getElementById('submitBtn').textContent = '✓ Update Risk';
   document.getElementById('submitBtn').classList.add('editing');
   document.getElementById('cancelEditBtn').classList.add('show');
   selectedItemId = id;
@@ -420,7 +421,7 @@ function loadItemIntoForm(id){
 
 function cancelEdit(doRender){
   editingItemId = null;
-  document.getElementById('formTitle').textContent = 'Add Item or Category';
+  document.getElementById('formTitle').textContent = 'Add a Supplier Risk';
   document.getElementById('submitBtn').textContent = '+ Add to Matrix';
   document.getElementById('submitBtn').classList.remove('editing');
   document.getElementById('cancelEditBtn').classList.remove('show');
@@ -479,7 +480,7 @@ function render(){
 
   const listEl = document.getElementById('itemList');
   if(items.length===0){
-    listEl.innerHTML = '<p style="font-size:12.5px;color:var(--slate-400);">No items yet. Add your first supplier or category using the form on the right, or click a preset below.</p>';
+    listEl.innerHTML = '<p style="font-size:12.5px;color:var(--slate-400);">No risks yet. Add your first supplier risk using the form on the right.</p>';
   } else {
     listEl.innerHTML = items.map((it, idx)=>{
       const quad = getQuadrant(it.risk, it.impact);
@@ -573,7 +574,7 @@ function showTooltip(dot){
   const it = items.find(i=>i.id===id);
   if(!it) return;
   const tip = document.getElementById('dotTooltip');
-  tip.textContent = `${it.name} — Risk ${it.risk.toFixed(1)}, Impact ${it.impact.toFixed(1)}`;
+  tip.textContent = `${it.name} — Probability ${it.risk.toFixed(1)}, Impact ${it.impact.toFixed(1)}`;
   tip.style.left = dot.style.left;
   tip.style.bottom = dot.style.bottom;
   tip.style.display = 'block';
@@ -588,7 +589,7 @@ function saveState(){
   clearTimeout(saveTimeout);
   saveTimeout = setTimeout(()=>{
     try{
-      localStorage.setItem('cbmlab_kraljic', JSON.stringify({ items, itemCounter }));
+      localStorage.setItem('cbmlab_supplier_risk', JSON.stringify({ items, itemCounter }));
       const ind = document.getElementById('saveIndicator');
       ind.classList.add('show');
       setTimeout(()=>ind.classList.remove('show'), 1200);
@@ -597,7 +598,7 @@ function saveState(){
 }
 function restoreState(){
   try{
-    const raw = localStorage.getItem('cbmlab_kraljic');
+    const raw = localStorage.getItem('cbmlab_supplier_risk');
     if(!raw) return false;
     const state = JSON.parse(raw);
     if(state.items && state.items.length){
@@ -613,10 +614,10 @@ function restoreState(){
 renderGridlines();
 const restored = restoreState();
 if(!restored){
-  items.push({id:++itemCounter, name:'Office Supplies', risk:2, impact:2, spend:8000});
-  items.push({id:++itemCounter, name:'Custom PCB Assembly', risk:8, impact:8, spend:420000});
-  items.push({id:++itemCounter, name:'Standard Fasteners', risk:2, impact:7, spend:180000});
-  items.push({id:++itemCounter, name:'Rare Earth Magnet', risk:9, impact:3, spend:35000});
+  items.push({id:++itemCounter, name:'Local Packaging Vendor', risk:2, impact:2, spend:8000});
+  items.push({id:++itemCounter, name:'Sole-Source Chip Supplier', risk:8, impact:8, spend:420000});
+  items.push({id:++itemCounter, name:'Key Raw Material (Politically Unstable Region)', risk:2, impact:7, spend:180000});
+  items.push({id:++itemCounter, name:'Financially Distressed Distributor', risk:9, impact:3, spend:35000});
 }
 render();
 </script>
@@ -627,18 +628,26 @@ render();
   "mainEntity": [
     {
       "@type": "Question",
-      "name": "What are the four quadrants of the Kraljic Matrix, and what does each mean?",
+      "name": "What's the difference between this and the Kraljic Matrix?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "The matrix plots supply risk against profit impact. Non-critical items (low risk, low impact) call for efficient process automation. Leverage items (low risk, high impact) call for competitive bidding and negotiation leverage. Bottleneck items (high risk, low impact) call for securing supply continuity. Strategic items (high risk, high impact) call for close partnership and joint planning with the supplier."
+        "text": "The Kraljic Matrix classifies purchases by supply risk and profit impact to set sourcing strategy. This Supplier Risk Matrix is a more general risk-management tool: it plots the probability that a disruption happens against how severe it would be, and applies to any supplier risk, not just sourcing strategy."
       }
     },
     {
       "@type": "Question",
-      "name": "How often should a Kraljic classification be re-evaluated?",
+      "name": "How often should a supplier risk assessment be updated?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Annually at minimum, and sooner if there's a major shift — a new supplier entering the market, a shortage affecting supply risk, or a significant change in a category's spend. A category's classification isn't permanent and can move between quadrants over time."
+        "text": "At least twice a year, and immediately after any major event such as a supplier's financial trouble, a geopolitical development, or a quality incident."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What does a contingency plan look like for a low-probability, high-impact supplier?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Typically identifying a backup supplier in advance, holding extra safety stock, or securing insurance or contractual protections, without the ongoing management effort given to a Critical-quadrant supplier."
       }
     }
   ]

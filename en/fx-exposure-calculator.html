@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Free FX exposure calculator for procurement teams. Enter your purchases by currency to see total exposure, concentration risk, and the P&L impact of a simulated exchange rate move. Live exchange rate lookup included.">
+<meta name="keywords" content="FX exposure calculator, foreign exchange risk calculator, currency exposure procurement, FX risk assessment tool, multi-currency purchasing">
+<title>FX Exposure Calculator — CBM Lab</title>
+<link rel="icon" href="../favicon.ico" sizes="any">
+<link rel="icon" href="../favicon.ico" type="image/x-icon">
+<link rel="apple-touch-icon" href="../apple-touch-icon.png">
+<link rel="canonical" href="https://procurement-toolkit-eight.vercel.app/en/fx-exposure-calculator.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="CBM Lab">
+<meta property="og:locale" content="en_US">
+<meta property="og:title" content="FX Exposure Calculator — CBM Lab">
+<meta property="og:description" content="Free FX exposure calculator for procurement teams. Enter your purchases by currency to see total exposure, concentration risk, and the P&L impact of a simulated exchange rate move. Live exchange rate lookup included.">
+<meta property="og:url" content="https://procurement-toolkit-eight.vercel.app/en/fx-exposure-calculator.html">
+<meta property="og:image" content="https://procurement-toolkit-eight.vercel.app/assets/hero-team.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="FX Exposure Calculator — CBM Lab">
+<meta name="twitter:description" content="Free FX exposure calculator for procurement teams. Enter your purchases by currency to see total exposure, concentration risk, and the P&L impact of a simulated exchange rate move. Live exchange rate lookup included.">
+<meta name="twitter:image" content="https://procurement-toolkit-eight.vercel.app/assets/hero-team.jpg">
+
+<link rel="alternate" hreflang="ko" href="https://procurement-toolkit-eight.vercel.app/fx-exposure-calculator.html">
+<link rel="alternate" hreflang="en" href="https://procurement-toolkit-eight.vercel.app/en/fx-exposure-calculator.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@800;900&display=swap" rel="stylesheet">
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  :root{--accent:#2563EB;--accent-light:#DBEAFE;--accent-dark:#1D4ED8;--slate-50:#F8FAFC;--slate-100:#F1F5F9;--slate-200:#E2E8F0;--slate-300:#CBD5E1;--slate-400:#94A3B8;--slate-500:#64748B;--slate-600:#475569;--slate-700:#334155;--slate-800:#1E293B;--slate-900:#0F172A;--success:#0F766E;--success-light:#CCFBF1;--warning:#B45309;--warning-light:#FEF3C7;--danger:#DC2626;--danger-light:#FEE2E2;--radius:8px;--radius-lg:12px;--shadow-sm:0 1px 2px rgba(0,0,0,.05);font-family:'Inter','Pretendard',system-ui,-apple-system,sans-serif}
+  body{background:var(--slate-50);color:var(--slate-800);font-size:14px;line-height:1.6}
+  header{background:#fff;border-bottom:1px solid var(--slate-200)}
+  .header-inner{max-width:1200px;margin:0 auto;padding:16px 24px;display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}
+  .logo-mark{font-size:20px;font-weight:800;color:var(--slate-900);text-decoration:none;font-family:'Space Grotesk','Pretendard',sans-serif;letter-spacing:-0.4px;}
+  .nav-right{display:flex;align-items:center;gap:10px}
+  .nav-link{font-size:13px;font-weight:600;color:var(--slate-500);text-decoration:none;padding:7px 12px;border-radius:6px}
+  .nav-link:hover{background:var(--slate-100)}
+  .lang-switch{font-size:12px;font-weight:700;color:var(--accent);text-decoration:none;padding:6px 12px;border:1px solid var(--accent-light);border-radius:999px;background:var(--accent-light)}
+  .lang-switch:hover{background:#BFDBFE}
+
+  .hero{background:#fff;border-bottom:1px solid var(--slate-200);padding:28px 24px 24px}
+  .hero-inner{max-width:1200px;margin:0 auto}
+  .hero h1{font-size:24px;font-weight:700;color:var(--slate-900);margin-bottom:6px;letter-spacing:-0.3px}
+  .hero p{font-size:14px;color:var(--slate-500);max-width:740px}
+  .hero-tags{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}
+  .tag{background:var(--slate-100);color:var(--slate-600);font-size:11px;font-weight:500;padding:3px 10px;border-radius:4px;border:1px solid var(--slate-200)}
+
+  .main{max-width:1200px;margin:0 auto;padding:28px 24px 60px;display:grid;grid-template-columns:1fr 380px;gap:24px;align-items:start}
+  .card{background:#fff;border:1px solid var(--slate-200);border-radius:var(--radius-lg);box-shadow:var(--shadow-sm);margin-bottom:20px}
+  .card-header{padding:16px 20px;border-bottom:1px solid var(--slate-100);display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+  .card-title{font-size:14px;font-weight:600;color:var(--slate-800)}
+  .card-body{padding:20px}
+
+  .item-table{width:100%;border-collapse:collapse}
+  .item-table col.col-cur{width:26%}
+  .item-table col.col-amt{width:34%}
+  .item-table col.col-rate{width:26%}
+  .item-table col.col-del{width:40px}
+  .item-table th{font-size:10.5px;color:var(--slate-400);text-transform:uppercase;text-align:left;padding:0 6px 8px}
+  .item-table td{padding:6px;vertical-align:middle}
+  .item-table select,.item-table input{width:100%;border:1px solid var(--slate-200);border-radius:6px;padding:8px 8px;font-size:13px;font-family:inherit}
+  .item-table .del-btn{width:28px;height:28px;border:1px solid var(--slate-200);border-radius:6px;background:#fff;color:var(--slate-400);cursor:pointer;font-size:13px}
+  .item-table .del-btn:hover{border-color:var(--danger);color:var(--danger)}
+  .btn-add-row{width:100%;padding:9px;border:1px dashed var(--slate-300);border-radius:8px;background:#fff;color:var(--slate-500);font-size:12.5px;font-weight:600;cursor:pointer;margin-top:6px}
+  .btn-add-row:hover{border-color:var(--accent);color:var(--accent)}
+
+  .field-label{font-size:12.5px;font-weight:600;color:var(--slate-600);margin-bottom:6px;display:block}
+  .inp{width:100%;border:1px solid var(--slate-200);border-radius:8px;padding:9px 11px;font-size:13.5px;font-family:inherit}
+  .inp:focus{outline:none;border-color:var(--accent)}
+
+  .fx-fetch-btn{white-space:nowrap;padding:0 12px;border:1px solid var(--accent-light);border-radius:6px;background:var(--accent-light);color:var(--accent-dark);font-size:11.5px;font-weight:700;cursor:pointer}
+
+  .result-total{text-align:center;padding:18px 0 10px}
+  .result-total .label{font-size:12px;color:var(--slate-500);margin-bottom:4px}
+  .result-total .value{font-size:30px;font-weight:800;color:var(--slate-900);letter-spacing:-.5px}
+
+  .exposure-row{margin-bottom:12px}
+  .exposure-row .top-line{display:flex;justify-content:space-between;font-size:12.5px;margin-bottom:5px}
+  .exposure-row .cur-name{font-weight:700;color:var(--slate-800)}
+  .exposure-row .pct{color:var(--slate-500)}
+  .exposure-bar-bg{width:100%;height:8px;background:var(--slate-100);border-radius:4px;overflow:hidden}
+  .exposure-bar-fill{height:100%;background:var(--accent);border-radius:4px}
+
+  .warning-box{background:var(--warning-light);border:1px solid #FDE68A;border-radius:var(--radius);padding:12px 14px;font-size:12px;color:#78350F;margin-top:14px;line-height:1.6}
+  .notice-box{background:var(--accent-light);border:1px solid #BFDBFE;border-radius:var(--radius);padding:10px 14px;font-size:12px;color:#1E40AF;margin-top:14px;line-height:1.6}
+
+  .sim-row{display:flex;align-items:center;gap:10px;margin-top:10px}
+  .sim-row input[type=range]{flex:1}
+  .sim-val{font-size:13px;font-weight:700;color:var(--slate-800);min-width:52px;text-align:right}
+
+  .impact-table{width:100%;border-collapse:collapse;font-size:12.5px;margin-top:10px}
+  .impact-table th,.impact-table td{padding:8px 6px;border-bottom:1px solid var(--slate-100);text-align:left}
+  .impact-table th{font-size:10.5px;color:var(--slate-400);text-transform:uppercase}
+  .impact-table td.num{text-align:right;font-variant-numeric:tabular-nums}
+  .impact-table td.up{color:var(--danger)}
+  .impact-table td.down{color:var(--success)}
+
+  .faq-item{border-bottom:1px solid var(--slate-100);padding:12px 0}
+  .faq-item:last-child{border-bottom:none}
+  .faq-item summary{cursor:pointer;font-weight:700;font-size:13px;color:var(--slate-800);list-style:none;outline:none}
+  .faq-item summary::-webkit-details-marker{display:none}
+  .faq-item summary::before{content:'Q. ';color:var(--accent)}
+  .faq-item p{margin-top:8px;font-size:12.5px;color:var(--slate-600);line-height:1.7;padding-left:2px}
+
+  .ad-area-main{max-width:1200px;margin:24px auto 0;padding:0 24px 28px}
+  .ad-main-box{border:1px dashed #CBD5E1;border-radius:10px;background:#fff;height:90px;display:flex;flex-direction:column;align-items:center;justify-content:center;color:var(--slate-400);font-size:12px;gap:4px}
+  .ad-main-box strong{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:#94A3B8}
+  .faq-wrap{max-width:1100px;margin:20px auto 0;padding:0 24px}
+
+  footer{background:#0F172A;color:#94A3B8;padding:24px;font-size:12px}
+  .footer-inner{max-width:1200px;margin:0 auto;display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
+  .footer-logo{font-size:15px;font-weight:800;color:#fff;font-family:'Space Grotesk','Pretendard',sans-serif;}
+  .footer-link{color:#94A3B8;text-decoration:none;font-size:11px;margin-right:14px}
+
+  @media print{.ad-area-main,.ad-main-box,header,footer{display:none !important}.main{grid-template-columns:1fr}}
+  @media (max-width:900px){.main{grid-template-columns:1fr}}
+  @media (max-width:640px){.ad-area-main{padding:0 16px 20px}.faq-wrap{padding:0 16px}}
+</style>
+
+<script src="https://cdn.amplitude.com/script/d4aa9301e01f4600b5eeb018e160aa7c.js"></script>
+<script>
+  window.amplitude.init("d4aa9301e01f4600b5eeb018e160aa7c", { fetchRemoteConfig: true, autocapture: true });
+</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-W1YBL5BGGK"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-W1YBL5BGGK');
+</script>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute;" aria-hidden="true">
+  <defs>
+    <linearGradient id="cbmGradH" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#14B8A6"/><stop offset="100%" stop-color="#0B2A4A"/></linearGradient>
+    <linearGradient id="cbmGradF" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#2DD4BF"/><stop offset="100%" stop-color="#5B9EFF"/></linearGradient>
+  </defs>
+</svg>
+<header><div class="header-inner">
+  <a href="index.html" class="logo-mark"><svg width="26" height="26" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align:middle;margin-right:8px;flex-shrink:0;"><path d="M20 2.5L36.5 11.5V28.5L20 37.5L3.5 28.5V11.5L20 2.5Z" stroke="url(#cbmGradH)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M20 2.5V20M20 20L36.5 11.5M20 20L3.5 11.5" stroke="url(#cbmGradH)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/></svg><span style="font-family:'Montserrat','Space Grotesk',sans-serif;font-weight:800;letter-spacing:-1.1px;background:linear-gradient(90deg,#14B8A6 0%,#1E7A8C 45%,#0B2A4A 100%);-webkit-background-clip:text;background-clip:text;color:transparent;">CBMLab</span></a>
+  <div class="nav-right">
+    <a href="index.html" class="nav-link">← All Tools</a>
+    <a href="../fx-exposure-calculator.html" class="lang-switch">KOR</a>
+  </div>
+</div></header>
+
+<section class="hero"><div class="hero-inner">
+  <h1>FX Exposure Calculator</h1>
+  <p>If your purchases span multiple currencies, even a small exchange rate move can ripple through your total cost. Enter your spend by currency to see your actual exposure, and simulate what a rate move would do to your cost base.</p>
+  <div class="hero-tags"><span class="tag">FX Risk Management</span><span class="tag">Concentration Diagnosis</span><span class="tag">Scenario Simulation</span><span class="tag">Live Exchange Rates</span></div>
+</div></section>
+
+<div class="main">
+  <section>
+    <div class="card">
+      <div class="card-header">
+        <div class="card-title">Purchases by Currency</div>
+        <div style="font-size:11.5px;color:var(--slate-400);">Reporting currency: US Dollar (USD)</div>
+      </div>
+      <div class="card-body">
+        <table class="item-table">
+          <colgroup><col class="col-cur"><col class="col-amt"><col class="col-rate"><col class="col-del"></colgroup>
+          <thead><tr><th>Currency</th><th>Annual Purchase Value</th><th>Rate (1 unit = ? USD)</th><th></th></tr></thead>
+          <tbody id="itemBody"></tbody>
+        </table>
+        <button class="btn-add-row" onclick="addRow()">+ Add Currency</button>
+        <div class="notice-box">💡 Click "Fetch" next to any currency to auto-fill a live reference rate (ECB-based). For accounting purposes, always use the exchange rate as of the actual payment date.</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header"><div class="card-title">Exchange Rate Scenario</div></div>
+      <div class="card-body">
+        <label class="field-label">If all currencies moved by this much against USD at once (%)</label>
+        <div class="sim-row">
+          <input type="range" id="simSlider" min="-30" max="30" value="10" step="1" oninput="calc()">
+          <span class="sim-val" id="simValLabel">+10%</span>
+        </div>
+        <table class="impact-table" id="impactTable"></table>
+      </div>
+    </div>
+  </section>
+
+  <aside>
+    <div class="card">
+      <div class="card-header"><div class="card-title">Total FX Exposure</div></div>
+      <div class="card-body">
+        <div class="result-total">
+          <div class="label">Total purchase value (USD-equivalent)</div>
+          <div class="value" id="totalKrw">₩0</div>
+        </div>
+        <div id="exposureBreakdown"></div>
+        <div id="concentrationWarning"></div>
+      </div>
+    </div>
+  </aside>
+</div>
+
+<div style="max-width:1200px;margin:0 auto;padding:0 24px 30px;">
+  <div class="card">
+    <div class="card-header"><div class="card-title">Why Manage FX Exposure</div></div>
+    <div class="card-body" style="font-size:12.5px;color:var(--slate-600);line-height:1.7;">
+      <p>If a large share of your spend sits in one currency, a sharp move in that currency against your reporting currency can push up your costs with little warning. Common responses include diversifying sourcing across currencies, using forward contracts or other hedges, or building exchange-rate clauses into contracts.</p>
+      <p style="margin-top:8px;"><b>How to use this in practice:</b> Review your currency exposure with this tool every quarter. If any single currency crosses 50% of total exposure (you’ll see a concentration warning), that’s a good trigger to discuss hedging options with finance.</p>
+      <div class="notice-box">🔄 For an exact rate on a single transaction, use the <a href="landed-cost-calculator.html" style="color:#1E40AF;font-weight:700;">Landed Cost Calculator</a>. To track commodity prices and FX benchmarks more broadly, see the <a href="market-index-hub.html" style="color:#1E40AF;font-weight:700;">Market Index Hub</a>.</div>
+    </div>
+  </div>
+</div>
+
+<!-- AD (bottom banner) -->
+<div class="ad-area-main" role="complementary" aria-label="Advertisement area">
+  <div class="ad-main-box"><strong>Advertisement</strong>Google AdSense — 728 × 90 leaderboard</div>
+</div>
+
+<div class="faq-wrap">
+  <div class="card">
+    <div class="card-header"><div class="card-title">Frequently Asked Questions</div></div>
+    <div class="card-body">
+      <details class="faq-item"><summary>Is FX exposure the same thing as FX risk?</summary><p>Exposure is the amount that's affected by exchange rate movements; risk is the likelihood of an actual loss resulting from that exposure. Larger exposure generally means larger risk, so measuring exposure is the first step in managing the risk.</p></details>
+      <details class="faq-item"><summary>What level of currency concentration is risky?</summary><p>There's no universal threshold, but as a practical rule of thumb, once a single currency crosses 50% of total purchase exposure, your overall cost becomes heavily dependent on that one currency's movement — a reasonable point to consider diversifying.</p></details>
+      <details class="faq-item"><summary>Do I need to hedge my FX exposure?</summary><p>Not necessarily. If your exposure is small or your margins have enough cushion, absorbing the risk without hedging can be a reasonable choice. Either way, you need to measure the exposure first before that decision is even possible.</p></details>
+    </div>
+  </div>
+</div>
+
+<footer><div class="footer-inner">
+  <div class="footer-logo"><svg width="24" height="24" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align:middle;margin-right:9px;flex-shrink:0;"><path d="M20 2.5L36.5 11.5V28.5L20 37.5L3.5 28.5V11.5L20 2.5Z" stroke="url(#cbmGradF)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M20 2.5V20M20 20L36.5 11.5M20 20L3.5 11.5" stroke="url(#cbmGradF)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/></svg>CBM<span style="color:#2563EB;">Lab</span></div>
+  <nav><a href="index.html" class="footer-link">All Tools</a><a href="privacy.html" class="footer-link">Privacy Policy</a></nav>
+</div></footer>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {"@type":"Question","name":"Is FX exposure the same thing as FX risk?","acceptedAnswer":{"@type":"Answer","text":"Exposure is the amount affected by exchange rate movements; risk is the likelihood of an actual loss resulting from that exposure. Measuring exposure is the first step in managing the risk."}},
+    {"@type":"Question","name":"What level of currency concentration is risky?","acceptedAnswer":{"@type":"Answer","text":"There is no universal threshold, but once a single currency crosses 50% of total purchase exposure, it is a reasonable point to consider diversifying."}},
+    {"@type":"Question","name":"Do I need to hedge my FX exposure?","acceptedAnswer":{"@type":"Answer","text":"Not necessarily. If exposure is small, absorbing the risk without hedging can be reasonable. Either way, measuring the exposure comes first."}}
+  ]
+}
+</script>
+
+<script>
+const CURRENCIES = ['EUR','JPY','CNY','GBP','KRW','MXN','VND','INR'];
+let rows = [];
+let rowCounter = 0;
+
+function addRow(currency, amount, rate){
+  rowCounter++;
+  rows.push({ id: rowCounter, currency: currency || 'USD', amount: amount || 0, rate: rate || 1380 });
+  renderRows();
+  calc();
+}
+
+function removeRow(id){
+  rows = rows.filter(r=>r.id!==id);
+  renderRows();
+  calc();
+}
+
+function updateRow(id, field, value){
+  const r = rows.find(r=>r.id===id);
+  if(!r) return;
+  r[field] = (field==='amount'||field==='rate') ? parseFloat(value)||0 : value;
+  calc();
+}
+
+function renderRows(){
+  const body = document.getElementById('itemBody');
+  body.innerHTML = rows.map(r=>`
+    <tr>
+      <td>
+        <select onchange="updateRow(${r.id},'currency',this.value)">
+          ${CURRENCIES.map(c=>`<option value="${c}" ${c===r.currency?'selected':''}>${c}</option>`).join('')}
+        </select>
+      </td>
+      <td><input type="number" min="0" value="${r.amount||''}" placeholder="0" oninput="updateRow(${r.id},'amount',this.value)"></td>
+      <td style="display:flex;gap:4px;">
+        <input type="number" min="0" value="${r.rate}" oninput="updateRow(${r.id},'rate',this.value)">
+        <button class="fx-fetch-btn" onclick="fetchRate(${r.id})">Fetch</button>
+      </td>
+      <td><button class="del-btn" onclick="removeRow(${r.id})">✕</button></td>
+    </tr>
+  `).join('');
+}
+
+async function fetchRate(id){
+  const r = rows.find(r=>r.id===id);
+  if(!r) return;
+  try{
+    const res = await fetch(`https://api.frankfurter.dev/v1/latest?base=${r.currency}&symbols=USD`);
+    if(!res.ok) throw new Error();
+    const data = await res.json();
+    const rate = data.rates && data.rates.USD;
+    if(!rate) throw new Error();
+    r.rate = Math.round(rate*100)/100;
+    renderRows();
+    calc();
+  }catch(e){
+    alert('Failed to fetch the exchange rate. Please enter it manually.');
+  }
+}
+
+function fmt(v,d=0){ return (v||0).toLocaleString('en-US',{minimumFractionDigits:d,maximumFractionDigits:d}); }
+
+function calc(){
+  const simPct = parseInt(document.getElementById('simSlider').value);
+  document.getElementById('simValLabel').textContent = (simPct>=0?'+':'') + simPct + '%';
+
+  const withKrw = rows.map(r=>({...r, krw: (r.amount||0)*(r.rate||0)}));
+  const totalKrw = withKrw.reduce((s,r)=>s+r.krw,0);
+  document.getElementById('totalKrw').textContent = '$' + fmt(totalKrw, 0);
+
+  const breakdown = document.getElementById('exposureBreakdown');
+  if(totalKrw<=0){
+    breakdown.innerHTML = '<p style="font-size:12px;color:var(--slate-400);text-align:center;">Add a currency and enter an amount to see the breakdown.</p>';
+  } else {
+    breakdown.innerHTML = withKrw.filter(r=>r.krw>0).sort((a,b)=>b.krw-a.krw).map(r=>{
+      const pct = (r.krw/totalKrw)*100;
+      return `<div class="exposure-row">
+        <div class="top-line"><span class="cur-name">${r.currency}</span><span class="pct">${pct.toFixed(1)}% · $${fmt(r.krw)}</span></div>
+        <div class="exposure-bar-bg"><div class="exposure-bar-fill" style="width:${pct}%;"></div></div>
+      </div>`;
+    }).join('');
+  }
+
+  const warnEl = document.getElementById('concentrationWarning');
+  const maxShare = withKrw.length && totalKrw>0 ? Math.max(...withKrw.map(r=>r.krw/totalKrw)) : 0;
+  if(maxShare > 0.5){
+    const topCur = withKrw.reduce((a,b)=> (b.krw>a.krw?b:a), withKrw[0]).currency;
+    warnEl.innerHTML = `<div class="warning-box">⚠ <strong>${topCur}</strong> alone accounts for <strong>${(maxShare*100).toFixed(0)}%</strong> of your total exposure. This is a high currency concentration risk — consider diversifying your sourcing or exploring a hedge.</div>`;
+  } else {
+    warnEl.innerHTML = '';
+  }
+
+  const impactBody = document.getElementById('impactTable');
+  const impactRows = withKrw.filter(r=>r.krw>0).map(r=>{
+    const changedKrw = r.krw * (1 + simPct/100);
+    const diff = changedKrw - r.krw;
+    const cls = diff>0?'up':(diff<0?'down':'');
+    const sign = diff>0?'+':'';
+    return `<tr><td>${r.currency}</td><td class="num">$${fmt(r.krw)}</td><td class="num ${cls}">${sign}$${fmt(diff)}</td></tr>`;
+  }).join('');
+  const totalDiff = totalKrw * (simPct/100);
+  const totalCls = totalDiff>0?'up':(totalDiff<0?'down':'');
+  const totalSign = totalDiff>0?'+':'';
+  impactBody.innerHTML = `
+    <thead><tr><th>Currency</th><th style="text-align:right;">Current USD-Equiv.</th><th style="text-align:right;">Change Under Scenario</th></tr></thead>
+    <tbody>${impactRows}
+      <tr style="font-weight:800;"><td>Total</td><td class="num">$${fmt(totalKrw)}</td><td class="num ${totalCls}">${totalSign}$${fmt(totalDiff)}</td></tr>
+    </tbody>`;
+}
+
+addRow('EUR', 350000, 1.09);
+addRow('CNY', 150000, 0.14);
+addRow('JPY', 80000, 0.0068);
+</script>
+</body>
+</html>
