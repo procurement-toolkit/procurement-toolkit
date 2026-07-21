@@ -195,6 +195,7 @@
     fetchRemoteConfig: true,
     autocapture: true,
   });
+  window.amplitude.track('CBM Page View', {category: 'calc', page: 'personal-duty-calculator', lang: 'ko'});
 </script>
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-W1YBL5BGGK"></script>
 <script>
@@ -599,6 +600,7 @@ function calc(){
 }
 
 function saveResultImage(){
+  if(window.amplitude) window.amplitude.track('Download', {type:'image', tool:'duty-calculator'});
   const el = document.getElementById('resultCard');
   html2canvas(el, {backgroundColor:'#F8FAFC', scale:2}).then(canvas=>{
     const link = document.createElement('a');
@@ -619,6 +621,7 @@ function buildShareText(){
 }
 
 async function shareResult(){
+  if(window.amplitude) window.amplitude.track('Share', {tool:'duty-calculator'});
   const btn = document.getElementById('shareBtn');
   const shareText = buildShareText();
   const shareUrl = window.location.href.split('?')[0];
