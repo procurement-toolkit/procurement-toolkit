@@ -297,7 +297,7 @@ function calc(){
   if(buyVariable !== makeVariable){
     const bev = (makeFixed - buyFixed) / (buyVariable - makeVariable);
     if(bev > 0){
-      breakevenText = `약 ${fmt(bev)}개 지점에서 손익분기 — 이보다 많으면 ${bev && (makeVariable<buyVariable ? '자체생산' : '외주')}이 유리`;
+      breakevenText = `약 ${fmt(bev)}개 지점에서 손익분기 — 이보다 많으면 ${makeVariable<buyVariable ? '자체생산이' : '외주가'} 유리`;
     }
   }
 
@@ -305,7 +305,7 @@ function calc(){
   const cheaper = makeTotal < buyTotal ? 'make' : 'buy';
   costWrap.innerHTML = `
     <div class="cost-result" style="background:${cheaper==='make'?'var(--purple-light)':'var(--success-light)'};">
-      <div class="value" style="color:${cheaper==='make'?'var(--purple)':'var(--success)'};">${cheaper==='make'?'자체생산':'외주'}이 더 저렴</div>
+      <div class="value" style="color:${cheaper==='make'?'var(--purple)':'var(--success)'};">${cheaper==='make'?'자체생산이':'외주가'} 더 저렴</div>
       <div class="label">예상 물량 ${fmt(volume)}개 기준</div>
     </div>
     <div class="breakdown-row"><span class="k">자체생산 총비용</span><span class="v">₩${fmt(makeTotal)}</span></div>
@@ -325,7 +325,7 @@ function calc(){
   const avgScore = totalWeight > 0 ? weightedSum/totalWeight : 3;
 
   const finalWrap = document.getElementById('finalResultWrap');
-  let verdictClass = 'neutral', verdictText = '비슷함 — 비용 비교 결과를 더 비중있게 보세요';
+  let verdictClass = 'neutral', verdictText = '전략적 요인은 팽팽함 — 위 비용 비교 결과를 참고해 결정하세요';
   if(avgScore >= 3.5){ verdictClass = 'make'; verdictText = '자체생산 쪽으로 기울어요'; }
   else if(avgScore <= 2.5){ verdictClass = 'buy'; verdictText = '외주 쪽으로 기울어요'; }
 
