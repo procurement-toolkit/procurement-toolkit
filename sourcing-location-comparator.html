@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="니어쇼어·리쇼어·오프쇼어 소싱 비교 계산기 - 최대 3개 소싱 옵션의 단가·운임·관세·리드타임을 나란히 입력해 실제 총원가와 재고비용 영향까지 비교하세요.">
+<meta name="keywords" content="니어쇼어링 계산기, 리쇼어링 비교, 오프쇼어 소싱 비교, 소싱 전략 총원가">
+<title>니어쇼어·리쇼어·오프쇼어 소싱 비교 계산기 — CBM Lab</title>
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="icon" href="favicon.ico" type="image/x-icon">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="canonical" href="https://procurement-toolkit-eight.vercel.app/sourcing-location-comparator.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="CBM Lab">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:title" content="니어쇼어·리쇼어·오프쇼어 소싱 비교 계산기 — CBM Lab">
+<meta property="og:description" content="니어쇼어·리쇼어·오프쇼어 소싱 비교 계산기 - 최대 3개 소싱 옵션의 단가·운임·관세·리드타임을 나란히 비교하세요.">
+<meta property="og:url" content="https://procurement-toolkit-eight.vercel.app/sourcing-location-comparator.html">
+<meta property="og:image" content="https://procurement-toolkit-eight.vercel.app/assets/hero-team.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="니어쇼어·리쇼어·오프쇼어 소싱 비교 계산기 — CBM Lab">
+<meta name="twitter:description" content="니어쇼어·리쇼어·오프쇼어 소싱 비교 계산기 - 최대 3개 소싱 옵션의 단가·운임·관세·리드타임을 나란히 비교하세요.">
+<meta name="twitter:image" content="https://procurement-toolkit-eight.vercel.app/assets/hero-team.jpg">
+
+<link rel="alternate" hreflang="ko" href="https://procurement-toolkit-eight.vercel.app/sourcing-location-comparator.html">
+<link rel="alternate" hreflang="en" href="https://procurement-toolkit-eight.vercel.app/en/sourcing-location-comparator.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@800;900&display=swap" rel="stylesheet">
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  :root{--accent:#2563EB;--accent-light:#DBEAFE;--accent-dark:#1D4ED8;--slate-50:#F8FAFC;--slate-100:#F1F5F9;--slate-200:#E2E8F0;--slate-300:#CBD5E1;--slate-400:#94A3B8;--slate-500:#64748B;--slate-600:#475569;--slate-700:#334155;--slate-800:#1E293B;--slate-900:#0F172A;--success:#0F766E;--success-light:#D1FAE5;--warn:#B45309;--warn-light:#FEF3C7;--radius:8px;--radius-lg:12px;--shadow-sm:0 1px 2px rgba(0,0,0,.05);font-family:'Pretendard','Apple SD Gothic Neo',system-ui,-apple-system,sans-serif}
+  body{background:var(--slate-50);color:var(--slate-800);font-size:14px;line-height:1.6}
+  header{background:#fff;border-bottom:1px solid var(--slate-200)}
+  .header-inner{max-width:1200px;margin:0 auto;padding:16px 24px;display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}
+  .logo-mark{font-size:20px;font-weight:800;color:var(--slate-900);text-decoration:none;font-family:'Space Grotesk','Pretendard',sans-serif;letter-spacing:-0.4px;}
+  .nav-right{display:flex;align-items:center;gap:10px}
+  .nav-link{font-size:13px;font-weight:600;color:var(--slate-500);text-decoration:none;padding:7px 12px;border-radius:6px}
+  .nav-link:hover{background:var(--slate-100)}
+  .lang-switch{font-size:12px;font-weight:700;color:var(--accent);text-decoration:none;padding:6px 12px;border:1px solid var(--accent-light);border-radius:999px;background:var(--accent-light)}
+  .lang-switch:hover{background:#BFDBFE}
+
+  .hero{background:#fff;border-bottom:1px solid var(--slate-200);padding:28px 24px 24px}
+  .hero-inner{max-width:1200px;margin:0 auto}
+  .hero h1{font-size:24px;font-weight:700;color:var(--slate-900);margin-bottom:6px;letter-spacing:-0.3px}
+  .hero p{font-size:14px;color:var(--slate-500);max-width:740px}
+  .hero-tags{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}
+  .tag{background:var(--slate-100);color:var(--slate-600);font-size:11px;font-weight:500;padding:3px 10px;border-radius:4px;border:1px solid var(--slate-200)}
+
+  .main{max-width:1200px;margin:0 auto;padding:28px 24px 60px}
+  .card{background:#fff;border:1px solid var(--slate-200);border-radius:var(--radius-lg);box-shadow:var(--shadow-sm);margin-bottom:20px}
+  .card-header{padding:16px 20px;border-bottom:1px solid var(--slate-100)}
+  .card-title{font-size:14px;font-weight:700;color:var(--slate-800)}
+  .card-body{padding:20px;overflow-x:auto}
+
+  .compare-table{width:100%;border-collapse:collapse;min-width:640px}
+  .compare-table th{font-size:11px;color:var(--slate-400);text-transform:uppercase;text-align:left;padding:8px 10px;border-bottom:2px solid var(--slate-100)}
+  .compare-table th input{width:100%;border:none;border-bottom:2px solid var(--accent-light);background:transparent;font-size:13.5px;font-weight:800;color:var(--slate-800);padding:4px 2px;text-transform:none}
+  .compare-table td{padding:6px 10px;border-bottom:1px solid var(--slate-100)}
+  .compare-table td.label{font-size:12.5px;color:var(--slate-500);white-space:nowrap;font-weight:600}
+  .compare-table input[type=number]{width:100%;border:1px solid var(--slate-200);border-radius:6px;padding:7px 8px;font-size:13px;font-family:inherit}
+  .compare-table tr.result-row td{font-weight:800;font-size:14px;padding-top:10px}
+  .best-badge{display:inline-block;background:var(--success-light);color:var(--success);font-size:9.5px;font-weight:800;padding:2px 7px;border-radius:999px;margin-left:6px;vertical-align:middle}
+
+  .field-sub{font-size:10.5px;color:var(--slate-400)}
+
+  .warn-box{background:var(--warn-light);border:1px solid #FDE68A;border-radius:var(--radius);padding:12px 14px;font-size:12px;color:#78350F;margin-top:14px;line-height:1.6}
+  .notice-box{background:var(--accent-light);border:1px solid #BFDBFE;border-radius:var(--radius);padding:10px 14px;font-size:12px;color:#1E40AF;margin-top:14px;line-height:1.6}
+
+  .faq-item{border-bottom:1px solid var(--slate-100);padding:12px 0}
+  .faq-item:last-child{border-bottom:none}
+  .faq-item summary{cursor:pointer;font-weight:700;font-size:13px;color:var(--slate-800);list-style:none;outline:none}
+  .faq-item summary::-webkit-details-marker{display:none}
+  .faq-item summary::before{content:'Q. ';color:var(--accent)}
+  .faq-item p{margin-top:8px;font-size:12.5px;color:var(--slate-600);line-height:1.7;padding-left:2px}
+
+  .ad-area-main{max-width:1200px;margin:0 auto;padding:0 24px 28px}
+  .ad-main-box{border:1px dashed #CBD5E1;border-radius:10px;background:#fff;height:90px;display:flex;flex-direction:column;align-items:center;justify-content:center;color:var(--slate-400);font-size:12px;gap:4px}
+  .ad-main-box strong{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:#94A3B8}
+  .faq-wrap{max-width:1100px;margin:20px auto 0;padding:0 24px}
+
+  footer{background:#0F172A;color:#94A3B8;padding:24px;font-size:12px}
+  .footer-inner{max-width:1200px;margin:0 auto;display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
+  .footer-logo{font-size:15px;font-weight:800;color:#fff;font-family:'Space Grotesk','Pretendard',sans-serif;}
+  .footer-link{color:#94A3B8;text-decoration:none;font-size:11px;margin-right:14px}
+
+  @media print{.ad-area-main,.ad-main-box,header,footer{display:none !important}}
+  @media (max-width:640px){.ad-area-main{padding:0 16px 20px}.faq-wrap{padding:0 16px}}
+</style>
+
+<script src="https://cdn.amplitude.com/script/d4aa9301e01f4600b5eeb018e160aa7c.js"></script>
+<script>
+  window.amplitude.init("d4aa9301e01f4600b5eeb018e160aa7c", { fetchRemoteConfig: true, autocapture: true });
+  window.amplitude.track('CBM Page View', {category: 'calc', page: 'sourcing-location-comparator', lang: 'ko'});
+</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-W1YBL5BGGK"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-W1YBL5BGGK');
+</script>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute;" aria-hidden="true">
+  <defs>
+    <linearGradient id="cbmGradH" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#14B8A6"/><stop offset="100%" stop-color="#0B2A4A"/></linearGradient>
+    <linearGradient id="cbmGradF" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#2DD4BF"/><stop offset="100%" stop-color="#5B9EFF"/></linearGradient>
+  </defs>
+</svg>
+<header><div class="header-inner">
+  <a href="index.html" class="logo-mark"><svg width="26" height="26" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align:middle;margin-right:8px;flex-shrink:0;"><path d="M20 2.5L36.5 11.5V28.5L20 37.5L3.5 28.5V11.5L20 2.5Z" stroke="url(#cbmGradH)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M20 2.5V20M20 20L36.5 11.5M20 20L3.5 11.5" stroke="url(#cbmGradH)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/></svg><span style="font-family:'Montserrat','Space Grotesk',sans-serif;font-weight:800;letter-spacing:-1.1px;background:linear-gradient(90deg,#14B8A6 0%,#1E7A8C 45%,#0B2A4A 100%);-webkit-background-clip:text;background-clip:text;color:transparent;">CBMLab</span></a>
+  <div class="nav-right">
+    <a href="index.html" class="nav-link">← 전체 도구</a>
+    <a href="en/sourcing-location-comparator.html" class="lang-switch">EN</a>
+  </div>
+</div></header>
+
+<section class="hero"><div class="hero-inner">
+  <h1>니어쇼어·리쇼어·오프쇼어 소싱 비교 계산기</h1>
+  <p>"중국 대신 베트남?" "아예 국내로 리쇼어링?" — 단가만 보고 결정하지 마세요. 운임·관세·리드타임에 따른 재고비용까지 반영한 실제 총원가로 비교해보세요. 정확한 인건비·운임 데이터는 직접 입력하시는 방식이라, 지어낸 국가별 수치가 섞이지 않습니다.</p>
+  <div class="hero-tags"><span class="tag">소싱 전략 비교</span><span class="tag">총원가 계산</span><span class="tag">리드타임 영향 반영</span></div>
+</div></section>
+
+<div class="main">
+  <div class="card">
+    <div class="card-header"><div class="card-title">소싱 옵션 비교 (최대 3개, 이름 직접 수정 가능)</div></div>
+    <div class="card-body">
+      <table class="compare-table" id="compareTable"></table>
+      <div class="warn-box">⚠ 여기 나온 결과는 입력하신 숫자를 그대로 계산한 것입니다. 정확한 인건비·운임·관세율은 반드시 실제 견적과 관세사·포워더 확인을 거치세요. 이 도구가 국가별 수치를 자동으로 채워주지 않는 건 의도된 설계입니다 — 실제와 다른 통계를 보여드리는 것보다, 직접 확인한 숫자로 계산하시는 게 훨씬 안전합니다.</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header"><div class="card-title">숨은 비용, 놓치지 마세요</div></div>
+    <div class="card-body" style="font-size:13px;color:var(--slate-600);line-height:1.75;">
+      <p style="margin-bottom:8px;"><b>리드타임이 길수록 재고비용이 늘어납니다.</b> 오프쇼어가 단가는 싸도 리드타임이 길면, 그만큼 안전재고를 더 쌓아둬야 해서 재고 보유비용이 늘어납니다. 이 계산기의 "총원가"에는 재료비·운임·관세만 들어있고, 재고비용은 별도로 계산해야 정확합니다.</p>
+      <p><b>환율 변동 리스크도 소싱 위치마다 다릅니다.</b> 오프쇼어일수록 환노출이 커지는 경향이 있습니다.</p>
+      <div class="notice-box">🔄 리드타임 차이에 따른 재고비용은 <a href="inventory-planning-calculator.html" style="color:#1E40AF;font-weight:700;">재고 발주 계획 도구(EOQ)</a>로, 통화별 리스크는 <a href="fx-exposure-calculator.html" style="color:#1E40AF;font-weight:700;">환노출 계산기</a>로 이어서 확인하세요. 국경절·춘절 등 리드타임 지연 요인은 <a href="global-holiday-calendar.html" style="color:#1E40AF;font-weight:700;">글로벌 물류 휴일 캘린더</a>에서 미리 체크할 수 있습니다.</div>
+    </div>
+  </div>
+</div>
+
+<!-- AD -->
+<div class="ad-area-main" role="complementary" aria-label="하단 광고 영역">
+  <div class="ad-main-box"><strong>Advertisement</strong>광고 영역 (Google AdSense)</div>
+</div>
+
+<div class="faq-wrap">
+  <div class="card">
+    <div class="card-header"><div class="card-title">자주 묻는 질문</div></div>
+    <div class="card-body">
+      <details class="faq-item"><summary>왜 국가별 평균 인건비·운임 데이터가 미리 채워져 있지 않나요?</summary><p>이런 수치는 시점·환율·정확한 지역에 따라 크게 달라지고 빠르게 바뀝니다. 저희가 대략적인 통계를 채워두면 오히려 실제와 다른 숫자로 잘못된 결정을 내리실 위험이 있어서, 직접 확인하신 견적을 입력하시는 방식을 택했습니다.</p></details>
+      <details class="faq-item"><summary>니어쇼어링과 리쇼어링의 차이는 뭔가요?</summary><p>리쇼어링은 생산을 자국으로 다시 가져오는 것이고, 니어쇼어링은 완전히 자국은 아니지만 지리적으로 더 가까운 나라(예: 미국 기업의 멕시코 이전)로 옮기는 것입니다. 둘 다 리드타임 단축과 리스크 분산이 주요 동기입니다.</p></details>
+      <details class="faq-item"><summary>단가가 더 비싸도 니어쇼어·리쇼어를 선택하는 이유가 뭔가요?</summary><p>리드타임 단축에 따른 재고비용 절감, 환리스크 감소, 품질관리 용이성, 지정학적 리스크 분산 등 단가 외 요인이 총비용에 상당한 영향을 줄 수 있기 때문입니다. 이 계산기의 "숨은 비용" 섹션을 참고하세요.</p></details>
+    </div>
+  </div>
+</div>
+
+<footer><div class="footer-inner">
+  <div class="footer-logo"><svg width="24" height="24" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align:middle;margin-right:9px;flex-shrink:0;"><path d="M20 2.5L36.5 11.5V28.5L20 37.5L3.5 28.5V11.5L20 2.5Z" stroke="url(#cbmGradF)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M20 2.5V20M20 20L36.5 11.5M20 20L3.5 11.5" stroke="url(#cbmGradF)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/></svg>CBM<span style="color:#2563EB;">Lab</span></div>
+  <nav><a href="index.html" class="footer-link">전체 도구</a><a href="privacy.html" class="footer-link">개인정보 처리방침</a></nav>
+</div></footer>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {"@type":"Question","name":"왜 국가별 평균 인건비·운임 데이터가 미리 채워져 있지 않나요?","acceptedAnswer":{"@type":"Answer","text":"이런 수치는 시점·환율·지역에 따라 크게 달라지고 빠르게 바뀌어, 대략적인 통계보다 직접 확인한 견적을 입력하는 방식이 더 안전합니다."}},
+    {"@type":"Question","name":"니어쇼어링과 리쇼어링의 차이는 뭔가요?","acceptedAnswer":{"@type":"Answer","text":"리쇼어링은 생산을 자국으로 다시 가져오는 것이고, 니어쇼어링은 지리적으로 더 가까운 나라로 옮기는 것입니다."}},
+    {"@type":"Question","name":"단가가 더 비싸도 니어쇼어·리쇼어를 선택하는 이유가 뭔가요?","acceptedAnswer":{"@type":"Answer","text":"리드타임 단축에 따른 재고비용 절감, 환리스크 감소, 품질관리 용이성, 지정학적 리스크 분산 등이 총비용에 영향을 줄 수 있기 때문입니다."}}
+  ]
+}
+</script>
+
+<script>
+const ROWS = [
+  {id:'unitPrice', label:'단가 (개당)', sub:'FOB/공장출고 기준'},
+  {id:'freight', label:'운임 (개당)', sub:'국제운송비'},
+  {id:'dutyRate', label:'관세율 (%)', sub:'적용 관세율'},
+  {id:'otherCost', label:'기타 비용 (개당)', sub:'검사·인증·창고 등'},
+  {id:'leadTime', label:'리드타임 (일)', sub:'발주~입고까지'},
+];
+
+let columns = [
+  {name:'오프쇼어 (현재)', unitPrice:12, freight:1.5, dutyRate:8, otherCost:0.5, leadTime:45},
+  {name:'니어쇼어 후보', unitPrice:15, freight:0.8, dutyRate:0, otherCost:0.3, leadTime:18},
+  {name:'리쇼어 (국내)', unitPrice:19, freight:0.2, dutyRate:0, otherCost:0.2, leadTime:7},
+];
+
+function fmt(v,d=2){ return (v||0).toLocaleString('ko-KR',{minimumFractionDigits:d,maximumFractionDigits:d}); }
+
+function updateColName(idx, value){ columns[idx].name = value; render(); }
+function updateValue(idx, field, value){ columns[idx][field] = parseFloat(value)||0; render(); }
+
+function calcTotal(col){
+  const dutyCost = col.unitPrice * (col.dutyRate/100);
+  return col.unitPrice + col.freight + dutyCost + col.otherCost;
+}
+
+function render(){
+  const table = document.getElementById('compareTable');
+  const totals = columns.map(calcTotal);
+  const minTotal = Math.min(...totals);
+
+  let html = '<thead><tr><th></th>';
+  columns.forEach((col, i) => {
+    html += `<th><input value="${col.name}" oninput="updateColName(${i}, this.value)"></th>`;
+  });
+  html += '</tr></thead><tbody>';
+
+  ROWS.forEach(row => {
+    html += `<tr><td class="label">${row.label}<div class="field-sub">${row.sub}</div></td>`;
+    columns.forEach((col, i) => {
+      html += `<td><input type="number" step="0.01" value="${col[row.id]}" oninput="updateValue(${i},'${row.id}',this.value)"></td>`;
+    });
+    html += '</tr>';
+  });
+
+  html += '<tr class="result-row"><td class="label">개당 총원가</td>';
+  columns.forEach((col, i) => {
+    const total = totals[i];
+    const isBest = Math.abs(total - minTotal) < 0.001;
+    html += `<td>₩${fmt(total)}${isBest ? '<span class="best-badge">최저</span>' : ''}</td>`;
+  });
+  html += '</tr>';
+
+  html += '</tbody>';
+  table.innerHTML = html;
+}
+
+render();
+</script>
+</body>
+</html>
