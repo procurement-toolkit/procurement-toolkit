@@ -100,6 +100,23 @@
   .btn-copy-email{width:100%;padding:8px;background:transparent;border:1px dashed var(--slate-300);border-radius:6px;font-size:11.5px;color:var(--slate-500);cursor:pointer;margin-top:8px}
   .btn-copy-email:hover{border-color:var(--accent);color:var(--accent)}
   .notice-box{background:var(--accent-light);border:1px solid #BFDBFE;border-radius:var(--radius);padding:10px 14px;font-size:11.5px;color:#1E40AF;margin-top:12px;line-height:1.6}
+
+  .cost-breakdown-chart{margin:14px 0}
+  .cb-bar{display:flex;width:100%;height:26px;border-radius:6px;overflow:hidden;margin-bottom:8px}
+  .cb-seg{height:100%;display:flex;align-items:center;justify-content:center;font-size:9.5px;font-weight:700;color:#fff;overflow:hidden;white-space:nowrap;transition:width .2s}
+  .cb-legend{display:flex;flex-wrap:wrap;gap:8px 14px;font-size:11px;color:var(--slate-500)}
+  .cb-legend-item{display:flex;align-items:center;gap:5px}
+  .cb-dot{width:9px;height:9px;border-radius:3px;flex-shrink:0}
+
+  .ad-gate-overlay{position:fixed;inset:0;background:rgba(15,23,42,.7);display:flex;align-items:center;justify-content:center;z-index:9999;padding:20px}
+  .ad-gate-box{background:#fff;border-radius:14px;max-width:420px;width:100%;padding:24px;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,.3)}
+  .ad-gate-box h3{font-size:16px;font-weight:800;color:var(--slate-900);margin-bottom:8px}
+  .ad-gate-box p{font-size:12.5px;color:var(--slate-500);margin-bottom:16px;line-height:1.6}
+  .ad-gate-slot{border:1px dashed var(--slate-300);border-radius:8px;min-height:100px;display:flex;align-items:center;justify-content:center;margin-bottom:16px;overflow:hidden}
+  .ad-gate-timer{font-size:13px;font-weight:700;color:var(--slate-600);margin-bottom:12px}
+  .ad-gate-btn{width:100%;padding:12px;border:none;border-radius:8px;background:var(--accent);color:#fff;font-size:13.5px;font-weight:700;cursor:pointer}
+  .ad-gate-btn:disabled{background:var(--slate-300);cursor:not-allowed}
+  .ad-gate-cancel{margin-top:10px;font-size:12px;color:var(--slate-400);background:none;border:none;cursor:pointer;text-decoration:underline}
   @media (max-width:900px){.main{grid-template-columns:1fr}}
   @media (max-width:640px){.field-grid{grid-template-columns:1fr}.compare-box{grid-template-columns:1fr}}
 
@@ -119,6 +136,7 @@
   .faq-item p{margin-top:8px;font-size:12.5px;color:var(--slate-600);line-height:1.7;padding-left:2px}
   @media (max-width:640px){.faq-wrap{padding:0 16px}}
 </style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 </head>
 <body>
 <svg width="0" height="0" style="position:absolute;" aria-hidden="true">
@@ -213,6 +231,10 @@
         <div id="resultLines"></div>
         <div class="result-total"><div class="label">Should Cost (per unit)</div><div class="value" id="shouldCostValue">$0.00</div></div>
 
+        <div class="cost-breakdown-chart" id="breakdownChart"></div>
+
+        <button class="btn-add-row" id="excelDownloadBtn" onclick="requestExcelDownload()" style="border-style:solid;border-color:var(--accent);color:var(--accent);font-weight:700;">📊 Download Cost Breakdown (Excel)</button>
+
         <div id="compareSection" style="display:none;">
           <div class="compare-box">
             <div class="compare-item should"><div class="c-label">Should Cost</div><div class="c-value" id="cmpShould">$0.00</div></div>
@@ -261,6 +283,24 @@
      data-ad-format="auto"
      data-full-width-responsive="true"></ins>
 <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+
+<div class="ad-gate-overlay" id="adGateOverlay" style="display:none;">
+  <div class="ad-gate-box">
+    <h3>📊 Preparing Your Excel File</h3>
+    <p>Please wait while this ad is shown. Your download will start automatically once it's ready.</p>
+    <div class="ad-gate-slot">
+      <ins class="adsbygoogle"
+         style="display:block;width:100%;"
+         data-ad-client="ca-pub-4642197702620430"
+         data-ad-slot="2863170310"
+         data-ad-format="auto"
+         data-full-width-responsive="true"></ins>
+    </div>
+    <div class="ad-gate-timer" id="adGateTimer">Download available in 5s</div>
+    <button class="ad-gate-btn" id="adGateBtn" disabled onclick="completeAdGateDownload()">Start Download</button>
+    <button class="ad-gate-cancel" onclick="closeAdGate()">Cancel</button>
+  </div>
 </div>
 
 <footer style="background:#0F172A;color:#94A3B8;padding:24px;font-size:12px;">
@@ -382,6 +422,13 @@ function calc(){
   `;
   document.getElementById('shouldCostValue').textContent = fmt(shouldCost, 3);
 
+  const marginAmount = shouldCost - costBeforeMargin;
+  window._costBreakdown = {
+    bomTotal, procTotal, machineCostPerUnit, overheadAmount, marginAmount, shouldCost,
+    utilRate, overheadRate, marginMode, marginPct, currency: 'USD'
+  };
+  renderBreakdownChart(window._costBreakdown);
+
   const quote = parseFloat(document.getElementById('supplierQuote').value) || 0;
   const compareSection = document.getElementById('compareSection');
   if(quote > 0){
@@ -442,6 +489,110 @@ function copyEmail(){
     const btn = document.getElementById('copyEmailBtn'); const orig = btn.textContent;
     btn.textContent = '✓ Copied'; setTimeout(()=>{ btn.textContent = orig; }, 2000);
   });
+}
+
+// ===== Cost Breakdown Visualization =====
+const CB_COLORS = {material:'#2563EB', labor:'#0F766E', machine:'#B45309', overhead:'#7C3AED', margin:'#DC2626'};
+function renderBreakdownChart(d){
+  const el = document.getElementById('breakdownChart');
+  if(!el || !d.shouldCost || d.shouldCost<=0) { if(el) el.innerHTML=''; return; }
+  const segs = [
+    {key:'material', label:'Material', v:d.bomTotal},
+    {key:'labor', label:'Labor', v:d.procTotal},
+    {key:'machine', label:'Machine', v:d.machineCostPerUnit},
+    {key:'overhead', label:'Overhead', v:d.overheadAmount},
+    {key:'margin', label:'Margin', v:d.marginAmount},
+  ];
+  const total = d.shouldCost;
+  let barHtml = '<div class="cb-bar">';
+  segs.forEach(s=>{
+    const pct = total>0 ? (s.v/total)*100 : 0;
+    if(pct<=0) return;
+    barHtml += `<div class="cb-seg" style="width:${pct}%;background:${CB_COLORS[s.key]};" title="${s.label} ${pct.toFixed(1)}%">${pct>=8?pct.toFixed(0)+'%':''}</div>`;
+  });
+  barHtml += '</div>';
+  const legendHtml = '<div class="cb-legend">' + segs.map(s=>{
+    const pct = total>0 ? (s.v/total)*100 : 0;
+    return `<span class="cb-legend-item"><span class="cb-dot" style="background:${CB_COLORS[s.key]};"></span>${s.label} ${pct.toFixed(1)}%</span>`;
+  }).join('') + '</div>';
+  el.innerHTML = barHtml + legendHtml;
+}
+
+// ===== Excel Download (via ad gate) =====
+let adGateTimerInterval = null;
+
+function requestExcelDownload(){
+  if(!window._costBreakdown || !window._costBreakdown.shouldCost){
+    alert('Please enter values so a result can be calculated first.');
+    return;
+  }
+  document.getElementById('adGateOverlay').style.display = 'flex';
+  let seconds = 5;
+  const timerEl = document.getElementById('adGateTimer');
+  const btnEl = document.getElementById('adGateBtn');
+  btnEl.disabled = true;
+  timerEl.textContent = `Download available in ${seconds}s`;
+  try{ (adsbygoogle = window.adsbygoogle || []).push({}); }catch(e){}
+
+  clearInterval(adGateTimerInterval);
+  adGateTimerInterval = setInterval(()=>{
+    seconds--;
+    if(seconds <= 0){
+      clearInterval(adGateTimerInterval);
+      timerEl.textContent = 'Ready to download!';
+      btnEl.disabled = false;
+    } else {
+      timerEl.textContent = `Download available in ${seconds}s`;
+    }
+  }, 1000);
+}
+
+function closeAdGate(){
+  clearInterval(adGateTimerInterval);
+  document.getElementById('adGateOverlay').style.display = 'none';
+}
+
+function completeAdGateDownload(){
+  closeAdGate();
+  downloadExcel();
+  if(window.amplitude) window.amplitude.track('Download', {type:'excel', tool:'should-cost-calculator'});
+}
+
+function downloadExcel(){
+  const d = window._costBreakdown;
+  if(!d) return;
+
+  const wb = XLSX.utils.book_new();
+
+  const summaryData = [
+    ['CBM Lab — Should Cost Analysis', ''],
+    ['Currency', d.currency],
+    [],
+    ['Item', 'Amount/unit', '% of Total'],
+    ['Material Cost (BOM)', d.bomTotal, d.shouldCost>0?(d.bomTotal/d.shouldCost*100).toFixed(1):0],
+    ['Labor Cost', d.procTotal, d.shouldCost>0?(d.procTotal/d.shouldCost*100).toFixed(1):0],
+    ['Machine Cost (utilization '+d.utilRate+'%)', d.machineCostPerUnit, d.shouldCost>0?(d.machineCostPerUnit/d.shouldCost*100).toFixed(1):0],
+    ['Overhead ('+d.overheadRate+'%)', d.overheadAmount, d.shouldCost>0?(d.overheadAmount/d.shouldCost*100).toFixed(1):0],
+    ['Margin ('+d.marginMode+' '+d.marginPct+'%)', d.marginAmount, d.shouldCost>0?(d.marginAmount/d.shouldCost*100).toFixed(1):0],
+    ['Total Should Cost', d.shouldCost, 100],
+  ];
+  const wsSummary = XLSX.utils.aoa_to_sheet(summaryData);
+  wsSummary['!cols'] = [{wch:28},{wch:14},{wch:12}];
+  XLSX.utils.book_append_sheet(wb, wsSummary, 'Should Cost Summary');
+
+  const bomData = [['Material', 'Qty', 'Unit', 'Unit Price', 'Subtotal']];
+  bomItems.forEach(it=>{ bomData.push([it.name, it.qty, it.unit, it.price, it.qty*it.price]); });
+  const wsBom = XLSX.utils.aoa_to_sheet(bomData);
+  wsBom['!cols'] = [{wch:24},{wch:8},{wch:8},{wch:10},{wch:10}];
+  XLSX.utils.book_append_sheet(wb, wsBom, 'BOM Detail');
+
+  const procData = [['Process', 'Cycle Time (s)', 'Workers', 'Hourly Rate', 'Labor Cost/unit']];
+  procItems.forEach(it=>{ procData.push([it.name, it.cycle, it.workers, it.rate, (it.cycle/3600)*it.rate*it.workers]); });
+  const wsProc = XLSX.utils.aoa_to_sheet(procData);
+  wsProc['!cols'] = [{wch:24},{wch:14},{wch:10},{wch:10},{wch:12}];
+  XLSX.utils.book_append_sheet(wb, wsProc, 'Process Detail');
+
+  XLSX.writeFile(wb, 'CBMLab-ShouldCost-Analysis.xlsx');
 }
 
 addBom('Aluminum Sheet 6063', 1.2, 'KG', 3.20);
