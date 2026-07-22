@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Make-vs-Buy 의사결정 매트릭스 - 자체생산과 외주(구매)의 손익분기 물량을 계산하고, 전략적 중요도·사내 역량·품질관리·기술보호·공급시장 성숙도를 가중치로 평가해 최종 추천을 받아보세요.">
+<meta name="keywords" content="make or buy 의사결정, 자체생산 외주 비교, 손익분기 물량 계산, 아웃소싱 의사결정 매트릭스">
+<title>Make-vs-Buy 의사결정 매트릭스 — CBM Lab</title>
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="icon" href="favicon.ico" type="image/x-icon">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="canonical" href="https://procurement-toolkit-eight.vercel.app/make-vs-buy-matrix.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="CBM Lab">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:title" content="Make-vs-Buy 의사결정 매트릭스 — CBM Lab">
+<meta property="og:description" content="Make-vs-Buy 의사결정 매트릭스 - 자체생산과 외주의 손익분기 물량을 계산하고, 전략적 요인을 가중치로 평가해 최종 추천을 받아보세요.">
+<meta property="og:url" content="https://procurement-toolkit-eight.vercel.app/make-vs-buy-matrix.html">
+<meta property="og:image" content="https://procurement-toolkit-eight.vercel.app/assets/hero-team.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Make-vs-Buy 의사결정 매트릭스 — CBM Lab">
+<meta name="twitter:description" content="Make-vs-Buy 의사결정 매트릭스 - 자체생산과 외주의 손익분기 물량을 계산하고, 전략적 요인을 가중치로 평가해 최종 추천을 받아보세요.">
+<meta name="twitter:image" content="https://procurement-toolkit-eight.vercel.app/assets/hero-team.jpg">
+
+<link rel="alternate" hreflang="ko" href="https://procurement-toolkit-eight.vercel.app/make-vs-buy-matrix.html">
+<link rel="alternate" hreflang="en" href="https://procurement-toolkit-eight.vercel.app/en/make-vs-buy-matrix.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@800;900&display=swap" rel="stylesheet">
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  :root{--accent:#2563EB;--accent-light:#DBEAFE;--accent-dark:#1D4ED8;--slate-50:#F8FAFC;--slate-100:#F1F5F9;--slate-200:#E2E8F0;--slate-300:#CBD5E1;--slate-400:#94A3B8;--slate-500:#64748B;--slate-600:#475569;--slate-700:#334155;--slate-800:#1E293B;--slate-900:#0F172A;--success:#0F766E;--success-light:#D1FAE5;--warn:#B45309;--warn-light:#FEF3C7;--danger:#B91C1C;--danger-light:#FEE2E2;--purple:#7C3AED;--purple-light:#EDE9FE;--radius:8px;--radius-lg:12px;--shadow-sm:0 1px 2px rgba(0,0,0,.05);font-family:'Pretendard','Apple SD Gothic Neo',system-ui,-apple-system,sans-serif}
+  body{background:var(--slate-50);color:var(--slate-800);font-size:14px;line-height:1.6}
+  header{background:#fff;border-bottom:1px solid var(--slate-200)}
+  .header-inner{max-width:1200px;margin:0 auto;padding:16px 24px;display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}
+  .logo-mark{font-size:20px;font-weight:800;color:var(--slate-900);text-decoration:none;font-family:'Space Grotesk','Pretendard',sans-serif;letter-spacing:-0.4px;}
+  .nav-right{display:flex;align-items:center;gap:10px}
+  .nav-link{font-size:13px;font-weight:600;color:var(--slate-500);text-decoration:none;padding:7px 12px;border-radius:6px}
+  .nav-link:hover{background:var(--slate-100)}
+  .lang-switch{font-size:12px;font-weight:700;color:var(--accent);text-decoration:none;padding:6px 12px;border:1px solid var(--accent-light);border-radius:999px;background:var(--accent-light)}
+  .lang-switch:hover{background:#BFDBFE}
+
+  .hero{background:#fff;border-bottom:1px solid var(--slate-200);padding:28px 24px 24px}
+  .hero-inner{max-width:1200px;margin:0 auto}
+  .hero h1{font-size:24px;font-weight:700;color:var(--slate-900);margin-bottom:6px;letter-spacing:-0.3px}
+  .hero p{font-size:14px;color:var(--slate-500);max-width:740px}
+  .hero-tags{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}
+  .tag{background:var(--slate-100);color:var(--slate-600);font-size:11px;font-weight:500;padding:3px 10px;border-radius:4px;border:1px solid var(--slate-200)}
+
+  .main{max-width:1200px;margin:0 auto;padding:28px 24px 60px;display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:start}
+  .card{background:#fff;border:1px solid var(--slate-200);border-radius:var(--radius-lg);box-shadow:var(--shadow-sm);margin-bottom:20px}
+  .card-header{padding:16px 20px;border-bottom:1px solid var(--slate-100)}
+  .card-title{font-size:14px;font-weight:700;color:var(--slate-800)}
+  .card-body{padding:20px}
+
+  .field-label{font-size:12.5px;font-weight:600;color:var(--slate-600);margin-bottom:5px;display:block}
+  .field-sub{font-size:11px;color:var(--slate-400);margin-bottom:5px}
+  .inp{width:100%;border:1px solid var(--slate-200);border-radius:8px;padding:9px 11px;font-size:13.5px;font-family:inherit}
+  .inp:focus{outline:none;border-color:var(--accent)}
+  .field-group{margin-bottom:14px}
+  .field-row2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+
+  .cost-result{text-align:center;padding:16px 0;border-radius:10px;background:var(--slate-50);margin-top:6px}
+  .cost-result .value{font-size:22px;font-weight:800;color:var(--slate-900)}
+  .cost-result .label{font-size:11.5px;color:var(--slate-500);margin-top:2px}
+
+  .breakdown-row{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--slate-100);font-size:12.5px}
+  .breakdown-row:last-child{border-bottom:none}
+  .breakdown-row .k{color:var(--slate-500)}
+  .breakdown-row .v{font-weight:700;color:var(--slate-800)}
+
+  .criterion{margin-bottom:16px;padding-bottom:14px;border-bottom:1px solid var(--slate-100)}
+  .criterion:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0}
+  .criterion-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:4px}
+  .criterion-name{font-size:12.5px;font-weight:700;color:var(--slate-800)}
+  .criterion-weight{font-size:11px;color:var(--slate-400)}
+  .criterion-hint{font-size:11px;color:var(--slate-400);margin-bottom:6px}
+  .scale-row{display:flex;align-items:center;gap:8px}
+  .scale-row input[type=range]{flex:1}
+  .scale-labels{display:flex;justify-content:space-between;font-size:10px;color:var(--slate-400);margin-top:2px}
+
+  .final-result{text-align:center;padding:20px 0;border-radius:12px}
+  .final-result.make{background:var(--purple-light)}
+  .final-result.buy{background:var(--success-light)}
+  .final-result.neutral{background:var(--warn-light)}
+  .final-result .verdict{font-size:24px;font-weight:800;letter-spacing:-.3px}
+  .final-result.make .verdict{color:var(--purple)}
+  .final-result.buy .verdict{color:var(--success)}
+  .final-result.neutral .verdict{color:var(--warn)}
+  .final-result .score{font-size:12.5px;color:var(--slate-500);margin-top:4px}
+
+  .warn-box{background:var(--warn-light);border:1px solid #FDE68A;border-radius:var(--radius);padding:12px 14px;font-size:12px;color:#78350F;margin-top:14px;line-height:1.6}
+  .notice-box{background:var(--accent-light);border:1px solid #BFDBFE;border-radius:var(--radius);padding:10px 14px;font-size:12px;color:#1E40AF;margin-top:14px;line-height:1.6}
+
+  .faq-item{border-bottom:1px solid var(--slate-100);padding:12px 0}
+  .faq-item:last-child{border-bottom:none}
+  .faq-item summary{cursor:pointer;font-weight:700;font-size:13px;color:var(--slate-800);list-style:none;outline:none}
+  .faq-item summary::-webkit-details-marker{display:none}
+  .faq-item summary::before{content:'Q. ';color:var(--accent)}
+  .faq-item p{margin-top:8px;font-size:12.5px;color:var(--slate-600);line-height:1.7;padding-left:2px}
+
+  .ad-area-main{max-width:1200px;margin:0 auto;padding:0 24px 28px}
+  .ad-main-box{border:1px dashed #CBD5E1;border-radius:10px;background:#fff;height:90px;display:flex;flex-direction:column;align-items:center;justify-content:center;color:var(--slate-400);font-size:12px;gap:4px}
+  .ad-main-box strong{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:#94A3B8}
+  .faq-wrap{max-width:1100px;margin:20px auto 0;padding:0 24px}
+
+  footer{background:#0F172A;color:#94A3B8;padding:24px;font-size:12px}
+  .footer-inner{max-width:1200px;margin:0 auto;display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
+  .footer-logo{font-size:15px;font-weight:800;color:#fff;font-family:'Space Grotesk','Pretendard',sans-serif;}
+  .footer-link{color:#94A3B8;text-decoration:none;font-size:11px;margin-right:14px}
+
+  @media print{.ad-area-main,.ad-main-box,header,footer{display:none !important}.main{grid-template-columns:1fr}}
+  @media (max-width:900px){.main{grid-template-columns:1fr}}
+  @media (max-width:640px){.ad-area-main{padding:0 16px 20px}.faq-wrap{padding:0 16px}.field-row2{grid-template-columns:1fr}}
+</style>
+
+<script src="https://cdn.amplitude.com/script/d4aa9301e01f4600b5eeb018e160aa7c.js"></script>
+<script>
+  window.amplitude.init("d4aa9301e01f4600b5eeb018e160aa7c", { fetchRemoteConfig: true, autocapture: true });
+  window.amplitude.track('CBM Page View', {category: 'calc', page: 'make-vs-buy-matrix', lang: 'ko'});
+</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-W1YBL5BGGK"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-W1YBL5BGGK');
+</script>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute;" aria-hidden="true">
+  <defs>
+    <linearGradient id="cbmGradH" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#14B8A6"/><stop offset="100%" stop-color="#0B2A4A"/></linearGradient>
+    <linearGradient id="cbmGradF" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#2DD4BF"/><stop offset="100%" stop-color="#5B9EFF"/></linearGradient>
+  </defs>
+</svg>
+<header><div class="header-inner">
+  <a href="index.html" class="logo-mark"><svg width="26" height="26" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align:middle;margin-right:8px;flex-shrink:0;"><path d="M20 2.5L36.5 11.5V28.5L20 37.5L3.5 28.5V11.5L20 2.5Z" stroke="url(#cbmGradH)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M20 2.5V20M20 20L36.5 11.5M20 20L3.5 11.5" stroke="url(#cbmGradH)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/></svg><span style="font-family:'Montserrat','Space Grotesk',sans-serif;font-weight:800;letter-spacing:-1.1px;background:linear-gradient(90deg,#14B8A6 0%,#1E7A8C 45%,#0B2A4A 100%);-webkit-background-clip:text;background-clip:text;color:transparent;">CBMLab</span></a>
+  <div class="nav-right">
+    <a href="index.html" class="nav-link">← 전체 도구</a>
+    <a href="en/make-vs-buy-matrix.html" class="lang-switch">EN</a>
+  </div>
+</div></header>
+
+<section class="hero"><div class="hero-inner">
+  <h1>Make-vs-Buy 의사결정 매트릭스</h1>
+  <p>"이거 자체생산 할까 외주 줄까"를 감으로 정하지 마세요. 손익분기 물량을 계산하고, 전략적 요인까지 가중치로 반영해서 근거 있는 결론을 내려보세요.</p>
+  <div class="hero-tags"><span class="tag">손익분기 분석</span><span class="tag">전략적 요인 평가</span><span class="tag">아웃소싱 의사결정</span></div>
+</div></section>
+
+<div class="main">
+  <section>
+    <div class="card">
+      <div class="card-header"><div class="card-title">1. 비용 비교</div></div>
+      <div class="card-body">
+        <div class="field-group">
+          <label class="field-label">예상 연간 물량 (개)</label>
+          <input type="number" class="inp" id="volume" value="10000" min="1" oninput="calc()">
+        </div>
+        <div class="field-row2">
+          <div class="field-group">
+            <label class="field-label">자체생산 — 연간 고정비</label>
+            <div class="field-sub">설비·금형·초기 세팅 비용</div>
+            <input type="number" class="inp" id="makeFixed" value="80000000" min="0" oninput="calc()">
+          </div>
+          <div class="field-group">
+            <label class="field-label">자체생산 — 개당 변동비</label>
+            <div class="field-sub">재료비+직접 인건비</div>
+            <input type="number" class="inp" id="makeVariable" value="3000" min="0" oninput="calc()">
+          </div>
+        </div>
+        <div class="field-row2">
+          <div class="field-group">
+            <label class="field-label">외주 — 연간 고정비</label>
+            <div class="field-sub">품질검사·관리 인력 등</div>
+            <input type="number" class="inp" id="buyFixed" value="5000000" min="0" oninput="calc()">
+          </div>
+          <div class="field-group">
+            <label class="field-label">외주 — 개당 구매단가</label>
+            <div class="field-sub">공급업체 견적 단가</div>
+            <input type="number" class="inp" id="buyVariable" value="4500" min="0" oninput="calc()">
+          </div>
+        </div>
+        <div id="costResultWrap"></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header"><div class="card-title">2. 전략적 요인 평가 (가중치 조정 가능)</div></div>
+      <div class="card-body" id="criteriaWrap"></div>
+    </div>
+  </section>
+
+  <aside>
+    <div class="card">
+      <div class="card-header"><div class="card-title">종합 결과</div></div>
+      <div class="card-body">
+        <div id="finalResultWrap"></div>
+        <div class="warn-box">⚠ 이 결과는 참고용 의사결정 보조 도구입니다. 실제 결정 전에는 재무팀·생산팀·품질팀과 함께 가정치(고정비·변동비 등)를 재검증하세요.</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header"><div class="card-title">평가 기준 설명</div></div>
+      <div class="card-body" style="font-size:11.5px;color:var(--slate-600);line-height:1.7;">
+        <p style="margin-bottom:8px;"><b>전략적 중요도:</b> 이 부품·역량이 우리 제품의 핵심 경쟁력과 얼마나 직결되는가.</p>
+        <p style="margin-bottom:8px;"><b>사내 역량·여유:</b> 지금 설비·인력으로 추가 생산이 실제로 가능한가.</p>
+        <p style="margin-bottom:8px;"><b>품질관리 필요도:</b> 품질 편차가 최종 제품에 치명적인 영향을 주는가.</p>
+        <p style="margin-bottom:8px;"><b>기술보호 필요성:</b> 외주 시 핵심 기술·설계가 유출될 위험이 있는가.</p>
+        <p><b>공급시장 성숙도:</b> 신뢰할 만한 공급업체가 시장에 충분히 있는가 (많을수록 외주 쪽에 유리).</p>
+      </div>
+    </div>
+  </aside>
+</div>
+
+<div style="max-width:1200px;margin:0 auto;padding:0 24px 30px;">
+  <div class="notice-box">🔄 외주로 기운다면 <a href="supplier-scorecard.html" style="color:#1E40AF;font-weight:700;">공급업체 스코어카드</a>로 후보를 평가해보세요.</div>
+</div>
+
+<!-- AD -->
+<div class="ad-area-main" role="complementary" aria-label="하단 광고 영역">
+  <div class="ad-main-box"><strong>Advertisement</strong>광고 영역 (Google AdSense)</div>
+</div>
+
+<div class="faq-wrap">
+  <div class="card">
+    <div class="card-header"><div class="card-title">자주 묻는 질문</div></div>
+    <div class="card-body">
+      <details class="faq-item"><summary>비용 비교와 전략적 평가 결과가 다르게 나오면 어떻게 하나요?</summary><p>실제로 자주 있는 일입니다. 예를 들어 비용은 외주가 유리한데 전략적 중요도가 매우 높다면, 단기 비용보다 장기적 경쟁력을 우선해서 자체생산을 선택하는 경우가 많습니다. 두 결과가 다르다면 오히려 신중히 논의해야 할 신호로 받아들이세요.</p></details>
+      <details class="faq-item"><summary>손익분기 물량은 어떻게 계산되나요?</summary><p>두 옵션의 총비용(고정비+변동비×물량)이 같아지는 물량을 계산합니다. 예상 물량이 이 지점보다 많으면 고정비가 큰 옵션(보통 자체생산)이 유리해지고, 적으면 반대가 유리합니다.</p></details>
+      <details class="faq-item"><summary>가중치는 어떻게 정해야 하나요?</summary><p>정해진 답은 없습니다. 다만 다섯 개 가중치의 합이 100%가 되도록 맞추고, 회사의 우선순위(예: 기술보호가 가장 중요한 산업이면 그 항목 가중치를 높게)를 반영하는 것이 일반적입니다.</p></details>
+    </div>
+  </div>
+</div>
+
+<footer><div class="footer-inner">
+  <div class="footer-logo"><svg width="24" height="24" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align:middle;margin-right:9px;flex-shrink:0;"><path d="M20 2.5L36.5 11.5V28.5L20 37.5L3.5 28.5V11.5L20 2.5Z" stroke="url(#cbmGradF)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M20 2.5V20M20 20L36.5 11.5M20 20L3.5 11.5" stroke="url(#cbmGradF)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/></svg>CBM<span style="color:#2563EB;">Lab</span></div>
+  <nav><a href="index.html" class="footer-link">전체 도구</a><a href="privacy.html" class="footer-link">개인정보 처리방침</a></nav>
+</div></footer>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {"@type":"Question","name":"비용 비교와 전략적 평가 결과가 다르게 나오면 어떻게 하나요?","acceptedAnswer":{"@type":"Answer","text":"실제로 자주 있는 일입니다. 비용은 외주가 유리한데 전략적 중요도가 매우 높다면, 단기 비용보다 장기적 경쟁력을 우선해서 자체생산을 선택하는 경우가 많습니다."}},
+    {"@type":"Question","name":"손익분기 물량은 어떻게 계산되나요?","acceptedAnswer":{"@type":"Answer","text":"두 옵션의 총비용이 같아지는 물량을 계산하며, 예상 물량이 이 지점보다 많으면 고정비가 큰 옵션이 유리해집니다."}},
+    {"@type":"Question","name":"가중치는 어떻게 정해야 하나요?","acceptedAnswer":{"@type":"Answer","text":"다섯 개 가중치의 합이 100%가 되도록 맞추고, 회사의 우선순위를 반영해 조정하는 것이 일반적입니다."}}
+  ]
+}
+</script>
+
+<script>
+const CRITERIA = [
+  {id:'strategic', name:'전략적 중요도', hint:'핵심 경쟁력과 직결될수록 자체생산 쪽', weight:25},
+  {id:'capacity', name:'사내 역량·여유', hint:'설비·인력 여유가 있을수록 자체생산 쪽', weight:20},
+  {id:'quality', name:'품질관리 필요도', hint:'품질 통제가 중요할수록 자체생산 쪽', weight:20},
+  {id:'ip', name:'기술보호 필요성', hint:'기술 유출 우려가 클수록 자체생산 쪽', weight:20},
+  {id:'market', name:'공급시장 성숙도', hint:'신뢰할 공급업체가 많을수록 외주 쪽 (낮게 평가)', weight:15},
+];
+let scores = {strategic:3, capacity:3, quality:3, ip:3, market:3};
+
+function fmt(v){ return Math.round(v||0).toLocaleString('ko-KR'); }
+
+function renderCriteria(){
+  const wrap = document.getElementById('criteriaWrap');
+  wrap.innerHTML = CRITERIA.map(c => `
+    <div class="criterion">
+      <div class="criterion-top">
+        <span class="criterion-name">${c.name}</span>
+        <span class="criterion-weight">가중치 <input type="number" class="inp" style="width:52px;padding:4px 6px;display:inline-block;text-align:center;" id="w_${c.id}" value="${c.weight}" min="0" max="100" oninput="calc()">%</span>
+      </div>
+      <div class="criterion-hint">${c.hint}</div>
+      <div class="scale-row">
+        <input type="range" min="1" max="5" step="1" value="${scores[c.id]}" id="s_${c.id}" oninput="scores['${c.id}']=parseInt(this.value); calc();">
+      </div>
+      <div class="scale-labels"><span>1 (외주 강력 선호)</span><span>3 (중립)</span><span>5 (자체생산 강력 선호)</span></div>
+    </div>
+  `).join('');
+}
+
+function calc(){
+  // 비용 비교
+  const volume = parseFloat(document.getElementById('volume').value)||0;
+  const makeFixed = parseFloat(document.getElementById('makeFixed').value)||0;
+  const makeVariable = parseFloat(document.getElementById('makeVariable').value)||0;
+  const buyFixed = parseFloat(document.getElementById('buyFixed').value)||0;
+  const buyVariable = parseFloat(document.getElementById('buyVariable').value)||0;
+
+  const makeTotal = makeFixed + makeVariable*volume;
+  const buyTotal = buyFixed + buyVariable*volume;
+
+  let breakevenText = '두 옵션의 변동비가 같아 손익분기점이 없습니다.';
+  if(buyVariable !== makeVariable){
+    const bev = (makeFixed - buyFixed) / (buyVariable - makeVariable);
+    if(bev > 0){
+      breakevenText = `약 ${fmt(bev)}개 지점에서 손익분기 — 이보다 많으면 ${bev && (makeVariable<buyVariable ? '자체생산' : '외주')}이 유리`;
+    }
+  }
+
+  const costWrap = document.getElementById('costResultWrap');
+  const cheaper = makeTotal < buyTotal ? 'make' : 'buy';
+  costWrap.innerHTML = `
+    <div class="cost-result" style="background:${cheaper==='make'?'var(--purple-light)':'var(--success-light)'};">
+      <div class="value" style="color:${cheaper==='make'?'var(--purple)':'var(--success)'};">${cheaper==='make'?'자체생산':'외주'}이 더 저렴</div>
+      <div class="label">예상 물량 ${fmt(volume)}개 기준</div>
+    </div>
+    <div class="breakdown-row"><span class="k">자체생산 총비용</span><span class="v">₩${fmt(makeTotal)}</span></div>
+    <div class="breakdown-row"><span class="k">외주 총비용</span><span class="v">₩${fmt(buyTotal)}</span></div>
+    <div class="breakdown-row"><span class="k">차액</span><span class="v">₩${fmt(Math.abs(makeTotal-buyTotal))}</span></div>
+    <div class="notice-box" style="margin-top:10px;">${breakevenText}</div>
+  `;
+
+  // 전략적 가중평가
+  let totalWeight = 0, weightedSum = 0;
+  CRITERIA.forEach(c=>{
+    const wInput = document.getElementById(`w_${c.id}`);
+    const w = wInput ? (parseFloat(wInput.value)||0) : c.weight;
+    totalWeight += w;
+    weightedSum += w * scores[c.id];
+  });
+  const avgScore = totalWeight > 0 ? weightedSum/totalWeight : 3;
+
+  const finalWrap = document.getElementById('finalResultWrap');
+  let verdictClass = 'neutral', verdictText = '비슷함 — 비용 비교 결과를 더 비중있게 보세요';
+  if(avgScore >= 3.5){ verdictClass = 'make'; verdictText = '자체생산 쪽으로 기울어요'; }
+  else if(avgScore <= 2.5){ verdictClass = 'buy'; verdictText = '외주 쪽으로 기울어요'; }
+
+  const weightWarn = Math.abs(totalWeight-100) > 0.5 ? `<div class="warn-box" style="margin-top:10px;">⚠ 가중치 합이 ${fmt(totalWeight)}%입니다. 100%가 되도록 조정하면 더 정확합니다.</div>` : '';
+
+  finalWrap.innerHTML = `
+    <div class="final-result ${verdictClass}">
+      <div class="verdict">${verdictText}</div>
+      <div class="score">전략적 가중평균 점수: ${avgScore.toFixed(2)} / 5.0</div>
+    </div>
+    ${weightWarn}
+  `;
+}
+
+renderCriteria();
+calc();
+</script>
+</body>
+</html>

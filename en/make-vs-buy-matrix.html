@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Free Make-vs-Buy decision matrix for procurement. Calculate the breakeven volume between making in-house and buying, then weigh strategic importance, capacity, quality control, IP risk, and supply market maturity for a data-backed recommendation.">
+<meta name="keywords" content="make or buy decision, make vs buy analysis, breakeven volume calculator, outsourcing decision matrix">
+<title>Make-vs-Buy Decision Matrix — CBM Lab</title>
+<link rel="icon" href="../favicon.ico" sizes="any">
+<link rel="icon" href="../favicon.ico" type="image/x-icon">
+<link rel="apple-touch-icon" href="../apple-touch-icon.png">
+<link rel="canonical" href="https://procurement-toolkit-eight.vercel.app/en/make-vs-buy-matrix.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="CBM Lab">
+<meta property="og:locale" content="en_US">
+<meta property="og:title" content="Make-vs-Buy Decision Matrix — CBM Lab">
+<meta property="og:description" content="Free Make-vs-Buy decision matrix for procurement. Calculate the breakeven volume and weigh strategic factors for a data-backed recommendation.">
+<meta property="og:url" content="https://procurement-toolkit-eight.vercel.app/en/make-vs-buy-matrix.html">
+<meta property="og:image" content="https://procurement-toolkit-eight.vercel.app/assets/hero-team.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Make-vs-Buy Decision Matrix — CBM Lab">
+<meta name="twitter:description" content="Free Make-vs-Buy decision matrix for procurement. Calculate the breakeven volume and weigh strategic factors for a data-backed recommendation.">
+<meta name="twitter:image" content="https://procurement-toolkit-eight.vercel.app/assets/hero-team.jpg">
+
+<link rel="alternate" hreflang="ko" href="https://procurement-toolkit-eight.vercel.app/make-vs-buy-matrix.html">
+<link rel="alternate" hreflang="en" href="https://procurement-toolkit-eight.vercel.app/en/make-vs-buy-matrix.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@800;900&display=swap" rel="stylesheet">
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  :root{--accent:#2563EB;--accent-light:#DBEAFE;--accent-dark:#1D4ED8;--slate-50:#F8FAFC;--slate-100:#F1F5F9;--slate-200:#E2E8F0;--slate-300:#CBD5E1;--slate-400:#94A3B8;--slate-500:#64748B;--slate-600:#475569;--slate-700:#334155;--slate-800:#1E293B;--slate-900:#0F172A;--success:#0F766E;--success-light:#D1FAE5;--warn:#B45309;--warn-light:#FEF3C7;--danger:#B91C1C;--danger-light:#FEE2E2;--purple:#7C3AED;--purple-light:#EDE9FE;--radius:8px;--radius-lg:12px;--shadow-sm:0 1px 2px rgba(0,0,0,.05);font-family:'Inter','Pretendard',system-ui,-apple-system,sans-serif}
+  body{background:var(--slate-50);color:var(--slate-800);font-size:14px;line-height:1.6}
+  header{background:#fff;border-bottom:1px solid var(--slate-200)}
+  .header-inner{max-width:1200px;margin:0 auto;padding:16px 24px;display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}
+  .logo-mark{font-size:20px;font-weight:800;color:var(--slate-900);text-decoration:none;font-family:'Space Grotesk','Pretendard',sans-serif;letter-spacing:-0.4px;}
+  .nav-right{display:flex;align-items:center;gap:10px}
+  .nav-link{font-size:13px;font-weight:600;color:var(--slate-500);text-decoration:none;padding:7px 12px;border-radius:6px}
+  .nav-link:hover{background:var(--slate-100)}
+  .lang-switch{font-size:12px;font-weight:700;color:var(--accent);text-decoration:none;padding:6px 12px;border:1px solid var(--accent-light);border-radius:999px;background:var(--accent-light)}
+  .lang-switch:hover{background:#BFDBFE}
+
+  .hero{background:#fff;border-bottom:1px solid var(--slate-200);padding:28px 24px 24px}
+  .hero-inner{max-width:1200px;margin:0 auto}
+  .hero h1{font-size:24px;font-weight:700;color:var(--slate-900);margin-bottom:6px;letter-spacing:-0.3px}
+  .hero p{font-size:14px;color:var(--slate-500);max-width:740px}
+  .hero-tags{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}
+  .tag{background:var(--slate-100);color:var(--slate-600);font-size:11px;font-weight:500;padding:3px 10px;border-radius:4px;border:1px solid var(--slate-200)}
+
+  .main{max-width:1200px;margin:0 auto;padding:28px 24px 60px;display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:start}
+  .card{background:#fff;border:1px solid var(--slate-200);border-radius:var(--radius-lg);box-shadow:var(--shadow-sm);margin-bottom:20px}
+  .card-header{padding:16px 20px;border-bottom:1px solid var(--slate-100)}
+  .card-title{font-size:14px;font-weight:700;color:var(--slate-800)}
+  .card-body{padding:20px}
+
+  .field-label{font-size:12.5px;font-weight:600;color:var(--slate-600);margin-bottom:5px;display:block}
+  .field-sub{font-size:11px;color:var(--slate-400);margin-bottom:5px}
+  .inp{width:100%;border:1px solid var(--slate-200);border-radius:8px;padding:9px 11px;font-size:13.5px;font-family:inherit}
+  .inp:focus{outline:none;border-color:var(--accent)}
+  .field-group{margin-bottom:14px}
+  .field-row2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+
+  .cost-result{text-align:center;padding:16px 0;border-radius:10px;background:var(--slate-50);margin-top:6px}
+  .cost-result .value{font-size:22px;font-weight:800;color:var(--slate-900)}
+  .cost-result .label{font-size:11.5px;color:var(--slate-500);margin-top:2px}
+
+  .breakdown-row{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--slate-100);font-size:12.5px}
+  .breakdown-row:last-child{border-bottom:none}
+  .breakdown-row .k{color:var(--slate-500)}
+  .breakdown-row .v{font-weight:700;color:var(--slate-800)}
+
+  .criterion{margin-bottom:16px;padding-bottom:14px;border-bottom:1px solid var(--slate-100)}
+  .criterion:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0}
+  .criterion-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:4px}
+  .criterion-name{font-size:12.5px;font-weight:700;color:var(--slate-800)}
+  .criterion-weight{font-size:11px;color:var(--slate-400)}
+  .criterion-hint{font-size:11px;color:var(--slate-400);margin-bottom:6px}
+  .scale-row{display:flex;align-items:center;gap:8px}
+  .scale-row input[type=range]{flex:1}
+  .scale-labels{display:flex;justify-content:space-between;font-size:10px;color:var(--slate-400);margin-top:2px}
+
+  .final-result{text-align:center;padding:20px 0;border-radius:12px}
+  .final-result.make{background:var(--purple-light)}
+  .final-result.buy{background:var(--success-light)}
+  .final-result.neutral{background:var(--warn-light)}
+  .final-result .verdict{font-size:24px;font-weight:800;letter-spacing:-.3px}
+  .final-result.make .verdict{color:var(--purple)}
+  .final-result.buy .verdict{color:var(--success)}
+  .final-result.neutral .verdict{color:var(--warn)}
+  .final-result .score{font-size:12.5px;color:var(--slate-500);margin-top:4px}
+
+  .warn-box{background:var(--warn-light);border:1px solid #FDE68A;border-radius:var(--radius);padding:12px 14px;font-size:12px;color:#78350F;margin-top:14px;line-height:1.6}
+  .notice-box{background:var(--accent-light);border:1px solid #BFDBFE;border-radius:var(--radius);padding:10px 14px;font-size:12px;color:#1E40AF;margin-top:14px;line-height:1.6}
+
+  .faq-item{border-bottom:1px solid var(--slate-100);padding:12px 0}
+  .faq-item:last-child{border-bottom:none}
+  .faq-item summary{cursor:pointer;font-weight:700;font-size:13px;color:var(--slate-800);list-style:none;outline:none}
+  .faq-item summary::-webkit-details-marker{display:none}
+  .faq-item summary::before{content:'Q. ';color:var(--accent)}
+  .faq-item p{margin-top:8px;font-size:12.5px;color:var(--slate-600);line-height:1.7;padding-left:2px}
+
+  .ad-area-main{max-width:1200px;margin:0 auto;padding:0 24px 28px}
+  .ad-main-box{border:1px dashed #CBD5E1;border-radius:10px;background:#fff;height:90px;display:flex;flex-direction:column;align-items:center;justify-content:center;color:var(--slate-400);font-size:12px;gap:4px}
+  .ad-main-box strong{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:#94A3B8}
+  .faq-wrap{max-width:1100px;margin:20px auto 0;padding:0 24px}
+
+  footer{background:#0F172A;color:#94A3B8;padding:24px;font-size:12px}
+  .footer-inner{max-width:1200px;margin:0 auto;display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
+  .footer-logo{font-size:15px;font-weight:800;color:#fff;font-family:'Space Grotesk','Pretendard',sans-serif;}
+  .footer-link{color:#94A3B8;text-decoration:none;font-size:11px;margin-right:14px}
+
+  @media print{.ad-area-main,.ad-main-box,header,footer{display:none !important}.main{grid-template-columns:1fr}}
+  @media (max-width:900px){.main{grid-template-columns:1fr}}
+  @media (max-width:640px){.ad-area-main{padding:0 16px 20px}.faq-wrap{padding:0 16px}.field-row2{grid-template-columns:1fr}}
+</style>
+
+<script src="https://cdn.amplitude.com/script/d4aa9301e01f4600b5eeb018e160aa7c.js"></script>
+<script>
+  window.amplitude.init("d4aa9301e01f4600b5eeb018e160aa7c", { fetchRemoteConfig: true, autocapture: true });
+  window.amplitude.track('CBM Page View', {category: 'calc', page: 'make-vs-buy-matrix', lang: 'en'});
+</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-W1YBL5BGGK"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-W1YBL5BGGK');
+</script>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute;" aria-hidden="true">
+  <defs>
+    <linearGradient id="cbmGradH" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#14B8A6"/><stop offset="100%" stop-color="#0B2A4A"/></linearGradient>
+    <linearGradient id="cbmGradF" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#2DD4BF"/><stop offset="100%" stop-color="#5B9EFF"/></linearGradient>
+  </defs>
+</svg>
+<header><div class="header-inner">
+  <a href="index.html" class="logo-mark"><svg width="26" height="26" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align:middle;margin-right:8px;flex-shrink:0;"><path d="M20 2.5L36.5 11.5V28.5L20 37.5L3.5 28.5V11.5L20 2.5Z" stroke="url(#cbmGradH)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M20 2.5V20M20 20L36.5 11.5M20 20L3.5 11.5" stroke="url(#cbmGradH)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/></svg><span style="font-family:'Montserrat','Space Grotesk',sans-serif;font-weight:800;letter-spacing:-1.1px;background:linear-gradient(90deg,#14B8A6 0%,#1E7A8C 45%,#0B2A4A 100%);-webkit-background-clip:text;background-clip:text;color:transparent;">CBMLab</span></a>
+  <div class="nav-right">
+    <a href="index.html" class="nav-link">← All Tools</a>
+    <a href="../make-vs-buy-matrix.html" class="lang-switch">KOR</a>
+  </div>
+</div></header>
+
+<section class="hero"><div class="hero-inner">
+  <h1>Make-vs-Buy Decision Matrix</h1>
+  <p>Don't decide "make it ourselves or outsource it" by gut feel. Calculate the breakeven volume, then weigh in strategic factors for a decision backed by data.</p>
+  <div class="hero-tags"><span class="tag">Breakeven Analysis</span><span class="tag">Strategic Factor Scoring</span><span class="tag">Outsourcing Decision</span></div>
+</div></section>
+
+<div class="main">
+  <section>
+    <div class="card">
+      <div class="card-header"><div class="card-title">1. Cost Comparison</div></div>
+      <div class="card-body">
+        <div class="field-group">
+          <label class="field-label">Expected Annual Volume (units)</label>
+          <input type="number" class="inp" id="volume" value="10000" min="1" oninput="calc()">
+        </div>
+        <div class="field-row2">
+          <div class="field-group">
+            <label class="field-label">Make — Annual Fixed Cost</label>
+            <div class="field-sub">Equipment, tooling, initial setup cost</div>
+            <input type="number" class="inp" id="makeFixed" value="80000000" min="0" oninput="calc()">
+          </div>
+          <div class="field-group">
+            <label class="field-label">Make — Variable Cost per Unit</label>
+            <div class="field-sub">Materials + direct labor</div>
+            <input type="number" class="inp" id="makeVariable" value="3000" min="0" oninput="calc()">
+          </div>
+        </div>
+        <div class="field-row2">
+          <div class="field-group">
+            <label class="field-label">Buy — Annual Fixed Cost</label>
+            <div class="field-sub">Quality inspection, management overhead</div>
+            <input type="number" class="inp" id="buyFixed" value="5000000" min="0" oninput="calc()">
+          </div>
+          <div class="field-group">
+            <label class="field-label">Buy — Unit Purchase Price</label>
+            <div class="field-sub">Supplier quoted price</div>
+            <input type="number" class="inp" id="buyVariable" value="4500" min="0" oninput="calc()">
+          </div>
+        </div>
+        <div id="costResultWrap"></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header"><div class="card-title">2. Strategic Factor Scoring (Adjustable Weights)</div></div>
+      <div class="card-body" id="criteriaWrap"></div>
+    </div>
+  </section>
+
+  <aside>
+    <div class="card">
+      <div class="card-header"><div class="card-title">Overall Result</div></div>
+      <div class="card-body">
+        <div id="finalResultWrap"></div>
+        <div class="warn-box">⚠ This is a reference decision-support tool. Before finalizing a decision, re-verify the assumptions (fixed and variable costs, etc.) with finance, production, and quality teams.</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header"><div class="card-title">What Each Criterion Means</div></div>
+      <div class="card-body" style="font-size:11.5px;color:var(--slate-600);line-height:1.7;">
+        <p style="margin-bottom:8px;"><b>Strategic Importance:</b> How directly this part or capability ties to your product's core competitive advantage.</p>
+        <p style="margin-bottom:8px;"><b>Internal Capacity:</b> Whether your current equipment and staff can realistically absorb additional production.</p>
+        <p style="margin-bottom:8px;"><b>Quality Control Requirement:</b> Whether quality variation would have a critical impact on the final product.</p>
+        <p style="margin-bottom:8px;"><b>IP Protection Need:</b> Whether outsourcing risks leaking core technology or design.</p>
+        <p><b>Supply Market Maturity:</b> Whether enough reliable suppliers exist in the market (more suppliers favors Buy).</p>
+      </div>
+    </div>
+  </aside>
+</div>
+
+<div style="max-width:1200px;margin:0 auto;padding:0 24px 30px;">
+  <div class="notice-box">🔄 If you lean toward Buy, evaluate candidates with the <a href="supplier-scorecard.html" style="color:#1E40AF;font-weight:700;">Supplier Scorecard</a>, then confirm your sourcing strategy with the <a href="kraljic-matrix.html" style="color:#1E40AF;font-weight:700;">Kraljic Matrix</a>.</div>
+</div>
+
+<!-- AD -->
+<div class="ad-area-main" role="complementary" aria-label="Advertisement area">
+  <div class="ad-main-box"><strong>Advertisement</strong>Google AdSense</div>
+</div>
+
+<div class="faq-wrap">
+  <div class="card">
+    <div class="card-header"><div class="card-title">Frequently Asked Questions</div></div>
+    <div class="card-body">
+      <details class="faq-item"><summary>What if the cost comparison and strategic scoring disagree?</summary><p>This happens often in practice. If cost favors Buy but strategic importance is very high, teams frequently choose Make anyway, prioritizing long-term competitiveness over short-term cost. A disagreement between the two is a signal to discuss carefully, not a bug.</p></details>
+      <details class="faq-item"><summary>How is the breakeven volume calculated?</summary><p>It's the volume at which both options' total cost (fixed + variable × volume) becomes equal. Above that volume, the option with higher fixed cost (usually Make) becomes cheaper; below it, the other option wins.</p></details>
+      <details class="faq-item"><summary>How should I set the weights?</summary><p>There's no fixed answer. The common practice is to make the five weights sum to 100% and reflect your organization's priorities — for example, weighting IP protection higher in an industry where that matters most.</p></details>
+    </div>
+  </div>
+</div>
+
+<footer><div class="footer-inner">
+  <div class="footer-logo"><svg width="24" height="24" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align:middle;margin-right:9px;flex-shrink:0;"><path d="M20 2.5L36.5 11.5V28.5L20 37.5L3.5 28.5V11.5L20 2.5Z" stroke="url(#cbmGradF)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M20 2.5V20M20 20L36.5 11.5M20 20L3.5 11.5" stroke="url(#cbmGradF)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/></svg>CBM<span style="color:#2563EB;">Lab</span></div>
+  <nav><a href="index.html" class="footer-link">All Tools</a><a href="privacy.html" class="footer-link">Privacy Policy</a></nav>
+</div></footer>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {"@type":"Question","name":"What if the cost comparison and strategic scoring disagree?","acceptedAnswer":{"@type":"Answer","text":"This happens often. If cost favors Buy but strategic importance is very high, teams frequently choose Make anyway, prioritizing long-term competitiveness over short-term cost."}},
+    {"@type":"Question","name":"How is the breakeven volume calculated?","acceptedAnswer":{"@type":"Answer","text":"It is the volume at which both options' total cost becomes equal; above that volume, the option with higher fixed cost becomes cheaper."}},
+    {"@type":"Question","name":"How should I set the weights?","acceptedAnswer":{"@type":"Answer","text":"The common practice is to make the five weights sum to 100% and adjust them to reflect your organization's priorities."}}
+  ]
+}
+</script>
+
+<script>
+const CRITERIA = [
+  {id:'strategic', name:'Strategic Importance', hint:'The more central to core competitiveness, the more it favors Make', weight:25},
+  {id:'capacity', name:'Internal Capacity', hint:'The more spare equipment/staff capacity, the more it favors Make', weight:20},
+  {id:'quality', name:'Quality Control Requirement', hint:'The more critical quality control is, the more it favors Make', weight:20},
+  {id:'ip', name:'IP Protection Need', hint:'The higher the risk of tech/design leakage, the more it favors Make', weight:20},
+  {id:'market', name:'Supply Market Maturity', hint:'More reliable suppliers available favors Buy (score lower)', weight:15},
+];
+let scores = {strategic:3, capacity:3, quality:3, ip:3, market:3};
+
+function fmt(v){ return Math.round(v||0).toLocaleString('en-US'); }
+
+function renderCriteria(){
+  const wrap = document.getElementById('criteriaWrap');
+  wrap.innerHTML = CRITERIA.map(c => `
+    <div class="criterion">
+      <div class="criterion-top">
+        <span class="criterion-name">${c.name}</span>
+        <span class="criterion-weight">Weight <input type="number" class="inp" style="width:52px;padding:4px 6px;display:inline-block;text-align:center;" id="w_${c.id}" value="${c.weight}" min="0" max="100" oninput="calc()">%</span>
+      </div>
+      <div class="criterion-hint">${c.hint}</div>
+      <div class="scale-row">
+        <input type="range" min="1" max="5" step="1" value="${scores[c.id]}" id="s_${c.id}" oninput="scores['${c.id}']=parseInt(this.value); calc();">
+      </div>
+      <div class="scale-labels"><span>1 (Strongly favors Buy)</span><span>3 (Neutral)</span><span>5 (Strongly favors Make)</span></div>
+    </div>
+  `).join('');
+}
+
+function calc(){
+  // Cost comparison
+  const volume = parseFloat(document.getElementById('volume').value)||0;
+  const makeFixed = parseFloat(document.getElementById('makeFixed').value)||0;
+  const makeVariable = parseFloat(document.getElementById('makeVariable').value)||0;
+  const buyFixed = parseFloat(document.getElementById('buyFixed').value)||0;
+  const buyVariable = parseFloat(document.getElementById('buyVariable').value)||0;
+
+  const makeTotal = makeFixed + makeVariable*volume;
+  const buyTotal = buyFixed + buyVariable*volume;
+
+  let breakevenText = 'Variable costs are equal for both options, so there is no breakeven point.';
+  if(buyVariable !== makeVariable){
+    const bev = (makeFixed - buyFixed) / (buyVariable - makeVariable);
+    if(bev > 0){
+      breakevenText = `Breakeven at approximately ${fmt(bev)} units — beyond that, ${bev && (makeVariable<buyVariable ? 'Make' : 'Buy')} becomes cheaper`;
+    }
+  }
+
+  const costWrap = document.getElementById('costResultWrap');
+  const cheaper = makeTotal < buyTotal ? 'make' : 'buy';
+  costWrap.innerHTML = `
+    <div class="cost-result" style="background:${cheaper==='make'?'var(--purple-light)':'var(--success-light)'};">
+      <div class="value" style="color:${cheaper==='make'?'var(--purple)':'var(--success)'};">${cheaper==='make'?'Make':'Buy'} is cheaper</div>
+      <div class="label">At expected volume of ${fmt(volume)} units</div>
+    </div>
+    <div class="breakdown-row"><span class="k">Make total cost</span><span class="v">$${fmt(makeTotal)}</span></div>
+    <div class="breakdown-row"><span class="k">Buy total cost</span><span class="v">$${fmt(buyTotal)}</span></div>
+    <div class="breakdown-row"><span class="k">Difference</span><span class="v">$${fmt(Math.abs(makeTotal-buyTotal))}</span></div>
+    <div class="notice-box" style="margin-top:10px;">${breakevenText}</div>
+  `;
+
+  // Strategic weighted scoring
+  let totalWeight = 0, weightedSum = 0;
+  CRITERIA.forEach(c=>{
+    const wInput = document.getElementById(`w_${c.id}`);
+    const w = wInput ? (parseFloat(wInput.value)||0) : c.weight;
+    totalWeight += w;
+    weightedSum += w * scores[c.id];
+  });
+  const avgScore = totalWeight > 0 ? weightedSum/totalWeight : 3;
+
+  const finalWrap = document.getElementById('finalResultWrap');
+  let verdictClass = 'neutral', verdictText = 'Too close to call — weigh the cost comparison more heavily';
+  if(avgScore >= 3.5){ verdictClass = 'make'; verdictText = 'Leans toward Make'; }
+  else if(avgScore <= 2.5){ verdictClass = 'buy'; verdictText = 'Leans toward Buy'; }
+
+  const weightWarn = Math.abs(totalWeight-100) > 0.5 ? `<div class="warn-box" style="margin-top:10px;">⚠ Weights sum to ${fmt(totalWeight)}%. Adjust them to total 100% for a more accurate result.</div>` : '';
+
+  finalWrap.innerHTML = `
+    <div class="final-result ${verdictClass}">
+      <div class="verdict">${verdictText}</div>
+      <div class="score">Strategic weighted average: ${avgScore.toFixed(2)} / 5.0</div>
+    </div>
+    ${weightWarn}
+  `;
+}
+
+renderCriteria();
+calc();
+</script>
+</body>
+</html>
