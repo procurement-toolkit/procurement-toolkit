@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Free BATNA negotiation preparation tool. List your alternatives, set your target and reservation price, and compare against the counterparty's estimated range to see if a Zone of Possible Agreement (ZOPA) actually exists.">
+<meta name="keywords" content="BATNA negotiation, ZOPA calculator, negotiation preparation tool, reservation price, target price negotiation">
+<title>BATNA Negotiation Preparation Tool — CBM Lab</title>
+<link rel="icon" href="../favicon.ico" sizes="any">
+<link rel="icon" href="../favicon.ico" type="image/x-icon">
+<link rel="apple-touch-icon" href="../apple-touch-icon.png">
+<link rel="canonical" href="https://procurement-toolkit-eight.vercel.app/en/batna-negotiation-matrix.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="CBM Lab">
+<meta property="og:locale" content="en_US">
+<meta property="og:title" content="BATNA Negotiation Preparation Tool — CBM Lab">
+<meta property="og:description" content="Free BATNA negotiation preparation tool. List your alternatives and compare your price range against the counterparty's estimated range to see if a ZOPA exists.">
+<meta property="og:url" content="https://procurement-toolkit-eight.vercel.app/en/batna-negotiation-matrix.html">
+<meta property="og:image" content="https://procurement-toolkit-eight.vercel.app/assets/hero-team.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="BATNA Negotiation Preparation Tool — CBM Lab">
+<meta name="twitter:description" content="Free BATNA negotiation preparation tool. List your alternatives and compare your price range against the counterparty's estimated range to see if a ZOPA exists.">
+<meta name="twitter:image" content="https://procurement-toolkit-eight.vercel.app/assets/hero-team.jpg">
+
+<link rel="alternate" hreflang="ko" href="https://procurement-toolkit-eight.vercel.app/batna-negotiation-matrix.html">
+<link rel="alternate" hreflang="en" href="https://procurement-toolkit-eight.vercel.app/en/batna-negotiation-matrix.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@800;900&display=swap" rel="stylesheet">
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  :root{--accent:#2563EB;--accent-light:#DBEAFE;--accent-dark:#1D4ED8;--slate-50:#F8FAFC;--slate-100:#F1F5F9;--slate-200:#E2E8F0;--slate-300:#CBD5E1;--slate-400:#94A3B8;--slate-500:#64748B;--slate-600:#475569;--slate-700:#334155;--slate-800:#1E293B;--slate-900:#0F172A;--success:#0F766E;--success-light:#D1FAE5;--warn:#B45309;--warn-light:#FEF3C7;--danger:#B91C1C;--danger-light:#FEE2E2;--radius:8px;--radius-lg:12px;--shadow-sm:0 1px 2px rgba(0,0,0,.05);font-family:'Inter','Pretendard',system-ui,-apple-system,sans-serif}
+  body{background:var(--slate-50);color:var(--slate-800);font-size:14px;line-height:1.6}
+  header{background:#fff;border-bottom:1px solid var(--slate-200)}
+  .header-inner{max-width:1200px;margin:0 auto;padding:16px 24px;display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}
+  .logo-mark{font-size:20px;font-weight:800;color:var(--slate-900);text-decoration:none;font-family:'Space Grotesk','Pretendard',sans-serif;letter-spacing:-0.4px;}
+  .nav-right{display:flex;align-items:center;gap:10px}
+  .nav-link{font-size:13px;font-weight:600;color:var(--slate-500);text-decoration:none;padding:7px 12px;border-radius:6px}
+  .nav-link:hover{background:var(--slate-100)}
+  .lang-switch{font-size:12px;font-weight:700;color:var(--accent);text-decoration:none;padding:6px 12px;border:1px solid var(--accent-light);border-radius:999px;background:var(--accent-light)}
+  .lang-switch:hover{background:#BFDBFE}
+
+  .hero{background:#fff;border-bottom:1px solid var(--slate-200);padding:28px 24px 24px}
+  .hero-inner{max-width:1200px;margin:0 auto}
+  .hero h1{font-size:24px;font-weight:700;color:var(--slate-900);margin-bottom:6px;letter-spacing:-0.3px}
+  .hero p{font-size:14px;color:var(--slate-500);max-width:740px}
+  .hero-tags{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}
+  .tag{background:var(--slate-100);color:var(--slate-600);font-size:11px;font-weight:500;padding:3px 10px;border-radius:4px;border:1px solid var(--slate-200)}
+
+  .main{max-width:1200px;margin:0 auto;padding:28px 24px 60px;display:grid;grid-template-columns:1fr 380px;gap:24px;align-items:start}
+  .card{background:#fff;border:1px solid var(--slate-200);border-radius:var(--radius-lg);box-shadow:var(--shadow-sm);margin-bottom:20px}
+  .card-header{padding:16px 20px;border-bottom:1px solid var(--slate-100)}
+  .card-title{font-size:14px;font-weight:700;color:var(--slate-800)}
+  .card-body{padding:20px}
+
+  .field-label{font-size:12.5px;font-weight:600;color:var(--slate-600);margin-bottom:5px;display:block}
+  .field-sub{font-size:11px;color:var(--slate-400);margin-bottom:5px}
+  .inp{width:100%;border:1px solid var(--slate-200);border-radius:8px;padding:9px 11px;font-size:13.5px;font-family:inherit}
+  .inp:focus{outline:none;border-color:var(--accent)}
+  .field-group{margin-bottom:14px}
+  .field-row2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+
+  .alt-table{width:100%;border-collapse:collapse;margin-bottom:10px}
+  .alt-table th{font-size:10.5px;color:var(--slate-400);text-transform:uppercase;text-align:left;padding:0 6px 6px}
+  .alt-table td{padding:5px 6px}
+  .alt-table input{width:100%;border:1px solid var(--slate-200);border-radius:6px;padding:7px 8px;font-size:13px;font-family:inherit}
+  .del-btn{width:26px;height:26px;border:1px solid var(--slate-200);border-radius:6px;background:#fff;color:var(--slate-400);cursor:pointer}
+  .del-btn:hover{border-color:var(--danger);color:var(--danger)}
+  .btn-add-row{width:100%;padding:8px;border:1px dashed var(--slate-300);border-radius:8px;background:#fff;color:var(--slate-500);font-size:12px;font-weight:600;cursor:pointer;margin-bottom:10px}
+  .btn-add-row:hover{border-color:var(--accent);color:var(--accent)}
+
+  .batna-result{background:var(--slate-50);border-radius:10px;padding:14px 16px;margin-top:6px}
+  .batna-result .label{font-size:11px;color:var(--slate-500);margin-bottom:3px}
+  .batna-result .value{font-size:16px;font-weight:800;color:var(--slate-900)}
+
+  .zopa-viz{position:relative;height:70px;margin:20px 0 8px;}
+  .zopa-track{position:absolute;top:30px;left:0;right:0;height:8px;background:var(--slate-100);border-radius:4px}
+  .zopa-overlap{position:absolute;top:30px;height:8px;background:var(--success);border-radius:4px}
+  .zopa-marker{position:absolute;top:20px;width:2px;height:28px;background:var(--slate-400)}
+  .zopa-marker-label{position:absolute;top:0;font-size:9.5px;font-weight:700;white-space:nowrap;transform:translateX(-50%);color:var(--slate-600)}
+  .zopa-marker-value{position:absolute;top:50px;font-size:10px;color:var(--slate-500);white-space:nowrap;transform:translateX(-50%)}
+
+  .zopa-status{text-align:center;padding:16px;border-radius:10px;margin-bottom:14px}
+  .zopa-status.positive{background:var(--success-light)}
+  .zopa-status.negative{background:var(--danger-light)}
+  .zopa-status .verdict{font-size:17px;font-weight:800}
+  .zopa-status.positive .verdict{color:var(--success)}
+  .zopa-status.negative .verdict{color:var(--danger)}
+  .zopa-status .sub{font-size:12px;color:var(--slate-500);margin-top:4px}
+
+  .warn-box{background:var(--warn-light);border:1px solid #FDE68A;border-radius:var(--radius);padding:12px 14px;font-size:12px;color:#78350F;margin-top:14px;line-height:1.6}
+  .notice-box{background:var(--accent-light);border:1px solid #BFDBFE;border-radius:var(--radius);padding:10px 14px;font-size:12px;color:#1E40AF;margin-top:14px;line-height:1.6}
+
+  .faq-item{border-bottom:1px solid var(--slate-100);padding:12px 0}
+  .faq-item:last-child{border-bottom:none}
+  .faq-item summary{cursor:pointer;font-weight:700;font-size:13px;color:var(--slate-800);list-style:none;outline:none}
+  .faq-item summary::-webkit-details-marker{display:none}
+  .faq-item summary::before{content:'Q. ';color:var(--accent)}
+  .faq-item p{margin-top:8px;font-size:12.5px;color:var(--slate-600);line-height:1.7;padding-left:2px}
+
+  .ad-area-main{max-width:1200px;margin:0 auto;padding:0 24px 28px}
+  .ad-main-box{border:1px dashed #CBD5E1;border-radius:10px;background:#fff;height:90px;display:flex;flex-direction:column;align-items:center;justify-content:center;color:var(--slate-400);font-size:12px;gap:4px}
+  .ad-main-box strong{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:#94A3B8}
+  .faq-wrap{max-width:1100px;margin:20px auto 0;padding:0 24px}
+
+  footer{background:#0F172A;color:#94A3B8;padding:24px;font-size:12px}
+  .footer-inner{max-width:1200px;margin:0 auto;display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
+  .footer-logo{font-size:15px;font-weight:800;color:#fff;font-family:'Space Grotesk','Pretendard',sans-serif;}
+  .footer-link{color:#94A3B8;text-decoration:none;font-size:11px;margin-right:14px}
+
+  @media print{.ad-area-main,.ad-main-box,header,footer{display:none !important}.main{grid-template-columns:1fr}}
+  @media (max-width:900px){.main{grid-template-columns:1fr}}
+  @media (max-width:640px){.ad-area-main{padding:0 16px 20px}.faq-wrap{padding:0 16px}.field-row2{grid-template-columns:1fr}}
+</style>
+
+<script src="https://cdn.amplitude.com/script/d4aa9301e01f4600b5eeb018e160aa7c.js"></script>
+<script>
+  window.amplitude.init("d4aa9301e01f4600b5eeb018e160aa7c", { fetchRemoteConfig: true, autocapture: true });
+  window.amplitude.track('CBM Page View', {category: 'calc', page: 'batna-negotiation-matrix', lang: 'en'});
+</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-W1YBL5BGGK"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-W1YBL5BGGK');
+</script>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute;" aria-hidden="true">
+  <defs>
+    <linearGradient id="cbmGradH" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#14B8A6"/><stop offset="100%" stop-color="#0B2A4A"/></linearGradient>
+    <linearGradient id="cbmGradF" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#2DD4BF"/><stop offset="100%" stop-color="#5B9EFF"/></linearGradient>
+  </defs>
+</svg>
+<header><div class="header-inner">
+  <a href="index.html" class="logo-mark"><svg width="26" height="26" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align:middle;margin-right:8px;flex-shrink:0;"><path d="M20 2.5L36.5 11.5V28.5L20 37.5L3.5 28.5V11.5L20 2.5Z" stroke="url(#cbmGradH)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M20 2.5V20M20 20L36.5 11.5M20 20L3.5 11.5" stroke="url(#cbmGradH)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/></svg><span style="font-family:'Montserrat','Space Grotesk',sans-serif;font-weight:800;letter-spacing:-1.1px;background:linear-gradient(90deg,#14B8A6 0%,#1E7A8C 45%,#0B2A4A 100%);-webkit-background-clip:text;background-clip:text;color:transparent;">CBMLab</span></a>
+  <div class="nav-right">
+    <a href="index.html" class="nav-link">← All Tools</a>
+    <a href="../batna-negotiation-matrix.html" class="lang-switch">KOR</a>
+  </div>
+</div></header>
+
+<section class="hero"><div class="hero-inner">
+  <h1>BATNA Negotiation Preparation Tool</h1>
+  <p>Walking into a negotiation without knowing your best alternative puts you at a disadvantage. List your alternatives, and check whether a genuine Zone of Possible Agreement exists with the other side before you sit down.</p>
+  <div class="hero-tags"><span class="tag">Getting to Yes Framework</span><span class="tag">ZOPA Visualization</span><span class="tag">Negotiation Prep Checklist</span></div>
+</div></section>
+
+<div class="main">
+  <section>
+    <div class="card">
+      <div class="card-header"><div class="card-title">1. List Your Alternatives (BATNA)</div></div>
+      <div class="card-body">
+        <p style="font-size:12.5px;color:var(--slate-600);margin-bottom:12px;">List the alternatives you could fall back on if this negotiation falls through. The most favorable (lowest-cost) alternative automatically becomes your BATNA.</p>
+        <table class="alt-table">
+          <thead><tr><th style="width:55%">Alternative</th><th style="width:35%">Estimated Cost/Price</th><th></th></tr></thead>
+          <tbody id="altBody"></tbody>
+        </table>
+        <button class="btn-add-row" onclick="addAlt()">+ Add Alternative</button>
+        <div id="batnaResultWrap"></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header"><div class="card-title">2. Set Your Price Range</div></div>
+      <div class="card-body">
+        <div class="field-row2">
+          <div class="field-group">
+            <label class="field-label">My Target Price</label>
+            <div class="field-sub">Your ideal price</div>
+            <input type="number" class="inp" id="myTarget" value="4000" min="0" oninput="calc()">
+          </div>
+          <div class="field-group">
+            <label class="field-label">My Reservation Price</label>
+            <div class="field-sub">Walk-away point (should be informed by your BATNA)</div>
+            <input type="number" class="inp" id="myReservation" value="4800" min="0" oninput="calc()">
+          </div>
+        </div>
+        <div class="field-row2">
+          <div class="field-group">
+            <label class="field-label">Their Estimated Target Price</label>
+            <div class="field-sub">Their ideal price (your estimate)</div>
+            <input type="number" class="inp" id="theirTarget" value="5500" min="0" oninput="calc()">
+          </div>
+          <div class="field-group">
+            <label class="field-label">Their Estimated Reservation Price</label>
+            <div class="field-sub">The lowest they'd accept (your estimate)</div>
+            <input type="number" class="inp" id="theirReservation" value="4200" min="0" oninput="calc()">
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <aside>
+    <div class="card">
+      <div class="card-header"><div class="card-title">ZOPA Analysis</div></div>
+      <div class="card-body">
+        <div id="zopaWrap"></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header"><div class="card-title">Key Terms</div></div>
+      <div class="card-body" style="font-size:11.5px;color:var(--slate-600);line-height:1.7;">
+        <p style="margin-bottom:8px;"><b>BATNA:</b> Your best alternative if this negotiation fails. A stronger BATNA gives you more negotiating power.</p>
+        <p style="margin-bottom:8px;"><b>Reservation Price:</b> The point beyond which you're better off walking away and taking your BATNA instead.</p>
+        <p><b>ZOPA:</b> The overlap between your reservation price and the counterparty's reservation price. A deal is only structurally possible if this overlap exists.</p>
+      </div>
+    </div>
+  </aside>
+</div>
+
+<div style="max-width:1200px;margin:0 auto;padding:0 24px 30px;">
+  <div class="notice-box">🔄 Once you sign a resulting contract, track its renewal deadline with the <a href="contract-renewal-calendar.html" style="color:#1E40AF;font-weight:700;">Contract Renewal Calendar</a>. Need to prioritize which supplier to negotiate with first? Check the <a href="supplier-scorecard.html" style="color:#1E40AF;font-weight:700;">Supplier Scorecard</a>.</div>
+</div>
+
+<!-- AD -->
+<div class="ad-area-main" role="complementary" aria-label="Advertisement area">
+  <div class="ad-main-box"><strong>Advertisement</strong>Google AdSense</div>
+</div>
+
+<div class="faq-wrap">
+  <div class="card">
+    <div class="card-header"><div class="card-title">Frequently Asked Questions</div></div>
+    <div class="card-body">
+      <details class="faq-item"><summary>How do I estimate the counterparty's range?</summary><p>Base it on their cost structure, market pricing, past deal history, and competitor quotes. It doesn't need to be precise — even a rough range meaningfully improves your negotiation strategy.</p></details>
+      <details class="faq-item"><summary>If there's no ZOPA, should I give up on the negotiation?</summary><p>Not necessarily — first consider whether adjusting non-price terms (lead time, payment terms, volume, warranty) could widen the ZOPA. Bundling multiple issues together can create room for a deal that pure price negotiation couldn't.</p></details>
+      <details class="faq-item"><summary>Why should my reservation price be based on my BATNA?</summary><p>The worst deal you should accept can never be worse than your best alternative (BATNA) if the negotiation fails. If a deal is worse than your BATNA, walking away is the rational choice.</p></details>
+    </div>
+  </div>
+</div>
+
+<footer><div class="footer-inner">
+  <div class="footer-logo"><svg width="24" height="24" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align:middle;margin-right:9px;flex-shrink:0;"><path d="M20 2.5L36.5 11.5V28.5L20 37.5L3.5 28.5V11.5L20 2.5Z" stroke="url(#cbmGradF)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M20 2.5V20M20 20L36.5 11.5M20 20L3.5 11.5" stroke="url(#cbmGradF)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/></svg>CBM<span style="color:#2563EB;">Lab</span></div>
+  <nav><a href="index.html" class="footer-link">All Tools</a><a href="privacy.html" class="footer-link">Privacy Policy</a></nav>
+</div></footer>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {"@type":"Question","name":"How do I estimate the counterparty's range?","acceptedAnswer":{"@type":"Answer","text":"Base it on their cost structure, market pricing, past deal history, and competitor quotes; even a rough range meaningfully improves negotiation strategy."}},
+    {"@type":"Question","name":"If there's no ZOPA, should I give up on the negotiation?","acceptedAnswer":{"@type":"Answer","text":"Consider whether adjusting non-price terms such as lead time, payment terms, or volume could widen the ZOPA before giving up."}},
+    {"@type":"Question","name":"Why should my reservation price be based on my BATNA?","acceptedAnswer":{"@type":"Answer","text":"The worst deal you accept should never be worse than your best alternative, since walking away is rational if a deal falls below your BATNA."}}
+  ]
+}
+</script>
+
+<script>
+let alternatives = [];
+let altCounter = 0;
+
+function addAlt(name, cost){
+  altCounter++;
+  alternatives.push({id: altCounter, name: name || '', cost: cost !== undefined ? cost : ''});
+  renderAlts();
+  calc();
+}
+function removeAlt(id){
+  alternatives = alternatives.filter(a=>a.id!==id);
+  renderAlts();
+  calc();
+}
+function updateAlt(id, field, value){
+  const a = alternatives.find(a=>a.id===id);
+  if(!a) return;
+  a[field] = field==='cost' ? (parseFloat(value)||0) : value;
+  calc();
+}
+
+function renderAlts(){
+  const body = document.getElementById('altBody');
+  body.innerHTML = alternatives.map(a => `
+    <tr>
+      <td><input value="${a.name}" placeholder="e.g. Backup supplier B" oninput="updateAlt(${a.id},'name',this.value)"></td>
+      <td><input type="number" value="${a.cost}" placeholder="0" oninput="updateAlt(${a.id},'cost',this.value)"></td>
+      <td><button class="del-btn" onclick="removeAlt(${a.id})">✕</button></td>
+    </tr>
+  `).join('');
+}
+
+function fmt(v){ return Math.round(v||0).toLocaleString('en-US'); }
+
+function calc(){
+  // BATNA = the alternative with the lowest cost
+  const valid = alternatives.filter(a=>a.name && a.cost>0);
+  const batnaWrap = document.getElementById('batnaResultWrap');
+  let batnaCost = null;
+  if(valid.length===0){
+    batnaWrap.innerHTML = '<div class="warn-box">Add at least one alternative and we\'ll automatically identify your best alternative (BATNA).</div>';
+  } else {
+    const best = valid.reduce((a,b)=> a.cost<b.cost ? a : b);
+    batnaCost = best.cost;
+    batnaWrap.innerHTML = `<div class="batna-result"><div class="label">Your BATNA (Best Alternative)</div><div class="value">${best.name} — $${fmt(best.cost)}</div></div>`;
+  }
+
+  const myTarget = parseFloat(document.getElementById('myTarget').value)||0;
+  const myReservation = parseFloat(document.getElementById('myReservation').value)||0;
+  const theirTarget = parseFloat(document.getElementById('theirTarget').value)||0;
+  const theirReservation = parseFloat(document.getElementById('theirReservation').value)||0;
+
+  const zopaWrap = document.getElementById('zopaWrap');
+  const positive = myReservation >= theirReservation;
+
+  let statusHtml = '';
+  if(positive){
+    const overlapLow = theirReservation, overlapHigh = myReservation;
+    statusHtml = `<div class="zopa-status positive"><div class="verdict">✅ ZOPA Exists</div><div class="sub">A deal is possible between $${fmt(overlapLow)} and $${fmt(overlapHigh)}</div></div>`;
+  } else {
+    statusHtml = `<div class="zopa-status negative"><div class="verdict">⚠ No ZOPA</div><div class="sub">Under the current price terms, a deal is not structurally possible</div></div>`;
+  }
+
+  // Scale calculation for the visualization
+  const allVals = [myTarget, myReservation, theirTarget, theirReservation].filter(v=>v>0);
+  const minV = Math.min(...allVals) * 0.9;
+  const maxV = Math.max(...allVals) * 1.1;
+  const range = maxV - minV || 1;
+  const pos = (v) => ((v-minV)/range)*100;
+
+  const markers = [
+    {v: myTarget, label:'My Target', side:'my'},
+    {v: myReservation, label:'My Reservation', side:'my'},
+    {v: theirReservation, label:'Their Reservation', side:'their'},
+    {v: theirTarget, label:'Their Target', side:'their'},
+  ].sort((a,b)=>a.v-b.v);
+
+  let overlapStyle = '';
+  if(positive){
+    const left = Math.min(pos(theirReservation), pos(myReservation));
+    const rightPos = Math.max(pos(theirReservation), pos(myReservation));
+    overlapStyle = `left:${left}%;width:${rightPos-left}%;`;
+  }
+
+  const vizHtml = `
+    <div class="zopa-viz">
+      <div class="zopa-track"></div>
+      ${positive ? `<div class="zopa-overlap" style="${overlapStyle}"></div>` : ''}
+      ${markers.map(m => `
+        <div class="zopa-marker" style="left:${pos(m.v)}%;"></div>
+        <div class="zopa-marker-label" style="left:${pos(m.v)}%;">${m.label}</div>
+        <div class="zopa-marker-value" style="left:${pos(m.v)}%;">$${fmt(m.v)}</div>
+      `).join('')}
+    </div>
+  `;
+
+  let anchorTip = '';
+  if(positive && myTarget > 0){
+    anchorTip = `<div class="notice-box">💡 A common opening move is to anchor near your target price ($${fmt(myTarget)}), or slightly more favorable still.</div>`;
+  }
+
+  zopaWrap.innerHTML = statusHtml + vizHtml + anchorTip;
+}
+
+// Preset example
+addAlt('Backup supplier B', 4800);
+addAlt('Bring production in-house', 5200);
+calc();
+</script>
+</body>
+</html>
