@@ -39,6 +39,8 @@
     --route:#155EEF; --route-dim:#E8EFFE; --route-deep:#0E3FBF;
     --beacon:#F59E0B; --beacon-dim:#FEF3DC;
     --teal:#0F766E; --teal-dim:#DDF5F1;
+    --matrix:#7C3AED; --matrix-dim:#EDE4FE;
+    --util:#0891B2; --util-dim:#CFFAFE;
     --live:#059669; --live-dim:#D6F5E8;
     --muted:#5B6472; --faint:#8B94A3;
     --radius:10px; --radius-lg:16px;
@@ -88,11 +90,15 @@
   .tool-accent.calc{background:var(--route)}
   .tool-accent.gen{background:var(--beacon)}
   .tool-accent.guide{background:var(--teal)}
+  .tool-accent.matrix{background:var(--matrix)}
+  .tool-accent.tool{background:var(--util)}
   .tool-body{padding:14px 16px 12px;display:flex;flex-direction:column;gap:6px;flex:1}
   .tool-icon{width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center}
   .tool-icon.calc{background:var(--route-dim);color:var(--route)}
   .tool-icon.gen{background:var(--beacon-dim);color:var(--beacon)}
   .tool-icon.guide{background:var(--teal-dim);color:var(--teal)}
+  .tool-icon.matrix{background:var(--matrix-dim);color:var(--matrix)}
+  .tool-icon.tool{background:var(--util-dim);color:var(--util)}
   .tool-card h3{font-size:14px;font-weight:700;color:var(--ink);letter-spacing:-.2px;line-height:1.3}
   .tool-card p{font-size:12px;color:var(--muted);line-height:1.5;flex:1}
   .tool-go{font-family:var(--font-display);font-size:12px;font-weight:600;color:var(--ink)}
@@ -209,28 +215,28 @@ const ICONS = {
 };
 
 const TOOLS = [
-  {cat:'calc', icon:'matrix', title:'Kraljic Matrix Tool', desc:'Drag and drop suppliers or categories by supply risk and profit impact. Get instant quadrant classification and recommended sourcing strategy.', href:'kraljic-matrix.html', isNew:true, kw:'kraljic matrix supplier segmentation category management'},
-  {cat:'calc', icon:'matrix', title:'Directional Policy Matrix (DPM) Tool', desc:'A finer 3x3 grid version of the Kraljic Matrix. Plot suppliers by supply market attractiveness and your relative strength for an Invest, Selective, or Harvest policy.', href:'directional-policy-matrix.html', isNew:true, kw:'directional policy matrix ge mckinsey nine box procurement'},
-  {cat:'calc', icon:'matrix', title:'Supplier Preferencing Matrix Tool', desc:'The companion to the Kraljic Matrix — see how your suppliers likely view you, based on account value and attractiveness.', href:'supplier-preferencing-matrix.html', isNew:true, kw:'supplier preferencing matrix account attractiveness steele court'},
-  {cat:'calc', icon:'matrix', title:'Supplier Risk Matrix Tool', desc:'Plot suppliers by probability of disruption and impact if disrupted to see which need urgent action, a contingency plan, routine management, or just monitoring.', href:'supplier-risk-matrix.html', isNew:true, kw:'supplier risk matrix supply chain risk assessment probability impact'},
+  {cat:'matrix', icon:'matrix', title:'Kraljic Matrix Tool', desc:'Drag and drop suppliers or categories by supply risk and profit impact. Get instant quadrant classification and recommended sourcing strategy.', href:'kraljic-matrix.html', isNew:true, kw:'kraljic matrix supplier segmentation category management'},
+  {cat:'matrix', icon:'matrix', title:'Directional Policy Matrix (DPM) Tool', desc:'A finer 3x3 grid version of the Kraljic Matrix. Plot suppliers by supply market attractiveness and your relative strength for an Invest, Selective, or Harvest policy.', href:'directional-policy-matrix.html', isNew:true, kw:'directional policy matrix ge mckinsey nine box procurement'},
+  {cat:'matrix', icon:'matrix', title:'Supplier Preferencing Matrix Tool', desc:'The companion to the Kraljic Matrix — see how your suppliers likely view you, based on account value and attractiveness.', href:'supplier-preferencing-matrix.html', isNew:true, kw:'supplier preferencing matrix account attractiveness steele court'},
+  {cat:'matrix', icon:'matrix', title:'Supplier Risk Matrix Tool', desc:'Plot suppliers by probability of disruption and impact if disrupted to see which need urgent action, a contingency plan, routine management, or just monitoring.', href:'supplier-risk-matrix.html', isNew:true, kw:'supplier risk matrix supply chain risk assessment probability impact'},
   {cat:'calc', icon:'coin', title:'Landed Cost Calculator', desc:'Calculate total import cost from EXW, FOB, CFR, or CIF terms — with correct duty-basis handling for US (FOB) vs most other countries (CIF).', href:'landed-cost-calculator.html', kw:'landed cost fob cif import duty calculator'},
   {cat:'calc', icon:'coin', title:'FX Exposure Calculator', desc:'Enter your purchases by currency to see total exposure, concentration risk, and the P&L impact of a simulated exchange rate move.', href:'fx-exposure-calculator.html', kw:'fx exposure calculator foreign exchange risk currency exposure'},
   {cat:'calc', icon:'box', title:'CBM &amp; Volumetric Weight Calculator', desc:'Multiple carton sizes, total CBM, sea/air chargeable weight, and container capacity — all in one calculator.', href:'cbm-calculator.html', kw:'cbm volumetric weight dimensional weight'},
   {cat:'calc', icon:'truck', title:'Lead Time &amp; Delivery Date Calculator', desc:'Add production, transit, and customs clearance time to get an accurate expected arrival date.', href:'lead-time-calculator.html', kw:'lead time delivery date calculator'},
-  {cat:'calc', icon:'truck', title:'Global Supply Chain Holiday Calendar', desc:'Chinese New Year, Golden Week, Diwali and other events that actually disrupt logistics, with recommended order-by dates for each.', href:'global-holiday-calendar.html', kw:'chinese new year factory shutdown golden week supply chain holiday calendar'},
-  {cat:'calc', icon:'truck', title:'Nearshore vs Reshore vs Offshore Comparator', desc:'Enter unit price, freight, duty, and lead time for up to 3 sourcing options side by side to compare true total cost.', href:'sourcing-location-comparator.html', kw:'nearshoring reshoring offshore sourcing comparison'},
+  {cat:'tool', icon:'truck', title:'Global Supply Chain Holiday Calendar', desc:'Chinese New Year, Golden Week, Diwali and other events that actually disrupt logistics, with recommended order-by dates for each.', href:'global-holiday-calendar.html', kw:'chinese new year factory shutdown golden week supply chain holiday calendar'},
+  {cat:'matrix', icon:'truck', title:'Nearshore vs Reshore vs Offshore Comparator', desc:'Enter unit price, freight, duty, and lead time for up to 3 sourcing options side by side to compare true total cost.', href:'sourcing-location-comparator.html', kw:'nearshoring reshoring offshore sourcing comparison'},
   {cat:'calc', icon:'box', title:'EOQ, Safety Stock &amp; Reorder Point Calculator', desc:'Stop guessing order quantities — get a data-backed Economic Order Quantity, safety stock, and reorder point.', href:'eoq-safety-stock-calculator.html', kw:'eoq economic order quantity safety stock reorder point'},
-  {cat:'calc', icon:'matrix', title:'Container Loading Calculator', desc:'Enter multiple box sizes and see how they load into a 20ft/40ft container with a 2D/3D visualization.', href:'container-loading-calculator.html', kw:'container loading calculator 20ft 40ft'},
+  {cat:'tool', icon:'matrix', title:'Container Loading Calculator', desc:'Enter multiple box sizes and see how they load into a 20ft/40ft container with a 2D/3D visualization.', href:'container-loading-calculator.html', kw:'container loading calculator 20ft 40ft'},
   {cat:'calc', icon:'coin', title:'Should Cost Calculator', desc:'Build up material, labor, machine, and margin costs to estimate a fair price — then compare to a supplier quote and get negotiation points.', href:'should-cost-calculator.html', kw:'should cost analysis negotiation'},
   {cat:'calc', icon:'wallet', title:'TCO Calculator (Total Cost of Ownership)', desc:'Include purchase price, maintenance, energy, downtime, and disposal cost, then compare two equipment options.', href:'tco-calculator.html', kw:'tco total cost of ownership capex'},
   {cat:'calc', icon:'coin', title:'Cost Structure Calculator', desc:'Understand Prime Cost, Manufacturing Cost (COGM), Total Cost, and Landed/Acquisition Cost, and see how Markup vs Margin pricing differ.', href:'cost-structure-calculator.html', kw:'cost structure cogm markup margin'},
 
   {cat:'gen', icon:'doc', title:'RFI, RFP &amp; RFQ Template Generator', desc:'A shared template for sourcing, development, CAPEX, and strategic sourcing projects — fill in the fields and get a ready-to-send document.', href:'rfq-rfp-rfi-generator.html', kw:'rfq rfp rfi template generator'},
-  {cat:'calc', icon:'doc', title:'RFQ Comparison Tool', desc:'Compare multiple supplier quotes side by side on price, MOQ, and lead time, then weigh in quality and reliability for a documented selection rationale.', href:'rfq-comparison-tool.html', kw:'rfq comparison tool supplier quote comparison'},
+  {cat:'matrix', icon:'doc', title:'RFQ Comparison Tool', desc:'Compare multiple supplier quotes side by side on price, MOQ, and lead time, then weigh in quality and reliability for a documented selection rationale.', href:'rfq-comparison-tool.html', kw:'rfq comparison tool supplier quote comparison'},
   {cat:'gen', icon:'star', title:'Supplier &amp; Vendor Scorecard Generator', desc:'Pick from 30+ objective criteria with 1/3/5-point rubrics, get an automatic weighted score, and print a professional report.', href:'supplier-scorecard.html', kw:'supplier scorecard vendor evaluation'},
-  {cat:'calc', icon:'matrix', title:'Make-vs-Buy Decision Matrix', desc:'Calculate the breakeven volume between making in-house and buying, then weigh strategic factors for a data-backed recommendation.', href:'make-vs-buy-matrix.html', kw:'make or buy decision breakeven analysis outsourcing'},
-  {cat:'calc', icon:'matrix', title:'BATNA Negotiation Preparation Tool', desc:'List your alternatives, set your target and reservation price, and check whether a Zone of Possible Agreement (ZOPA) exists with the counterparty.', href:'batna-negotiation-matrix.html', kw:'batna negotiation zopa reservation price'},
-  {cat:'calc', icon:'clock', title:'Contract Renewal Calendar', desc:'Register contract expiry dates and notice periods to get them prioritized by urgency, and export a calendar file (.ics) for Google Calendar or Outlook.', href:'contract-renewal-calendar.html', kw:'contract renewal calendar expiration tracker reminder'},
+  {cat:'matrix', icon:'matrix', title:'Make-vs-Buy Decision Matrix', desc:'Calculate the breakeven volume between making in-house and buying, then weigh strategic factors for a data-backed recommendation.', href:'make-vs-buy-matrix.html', kw:'make or buy decision breakeven analysis outsourcing'},
+  {cat:'matrix', icon:'matrix', title:'BATNA Negotiation Preparation Tool', desc:'List your alternatives, set your target and reservation price, and check whether a Zone of Possible Agreement (ZOPA) exists with the counterparty.', href:'batna-negotiation-matrix.html', kw:'batna negotiation zopa reservation price'},
+  {cat:'tool', icon:'clock', title:'Contract Renewal Calendar', desc:'Register contract expiry dates and notice periods to get them prioritized by urgency, and export a calendar file (.ics) for Google Calendar or Outlook.', href:'contract-renewal-calendar.html', kw:'contract renewal calendar expiration tracker reminder'},
   {cat:'gen', icon:'doc', title:'Commercial Invoice &amp; Packing List Generator', desc:'Generate trade-ready commercial invoice and packing list documents from a single item entry — including Incoterm, origin, and HS Code.', href:'invoice-packing-generator.html', kw:'commercial invoice packing list generator'},
 
   {cat:'guide', icon:'incoterm', title:'Incoterms 2020 Guide &amp; Comparison Chart', desc:'All 11 Incoterms® 2020 rules compared — who pays freight, insurance, and duty, and where risk transfers.', href:'incoterms-guide.html', kw:'incoterms 2020 fob cif comparison'},
@@ -244,16 +250,16 @@ const TOOLS = [
   {cat:'gen', icon:'doc', title:'Procurement Email Generator', desc:'RFQs, order confirmations, delivery delay follow-ups, sample requests, and quality claims — fill in the fields and get a ready-to-send professional email.', href:'email-generator.html', kw:'procurement email rfq template generator'},
   {cat:'guide', icon:'coin', title:'Global Raw Material &amp; Economic Indicator Hub', desc:'PMI, LME base metals, global steel prices, the Baltic Dry Index, FX rates, and World Bank commodity data — linked straight to the official sources.', href:'market-index-hub.html', kw:'pmi lme steel price baltic dry index commodity'},
   {cat:'guide', icon:'star', title:'Global Procurement &amp; Supply Chain Certification Guide', desc:'CSCP, CPIM, CLTD, CPSM, and CIPS — how each credential is typically tested, with links to the official certifying body.', href:'exam-calendar.html', kw:'cscp cpsm cips certification supply chain'},
-  {cat:'live', icon:'clock', title:'World Clock &amp; Time Zone Converter', desc:'Check current local time and business-hours status for major trade hubs in real time.', href:'worldclock.html', kw:'world clock time zone converter business hours'}
+  {cat:'tool', icon:'clock', title:'World Clock &amp; Time Zone Converter', desc:'Check current local time and business-hours status for major trade hubs in real time.', href:'worldclock.html', kw:'world clock time zone converter business hours'}
 ];
 
-const CAT_LABEL = {calc:'Calculators', gen:'Generators', guide:'Guides', live:'Live Tools'};
-const CAT_COLOR = {calc:'var(--route)', gen:'var(--beacon)', guide:'var(--teal)', live:'var(--live)'};
+const CAT_LABEL = {calc:'Calculators', matrix:'Matrices &amp; Decision Tools', tool:'Utilities', gen:'Generators', guide:'Guides'};
+const CAT_COLOR = {calc:'var(--route)', matrix:'var(--matrix)', tool:'var(--util)', gen:'var(--beacon)', guide:'var(--teal)'};
 
 function renderTools(){
   const q = document.getElementById('searchInput').value.trim().toLowerCase();
   const container = document.getElementById('toolsContainer');
-  const cats = ['calc','gen','guide'];
+  const cats = ['calc','matrix','tool','gen','guide'];
   let anyResult = false;
   let html = '';
 

@@ -42,6 +42,8 @@
     --beacon:#F59E0B; --beacon-dim:#FEF3DC;
     --teal:#0F766E; --teal-dim:#DDF5F1;
     --live:#059669; --live-dim:#D6F5E8;
+    --matrix:#7C3AED; --matrix-dim:#EDE4FE;
+    --util:#0891B2; --util-dim:#CFFAFE;
     --muted:#5B6472; --faint:#8B94A3;
     --radius:10px; --radius-lg:16px;
     --shadow: 0 1px 2px rgba(11,20,36,.04), 0 6px 18px -8px rgba(11,20,36,.10);
@@ -107,6 +109,8 @@
   .tool-accent.cat-gen{background:var(--beacon)}
   .tool-accent.cat-guide{background:var(--teal)}
   .tool-accent.cat-live{background:var(--live)}
+  .tool-accent.cat-matrix{background:var(--matrix)}
+  .tool-accent.cat-tool{background:var(--util)}
   .tool-body{padding:14px 16px 12px;display:flex;flex-direction:column;gap:6px;flex:1}
   .tool-top{display:flex;align-items:center;justify-content:space-between;gap:10px}
   .tool-icon{width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
@@ -114,11 +118,15 @@
   .tool-icon.cat-gen{background:var(--beacon-dim);color:var(--beacon)}
   .tool-icon.cat-guide{background:var(--teal-dim);color:var(--teal)}
   .tool-icon.cat-live{background:var(--live-dim);color:var(--live)}
+  .tool-icon.cat-matrix{background:var(--matrix-dim);color:var(--matrix)}
+  .tool-icon.cat-tool{background:var(--util-dim);color:var(--util)}
   .tool-cat-label{font-family:var(--font-display);font-size:10px;font-weight:600;letter-spacing:.4px;text-transform:uppercase}
   .tool-cat-label.cat-calc{color:var(--route)}
   .tool-cat-label.cat-gen{color:var(--beacon)}
   .tool-cat-label.cat-guide{color:var(--teal)}
   .tool-cat-label.cat-live{color:var(--live)}
+  .tool-cat-label.cat-matrix{color:var(--matrix)}
+  .tool-cat-label.cat-tool{color:var(--util)}
   .tool-card h3{font-size:14px;font-weight:700;color:var(--ink);letter-spacing:-.2px;line-height:1.3}
   .tool-card p{font-size:12px;color:var(--muted);line-height:1.5;flex:1}
   .tool-go{font-family:var(--font-display);font-size:12px;font-weight:600;color:var(--ink);display:flex;align-items:center;gap:5px;margin-top:1px}
@@ -230,11 +238,12 @@
 </section>
 
 <div class="pillbar">
-  <button class="pill active" data-filter="all" onclick="setPill('all')"><span class="dot" style="background:var(--ink)"></span>전체 20</button>
-  <button class="pill" data-filter="calc" onclick="setPill('calc')"><span class="dot" style="background:var(--route)"></span>계산기 9</button>
-  <button class="pill" data-filter="gen" onclick="setPill('gen')"><span class="dot" style="background:var(--beacon)"></span>생성기 4</button>
-  <button class="pill" data-filter="guide" onclick="setPill('guide')"><span class="dot" style="background:var(--teal)"></span>가이드·정보 6</button>
-  <button class="pill" data-filter="live" onclick="setPill('live')"><span class="dot" style="background:var(--live)"></span>실시간 1</button>
+  <button class="pill active" data-filter="all" onclick="setPill('all')"><span class="dot" style="background:var(--ink)"></span>전체</button>
+  <button class="pill" data-filter="calc" onclick="setPill('calc')"><span class="dot" style="background:var(--route)"></span>계산기</button>
+  <button class="pill" data-filter="matrix" onclick="setPill('matrix')"><span class="dot" style="background:var(--matrix)"></span>매트릭스·의사결정</button>
+  <button class="pill" data-filter="tool" onclick="setPill('tool')"><span class="dot" style="background:var(--util)"></span>실무 유틸리티</button>
+  <button class="pill" data-filter="gen" onclick="setPill('gen')"><span class="dot" style="background:var(--beacon)"></span>생성기</button>
+  <button class="pill" data-filter="guide" onclick="setPill('guide')"><span class="dot" style="background:var(--teal)"></span>가이드·정보</button>
 </div>
 
 <div class="tools">
@@ -371,22 +380,22 @@ const TOOLS = [
   {cat:'calc', icon:'coin', title:'환노출(FX Exposure) 계산기', desc:'통화별 구매 비중을 입력하면 환율 변동 시 원가에 미치는 영향과 통화 집중 리스크를 계산합니다.', href:'fx-exposure-calculator.html', cta:'계산기 열기', kw:'환노출 계산기 환율 리스크 fx exposure'},
   {cat:'calc', icon:'calc', title:'해외직구 관부가세 계산기', desc:'물품가액과 카테고리를 입력하면 예상 관세·부가세와 면세한도까지 남은 금액을 계산합니다.', href:'personal-duty-calculator.html', cta:'계산기 열기', kw:'해외직구 관부가세 면세한도'},
   {cat:'calc', icon:'truck', title:'선적 리드타임 계산기', desc:'발주일, 생산기간, 운송·통관 소요일을 더해 예상 도착일을 자동으로 계산합니다.', href:'leadtime-calculator.html', cta:'계산기 열기', kw:'리드타임 도착일 일정'},
-  {cat:'calc', icon:'truck', title:'글로벌 물류 휴일 캘린더', desc:'춘절·국경절 등 공급망에 실제로 영향을 주는 이벤트만 골라 언제까지 주문해야 안전한지 알려드립니다.', href:'global-holiday-calendar.html', cta:'캘린더 열기', kw:'춘절 공장 셧다운 국경절 골든위크 물류 휴일'},
-  {cat:'calc', icon:'truck', title:'니어쇼어·리쇼어·오프쇼어 소싱 비교', desc:'최대 3개 소싱 옵션의 단가·운임·관세·리드타임을 나란히 입력해 실제 총원가를 비교하세요.', href:'sourcing-location-comparator.html', cta:'계산기 열기', kw:'니어쇼어링 리쇼어링 오프쇼어 소싱 비교'},
+  {cat:'tool', icon:'truck', title:'글로벌 물류 휴일 캘린더', desc:'춘절·국경절 등 공급망에 실제로 영향을 주는 이벤트만 골라 언제까지 주문해야 안전한지 알려드립니다.', href:'global-holiday-calendar.html', cta:'캘린더 열기', kw:'춘절 공장 셧다운 국경절 골든위크 물류 휴일'},
+  {cat:'matrix', icon:'truck', title:'니어쇼어·리쇼어·오프쇼어 소싱 비교', desc:'최대 3개 소싱 옵션의 단가·운임·관세·리드타임을 나란히 입력해 실제 총원가를 비교하세요.', href:'sourcing-location-comparator.html', cta:'계산기 열기', kw:'니어쇼어링 리쇼어링 오프쇼어 소싱 비교'},
   {cat:'calc', icon:'calc', title:'원가구조 이해 가이드 & 계산기', desc:'직접원가·제조원가·매입원가·수입원가 등 헷갈리는 용어를 영어 표준 용어와 함께 이해하고, 단계별로 직접 계산해봅니다.', href:'cost-structure-calculator.html', cta:'계산기 열기', kw:'원가 마진 markup margin'},
   {cat:'calc', icon:'box', title:'재고 발주 계획 도구', desc:'경제적 주문량(EOQ), 안전재고, 재주문점을 한 번에 계산해 발주 기준을 잡아줍니다.', href:'inventory-planning-calculator.html', cta:'계산기 열기', kw:'eoq 안전재고 재주문점 발주'},
-  {cat:'calc', icon:'grid', title:'컨테이너 적재 시각화 (2D/3D)', desc:'박스 규격을 입력하면 컨테이너 안에 어떻게 배치되는지 2D 평면도와 드래그로 돌려보는 3D 뷰로 보여주고, 적재량과 활용률을 계산합니다.', href:'container-loading-visualizer.html', cta:'계산기 열기', kw:'컨테이너 적재 시뮬레이션 3d'},
+  {cat:'tool', icon:'grid', title:'컨테이너 적재 시각화 (2D/3D)', desc:'박스 규격을 입력하면 컨테이너 안에 어떻게 배치되는지 2D 평면도와 드래그로 돌려보는 3D 뷰로 보여주고, 적재량과 활용률을 계산합니다.', href:'container-loading-visualizer.html', cta:'계산기 열기', kw:'컨테이너 적재 시뮬레이션 3d'},
   {cat:'calc', icon:'coin', title:'Should Cost 계산기', desc:'원재료비, 가공 공정별 인건비, 설비 가동률·간접비, 이윤까지 쌓아 올려 적정 원가를 산출하고, 공급업체 견적과 비교해 협상 포인트와 영문 이메일까지 생성합니다.', href:'should-cost-calculator.html', cta:'계산기 열기', kw:'should cost analysis 원가분석 협상'},
   {cat:'calc', icon:'wallet', title:'TCO 계산기 (총소유비용)', desc:'설비·장비 구매 시 구매가, 유지보수, 에너지, 다운타임, 처분비용까지 포함한 총소유비용을 계산하고 두 옵션을 비교합니다.', href:'tco-calculator.html', cta:'계산기 열기', kw:'tco total cost of ownership 설비 캐펙스'},
 
   {cat:'gen', icon:'mail', title:'영문 구매 이메일 생성기', desc:'견적 요청, 주문 확인, 납기 문의, 샘플 요청, 클레임까지 — 항목만 입력하면 완성됩니다.', href:'email-generator.html', cta:'생성기 열기', kw:'영문 이메일 rfq 견적'},
   {cat:'gen', icon:'doc', title:'인보이스 & 패킹리스트 생성기', desc:'인코텀즈, 원산지, HS Code까지 포함한 무역 실무용 서식을 입력만으로 완성하고 인쇄합니다.', href:'invoice-packing-generator.html', cta:'생성기 열기', kw:'인보이스 패킹리스트 서식'},
   {cat:'gen', icon:'star', title:'공급업체 평가 스코어카드 생성기', desc:'가중치와 항목별 점수를 입력하면 여러 공급업체의 종합 점수를 자동 계산하고 인쇄까지 가능합니다.', href:'supplier-scorecard.html', cta:'생성기 열기', kw:'공급업체 벤더 평가 스코어카드'},
-  {cat:'calc', icon:'matrix', title:'Make-vs-Buy 의사결정 매트릭스', desc:'자체생산과 외주의 손익분기 물량을 계산하고, 전략적 요인을 가중치로 평가해 최종 추천을 받아보세요.', href:'make-vs-buy-matrix.html', cta:'계산기 열기', kw:'make or buy 자체생산 외주 손익분기'},
-  {cat:'calc', icon:'matrix', title:'BATNA 협상준비 매트릭스', desc:'나의 대안(BATNA)을 정리하고, 목표가·최대허용가를 상대방 예상 범위와 비교해 합의 가능 구간(ZOPA)이 있는지 확인하세요.', href:'batna-negotiation-matrix.html', cta:'계산기 열기', kw:'batna 협상 zopa 협상준비'},
-  {cat:'calc', icon:'clock', title:'계약 갱신 캘린더', desc:'계약 만료일과 통지기한을 등록하면 우선순위대로 정리하고, 구글 캘린더에 바로 넣는 알림 파일(.ics)을 만들어 줍니다.', href:'contract-renewal-calendar.html', cta:'캘린더 열기', kw:'계약 갱신 캘린더 만료일 알림'},
+  {cat:'matrix', icon:'matrix', title:'Make-vs-Buy 의사결정 매트릭스', desc:'자체생산과 외주의 손익분기 물량을 계산하고, 전략적 요인을 가중치로 평가해 최종 추천을 받아보세요.', href:'make-vs-buy-matrix.html', cta:'계산기 열기', kw:'make or buy 자체생산 외주 손익분기'},
+  {cat:'matrix', icon:'matrix', title:'BATNA 협상준비 매트릭스', desc:'나의 대안(BATNA)을 정리하고, 목표가·최대허용가를 상대방 예상 범위와 비교해 합의 가능 구간(ZOPA)이 있는지 확인하세요.', href:'batna-negotiation-matrix.html', cta:'계산기 열기', kw:'batna 협상 zopa 협상준비'},
+  {cat:'tool', icon:'clock', title:'계약 갱신 캘린더', desc:'계약 만료일과 통지기한을 등록하면 우선순위대로 정리하고, 구글 캘린더에 바로 넣는 알림 파일(.ics)을 만들어 줍니다.', href:'contract-renewal-calendar.html', cta:'캘린더 열기', kw:'계약 갱신 캘린더 만료일 알림'},
   {cat:'gen', icon:'doc', title:'RFI·RFP·RFQ 영문 템플릿 생성기', desc:'원료 조달, 원료 개발, 설비/공사, 기획 등에서 공용으로 쓸 수 있는 영문 정보요청·제안요청·견적요청서를 작성합니다.', href:'rfx-generator.html', cta:'생성기 열기', kw:'rfi rfp rfq 템플릿 견적요청서 제안요청서'},
-  {cat:'calc', icon:'doc', title:'RFQ 견적 비교 도구', desc:'여러 공급업체 견적을 단가·MOQ·리드타임까지 나란히 비교하고, 품질·신뢰도를 가중치로 반영해 근거 있는 선정을 하세요.', href:'rfq-comparison-tool.html', cta:'도구 열기', kw:'견적 비교 rfq 비교 공급업체 선정'},
+  {cat:'matrix', icon:'doc', title:'RFQ 견적 비교 도구', desc:'여러 공급업체 견적을 단가·MOQ·리드타임까지 나란히 비교하고, 품질·신뢰도를 가중치로 반영해 근거 있는 선정을 하세요.', href:'rfq-comparison-tool.html', cta:'도구 열기', kw:'견적 비교 rfq 비교 공급업체 선정'},
 
   {cat:'guide', icon:'incoterm', title:'인코텀즈 2020 가이드', desc:'EXW부터 DDP까지 11개 조건별로 운임·보험·통관·위험 이전 시점을 표로 한눈에 비교합니다.', href:'incoterms-guide.html', cta:'가이드 보기', kw:'인코텀즈 fob cif 뜻'},
   {cat:'guide', icon:'cert', title:'원산지증명서(FTA) 가이드', desc:'자율발급·기관발급 차이와 주요 FTA 협정국 비교, 발급 전 체크리스트를 정리했습니다.', href:'fta-guide.html', cta:'가이드 보기', kw:'원산지증명서 fta co'},
@@ -408,19 +417,19 @@ const TOOLS = [
   {cat:'guide', icon:'star', title:'해외직구 완벽 가이드 (총정리)', desc:'관부가세 계산기부터 통관 규정, 쇼핑몰별 팁, 사기 예방까지 모든 직구 가이드를 한 곳에 모았습니다.', href:'guide-hub.html', cta:'가이드 허브 보기', kw:'해외직구 하는법 초보 총정리'},
   {cat:'guide', icon:'cert', title:'2026년 글로벌 면세한도 총정리', desc:'미국 $800 면세 정지, EU €150 폐지 등 전 세계 해외직구 면세한도 대격변을 국가별로 정리했습니다.', href:'global-de-minimis-guide.html', cta:'가이드 보기', kw:'미국 면세한도 폐지 EU 관세 글로벌 면세한도'},
 
-  {cat:'live', icon:'clock', title:'세계시간 & 시차 계산기', desc:'주요 거래국의 현재 시각과 업무시간 여부를 실시간으로 확인합니다.', href:'worldclock.html', cta:'바로 보기', kw:'세계시간 시차 업무시간'}
+  {cat:'tool', icon:'clock', title:'세계시간 & 시차 계산기', desc:'주요 거래국의 현재 시각과 업무시간 여부를 실시간으로 확인합니다.', href:'worldclock.html', cta:'바로 보기', kw:'세계시간 시차 업무시간'}
 ];
 
-const CAT_LABEL = {calc:'계산기', gen:'생성기', guide:'가이드·정보', live:'실시간 도구'};
+const CAT_LABEL = {calc:'계산기', matrix:'매트릭스·의사결정', tool:'실무 유틸리티', gen:'생성기', guide:'가이드·정보'};
 let currentFilter = 'all';
 
 function updatePillCounts(){
-  const counts = {all: TOOLS.length, calc:0, gen:0, guide:0, live:0};
+  const counts = {all: TOOLS.length, calc:0, matrix:0, tool:0, gen:0, guide:0};
   TOOLS.forEach(t => { if(counts[t.cat] !== undefined) counts[t.cat]++; });
   document.querySelectorAll('.pill').forEach(btn => {
     const cat = btn.dataset.filter;
     const dot = btn.querySelector('.dot');
-    const label = cat === 'all' ? '전체' : (cat === 'guide' ? '가이드·정보' : (cat === 'live' ? '실시간' : CAT_LABEL[cat]));
+    const label = cat === 'all' ? '전체' : CAT_LABEL[cat];
     btn.innerHTML = '';
     if(dot) btn.appendChild(dot);
     btn.appendChild(document.createTextNode(label + ' ' + counts[cat]));
