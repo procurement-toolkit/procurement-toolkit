@@ -76,6 +76,26 @@
   .result-total .sub{font-size:11px;color:var(--accent);margin-top:3px;font-weight:600}
   .winner-badge{text-align:center;background:var(--success-light);border:1px solid #99F6E4;border-radius:var(--radius);padding:14px;margin-top:20px;font-size:13.5px;font-weight:700;color:var(--success)}
   .notice-box{background:var(--accent-light);border:1px solid #BFDBFE;border-radius:var(--radius);padding:10px 14px;font-size:11.5px;color:#1E40AF;margin-top:14px;line-height:1.6}
+
+  .cost-breakdown-chart{margin:14px 0 4px}
+  .cb-bar{display:flex;width:100%;height:22px;border-radius:6px;overflow:hidden;margin-bottom:8px}
+  .cb-seg{height:100%;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;color:#fff;overflow:hidden;white-space:nowrap}
+  .cb-legend{display:flex;flex-wrap:wrap;gap:6px 12px;font-size:10.5px;color:var(--slate-500)}
+  .cb-legend-item{display:flex;align-items:center;gap:5px}
+  .cb-dot{width:8px;height:8px;border-radius:3px;flex-shrink:0}
+
+  .btn-excel{width:100%;padding:12px;border:2px solid var(--accent);border-radius:8px;background:#fff;color:var(--accent);font-size:13.5px;font-weight:700;cursor:pointer;margin-top:14px}
+  .btn-excel:hover{background:var(--accent-light)}
+
+  .ad-gate-overlay{position:fixed;inset:0;background:rgba(15,23,42,.7);display:flex;align-items:center;justify-content:center;z-index:9999;padding:20px}
+  .ad-gate-box{background:#fff;border-radius:14px;max-width:420px;width:100%;padding:24px;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,.3)}
+  .ad-gate-box h3{font-size:16px;font-weight:800;color:var(--slate-900);margin-bottom:8px}
+  .ad-gate-box p{font-size:12.5px;color:var(--slate-500);margin-bottom:16px;line-height:1.6}
+  .ad-gate-slot{border:1px dashed var(--slate-300);border-radius:8px;min-height:100px;display:flex;align-items:center;justify-content:center;margin-bottom:16px;overflow:hidden}
+  .ad-gate-timer{font-size:13px;font-weight:700;color:var(--slate-600);margin-bottom:12px}
+  .ad-gate-btn{width:100%;padding:12px;border:none;border-radius:8px;background:var(--accent);color:#fff;font-size:13.5px;font-weight:700;cursor:pointer}
+  .ad-gate-btn:disabled{background:var(--slate-300);cursor:not-allowed}
+  .ad-gate-cancel{margin-top:10px;font-size:12px;color:var(--slate-400);background:none;border:none;cursor:pointer;text-decoration:underline}
   @media (max-width:900px){.option-grid.dual{grid-template-columns:1fr}}
 
   .ad-area-main{max-width:1200px;margin:24px auto 0;padding:0 24px 28px}
@@ -94,6 +114,7 @@
   .faq-item p{margin-top:8px;font-size:12.5px;color:var(--slate-600);line-height:1.7;padding-left:2px}
   @media (max-width:640px){.faq-wrap{padding:0 16px}}
 </style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/exceljs/4.4.0/exceljs.min.js"></script>
 </head>
 <body>
 <svg width="0" height="0" style="position:absolute;" aria-hidden="true">
@@ -120,6 +141,7 @@
   <div class="compare-toggle"><button class="btn-compare" onclick="toggleCompare()" id="compareBtn">+ Compare with another option</button></div>
   <div class="option-grid" id="optionGrid"></div>
   <div class="winner-badge" id="winnerBadge" style="display:none;"></div>
+  <button class="btn-excel" onclick="requestExcelDownload()">📊 Download TCO Analysis (Excel)</button>
   <div class="notice-box">This calculator produces an estimate based on your assumptions. Actual maintenance cost, utilization, and resale value depend on your contract terms and real-world usage.</div>
 </div>
 
@@ -153,6 +175,24 @@
      data-ad-format="auto"
      data-full-width-responsive="true"></ins>
 <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+
+<div class="ad-gate-overlay" id="adGateOverlay" style="display:none;">
+  <div class="ad-gate-box">
+    <h3>📊 Preparing Your Excel File</h3>
+    <p>Please wait while this ad is shown. Your download will start automatically once it's ready.</p>
+    <div class="ad-gate-slot">
+      <ins class="adsbygoogle"
+         style="display:block;width:100%;"
+         data-ad-client="ca-pub-4642197702620430"
+         data-ad-slot="2863170310"
+         data-ad-format="auto"
+         data-full-width-responsive="true"></ins>
+    </div>
+    <div class="ad-gate-timer" id="adGateTimer">Download available in 5s</div>
+    <button class="ad-gate-btn" id="adGateBtn" disabled onclick="completeAdGateDownload()">Start Download</button>
+    <button class="ad-gate-cancel" onclick="closeAdGate()">Cancel</button>
+  </div>
 </div>
 
 <footer style="background:#0F172A;color:#94A3B8;padding:24px;font-size:12px;">
@@ -207,6 +247,7 @@ function buildOptionHTML(id, title){
         <div class="value" id="tcoValue-${id}">$0</div>
         <div class="sub" id="tcoPerYear-${id}"></div>
       </div>
+      <div class="cost-breakdown-chart" id="breakdownChart-${id}"></div>
     </div></div>`;
   return html;
 }
@@ -244,6 +285,13 @@ function calcOption(id){
   }
   document.getElementById('tcoValue-'+id).textContent = fmt(tco);
   document.getElementById('tcoPerYear-'+id).textContent = `Annualized: ${fmt(perYear)}/year`;
+
+  const breakdown = { upfront, totalAnnual, disposal, salvage, tco, lifespan, currency:'USD',
+    purchase, install, training, maintenance, energy, downtimeHours, downtimeCost };
+  renderBreakdownChart('breakdownChart-'+id, breakdown);
+  window._tcoData = window._tcoData || {};
+  window._tcoData[id] = breakdown;
+
   return { tco, perYear };
 }
 function calc(){
@@ -261,6 +309,137 @@ function calc(){
   }
 }
 render();
+
+// ===== Cost Breakdown Visualization =====
+const CB_COLORS = {upfront:'#2563EB', annual:'#0F766E', disposal:'#B45309', salvage:'#64748B'};
+function renderBreakdownChart(elId, d){
+  const el = document.getElementById(elId);
+  if(!el) return;
+  const grossTotal = d.upfront + d.totalAnnual + d.disposal;
+  if(grossTotal<=0){ el.innerHTML=''; return; }
+  const segs = [
+    {key:'upfront', label:'Upfront', v:d.upfront},
+    {key:'annual', label:`${d.lifespan}-yr Operating`, v:d.totalAnnual},
+    {key:'disposal', label:'Disposal', v:d.disposal},
+  ];
+  let barHtml = '<div class="cb-bar">';
+  segs.forEach(s=>{
+    const pct = (s.v/grossTotal)*100;
+    if(pct<=0) return;
+    barHtml += `<div class="cb-seg" style="width:${pct}%;background:${CB_COLORS[s.key]};" title="${s.label} ${pct.toFixed(1)}%">${pct>=10?pct.toFixed(0)+'%':''}</div>`;
+  });
+  barHtml += '</div>';
+  const legendHtml = '<div class="cb-legend">' + segs.map(s=>{
+    const pct = (s.v/grossTotal)*100;
+    return `<span class="cb-legend-item"><span class="cb-dot" style="background:${CB_COLORS[s.key]};"></span>${s.label} ${pct.toFixed(1)}%</span>`;
+  }).join('') + (d.salvage>0 ? `<span class="cb-legend-item"><span class="cb-dot" style="background:${CB_COLORS.salvage};"></span>Salvage credit ${fmt(d.salvage)}</span>` : '') + '</div>';
+  el.innerHTML = barHtml + legendHtml;
+}
+
+// ===== Excel Download (via ad gate) =====
+let adGateTimerInterval = null;
+
+function requestExcelDownload(){
+  if(!window._tcoData || !window._tcoData.a){
+    alert('Please enter values so a result can be calculated first.');
+    return;
+  }
+  document.getElementById('adGateOverlay').style.display = 'flex';
+  let seconds = 5;
+  const timerEl = document.getElementById('adGateTimer');
+  const btnEl = document.getElementById('adGateBtn');
+  btnEl.disabled = true;
+  timerEl.textContent = `Download available in ${seconds}s`;
+  try{ (adsbygoogle = window.adsbygoogle || []).push({}); }catch(e){}
+
+  clearInterval(adGateTimerInterval);
+  adGateTimerInterval = setInterval(()=>{
+    seconds--;
+    if(seconds <= 0){
+      clearInterval(adGateTimerInterval);
+      timerEl.textContent = 'Ready to download!';
+      btnEl.disabled = false;
+    } else {
+      timerEl.textContent = `Download available in ${seconds}s`;
+    }
+  }, 1000);
+}
+
+function closeAdGate(){
+  clearInterval(adGateTimerInterval);
+  document.getElementById('adGateOverlay').style.display = 'none';
+}
+
+function completeAdGateDownload(){
+  closeAdGate();
+  downloadExcel();
+  if(window.amplitude) window.amplitude.track('Download', {type:'excel', tool:'tco-calculator'});
+}
+
+async function downloadExcel(){
+  const data = window._tcoData;
+  if(!data || !data.a) return;
+  const curFmt = '"$"#,##0';
+  const NAVY = 'FF0F172A', SUCCESS_LIGHT = 'FFD1FAE5', SLATE_LIGHT = 'FFF1F5F9';
+
+  const wb = new ExcelJS.Workbook();
+  wb.creator = 'CBM Lab';
+  wb.created = new Date();
+
+  function addOptionSheet(id, title, d){
+    const ws = wb.addWorksheet(title);
+    ws.columns = [{width:30},{width:16}];
+    ws.mergeCells('A1:B1');
+    ws.getCell('A1').value = `CBM Lab — TCO Analysis (${title})`;
+    ws.getCell('A1').font = { bold:true, size:14, color:{argb:'FFFFFFFF'} };
+    ws.getCell('A1').fill = { type:'pattern', pattern:'solid', fgColor:{argb:NAVY} };
+    ws.getRow(1).height = 26;
+
+    const h = ws.getRow(3);
+    h.values = ['Item', 'Amount'];
+    h.font = { bold:true };
+    h.eachCell(c=>{ c.fill = { type:'pattern', pattern:'solid', fgColor:{argb:SLATE_LIGHT} }; });
+
+    const rows = [
+      ['Purchase Price', d.purchase], ['Installation/Commissioning', d.install], ['Training', d.training],
+      ['Annual Maintenance', d.maintenance], ['Annual Energy/Operating', d.energy],
+      ['Annual Downtime Loss (hours×rate)', d.downtimeHours*d.downtimeCost],
+      [`${d.lifespan}-Year Operating Total`, d.totalAnnual],
+      ['Disposal Cost', d.disposal], ['Salvage Value (deducted)', -d.salvage],
+    ];
+    rows.forEach(([label,val])=>{ const row = ws.addRow([label, val]); row.getCell(2).numFmt = curFmt; });
+
+    const totalRow = ws.addRow([`Total Cost of Ownership (${d.lifespan} yr)`, d.tco]);
+    totalRow.font = { bold:true };
+    totalRow.eachCell(c=>{ c.fill = { type:'pattern', pattern:'solid', fgColor:{argb:SUCCESS_LIGHT} }; });
+    totalRow.getCell(2).numFmt = curFmt;
+  }
+
+  addOptionSheet('a', compareMode ? 'Option A' : 'Equipment Details', data.a);
+  if(compareMode && data.b){
+    addOptionSheet('b', 'Option B', data.b);
+    const wsCompare = wb.addWorksheet('Comparison Summary');
+    wsCompare.columns = [{width:24},{width:16},{width:16}];
+    const hc = wsCompare.getRow(1);
+    hc.values = ['Item', 'Option A', 'Option B'];
+    hc.font = { bold:true, color:{argb:'FFFFFFFF'} };
+    hc.eachCell(c=>{ c.fill = { type:'pattern', pattern:'solid', fgColor:{argb:'FF2563EB'} }; });
+    const compRow = wsCompare.addRow(['Total Cost of Ownership', data.a.tco, data.b.tco]);
+    compRow.font = { bold:true };
+    compRow.getCell(2).numFmt = curFmt; compRow.getCell(3).numFmt = curFmt;
+  }
+
+  const buffer = await wb.xlsx.writeBuffer();
+  const blob = new Blob([buffer], {type:'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'CBMLab-TCO-Analysis.xlsx';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
 </script>
 <script type="application/ld+json">
 {

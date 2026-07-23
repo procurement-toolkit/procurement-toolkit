@@ -136,7 +136,7 @@
   .faq-item p{margin-top:8px;font-size:12.5px;color:var(--slate-600);line-height:1.7;padding-left:2px}
   @media (max-width:640px){.faq-wrap{padding:0 16px}}
 </style>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/exceljs/4.4.0/exceljs.min.js"></script>
 </head>
 <body>
 <svg width="0" height="0" style="position:absolute;" aria-hidden="true">
@@ -558,41 +558,89 @@ function completeAdGateDownload(){
   if(window.amplitude) window.amplitude.track('Download', {type:'excel', tool:'should-cost-calculator'});
 }
 
-function downloadExcel(){
+async function downloadExcel(){
   const d = window._costBreakdown;
   if(!d) return;
 
-  const wb = XLSX.utils.book_new();
+  const curFmt = '"$"#,##0.00';
+  const NAVY = 'FF0F172A', SUCCESS_LIGHT = 'FFD1FAE5', SLATE_LIGHT = 'FFF1F5F9';
 
-  const summaryData = [
-    ['CBM Lab — Should Cost Analysis', ''],
-    ['Currency', d.currency],
-    [],
-    ['Item', 'Amount/unit', '% of Total'],
-    ['Material Cost (BOM)', d.bomTotal, d.shouldCost>0?(d.bomTotal/d.shouldCost*100).toFixed(1):0],
-    ['Labor Cost', d.procTotal, d.shouldCost>0?(d.procTotal/d.shouldCost*100).toFixed(1):0],
-    ['Machine Cost (utilization '+d.utilRate+'%)', d.machineCostPerUnit, d.shouldCost>0?(d.machineCostPerUnit/d.shouldCost*100).toFixed(1):0],
-    ['Overhead ('+d.overheadRate+'%)', d.overheadAmount, d.shouldCost>0?(d.overheadAmount/d.shouldCost*100).toFixed(1):0],
-    ['Margin ('+d.marginMode+' '+d.marginPct+'%)', d.marginAmount, d.shouldCost>0?(d.marginAmount/d.shouldCost*100).toFixed(1):0],
-    ['Total Should Cost', d.shouldCost, 100],
+  const wb = new ExcelJS.Workbook();
+  wb.creator = 'CBM Lab';
+  wb.created = new Date();
+
+  const ws1 = wb.addWorksheet('Should Cost Summary');
+  ws1.columns = [{width:30},{width:16},{width:12}];
+
+  ws1.mergeCells('A1:C1');
+  ws1.getCell('A1').value = 'CBM Lab — Should Cost Analysis';
+  ws1.getCell('A1').font = { bold:true, size:14, color:{argb:'FFFFFFFF'} };
+  ws1.getCell('A1').fill = { type:'pattern', pattern:'solid', fgColor:{argb:NAVY} };
+  ws1.getRow(1).height = 26;
+
+  ws1.getCell('A2').value = `Currency: ${d.currency}   |   Generated: ${new Date().toLocaleDateString('en-US')}`;
+  ws1.getCell('A2').font = { size:10, color:{argb:'FF64748B'} };
+  ws1.mergeCells('A2:C2');
+
+  const headerRow = ws1.getRow(4);
+  headerRow.values = ['Item', 'Amount/unit', '% of Total'];
+  headerRow.font = { bold:true };
+  headerRow.eachCell(c => { c.fill = { type:'pattern', pattern:'solid', fgColor:{argb:SLATE_LIGHT} }; });
+
+  const items = [
+    ['Material Cost (BOM)', d.bomTotal],
+    ['Labor Cost', d.procTotal],
+    [`Machine Cost (utilization ${d.utilRate}%)`, d.machineCostPerUnit],
+    [`Overhead (${d.overheadRate}%)`, d.overheadAmount],
+    [`Margin (${d.marginMode} ${d.marginPct}%)`, d.marginAmount],
   ];
-  const wsSummary = XLSX.utils.aoa_to_sheet(summaryData);
-  wsSummary['!cols'] = [{wch:28},{wch:14},{wch:12}];
-  XLSX.utils.book_append_sheet(wb, wsSummary, 'Should Cost Summary');
+  items.forEach(([label, val])=>{
+    const row = ws1.addRow([label, val, d.shouldCost>0 ? val/d.shouldCost : 0]);
+    row.getCell(2).numFmt = curFmt;
+    row.getCell(3).numFmt = '0.0%';
+  });
 
-  const bomData = [['Material', 'Qty', 'Unit', 'Unit Price', 'Subtotal']];
-  bomItems.forEach(it=>{ bomData.push([it.name, it.qty, it.unit, it.price, it.qty*it.price]); });
-  const wsBom = XLSX.utils.aoa_to_sheet(bomData);
-  wsBom['!cols'] = [{wch:24},{wch:8},{wch:8},{wch:10},{wch:10}];
-  XLSX.utils.book_append_sheet(wb, wsBom, 'BOM Detail');
+  const totalRow = ws1.addRow(['Total Should Cost (per unit)', d.shouldCost, 1]);
+  totalRow.font = { bold:true };
+  totalRow.eachCell(c => { c.fill = { type:'pattern', pattern:'solid', fgColor:{argb:SUCCESS_LIGHT} }; });
+  totalRow.getCell(2).numFmt = curFmt;
+  totalRow.getCell(3).numFmt = '0.0%';
 
-  const procData = [['Process', 'Cycle Time (s)', 'Workers', 'Hourly Rate', 'Labor Cost/unit']];
-  procItems.forEach(it=>{ procData.push([it.name, it.cycle, it.workers, it.rate, (it.cycle/3600)*it.rate*it.workers]); });
-  const wsProc = XLSX.utils.aoa_to_sheet(procData);
-  wsProc['!cols'] = [{wch:24},{wch:14},{wch:10},{wch:10},{wch:12}];
-  XLSX.utils.book_append_sheet(wb, wsProc, 'Process Detail');
+  const ws2 = wb.addWorksheet('BOM Detail');
+  ws2.columns = [{width:26},{width:10},{width:10},{width:12},{width:12}];
+  const h2 = ws2.getRow(1);
+  h2.values = ['Material', 'Qty', 'Unit', 'Unit Price', 'Subtotal'];
+  h2.font = { bold:true, color:{argb:'FFFFFFFF'} };
+  h2.eachCell(c => { c.fill = { type:'pattern', pattern:'solid', fgColor:{argb:'FF2563EB'} }; });
+  bomItems.forEach(it=>{
+    const row = ws2.addRow([it.name, it.qty, it.unit, it.price, it.qty*it.price]);
+    row.getCell(4).numFmt = curFmt;
+    row.getCell(5).numFmt = curFmt;
+  });
 
-  XLSX.writeFile(wb, 'CBMLab-ShouldCost-Analysis.xlsx');
+  const ws3 = wb.addWorksheet('Process Detail');
+  ws3.columns = [{width:26},{width:14},{width:10},{width:12},{width:14}];
+  const h3 = ws3.getRow(1);
+  h3.values = ['Process', 'Cycle Time (s)', 'Workers', 'Hourly Rate', 'Labor Cost/unit'];
+  h3.font = { bold:true, color:{argb:'FFFFFFFF'} };
+  h3.eachCell(c => { c.fill = { type:'pattern', pattern:'solid', fgColor:{argb:'FF2563EB'} }; });
+  procItems.forEach(it=>{
+    const laborCost = (it.cycle/3600)*it.rate*it.workers;
+    const row = ws3.addRow([it.name, it.cycle, it.workers, it.rate, laborCost]);
+    row.getCell(4).numFmt = curFmt;
+    row.getCell(5).numFmt = curFmt;
+  });
+
+  const buffer = await wb.xlsx.writeBuffer();
+  const blob = new Blob([buffer], {type:'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'CBMLab-ShouldCost-Analysis.xlsx';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
 }
 
 addBom('Aluminum Sheet 6063', 1.2, 'KG', 3.20);

@@ -61,6 +61,26 @@
   .result-item .r-value{font-size:22px;font-weight:800;color:var(--accent-dark)}
   .result-item .r-desc{font-size:11.5px;color:var(--slate-500);margin-top:4px}
   .notice-box{background:var(--accent-light);border:1px solid #BFDBFE;border-radius:var(--radius);padding:10px 14px;font-size:12px;color:#1E40AF;margin-top:10px}
+
+  .cost-breakdown-chart{margin:14px 0 4px}
+  .cb-bar{display:flex;width:100%;height:22px;border-radius:6px;overflow:hidden;margin-bottom:8px}
+  .cb-seg{height:100%;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;color:#fff;overflow:hidden;white-space:nowrap}
+  .cb-legend{display:flex;flex-wrap:wrap;gap:6px 12px;font-size:10.5px;color:var(--slate-500)}
+  .cb-legend-item{display:flex;align-items:center;gap:5px}
+  .cb-dot{width:8px;height:8px;border-radius:3px;flex-shrink:0}
+
+  .btn-excel{width:100%;padding:12px;border:2px solid var(--accent);border-radius:8px;background:#fff;color:var(--accent);font-size:13.5px;font-weight:700;cursor:pointer;margin-top:6px}
+  .btn-excel:hover{background:var(--accent-light)}
+
+  .ad-gate-overlay{position:fixed;inset:0;background:rgba(15,23,42,.7);display:flex;align-items:center;justify-content:center;z-index:9999;padding:20px}
+  .ad-gate-box{background:#fff;border-radius:14px;max-width:420px;width:100%;padding:24px;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,.3)}
+  .ad-gate-box h3{font-size:16px;font-weight:800;color:var(--slate-900);margin-bottom:8px}
+  .ad-gate-box p{font-size:12.5px;color:var(--slate-500);margin-bottom:16px;line-height:1.6}
+  .ad-gate-slot{border:1px dashed #CBD5E1;border-radius:8px;min-height:100px;display:flex;align-items:center;justify-content:center;margin-bottom:16px;overflow:hidden}
+  .ad-gate-timer{font-size:13px;font-weight:700;color:var(--slate-600);margin-bottom:12px}
+  .ad-gate-btn{width:100%;padding:12px;border:none;border-radius:8px;background:var(--accent);color:#fff;font-size:13.5px;font-weight:700;cursor:pointer}
+  .ad-gate-btn:disabled{background:#CBD5E1;cursor:not-allowed}
+  .ad-gate-cancel{margin-top:10px;font-size:12px;color:var(--slate-400);background:none;border:none;cursor:pointer;text-decoration:underline}
   .timeline-bar{position:relative;height:24px;background:var(--slate-100);border-radius:4px;margin-top:10px;overflow:hidden}
   .timeline-fill{position:absolute;top:0;left:0;height:100%;background:var(--accent);opacity:.25}
   .timeline-mark{position:absolute;top:0;height:100%;width:2px;background:var(--accent-dark)}
@@ -103,6 +123,7 @@
   gtag('js', new Date());
   gtag('config', 'G-W1YBL5BGGK');
 </script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/exceljs/4.4.0/exceljs.min.js"></script>
 </head>
 <body>
 <svg width="0" height="0" style="position:absolute;" aria-hidden="true">
@@ -203,6 +224,9 @@
           <div class="r-label">연간 예상 발주 횟수</div>
           <div class="r-value" id="freqResult">-</div>
         </div>
+
+        <div class="cost-breakdown-chart" id="breakdownChart"></div>
+        <button class="btn-excel" onclick="requestExcelDownload()">📊 재고분석 엑셀 다운로드</button>
       </div>
     </div>
   </aside>
@@ -242,6 +266,24 @@
 <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
 </div>
 
+<div class="ad-gate-overlay" id="adGateOverlay" style="display:none;">
+  <div class="ad-gate-box">
+    <h3>📊 엑셀 파일 준비 중</h3>
+    <p>아래 광고가 노출되는 동안 잠시만 기다려주세요. 완료되면 자동으로 다운로드가 시작됩니다.</p>
+    <div class="ad-gate-slot">
+      <ins class="adsbygoogle"
+         style="display:block;width:100%;"
+         data-ad-client="ca-pub-4642197702620430"
+         data-ad-slot="2863170310"
+         data-ad-format="auto"
+         data-full-width-responsive="true"></ins>
+    </div>
+    <div class="ad-gate-timer" id="adGateTimer">5초 후 다운로드 가능</div>
+    <button class="ad-gate-btn" id="adGateBtn" disabled onclick="completeAdGateDownload()">다운로드 시작</button>
+    <button class="ad-gate-cancel" onclick="closeAdGate()">취소</button>
+  </div>
+</div>
+
 <footer><div class="footer-inner">
   <div class="footer-logo"><svg width="24" height="24" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align:middle;margin-right:9px;flex-shrink:0;"><path d="M20 2.5L36.5 11.5V28.5L20 37.5L3.5 28.5V11.5L20 2.5Z" stroke="url(#cbmGradF)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M20 2.5V20M20 20L36.5 11.5M20 20L3.5 11.5" stroke="url(#cbmGradF)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/></svg>CBM<span>Lab</span></div>
   <nav><a href="index.html" class="footer-link">전체 도구</a><a href="privacy.html" class="footer-link">개인정보 처리방침</a></nav>
@@ -276,8 +318,143 @@ function calc(){
   document.getElementById('ssResult').textContent = fmt(safetyStock) + ' 개';
   document.getElementById('ropResult').textContent = fmt(rop) + ' 개';
   document.getElementById('freqResult').textContent = fmt(freq) + ' 회/년';
+
+  const annualOrderCost = (D/(eoq||1)) * S;
+  const annualHoldCost = (eoq/2) * H;
+  window._eoqData = { D, S, H, LT, sigma, Z, eoq, safetyStock, rop, freq, annualOrderCost, annualHoldCost, currency: currentCurrency };
+  renderBreakdownChart(window._eoqData);
 }
 calc();
+
+// ===== 비용구조 시각화 (연간 발주비용 vs 보관비용 - EOQ 지점에서 같아야 정상) =====
+const CB_COLORS = {order:'#2563EB', hold:'#0F766E'};
+function renderBreakdownChart(d){
+  const el = document.getElementById('breakdownChart');
+  if(!el) return;
+  const total = d.annualOrderCost + d.annualHoldCost;
+  if(total<=0){ el.innerHTML=''; return; }
+  const orderPct = (d.annualOrderCost/total)*100;
+  const holdPct = (d.annualHoldCost/total)*100;
+  const sym = d.currency ? (CUR_SYMBOLS[d.currency]||'') : '';
+  let barHtml = `<div class="cb-bar">
+    <div class="cb-seg" style="width:${orderPct}%;background:${CB_COLORS.order};" title="연간 발주비용 ${orderPct.toFixed(1)}%">${orderPct>=15?orderPct.toFixed(0)+'%':''}</div>
+    <div class="cb-seg" style="width:${holdPct}%;background:${CB_COLORS.hold};" title="연간 보관비용 ${holdPct.toFixed(1)}%">${holdPct>=15?holdPct.toFixed(0)+'%':''}</div>
+  </div>`;
+  const legendHtml = `<div class="cb-legend">
+    <span class="cb-legend-item"><span class="cb-dot" style="background:${CB_COLORS.order};"></span>연간 발주비용 ${sym}${fmt(d.annualOrderCost)}</span>
+    <span class="cb-legend-item"><span class="cb-dot" style="background:${CB_COLORS.hold};"></span>연간 보관비용 ${sym}${fmt(d.annualHoldCost)}</span>
+  </div>`;
+  el.innerHTML = barHtml + legendHtml + '<div class="notice-box" style="margin-top:8px;">💡 EOQ 지점에서는 발주비용과 보관비용이 이론적으로 같아집니다 — 두 값이 비슷하다면 정상적으로 계산된 것입니다.</div>';
+}
+
+// ===== 엑셀 다운로드 (광고 게이트 경유) =====
+let adGateTimerInterval = null;
+
+function requestExcelDownload(){
+  if(!window._eoqData || !window._eoqData.eoq){
+    alert('먼저 계산 결과가 나오도록 값을 입력해주세요.');
+    return;
+  }
+  document.getElementById('adGateOverlay').style.display = 'flex';
+  let seconds = 5;
+  const timerEl = document.getElementById('adGateTimer');
+  const btnEl = document.getElementById('adGateBtn');
+  btnEl.disabled = true;
+  timerEl.textContent = `${seconds}초 후 다운로드 가능`;
+  try{ (adsbygoogle = window.adsbygoogle || []).push({}); }catch(e){}
+
+  clearInterval(adGateTimerInterval);
+  adGateTimerInterval = setInterval(()=>{
+    seconds--;
+    if(seconds <= 0){
+      clearInterval(adGateTimerInterval);
+      timerEl.textContent = '다운로드 준비 완료!';
+      btnEl.disabled = false;
+    } else {
+      timerEl.textContent = `${seconds}초 후 다운로드 가능`;
+    }
+  }, 1000);
+}
+
+function closeAdGate(){
+  clearInterval(adGateTimerInterval);
+  document.getElementById('adGateOverlay').style.display = 'none';
+}
+
+function completeAdGateDownload(){
+  closeAdGate();
+  downloadExcel();
+  if(window.amplitude) window.amplitude.track('Download', {type:'excel', tool:'inventory-planning-calculator'});
+}
+
+async function downloadExcel(){
+  const d = window._eoqData;
+  if(!d) return;
+  const sym = d.currency ? (CUR_SYMBOLS[d.currency]||'') : '';
+  const curFmt = sym ? `"${sym}"#,##0` : '#,##0';
+  const NAVY = 'FF0F172A', SUCCESS_LIGHT = 'FFD1FAE5', SLATE_LIGHT = 'FFF1F5F9';
+
+  const wb = new ExcelJS.Workbook();
+  wb.creator = 'CBM Lab';
+  wb.created = new Date();
+
+  const ws = wb.addWorksheet('재고 발주 계획 요약');
+  ws.columns = [{width:30},{width:18}];
+
+  ws.mergeCells('A1:B1');
+  ws.getCell('A1').value = 'CBM Lab — 재고 발주 계획 분석';
+  ws.getCell('A1').font = { bold:true, size:14, color:{argb:'FFFFFFFF'} };
+  ws.getCell('A1').fill = { type:'pattern', pattern:'solid', fgColor:{argb:NAVY} };
+  ws.getRow(1).height = 26;
+
+  ws.getCell('A2').value = `생성일: ${new Date().toLocaleDateString('ko-KR')}`;
+  ws.getCell('A2').font = { size:10, color:{argb:'FF64748B'} };
+
+  const h1 = ws.getRow(4);
+  h1.values = ['입력값', ''];
+  h1.font = { bold:true };
+  h1.eachCell(c=>{ c.fill = { type:'pattern', pattern:'solid', fgColor:{argb:SLATE_LIGHT} }; });
+
+  const inputs = [
+    ['연간 수요량 (D)', d.D], ['1회 발주비용 (S)', d.S], ['단위당 연간 보관비용 (H)', d.H],
+    ['리드타임 (일)', d.LT], ['수요 변동성 (표준편차)', d.sigma], ['서비스 수준 Z값', d.Z],
+  ];
+  inputs.forEach(([label,val])=>{ ws.addRow([label, val]); });
+
+  const h2 = ws.addRow(['계산 결과', '']);
+  h2.font = { bold:true };
+  h2.eachCell(c=>{ c.fill = { type:'pattern', pattern:'solid', fgColor:{argb:SLATE_LIGHT} }; });
+
+  const results = [
+    ['EOQ (경제적 주문량)', d.eoq], ['안전재고 (Safety Stock)', d.safetyStock],
+    ['재주문점 (Reorder Point)', d.rop], ['연간 예상 발주 횟수', d.freq],
+  ];
+  results.forEach(([label,val])=>{ ws.addRow([label, Math.round(val*100)/100]); });
+
+  const costHeaderRow = ws.addRow(['비용 구조', '']);
+  costHeaderRow.font = { bold:true };
+  costHeaderRow.eachCell(c=>{ c.fill = { type:'pattern', pattern:'solid', fgColor:{argb:SLATE_LIGHT} }; });
+
+  const orderRow = ws.addRow(['연간 발주비용', d.annualOrderCost]);
+  orderRow.getCell(2).numFmt = curFmt;
+  const holdRow = ws.addRow(['연간 보관비용', d.annualHoldCost]);
+  holdRow.getCell(2).numFmt = curFmt;
+  const totalRow = ws.addRow(['연간 재고관리 총비용', d.annualOrderCost + d.annualHoldCost]);
+  totalRow.font = { bold:true };
+  totalRow.eachCell(c=>{ c.fill = { type:'pattern', pattern:'solid', fgColor:{argb:SUCCESS_LIGHT} }; });
+  totalRow.getCell(2).numFmt = curFmt;
+
+  const buffer = await wb.xlsx.writeBuffer();
+  const blob = new Blob([buffer], {type:'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'CBMLab-재고발주계획.xlsx';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
 </script>
 <script type="application/ld+json">
 {

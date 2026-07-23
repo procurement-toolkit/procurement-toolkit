@@ -78,6 +78,26 @@
 
   .notice-box{background:var(--accent-light);border:1px solid #BFDBFE;border-radius:var(--radius);padding:10px 14px;font-size:11.5px;color:#1E40AF;margin-top:14px;line-height:1.6}
 
+  .cost-breakdown-chart{margin:14px 0 4px}
+  .cb-bar{display:flex;width:100%;height:22px;border-radius:6px;overflow:hidden;margin-bottom:8px}
+  .cb-seg{height:100%;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;color:#fff;overflow:hidden;white-space:nowrap}
+  .cb-legend{display:flex;flex-wrap:wrap;gap:6px 12px;font-size:10.5px;color:var(--slate-500)}
+  .cb-legend-item{display:flex;align-items:center;gap:5px}
+  .cb-dot{width:8px;height:8px;border-radius:3px;flex-shrink:0}
+
+  .btn-excel{width:100%;padding:12px;border:2px solid var(--accent);border-radius:8px;background:#fff;color:var(--accent);font-size:13.5px;font-weight:700;cursor:pointer;margin-top:14px}
+  .btn-excel:hover{background:var(--accent-light)}
+
+  .ad-gate-overlay{position:fixed;inset:0;background:rgba(15,23,42,.7);display:flex;align-items:center;justify-content:center;z-index:9999;padding:20px}
+  .ad-gate-box{background:#fff;border-radius:14px;max-width:420px;width:100%;padding:24px;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,.3)}
+  .ad-gate-box h3{font-size:16px;font-weight:800;color:var(--slate-900);margin-bottom:8px}
+  .ad-gate-box p{font-size:12.5px;color:var(--slate-500);margin-bottom:16px;line-height:1.6}
+  .ad-gate-slot{border:1px dashed var(--slate-300);border-radius:8px;min-height:100px;display:flex;align-items:center;justify-content:center;margin-bottom:16px;overflow:hidden}
+  .ad-gate-timer{font-size:13px;font-weight:700;color:var(--slate-600);margin-bottom:12px}
+  .ad-gate-btn{width:100%;padding:12px;border:none;border-radius:8px;background:var(--accent);color:#fff;font-size:13.5px;font-weight:700;cursor:pointer}
+  .ad-gate-btn:disabled{background:var(--slate-300);cursor:not-allowed}
+  .ad-gate-cancel{margin-top:10px;font-size:12px;color:var(--slate-400);background:none;border:none;cursor:pointer;text-decoration:underline}
+
   @media (max-width:900px){.option-grid.dual{grid-template-columns:1fr}}
 
   .ad-area-main{max-width:1200px;margin:24px auto 0;padding:0 24px 28px}
@@ -96,6 +116,7 @@
   .faq-item p{margin-top:8px;font-size:12.5px;color:var(--slate-600);line-height:1.7;padding-left:2px}
   @media (max-width:640px){.faq-wrap{padding:0 16px}}
 </style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/exceljs/4.4.0/exceljs.min.js"></script>
 </head>
 <body>
 <svg width="0" height="0" style="position:absolute;" aria-hidden="true">
@@ -129,6 +150,7 @@
   <div class="option-grid" id="optionGrid"></div>
 
   <div class="winner-badge" id="winnerBadge" style="display:none;"></div>
+  <button class="btn-excel" onclick="requestExcelDownload()">📊 TCO 분석 엑셀 다운로드</button>
   <div class="notice-box">본 계산기는 입력하신 가정치를 바탕으로 한 참고용 추정입니다. 실제 유지보수 비용, 가동률, 잔존가치는 계약 조건과 실사용 환경에 따라 달라질 수 있습니다.</div>
 </div>
 
@@ -163,6 +185,24 @@
      data-ad-format="auto"
      data-full-width-responsive="true"></ins>
 <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+
+<div class="ad-gate-overlay" id="adGateOverlay" style="display:none;">
+  <div class="ad-gate-box">
+    <h3>📊 엑셀 파일 준비 중</h3>
+    <p>아래 광고가 노출되는 동안 잠시만 기다려주세요. 완료되면 자동으로 다운로드가 시작됩니다.</p>
+    <div class="ad-gate-slot">
+      <ins class="adsbygoogle"
+         style="display:block;width:100%;"
+         data-ad-client="ca-pub-4642197702620430"
+         data-ad-slot="2863170310"
+         data-ad-format="auto"
+         data-full-width-responsive="true"></ins>
+    </div>
+    <div class="ad-gate-timer" id="adGateTimer">5초 후 다운로드 가능</div>
+    <button class="ad-gate-btn" id="adGateBtn" disabled onclick="completeAdGateDownload()">다운로드 시작</button>
+    <button class="ad-gate-cancel" onclick="closeAdGate()">취소</button>
+  </div>
 </div>
 
 <footer style="background:#0F172A;color:#94A3B8;padding:24px;font-size:12px;">
@@ -231,6 +271,7 @@ function buildOptionHTML(id, title){
         <div class="value" id="tcoValue-${id}">$0</div>
         <div class="sub" id="tcoPerYear-${id}"></div>
       </div>
+      <div class="cost-breakdown-chart" id="breakdownChart-${id}"></div>
     </div>
   </div>`;
   return html;
@@ -286,6 +327,12 @@ function calcOption(id){
   document.getElementById('tcoValue-'+id).textContent = fmt(tco);
   document.getElementById('tcoPerYear-'+id).textContent = `연간 환산: ${fmt(perYear)}/년`;
 
+  const breakdown = { upfront, totalAnnual, disposal, salvage, tco, lifespan, currency: currentCurrency,
+    purchase, install, training, maintenance, energy, downtimeHours, downtimeCost };
+  renderBreakdownChart('breakdownChart-'+id, breakdown);
+  window._tcoData = window._tcoData || {};
+  window._tcoData[id] = breakdown;
+
   return { tco, perYear };
 }
 
@@ -310,6 +357,139 @@ function calc(){
 }
 
 render();
+
+// ===== 비용구조 시각화 =====
+const CB_COLORS = {upfront:'#2563EB', annual:'#0F766E', disposal:'#B45309', salvage:'#64748B'};
+function renderBreakdownChart(elId, d){
+  const el = document.getElementById(elId);
+  if(!el) return;
+  const grossTotal = d.upfront + d.totalAnnual + d.disposal; // 잔존가치 차감 전 총액 기준으로 비중 계산
+  if(grossTotal<=0){ el.innerHTML=''; return; }
+  const segs = [
+    {key:'upfront', label:'초기비용', v:d.upfront},
+    {key:'annual', label:`${d.lifespan}년 운영비`, v:d.totalAnnual},
+    {key:'disposal', label:'처분비용', v:d.disposal},
+  ];
+  let barHtml = '<div class="cb-bar">';
+  segs.forEach(s=>{
+    const pct = (s.v/grossTotal)*100;
+    if(pct<=0) return;
+    barHtml += `<div class="cb-seg" style="width:${pct}%;background:${CB_COLORS[s.key]};" title="${s.label} ${pct.toFixed(1)}%">${pct>=10?pct.toFixed(0)+'%':''}</div>`;
+  });
+  barHtml += '</div>';
+  const legendHtml = '<div class="cb-legend">' + segs.map(s=>{
+    const pct = (s.v/grossTotal)*100;
+    return `<span class="cb-legend-item"><span class="cb-dot" style="background:${CB_COLORS[s.key]};"></span>${s.label} ${pct.toFixed(1)}%</span>`;
+  }).join('') + (d.salvage>0 ? `<span class="cb-legend-item"><span class="cb-dot" style="background:${CB_COLORS.salvage};"></span>잔존가치 차감 ${fmt(d.salvage)}</span>` : '') + '</div>';
+  el.innerHTML = barHtml + legendHtml;
+}
+
+// ===== 엑셀 다운로드 (광고 게이트 경유) =====
+let adGateTimerInterval = null;
+
+function requestExcelDownload(){
+  if(!window._tcoData || !window._tcoData.a){
+    alert('먼저 계산 결과가 나오도록 값을 입력해주세요.');
+    return;
+  }
+  document.getElementById('adGateOverlay').style.display = 'flex';
+  let seconds = 5;
+  const timerEl = document.getElementById('adGateTimer');
+  const btnEl = document.getElementById('adGateBtn');
+  btnEl.disabled = true;
+  timerEl.textContent = `${seconds}초 후 다운로드 가능`;
+  try{ (adsbygoogle = window.adsbygoogle || []).push({}); }catch(e){}
+
+  clearInterval(adGateTimerInterval);
+  adGateTimerInterval = setInterval(()=>{
+    seconds--;
+    if(seconds <= 0){
+      clearInterval(adGateTimerInterval);
+      timerEl.textContent = '다운로드 준비 완료!';
+      btnEl.disabled = false;
+    } else {
+      timerEl.textContent = `${seconds}초 후 다운로드 가능`;
+    }
+  }, 1000);
+}
+
+function closeAdGate(){
+  clearInterval(adGateTimerInterval);
+  document.getElementById('adGateOverlay').style.display = 'none';
+}
+
+function completeAdGateDownload(){
+  closeAdGate();
+  downloadExcel();
+  if(window.amplitude) window.amplitude.track('Download', {type:'excel', tool:'tco-calculator'});
+}
+
+async function downloadExcel(){
+  const data = window._tcoData;
+  if(!data || !data.a) return;
+  const CUR_SYM = {USD:'$', KRW:'₩', CNY:'¥', JPY:'¥', EUR:'€'};
+  const sym = CUR_SYM[data.a.currency] || '$';
+  const curFmt = `"${sym}"#,##0`;
+  const NAVY = 'FF0F172A', SUCCESS_LIGHT = 'FFD1FAE5', SLATE_LIGHT = 'FFF1F5F9';
+
+  const wb = new ExcelJS.Workbook();
+  wb.creator = 'CBM Lab';
+  wb.created = new Date();
+
+  function addOptionSheet(id, title, d){
+    const ws = wb.addWorksheet(title);
+    ws.columns = [{width:30},{width:16}];
+    ws.mergeCells('A1:B1');
+    ws.getCell('A1').value = `CBM Lab — TCO 분석 (${title})`;
+    ws.getCell('A1').font = { bold:true, size:14, color:{argb:'FFFFFFFF'} };
+    ws.getCell('A1').fill = { type:'pattern', pattern:'solid', fgColor:{argb:NAVY} };
+    ws.getRow(1).height = 26;
+
+    const h = ws.getRow(3);
+    h.values = ['항목', '금액'];
+    h.font = { bold:true };
+    h.eachCell(c=>{ c.fill = { type:'pattern', pattern:'solid', fgColor:{argb:SLATE_LIGHT} }; });
+
+    const rows = [
+      ['구매가', d.purchase], ['설치·시운전비', d.install], ['교육·트레이닝비', d.training],
+      ['연간 유지보수비', d.maintenance], ['연간 에너지/운영비', d.energy],
+      ['연간 다운타임 손실 (시간×단가)', d.downtimeHours*d.downtimeCost],
+      [`${d.lifespan}년 운영비 총합`, d.totalAnnual],
+      ['처분비용', d.disposal], ['잔존가치 (차감)', -d.salvage],
+    ];
+    rows.forEach(([label,val])=>{ const row = ws.addRow([label, val]); row.getCell(2).numFmt = curFmt; });
+
+    const totalRow = ws.addRow([`총소유비용 (TCO, ${d.lifespan}년)`, d.tco]);
+    totalRow.font = { bold:true };
+    totalRow.eachCell(c=>{ c.fill = { type:'pattern', pattern:'solid', fgColor:{argb:SUCCESS_LIGHT} }; });
+    totalRow.getCell(2).numFmt = curFmt;
+  }
+
+  addOptionSheet('a', compareMode ? '옵션 A' : '설비 정보', data.a);
+  if(compareMode && data.b){
+    addOptionSheet('b', '옵션 B', data.b);
+    const wsCompare = wb.addWorksheet('비교 요약');
+    wsCompare.columns = [{width:24},{width:16},{width:16}];
+    const hc = wsCompare.getRow(1);
+    hc.values = ['항목', '옵션 A', '옵션 B'];
+    hc.font = { bold:true, color:{argb:'FFFFFFFF'} };
+    hc.eachCell(c=>{ c.fill = { type:'pattern', pattern:'solid', fgColor:{argb:'FF2563EB'} }; });
+    const compRow = wsCompare.addRow(['총소유비용(TCO)', data.a.tco, data.b.tco]);
+    compRow.font = { bold:true };
+    compRow.getCell(2).numFmt = curFmt; compRow.getCell(3).numFmt = curFmt;
+  }
+
+  const buffer = await wb.xlsx.writeBuffer();
+  const blob = new Blob([buffer], {type:'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'CBMLab-TCO-분석.xlsx';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
 </script>
 <script type="application/ld+json">
 {

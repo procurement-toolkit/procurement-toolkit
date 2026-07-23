@@ -442,6 +442,26 @@
     padding: 10px 14px; font-size: 12px; color: #1E40AF; line-height: 1.5;
   }
 
+  .cost-breakdown-chart{margin:14px 0 4px}
+  .cb-bar{display:flex;width:100%;height:22px;border-radius:6px;overflow:hidden;margin-bottom:8px}
+  .cb-seg{height:100%;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;color:#fff;overflow:hidden;white-space:nowrap}
+  .cb-legend{display:flex;flex-wrap:wrap;gap:6px 12px;font-size:10.5px;color:var(--slate-500)}
+  .cb-legend-item{display:flex;align-items:center;gap:5px}
+  .cb-dot{width:8px;height:8px;border-radius:3px;flex-shrink:0}
+
+  .btn-excel{width:100%;padding:12px;border:2px solid var(--accent);border-radius:8px;background:#fff;color:var(--accent);font-size:13.5px;font-weight:700;cursor:pointer;margin-top:6px}
+  .btn-excel:hover{background:var(--accent-light)}
+
+  .ad-gate-overlay{position:fixed;inset:0;background:rgba(15,23,42,.7);display:flex;align-items:center;justify-content:center;z-index:9999;padding:20px}
+  .ad-gate-box{background:#fff;border-radius:14px;max-width:420px;width:100%;padding:24px;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,.3)}
+  .ad-gate-box h3{font-size:16px;font-weight:800;color:var(--slate-900);margin-bottom:8px}
+  .ad-gate-box p{font-size:12.5px;color:var(--slate-500);margin-bottom:16px;line-height:1.6}
+  .ad-gate-slot{border:1px dashed var(--slate-300);border-radius:8px;min-height:100px;display:flex;align-items:center;justify-content:center;margin-bottom:16px;overflow:hidden}
+  .ad-gate-timer{font-size:13px;font-weight:700;color:var(--slate-600);margin-bottom:12px}
+  .ad-gate-btn{width:100%;padding:12px;border:none;border-radius:8px;background:var(--accent);color:#fff;font-size:13.5px;font-weight:700;cursor:pointer}
+  .ad-gate-btn:disabled{background:var(--slate-300);cursor:not-allowed}
+  .ad-gate-cancel{margin-top:10px;font-size:12px;color:var(--slate-400);background:none;border:none;cursor:pointer;text-decoration:underline}
+
   /* AD PLACEHOLDER */
   .ad-placeholder {
     border: 1px dashed var(--slate-300); border-radius: var(--radius); background: var(--slate-50);
@@ -527,6 +547,7 @@
   gtag('js', new Date());
   gtag('config', 'G-W1YBL5BGGK');
 </script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/exceljs/4.4.0/exceljs.min.js"></script>
 </head>
 <body>
 <svg width="0" height="0" style="position:absolute;" aria-hidden="true">
@@ -748,6 +769,8 @@
                 <div class="result-value" id="unitCost">₩0</div>
               </div>
             </div>
+            <div class="cost-breakdown-chart" id="breakdownChart"></div>
+            <button class="btn-excel" onclick="requestExcelDownload()">📊 원가분석 엑셀 다운로드</button>
           </div>
         </div>
 
@@ -802,6 +825,24 @@
 <p>수입 단가만 보고 원가를 판단하면, 관세·부가세·운임을 더한 실제 도착 원가와 큰 차이가 나는 경우가 많습니다. 인코텀즈 조건에 따라 매수인이 부담해야 하는 항목이 달라지기 때문입니다.</p>
 <p><b>실무 활용법:</b> 서로 다른 인코텀즈 조건으로 온 여러 견적을 같은 기준(수입 원가)으로 환산해서 비교하거나, 품목별로 관세율이 다른 다품목 수입 건에서는 품목별 관세 모드를 활용해 정확한 원가를 산출할 때 유용합니다.</p>
 </div>
+  </div>
+</div>
+
+<div class="ad-gate-overlay" id="adGateOverlay" style="display:none;">
+  <div class="ad-gate-box">
+    <h3>📊 엑셀 파일 준비 중</h3>
+    <p>아래 광고가 노출되는 동안 잠시만 기다려주세요. 완료되면 자동으로 다운로드가 시작됩니다.</p>
+    <div class="ad-gate-slot">
+      <ins class="adsbygoogle"
+         style="display:block;width:100%;"
+         data-ad-client="ca-pub-4642197702620430"
+         data-ad-slot="2863170310"
+         data-ad-format="auto"
+         data-full-width-responsive="true"></ins>
+    </div>
+    <div class="ad-gate-timer" id="adGateTimer">5초 후 다운로드 가능</div>
+    <button class="ad-gate-btn" id="adGateBtn" disabled onclick="completeAdGateDownload()">다운로드 시작</button>
+    <button class="ad-gate-cancel" onclick="closeAdGate()">취소</button>
   </div>
 </div>
 
@@ -1061,11 +1102,163 @@
       document.getElementById('marginProfit').textContent = '-';
       document.getElementById('marginPct').textContent = '-';
     }
+
+    const extraCostsSum = cifValue - goodsValue;
+    window._landedCostData = {
+      goodsValue, extraCostsSum, dutyAmount, vatAmount, landedUsd, landedKrw, includeVat,
+      customsFee, inlandDest, fxRate, totalQty, unitCostKrw, term: currentTerm, currency: currentCurrency,
+      items: items.map(it=>({name:it.name, qty:it.qty, price:it.price, dutyRate:it.dutyRate}))
+    };
+    renderBreakdownChart(window._landedCostData);
   }
 
   // init
   addItemRow('상품 A', 100, 5.00);
   setIncoterm('FOB');
+
+  // ===== 비용구조 시각화 =====
+  const CB_COLORS = {goods:'#2563EB', extra:'#0F766E', duty:'#B45309', vat:'#7C3AED'};
+  function renderBreakdownChart(d){
+    const el = document.getElementById('breakdownChart');
+    if(!el) return;
+    const total = d.landedUsd;
+    if(!total || total<=0){ el.innerHTML=''; return; }
+    const segs = [
+      {key:'goods', label:'상품가액', v:d.goodsValue},
+      {key:'extra', label:'운임·보험 등', v:Math.max(d.extraCostsSum,0)},
+      {key:'duty', label:'관세', v:d.dutyAmount},
+    ];
+    if(d.includeVat) segs.push({key:'vat', label:'부가세', v:d.vatAmount});
+    let barHtml = '<div class="cb-bar">';
+    segs.forEach(s=>{
+      const pct = (s.v/total)*100;
+      if(pct<=0) return;
+      barHtml += `<div class="cb-seg" style="width:${pct}%;background:${CB_COLORS[s.key]};" title="${s.label} ${pct.toFixed(1)}%">${pct>=10?pct.toFixed(0)+'%':''}</div>`;
+    });
+    barHtml += '</div>';
+    const legendHtml = '<div class="cb-legend">' + segs.map(s=>{
+      const pct = (s.v/total)*100;
+      return pct>0 ? `<span class="cb-legend-item"><span class="cb-dot" style="background:${CB_COLORS[s.key]};"></span>${s.label} ${pct.toFixed(1)}%</span>` : '';
+    }).join('') + (!d.includeVat && d.vatAmount>0 ? `<span class="cb-legend-item"><span class="cb-dot" style="background:${CB_COLORS.vat};"></span>부가세(미포함, 참고) +${curSym()}${fmt(d.vatAmount,2)}</span>` : '') + '</div>';
+    el.innerHTML = barHtml + legendHtml;
+  }
+
+  // ===== 엑셀 다운로드 (광고 게이트 경유) =====
+  let adGateTimerInterval = null;
+
+  function requestExcelDownload(){
+    if(!window._landedCostData || !window._landedCostData.landedKrw){
+      alert('먼저 계산 결과가 나오도록 값을 입력해주세요.');
+      return;
+    }
+    document.getElementById('adGateOverlay').style.display = 'flex';
+    let seconds = 5;
+    const timerEl = document.getElementById('adGateTimer');
+    const btnEl = document.getElementById('adGateBtn');
+    btnEl.disabled = true;
+    timerEl.textContent = `${seconds}초 후 다운로드 가능`;
+    try{ (adsbygoogle = window.adsbygoogle || []).push({}); }catch(e){}
+
+    clearInterval(adGateTimerInterval);
+    adGateTimerInterval = setInterval(()=>{
+      seconds--;
+      if(seconds <= 0){
+        clearInterval(adGateTimerInterval);
+        timerEl.textContent = '다운로드 준비 완료!';
+        btnEl.disabled = false;
+      } else {
+        timerEl.textContent = `${seconds}초 후 다운로드 가능`;
+      }
+    }, 1000);
+  }
+
+  function closeAdGate(){
+    clearInterval(adGateTimerInterval);
+    document.getElementById('adGateOverlay').style.display = 'none';
+  }
+
+  function completeAdGateDownload(){
+    closeAdGate();
+    downloadExcel();
+    if(window.amplitude) window.amplitude.track('Download', {type:'excel', tool:'landed-cost-calculator'});
+  }
+
+  async function downloadExcel(){
+    const d = window._landedCostData;
+    if(!d) return;
+    const sym = CURRENCIES[d.currency] ? CURRENCIES[d.currency].symbol : '$';
+    const curFmt = `"${sym}"#,##0.00`;
+    const krwFmt = '"₩"#,##0';
+    const NAVY = 'FF0F172A', SUCCESS_LIGHT = 'FFD1FAE5', SLATE_LIGHT = 'FFF1F5F9';
+
+    const wb = new ExcelJS.Workbook();
+    wb.creator = 'CBM Lab';
+    wb.created = new Date();
+
+    const ws1 = wb.addWorksheet('수입원가 요약');
+    ws1.columns = [{width:30},{width:16}];
+    ws1.mergeCells('A1:B1');
+    ws1.getCell('A1').value = `CBM Lab — 수입원가 분석 (${d.term})`;
+    ws1.getCell('A1').font = { bold:true, size:14, color:{argb:'FFFFFFFF'} };
+    ws1.getCell('A1').fill = { type:'pattern', pattern:'solid', fgColor:{argb:NAVY} };
+    ws1.getRow(1).height = 26;
+
+    ws1.getCell('A2').value = `적용환율: 1${d.currency} = ₩${d.fxRate}   |   생성일: ${new Date().toLocaleDateString('ko-KR')}`;
+    ws1.getCell('A2').font = { size:10, color:{argb:'FF64748B'} };
+    ws1.mergeCells('A2:B2');
+
+    const h1 = ws1.getRow(4);
+    h1.values = ['항목', `금액 (${d.currency})`];
+    h1.font = { bold:true };
+    h1.eachCell(c=>{ c.fill = { type:'pattern', pattern:'solid', fgColor:{argb:SLATE_LIGHT} }; });
+
+    const rows = [
+      ['상품가액', d.goodsValue], ['운임·보험·내륙운송 등', d.extraCostsSum],
+      ['관세', d.dutyAmount], ['부가가치세', d.vatAmount],
+    ];
+    rows.forEach(([label,val])=>{ const row = ws1.addRow([label, val]); row.getCell(2).numFmt = curFmt; });
+
+    const totalRow = ws1.addRow([`총 수입원가 (${d.currency} 기준)`, d.landedUsd]);
+    totalRow.font = { bold:true };
+    totalRow.eachCell(c=>{ c.fill = { type:'pattern', pattern:'solid', fgColor:{argb:SUCCESS_LIGHT} }; });
+    totalRow.getCell(2).numFmt = curFmt;
+
+    const krwRow1 = ws1.addRow(['통관 수수료 (원화)', d.customsFee]);
+    krwRow1.getCell(2).numFmt = krwFmt;
+    const krwRow2 = ws1.addRow(['국내 운송비 (원화)', d.inlandDest]);
+    krwRow2.getCell(2).numFmt = krwFmt;
+
+    const krwTotalRow = ws1.addRow(['총 수입원가 (원화 환산)', d.landedKrw]);
+    krwTotalRow.font = { bold:true };
+    krwTotalRow.eachCell(c=>{ c.fill = { type:'pattern', pattern:'solid', fgColor:{argb:SUCCESS_LIGHT} }; });
+    krwTotalRow.getCell(2).numFmt = krwFmt;
+
+    const unitRow = ws1.addRow(['개당 원가 (원화)', d.unitCostKrw]);
+    unitRow.getCell(2).numFmt = krwFmt;
+
+    const ws2 = wb.addWorksheet('품목 상세');
+    ws2.columns = [{width:24},{width:10},{width:12},{width:12},{width:14}];
+    const h2 = ws2.getRow(1);
+    h2.values = ['품목명', '수량', '단가', '관세율(%)', '소계'];
+    h2.font = { bold:true, color:{argb:'FFFFFFFF'} };
+    h2.eachCell(c=>{ c.fill = { type:'pattern', pattern:'solid', fgColor:{argb:'FF2563EB'} }; });
+    d.items.forEach(it=>{
+      const row = ws2.addRow([it.name, it.qty, it.price, it.dutyRate, it.qty*it.price]);
+      row.getCell(3).numFmt = curFmt;
+      row.getCell(5).numFmt = curFmt;
+    });
+
+    const buffer = await wb.xlsx.writeBuffer();
+    const blob = new Blob([buffer], {type:'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'});
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'CBMLab-수입원가분석.xlsx';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  }
 </script>
 
 <script type="application/ld+json">

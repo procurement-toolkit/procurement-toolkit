@@ -122,6 +122,26 @@
   .vat-toggle-row input { accent-color: var(--accent); width: 15px; height: 15px; }
 
   .notice-box { background: var(--accent-light); border: 1px solid #BFDBFE; border-radius: var(--radius); padding: 10px 14px; font-size: 12px; color: #1E40AF; line-height: 1.5; }
+
+  .cost-breakdown-chart{margin:14px 0 4px}
+  .cb-bar{display:flex;width:100%;height:22px;border-radius:6px;overflow:hidden;margin-bottom:8px}
+  .cb-seg{height:100%;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;color:#fff;overflow:hidden;white-space:nowrap}
+  .cb-legend{display:flex;flex-wrap:wrap;gap:6px 12px;font-size:10.5px;color:var(--slate-500)}
+  .cb-legend-item{display:flex;align-items:center;gap:5px}
+  .cb-dot{width:8px;height:8px;border-radius:3px;flex-shrink:0}
+
+  .btn-excel{width:100%;padding:12px;border:2px solid var(--accent);border-radius:8px;background:#fff;color:var(--accent);font-size:13.5px;font-weight:700;cursor:pointer;margin-top:6px}
+  .btn-excel:hover{background:var(--accent-light)}
+
+  .ad-gate-overlay{position:fixed;inset:0;background:rgba(15,23,42,.7);display:flex;align-items:center;justify-content:center;z-index:9999;padding:20px}
+  .ad-gate-box{background:#fff;border-radius:14px;max-width:420px;width:100%;padding:24px;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,.3)}
+  .ad-gate-box h3{font-size:16px;font-weight:800;color:var(--slate-900);margin-bottom:8px}
+  .ad-gate-box p{font-size:12.5px;color:var(--slate-500);margin-bottom:16px;line-height:1.6}
+  .ad-gate-slot{border:1px dashed var(--slate-300);border-radius:8px;min-height:100px;display:flex;align-items:center;justify-content:center;margin-bottom:16px;overflow:hidden}
+  .ad-gate-timer{font-size:13px;font-weight:700;color:var(--slate-600);margin-bottom:12px}
+  .ad-gate-btn{width:100%;padding:12px;border:none;border-radius:8px;background:var(--accent);color:#fff;font-size:13.5px;font-weight:700;cursor:pointer}
+  .ad-gate-btn:disabled{background:var(--slate-300);cursor:not-allowed}
+  .ad-gate-cancel{margin-top:10px;font-size:12px;color:var(--slate-400);background:none;border:none;cursor:pointer;text-decoration:underline}
   .warn-box { background: var(--warning-light); border: 1px solid #FDE68A; border-radius: var(--radius); padding: 10px 14px; font-size: 11.5px; color: #78350F; line-height: 1.6; margin-top: 12px; }
 
   .ad-placeholder { border: 1px dashed var(--slate-300); border-radius: var(--radius); background: var(--slate-50); padding: 20px; text-align: center; color: var(--slate-400); font-size: 12px; }
@@ -143,6 +163,7 @@
   .faq-item p{margin-top:8px;font-size:12.5px;color:var(--slate-600);line-height:1.7;padding-left:2px}
   @media (max-width:640px){.faq-wrap{padding:0 16px}}
 </style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/exceljs/4.4.0/exceljs.min.js"></script>
 </head>
 <body>
 <svg width="0" height="0" style="position:absolute;" aria-hidden="true">
@@ -287,6 +308,8 @@
             </div>
           </div>
           <div class="warn-box" id="deMinimisWarn" style="display:none;"></div>
+          <div class="cost-breakdown-chart" id="breakdownChart"></div>
+          <button class="btn-excel" onclick="requestExcelDownload()">📊 Download Cost Analysis (Excel)</button>
         </div>
       </div>
 
@@ -325,6 +348,24 @@
       <details class="faq-item"><summary>What exactly does 'landed cost' include?</summary><p>Landed cost is the true total cost of getting goods into your warehouse: goods value, international freight, insurance, customs duty, VAT/sales tax, customs broker fees, and inland transportation. Looking at the goods price alone often overstates your actual margin.</p></details>
       <details class="faq-item"><summary>Why is VAT/sales tax calculated on top of the duty-inclusive amount rather than the goods price?</summary><p>In most jurisdictions, import VAT is assessed on (customs value + duty), not on the goods price alone. This means a higher duty rate also indirectly increases the VAT amount, compounding the cost impact.</p></details>
     </div>
+  </div>
+</div>
+
+<div class="ad-gate-overlay" id="adGateOverlay" style="display:none;">
+  <div class="ad-gate-box">
+    <h3>📊 Preparing Your Excel File</h3>
+    <p>Please wait while this ad is shown. Your download will start automatically once it's ready.</p>
+    <div class="ad-gate-slot">
+      <ins class="adsbygoogle"
+         style="display:block;width:100%;"
+         data-ad-client="ca-pub-4642197702620430"
+         data-ad-slot="2863170310"
+         data-ad-format="auto"
+         data-full-width-responsive="true"></ins>
+    </div>
+    <div class="ad-gate-timer" id="adGateTimer">Download available in 5s</div>
+    <button class="ad-gate-btn" id="adGateBtn" disabled onclick="completeAdGateDownload()">Start Download</button>
+    <button class="ad-gate-cancel" onclick="closeAdGate()">Cancel</button>
   </div>
 </div>
 
@@ -522,11 +563,162 @@
     } else {
       warnEl.style.display = 'none';
     }
+
+    const extraCostsSum = cifValue - goodsValue;
+    window._landedCostData = {
+      goodsValue, extraCostsSum, dutyAmount, vatAmount, landedForeign, landedConverted, includeVat,
+      customsFee, inlandDest, fxRate, totalQty, unitCost, term: currentTerm, currency: currentCurrency,
+      items: items.map(it=>({name:it.name, qty:it.qty, price:it.price}))
+    };
+    renderBreakdownChart(window._landedCostData);
   }
 
   addItemRow('Product A', 100, 5.00);
   setIncoterm('FOB');
   setDutyBasis('fob');
+
+  // ===== Cost Breakdown Visualization =====
+  const CB_COLORS = {goods:'#2563EB', extra:'#0F766E', duty:'#B45309', vat:'#7C3AED'};
+  function renderBreakdownChart(d){
+    const el = document.getElementById('breakdownChart');
+    if(!el) return;
+    const total = d.landedForeign;
+    if(!total || total<=0){ el.innerHTML=''; return; }
+    const segs = [
+      {key:'goods', label:'Goods Value', v:d.goodsValue},
+      {key:'extra', label:'Freight/Insurance etc.', v:Math.max(d.extraCostsSum,0)},
+      {key:'duty', label:'Duty', v:d.dutyAmount},
+    ];
+    if(d.includeVat) segs.push({key:'vat', label:'VAT', v:d.vatAmount});
+    let barHtml = '<div class="cb-bar">';
+    segs.forEach(s=>{
+      const pct = (s.v/total)*100;
+      if(pct<=0) return;
+      barHtml += `<div class="cb-seg" style="width:${pct}%;background:${CB_COLORS[s.key]};" title="${s.label} ${pct.toFixed(1)}%">${pct>=10?pct.toFixed(0)+'%':''}</div>`;
+    });
+    barHtml += '</div>';
+    const legendHtml = '<div class="cb-legend">' + segs.map(s=>{
+      const pct = (s.v/total)*100;
+      return pct>0 ? `<span class="cb-legend-item"><span class="cb-dot" style="background:${CB_COLORS[s.key]};"></span>${s.label} ${pct.toFixed(1)}%</span>` : '';
+    }).join('') + (!d.includeVat && d.vatAmount>0 ? `<span class="cb-legend-item"><span class="cb-dot" style="background:${CB_COLORS.vat};"></span>VAT (excluded, reference) +${curSym()}${fmt(d.vatAmount,2)}</span>` : '') + '</div>';
+    el.innerHTML = barHtml + legendHtml;
+  }
+
+  // ===== Excel Download (via ad gate) =====
+  let adGateTimerInterval = null;
+
+  function requestExcelDownload(){
+    if(!window._landedCostData || !window._landedCostData.landedConverted){
+      alert('Please enter values so a result can be calculated first.');
+      return;
+    }
+    document.getElementById('adGateOverlay').style.display = 'flex';
+    let seconds = 5;
+    const timerEl = document.getElementById('adGateTimer');
+    const btnEl = document.getElementById('adGateBtn');
+    btnEl.disabled = true;
+    timerEl.textContent = `Download available in ${seconds}s`;
+    try{ (adsbygoogle = window.adsbygoogle || []).push({}); }catch(e){}
+
+    clearInterval(adGateTimerInterval);
+    adGateTimerInterval = setInterval(()=>{
+      seconds--;
+      if(seconds <= 0){
+        clearInterval(adGateTimerInterval);
+        timerEl.textContent = 'Ready to download!';
+        btnEl.disabled = false;
+      } else {
+        timerEl.textContent = `Download available in ${seconds}s`;
+      }
+    }, 1000);
+  }
+
+  function closeAdGate(){
+    clearInterval(adGateTimerInterval);
+    document.getElementById('adGateOverlay').style.display = 'none';
+  }
+
+  function completeAdGateDownload(){
+    closeAdGate();
+    downloadExcel();
+    if(window.amplitude) window.amplitude.track('Download', {type:'excel', tool:'landed-cost-calculator'});
+  }
+
+  async function downloadExcel(){
+    const d = window._landedCostData;
+    if(!d) return;
+    const sym = CURRENCIES[d.currency] ? CURRENCIES[d.currency].symbol : '$';
+    const curFmt = `"${sym}"#,##0.00`;
+    const NAVY = 'FF0F172A', SUCCESS_LIGHT = 'FFD1FAE5', SLATE_LIGHT = 'FFF1F5F9';
+
+    const wb = new ExcelJS.Workbook();
+    wb.creator = 'CBM Lab';
+    wb.created = new Date();
+
+    const ws1 = wb.addWorksheet('Landed Cost Summary');
+    ws1.columns = [{width:32},{width:16}];
+    ws1.mergeCells('A1:B1');
+    ws1.getCell('A1').value = `CBM Lab — Landed Cost Analysis (${d.term})`;
+    ws1.getCell('A1').font = { bold:true, size:14, color:{argb:'FFFFFFFF'} };
+    ws1.getCell('A1').fill = { type:'pattern', pattern:'solid', fgColor:{argb:NAVY} };
+    ws1.getRow(1).height = 26;
+
+    ws1.getCell('A2').value = `FX Rate: 1 ${d.currency} = ${d.fxRate}   |   Generated: ${new Date().toLocaleDateString('en-US')}`;
+    ws1.getCell('A2').font = { size:10, color:{argb:'FF64748B'} };
+    ws1.mergeCells('A2:B2');
+
+    const h1 = ws1.getRow(4);
+    h1.values = ['Item', `Amount (${d.currency})`];
+    h1.font = { bold:true };
+    h1.eachCell(c=>{ c.fill = { type:'pattern', pattern:'solid', fgColor:{argb:SLATE_LIGHT} }; });
+
+    const rows = [
+      ['Goods Value', d.goodsValue], ['Freight/Insurance/Inland etc.', d.extraCostsSum],
+      ['Import Duty', d.dutyAmount], ['VAT/Sales Tax', d.vatAmount],
+    ];
+    rows.forEach(([label,val])=>{ const row = ws1.addRow([label, val]); row.getCell(2).numFmt = curFmt; });
+
+    const totalRow = ws1.addRow([`Total Landed Cost (${d.currency} basis)`, d.landedForeign]);
+    totalRow.font = { bold:true };
+    totalRow.eachCell(c=>{ c.fill = { type:'pattern', pattern:'solid', fgColor:{argb:SUCCESS_LIGHT} }; });
+    totalRow.getCell(2).numFmt = curFmt;
+
+    const feeRow1 = ws1.addRow(['Customs Broker Fee (local currency)', d.customsFee]);
+    feeRow1.getCell(2).numFmt = '#,##0';
+    const feeRow2 = ws1.addRow(['Inland Delivery (local currency)', d.inlandDest]);
+    feeRow2.getCell(2).numFmt = '#,##0';
+
+    const convTotalRow = ws1.addRow(['Total Landed Cost (converted)', d.landedConverted]);
+    convTotalRow.font = { bold:true };
+    convTotalRow.eachCell(c=>{ c.fill = { type:'pattern', pattern:'solid', fgColor:{argb:SUCCESS_LIGHT} }; });
+    convTotalRow.getCell(2).numFmt = '#,##0';
+
+    const unitRow = ws1.addRow(['Per-Unit Landed Cost (converted)', d.unitCost]);
+    unitRow.getCell(2).numFmt = '#,##0';
+
+    const ws2 = wb.addWorksheet('Item Detail');
+    ws2.columns = [{width:24},{width:10},{width:12},{width:14}];
+    const h2 = ws2.getRow(1);
+    h2.values = ['Item', 'Qty', 'Unit Price', 'Subtotal'];
+    h2.font = { bold:true, color:{argb:'FFFFFFFF'} };
+    h2.eachCell(c=>{ c.fill = { type:'pattern', pattern:'solid', fgColor:{argb:'FF2563EB'} }; });
+    d.items.forEach(it=>{
+      const row = ws2.addRow([it.name, it.qty, it.price, it.qty*it.price]);
+      row.getCell(3).numFmt = curFmt;
+      row.getCell(4).numFmt = curFmt;
+    });
+
+    const buffer = await wb.xlsx.writeBuffer();
+    const blob = new Blob([buffer], {type:'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'});
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'CBMLab-LandedCost-Analysis.xlsx';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  }
 </script>
 <script type="application/ld+json">
 {

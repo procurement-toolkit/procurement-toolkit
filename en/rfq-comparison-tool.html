@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Free RFQ comparison tool for procurement. Compare multiple supplier quotes side by side on price, MOQ, lead time, and payment terms, then weigh in quality and reliability scores to see when the lowest price isn't the best value.">
+<meta name="keywords" content="RFQ comparison tool, supplier quote comparison, lowest price vs best value, quotation evaluation">
+<title>RFQ Comparison Tool — CBM Lab</title>
+<link rel="icon" href="../favicon.ico" sizes="any">
+<link rel="icon" href="../favicon.ico" type="image/x-icon">
+<link rel="apple-touch-icon" href="../apple-touch-icon.png">
+<link rel="canonical" href="https://procurement-toolkit-eight.vercel.app/en/rfq-comparison-tool.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="CBM Lab">
+<meta property="og:locale" content="en_US">
+<meta property="og:title" content="RFQ Comparison Tool — CBM Lab">
+<meta property="og:description" content="Free RFQ comparison tool. Compare multiple supplier quotes side by side and weigh in quality and reliability to see when the lowest price isn't the best value.">
+<meta property="og:url" content="https://procurement-toolkit-eight.vercel.app/en/rfq-comparison-tool.html">
+<meta property="og:image" content="https://procurement-toolkit-eight.vercel.app/assets/hero-team.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="RFQ Comparison Tool — CBM Lab">
+<meta name="twitter:description" content="Free RFQ comparison tool. Compare multiple supplier quotes side by side and weigh in quality and reliability to see when the lowest price isn't the best value.">
+<meta name="twitter:image" content="https://procurement-toolkit-eight.vercel.app/assets/hero-team.jpg">
+
+<link rel="alternate" hreflang="ko" href="https://procurement-toolkit-eight.vercel.app/rfq-comparison-tool.html">
+<link rel="alternate" hreflang="en" href="https://procurement-toolkit-eight.vercel.app/en/rfq-comparison-tool.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@800;900&display=swap" rel="stylesheet">
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  :root{--accent:#2563EB;--accent-light:#DBEAFE;--accent-dark:#1D4ED8;--slate-50:#F8FAFC;--slate-100:#F1F5F9;--slate-200:#E2E8F0;--slate-300:#CBD5E1;--slate-400:#94A3B8;--slate-500:#64748B;--slate-600:#475569;--slate-700:#334155;--slate-800:#1E293B;--slate-900:#0F172A;--success:#0F766E;--success-light:#D1FAE5;--warn:#B45309;--warn-light:#FEF3C7;--purple:#7C3AED;--purple-light:#EDE9FE;--radius:8px;--radius-lg:12px;--shadow-sm:0 1px 2px rgba(0,0,0,.05);font-family:'Inter','Pretendard',system-ui,-apple-system,sans-serif}
+  body{background:var(--slate-50);color:var(--slate-800);font-size:14px;line-height:1.6}
+  header{background:#fff;border-bottom:1px solid var(--slate-200)}
+  .header-inner{max-width:1300px;margin:0 auto;padding:16px 24px;display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}
+  .logo-mark{font-size:20px;font-weight:800;color:var(--slate-900);text-decoration:none;font-family:'Space Grotesk','Pretendard',sans-serif;letter-spacing:-0.4px;}
+  .nav-right{display:flex;align-items:center;gap:10px}
+  .nav-link{font-size:13px;font-weight:600;color:var(--slate-500);text-decoration:none;padding:7px 12px;border-radius:6px}
+  .nav-link:hover{background:var(--slate-100)}
+  .lang-switch{font-size:12px;font-weight:700;color:var(--accent);text-decoration:none;padding:6px 12px;border:1px solid var(--accent-light);border-radius:999px;background:var(--accent-light)}
+  .lang-switch:hover{background:#BFDBFE}
+
+  .hero{background:#fff;border-bottom:1px solid var(--slate-200);padding:28px 24px 24px}
+  .hero-inner{max-width:1300px;margin:0 auto}
+  .hero h1{font-size:24px;font-weight:700;color:var(--slate-900);margin-bottom:6px;letter-spacing:-0.3px}
+  .hero p{font-size:14px;color:var(--slate-500);max-width:740px}
+  .hero-tags{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}
+  .tag{background:var(--slate-100);color:var(--slate-600);font-size:11px;font-weight:500;padding:3px 10px;border-radius:4px;border:1px solid var(--slate-200)}
+
+  .main{max-width:1300px;margin:0 auto;padding:28px 24px 60px}
+  .card{background:#fff;border:1px solid var(--slate-200);border-radius:var(--radius-lg);box-shadow:var(--shadow-sm);margin-bottom:20px}
+  .card-header{padding:16px 20px;border-bottom:1px solid var(--slate-100)}
+  .card-title{font-size:14px;font-weight:700;color:var(--slate-800)}
+  .card-body{padding:20px;overflow-x:auto}
+
+  .compare-table{width:100%;border-collapse:collapse;min-width:700px}
+  .compare-table th{font-size:11px;color:var(--slate-400);text-transform:uppercase;text-align:left;padding:8px 10px;border-bottom:2px solid var(--slate-100)}
+  .compare-table th input{width:100%;border:none;border-bottom:2px solid var(--accent-light);background:transparent;font-size:13.5px;font-weight:800;color:var(--slate-800);padding:4px 2px;text-transform:none}
+  .compare-table td{padding:6px 10px;border-bottom:1px solid var(--slate-100)}
+  .compare-table td.label{font-size:12.5px;color:var(--slate-500);white-space:nowrap;font-weight:600}
+  .compare-table input[type=number],.compare-table input[type=text]{width:100%;border:1px solid var(--slate-200);border-radius:6px;padding:7px 8px;font-size:13px;font-family:inherit}
+  .compare-table input[type=range]{width:100%}
+  .compare-table tr.result-row td{font-weight:800;font-size:14px;padding-top:10px}
+  .best-badge{display:inline-block;font-size:9.5px;font-weight:800;padding:2px 7px;border-radius:999px;margin-left:4px;vertical-align:middle;white-space:nowrap}
+  .best-badge.price{background:var(--success-light);color:var(--success)}
+  .best-badge.value{background:var(--purple-light);color:var(--purple)}
+
+  .field-sub{font-size:10px;color:var(--slate-400)}
+  .weight-row{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+  .weight-row label{font-size:12.5px;font-weight:600;color:var(--slate-600);width:110px;flex-shrink:0}
+  .weight-row .wval{font-size:12.5px;font-weight:700;color:var(--slate-800);width:36px;text-align:right}
+
+  .warn-box{background:var(--warn-light);border:1px solid #FDE68A;border-radius:var(--radius);padding:12px 14px;font-size:12px;color:#78350F;margin-top:14px;line-height:1.6}
+  .notice-box{background:var(--accent-light);border:1px solid #BFDBFE;border-radius:var(--radius);padding:10px 14px;font-size:12px;color:#1E40AF;margin-top:14px;line-height:1.6}
+
+  .faq-item{border-bottom:1px solid var(--slate-100);padding:12px 0}
+  .faq-item:last-child{border-bottom:none}
+  .faq-item summary{cursor:pointer;font-weight:700;font-size:13px;color:var(--slate-800);list-style:none;outline:none}
+  .faq-item summary::-webkit-details-marker{display:none}
+  .faq-item summary::before{content:'Q. ';color:var(--accent)}
+  .faq-item p{margin-top:8px;font-size:12.5px;color:var(--slate-600);line-height:1.7;padding-left:2px}
+
+  .ad-area-main{max-width:1300px;margin:0 auto;padding:0 24px 28px}
+  .ad-main-box{border:1px dashed #CBD5E1;border-radius:10px;background:#fff;height:90px;display:flex;flex-direction:column;align-items:center;justify-content:center;color:var(--slate-400);font-size:12px;gap:4px}
+  .ad-main-box strong{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:#94A3B8}
+  .faq-wrap{max-width:1100px;margin:20px auto 0;padding:0 24px}
+
+  footer{background:#0F172A;color:#94A3B8;padding:24px;font-size:12px}
+  .footer-inner{max-width:1300px;margin:0 auto;display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
+  .footer-logo{font-size:15px;font-weight:800;color:#fff;font-family:'Space Grotesk','Pretendard',sans-serif;}
+  .footer-link{color:#94A3B8;text-decoration:none;font-size:11px;margin-right:14px}
+
+  @media print{.ad-area-main,.ad-main-box,header,footer{display:none !important}}
+  @media (max-width:640px){.ad-area-main{padding:0 16px 20px}.faq-wrap{padding:0 16px}}
+</style>
+
+<script src="https://cdn.amplitude.com/script/d4aa9301e01f4600b5eeb018e160aa7c.js"></script>
+<script>
+  window.amplitude.init("d4aa9301e01f4600b5eeb018e160aa7c", { fetchRemoteConfig: true, autocapture: true });
+  window.amplitude.track('CBM Page View', {category: 'calc', page: 'rfq-comparison-tool', lang: 'en'});
+</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-W1YBL5BGGK"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-W1YBL5BGGK');
+</script>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute;" aria-hidden="true">
+  <defs>
+    <linearGradient id="cbmGradH" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#14B8A6"/><stop offset="100%" stop-color="#0B2A4A"/></linearGradient>
+    <linearGradient id="cbmGradF" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#2DD4BF"/><stop offset="100%" stop-color="#5B9EFF"/></linearGradient>
+  </defs>
+</svg>
+<header><div class="header-inner">
+  <a href="index.html" class="logo-mark"><svg width="26" height="26" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align:middle;margin-right:8px;flex-shrink:0;"><path d="M20 2.5L36.5 11.5V28.5L20 37.5L3.5 28.5V11.5L20 2.5Z" stroke="url(#cbmGradH)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M20 2.5V20M20 20L36.5 11.5M20 20L3.5 11.5" stroke="url(#cbmGradH)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/></svg><span style="font-family:'Montserrat','Space Grotesk',sans-serif;font-weight:800;letter-spacing:-1.1px;background:linear-gradient(90deg,#14B8A6 0%,#1E7A8C 45%,#0B2A4A 100%);-webkit-background-clip:text;background-clip:text;color:transparent;">CBMLab</span></a>
+  <div class="nav-right">
+    <a href="index.html" class="nav-link">← All Tools</a>
+    <a href="../rfq-comparison-tool.html" class="lang-switch">KOR</a>
+  </div>
+</div></header>
+
+<section class="hero"><div class="hero-inner">
+  <h1>RFQ Comparison Tool</h1>
+  <p>Stop juggling separate spreadsheets for every quote you receive. Line up unit price, MOQ, and lead time side by side, weigh in quality and reliability, and get a documented rationale for when the lowest price isn't the best value.</p>
+  <div class="hero-tags"><span class="tag">Quote Comparison</span><span class="tag">Supplier Selection Rationale</span><span class="tag">Weighted Scoring</span></div>
+</div></section>
+
+<div class="main">
+  <div class="card">
+    <div class="card-header"><div class="card-title">Quote Comparison (up to 4, names editable)</div></div>
+    <div class="card-body">
+      <table class="compare-table" id="compareTable"></table>
+      <div class="notice-box">💡 Score quality and reliability yourself on a 1-5 scale (based on past dealings, sample quality, responsiveness, etc.). Adjust the weights below.</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header"><div class="card-title">Adjust Scoring Weights</div></div>
+    <div class="card-body">
+      <div class="weight-row"><label>Price</label><input type="range" min="0" max="100" value="40" id="w-price" oninput="calc()"><span class="wval" id="wv-price">40%</span></div>
+      <div class="weight-row"><label>Lead Time</label><input type="range" min="0" max="100" value="20" id="w-lead" oninput="calc()"><span class="wval" id="wv-lead">20%</span></div>
+      <div class="weight-row"><label>Quality Score</label><input type="range" min="0" max="100" value="25" id="w-quality" oninput="calc()"><span class="wval" id="wv-quality">25%</span></div>
+      <div class="weight-row"><label>Reliability Score</label><input type="range" min="0" max="100" value="15" id="w-reliability" oninput="calc()"><span class="wval" id="wv-reliability">15%</span></div>
+      <div id="weightWarn"></div>
+    </div>
+  </div>
+</div>
+
+<div style="max-width:1300px;margin:0 auto;padding:0 24px 30px;">
+  <div class="notice-box">🔄 When the lowest price and best overall value diverge, prepare for the final negotiation with the <a href="batna-negotiation-matrix.html" style="color:#1E40AF;font-weight:700;">BATNA Negotiation Tool</a>, and once you sign, track it with the <a href="contract-renewal-calendar.html" style="color:#1E40AF;font-weight:700;">Contract Renewal Calendar</a>.</div>
+</div>
+
+<!-- AD -->
+<div class="ad-area-main" role="complementary" aria-label="Advertisement area">
+  <div class="ad-main-box"><strong>Advertisement</strong>Google AdSense</div>
+</div>
+
+<div class="faq-wrap">
+  <div class="card">
+    <div class="card-header"><div class="card-title">Frequently Asked Questions</div></div>
+    <div class="card-body">
+      <details class="faq-item"><summary>What if the lowest-price supplier and the highest-scoring supplier differ?</summary><p>This happens often. If the cheapest option has a very long lead time or an uncertain quality track record, choosing the higher-scoring option despite a somewhat higher price can be the better long-term call. This tool exists to document exactly that rationale.</p></details>
+      <details class="faq-item"><summary>How do I score quality and reliability?</summary><p>There's no fixed formula. Combine past dealings, sample quality, certifications held, quote response speed, and communication into a 1 (poor) to 5 (excellent) rating.</p></details>
+      <details class="faq-item"><summary>How should I set the weights?</summary><p>It depends on what you're buying. For standard, commoditized items with little quality variation, weight price more heavily; for precision parts or a new, unproven supplier, weight quality and reliability more heavily.</p></details>
+    </div>
+  </div>
+</div>
+
+<footer><div class="footer-inner">
+  <div class="footer-logo"><svg width="24" height="24" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align:middle;margin-right:9px;flex-shrink:0;"><path d="M20 2.5L36.5 11.5V28.5L20 37.5L3.5 28.5V11.5L20 2.5Z" stroke="url(#cbmGradF)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M20 2.5V20M20 20L36.5 11.5M20 20L3.5 11.5" stroke="url(#cbmGradF)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/></svg>CBM<span style="color:#2563EB;">Lab</span></div>
+  <nav><a href="index.html" class="footer-link">All Tools</a><a href="privacy.html" class="footer-link">Privacy Policy</a></nav>
+</div></footer>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {"@type":"Question","name":"What if the lowest-price supplier and the highest-scoring supplier differ?","acceptedAnswer":{"@type":"Answer","text":"This happens often; if the cheapest option has a long lead time or uncertain quality history, the higher-scoring option can be the better long-term choice despite a higher price."}},
+    {"@type":"Question","name":"How do I score quality and reliability?","acceptedAnswer":{"@type":"Answer","text":"There is no fixed formula; combine past dealings, sample quality, certifications, and responsiveness into a 1 to 5 rating."}},
+    {"@type":"Question","name":"How should I set the weights?","acceptedAnswer":{"@type":"Answer","text":"It depends on the item; weight price more for standard commoditized goods, and quality/reliability more for precision parts or new suppliers."}}
+  ]
+}
+</script>
+
+<script>
+const ROWS = [
+  {id:'price', label:'Unit Price', sub:'per unit', type:'number'},
+  {id:'moq', label:'MOQ', sub:'minimum order qty', type:'number'},
+  {id:'leadTime', label:'Lead Time', sub:'days', type:'number'},
+  {id:'paymentTerms', label:'Payment Terms', sub:'e.g. T/T 30/70', type:'text'},
+  {id:'quality', label:'Quality Score', sub:'1-5', type:'number', min:1, max:5},
+  {id:'reliability', label:'Reliability Score', sub:'1-5', type:'number', min:1, max:5},
+];
+
+let columns = [
+  {name:'Supplier A', price:12.5, moq:500, leadTime:30, paymentTerms:'T/T 30/70', quality:4, reliability:4},
+  {name:'Supplier B', price:10.8, moq:1000, leadTime:45, paymentTerms:'L/C at sight', quality:3, reliability:3},
+  {name:'Supplier C', price:13.2, moq:300, leadTime:20, paymentTerms:'T/T 50/50', quality:5, reliability:5},
+];
+
+function fmt(v,d=2){ return (v||0).toLocaleString('en-US',{minimumFractionDigits:d,maximumFractionDigits:d}); }
+
+function updateColName(idx, value){ columns[idx].name = value; calc(); }
+function updateValue(idx, field, value, isText){ columns[idx][field] = isText ? value : (parseFloat(value)||0); calc(); }
+
+function normalize(values, higherIsBetter){
+  const min = Math.min(...values), max = Math.max(...values);
+  if(max===min) return values.map(()=>100);
+  return values.map(v => higherIsBetter ? ((v-min)/(max-min))*100 : ((max-v)/(max-min))*100);
+}
+
+function calc(){
+  const wPrice = parseFloat(document.getElementById('w-price').value);
+  const wLead = parseFloat(document.getElementById('w-lead').value);
+  const wQuality = parseFloat(document.getElementById('w-quality').value);
+  const wReliability = parseFloat(document.getElementById('w-reliability').value);
+  document.getElementById('wv-price').textContent = wPrice+'%';
+  document.getElementById('wv-lead').textContent = wLead+'%';
+  document.getElementById('wv-quality').textContent = wQuality+'%';
+  document.getElementById('wv-reliability').textContent = wReliability+'%';
+  const totalWeight = wPrice+wLead+wQuality+wReliability;
+  document.getElementById('weightWarn').innerHTML = Math.abs(totalWeight-100)>0.5
+    ? `<div class="warn-box">⚠ Weights sum to ${totalWeight}%. Adjust them to total 100% for a more accurate result.</div>` : '';
+
+  const priceNorm = normalize(columns.map(c=>c.price), false);
+  const leadNorm = normalize(columns.map(c=>c.leadTime), false);
+  const qualityNorm = normalize(columns.map(c=>c.quality), true);
+  const reliabilityNorm = normalize(columns.map(c=>c.reliability), true);
+
+  const scores = columns.map((c,i) => totalWeight>0
+    ? (priceNorm[i]*wPrice + leadNorm[i]*wLead + qualityNorm[i]*wQuality + reliabilityNorm[i]*wReliability) / totalWeight
+    : 0);
+
+  const minPrice = Math.min(...columns.map(c=>c.price));
+  const maxScore = Math.max(...scores);
+
+  const table = document.getElementById('compareTable');
+  let html = '<thead><tr><th></th>';
+  columns.forEach((col, i) => { html += `<th><input value="${col.name}" oninput="updateColName(${i}, this.value)"></th>`; });
+  html += '</tr></thead><tbody>';
+
+  ROWS.forEach(row => {
+    html += `<tr><td class="label">${row.label}<div class="field-sub">${row.sub}</div></td>`;
+    columns.forEach((col, i) => {
+      if(row.type==='text'){
+        html += `<td><input type="text" value="${col[row.id]}" oninput="updateValue(${i},'${row.id}',this.value,true)"></td>`;
+      } else {
+        html += `<td><input type="number" step="0.01" min="${row.min||0}" max="${row.max||''}" value="${col[row.id]}" oninput="updateValue(${i},'${row.id}',this.value)"></td>`;
+      }
+    });
+    html += '</tr>';
+  });
+
+  html += '<tr class="result-row"><td class="label">Overall Score</td>';
+  columns.forEach((col, i) => {
+    const isCheapest = Math.abs(col.price-minPrice)<0.001;
+    const isBest = Math.abs(scores[i]-maxScore)<0.001;
+    html += `<td>${scores[i].toFixed(1)} pts ${isCheapest?'<span class="best-badge price">Lowest Price</span>':''}${isBest?'<span class="best-badge value">Best Value</span>':''}</td>`;
+  });
+  html += '</tr></tbody>';
+  table.innerHTML = html;
+}
+
+calc();
+</script>
+</body>
+</html>

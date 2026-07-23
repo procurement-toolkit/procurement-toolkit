@@ -144,7 +144,7 @@
   .faq-item p{margin-top:8px;font-size:12.5px;color:var(--slate-600);line-height:1.7;padding-left:2px}
   @media (max-width:640px){.faq-wrap{padding:0 16px}}
 </style>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/exceljs/4.4.0/exceljs.min.js"></script>
 </head>
 <body>
 <svg width="0" height="0" style="position:absolute;" aria-hidden="true">
@@ -655,41 +655,95 @@ function completeAdGateDownload(){
   if(window.amplitude) window.amplitude.track('Download', {type:'excel', tool:'should-cost-calculator'});
 }
 
-function downloadExcel(){
+async function downloadExcel(){
   const d = window._costBreakdown;
   if(!d) return;
 
-  const wb = XLSX.utils.book_new();
+  const CUR_SYM = {USD:'$', KRW:'₩', CNY:'¥', JPY:'¥', EUR:'€'};
+  const sym = CUR_SYM[d.currency] || '$';
+  const curFmt = `"${sym}"#,##0.00`;
+  const NAVY = 'FF0F172A', SUCCESS_LIGHT = 'FFD1FAE5', SLATE_LIGHT = 'FFF1F5F9';
 
-  const summaryData = [
-    ['CBM Lab — Should Cost 분석 결과', ''],
-    ['통화', d.currency],
-    [],
-    ['항목', '금액/개', '비중(%)'],
-    ['원재료비 (BOM)', d.bomTotal, d.shouldCost>0?(d.bomTotal/d.shouldCost*100).toFixed(1):0],
-    ['가공 인건비', d.procTotal, d.shouldCost>0?(d.procTotal/d.shouldCost*100).toFixed(1):0],
-    ['설비비 (가동률 '+d.utilRate+'%)', d.machineCostPerUnit, d.shouldCost>0?(d.machineCostPerUnit/d.shouldCost*100).toFixed(1):0],
-    ['간접비 ('+d.overheadRate+'%)', d.overheadAmount, d.shouldCost>0?(d.overheadAmount/d.shouldCost*100).toFixed(1):0],
-    ['이윤 ('+d.marginMode+' '+d.marginPct+'%)', d.marginAmount, d.shouldCost>0?(d.marginAmount/d.shouldCost*100).toFixed(1):0],
-    ['Should Cost 합계', d.shouldCost, 100],
+  const wb = new ExcelJS.Workbook();
+  wb.creator = 'CBM Lab';
+  wb.created = new Date();
+
+  // ===== 시트 1: Should Cost 요약 =====
+  const ws1 = wb.addWorksheet('Should Cost 요약');
+  ws1.columns = [{width:30},{width:16},{width:12}];
+
+  ws1.mergeCells('A1:C1');
+  ws1.getCell('A1').value = 'CBM Lab — Should Cost 분석 결과';
+  ws1.getCell('A1').font = { bold:true, size:14, color:{argb:'FFFFFFFF'} };
+  ws1.getCell('A1').fill = { type:'pattern', pattern:'solid', fgColor:{argb:NAVY} };
+  ws1.getCell('A1').alignment = { vertical:'middle' };
+  ws1.getRow(1).height = 26;
+
+  ws1.getCell('A2').value = `통화: ${d.currency}   |   생성일: ${new Date().toLocaleDateString('ko-KR')}`;
+  ws1.getCell('A2').font = { size:10, color:{argb:'FF64748B'} };
+  ws1.mergeCells('A2:C2');
+
+  const headerRow = ws1.getRow(4);
+  headerRow.values = ['항목', '금액/개', '비중(%)'];
+  headerRow.font = { bold:true };
+  headerRow.eachCell(c => { c.fill = { type:'pattern', pattern:'solid', fgColor:{argb:SLATE_LIGHT} }; c.border = { bottom:{style:'thin', color:{argb:'FFCBD5E1'}} }; });
+
+  const items = [
+    ['원재료비 (BOM)', d.bomTotal],
+    ['가공 인건비', d.procTotal],
+    [`설비비 (가동률 ${d.utilRate}%)`, d.machineCostPerUnit],
+    [`간접비 (${d.overheadRate}%)`, d.overheadAmount],
+    [`이윤 (${d.marginMode==='markup'?'Markup':'Margin'} ${d.marginPct}%)`, d.marginAmount],
   ];
-  const wsSummary = XLSX.utils.aoa_to_sheet(summaryData);
-  wsSummary['!cols'] = [{wch:28},{wch:14},{wch:12}];
-  XLSX.utils.book_append_sheet(wb, wsSummary, 'Should Cost 요약');
+  items.forEach(([label, val])=>{
+    const row = ws1.addRow([label, val, d.shouldCost>0 ? val/d.shouldCost : 0]);
+    row.getCell(2).numFmt = curFmt;
+    row.getCell(3).numFmt = '0.0%';
+  });
 
-  const bomData = [['원재료명', '수량', '단위', '단가', '소계']];
-  bomItems.forEach(it=>{ bomData.push([it.name, it.qty, it.unit, it.price, it.qty*it.price]); });
-  const wsBom = XLSX.utils.aoa_to_sheet(bomData);
-  wsBom['!cols'] = [{wch:24},{wch:8},{wch:8},{wch:10},{wch:10}];
-  XLSX.utils.book_append_sheet(wb, wsBom, 'BOM 상세');
+  const totalRow = ws1.addRow(['Should Cost 합계 (개당)', d.shouldCost, 1]);
+  totalRow.font = { bold:true };
+  totalRow.eachCell(c => { c.fill = { type:'pattern', pattern:'solid', fgColor:{argb:SUCCESS_LIGHT} }; });
+  totalRow.getCell(2).numFmt = curFmt;
+  totalRow.getCell(3).numFmt = '0.0%';
 
-  const procData = [['공정명', '사이클타임(초)', '투입인원', '시급', '인건비/개']];
-  procItems.forEach(it=>{ procData.push([it.name, it.cycle, it.workers, it.rate, (it.cycle/3600)*it.rate*it.workers]); });
-  const wsProc = XLSX.utils.aoa_to_sheet(procData);
-  wsProc['!cols'] = [{wch:24},{wch:14},{wch:10},{wch:10},{wch:12}];
-  XLSX.utils.book_append_sheet(wb, wsProc, '가공공정 상세');
+  // ===== 시트 2: BOM 상세 =====
+  const ws2 = wb.addWorksheet('BOM 상세');
+  ws2.columns = [{width:26},{width:10},{width:10},{width:12},{width:12}];
+  const h2 = ws2.getRow(1);
+  h2.values = ['원재료명', '수량', '단위', '단가', '소계'];
+  h2.font = { bold:true, color:{argb:'FFFFFFFF'} };
+  h2.eachCell(c => { c.fill = { type:'pattern', pattern:'solid', fgColor:{argb:'FF2563EB'} }; });
+  bomItems.forEach(it=>{
+    const row = ws2.addRow([it.name, it.qty, it.unit, it.price, it.qty*it.price]);
+    row.getCell(4).numFmt = curFmt;
+    row.getCell(5).numFmt = curFmt;
+  });
 
-  XLSX.writeFile(wb, 'CBMLab-ShouldCost-원가분석.xlsx');
+  // ===== 시트 3: 가공공정 상세 =====
+  const ws3 = wb.addWorksheet('가공공정 상세');
+  ws3.columns = [{width:26},{width:14},{width:10},{width:12},{width:14}];
+  const h3 = ws3.getRow(1);
+  h3.values = ['공정명', '사이클타임(초)', '투입인원', '시급', '인건비/개'];
+  h3.font = { bold:true, color:{argb:'FFFFFFFF'} };
+  h3.eachCell(c => { c.fill = { type:'pattern', pattern:'solid', fgColor:{argb:'FF2563EB'} }; });
+  procItems.forEach(it=>{
+    const laborCost = (it.cycle/3600)*it.rate*it.workers;
+    const row = ws3.addRow([it.name, it.cycle, it.workers, it.rate, laborCost]);
+    row.getCell(4).numFmt = curFmt;
+    row.getCell(5).numFmt = curFmt;
+  });
+
+  const buffer = await wb.xlsx.writeBuffer();
+  const blob = new Blob([buffer], {type:'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'CBMLab-ShouldCost-원가분석.xlsx';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
 }
 
 // 초기값

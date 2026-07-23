@@ -63,6 +63,26 @@
   .result-item .r-label{font-size:10.5px;font-weight:700;color:var(--slate-400);text-transform:uppercase}
   .result-item .r-value{font-size:20px;font-weight:800;color:var(--accent-dark);margin-top:4px}
   .notice-box{background:var(--accent-light);border:1px solid #BFDBFE;border-radius:var(--radius);padding:10px 14px;font-size:12px;color:#1E40AF;margin-top:14px;line-height:1.6}
+
+  .cost-breakdown-chart{margin:14px 0 4px}
+  .cb-bar{display:flex;width:100%;height:22px;border-radius:6px;overflow:hidden;margin-bottom:8px}
+  .cb-seg{height:100%;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;color:#fff;overflow:hidden;white-space:nowrap}
+  .cb-legend{display:flex;flex-wrap:wrap;gap:6px 12px;font-size:10.5px;color:var(--slate-500)}
+  .cb-legend-item{display:flex;align-items:center;gap:5px}
+  .cb-dot{width:8px;height:8px;border-radius:3px;flex-shrink:0}
+
+  .btn-excel{width:100%;padding:12px;border:2px solid var(--accent);border-radius:8px;background:#fff;color:var(--accent);font-size:13.5px;font-weight:700;cursor:pointer;margin-top:6px}
+  .btn-excel:hover{background:var(--accent-light)}
+
+  .ad-gate-overlay{position:fixed;inset:0;background:rgba(15,23,42,.7);display:flex;align-items:center;justify-content:center;z-index:9999;padding:20px}
+  .ad-gate-box{background:#fff;border-radius:14px;max-width:420px;width:100%;padding:24px;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,.3)}
+  .ad-gate-box h3{font-size:16px;font-weight:800;color:var(--slate-900);margin-bottom:8px}
+  .ad-gate-box p{font-size:12.5px;color:var(--slate-500);margin-bottom:16px;line-height:1.6}
+  .ad-gate-slot{border:1px dashed var(--slate-300);border-radius:8px;min-height:100px;display:flex;align-items:center;justify-content:center;margin-bottom:16px;overflow:hidden}
+  .ad-gate-timer{font-size:13px;font-weight:700;color:var(--slate-600);margin-bottom:12px}
+  .ad-gate-btn{width:100%;padding:12px;border:none;border-radius:8px;background:var(--accent);color:#fff;font-size:13.5px;font-weight:700;cursor:pointer}
+  .ad-gate-btn:disabled{background:var(--slate-300);cursor:not-allowed}
+  .ad-gate-cancel{margin-top:10px;font-size:12px;color:var(--slate-400);background:none;border:none;cursor:pointer;text-decoration:underline}
   @media (max-width:900px){.main{grid-template-columns:1fr}}
 
   .ad-area-main{max-width:1200px;margin:24px auto 0;padding:0 24px 28px}
@@ -81,6 +101,7 @@
   .faq-item p{margin-top:8px;font-size:12.5px;color:var(--slate-600);line-height:1.7;padding-left:2px}
   @media (max-width:640px){.faq-wrap{padding:0 16px}}
 </style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/exceljs/4.4.0/exceljs.min.js"></script>
 </head>
 <body>
 <svg width="0" height="0" style="position:absolute;" aria-hidden="true">
@@ -162,6 +183,9 @@
           <b>Safety Stock</b> = Z × Demand Std Dev × √(Lead Time)<br>
           <b>Reorder Point</b> = (Avg Daily Demand × Lead Time) + Safety Stock
         </div>
+
+        <div class="cost-breakdown-chart" id="breakdownChart"></div>
+        <button class="btn-excel" onclick="requestExcelDownload()">📊 Download Inventory Plan (Excel)</button>
       </div>
     </div>
   </aside>
@@ -198,6 +222,24 @@
      data-ad-format="auto"
      data-full-width-responsive="true"></ins>
 <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+
+<div class="ad-gate-overlay" id="adGateOverlay" style="display:none;">
+  <div class="ad-gate-box">
+    <h3>📊 Preparing Your Excel File</h3>
+    <p>Please wait while this ad is shown. Your download will start automatically once it's ready.</p>
+    <div class="ad-gate-slot">
+      <ins class="adsbygoogle"
+         style="display:block;width:100%;"
+         data-ad-client="ca-pub-4642197702620430"
+         data-ad-slot="2863170310"
+         data-ad-format="auto"
+         data-full-width-responsive="true"></ins>
+    </div>
+    <div class="ad-gate-timer" id="adGateTimer">Download available in 5s</div>
+    <button class="ad-gate-btn" id="adGateBtn" disabled onclick="completeAdGateDownload()">Start Download</button>
+    <button class="ad-gate-cancel" onclick="closeAdGate()">Cancel</button>
+  </div>
 </div>
 
 <footer style="background:#0F172A;color:#94A3B8;padding:24px;font-size:12px;">
@@ -239,8 +281,141 @@ function calc(){
   document.getElementById('ssResult').textContent = fmt(safetyStock) + ' units';
   document.getElementById('ropResult').textContent = fmt(rop) + ' units';
   document.getElementById('freqResult').textContent = fmt(freq) + ' / year';
+
+  const annualOrderCost = (D/(eoq||1)) * S;
+  const annualHoldCost = (eoq/2) * H;
+  window._eoqData = { D, S, H, leadTime, stdDev, z, eoq, safetyStock, rop, freq, annualOrderCost, annualHoldCost };
+  renderBreakdownChart(window._eoqData);
 }
 calc();
+
+// ===== Cost Breakdown Visualization (annual order cost vs holding cost — equal at true EOQ) =====
+const CB_COLORS = {order:'#2563EB', hold:'#0F766E'};
+function renderBreakdownChart(d){
+  const el = document.getElementById('breakdownChart');
+  if(!el) return;
+  const total = d.annualOrderCost + d.annualHoldCost;
+  if(total<=0){ el.innerHTML=''; return; }
+  const orderPct = (d.annualOrderCost/total)*100;
+  const holdPct = (d.annualHoldCost/total)*100;
+  let barHtml = `<div class="cb-bar">
+    <div class="cb-seg" style="width:${orderPct}%;background:${CB_COLORS.order};" title="Annual Order Cost ${orderPct.toFixed(1)}%">${orderPct>=15?orderPct.toFixed(0)+'%':''}</div>
+    <div class="cb-seg" style="width:${holdPct}%;background:${CB_COLORS.hold};" title="Annual Holding Cost ${holdPct.toFixed(1)}%">${holdPct>=15?holdPct.toFixed(0)+'%':''}</div>
+  </div>`;
+  const legendHtml = `<div class="cb-legend">
+    <span class="cb-legend-item"><span class="cb-dot" style="background:${CB_COLORS.order};"></span>Annual Order Cost ${fmt(d.annualOrderCost)}</span>
+    <span class="cb-legend-item"><span class="cb-dot" style="background:${CB_COLORS.hold};"></span>Annual Holding Cost ${fmt(d.annualHoldCost)}</span>
+  </div>`;
+  el.innerHTML = barHtml + legendHtml + '<div class="notice-box" style="margin-top:8px;">💡 At the true EOQ, ordering cost and holding cost are theoretically equal — if the two values are close, your calculation checks out.</div>';
+}
+
+// ===== Excel Download (via ad gate) =====
+let adGateTimerInterval = null;
+
+function requestExcelDownload(){
+  if(!window._eoqData || !window._eoqData.eoq){
+    alert('Please enter values so a result can be calculated first.');
+    return;
+  }
+  document.getElementById('adGateOverlay').style.display = 'flex';
+  let seconds = 5;
+  const timerEl = document.getElementById('adGateTimer');
+  const btnEl = document.getElementById('adGateBtn');
+  btnEl.disabled = true;
+  timerEl.textContent = `Download available in ${seconds}s`;
+  try{ (adsbygoogle = window.adsbygoogle || []).push({}); }catch(e){}
+
+  clearInterval(adGateTimerInterval);
+  adGateTimerInterval = setInterval(()=>{
+    seconds--;
+    if(seconds <= 0){
+      clearInterval(adGateTimerInterval);
+      timerEl.textContent = 'Ready to download!';
+      btnEl.disabled = false;
+    } else {
+      timerEl.textContent = `Download available in ${seconds}s`;
+    }
+  }, 1000);
+}
+
+function closeAdGate(){
+  clearInterval(adGateTimerInterval);
+  document.getElementById('adGateOverlay').style.display = 'none';
+}
+
+function completeAdGateDownload(){
+  closeAdGate();
+  downloadExcel();
+  if(window.amplitude) window.amplitude.track('Download', {type:'excel', tool:'eoq-safety-stock-calculator'});
+}
+
+async function downloadExcel(){
+  const d = window._eoqData;
+  if(!d) return;
+  const curFmt = '#,##0';
+  const NAVY = 'FF0F172A', SUCCESS_LIGHT = 'FFD1FAE5', SLATE_LIGHT = 'FFF1F5F9';
+
+  const wb = new ExcelJS.Workbook();
+  wb.creator = 'CBM Lab';
+  wb.created = new Date();
+
+  const ws = wb.addWorksheet('Inventory Plan Summary');
+  ws.columns = [{width:32},{width:18}];
+
+  ws.mergeCells('A1:B1');
+  ws.getCell('A1').value = 'CBM Lab — Inventory Planning Analysis';
+  ws.getCell('A1').font = { bold:true, size:14, color:{argb:'FFFFFFFF'} };
+  ws.getCell('A1').fill = { type:'pattern', pattern:'solid', fgColor:{argb:NAVY} };
+  ws.getRow(1).height = 26;
+
+  ws.getCell('A2').value = `Generated: ${new Date().toLocaleDateString('en-US')}`;
+  ws.getCell('A2').font = { size:10, color:{argb:'FF64748B'} };
+
+  const h1 = ws.getRow(4);
+  h1.values = ['Inputs', ''];
+  h1.font = { bold:true };
+  h1.eachCell(c=>{ c.fill = { type:'pattern', pattern:'solid', fgColor:{argb:SLATE_LIGHT} }; });
+
+  const inputs = [
+    ['Annual Demand (D)', d.D], ['Order Cost (S)', d.S], ['Annual Holding Cost per Unit (H)', d.H],
+    ['Lead Time (days)', d.leadTime], ['Demand Std Dev', d.stdDev], ['Service Level Z-score', d.z],
+  ];
+  inputs.forEach(([label,val])=>{ ws.addRow([label, val]); });
+
+  const h2 = ws.addRow(['Results', '']);
+  h2.font = { bold:true };
+  h2.eachCell(c=>{ c.fill = { type:'pattern', pattern:'solid', fgColor:{argb:SLATE_LIGHT} }; });
+
+  const results = [
+    ['EOQ (Economic Order Quantity)', d.eoq], ['Safety Stock', d.safetyStock],
+    ['Reorder Point', d.rop], ['Orders per Year', d.freq],
+  ];
+  results.forEach(([label,val])=>{ ws.addRow([label, Math.round(val*100)/100]); });
+
+  const costHeaderRow = ws.addRow(['Cost Structure', '']);
+  costHeaderRow.font = { bold:true };
+  costHeaderRow.eachCell(c=>{ c.fill = { type:'pattern', pattern:'solid', fgColor:{argb:SLATE_LIGHT} }; });
+
+  const orderRow = ws.addRow(['Annual Order Cost', d.annualOrderCost]);
+  orderRow.getCell(2).numFmt = curFmt;
+  const holdRow = ws.addRow(['Annual Holding Cost', d.annualHoldCost]);
+  holdRow.getCell(2).numFmt = curFmt;
+  const totalRow = ws.addRow(['Total Annual Inventory Cost', d.annualOrderCost + d.annualHoldCost]);
+  totalRow.font = { bold:true };
+  totalRow.eachCell(c=>{ c.fill = { type:'pattern', pattern:'solid', fgColor:{argb:SUCCESS_LIGHT} }; });
+  totalRow.getCell(2).numFmt = curFmt;
+
+  const buffer = await wb.xlsx.writeBuffer();
+  const blob = new Blob([buffer], {type:'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'CBMLab-InventoryPlan.xlsx';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
 </script>
 <script type="application/ld+json">
 {
