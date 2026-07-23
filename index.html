@@ -222,8 +222,8 @@
     </div>
 
     <div class="hero-stats">
-      <div class="hero-stat"><span class="n">20</span><span class="l">도구 (Tools)</span></div>
-      <div class="hero-stat"><span class="n">4</span><span class="l">카테고리</span></div>
+      <div class="hero-stat"><span class="n" id="statToolCount">-</span><span class="l">도구 (Tools)</span></div>
+      <div class="hero-stat"><span class="n" id="statCatCount">-</span><span class="l">카테고리</span></div>
       <div class="hero-stat"><span class="n">0원</span><span class="l">이용 비용</span></div>
       <div class="hero-stat"><span class="n">0건</span><span class="l">서버 전송 (전부 브라우저 계산)</span></div>
     </div>
@@ -436,6 +436,11 @@ function updatePillCounts(){
   });
   const searchKbd = document.getElementById('searchKbd');
   if(searchKbd) searchKbd.textContent = TOOLS.length + '개 도구 검색';
+
+  const statTool = document.getElementById('statToolCount');
+  if(statTool) statTool.textContent = TOOLS.length;
+  const statCat = document.getElementById('statCatCount');
+  if(statCat) statCat.textContent = Object.keys(CAT_LABEL).length;
 }
 
 function renderTools(){
