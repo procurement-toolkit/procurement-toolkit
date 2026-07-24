@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="디머리지·디텐션 비용 계산기 - 무료기간(Free Time)이 지나면 계층별로 올라가는 하루 단위 요금을 정확히 계산합니다. 컨테이너 몇 개를 며칠 늦게 반납하면 총 얼마인지 미리 확인하세요.">
+<meta name="keywords" content="디머리지 계산, 디텐션 계산, demurrage detention calculator, 컨테이너 반납 지연 비용, free time 초과 비용">
+<title>디머리지·디텐션 비용 계산기 — CBM Lab</title>
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="icon" href="favicon.ico" type="image/x-icon">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="canonical" href="https://procurement-toolkit-eight.vercel.app/demurrage-detention-calculator.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="CBM Lab">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:title" content="디머리지·디텐션 비용 계산기 — CBM Lab">
+<meta property="og:description" content="디머리지·디텐션 비용 계산기 - 무료기간이 지나면 계층별로 올라가는 하루 단위 요금을 정확히 계산합니다.">
+<meta property="og:url" content="https://procurement-toolkit-eight.vercel.app/demurrage-detention-calculator.html">
+<meta property="og:image" content="https://procurement-toolkit-eight.vercel.app/assets/hero-team.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="디머리지·디텐션 비용 계산기 — CBM Lab">
+<meta name="twitter:description" content="디머리지·디텐션 비용 계산기 - 무료기간이 지나면 계층별로 올라가는 하루 단위 요금을 정확히 계산합니다.">
+<meta name="twitter:image" content="https://procurement-toolkit-eight.vercel.app/assets/hero-team.jpg">
+
+<link rel="alternate" hreflang="ko" href="https://procurement-toolkit-eight.vercel.app/demurrage-detention-calculator.html">
+<link rel="alternate" hreflang="en" href="https://procurement-toolkit-eight.vercel.app/en/demurrage-detention-calculator.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@800;900&display=swap" rel="stylesheet">
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  :root{--accent:#2563EB;--accent-light:#DBEAFE;--accent-dark:#1D4ED8;--slate-50:#F8FAFC;--slate-100:#F1F5F9;--slate-200:#E2E8F0;--slate-300:#CBD5E1;--slate-400:#94A3B8;--slate-500:#64748B;--slate-600:#475569;--slate-700:#334155;--slate-800:#1E293B;--slate-900:#0F172A;--success:#0F766E;--success-light:#D1FAE5;--warn:#B45309;--warn-light:#FEF3C7;--danger:#B91C1C;--danger-light:#FEE2E2;--radius:8px;--radius-lg:12px;--shadow-sm:0 1px 2px rgba(0,0,0,.05);font-family:'Pretendard','Apple SD Gothic Neo',system-ui,-apple-system,sans-serif}
+  body{background:var(--slate-50);color:var(--slate-800);font-size:14px;line-height:1.6}
+  header{background:#fff;border-bottom:1px solid var(--slate-200)}
+  .header-inner{max-width:1200px;margin:0 auto;padding:16px 24px;display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}
+  .logo-mark{font-size:20px;font-weight:800;color:var(--slate-900);text-decoration:none;font-family:'Space Grotesk','Pretendard',sans-serif;letter-spacing:-0.4px;}
+  .nav-right{display:flex;align-items:center;gap:10px}
+  .nav-link{font-size:13px;font-weight:600;color:var(--slate-500);text-decoration:none;padding:7px 12px;border-radius:6px}
+  .nav-link:hover{background:var(--slate-100)}
+  .lang-switch{font-size:12px;font-weight:700;color:var(--accent);text-decoration:none;padding:6px 12px;border:1px solid var(--accent-light);border-radius:999px;background:var(--accent-light)}
+  .lang-switch:hover{background:#BFDBFE}
+
+  .hero{background:#fff;border-bottom:1px solid var(--slate-200);padding:28px 24px 24px}
+  .hero-inner{max-width:1200px;margin:0 auto}
+  .hero h1{font-size:24px;font-weight:700;color:var(--slate-900);margin-bottom:6px;letter-spacing:-0.3px}
+  .hero p{font-size:14px;color:var(--slate-500);max-width:740px}
+  .hero-tags{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}
+  .tag{background:var(--slate-100);color:var(--slate-600);font-size:11px;font-weight:500;padding:3px 10px;border-radius:4px;border:1px solid var(--slate-200)}
+
+  .main{max-width:1200px;margin:0 auto;padding:28px 24px 60px;display:grid;grid-template-columns:1fr 380px;gap:24px;align-items:start}
+  .card{background:#fff;border:1px solid var(--slate-200);border-radius:var(--radius-lg);box-shadow:var(--shadow-sm);margin-bottom:20px}
+  .card-header{padding:16px 20px;border-bottom:1px solid var(--slate-100);display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+  .card-title{font-size:14px;font-weight:700;color:var(--slate-800)}
+  .card-body{padding:20px}
+
+  .field-label{font-size:12.5px;font-weight:600;color:var(--slate-600);margin-bottom:5px;display:block}
+  .field-sub{font-size:11px;color:var(--slate-400);margin-bottom:5px}
+  .inp{width:100%;border:1px solid var(--slate-200);border-radius:8px;padding:9px 11px;font-size:13.5px;font-family:inherit}
+  .inp:focus{outline:none;border-color:var(--accent)}
+  .field-group{margin-bottom:14px}
+  .field-row3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
+  .field-row2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+
+  .tier-table{width:100%;border-collapse:collapse;margin-top:6px}
+  .tier-table th{font-size:10.5px;color:var(--slate-400);text-transform:uppercase;text-align:left;padding:0 6px 6px}
+  .tier-table td{padding:5px 6px}
+  .tier-table input{width:100%;border:1px solid var(--slate-200);border-radius:6px;padding:7px 8px;font-size:13px;font-family:inherit}
+
+  .charge-section{border-left:3px solid var(--accent);padding-left:14px;margin-bottom:20px}
+  .charge-section:last-child{margin-bottom:0}
+  .charge-section h4{font-size:13.5px;font-weight:800;color:var(--slate-800);margin-bottom:10px}
+
+  .result-total{background:var(--danger-light);border-radius:10px;padding:18px;text-align:center;margin-bottom:14px}
+  .result-total .label{font-size:11.5px;color:var(--danger);font-weight:700;text-transform:uppercase}
+  .result-total .value{font-size:28px;font-weight:800;color:var(--danger);margin-top:4px}
+
+  .breakdown-row{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--slate-100);font-size:12.5px}
+  .breakdown-row:last-child{border-bottom:none}
+  .breakdown-row .k{color:var(--slate-500)}
+  .breakdown-row .v{font-weight:700;color:var(--slate-800)}
+  .tier-detail{font-size:11px;color:var(--slate-400);margin-top:2px}
+
+  .timeline{position:relative;height:50px;margin:16px 0}
+  .timeline-track{position:absolute;top:20px;left:0;right:0;height:10px;background:var(--slate-100);border-radius:5px;overflow:hidden;display:flex}
+  .timeline-seg{height:100%}
+
+  .warn-box{background:var(--warn-light);border:1px solid #FDE68A;border-radius:var(--radius);padding:12px 14px;font-size:12px;color:#78350F;margin-top:14px;line-height:1.6}
+  .notice-box{background:var(--accent-light);border:1px solid #BFDBFE;border-radius:var(--radius);padding:10px 14px;font-size:12px;color:#1E40AF;margin-top:14px;line-height:1.6}
+
+  .faq-item{border-bottom:1px solid var(--slate-100);padding:12px 0}
+  .faq-item:last-child{border-bottom:none}
+  .faq-item summary{cursor:pointer;font-weight:700;font-size:13px;color:var(--slate-800);list-style:none;outline:none}
+  .faq-item summary::-webkit-details-marker{display:none}
+  .faq-item summary::before{content:'Q. ';color:var(--accent)}
+  .faq-item p{margin-top:8px;font-size:12.5px;color:var(--slate-600);line-height:1.7;padding-left:2px}
+
+  .ad-area-main{max-width:1200px;margin:0 auto;padding:0 24px 28px}
+  .ad-main-box{border:1px dashed #CBD5E1;border-radius:10px;background:#fff;height:90px;display:flex;flex-direction:column;align-items:center;justify-content:center;color:var(--slate-400);font-size:12px;gap:4px}
+  .ad-main-box strong{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:#94A3B8}
+  .faq-wrap{max-width:1100px;margin:20px auto 0;padding:0 24px}
+
+  footer{background:#0F172A;color:#94A3B8;padding:24px;font-size:12px}
+  .footer-inner{max-width:1200px;margin:0 auto;display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
+  .footer-logo{font-size:15px;font-weight:800;color:#fff;font-family:'Space Grotesk','Pretendard',sans-serif;}
+  .footer-link{color:#94A3B8;text-decoration:none;font-size:11px;margin-right:14px}
+
+  @media print{.ad-area-main,.ad-main-box,header,footer{display:none !important}.main{grid-template-columns:1fr}}
+  @media (max-width:900px){.main{grid-template-columns:1fr}}
+  @media (max-width:640px){.ad-area-main{padding:0 16px 20px}.faq-wrap{padding:0 16px}.field-row3{grid-template-columns:1fr}}
+</style>
+
+<script src="https://cdn.amplitude.com/script/d4aa9301e01f4600b5eeb018e160aa7c.js"></script>
+<script>
+  window.amplitude.init("d4aa9301e01f4600b5eeb018e160aa7c", { fetchRemoteConfig: true, autocapture: true });
+  window.amplitude.track('CBM Page View', {category: 'calc', page: 'demurrage-detention-calculator', lang: 'ko'});
+</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-W1YBL5BGGK"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-W1YBL5BGGK');
+</script>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute;" aria-hidden="true">
+  <defs>
+    <linearGradient id="cbmGradH" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#14B8A6"/><stop offset="100%" stop-color="#0B2A4A"/></linearGradient>
+    <linearGradient id="cbmGradF" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#2DD4BF"/><stop offset="100%" stop-color="#5B9EFF"/></linearGradient>
+  </defs>
+</svg>
+<header><div class="header-inner">
+  <a href="index.html" class="logo-mark"><svg width="26" height="26" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align:middle;margin-right:8px;flex-shrink:0;"><path d="M20 2.5L36.5 11.5V28.5L20 37.5L3.5 28.5V11.5L20 2.5Z" stroke="url(#cbmGradH)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M20 2.5V20M20 20L36.5 11.5M20 20L3.5 11.5" stroke="url(#cbmGradH)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/></svg><span style="font-family:'Montserrat','Space Grotesk',sans-serif;font-weight:800;letter-spacing:-1.1px;background:linear-gradient(90deg,#14B8A6 0%,#1E7A8C 45%,#0B2A4A 100%);-webkit-background-clip:text;background-clip:text;color:transparent;">CBMLab</span></a>
+  <div class="nav-right">
+    <a href="index.html" class="nav-link">← 전체 도구</a>
+    <a href="en/demurrage-detention-calculator.html" class="lang-switch">EN</a>
+  </div>
+</div></header>
+
+<section class="hero"><div class="hero-inner">
+  <h1>디머리지·디텐션 비용 계산기</h1>
+  <p>무료기간(Free Time)이 지나면 하루하루 요금이 계층별로 뛰어오릅니다. 컨테이너 반납이 며칠 늦어질 것 같을 때, 미리 총비용을 계산해서 반출 우선순위를 정하세요.</p>
+  <div class="hero-tags"><span class="tag">계층별 요금 계산</span><span class="tag">디머리지 vs 디텐션</span><span class="tag">항만·트럭킹 비용</span></div>
+</div></section>
+
+<div class="main">
+  <section>
+    <div class="card">
+      <div class="card-header"><div class="card-title">억류 정보</div></div>
+      <div class="card-body">
+        <div class="field-row2">
+          <div class="field-group">
+            <label class="field-label">컨테이너 수량</label>
+            <input type="number" class="inp" id="containerCount" value="1" min="1" oninput="calc()">
+          </div>
+          <div class="field-group">
+            <label class="field-label">총 억류 예상일 (반출~반납까지)</label>
+            <div class="field-sub">터미널 반출부터 공컨테이너 반납까지 총 일수</div>
+            <input type="number" class="inp" id="totalDays" value="15" min="0" oninput="calc()">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header"><div class="card-title">디머리지 (Demurrage) — 터미널 내 보관</div></div>
+      <div class="card-body">
+        <div class="charge-section">
+          <div class="field-group">
+            <label class="field-label">무료기간 (Free Time, 일)</label>
+            <input type="number" class="inp" id="demFree" value="7" min="0" oninput="calc()">
+          </div>
+          <table class="tier-table">
+            <thead><tr><th style="width:40%">구간</th><th style="width:30%">일수</th><th style="width:30%">일일 요금</th></tr></thead>
+            <tbody>
+              <tr><td>1구간</td><td><input type="number" id="demT1Days" value="3" min="0" oninput="calc()"></td><td><input type="number" id="demT1Rate" value="100" min="0" oninput="calc()"></td></tr>
+              <tr><td>2구간</td><td><input type="number" id="demT2Days" value="3" min="0" oninput="calc()"></td><td><input type="number" id="demT2Rate" value="250" min="0" oninput="calc()"></td></tr>
+              <tr><td>3구간 (이후 전체)</td><td>무제한</td><td><input type="number" id="demT3Rate" value="350" min="0" oninput="calc()"></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header"><div class="card-title">디텐션 (Detention) — 터미널 밖 컨테이너 사용</div></div>
+      <div class="card-body">
+        <div class="charge-section">
+          <div class="field-group">
+            <label class="field-label">무료기간 (Free Time, 일)</label>
+            <input type="number" class="inp" id="detFree" value="5" min="0" oninput="calc()">
+          </div>
+          <table class="tier-table">
+            <thead><tr><th style="width:40%">구간</th><th style="width:30%">일수</th><th style="width:30%">일일 요금</th></tr></thead>
+            <tbody>
+              <tr><td>1구간</td><td><input type="number" id="detT1Days" value="5" min="0" oninput="calc()"></td><td><input type="number" id="detT1Rate" value="120" min="0" oninput="calc()"></td></tr>
+              <tr><td>2구간 (이후 전체)</td><td>무제한</td><td><input type="number" id="detT2Rate" value="180" min="0" oninput="calc()"></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="warn-box">⚠ 여기 입력하는 무료기간·요금은 예시값입니다. 실제 요금은 선사·터미널·계약마다 크게 다르니, 반드시 실제 계약서(B/L, 선사 tariff)의 수치로 바꿔서 계산하세요.</div>
+      </div>
+    </div>
+  </section>
+
+  <aside>
+    <div class="card">
+      <div class="card-header"><div class="card-title">총 예상 비용</div></div>
+      <div class="card-body">
+        <div id="resultWrap"></div>
+      </div>
+    </div>
+  </aside>
+</div>
+
+<div style="max-width:1200px;margin:0 auto;padding:0 24px 30px;">
+  <div class="notice-box">🔄 애초에 이런 지연이 자주 생긴다면, 리드타임 산정 자체를 재검토해보세요 — <a href="leadtime-calculator.html" style="color:#1E40AF;font-weight:700;">리드타임 계산기</a>와 <a href="global-holiday-calendar.html" style="color:#1E40AF;font-weight:700;">글로벌 물류 휴일 캘린더</a>를 함께 참고하시면 좋습니다.</div>
+</div>
+
+<!-- AD -->
+<div class="ad-area-main" role="complementary" aria-label="하단 광고 영역">
+  <div class="ad-main-box"><strong>Advertisement</strong>광고 영역 (Google AdSense)</div>
+</div>
+
+<div class="faq-wrap">
+  <div class="card">
+    <div class="card-header"><div class="card-title">자주 묻는 질문</div></div>
+    <div class="card-body">
+      <details class="faq-item"><summary>디머리지와 디텐션의 차이가 뭔가요?</summary><p>디머리지는 컨테이너가 항만·터미널 안에 머무는 동안 발생하는 보관료이고, 디텐션은 터미널 밖으로 반출한 뒤 공컨테이너를 선사에 반납하기 전까지 사용하는 데 대한 요금입니다. 둘 다 무료기간이 지나면 하루 단위로 청구됩니다.</p></details>
+      <details class="faq-item"><summary>왜 날이 갈수록 요금이 더 비싸지나요?</summary><p>선사·터미널이 컨테이너를 빨리 회전시키고 싶어하기 때문에, 오래 붙잡아둘수록 불이익을 주는 구조로 설계되어 있습니다. 그래서 초반 며칠은 상대적으로 저렴하지만, 그 이후로는 요금이 계단식으로 뛰는 경우가 많습니다.</p></details>
+      <details class="faq-item"><summary>이 비용을 줄이려면 어떻게 해야 하나요?</summary><p>통관·하차 일정을 미리 확정해서 무료기간 안에 반출·반납을 끝내는 게 가장 확실합니다. 지연이 예상되면 선사·포워더에 무료기간 연장(extension)을 미리 요청해보는 것도 방법입니다.</p></details>
+    </div>
+  </div>
+</div>
+
+<footer><div class="footer-inner">
+  <div class="footer-logo"><svg width="24" height="24" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align:middle;margin-right:9px;flex-shrink:0;"><path d="M20 2.5L36.5 11.5V28.5L20 37.5L3.5 28.5V11.5L20 2.5Z" stroke="url(#cbmGradF)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M20 2.5V20M20 20L36.5 11.5M20 20L3.5 11.5" stroke="url(#cbmGradF)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/></svg>CBM<span style="color:#2563EB;">Lab</span></div>
+  <nav><a href="index.html" class="footer-link">전체 도구</a><a href="privacy.html" class="footer-link">개인정보 처리방침</a></nav>
+</div></footer>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {"@type":"Question","name":"디머리지와 디텐션의 차이가 뭔가요?","acceptedAnswer":{"@type":"Answer","text":"디머리지는 컨테이너가 터미널 안에 머무는 동안 발생하는 보관료이고, 디텐션은 터미널 밖에서 공컨테이너를 반납하기 전까지 사용하는 데 대한 요금입니다."}},
+    {"@type":"Question","name":"왜 날이 갈수록 요금이 더 비싸지나요?","acceptedAnswer":{"@type":"Answer","text":"선사·터미널이 컨테이너를 빨리 회전시키려는 목적으로, 오래 붙잡아둘수록 불이익을 주는 계단식 요금 구조를 설계했기 때문입니다."}},
+    {"@type":"Question","name":"이 비용을 줄이려면 어떻게 해야 하나요?","acceptedAnswer":{"@type":"Answer","text":"통관·하차 일정을 미리 확정해 무료기간 안에 끝내는 것이 가장 확실하며, 지연이 예상되면 선사·포워더에 무료기간 연장을 미리 요청할 수 있습니다."}}
+  ]
+}
+</script>
+
+<script>
+function fmt(v){ return Math.round(v||0).toLocaleString('ko-KR'); }
+
+function calcTieredCost(totalDays, freeDays, tiers){
+  let remaining = Math.max(totalDays - freeDays, 0);
+  let cost = 0;
+  const breakdown = [];
+  for(const tier of tiers){
+    if(remaining <= 0) break;
+    const daysInTier = tier.days ? Math.min(remaining, tier.days) : remaining;
+    if(daysInTier <= 0) continue;
+    const tierCost = daysInTier * tier.rate;
+    cost += tierCost;
+    breakdown.push({days: daysInTier, rate: tier.rate, cost: tierCost});
+    remaining -= daysInTier;
+  }
+  return {cost, breakdown, chargeableDays: Math.max(totalDays-freeDays,0)};
+}
+
+function calc(){
+  const containerCount = parseFloat(document.getElementById('containerCount').value)||1;
+  const totalDays = parseFloat(document.getElementById('totalDays').value)||0;
+
+  const demFree = parseFloat(document.getElementById('demFree').value)||0;
+  const demTiers = [
+    {days: parseFloat(document.getElementById('demT1Days').value)||0, rate: parseFloat(document.getElementById('demT1Rate').value)||0},
+    {days: parseFloat(document.getElementById('demT2Days').value)||0, rate: parseFloat(document.getElementById('demT2Rate').value)||0},
+    {days: null, rate: parseFloat(document.getElementById('demT3Rate').value)||0},
+  ];
+  const demResult = calcTieredCost(totalDays, demFree, demTiers);
+
+  const detFree = parseFloat(document.getElementById('detFree').value)||0;
+  const detTiers = [
+    {days: parseFloat(document.getElementById('detT1Days').value)||0, rate: parseFloat(document.getElementById('detT1Rate').value)||0},
+    {days: null, rate: parseFloat(document.getElementById('detT2Rate').value)||0},
+  ];
+  const detResult = calcTieredCost(totalDays, detFree, detTiers);
+
+  const perContainerTotal = demResult.cost + detResult.cost;
+  const grandTotal = perContainerTotal * containerCount;
+
+  const resultWrap = document.getElementById('resultWrap');
+  resultWrap.innerHTML = `
+    <div class="result-total">
+      <div class="label">총 예상 비용 (컨테이너 ${fmt(containerCount)}개)</div>
+      <div class="value">$${fmt(grandTotal)}</div>
+    </div>
+    <div class="breakdown-row"><span class="k">디머리지 (개당)</span><span class="v">$${fmt(demResult.cost)}</span></div>
+    <div class="tier-detail">${demResult.breakdown.map(b=>`${b.days}일 × $${fmt(b.rate)} = $${fmt(b.cost)}`).join(' + ') || '무료기간 이내'}</div>
+    <div class="breakdown-row" style="margin-top:8px;"><span class="k">디텐션 (개당)</span><span class="v">$${fmt(detResult.cost)}</span></div>
+    <div class="tier-detail">${detResult.breakdown.map(b=>`${b.days}일 × $${fmt(b.rate)} = $${fmt(b.cost)}`).join(' + ') || '무료기간 이내'}</div>
+    <div class="breakdown-row" style="margin-top:8px;"><span class="k">개당 합계</span><span class="v">$${fmt(perContainerTotal)}</span></div>
+  `;
+}
+
+calc();
+</script>
+</body>
+</html>
