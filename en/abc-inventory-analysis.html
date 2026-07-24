@@ -87,6 +87,19 @@
 
   .notice-box{background:var(--accent-light);border:1px solid #BFDBFE;border-radius:var(--radius);padding:10px 14px;font-size:12px;color:#1E40AF;margin-top:14px;line-height:1.6}
 
+  .btn-excel{width:100%;padding:12px;border:2px solid var(--accent);border-radius:8px;background:#fff;color:var(--accent);font-size:13.5px;font-weight:700;cursor:pointer;margin-top:14px}
+  .btn-excel:hover{background:var(--accent-light)}
+
+  .ad-gate-overlay{position:fixed;inset:0;background:rgba(15,23,42,.7);display:flex;align-items:center;justify-content:center;z-index:9999;padding:20px}
+  .ad-gate-box{background:#fff;border-radius:14px;max-width:420px;width:100%;padding:24px;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,.3)}
+  .ad-gate-box h3{font-size:16px;font-weight:800;color:var(--slate-900);margin-bottom:8px}
+  .ad-gate-box p{font-size:12.5px;color:var(--slate-500);margin-bottom:16px;line-height:1.6}
+  .ad-gate-slot{border:1px dashed var(--slate-300);border-radius:8px;min-height:100px;display:flex;align-items:center;justify-content:center;margin-bottom:16px;overflow:hidden}
+  .ad-gate-timer{font-size:13px;font-weight:700;color:var(--slate-600);margin-bottom:12px}
+  .ad-gate-btn{width:100%;padding:12px;border:none;border-radius:8px;background:var(--accent);color:#fff;font-size:13.5px;font-weight:700;cursor:pointer}
+  .ad-gate-btn:disabled{background:var(--slate-300);cursor:not-allowed}
+  .ad-gate-cancel{margin-top:10px;font-size:12px;color:var(--slate-400);background:none;border:none;cursor:pointer;text-decoration:underline}
+
   .faq-item{border-bottom:1px solid var(--slate-100);padding:12px 0}
   .faq-item:last-child{border-bottom:none}
   .faq-item summary{cursor:pointer;font-weight:700;font-size:13px;color:var(--slate-800);list-style:none;outline:none}
@@ -120,6 +133,7 @@
   gtag('js', new Date());
   gtag('config', 'G-W1YBL5BGGK');
 </script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/exceljs/4.4.0/exceljs.min.js"></script>
 </head>
 <body>
 <svg width="0" height="0" style="position:absolute;" aria-hidden="true">
@@ -155,6 +169,7 @@
       <button class="btn-add-row" onclick="addRow()">+ Add SKU</button>
       <div class="summary-grid" id="summaryGrid"></div>
       <div class="notice-box">💡 The common strategy is tight demand forecasting, frequent cycle counts, and close supplier management for <strong>Class A</strong>, while <strong>Class C</strong> gets simple ordering rules and generous safety stock to reduce management overhead.</div>
+      <button class="btn-excel" onclick="requestExcelDownload()">📊 Download ABC Analysis (Excel)</button>
     </div>
   </div>
 </div>
@@ -176,6 +191,24 @@
       <details class="faq-item"><summary>Why does Class A end up with so few items?</summary><p>That's expected. Typically only 10-20% of SKUs get classified as Class A, and this small group accounting for 70-80% of total consumption value is exactly what a Pareto distribution looks like.</p></details>
       <details class="faq-item"><summary>Can I classify by a criterion other than consumption value?</summary><p>Yes — ABC analysis can also be based on revenue, profit contribution, or the impact of a stockout. The most widely used criterion, though, is annual consumption value (demand × unit cost).</p></details>
     </div>
+  </div>
+</div>
+
+<div class="ad-gate-overlay" id="adGateOverlay" style="display:none;">
+  <div class="ad-gate-box">
+    <h3>📊 Preparing Your Excel File</h3>
+    <p>Please wait while this ad is shown. Your download will start automatically once it's ready.</p>
+    <div class="ad-gate-slot">
+      <ins class="adsbygoogle"
+         style="display:block;width:100%;"
+         data-ad-client="ca-pub-4642197702620430"
+         data-ad-slot="2863170310"
+         data-ad-format="auto"
+         data-full-width-responsive="true"></ins>
+    </div>
+    <div class="ad-gate-timer" id="adGateTimer">Download available in 5s</div>
+    <button class="ad-gate-btn" id="adGateBtn" disabled onclick="completeAdGateDownload()">Start Download</button>
+    <button class="ad-gate-cancel" onclick="closeAdGate()">Cancel</button>
   </div>
 </div>
 
@@ -275,6 +308,14 @@ function calc(){
       <div class="stat">Share of Value: ${totalValue>0?(values[cls]/totalValue*100).toFixed(1):0}%</div>
     </div>
   `).join('');
+
+  window._abcData = {
+    items: sortedIds.map(id=>{
+      const it = withValue.find(w=>w.id===id);
+      return {...it, cumPct: cumMap[id], cls: classMap[id]};
+    }),
+    counts, values, totalValue, thresholdA, thresholdB
+  };
 }
 
 addRow('Bearing Assembly', 500, 120);
@@ -285,6 +326,106 @@ addRow('Sensor Module', 800, 35);
 addRow('Cable Harness', 1500, 8);
 addRow('Packaging Box', 10000, 0.5);
 addRow('Label Sticker', 15000, 0.05);
+
+// ===== Excel Download (via ad gate) =====
+let adGateTimerInterval = null;
+
+function requestExcelDownload(){
+  if(!window._abcData || !window._abcData.items || window._abcData.items.length===0){
+    alert('Please enter SKUs first.');
+    return;
+  }
+  document.getElementById('adGateOverlay').style.display = 'flex';
+  let seconds = 5;
+  const timerEl = document.getElementById('adGateTimer');
+  const btnEl = document.getElementById('adGateBtn');
+  btnEl.disabled = true;
+  timerEl.textContent = `Download available in ${seconds}s`;
+  try{ (adsbygoogle = window.adsbygoogle || []).push({}); }catch(e){}
+
+  clearInterval(adGateTimerInterval);
+  adGateTimerInterval = setInterval(()=>{
+    seconds--;
+    if(seconds <= 0){
+      clearInterval(adGateTimerInterval);
+      timerEl.textContent = 'Ready to download!';
+      btnEl.disabled = false;
+    } else {
+      timerEl.textContent = `Download available in ${seconds}s`;
+    }
+  }, 1000);
+}
+
+function closeAdGate(){
+  clearInterval(adGateTimerInterval);
+  document.getElementById('adGateOverlay').style.display = 'none';
+}
+
+function completeAdGateDownload(){
+  closeAdGate();
+  downloadExcel();
+  if(window.amplitude) window.amplitude.track('Download', {type:'excel', tool:'abc-inventory-analysis'});
+}
+
+async function downloadExcel(){
+  const d = window._abcData;
+  if(!d) return;
+  const NAVY = 'FF0F172A', DANGER_LIGHT = 'FFFEE2E2', WARN_LIGHT = 'FFFEF3C7', SUCCESS_LIGHT = 'FFD1FAE5', SLATE_LIGHT = 'FFF1F5F9';
+  const CLASS_COLOR = {A: DANGER_LIGHT, B: WARN_LIGHT, C: SUCCESS_LIGHT};
+
+  const wb = new ExcelJS.Workbook();
+  wb.creator = 'CBM Lab';
+  wb.created = new Date();
+
+  const ws = wb.addWorksheet('ABC Analysis');
+  ws.columns = [{width:24},{width:14},{width:12},{width:16},{width:12},{width:8}];
+
+  ws.mergeCells('A1:F1');
+  ws.getCell('A1').value = 'CBM Lab — ABC Inventory Analysis';
+  ws.getCell('A1').font = { bold:true, size:14, color:{argb:'FFFFFFFF'} };
+  ws.getCell('A1').fill = { type:'pattern', pattern:'solid', fgColor:{argb:NAVY} };
+  ws.getRow(1).height = 26;
+
+  ws.getCell('A2').value = `Class A threshold: ${d.thresholdA}%, Class B threshold: ${d.thresholdB}%   |   Generated: ${new Date().toLocaleDateString('en-US')}`;
+  ws.getCell('A2').font = { size:10, color:{argb:'FF64748B'} };
+  ws.mergeCells('A2:F2');
+
+  const h = ws.getRow(4);
+  h.values = ['SKU Name', 'Annual Demand', 'Unit Cost', 'Consumption Value', 'Cumulative%', 'Class'];
+  h.font = { bold:true };
+  h.eachCell(c=>{ c.fill = { type:'pattern', pattern:'solid', fgColor:{argb:SLATE_LIGHT} }; });
+
+  d.items.forEach(it=>{
+    const row = ws.addRow([it.name, it.demand, it.cost, it.value, it.cumPct/100, it.cls]);
+    row.getCell(4).numFmt = '#,##0';
+    row.getCell(5).numFmt = '0.0%';
+    row.getCell(6).fill = { type:'pattern', pattern:'solid', fgColor:{argb:CLASS_COLOR[it.cls]} };
+    row.getCell(6).font = { bold:true };
+  });
+
+  ws.addRow([]);
+  const summaryHeader = ws.addRow(['Class', 'Items', '% of Items', '% of Value']);
+  summaryHeader.font = { bold:true };
+  summaryHeader.eachCell(c=>{ c.fill = { type:'pattern', pattern:'solid', fgColor:{argb:SLATE_LIGHT} }; });
+  ['A','B','C'].forEach(cls=>{
+    const totalItems = d.items.length || 1;
+    const row = ws.addRow([cls, d.counts[cls], d.counts[cls]/totalItems, d.totalValue>0?d.values[cls]/d.totalValue:0]);
+    row.getCell(1).fill = { type:'pattern', pattern:'solid', fgColor:{argb:CLASS_COLOR[cls]} };
+    row.getCell(3).numFmt = '0%';
+    row.getCell(4).numFmt = '0.0%';
+  });
+
+  const buffer = await wb.xlsx.writeBuffer();
+  const blob = new Blob([buffer], {type:'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'CBMLab-ABC-Analysis.xlsx';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
 </script>
 </body>
 </html>

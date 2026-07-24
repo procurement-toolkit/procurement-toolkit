@@ -90,6 +90,19 @@
   .warn-box{background:var(--warn-light);border:1px solid #FDE68A;border-radius:var(--radius);padding:12px 14px;font-size:12px;color:#78350F;margin-top:14px;line-height:1.6}
   .notice-box{background:var(--accent-light);border:1px solid #BFDBFE;border-radius:var(--radius);padding:10px 14px;font-size:12px;color:#1E40AF;margin-top:14px;line-height:1.6}
 
+  .btn-excel{width:100%;padding:12px;border:2px solid var(--accent);border-radius:8px;background:#fff;color:var(--accent);font-size:13.5px;font-weight:700;cursor:pointer;margin-top:14px}
+  .btn-excel:hover{background:var(--accent-light)}
+
+  .ad-gate-overlay{position:fixed;inset:0;background:rgba(15,23,42,.7);display:flex;align-items:center;justify-content:center;z-index:9999;padding:20px}
+  .ad-gate-box{background:#fff;border-radius:14px;max-width:420px;width:100%;padding:24px;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,.3)}
+  .ad-gate-box h3{font-size:16px;font-weight:800;color:var(--slate-900);margin-bottom:8px}
+  .ad-gate-box p{font-size:12.5px;color:var(--slate-500);margin-bottom:16px;line-height:1.6}
+  .ad-gate-slot{border:1px dashed var(--slate-300);border-radius:8px;min-height:100px;display:flex;align-items:center;justify-content:center;margin-bottom:16px;overflow:hidden}
+  .ad-gate-timer{font-size:13px;font-weight:700;color:var(--slate-600);margin-bottom:12px}
+  .ad-gate-btn{width:100%;padding:12px;border:none;border-radius:8px;background:var(--accent);color:#fff;font-size:13.5px;font-weight:700;cursor:pointer}
+  .ad-gate-btn:disabled{background:var(--slate-300);cursor:not-allowed}
+  .ad-gate-cancel{margin-top:10px;font-size:12px;color:var(--slate-400);background:none;border:none;cursor:pointer;text-decoration:underline}
+
   .faq-item{border-bottom:1px solid var(--slate-100);padding:12px 0}
   .faq-item:last-child{border-bottom:none}
   .faq-item summary{cursor:pointer;font-weight:700;font-size:13px;color:var(--slate-800);list-style:none;outline:none}
@@ -124,6 +137,7 @@
   gtag('js', new Date());
   gtag('config', 'G-W1YBL5BGGK');
 </script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/exceljs/4.4.0/exceljs.min.js"></script>
 </head>
 <body>
 <svg width="0" height="0" style="position:absolute;" aria-hidden="true">
@@ -211,6 +225,7 @@
       <div class="card-header"><div class="card-title">Total Estimated Cost</div></div>
       <div class="card-body">
         <div id="resultWrap"></div>
+        <button class="btn-excel" onclick="requestExcelDownload()">📊 Download Cost Analysis (Excel)</button>
       </div>
     </div>
   </aside>
@@ -233,6 +248,24 @@
       <details class="faq-item"><summary>Why does the rate get more expensive the longer it goes?</summary><p>Carriers and terminals want to keep their equipment circulating quickly, so the rate structure is designed to penalize holding a container longer. The first few days are relatively cheap, but the rate often steps up sharply after that.</p></details>
       <details class="faq-item"><summary>How can I reduce these costs?</summary><p>The most reliable approach is locking in your customs clearance and unloading schedule early enough to finish within free time. If a delay looks likely, requesting a free time extension from the carrier or forwarder in advance is another option.</p></details>
     </div>
+  </div>
+</div>
+
+<div class="ad-gate-overlay" id="adGateOverlay" style="display:none;">
+  <div class="ad-gate-box">
+    <h3>📊 Preparing Your Excel File</h3>
+    <p>Please wait while this ad is shown. Your download will start automatically once it's ready.</p>
+    <div class="ad-gate-slot">
+      <ins class="adsbygoogle"
+         style="display:block;width:100%;"
+         data-ad-client="ca-pub-4642197702620430"
+         data-ad-slot="2863170310"
+         data-ad-format="auto"
+         data-full-width-responsive="true"></ins>
+    </div>
+    <div class="ad-gate-timer" id="adGateTimer">Download available in 5s</div>
+    <button class="ad-gate-btn" id="adGateBtn" disabled onclick="completeAdGateDownload()">Start Download</button>
+    <button class="ad-gate-cancel" onclick="closeAdGate()">Cancel</button>
   </div>
 </div>
 
@@ -306,9 +339,121 @@ function calc(){
     <div class="tier-detail">${detResult.breakdown.map(b=>`${b.days} day(s) × $${fmt(b.rate)} = $${fmt(b.cost)}`).join(' + ') || 'Within free time'}</div>
     <div class="breakdown-row" style="margin-top:8px;"><span class="k">Total per Container</span><span class="v">$${fmt(perContainerTotal)}</span></div>
   `;
+
+  window._ddData = { containerCount, totalDays, demFree, demResult, detFree, detResult, perContainerTotal, grandTotal };
 }
 
 calc();
+
+// ===== Excel Download (via ad gate) =====
+let adGateTimerInterval = null;
+
+function requestExcelDownload(){
+  if(!window._ddData || !window._ddData.grandTotal){
+    alert('Please enter container hold details first.');
+    return;
+  }
+  document.getElementById('adGateOverlay').style.display = 'flex';
+  let seconds = 5;
+  const timerEl = document.getElementById('adGateTimer');
+  const btnEl = document.getElementById('adGateBtn');
+  btnEl.disabled = true;
+  timerEl.textContent = `Download available in ${seconds}s`;
+  try{ (adsbygoogle = window.adsbygoogle || []).push({}); }catch(e){}
+
+  clearInterval(adGateTimerInterval);
+  adGateTimerInterval = setInterval(()=>{
+    seconds--;
+    if(seconds <= 0){
+      clearInterval(adGateTimerInterval);
+      timerEl.textContent = 'Ready to download!';
+      btnEl.disabled = false;
+    } else {
+      timerEl.textContent = `Download available in ${seconds}s`;
+    }
+  }, 1000);
+}
+
+function closeAdGate(){
+  clearInterval(adGateTimerInterval);
+  document.getElementById('adGateOverlay').style.display = 'none';
+}
+
+function completeAdGateDownload(){
+  closeAdGate();
+  downloadExcel();
+  if(window.amplitude) window.amplitude.track('Download', {type:'excel', tool:'demurrage-detention-calculator'});
+}
+
+async function downloadExcel(){
+  const d = window._ddData;
+  if(!d) return;
+  const NAVY = 'FF0F172A', SUCCESS_LIGHT = 'FFD1FAE5', SLATE_LIGHT = 'FFF1F5F9';
+
+  const wb = new ExcelJS.Workbook();
+  wb.creator = 'CBM Lab';
+  wb.created = new Date();
+
+  const ws = wb.addWorksheet('Cost Analysis');
+  ws.columns = [{width:26},{width:16}];
+
+  ws.mergeCells('A1:B1');
+  ws.getCell('A1').value = 'CBM Lab — Demurrage & Detention Cost Analysis';
+  ws.getCell('A1').font = { bold:true, size:14, color:{argb:'FFFFFFFF'} };
+  ws.getCell('A1').fill = { type:'pattern', pattern:'solid', fgColor:{argb:NAVY} };
+  ws.getRow(1).height = 26;
+
+  ws.getCell('A2').value = `${d.containerCount} container(s), ${d.totalDays} total hold days   |   Generated: ${new Date().toLocaleDateString('en-US')}`;
+  ws.getCell('A2').font = { size:10, color:{argb:'FF64748B'} };
+  ws.mergeCells('A2:B2');
+
+  const h1 = ws.getRow(4);
+  h1.values = ['Demurrage (per container)', `Free time ${d.demFree} days`];
+  h1.font = { bold:true };
+  h1.eachCell(c=>{ c.fill = { type:'pattern', pattern:'solid', fgColor:{argb:SLATE_LIGHT} }; });
+
+  d.demResult.breakdown.forEach(b=>{
+    const row = ws.addRow([`${b.days} day(s) × $${b.rate}`, b.cost]);
+    row.getCell(2).numFmt = '"$"#,##0';
+  });
+  const demTotalRow = ws.addRow(['Demurrage Subtotal', d.demResult.cost]);
+  demTotalRow.font = { bold:true };
+  demTotalRow.getCell(2).numFmt = '"$"#,##0';
+
+  ws.addRow([]);
+  const h2 = ws.addRow(['Detention (per container)', `Free time ${d.detFree} days`]);
+  h2.font = { bold:true };
+  h2.eachCell(c=>{ c.fill = { type:'pattern', pattern:'solid', fgColor:{argb:SLATE_LIGHT} }; });
+
+  d.detResult.breakdown.forEach(b=>{
+    const row = ws.addRow([`${b.days} day(s) × $${b.rate}`, b.cost]);
+    row.getCell(2).numFmt = '"$"#,##0';
+  });
+  const detTotalRow = ws.addRow(['Detention Subtotal', d.detResult.cost]);
+  detTotalRow.font = { bold:true };
+  detTotalRow.getCell(2).numFmt = '"$"#,##0';
+
+  ws.addRow([]);
+  const perUnitRow = ws.addRow(['Total per Container', d.perContainerTotal]);
+  perUnitRow.font = { bold:true };
+  perUnitRow.getCell(2).numFmt = '"$"#,##0';
+
+  const grandRow = ws.addRow([`Total Estimated Cost (${d.containerCount} container(s))`, d.grandTotal]);
+  grandRow.font = { bold:true };
+  grandRow.eachCell(c=>{ c.fill = { type:'pattern', pattern:'solid', fgColor:{argb:SUCCESS_LIGHT} }; });
+  grandRow.getCell(2).numFmt = '"$"#,##0';
+
+  const buffer = await wb.xlsx.writeBuffer();
+  const blob = new Blob([buffer], {type:'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'CBMLab-Demurrage-Detention-Analysis.xlsx';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
 </script>
 </body>
 </html>

@@ -76,6 +76,19 @@
   .warn-box{background:var(--warn-light);border:1px solid #FDE68A;border-radius:var(--radius);padding:12px 14px;font-size:12px;color:#78350F;margin-top:14px;line-height:1.6}
   .notice-box{background:var(--accent-light);border:1px solid #BFDBFE;border-radius:var(--radius);padding:10px 14px;font-size:12px;color:#1E40AF;margin-top:14px;line-height:1.6}
 
+  .btn-excel{width:100%;padding:12px;border:2px solid var(--accent);border-radius:8px;background:#fff;color:var(--accent);font-size:13.5px;font-weight:700;cursor:pointer;margin-top:14px}
+  .btn-excel:hover{background:var(--accent-light)}
+
+  .ad-gate-overlay{position:fixed;inset:0;background:rgba(15,23,42,.7);display:flex;align-items:center;justify-content:center;z-index:9999;padding:20px}
+  .ad-gate-box{background:#fff;border-radius:14px;max-width:420px;width:100%;padding:24px;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,.3)}
+  .ad-gate-box h3{font-size:16px;font-weight:800;color:var(--slate-900);margin-bottom:8px}
+  .ad-gate-box p{font-size:12.5px;color:var(--slate-500);margin-bottom:16px;line-height:1.6}
+  .ad-gate-slot{border:1px dashed var(--slate-300);border-radius:8px;min-height:100px;display:flex;align-items:center;justify-content:center;margin-bottom:16px;overflow:hidden}
+  .ad-gate-timer{font-size:13px;font-weight:700;color:var(--slate-600);margin-bottom:12px}
+  .ad-gate-btn{width:100%;padding:12px;border:none;border-radius:8px;background:var(--accent);color:#fff;font-size:13.5px;font-weight:700;cursor:pointer}
+  .ad-gate-btn:disabled{background:var(--slate-300);cursor:not-allowed}
+  .ad-gate-cancel{margin-top:10px;font-size:12px;color:var(--slate-400);background:none;border:none;cursor:pointer;text-decoration:underline}
+
   .faq-item{border-bottom:1px solid var(--slate-100);padding:12px 0}
   .faq-item:last-child{border-bottom:none}
   .faq-item summary{cursor:pointer;font-weight:700;font-size:13px;color:var(--slate-800);list-style:none;outline:none}
@@ -109,6 +122,7 @@
   gtag('js', new Date());
   gtag('config', 'G-W1YBL5BGGK');
 </script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/exceljs/4.4.0/exceljs.min.js"></script>
 </head>
 <body>
 <svg width="0" height="0" style="position:absolute;" aria-hidden="true">
@@ -148,6 +162,7 @@
       <div class="weight-row"><label>품질 점수</label><input type="range" min="0" max="100" value="25" id="w-quality" oninput="calc()"><span class="wval" id="wv-quality">25%</span></div>
       <div class="weight-row"><label>신뢰도 점수</label><input type="range" min="0" max="100" value="15" id="w-reliability" oninput="calc()"><span class="wval" id="wv-reliability">15%</span></div>
       <div id="weightWarn"></div>
+      <button class="btn-excel" onclick="requestExcelDownload()">📊 견적 비교표 엑셀 다운로드</button>
     </div>
   </div>
 </div>
@@ -169,6 +184,24 @@
       <details class="faq-item"><summary>품질·신뢰도 점수는 어떻게 매기나요?</summary><p>정해진 공식은 없습니다. 과거 거래 경험, 샘플 품질, 인증 보유 여부, 견적 응답 속도, 커뮤니케이션 태도 등을 종합해서 1(매우 부족)~5(매우 우수)점으로 평가하시면 됩니다.</p></details>
       <details class="faq-item"><summary>가중치는 어떻게 정해야 하나요?</summary><p>구매하려는 품목의 특성에 따라 다릅니다. 표준 규격품이라 품질 편차가 적다면 단가 가중치를 높이고, 정밀 부품이나 신규 공급업체라면 품질·신뢰도 가중치를 높이는 것이 일반적입니다.</p></details>
     </div>
+  </div>
+</div>
+
+<div class="ad-gate-overlay" id="adGateOverlay" style="display:none;">
+  <div class="ad-gate-box">
+    <h3>📊 엑셀 파일 준비 중</h3>
+    <p>아래 광고가 노출되는 동안 잠시만 기다려주세요. 완료되면 자동으로 다운로드가 시작됩니다.</p>
+    <div class="ad-gate-slot">
+      <ins class="adsbygoogle"
+         style="display:block;width:100%;"
+         data-ad-client="ca-pub-4642197702620430"
+         data-ad-slot="2863170310"
+         data-ad-format="auto"
+         data-full-width-responsive="true"></ins>
+    </div>
+    <div class="ad-gate-timer" id="adGateTimer">5초 후 다운로드 가능</div>
+    <button class="ad-gate-btn" id="adGateBtn" disabled onclick="completeAdGateDownload()">다운로드 시작</button>
+    <button class="ad-gate-cancel" onclick="closeAdGate()">취소</button>
   </div>
 </div>
 
@@ -266,9 +299,114 @@ function calc(){
   });
   html += '</tr></tbody>';
   table.innerHTML = html;
+
+  window._rfqData = { columns: columns.map((c,i)=>({...c, score:scores[i]})), minPrice, maxScore,
+    weights: {wPrice, wLead, wQuality, wReliability} };
 }
 
 calc();
+
+// ===== 엑셀 다운로드 (광고 게이트 경유) =====
+let adGateTimerInterval = null;
+
+function requestExcelDownload(){
+  if(!window._rfqData || !window._rfqData.columns || window._rfqData.columns.length===0){
+    alert('먼저 견적 정보를 입력해주세요.');
+    return;
+  }
+  document.getElementById('adGateOverlay').style.display = 'flex';
+  let seconds = 5;
+  const timerEl = document.getElementById('adGateTimer');
+  const btnEl = document.getElementById('adGateBtn');
+  btnEl.disabled = true;
+  timerEl.textContent = `${seconds}초 후 다운로드 가능`;
+  try{ (adsbygoogle = window.adsbygoogle || []).push({}); }catch(e){}
+
+  clearInterval(adGateTimerInterval);
+  adGateTimerInterval = setInterval(()=>{
+    seconds--;
+    if(seconds <= 0){
+      clearInterval(adGateTimerInterval);
+      timerEl.textContent = '다운로드 준비 완료!';
+      btnEl.disabled = false;
+    } else {
+      timerEl.textContent = `${seconds}초 후 다운로드 가능`;
+    }
+  }, 1000);
+}
+
+function closeAdGate(){
+  clearInterval(adGateTimerInterval);
+  document.getElementById('adGateOverlay').style.display = 'none';
+}
+
+function completeAdGateDownload(){
+  closeAdGate();
+  downloadExcel();
+  if(window.amplitude) window.amplitude.track('Download', {type:'excel', tool:'rfq-comparison-tool'});
+}
+
+async function downloadExcel(){
+  const d = window._rfqData;
+  if(!d) return;
+  const NAVY = 'FF0F172A', SUCCESS_LIGHT = 'FFD1FAE5', PURPLE_LIGHT = 'FFEDE4FE', SLATE_LIGHT = 'FFF1F5F9';
+
+  const wb = new ExcelJS.Workbook();
+  wb.creator = 'CBM Lab';
+  wb.created = new Date();
+
+  const ws = wb.addWorksheet('견적 비교');
+  ws.columns = [{width:22}, ...d.columns.map(()=>({width:20}))];
+
+  ws.mergeCells(1,1,1,d.columns.length+1);
+  ws.getCell(1,1).value = 'CBM Lab — RFQ 견적 비교 결과';
+  ws.getCell(1,1).font = { bold:true, size:14, color:{argb:'FFFFFFFF'} };
+  ws.getCell(1,1).fill = { type:'pattern', pattern:'solid', fgColor:{argb:NAVY} };
+  ws.getRow(1).height = 26;
+
+  const headerRow = ws.getRow(3);
+  headerRow.getCell(1).value = '항목';
+  d.columns.forEach((c,i)=>{ headerRow.getCell(i+2).value = c.name; });
+  headerRow.font = { bold:true };
+  headerRow.eachCell(c=>{ c.fill = { type:'pattern', pattern:'solid', fgColor:{argb:SLATE_LIGHT} }; });
+
+  const rows = [
+    ['단가', d.columns.map(c=>c.price)],
+    ['MOQ', d.columns.map(c=>c.moq)],
+    ['리드타임 (일)', d.columns.map(c=>c.leadTime)],
+    ['결제조건', d.columns.map(c=>c.paymentTerms)],
+    ['품질 점수', d.columns.map(c=>c.quality)],
+    ['신뢰도 점수', d.columns.map(c=>c.reliability)],
+  ];
+  rows.forEach(([label, values])=>{
+    const row = ws.addRow([label, ...values]);
+  });
+
+  const scoreRow = ws.addRow(['종합 점수', ...d.columns.map(c=>Math.round(c.score*10)/10)]);
+  scoreRow.font = { bold:true };
+  scoreRow.eachCell(c=>{ c.fill = { type:'pattern', pattern:'solid', fgColor:{argb:PURPLE_LIGHT} }; });
+
+  d.columns.forEach((c,i)=>{
+    if(Math.abs(c.price-d.minPrice)<0.001){
+      ws.getCell(4,i+2).fill = { type:'pattern', pattern:'solid', fgColor:{argb:SUCCESS_LIGHT} };
+    }
+    if(Math.abs(c.score-d.maxScore)<0.001){
+      const lastRowNum = scoreRow.number;
+      ws.getCell(lastRowNum,i+2).font = { bold:true, color:{argb:'FF7C3AED'} };
+    }
+  });
+
+  const buffer = await wb.xlsx.writeBuffer();
+  const blob = new Blob([buffer], {type:'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'CBMLab-RFQ견적비교.xlsx';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
 </script>
 </body>
 </html>

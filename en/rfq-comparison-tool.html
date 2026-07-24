@@ -76,6 +76,19 @@
   .warn-box{background:var(--warn-light);border:1px solid #FDE68A;border-radius:var(--radius);padding:12px 14px;font-size:12px;color:#78350F;margin-top:14px;line-height:1.6}
   .notice-box{background:var(--accent-light);border:1px solid #BFDBFE;border-radius:var(--radius);padding:10px 14px;font-size:12px;color:#1E40AF;margin-top:14px;line-height:1.6}
 
+  .btn-excel{width:100%;padding:12px;border:2px solid var(--accent);border-radius:8px;background:#fff;color:var(--accent);font-size:13.5px;font-weight:700;cursor:pointer;margin-top:14px}
+  .btn-excel:hover{background:var(--accent-light)}
+
+  .ad-gate-overlay{position:fixed;inset:0;background:rgba(15,23,42,.7);display:flex;align-items:center;justify-content:center;z-index:9999;padding:20px}
+  .ad-gate-box{background:#fff;border-radius:14px;max-width:420px;width:100%;padding:24px;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,.3)}
+  .ad-gate-box h3{font-size:16px;font-weight:800;color:var(--slate-900);margin-bottom:8px}
+  .ad-gate-box p{font-size:12.5px;color:var(--slate-500);margin-bottom:16px;line-height:1.6}
+  .ad-gate-slot{border:1px dashed var(--slate-300);border-radius:8px;min-height:100px;display:flex;align-items:center;justify-content:center;margin-bottom:16px;overflow:hidden}
+  .ad-gate-timer{font-size:13px;font-weight:700;color:var(--slate-600);margin-bottom:12px}
+  .ad-gate-btn{width:100%;padding:12px;border:none;border-radius:8px;background:var(--accent);color:#fff;font-size:13.5px;font-weight:700;cursor:pointer}
+  .ad-gate-btn:disabled{background:var(--slate-300);cursor:not-allowed}
+  .ad-gate-cancel{margin-top:10px;font-size:12px;color:var(--slate-400);background:none;border:none;cursor:pointer;text-decoration:underline}
+
   .faq-item{border-bottom:1px solid var(--slate-100);padding:12px 0}
   .faq-item:last-child{border-bottom:none}
   .faq-item summary{cursor:pointer;font-weight:700;font-size:13px;color:var(--slate-800);list-style:none;outline:none}
@@ -109,6 +122,7 @@
   gtag('js', new Date());
   gtag('config', 'G-W1YBL5BGGK');
 </script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/exceljs/4.4.0/exceljs.min.js"></script>
 </head>
 <body>
 <svg width="0" height="0" style="position:absolute;" aria-hidden="true">
@@ -148,6 +162,7 @@
       <div class="weight-row"><label>Quality Score</label><input type="range" min="0" max="100" value="25" id="w-quality" oninput="calc()"><span class="wval" id="wv-quality">25%</span></div>
       <div class="weight-row"><label>Reliability Score</label><input type="range" min="0" max="100" value="15" id="w-reliability" oninput="calc()"><span class="wval" id="wv-reliability">15%</span></div>
       <div id="weightWarn"></div>
+      <button class="btn-excel" onclick="requestExcelDownload()">📊 Download Quote Comparison (Excel)</button>
     </div>
   </div>
 </div>
@@ -169,6 +184,24 @@
       <details class="faq-item"><summary>How do I score quality and reliability?</summary><p>There's no fixed formula. Combine past dealings, sample quality, certifications held, quote response speed, and communication into a 1 (poor) to 5 (excellent) rating.</p></details>
       <details class="faq-item"><summary>How should I set the weights?</summary><p>It depends on what you're buying. For standard, commoditized items with little quality variation, weight price more heavily; for precision parts or a new, unproven supplier, weight quality and reliability more heavily.</p></details>
     </div>
+  </div>
+</div>
+
+<div class="ad-gate-overlay" id="adGateOverlay" style="display:none;">
+  <div class="ad-gate-box">
+    <h3>📊 Preparing Your Excel File</h3>
+    <p>Please wait while this ad is shown. Your download will start automatically once it's ready.</p>
+    <div class="ad-gate-slot">
+      <ins class="adsbygoogle"
+         style="display:block;width:100%;"
+         data-ad-client="ca-pub-4642197702620430"
+         data-ad-slot="2863170310"
+         data-ad-format="auto"
+         data-full-width-responsive="true"></ins>
+    </div>
+    <div class="ad-gate-timer" id="adGateTimer">Download available in 5s</div>
+    <button class="ad-gate-btn" id="adGateBtn" disabled onclick="completeAdGateDownload()">Start Download</button>
+    <button class="ad-gate-cancel" onclick="closeAdGate()">Cancel</button>
   </div>
 </div>
 
@@ -266,9 +299,114 @@ function calc(){
   });
   html += '</tr></tbody>';
   table.innerHTML = html;
+
+  window._rfqData = { columns: columns.map((c,i)=>({...c, score:scores[i]})), minPrice, maxScore,
+    weights: {wPrice, wLead, wQuality, wReliability} };
 }
 
 calc();
+
+// ===== Excel Download (via ad gate) =====
+let adGateTimerInterval = null;
+
+function requestExcelDownload(){
+  if(!window._rfqData || !window._rfqData.columns || window._rfqData.columns.length===0){
+    alert('Please enter quote details first.');
+    return;
+  }
+  document.getElementById('adGateOverlay').style.display = 'flex';
+  let seconds = 5;
+  const timerEl = document.getElementById('adGateTimer');
+  const btnEl = document.getElementById('adGateBtn');
+  btnEl.disabled = true;
+  timerEl.textContent = `Download available in ${seconds}s`;
+  try{ (adsbygoogle = window.adsbygoogle || []).push({}); }catch(e){}
+
+  clearInterval(adGateTimerInterval);
+  adGateTimerInterval = setInterval(()=>{
+    seconds--;
+    if(seconds <= 0){
+      clearInterval(adGateTimerInterval);
+      timerEl.textContent = 'Ready to download!';
+      btnEl.disabled = false;
+    } else {
+      timerEl.textContent = `Download available in ${seconds}s`;
+    }
+  }, 1000);
+}
+
+function closeAdGate(){
+  clearInterval(adGateTimerInterval);
+  document.getElementById('adGateOverlay').style.display = 'none';
+}
+
+function completeAdGateDownload(){
+  closeAdGate();
+  downloadExcel();
+  if(window.amplitude) window.amplitude.track('Download', {type:'excel', tool:'rfq-comparison-tool'});
+}
+
+async function downloadExcel(){
+  const d = window._rfqData;
+  if(!d) return;
+  const NAVY = 'FF0F172A', SUCCESS_LIGHT = 'FFD1FAE5', PURPLE_LIGHT = 'FFEDE4FE', SLATE_LIGHT = 'FFF1F5F9';
+
+  const wb = new ExcelJS.Workbook();
+  wb.creator = 'CBM Lab';
+  wb.created = new Date();
+
+  const ws = wb.addWorksheet('Quote Comparison');
+  ws.columns = [{width:22}, ...d.columns.map(()=>({width:20}))];
+
+  ws.mergeCells(1,1,1,d.columns.length+1);
+  ws.getCell(1,1).value = 'CBM Lab — RFQ Quote Comparison';
+  ws.getCell(1,1).font = { bold:true, size:14, color:{argb:'FFFFFFFF'} };
+  ws.getCell(1,1).fill = { type:'pattern', pattern:'solid', fgColor:{argb:NAVY} };
+  ws.getRow(1).height = 26;
+
+  const headerRow = ws.getRow(3);
+  headerRow.getCell(1).value = 'Item';
+  d.columns.forEach((c,i)=>{ headerRow.getCell(i+2).value = c.name; });
+  headerRow.font = { bold:true };
+  headerRow.eachCell(c=>{ c.fill = { type:'pattern', pattern:'solid', fgColor:{argb:SLATE_LIGHT} }; });
+
+  const rows = [
+    ['Unit Price', d.columns.map(c=>c.price)],
+    ['MOQ', d.columns.map(c=>c.moq)],
+    ['Lead Time (days)', d.columns.map(c=>c.leadTime)],
+    ['Payment Terms', d.columns.map(c=>c.paymentTerms)],
+    ['Quality Score', d.columns.map(c=>c.quality)],
+    ['Reliability Score', d.columns.map(c=>c.reliability)],
+  ];
+  rows.forEach(([label, values])=>{
+    ws.addRow([label, ...values]);
+  });
+
+  const scoreRow = ws.addRow(['Overall Score', ...d.columns.map(c=>Math.round(c.score*10)/10)]);
+  scoreRow.font = { bold:true };
+  scoreRow.eachCell(c=>{ c.fill = { type:'pattern', pattern:'solid', fgColor:{argb:PURPLE_LIGHT} }; });
+
+  d.columns.forEach((c,i)=>{
+    if(Math.abs(c.price-d.minPrice)<0.001){
+      ws.getCell(4,i+2).fill = { type:'pattern', pattern:'solid', fgColor:{argb:SUCCESS_LIGHT} };
+    }
+    if(Math.abs(c.score-d.maxScore)<0.001){
+      const lastRowNum = scoreRow.number;
+      ws.getCell(lastRowNum,i+2).font = { bold:true, color:{argb:'FF7C3AED'} };
+    }
+  });
+
+  const buffer = await wb.xlsx.writeBuffer();
+  const blob = new Blob([buffer], {type:'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'CBMLab-RFQ-Comparison.xlsx';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
 </script>
 </body>
 </html>

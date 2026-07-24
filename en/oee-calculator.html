@@ -86,6 +86,19 @@
   .benchmark-marker-label{position:absolute;top:12px;font-size:9.5px;color:var(--slate-400);white-space:nowrap;transform:translateX(-50%)}
 
   .notice-box{background:var(--accent-light);border:1px solid #BFDBFE;border-radius:var(--radius);padding:10px 14px;font-size:12px;color:#1E40AF;margin-top:14px;line-height:1.6}
+
+  .btn-excel{width:100%;padding:12px;border:2px solid var(--accent);border-radius:8px;background:#fff;color:var(--accent);font-size:13.5px;font-weight:700;cursor:pointer;margin-top:14px}
+  .btn-excel:hover{background:var(--accent-light)}
+
+  .ad-gate-overlay{position:fixed;inset:0;background:rgba(15,23,42,.7);display:flex;align-items:center;justify-content:center;z-index:9999;padding:20px}
+  .ad-gate-box{background:#fff;border-radius:14px;max-width:420px;width:100%;padding:24px;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,.3)}
+  .ad-gate-box h3{font-size:16px;font-weight:800;color:var(--slate-900);margin-bottom:8px}
+  .ad-gate-box p{font-size:12.5px;color:var(--slate-500);margin-bottom:16px;line-height:1.6}
+  .ad-gate-slot{border:1px dashed var(--slate-300);border-radius:8px;min-height:100px;display:flex;align-items:center;justify-content:center;margin-bottom:16px;overflow:hidden}
+  .ad-gate-timer{font-size:13px;font-weight:700;color:var(--slate-600);margin-bottom:12px}
+  .ad-gate-btn{width:100%;padding:12px;border:none;border-radius:8px;background:var(--accent);color:#fff;font-size:13.5px;font-weight:700;cursor:pointer}
+  .ad-gate-btn:disabled{background:var(--slate-300);cursor:not-allowed}
+  .ad-gate-cancel{margin-top:10px;font-size:12px;color:var(--slate-400);background:none;border:none;cursor:pointer;text-decoration:underline}
   .warn-box{background:var(--warn-light);border:1px solid #FDE68A;border-radius:var(--radius);padding:12px 14px;font-size:12px;color:#78350F;margin-top:14px;line-height:1.6}
 
   .faq-item{border-bottom:1px solid var(--slate-100);padding:12px 0}
@@ -122,6 +135,7 @@
   gtag('js', new Date());
   gtag('config', 'G-W1YBL5BGGK');
 </script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/exceljs/4.4.0/exceljs.min.js"></script>
 </head>
 <body>
 <svg width="0" height="0" style="position:absolute;" aria-hidden="true">
@@ -192,6 +206,7 @@
       <div class="card-body">
         <div id="resultWrap"></div>
         <div class="notice-box">💡 Industry benchmarks: automotive assembly 85-92%, food processing 75-85%, and pharma 70-80% are generally considered world-class. Below 40% signals urgent need for improvement.</div>
+        <button class="btn-excel" onclick="requestExcelDownload()">📊 Download OEE Analysis (Excel)</button>
       </div>
     </div>
   </aside>
@@ -214,6 +229,24 @@
       <details class="faq-item"><summary>Which is easiest to improve: availability, performance, or quality?</summary><p>There's no fixed answer, but quality improvements often require changing the process itself and take longer, while availability gains from reducing unplanned downtime through preventive maintenance are often achievable more quickly.</p></details>
       <details class="faq-item"><summary>How do I determine the ideal cycle time?</summary><p>Use the manufacturer's rated speed spec, or the average of a measured best-case run. If this number is set too optimistically, your Performance figure will come out lower than it should.</p></details>
     </div>
+  </div>
+</div>
+
+<div class="ad-gate-overlay" id="adGateOverlay" style="display:none;">
+  <div class="ad-gate-box">
+    <h3>📊 Preparing Your Excel File</h3>
+    <p>Please wait while this ad is shown. Your download will start automatically once it's ready.</p>
+    <div class="ad-gate-slot">
+      <ins class="adsbygoogle"
+         style="display:block;width:100%;"
+         data-ad-client="ca-pub-4642197702620430"
+         data-ad-slot="2863170310"
+         data-ad-format="auto"
+         data-full-width-responsive="true"></ins>
+    </div>
+    <div class="ad-gate-timer" id="adGateTimer">Download available in 5s</div>
+    <button class="ad-gate-btn" id="adGateBtn" disabled onclick="completeAdGateDownload()">Start Download</button>
+    <button class="ad-gate-cancel" onclick="closeAdGate()">Cancel</button>
   </div>
 </div>
 
@@ -287,9 +320,113 @@ function calc(){
       <div class="benchmark-marker-label" style="left:85%;">85% (World-Class)</div>
     </div>
   `;
+
+  window._oeeData = { planned, downtime, idealCycle, totalCount, goodCount, runTime, availability, performance, quality, oee, label };
 }
 
 calc();
+
+// ===== Excel Download (via ad gate) =====
+let adGateTimerInterval = null;
+
+function requestExcelDownload(){
+  if(!window._oeeData || !window._oeeData.planned){
+    alert('Please enter production run details first.');
+    return;
+  }
+  document.getElementById('adGateOverlay').style.display = 'flex';
+  let seconds = 5;
+  const timerEl = document.getElementById('adGateTimer');
+  const btnEl = document.getElementById('adGateBtn');
+  btnEl.disabled = true;
+  timerEl.textContent = `Download available in ${seconds}s`;
+  try{ (adsbygoogle = window.adsbygoogle || []).push({}); }catch(e){}
+
+  clearInterval(adGateTimerInterval);
+  adGateTimerInterval = setInterval(()=>{
+    seconds--;
+    if(seconds <= 0){
+      clearInterval(adGateTimerInterval);
+      timerEl.textContent = 'Ready to download!';
+      btnEl.disabled = false;
+    } else {
+      timerEl.textContent = `Download available in ${seconds}s`;
+    }
+  }, 1000);
+}
+
+function closeAdGate(){
+  clearInterval(adGateTimerInterval);
+  document.getElementById('adGateOverlay').style.display = 'none';
+}
+
+function completeAdGateDownload(){
+  closeAdGate();
+  downloadExcel();
+  if(window.amplitude) window.amplitude.track('Download', {type:'excel', tool:'oee-calculator'});
+}
+
+async function downloadExcel(){
+  const d = window._oeeData;
+  if(!d) return;
+  const NAVY = 'FF0F172A', SUCCESS_LIGHT = 'FFD1FAE5', SLATE_LIGHT = 'FFF1F5F9';
+
+  const wb = new ExcelJS.Workbook();
+  wb.creator = 'CBM Lab';
+  wb.created = new Date();
+
+  const ws = wb.addWorksheet('OEE Analysis');
+  ws.columns = [{width:28},{width:16}];
+
+  ws.mergeCells('A1:B1');
+  ws.getCell('A1').value = 'CBM Lab — OEE (Overall Equipment Effectiveness) Analysis';
+  ws.getCell('A1').font = { bold:true, size:14, color:{argb:'FFFFFFFF'} };
+  ws.getCell('A1').fill = { type:'pattern', pattern:'solid', fgColor:{argb:NAVY} };
+  ws.getRow(1).height = 26;
+
+  ws.getCell('A2').value = `Generated: ${new Date().toLocaleDateString('en-US')}`;
+  ws.getCell('A2').font = { size:10, color:{argb:'FF64748B'} };
+
+  const h1 = ws.getRow(4);
+  h1.values = ['Inputs', ''];
+  h1.font = { bold:true };
+  h1.eachCell(c=>{ c.fill = { type:'pattern', pattern:'solid', fgColor:{argb:SLATE_LIGHT} }; });
+
+  const inputs = [
+    ['Planned Production Time (min)', d.planned], ['Downtime (min)', d.downtime],
+    ['Ideal Cycle Time (min/unit)', d.idealCycle], ['Total Count (units)', d.totalCount], ['Good Count (units)', d.goodCount],
+  ];
+  inputs.forEach(([label,val])=>{ ws.addRow([label, val]); });
+
+  const h2 = ws.addRow(['Results', '']);
+  h2.font = { bold:true };
+  h2.eachCell(c=>{ c.fill = { type:'pattern', pattern:'solid', fgColor:{argb:SLATE_LIGHT} }; });
+
+  const results = [
+    ['Run Time (min)', d.runTime], ['Availability', d.availability],
+    ['Performance', d.performance], ['Quality', d.quality],
+  ];
+  results.forEach(([label,val])=>{
+    const row = ws.addRow([label, val]);
+    if(label !== 'Run Time (min)') row.getCell(2).numFmt = '0.0%';
+  });
+
+  const oeeRow = ws.addRow([`Overall OEE (${d.label})`, d.oee]);
+  oeeRow.font = { bold:true };
+  oeeRow.eachCell(c=>{ c.fill = { type:'pattern', pattern:'solid', fgColor:{argb:SUCCESS_LIGHT} }; });
+  oeeRow.getCell(2).numFmt = '0.0%';
+
+  const buffer = await wb.xlsx.writeBuffer();
+  const blob = new Blob([buffer], {type:'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'CBMLab-OEE-Analysis.xlsx';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
 </script>
 </body>
 </html>

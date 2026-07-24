@@ -86,6 +86,19 @@
   .benchmark-marker-label{position:absolute;top:12px;font-size:9.5px;color:var(--slate-400);white-space:nowrap;transform:translateX(-50%)}
 
   .notice-box{background:var(--accent-light);border:1px solid #BFDBFE;border-radius:var(--radius);padding:10px 14px;font-size:12px;color:#1E40AF;margin-top:14px;line-height:1.6}
+
+  .btn-excel{width:100%;padding:12px;border:2px solid var(--accent);border-radius:8px;background:#fff;color:var(--accent);font-size:13.5px;font-weight:700;cursor:pointer;margin-top:14px}
+  .btn-excel:hover{background:var(--accent-light)}
+
+  .ad-gate-overlay{position:fixed;inset:0;background:rgba(15,23,42,.7);display:flex;align-items:center;justify-content:center;z-index:9999;padding:20px}
+  .ad-gate-box{background:#fff;border-radius:14px;max-width:420px;width:100%;padding:24px;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,.3)}
+  .ad-gate-box h3{font-size:16px;font-weight:800;color:var(--slate-900);margin-bottom:8px}
+  .ad-gate-box p{font-size:12.5px;color:var(--slate-500);margin-bottom:16px;line-height:1.6}
+  .ad-gate-slot{border:1px dashed var(--slate-300);border-radius:8px;min-height:100px;display:flex;align-items:center;justify-content:center;margin-bottom:16px;overflow:hidden}
+  .ad-gate-timer{font-size:13px;font-weight:700;color:var(--slate-600);margin-bottom:12px}
+  .ad-gate-btn{width:100%;padding:12px;border:none;border-radius:8px;background:var(--accent);color:#fff;font-size:13.5px;font-weight:700;cursor:pointer}
+  .ad-gate-btn:disabled{background:var(--slate-300);cursor:not-allowed}
+  .ad-gate-cancel{margin-top:10px;font-size:12px;color:var(--slate-400);background:none;border:none;cursor:pointer;text-decoration:underline}
   .warn-box{background:var(--warn-light);border:1px solid #FDE68A;border-radius:var(--radius);padding:12px 14px;font-size:12px;color:#78350F;margin-top:14px;line-height:1.6}
 
   .faq-item{border-bottom:1px solid var(--slate-100);padding:12px 0}
@@ -122,6 +135,7 @@
   gtag('js', new Date());
   gtag('config', 'G-W1YBL5BGGK');
 </script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/exceljs/4.4.0/exceljs.min.js"></script>
 </head>
 <body>
 <svg width="0" height="0" style="position:absolute;" aria-hidden="true">
@@ -192,6 +206,7 @@
       <div class="card-body">
         <div id="resultWrap"></div>
         <div class="notice-box">💡 업계 평균 기준: 자동차 조립 85~92%, 식품가공 75~85%, 제약 70~80%가 세계 최고 수준으로 통합니다. 40% 미만은 개선이 시급한 상태로 봅니다.</div>
+        <button class="btn-excel" onclick="requestExcelDownload()">📊 OEE 분석 엑셀 다운로드</button>
       </div>
     </div>
   </aside>
@@ -214,6 +229,24 @@
       <details class="faq-item"><summary>가동률·성능·양품률 중 뭐가 가장 개선하기 쉬운가요?</summary><p>정해진 답은 없지만, 일반적으로 양품률(품질) 개선이 공정 자체를 바꾸는 경우가 많아 시간이 걸리고, 가동률(고장정지 감소)은 예방보전으로 비교적 빠르게 개선 가능한 경우가 많습니다.</p></details>
       <details class="faq-item"><summary>이론 사이클타임은 어떻게 구하나요?</summary><p>설비 제조사가 제공하는 정격 속도(spec) 또는 실측 최고속도 구간의 평균값을 사용합니다. 이 값이 너무 낙관적으로 잡히면 성능(Performance) 수치가 실제보다 낮게 나올 수 있습니다.</p></details>
     </div>
+  </div>
+</div>
+
+<div class="ad-gate-overlay" id="adGateOverlay" style="display:none;">
+  <div class="ad-gate-box">
+    <h3>📊 엑셀 파일 준비 중</h3>
+    <p>아래 광고가 노출되는 동안 잠시만 기다려주세요. 완료되면 자동으로 다운로드가 시작됩니다.</p>
+    <div class="ad-gate-slot">
+      <ins class="adsbygoogle"
+         style="display:block;width:100%;"
+         data-ad-client="ca-pub-4642197702620430"
+         data-ad-slot="2863170310"
+         data-ad-format="auto"
+         data-full-width-responsive="true"></ins>
+    </div>
+    <div class="ad-gate-timer" id="adGateTimer">5초 후 다운로드 가능</div>
+    <button class="ad-gate-btn" id="adGateBtn" disabled onclick="completeAdGateDownload()">다운로드 시작</button>
+    <button class="ad-gate-cancel" onclick="closeAdGate()">취소</button>
   </div>
 </div>
 
@@ -287,9 +320,113 @@ function calc(){
       <div class="benchmark-marker-label" style="left:85%;">85%(세계최고)</div>
     </div>
   `;
+
+  window._oeeData = { planned, downtime, idealCycle, totalCount, goodCount, runTime, availability, performance, quality, oee, label };
 }
 
 calc();
+
+// ===== 엑셀 다운로드 (광고 게이트 경유) =====
+let adGateTimerInterval = null;
+
+function requestExcelDownload(){
+  if(!window._oeeData || !window._oeeData.planned){
+    alert('먼저 가동 정보를 입력해주세요.');
+    return;
+  }
+  document.getElementById('adGateOverlay').style.display = 'flex';
+  let seconds = 5;
+  const timerEl = document.getElementById('adGateTimer');
+  const btnEl = document.getElementById('adGateBtn');
+  btnEl.disabled = true;
+  timerEl.textContent = `${seconds}초 후 다운로드 가능`;
+  try{ (adsbygoogle = window.adsbygoogle || []).push({}); }catch(e){}
+
+  clearInterval(adGateTimerInterval);
+  adGateTimerInterval = setInterval(()=>{
+    seconds--;
+    if(seconds <= 0){
+      clearInterval(adGateTimerInterval);
+      timerEl.textContent = '다운로드 준비 완료!';
+      btnEl.disabled = false;
+    } else {
+      timerEl.textContent = `${seconds}초 후 다운로드 가능`;
+    }
+  }, 1000);
+}
+
+function closeAdGate(){
+  clearInterval(adGateTimerInterval);
+  document.getElementById('adGateOverlay').style.display = 'none';
+}
+
+function completeAdGateDownload(){
+  closeAdGate();
+  downloadExcel();
+  if(window.amplitude) window.amplitude.track('Download', {type:'excel', tool:'oee-calculator'});
+}
+
+async function downloadExcel(){
+  const d = window._oeeData;
+  if(!d) return;
+  const NAVY = 'FF0F172A', SUCCESS_LIGHT = 'FFD1FAE5', SLATE_LIGHT = 'FFF1F5F9';
+
+  const wb = new ExcelJS.Workbook();
+  wb.creator = 'CBM Lab';
+  wb.created = new Date();
+
+  const ws = wb.addWorksheet('OEE 분석');
+  ws.columns = [{width:28},{width:16}];
+
+  ws.mergeCells('A1:B1');
+  ws.getCell('A1').value = 'CBM Lab — OEE(설비종합효율) 분석';
+  ws.getCell('A1').font = { bold:true, size:14, color:{argb:'FFFFFFFF'} };
+  ws.getCell('A1').fill = { type:'pattern', pattern:'solid', fgColor:{argb:NAVY} };
+  ws.getRow(1).height = 26;
+
+  ws.getCell('A2').value = `생성일: ${new Date().toLocaleDateString('ko-KR')}`;
+  ws.getCell('A2').font = { size:10, color:{argb:'FF64748B'} };
+
+  const h1 = ws.getRow(4);
+  h1.values = ['입력값', ''];
+  h1.font = { bold:true };
+  h1.eachCell(c=>{ c.fill = { type:'pattern', pattern:'solid', fgColor:{argb:SLATE_LIGHT} }; });
+
+  const inputs = [
+    ['계획 가동시간 (분)', d.planned], ['비가동시간 (분)', d.downtime],
+    ['이론 사이클타임 (분/개)', d.idealCycle], ['총 생산수량 (개)', d.totalCount], ['양품 수량 (개)', d.goodCount],
+  ];
+  inputs.forEach(([label,val])=>{ ws.addRow([label, val]); });
+
+  const h2 = ws.addRow(['계산 결과', '']);
+  h2.font = { bold:true };
+  h2.eachCell(c=>{ c.fill = { type:'pattern', pattern:'solid', fgColor:{argb:SLATE_LIGHT} }; });
+
+  const results = [
+    ['가동시간 (분)', d.runTime], ['가동률 (Availability)', d.availability],
+    ['성능 (Performance)', d.performance], ['양품률 (Quality)', d.quality],
+  ];
+  results.forEach(([label,val])=>{
+    const row = ws.addRow([label, val]);
+    if(label.includes('(')) row.getCell(2).numFmt = '0.0%';
+  });
+
+  const oeeRow = ws.addRow([`종합 OEE (${d.label})`, d.oee]);
+  oeeRow.font = { bold:true };
+  oeeRow.eachCell(c=>{ c.fill = { type:'pattern', pattern:'solid', fgColor:{argb:SUCCESS_LIGHT} }; });
+  oeeRow.getCell(2).numFmt = '0.0%';
+
+  const buffer = await wb.xlsx.writeBuffer();
+  const blob = new Blob([buffer], {type:'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'CBMLab-OEE분석.xlsx';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
 </script>
 </body>
 </html>

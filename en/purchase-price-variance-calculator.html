@@ -81,6 +81,19 @@
   .summary-item.unfav .value{color:var(--danger)}
 
   .notice-box{background:var(--accent-light);border:1px solid #BFDBFE;border-radius:var(--radius);padding:10px 14px;font-size:12px;color:#1E40AF;margin-top:14px;line-height:1.6}
+
+  .btn-excel{width:100%;padding:12px;border:2px solid var(--accent);border-radius:8px;background:#fff;color:var(--accent);font-size:13.5px;font-weight:700;cursor:pointer;margin-top:14px}
+  .btn-excel:hover{background:var(--accent-light)}
+
+  .ad-gate-overlay{position:fixed;inset:0;background:rgba(15,23,42,.7);display:flex;align-items:center;justify-content:center;z-index:9999;padding:20px}
+  .ad-gate-box{background:#fff;border-radius:14px;max-width:420px;width:100%;padding:24px;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,.3)}
+  .ad-gate-box h3{font-size:16px;font-weight:800;color:var(--slate-900);margin-bottom:8px}
+  .ad-gate-box p{font-size:12.5px;color:var(--slate-500);margin-bottom:16px;line-height:1.6}
+  .ad-gate-slot{border:1px dashed var(--slate-300);border-radius:8px;min-height:100px;display:flex;align-items:center;justify-content:center;margin-bottom:16px;overflow:hidden}
+  .ad-gate-timer{font-size:13px;font-weight:700;color:var(--slate-600);margin-bottom:12px}
+  .ad-gate-btn{width:100%;padding:12px;border:none;border-radius:8px;background:var(--accent);color:#fff;font-size:13.5px;font-weight:700;cursor:pointer}
+  .ad-gate-btn:disabled{background:var(--slate-300);cursor:not-allowed}
+  .ad-gate-cancel{margin-top:10px;font-size:12px;color:var(--slate-400);background:none;border:none;cursor:pointer;text-decoration:underline}
   .warn-box{background:#FEF3C7;border:1px solid #FDE68A;border-radius:var(--radius);padding:12px 14px;font-size:12px;color:#78350F;margin-top:14px;line-height:1.6}
 
   .faq-item{border-bottom:1px solid var(--slate-100);padding:12px 0}
@@ -116,6 +129,7 @@
   gtag('js', new Date());
   gtag('config', 'G-W1YBL5BGGK');
 </script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/exceljs/4.4.0/exceljs.min.js"></script>
 </head>
 <body>
 <svg width="0" height="0" style="position:absolute;" aria-hidden="true">
@@ -147,6 +161,7 @@
       <div class="summary-box" id="summaryBox"></div>
       <div class="notice-box">💡 <strong>Negative is Favorable</strong> (savings), <strong>positive is Unfavorable</strong> (over budget) — a lower actual price than standard is good for the company.</div>
       <div class="warn-box">⚠ A large PPV doesn't automatically mean poor performance. Raw material market swings, exchange rates, and MOQ changes are factors procurement often can't control. Treat PPV as a signal for what to investigate, not a verdict on its own.</div>
+      <button class="btn-excel" onclick="requestExcelDownload()">📊 Download PPV Analysis (Excel)</button>
     </div>
   </div>
 </div>
@@ -168,6 +183,24 @@
       <details class="faq-item"><summary>Does a positive PPV mean poor buyer performance?</summary><p>Not necessarily. External factors buyers can't control — raw material price spikes, exchange rate shifts, supplier changes — can also drive PPV up. That said, a large, recurring variance is still worth investigating.</p></details>
       <details class="faq-item"><summary>Are PPV and cost savings the same thing?</summary><p>No. PPV is an accounting measure of budget-vs-actual, while cost savings measures the actual dollar amount saved compared to before. In a year when raw material prices spike, PPV can look unfavorable even though negotiating a smaller increase than the market average represents real cost avoidance.</p></details>
     </div>
+  </div>
+</div>
+
+<div class="ad-gate-overlay" id="adGateOverlay" style="display:none;">
+  <div class="ad-gate-box">
+    <h3>📊 Preparing Your Excel File</h3>
+    <p>Please wait while this ad is shown. Your download will start automatically once it's ready.</p>
+    <div class="ad-gate-slot">
+      <ins class="adsbygoogle"
+         style="display:block;width:100%;"
+         data-ad-client="ca-pub-4642197702620430"
+         data-ad-slot="2863170310"
+         data-ad-format="auto"
+         data-full-width-responsive="true"></ins>
+    </div>
+    <div class="ad-gate-timer" id="adGateTimer">Download available in 5s</div>
+    <button class="ad-gate-btn" id="adGateBtn" disabled onclick="completeAdGateDownload()">Start Download</button>
+    <button class="ad-gate-cancel" onclick="closeAdGate()">Cancel</button>
   </div>
 </div>
 
@@ -249,11 +282,109 @@ function render(){
       <div class="value">+${fmt(unfavorableTotal)}</div>
     </div>
   `;
+
+  window._ppvData = { items: items.map(it=>({...it, ppv:(it.actual-it.std)*it.qty})), totalPPV, favorableTotal, unfavorableTotal };
 }
 
 addRow('Aluminum Sheet 6063', 3.20, 3.45, 5000);
 addRow('Electronic Component A', 12.00, 11.20, 2000);
 addRow('Packaging Material', 0.85, 0.85, 10000);
+
+// ===== Excel Download (via ad gate) =====
+let adGateTimerInterval = null;
+
+function requestExcelDownload(){
+  if(!window._ppvData || !window._ppvData.items || window._ppvData.items.length===0){
+    alert('Please enter line items first.');
+    return;
+  }
+  document.getElementById('adGateOverlay').style.display = 'flex';
+  let seconds = 5;
+  const timerEl = document.getElementById('adGateTimer');
+  const btnEl = document.getElementById('adGateBtn');
+  btnEl.disabled = true;
+  timerEl.textContent = `Download available in ${seconds}s`;
+  try{ (adsbygoogle = window.adsbygoogle || []).push({}); }catch(e){}
+
+  clearInterval(adGateTimerInterval);
+  adGateTimerInterval = setInterval(()=>{
+    seconds--;
+    if(seconds <= 0){
+      clearInterval(adGateTimerInterval);
+      timerEl.textContent = 'Ready to download!';
+      btnEl.disabled = false;
+    } else {
+      timerEl.textContent = `Download available in ${seconds}s`;
+    }
+  }, 1000);
+}
+
+function closeAdGate(){
+  clearInterval(adGateTimerInterval);
+  document.getElementById('adGateOverlay').style.display = 'none';
+}
+
+function completeAdGateDownload(){
+  closeAdGate();
+  downloadExcel();
+  if(window.amplitude) window.amplitude.track('Download', {type:'excel', tool:'purchase-price-variance-calculator'});
+}
+
+async function downloadExcel(){
+  const d = window._ppvData;
+  if(!d) return;
+  const NAVY = 'FF0F172A', SUCCESS_LIGHT = 'FFD1FAE5', DANGER_LIGHT = 'FFFEE2E2', SLATE_LIGHT = 'FFF1F5F9';
+
+  const wb = new ExcelJS.Workbook();
+  wb.creator = 'CBM Lab';
+  wb.created = new Date();
+
+  const ws = wb.addWorksheet('PPV Analysis');
+  ws.columns = [{width:26},{width:14},{width:14},{width:12},{width:14}];
+
+  ws.mergeCells('A1:E1');
+  ws.getCell('A1').value = 'CBM Lab — Purchase Price Variance (PPV) Analysis';
+  ws.getCell('A1').font = { bold:true, size:14, color:{argb:'FFFFFFFF'} };
+  ws.getCell('A1').fill = { type:'pattern', pattern:'solid', fgColor:{argb:NAVY} };
+  ws.getRow(1).height = 26;
+
+  ws.getCell('A2').value = `Generated: ${new Date().toLocaleDateString('en-US')}`;
+  ws.getCell('A2').font = { size:10, color:{argb:'FF64748B'} };
+  ws.mergeCells('A2:E2');
+
+  const h = ws.getRow(4);
+  h.values = ['Item', 'Standard Price', 'Actual Price', 'Quantity', 'PPV'];
+  h.font = { bold:true };
+  h.eachCell(c=>{ c.fill = { type:'pattern', pattern:'solid', fgColor:{argb:SLATE_LIGHT} }; });
+
+  d.items.forEach(it=>{
+    const row = ws.addRow([it.name, it.std, it.actual, it.qty, it.ppv]);
+    row.getCell(5).numFmt = '#,##0';
+    if(it.ppv < 0){ row.getCell(5).font = { color:{argb:'FF0F766E'} }; }
+    else if(it.ppv > 0){ row.getCell(5).font = { color:{argb:'FFB91C1C'} }; }
+  });
+
+  const totalRow = ws.addRow(['Total PPV', '', '', '', d.totalPPV]);
+  totalRow.font = { bold:true };
+  totalRow.eachCell(c=>{ c.fill = { type:'pattern', pattern:'solid', fgColor:{argb: d.totalPPV<0?SUCCESS_LIGHT:DANGER_LIGHT} }; });
+  totalRow.getCell(5).numFmt = '#,##0';
+
+  const favRow = ws.addRow(['Favorable', '', '', '', -d.favorableTotal]);
+  favRow.getCell(5).numFmt = '#,##0';
+  const unfavRow = ws.addRow(['Unfavorable', '', '', '', d.unfavorableTotal]);
+  unfavRow.getCell(5).numFmt = '#,##0';
+
+  const buffer = await wb.xlsx.writeBuffer();
+  const blob = new Blob([buffer], {type:'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'CBMLab-PPV-Analysis.xlsx';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
 </script>
 </body>
 </html>

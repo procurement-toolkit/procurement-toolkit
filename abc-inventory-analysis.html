@@ -87,6 +87,19 @@
 
   .notice-box{background:var(--accent-light);border:1px solid #BFDBFE;border-radius:var(--radius);padding:10px 14px;font-size:12px;color:#1E40AF;margin-top:14px;line-height:1.6}
 
+  .btn-excel{width:100%;padding:12px;border:2px solid var(--accent);border-radius:8px;background:#fff;color:var(--accent);font-size:13.5px;font-weight:700;cursor:pointer;margin-top:14px}
+  .btn-excel:hover{background:var(--accent-light)}
+
+  .ad-gate-overlay{position:fixed;inset:0;background:rgba(15,23,42,.7);display:flex;align-items:center;justify-content:center;z-index:9999;padding:20px}
+  .ad-gate-box{background:#fff;border-radius:14px;max-width:420px;width:100%;padding:24px;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,.3)}
+  .ad-gate-box h3{font-size:16px;font-weight:800;color:var(--slate-900);margin-bottom:8px}
+  .ad-gate-box p{font-size:12.5px;color:var(--slate-500);margin-bottom:16px;line-height:1.6}
+  .ad-gate-slot{border:1px dashed var(--slate-300);border-radius:8px;min-height:100px;display:flex;align-items:center;justify-content:center;margin-bottom:16px;overflow:hidden}
+  .ad-gate-timer{font-size:13px;font-weight:700;color:var(--slate-600);margin-bottom:12px}
+  .ad-gate-btn{width:100%;padding:12px;border:none;border-radius:8px;background:var(--accent);color:#fff;font-size:13.5px;font-weight:700;cursor:pointer}
+  .ad-gate-btn:disabled{background:var(--slate-300);cursor:not-allowed}
+  .ad-gate-cancel{margin-top:10px;font-size:12px;color:var(--slate-400);background:none;border:none;cursor:pointer;text-decoration:underline}
+
   .faq-item{border-bottom:1px solid var(--slate-100);padding:12px 0}
   .faq-item:last-child{border-bottom:none}
   .faq-item summary{cursor:pointer;font-weight:700;font-size:13px;color:var(--slate-800);list-style:none;outline:none}
@@ -120,6 +133,7 @@
   gtag('js', new Date());
   gtag('config', 'G-W1YBL5BGGK');
 </script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/exceljs/4.4.0/exceljs.min.js"></script>
 </head>
 <body>
 <svg width="0" height="0" style="position:absolute;" aria-hidden="true">
@@ -155,6 +169,7 @@
       <button class="btn-add-row" onclick="addRow()">+ SKU 추가</button>
       <div class="summary-grid" id="summaryGrid"></div>
       <div class="notice-box">💡 <strong>A등급</strong>은 정밀 수요예측·잦은 재고실사·긴밀한 공급업체 관리를, <strong>C등급</strong>은 간단한 발주규칙과 넉넉한 안전재고로 관리 부담을 줄이는 것이 일반적인 전략입니다.</div>
+      <button class="btn-excel" onclick="requestExcelDownload()">📊 ABC 분석 엑셀 다운로드</button>
     </div>
   </div>
 </div>
@@ -176,6 +191,24 @@
       <details class="faq-item"><summary>A등급 품목이 왜 이렇게 적게 나오나요?</summary><p>정상입니다. 보통 전체 SKU의 10~20% 정도가 A등급으로 분류되고, 이 소수의 품목이 전체 소비가치의 70~80%를 차지하는 게 파레토 분포의 특징입니다.</p></details>
       <details class="faq-item"><summary>소비가치(Consumption Value) 대신 다른 기준으로 분류할 수도 있나요?</summary><p>네, 매출액·이익 기여도·품절 시 영향도 등 다른 기준으로도 ABC 분석을 할 수 있습니다. 다만 가장 널리 쓰이는 기준은 연간 소비가치(수요×단가)입니다.</p></details>
     </div>
+  </div>
+</div>
+
+<div class="ad-gate-overlay" id="adGateOverlay" style="display:none;">
+  <div class="ad-gate-box">
+    <h3>📊 엑셀 파일 준비 중</h3>
+    <p>아래 광고가 노출되는 동안 잠시만 기다려주세요. 완료되면 자동으로 다운로드가 시작됩니다.</p>
+    <div class="ad-gate-slot">
+      <ins class="adsbygoogle"
+         style="display:block;width:100%;"
+         data-ad-client="ca-pub-4642197702620430"
+         data-ad-slot="2863170310"
+         data-ad-format="auto"
+         data-full-width-responsive="true"></ins>
+    </div>
+    <div class="ad-gate-timer" id="adGateTimer">5초 후 다운로드 가능</div>
+    <button class="ad-gate-btn" id="adGateBtn" disabled onclick="completeAdGateDownload()">다운로드 시작</button>
+    <button class="ad-gate-cancel" onclick="closeAdGate()">취소</button>
   </div>
 </div>
 
@@ -275,6 +308,14 @@ function calc(){
       <div class="stat">소비가치 비중: ${totalValue>0?(values[cls]/totalValue*100).toFixed(1):0}%</div>
     </div>
   `).join('');
+
+  window._abcData = {
+    items: sortedIds.map(id=>{
+      const it = withValue.find(w=>w.id===id);
+      return {...it, cumPct: cumMap[id], cls: classMap[id]};
+    }),
+    counts, values, totalValue, thresholdA, thresholdB
+  };
 }
 
 addRow('베어링 어셈블리', 500, 120);
@@ -285,6 +326,106 @@ addRow('센서 모듈', 800, 35);
 addRow('케이블 하네스', 1500, 8);
 addRow('포장 박스', 10000, 0.5);
 addRow('라벨 스티커', 15000, 0.05);
+
+// ===== 엑셀 다운로드 (광고 게이트 경유) =====
+let adGateTimerInterval = null;
+
+function requestExcelDownload(){
+  if(!window._abcData || !window._abcData.items || window._abcData.items.length===0){
+    alert('먼저 SKU를 입력해주세요.');
+    return;
+  }
+  document.getElementById('adGateOverlay').style.display = 'flex';
+  let seconds = 5;
+  const timerEl = document.getElementById('adGateTimer');
+  const btnEl = document.getElementById('adGateBtn');
+  btnEl.disabled = true;
+  timerEl.textContent = `${seconds}초 후 다운로드 가능`;
+  try{ (adsbygoogle = window.adsbygoogle || []).push({}); }catch(e){}
+
+  clearInterval(adGateTimerInterval);
+  adGateTimerInterval = setInterval(()=>{
+    seconds--;
+    if(seconds <= 0){
+      clearInterval(adGateTimerInterval);
+      timerEl.textContent = '다운로드 준비 완료!';
+      btnEl.disabled = false;
+    } else {
+      timerEl.textContent = `${seconds}초 후 다운로드 가능`;
+    }
+  }, 1000);
+}
+
+function closeAdGate(){
+  clearInterval(adGateTimerInterval);
+  document.getElementById('adGateOverlay').style.display = 'none';
+}
+
+function completeAdGateDownload(){
+  closeAdGate();
+  downloadExcel();
+  if(window.amplitude) window.amplitude.track('Download', {type:'excel', tool:'abc-inventory-analysis'});
+}
+
+async function downloadExcel(){
+  const d = window._abcData;
+  if(!d) return;
+  const NAVY = 'FF0F172A', DANGER_LIGHT = 'FFFEE2E2', WARN_LIGHT = 'FFFEF3C7', SUCCESS_LIGHT = 'FFD1FAE5', SLATE_LIGHT = 'FFF1F5F9';
+  const CLASS_COLOR = {A: DANGER_LIGHT, B: WARN_LIGHT, C: SUCCESS_LIGHT};
+
+  const wb = new ExcelJS.Workbook();
+  wb.creator = 'CBM Lab';
+  wb.created = new Date();
+
+  const ws = wb.addWorksheet('ABC 분석');
+  ws.columns = [{width:24},{width:14},{width:12},{width:16},{width:12},{width:8}];
+
+  ws.mergeCells('A1:F1');
+  ws.getCell('A1').value = 'CBM Lab — ABC 재고 분석';
+  ws.getCell('A1').font = { bold:true, size:14, color:{argb:'FFFFFFFF'} };
+  ws.getCell('A1').fill = { type:'pattern', pattern:'solid', fgColor:{argb:NAVY} };
+  ws.getRow(1).height = 26;
+
+  ws.getCell('A2').value = `A등급 기준: ${d.thresholdA}%, B등급 기준: ${d.thresholdB}%   |   생성일: ${new Date().toLocaleDateString('ko-KR')}`;
+  ws.getCell('A2').font = { size:10, color:{argb:'FF64748B'} };
+  ws.mergeCells('A2:F2');
+
+  const h = ws.getRow(4);
+  h.values = ['SKU명', '연간 수요', '단가', '소비가치', '누적%', '등급'];
+  h.font = { bold:true };
+  h.eachCell(c=>{ c.fill = { type:'pattern', pattern:'solid', fgColor:{argb:SLATE_LIGHT} }; });
+
+  d.items.forEach(it=>{
+    const row = ws.addRow([it.name, it.demand, it.cost, it.value, it.cumPct/100, it.cls]);
+    row.getCell(4).numFmt = '#,##0';
+    row.getCell(5).numFmt = '0.0%';
+    row.getCell(6).fill = { type:'pattern', pattern:'solid', fgColor:{argb:CLASS_COLOR[it.cls]} };
+    row.getCell(6).font = { bold:true };
+  });
+
+  ws.addRow([]);
+  const summaryHeader = ws.addRow(['등급', '품목 수', '비중(%)', '소비가치 비중(%)']);
+  summaryHeader.font = { bold:true };
+  summaryHeader.eachCell(c=>{ c.fill = { type:'pattern', pattern:'solid', fgColor:{argb:SLATE_LIGHT} }; });
+  ['A','B','C'].forEach(cls=>{
+    const totalItems = d.items.length || 1;
+    const row = ws.addRow([cls, d.counts[cls], d.counts[cls]/totalItems, d.totalValue>0?d.values[cls]/d.totalValue:0]);
+    row.getCell(1).fill = { type:'pattern', pattern:'solid', fgColor:{argb:CLASS_COLOR[cls]} };
+    row.getCell(3).numFmt = '0%';
+    row.getCell(4).numFmt = '0.0%';
+  });
+
+  const buffer = await wb.xlsx.writeBuffer();
+  const blob = new Blob([buffer], {type:'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'CBMLab-ABC재고분석.xlsx';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
 </script>
 </body>
 </html>

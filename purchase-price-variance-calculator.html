@@ -81,6 +81,19 @@
   .summary-item.unfav .value{color:var(--danger)}
 
   .notice-box{background:var(--accent-light);border:1px solid #BFDBFE;border-radius:var(--radius);padding:10px 14px;font-size:12px;color:#1E40AF;margin-top:14px;line-height:1.6}
+
+  .btn-excel{width:100%;padding:12px;border:2px solid var(--accent);border-radius:8px;background:#fff;color:var(--accent);font-size:13.5px;font-weight:700;cursor:pointer;margin-top:14px}
+  .btn-excel:hover{background:var(--accent-light)}
+
+  .ad-gate-overlay{position:fixed;inset:0;background:rgba(15,23,42,.7);display:flex;align-items:center;justify-content:center;z-index:9999;padding:20px}
+  .ad-gate-box{background:#fff;border-radius:14px;max-width:420px;width:100%;padding:24px;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,.3)}
+  .ad-gate-box h3{font-size:16px;font-weight:800;color:var(--slate-900);margin-bottom:8px}
+  .ad-gate-box p{font-size:12.5px;color:var(--slate-500);margin-bottom:16px;line-height:1.6}
+  .ad-gate-slot{border:1px dashed var(--slate-300);border-radius:8px;min-height:100px;display:flex;align-items:center;justify-content:center;margin-bottom:16px;overflow:hidden}
+  .ad-gate-timer{font-size:13px;font-weight:700;color:var(--slate-600);margin-bottom:12px}
+  .ad-gate-btn{width:100%;padding:12px;border:none;border-radius:8px;background:var(--accent);color:#fff;font-size:13.5px;font-weight:700;cursor:pointer}
+  .ad-gate-btn:disabled{background:var(--slate-300);cursor:not-allowed}
+  .ad-gate-cancel{margin-top:10px;font-size:12px;color:var(--slate-400);background:none;border:none;cursor:pointer;text-decoration:underline}
   .warn-box{background:#FEF3C7;border:1px solid #FDE68A;border-radius:var(--radius);padding:12px 14px;font-size:12px;color:#78350F;margin-top:14px;line-height:1.6}
 
   .faq-item{border-bottom:1px solid var(--slate-100);padding:12px 0}
@@ -116,6 +129,7 @@
   gtag('js', new Date());
   gtag('config', 'G-W1YBL5BGGK');
 </script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/exceljs/4.4.0/exceljs.min.js"></script>
 </head>
 <body>
 <svg width="0" height="0" style="position:absolute;" aria-hidden="true">
@@ -147,6 +161,7 @@
       <div class="summary-box" id="summaryBox"></div>
       <div class="notice-box">💡 <strong>음수(-)가 절감(Favorable)</strong>, <strong>양수(+)가 예산초과(Unfavorable)</strong>입니다 — 실제단가가 표준단가보다 낮을수록 회사에 유리하기 때문입니다.</div>
       <div class="warn-box">⚠ PPV가 크다고 무조건 담당자 잘못은 아닙니다. 원자재 시황 변동, 환율, 최소주문수량(MOQ) 변경 등 구매팀이 통제할 수 없는 요인도 큰 영향을 줍니다. PPV는 "무엇을 조사해야 할지" 알려주는 신호로 쓰세요.</div>
+      <button class="btn-excel" onclick="requestExcelDownload()">📊 PPV 분석 엑셀 다운로드</button>
     </div>
   </div>
 </div>
@@ -168,6 +183,24 @@
       <details class="faq-item"><summary>PPV가 양수(+)면 담당자 성과가 나쁜 건가요?</summary><p>꼭 그런 건 아닙니다. 원자재 가격 급등, 환율 변동, 공급업체 사정 변경처럼 구매담당자가 통제할 수 없는 외부 요인으로도 PPV가 커질 수 있습니다. 다만 반복적으로 크게 나온다면 원인 조사는 필요합니다.</p></details>
       <details class="faq-item"><summary>PPV와 실제 원가절감(Cost Savings)은 같은 말인가요?</summary><p>다릅니다. PPV는 "예산 대비 실적"을 보는 회계 지표이고, 원가절감은 "이전 대비 실제로 아낀 금액"을 말합니다. 예를 들어 원자재 가격이 폭등한 해에는 PPV가 나쁘게 나와도, 시장 평균보다 덜 오르게 협상했다면 실질적으로는 원가절감을 한 것일 수 있습니다.</p></details>
     </div>
+  </div>
+</div>
+
+<div class="ad-gate-overlay" id="adGateOverlay" style="display:none;">
+  <div class="ad-gate-box">
+    <h3>📊 엑셀 파일 준비 중</h3>
+    <p>아래 광고가 노출되는 동안 잠시만 기다려주세요. 완료되면 자동으로 다운로드가 시작됩니다.</p>
+    <div class="ad-gate-slot">
+      <ins class="adsbygoogle"
+         style="display:block;width:100%;"
+         data-ad-client="ca-pub-4642197702620430"
+         data-ad-slot="2863170310"
+         data-ad-format="auto"
+         data-full-width-responsive="true"></ins>
+    </div>
+    <div class="ad-gate-timer" id="adGateTimer">5초 후 다운로드 가능</div>
+    <button class="ad-gate-btn" id="adGateBtn" disabled onclick="completeAdGateDownload()">다운로드 시작</button>
+    <button class="ad-gate-cancel" onclick="closeAdGate()">취소</button>
   </div>
 </div>
 
@@ -249,11 +282,109 @@ function render(){
       <div class="value">+${fmt(unfavorableTotal)}</div>
     </div>
   `;
+
+  window._ppvData = { items: items.map(it=>({...it, ppv:(it.actual-it.std)*it.qty})), totalPPV, favorableTotal, unfavorableTotal };
 }
 
 addRow('알루미늄 시트 6063', 3.20, 3.45, 5000);
 addRow('전자부품 A', 12.00, 11.20, 2000);
 addRow('포장재', 0.85, 0.85, 10000);
+
+// ===== 엑셀 다운로드 (광고 게이트 경유) =====
+let adGateTimerInterval = null;
+
+function requestExcelDownload(){
+  if(!window._ppvData || !window._ppvData.items || window._ppvData.items.length===0){
+    alert('먼저 품목을 입력해주세요.');
+    return;
+  }
+  document.getElementById('adGateOverlay').style.display = 'flex';
+  let seconds = 5;
+  const timerEl = document.getElementById('adGateTimer');
+  const btnEl = document.getElementById('adGateBtn');
+  btnEl.disabled = true;
+  timerEl.textContent = `${seconds}초 후 다운로드 가능`;
+  try{ (adsbygoogle = window.adsbygoogle || []).push({}); }catch(e){}
+
+  clearInterval(adGateTimerInterval);
+  adGateTimerInterval = setInterval(()=>{
+    seconds--;
+    if(seconds <= 0){
+      clearInterval(adGateTimerInterval);
+      timerEl.textContent = '다운로드 준비 완료!';
+      btnEl.disabled = false;
+    } else {
+      timerEl.textContent = `${seconds}초 후 다운로드 가능`;
+    }
+  }, 1000);
+}
+
+function closeAdGate(){
+  clearInterval(adGateTimerInterval);
+  document.getElementById('adGateOverlay').style.display = 'none';
+}
+
+function completeAdGateDownload(){
+  closeAdGate();
+  downloadExcel();
+  if(window.amplitude) window.amplitude.track('Download', {type:'excel', tool:'purchase-price-variance-calculator'});
+}
+
+async function downloadExcel(){
+  const d = window._ppvData;
+  if(!d) return;
+  const NAVY = 'FF0F172A', SUCCESS_LIGHT = 'FFD1FAE5', DANGER_LIGHT = 'FFFEE2E2', SLATE_LIGHT = 'FFF1F5F9';
+
+  const wb = new ExcelJS.Workbook();
+  wb.creator = 'CBM Lab';
+  wb.created = new Date();
+
+  const ws = wb.addWorksheet('PPV 분석');
+  ws.columns = [{width:26},{width:14},{width:14},{width:12},{width:14}];
+
+  ws.mergeCells('A1:E1');
+  ws.getCell('A1').value = 'CBM Lab — 구매가격차이(PPV) 분석';
+  ws.getCell('A1').font = { bold:true, size:14, color:{argb:'FFFFFFFF'} };
+  ws.getCell('A1').fill = { type:'pattern', pattern:'solid', fgColor:{argb:NAVY} };
+  ws.getRow(1).height = 26;
+
+  ws.getCell('A2').value = `생성일: ${new Date().toLocaleDateString('ko-KR')}`;
+  ws.getCell('A2').font = { size:10, color:{argb:'FF64748B'} };
+  ws.mergeCells('A2:E2');
+
+  const h = ws.getRow(4);
+  h.values = ['품목명', '표준단가', '실제단가', '수량', 'PPV'];
+  h.font = { bold:true };
+  h.eachCell(c=>{ c.fill = { type:'pattern', pattern:'solid', fgColor:{argb:SLATE_LIGHT} }; });
+
+  d.items.forEach(it=>{
+    const row = ws.addRow([it.name, it.std, it.actual, it.qty, it.ppv]);
+    row.getCell(5).numFmt = '#,##0';
+    if(it.ppv < 0){ row.getCell(5).font = { color:{argb:'FF0F766E'} }; }
+    else if(it.ppv > 0){ row.getCell(5).font = { color:{argb:'FFB91C1C'} }; }
+  });
+
+  const totalRow = ws.addRow(['합계 (Total PPV)', '', '', '', d.totalPPV]);
+  totalRow.font = { bold:true };
+  totalRow.eachCell(c=>{ c.fill = { type:'pattern', pattern:'solid', fgColor:{argb: d.totalPPV<0?SUCCESS_LIGHT:DANGER_LIGHT} }; });
+  totalRow.getCell(5).numFmt = '#,##0';
+
+  const favRow = ws.addRow(['절감 (Favorable)', '', '', '', -d.favorableTotal]);
+  favRow.getCell(5).numFmt = '#,##0';
+  const unfavRow = ws.addRow(['초과 (Unfavorable)', '', '', '', d.unfavorableTotal]);
+  unfavRow.getCell(5).numFmt = '#,##0';
+
+  const buffer = await wb.xlsx.writeBuffer();
+  const blob = new Blob([buffer], {type:'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'CBMLab-PPV분석.xlsx';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
 </script>
 </body>
 </html>
