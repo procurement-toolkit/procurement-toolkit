@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="ABC 재고 분석 도구 - 파레토 원칙(80/20 법칙)에 따라 SKU를 소비가치 기준으로 A/B/C 등급으로 자동 분류합니다. 어떤 품목에 관리 자원을 집중해야 하는지 한눈에 확인하세요.">
+<meta name="keywords" content="ABC 재고분석, ABC analysis inventory, 파레토 분석, SKU 등급 분류, 재고 우선순위, supply chain inventory management">
+<title>ABC 재고 분석 도구 — CBM Lab</title>
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="icon" href="favicon.ico" type="image/x-icon">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="canonical" href="https://procurement-toolkit-eight.vercel.app/abc-inventory-analysis.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="CBM Lab">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:title" content="ABC 재고 분석 도구 — CBM Lab">
+<meta property="og:description" content="ABC 재고 분석 도구 - 파레토 원칙에 따라 SKU를 소비가치 기준으로 A/B/C 등급으로 자동 분류합니다.">
+<meta property="og:url" content="https://procurement-toolkit-eight.vercel.app/abc-inventory-analysis.html">
+<meta property="og:image" content="https://procurement-toolkit-eight.vercel.app/assets/hero-team.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="ABC 재고 분석 도구 — CBM Lab">
+<meta name="twitter:description" content="ABC 재고 분석 도구 - 파레토 원칙에 따라 SKU를 소비가치 기준으로 A/B/C 등급으로 자동 분류합니다.">
+<meta name="twitter:image" content="https://procurement-toolkit-eight.vercel.app/assets/hero-team.jpg">
+
+<link rel="alternate" hreflang="ko" href="https://procurement-toolkit-eight.vercel.app/abc-inventory-analysis.html">
+<link rel="alternate" hreflang="en" href="https://procurement-toolkit-eight.vercel.app/en/abc-inventory-analysis.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@800;900&display=swap" rel="stylesheet">
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  :root{--accent:#2563EB;--accent-light:#DBEAFE;--accent-dark:#1D4ED8;--slate-50:#F8FAFC;--slate-100:#F1F5F9;--slate-200:#E2E8F0;--slate-300:#CBD5E1;--slate-400:#94A3B8;--slate-500:#64748B;--slate-600:#475569;--slate-700:#334155;--slate-800:#1E293B;--slate-900:#0F172A;--success:#0F766E;--success-light:#D1FAE5;--warn:#B45309;--warn-light:#FEF3C7;--danger:#B91C1C;--danger-light:#FEE2E2;--radius:8px;--radius-lg:12px;--shadow-sm:0 1px 2px rgba(0,0,0,.05);font-family:'Pretendard','Apple SD Gothic Neo',system-ui,-apple-system,sans-serif}
+  body{background:var(--slate-50);color:var(--slate-800);font-size:14px;line-height:1.6}
+  header{background:#fff;border-bottom:1px solid var(--slate-200)}
+  .header-inner{max-width:1300px;margin:0 auto;padding:16px 24px;display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}
+  .logo-mark{font-size:20px;font-weight:800;color:var(--slate-900);text-decoration:none;font-family:'Space Grotesk','Pretendard',sans-serif;letter-spacing:-0.4px;}
+  .nav-right{display:flex;align-items:center;gap:10px}
+  .nav-link{font-size:13px;font-weight:600;color:var(--slate-500);text-decoration:none;padding:7px 12px;border-radius:6px}
+  .nav-link:hover{background:var(--slate-100)}
+  .lang-switch{font-size:12px;font-weight:700;color:var(--accent);text-decoration:none;padding:6px 12px;border:1px solid var(--accent-light);border-radius:999px;background:var(--accent-light)}
+  .lang-switch:hover{background:#BFDBFE}
+
+  .hero{background:#fff;border-bottom:1px solid var(--slate-200);padding:28px 24px 24px}
+  .hero-inner{max-width:1300px;margin:0 auto}
+  .hero h1{font-size:24px;font-weight:700;color:var(--slate-900);margin-bottom:6px;letter-spacing:-0.3px}
+  .hero p{font-size:14px;color:var(--slate-500);max-width:740px}
+  .hero-tags{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}
+  .tag{background:var(--slate-100);color:var(--slate-600);font-size:11px;font-weight:500;padding:3px 10px;border-radius:4px;border:1px solid var(--slate-200)}
+
+  .main{max-width:1300px;margin:0 auto;padding:28px 24px 60px}
+  .card{background:#fff;border:1px solid var(--slate-200);border-radius:var(--radius-lg);box-shadow:var(--shadow-sm);margin-bottom:20px}
+  .card-header{padding:16px 20px;border-bottom:1px solid var(--slate-100);display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+  .card-title{font-size:14px;font-weight:700;color:var(--slate-800)}
+  .card-body{padding:20px;overflow-x:auto}
+
+  .threshold-row{display:flex;gap:20px;align-items:center;margin-bottom:16px;flex-wrap:wrap}
+  .threshold-item{display:flex;align-items:center;gap:8px;font-size:12.5px;font-weight:600;color:var(--slate-600)}
+  .threshold-item input{width:60px;border:1px solid var(--slate-200);border-radius:6px;padding:6px 8px;font-size:13px;text-align:center}
+
+  .abc-table{width:100%;border-collapse:collapse;min-width:680px}
+  .abc-table th{font-size:10.5px;color:var(--slate-400);text-transform:uppercase;text-align:left;padding:8px 10px;border-bottom:2px solid var(--slate-100)}
+  .abc-table td{padding:6px 10px;border-bottom:1px solid var(--slate-100)}
+  .abc-table input{width:100%;border:1px solid var(--slate-200);border-radius:6px;padding:7px 8px;font-size:13px;font-family:inherit}
+  .del-btn{width:26px;height:26px;border:1px solid var(--slate-200);border-radius:6px;background:#fff;color:var(--slate-400);cursor:pointer}
+  .del-btn:hover{border-color:var(--danger);color:var(--danger)}
+  .btn-add-row{width:100%;padding:9px;border:1px dashed var(--slate-300);border-radius:8px;background:#fff;color:var(--slate-500);font-size:12px;font-weight:600;cursor:pointer;margin-top:10px}
+  .btn-add-row:hover{border-color:var(--accent);color:var(--accent)}
+
+  .class-pill{font-size:11px;font-weight:800;padding:3px 10px;border-radius:999px}
+  .class-pill.A{background:var(--danger-light);color:var(--danger)}
+  .class-pill.B{background:var(--warn-light);color:var(--warn)}
+  .class-pill.C{background:var(--success-light);color:var(--success)}
+
+  .summary-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-top:16px}
+  .summary-card{border-radius:10px;padding:16px;text-align:center}
+  .summary-card.A{background:var(--danger-light)}
+  .summary-card.B{background:var(--warn-light)}
+  .summary-card.C{background:var(--success-light)}
+  .summary-card .cls-title{font-size:15px;font-weight:800}
+  .summary-card.A .cls-title{color:var(--danger)}
+  .summary-card.B .cls-title{color:var(--warn)}
+  .summary-card.C .cls-title{color:var(--success)}
+  .summary-card .stat{font-size:11.5px;color:var(--slate-600);margin-top:6px}
+
+  .notice-box{background:var(--accent-light);border:1px solid #BFDBFE;border-radius:var(--radius);padding:10px 14px;font-size:12px;color:#1E40AF;margin-top:14px;line-height:1.6}
+
+  .faq-item{border-bottom:1px solid var(--slate-100);padding:12px 0}
+  .faq-item:last-child{border-bottom:none}
+  .faq-item summary{cursor:pointer;font-weight:700;font-size:13px;color:var(--slate-800);list-style:none;outline:none}
+  .faq-item summary::-webkit-details-marker{display:none}
+  .faq-item summary::before{content:'Q. ';color:var(--accent)}
+  .faq-item p{margin-top:8px;font-size:12.5px;color:var(--slate-600);line-height:1.7;padding-left:2px}
+
+  .ad-area-main{max-width:1300px;margin:0 auto;padding:0 24px 28px}
+  .ad-main-box{border:1px dashed #CBD5E1;border-radius:10px;background:#fff;height:90px;display:flex;flex-direction:column;align-items:center;justify-content:center;color:var(--slate-400);font-size:12px;gap:4px}
+  .ad-main-box strong{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:#94A3B8}
+  .faq-wrap{max-width:1100px;margin:20px auto 0;padding:0 24px}
+
+  footer{background:#0F172A;color:#94A3B8;padding:24px;font-size:12px}
+  .footer-inner{max-width:1300px;margin:0 auto;display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
+  .footer-logo{font-size:15px;font-weight:800;color:#fff;font-family:'Space Grotesk','Pretendard',sans-serif;}
+  .footer-link{color:#94A3B8;text-decoration:none;font-size:11px;margin-right:14px}
+
+  @media print{.ad-area-main,.ad-main-box,header,footer{display:none !important}}
+  @media (max-width:640px){.ad-area-main{padding:0 16px 20px}.faq-wrap{padding:0 16px}.summary-grid{grid-template-columns:1fr}}
+</style>
+
+<script src="https://cdn.amplitude.com/script/d4aa9301e01f4600b5eeb018e160aa7c.js"></script>
+<script>
+  window.amplitude.init("d4aa9301e01f4600b5eeb018e160aa7c", { fetchRemoteConfig: true, autocapture: true });
+  window.amplitude.track('CBM Page View', {category: 'calc', page: 'abc-inventory-analysis', lang: 'ko'});
+</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-W1YBL5BGGK"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-W1YBL5BGGK');
+</script>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute;" aria-hidden="true">
+  <defs>
+    <linearGradient id="cbmGradH" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#14B8A6"/><stop offset="100%" stop-color="#0B2A4A"/></linearGradient>
+    <linearGradient id="cbmGradF" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#2DD4BF"/><stop offset="100%" stop-color="#5B9EFF"/></linearGradient>
+  </defs>
+</svg>
+<header><div class="header-inner">
+  <a href="index.html" class="logo-mark"><svg width="26" height="26" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align:middle;margin-right:8px;flex-shrink:0;"><path d="M20 2.5L36.5 11.5V28.5L20 37.5L3.5 28.5V11.5L20 2.5Z" stroke="url(#cbmGradH)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M20 2.5V20M20 20L36.5 11.5M20 20L3.5 11.5" stroke="url(#cbmGradH)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/></svg><span style="font-family:'Montserrat','Space Grotesk',sans-serif;font-weight:800;letter-spacing:-1.1px;background:linear-gradient(90deg,#14B8A6 0%,#1E7A8C 45%,#0B2A4A 100%);-webkit-background-clip:text;background-clip:text;color:transparent;">CBMLab</span></a>
+  <div class="nav-right">
+    <a href="index.html" class="nav-link">← 전체 도구</a>
+    <a href="en/abc-inventory-analysis.html" class="lang-switch">EN</a>
+  </div>
+</div></header>
+
+<section class="hero"><div class="hero-inner">
+  <h1>ABC 재고 분석 도구</h1>
+  <p>수백 개 SKU를 다 똑같이 관리하지 마세요. 파레토 원칙(80/20 법칙)에 따라 소비가치 기준 상위 품목(A)에 관리 자원을 집중하고, 하위 품목(C)은 간소화하세요.</p>
+  <div class="hero-tags"><span class="tag">파레토 분석</span><span class="tag">재고 우선순위</span><span class="tag">SKU 등급 분류</span></div>
+</div></section>
+
+<div class="main">
+  <div class="card">
+    <div class="card-header"><div class="card-title">SKU 목록 (소비가치 = 연간 수요 × 단가)</div></div>
+    <div class="card-body">
+      <div class="threshold-row">
+        <div class="threshold-item">A등급 누적 기준 <input type="number" id="thresholdA" value="80" min="1" max="99" oninput="calc()">%</div>
+        <div class="threshold-item">B등급 누적 기준 <input type="number" id="thresholdB" value="95" min="1" max="99" oninput="calc()">%</div>
+        <span style="font-size:11px;color:var(--slate-400);">(업계 표준: 80% / 95%, 조정 가능)</span>
+      </div>
+      <table class="abc-table" id="abcTable"></table>
+      <button class="btn-add-row" onclick="addRow()">+ SKU 추가</button>
+      <div class="summary-grid" id="summaryGrid"></div>
+      <div class="notice-box">💡 <strong>A등급</strong>은 정밀 수요예측·잦은 재고실사·긴밀한 공급업체 관리를, <strong>C등급</strong>은 간단한 발주규칙과 넉넉한 안전재고로 관리 부담을 줄이는 것이 일반적인 전략입니다.</div>
+    </div>
+  </div>
+</div>
+
+<div style="max-width:1300px;margin:0 auto;padding:0 24px 30px;">
+  <div class="notice-box">🔄 A등급 품목의 재주문 시점을 정교하게 계산하려면 <a href="inventory-planning-calculator.html" style="color:#1E40AF;font-weight:700;">EOQ·안전재고 계산기</a>를 확인해보세요.</div>
+</div>
+
+<!-- AD -->
+<div class="ad-area-main" role="complementary" aria-label="하단 광고 영역">
+  <div class="ad-main-box"><strong>Advertisement</strong>광고 영역 (Google AdSense)</div>
+</div>
+
+<div class="faq-wrap">
+  <div class="card">
+    <div class="card-header"><div class="card-title">자주 묻는 질문</div></div>
+    <div class="card-body">
+      <details class="faq-item"><summary>왜 80%/95% 기준을 쓰나요?</summary><p>파레토 원칙(80/20 법칙)에서 나온 업계 표준 기준입니다. 다만 절대적인 규칙은 아니라서, 회사 상황에 맞게 70%/90%처럼 조정해서 쓰는 경우도 많습니다.</p></details>
+      <details class="faq-item"><summary>A등급 품목이 왜 이렇게 적게 나오나요?</summary><p>정상입니다. 보통 전체 SKU의 10~20% 정도가 A등급으로 분류되고, 이 소수의 품목이 전체 소비가치의 70~80%를 차지하는 게 파레토 분포의 특징입니다.</p></details>
+      <details class="faq-item"><summary>소비가치(Consumption Value) 대신 다른 기준으로 분류할 수도 있나요?</summary><p>네, 매출액·이익 기여도·품절 시 영향도 등 다른 기준으로도 ABC 분석을 할 수 있습니다. 다만 가장 널리 쓰이는 기준은 연간 소비가치(수요×단가)입니다.</p></details>
+    </div>
+  </div>
+</div>
+
+<footer><div class="footer-inner">
+  <div class="footer-logo"><svg width="24" height="24" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align:middle;margin-right:9px;flex-shrink:0;"><path d="M20 2.5L36.5 11.5V28.5L20 37.5L3.5 28.5V11.5L20 2.5Z" stroke="url(#cbmGradF)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M20 2.5V20M20 20L36.5 11.5M20 20L3.5 11.5" stroke="url(#cbmGradF)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/></svg>CBM<span style="color:#2563EB;">Lab</span></div>
+  <nav><a href="index.html" class="footer-link">전체 도구</a><a href="privacy.html" class="footer-link">개인정보 처리방침</a></nav>
+</div></footer>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {"@type":"Question","name":"왜 80%/95% 기준을 쓰나요?","acceptedAnswer":{"@type":"Answer","text":"파레토 원칙(80/20 법칙)에서 나온 업계 표준 기준이며, 절대적인 규칙은 아니라 회사 상황에 맞게 조정해서 쓰는 경우도 많습니다."}},
+    {"@type":"Question","name":"A등급 품목이 왜 이렇게 적게 나오나요?","acceptedAnswer":{"@type":"Answer","text":"정상이며, 보통 전체 SKU의 10~20%가 A등급으로 분류되고 이 소수 품목이 전체 소비가치의 70~80%를 차지하는 것이 파레토 분포의 특징입니다."}},
+    {"@type":"Question","name":"소비가치 대신 다른 기준으로 분류할 수도 있나요?","acceptedAnswer":{"@type":"Answer","text":"네, 매출액·이익 기여도 등 다른 기준으로도 가능하지만, 가장 널리 쓰이는 기준은 연간 소비가치(수요×단가)입니다."}}
+  ]
+}
+</script>
+
+<script>
+let items = [];
+let itemCounter = 0;
+
+function addRow(name, demand, cost){
+  itemCounter++;
+  items.push({id: itemCounter, name: name||'', demand: demand??0, cost: cost??0});
+  calc();
+}
+function removeRow(id){
+  items = items.filter(i=>i.id!==id);
+  calc();
+}
+function updateRow(id, field, value, isText){
+  const it = items.find(i=>i.id===id);
+  if(!it) return;
+  it[field] = isText ? value : (parseFloat(value)||0);
+  calc();
+}
+
+function fmt(v,d=0){ return (v||0).toLocaleString('ko-KR',{minimumFractionDigits:d,maximumFractionDigits:d}); }
+
+function calc(){
+  const thresholdA = parseFloat(document.getElementById('thresholdA').value)||80;
+  const thresholdB = parseFloat(document.getElementById('thresholdB').value)||95;
+
+  const withValue = items.map(it => ({...it, value: it.demand * it.cost}));
+  const sortedIds = [...withValue].sort((a,b)=>b.value-a.value).map(it=>it.id);
+  const totalValue = withValue.reduce((s,it)=>s+it.value,0);
+
+  let cumValue = 0;
+  const classMap = {};
+  const cumMap = {};
+  sortedIds.forEach(id=>{
+    const it = withValue.find(w=>w.id===id);
+    cumValue += it.value;
+    const cumPct = totalValue>0 ? (cumValue/totalValue*100) : 0;
+    let cls = 'C';
+    if(cumPct <= thresholdA) cls = 'A';
+    else if(cumPct <= thresholdB) cls = 'B';
+    classMap[id] = cls;
+    cumMap[id] = cumPct;
+  });
+
+  const table = document.getElementById('abcTable');
+  let html = '<thead><tr><th style="width:26%">SKU명</th><th style="width:16%">연간 수요</th><th style="width:16%">단가</th><th style="width:16%">소비가치</th><th style="width:14%">누적%</th><th style="width:8%">등급</th><th></th></tr></thead><tbody>';
+
+  // 화면에는 소비가치 내림차순으로 표시
+  sortedIds.forEach(id=>{
+    const it = withValue.find(w=>w.id===id);
+    html += `<tr>
+      <td><input type="text" value="${it.name}" placeholder="예: 부품 A" oninput="updateRow(${id},'name',this.value,true)"></td>
+      <td><input type="number" value="${it.demand}" oninput="updateRow(${id},'demand',this.value)"></td>
+      <td><input type="number" value="${it.cost}" step="0.01" oninput="updateRow(${id},'cost',this.value)"></td>
+      <td style="font-weight:700;">${fmt(it.value)}</td>
+      <td>${cumMap[id].toFixed(1)}%</td>
+      <td><span class="class-pill ${classMap[id]}">${classMap[id]}</span></td>
+      <td><button class="del-btn" onclick="removeRow(${id})">✕</button></td>
+    </tr>`;
+  });
+  html += '</tbody>';
+  table.innerHTML = html;
+
+  const counts = {A:0,B:0,C:0}, values = {A:0,B:0,C:0};
+  withValue.forEach(it=>{
+    const cls = classMap[it.id];
+    counts[cls]++;
+    values[cls] += it.value;
+  });
+
+  const summaryGrid = document.getElementById('summaryGrid');
+  const totalItems = items.length || 1;
+  summaryGrid.innerHTML = ['A','B','C'].map(cls=>`
+    <div class="summary-card ${cls}">
+      <div class="cls-title">${cls}등급</div>
+      <div class="stat">품목 수: ${counts[cls]}개 (${(counts[cls]/totalItems*100).toFixed(0)}%)</div>
+      <div class="stat">소비가치 비중: ${totalValue>0?(values[cls]/totalValue*100).toFixed(1):0}%</div>
+    </div>
+  `).join('');
+}
+
+addRow('베어링 어셈블리', 500, 120);
+addRow('구동모터', 100, 450);
+addRow('볼트·너트 세트', 20000, 0.15);
+addRow('제어보드', 300, 180);
+addRow('센서 모듈', 800, 35);
+addRow('케이블 하네스', 1500, 8);
+addRow('포장 박스', 10000, 0.5);
+addRow('라벨 스티커', 15000, 0.05);
+</script>
+</body>
+</html>

@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="OEE(설비종합효율) 계산기 - 가동률·성능·양품률을 각각 계산해서 어디서 손실이 가장 큰지 찾아냅니다. 세계 최고 수준(85%) 대비 우리 설비가 어디쯤인지 확인하세요.">
+<meta name="keywords" content="OEE 계산기, 설비종합효율, overall equipment effectiveness calculator, 가동률 계산, TPM 지표, 제조 생산성 지표">
+<title>OEE(설비종합효율) 계산기 — CBM Lab</title>
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="icon" href="favicon.ico" type="image/x-icon">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="canonical" href="https://procurement-toolkit-eight.vercel.app/oee-calculator.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="CBM Lab">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:title" content="OEE(설비종합효율) 계산기 — CBM Lab">
+<meta property="og:description" content="OEE(설비종합효율) 계산기 - 가동률·성능·양품률을 각각 계산해서 어디서 손실이 가장 큰지 찾아냅니다.">
+<meta property="og:url" content="https://procurement-toolkit-eight.vercel.app/oee-calculator.html">
+<meta property="og:image" content="https://procurement-toolkit-eight.vercel.app/assets/hero-team.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="OEE(설비종합효율) 계산기 — CBM Lab">
+<meta name="twitter:description" content="OEE(설비종합효율) 계산기 - 가동률·성능·양품률을 각각 계산해서 어디서 손실이 가장 큰지 찾아냅니다.">
+<meta name="twitter:image" content="https://procurement-toolkit-eight.vercel.app/assets/hero-team.jpg">
+
+<link rel="alternate" hreflang="ko" href="https://procurement-toolkit-eight.vercel.app/oee-calculator.html">
+<link rel="alternate" hreflang="en" href="https://procurement-toolkit-eight.vercel.app/en/oee-calculator.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@800;900&display=swap" rel="stylesheet">
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  :root{--accent:#2563EB;--accent-light:#DBEAFE;--accent-dark:#1D4ED8;--slate-50:#F8FAFC;--slate-100:#F1F5F9;--slate-200:#E2E8F0;--slate-300:#CBD5E1;--slate-400:#94A3B8;--slate-500:#64748B;--slate-600:#475569;--slate-700:#334155;--slate-800:#1E293B;--slate-900:#0F172A;--success:#0F766E;--success-light:#D1FAE5;--warn:#B45309;--warn-light:#FEF3C7;--danger:#B91C1C;--danger-light:#FEE2E2;--radius:8px;--radius-lg:12px;--shadow-sm:0 1px 2px rgba(0,0,0,.05);font-family:'Pretendard','Apple SD Gothic Neo',system-ui,-apple-system,sans-serif}
+  body{background:var(--slate-50);color:var(--slate-800);font-size:14px;line-height:1.6}
+  header{background:#fff;border-bottom:1px solid var(--slate-200)}
+  .header-inner{max-width:1200px;margin:0 auto;padding:16px 24px;display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}
+  .logo-mark{font-size:20px;font-weight:800;color:var(--slate-900);text-decoration:none;font-family:'Space Grotesk','Pretendard',sans-serif;letter-spacing:-0.4px;}
+  .nav-right{display:flex;align-items:center;gap:10px}
+  .nav-link{font-size:13px;font-weight:600;color:var(--slate-500);text-decoration:none;padding:7px 12px;border-radius:6px}
+  .nav-link:hover{background:var(--slate-100)}
+  .lang-switch{font-size:12px;font-weight:700;color:var(--accent);text-decoration:none;padding:6px 12px;border:1px solid var(--accent-light);border-radius:999px;background:var(--accent-light)}
+  .lang-switch:hover{background:#BFDBFE}
+
+  .hero{background:#fff;border-bottom:1px solid var(--slate-200);padding:28px 24px 24px}
+  .hero-inner{max-width:1200px;margin:0 auto}
+  .hero h1{font-size:24px;font-weight:700;color:var(--slate-900);margin-bottom:6px;letter-spacing:-0.3px}
+  .hero p{font-size:14px;color:var(--slate-500);max-width:740px}
+  .hero-tags{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}
+  .tag{background:var(--slate-100);color:var(--slate-600);font-size:11px;font-weight:500;padding:3px 10px;border-radius:4px;border:1px solid var(--slate-200)}
+
+  .main{max-width:1200px;margin:0 auto;padding:28px 24px 60px;display:grid;grid-template-columns:1fr 380px;gap:24px;align-items:start}
+  .card{background:#fff;border:1px solid var(--slate-200);border-radius:var(--radius-lg);box-shadow:var(--shadow-sm);margin-bottom:20px}
+  .card-header{padding:16px 20px;border-bottom:1px solid var(--slate-100)}
+  .card-title{font-size:14px;font-weight:700;color:var(--slate-800)}
+  .card-body{padding:20px}
+
+  .field-label{font-size:12.5px;font-weight:600;color:var(--slate-600);margin-bottom:5px;display:block}
+  .field-sub{font-size:11px;color:var(--slate-400);margin-bottom:5px}
+  .inp{width:100%;border:1px solid var(--slate-200);border-radius:8px;padding:9px 11px;font-size:13.5px;font-family:inherit}
+  .inp:focus{outline:none;border-color:var(--accent)}
+  .field-group{margin-bottom:16px}
+  .field-row2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+
+  .factor-row{display:flex;align-items:center;gap:14px;padding:14px 0;border-bottom:1px solid var(--slate-100)}
+  .factor-row:last-child{border-bottom:none}
+  .factor-ring{width:56px;height:56px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;color:#fff}
+  .factor-info{flex:1}
+  .factor-name{font-size:13px;font-weight:700;color:var(--slate-800)}
+  .factor-formula{font-size:11px;color:var(--slate-400)}
+
+  .oee-result{text-align:center;padding:22px;border-radius:12px;margin-bottom:14px}
+  .oee-result .value{font-size:36px;font-weight:800}
+  .oee-result .label{font-size:12px;font-weight:700;text-transform:uppercase;margin-top:4px}
+  .oee-result.world-class{background:var(--success-light)}
+  .oee-result.world-class .value, .oee-result.world-class .label{color:var(--success)}
+  .oee-result.typical{background:var(--warn-light)}
+  .oee-result.typical .value, .oee-result.typical .label{color:var(--warn)}
+  .oee-result.poor{background:var(--danger-light)}
+  .oee-result.poor .value, .oee-result.poor .label{color:var(--danger)}
+
+  .benchmark-bar{position:relative;height:8px;background:var(--slate-100);border-radius:4px;margin:14px 0 20px;overflow:visible}
+  .benchmark-fill{position:absolute;top:0;left:0;height:100%;background:var(--accent);border-radius:4px}
+  .benchmark-marker{position:absolute;top:-4px;width:2px;height:16px;background:var(--slate-400)}
+  .benchmark-marker-label{position:absolute;top:12px;font-size:9.5px;color:var(--slate-400);white-space:nowrap;transform:translateX(-50%)}
+
+  .notice-box{background:var(--accent-light);border:1px solid #BFDBFE;border-radius:var(--radius);padding:10px 14px;font-size:12px;color:#1E40AF;margin-top:14px;line-height:1.6}
+  .warn-box{background:var(--warn-light);border:1px solid #FDE68A;border-radius:var(--radius);padding:12px 14px;font-size:12px;color:#78350F;margin-top:14px;line-height:1.6}
+
+  .faq-item{border-bottom:1px solid var(--slate-100);padding:12px 0}
+  .faq-item:last-child{border-bottom:none}
+  .faq-item summary{cursor:pointer;font-weight:700;font-size:13px;color:var(--slate-800);list-style:none;outline:none}
+  .faq-item summary::-webkit-details-marker{display:none}
+  .faq-item summary::before{content:'Q. ';color:var(--accent)}
+  .faq-item p{margin-top:8px;font-size:12.5px;color:var(--slate-600);line-height:1.7;padding-left:2px}
+
+  .ad-area-main{max-width:1200px;margin:0 auto;padding:0 24px 28px}
+  .ad-main-box{border:1px dashed #CBD5E1;border-radius:10px;background:#fff;height:90px;display:flex;flex-direction:column;align-items:center;justify-content:center;color:var(--slate-400);font-size:12px;gap:4px}
+  .ad-main-box strong{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:#94A3B8}
+  .faq-wrap{max-width:1000px;margin:20px auto 0;padding:0 24px}
+
+  footer{background:#0F172A;color:#94A3B8;padding:24px;font-size:12px}
+  .footer-inner{max-width:1200px;margin:0 auto;display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
+  .footer-logo{font-size:15px;font-weight:800;color:#fff;font-family:'Space Grotesk','Pretendard',sans-serif;}
+  .footer-link{color:#94A3B8;text-decoration:none;font-size:11px;margin-right:14px}
+
+  @media print{.ad-area-main,.ad-main-box,header,footer{display:none !important}.main{grid-template-columns:1fr}}
+  @media (max-width:900px){.main{grid-template-columns:1fr}}
+  @media (max-width:640px){.ad-area-main{padding:0 16px 20px}.faq-wrap{padding:0 16px}.field-row2{grid-template-columns:1fr}}
+</style>
+
+<script src="https://cdn.amplitude.com/script/d4aa9301e01f4600b5eeb018e160aa7c.js"></script>
+<script>
+  window.amplitude.init("d4aa9301e01f4600b5eeb018e160aa7c", { fetchRemoteConfig: true, autocapture: true });
+  window.amplitude.track('CBM Page View', {category: 'calc', page: 'oee-calculator', lang: 'ko'});
+</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-W1YBL5BGGK"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-W1YBL5BGGK');
+</script>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute;" aria-hidden="true">
+  <defs>
+    <linearGradient id="cbmGradH" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#14B8A6"/><stop offset="100%" stop-color="#0B2A4A"/></linearGradient>
+    <linearGradient id="cbmGradF" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#2DD4BF"/><stop offset="100%" stop-color="#5B9EFF"/></linearGradient>
+  </defs>
+</svg>
+<header><div class="header-inner">
+  <a href="index.html" class="logo-mark"><svg width="26" height="26" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align:middle;margin-right:8px;flex-shrink:0;"><path d="M20 2.5L36.5 11.5V28.5L20 37.5L3.5 28.5V11.5L20 2.5Z" stroke="url(#cbmGradH)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M20 2.5V20M20 20L36.5 11.5M20 20L3.5 11.5" stroke="url(#cbmGradH)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/></svg><span style="font-family:'Montserrat','Space Grotesk',sans-serif;font-weight:800;letter-spacing:-1.1px;background:linear-gradient(90deg,#14B8A6 0%,#1E7A8C 45%,#0B2A4A 100%);-webkit-background-clip:text;background-clip:text;color:transparent;">CBMLab</span></a>
+  <div class="nav-right">
+    <a href="index.html" class="nav-link">← 전체 도구</a>
+    <a href="en/oee-calculator.html" class="lang-switch">EN</a>
+  </div>
+</div></header>
+
+<section class="hero"><div class="hero-inner">
+  <h1>OEE(설비종합효율) 계산기</h1>
+  <p>설비가 왜 목표만큼 못 뽑아내는지 감으로 짐작하지 마세요. 가동률·성능·양품률로 나눠서 계산하면, 어디서 손실이 가장 큰지(고장정지인지, 속도저하인지, 불량인지) 바로 보입니다.</p>
+  <div class="hero-tags"><span class="tag">TPM 핵심지표</span><span class="tag">가동률·성능·양품률</span><span class="tag">설비 생산성</span></div>
+</div></section>
+
+<div class="main">
+  <section>
+    <div class="card">
+      <div class="card-header"><div class="card-title">가동 정보 입력</div></div>
+      <div class="card-body">
+        <div class="field-row2">
+          <div class="field-group">
+            <label class="field-label">계획 가동시간 (분)</label>
+            <div class="field-sub">예: 8시간 교대 = 480분</div>
+            <input type="number" class="inp" id="plannedTime" value="480" min="0" oninput="calc()">
+          </div>
+          <div class="field-group">
+            <label class="field-label">비가동시간 (분)</label>
+            <div class="field-sub">고장, 교체작업, 계획정지 등</div>
+            <input type="number" class="inp" id="downtime" value="48" min="0" oninput="calc()">
+          </div>
+        </div>
+        <div class="field-row2">
+          <div class="field-group">
+            <label class="field-label">이론 사이클타임 (분/개)</label>
+            <div class="field-sub">설비가 낼 수 있는 최고 속도 기준</div>
+            <input type="number" class="inp" id="idealCycle" value="0.5" min="0" step="0.01" oninput="calc()">
+          </div>
+          <div class="field-group">
+            <label class="field-label">총 생산수량 (개)</label>
+            <input type="number" class="inp" id="totalCount" value="820" min="0" oninput="calc()">
+          </div>
+        </div>
+        <div class="field-group">
+          <label class="field-label">양품 수량 (개)</label>
+          <div class="field-sub">불량·재작업 제외한 첫 검사 합격 수량</div>
+          <input type="number" class="inp" id="goodCount" value="804" min="0" oninput="calc()">
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header"><div class="card-title">요인별 분석</div></div>
+      <div class="card-body" id="factorWrap"></div>
+    </div>
+  </section>
+
+  <aside>
+    <div class="card">
+      <div class="card-header"><div class="card-title">종합 OEE</div></div>
+      <div class="card-body">
+        <div id="resultWrap"></div>
+        <div class="notice-box">💡 업계 평균 기준: 자동차 조립 85~92%, 식품가공 75~85%, 제약 70~80%가 세계 최고 수준으로 통합니다. 40% 미만은 개선이 시급한 상태로 봅니다.</div>
+      </div>
+    </div>
+  </aside>
+</div>
+
+<div style="max-width:1200px;margin:0 auto;padding:0 24px 30px;">
+  <div class="notice-box">🔄 설비 구매·교체를 고민 중이라면 <a href="tco-calculator.html" style="color:#1E40AF;font-weight:700;">TCO 계산기</a>로 총소유비용까지 비교해보세요.</div>
+</div>
+
+<!-- AD -->
+<div class="ad-area-main" role="complementary" aria-label="하단 광고 영역">
+  <div class="ad-main-box"><strong>Advertisement</strong>광고 영역 (Google AdSense)</div>
+</div>
+
+<div class="faq-wrap">
+  <div class="card">
+    <div class="card-header"><div class="card-title">자주 묻는 질문</div></div>
+    <div class="card-body">
+      <details class="faq-item"><summary>OEE 100%는 실제로 가능한가요?</summary><p>이론적으로는 가능하지만(고장 없이, 최고속도로, 불량 없이), 실무에서는 거의 불가능합니다. 세계 최고 수준의 공장도 85% 안팎이며, 100%를 목표로 하기보다는 "지난달보다 나아졌는가"를 보는 게 실용적입니다.</p></details>
+      <details class="faq-item"><summary>가동률·성능·양품률 중 뭐가 가장 개선하기 쉬운가요?</summary><p>정해진 답은 없지만, 일반적으로 양품률(품질) 개선이 공정 자체를 바꾸는 경우가 많아 시간이 걸리고, 가동률(고장정지 감소)은 예방보전으로 비교적 빠르게 개선 가능한 경우가 많습니다.</p></details>
+      <details class="faq-item"><summary>이론 사이클타임은 어떻게 구하나요?</summary><p>설비 제조사가 제공하는 정격 속도(spec) 또는 실측 최고속도 구간의 평균값을 사용합니다. 이 값이 너무 낙관적으로 잡히면 성능(Performance) 수치가 실제보다 낮게 나올 수 있습니다.</p></details>
+    </div>
+  </div>
+</div>
+
+<footer><div class="footer-inner">
+  <div class="footer-logo"><svg width="24" height="24" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align:middle;margin-right:9px;flex-shrink:0;"><path d="M20 2.5L36.5 11.5V28.5L20 37.5L3.5 28.5V11.5L20 2.5Z" stroke="url(#cbmGradF)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M20 2.5V20M20 20L36.5 11.5M20 20L3.5 11.5" stroke="url(#cbmGradF)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/></svg>CBM<span style="color:#2563EB;">Lab</span></div>
+  <nav><a href="index.html" class="footer-link">전체 도구</a><a href="privacy.html" class="footer-link">개인정보 처리방침</a></nav>
+</div></footer>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {"@type":"Question","name":"OEE 100%는 실제로 가능한가요?","acceptedAnswer":{"@type":"Answer","text":"이론적으로는 가능하지만 실무에서는 거의 불가능하며, 세계 최고 수준의 공장도 85% 안팎이라 100%보다는 지난 기간 대비 개선 여부를 보는 것이 실용적입니다."}},
+    {"@type":"Question","name":"가동률·성능·양품률 중 뭐가 가장 개선하기 쉬운가요?","acceptedAnswer":{"@type":"Answer","text":"정해진 답은 없지만, 양품률 개선은 공정 자체를 바꿔야 해 시간이 걸리고, 가동률은 예방보전으로 비교적 빠르게 개선되는 경우가 많습니다."}},
+    {"@type":"Question","name":"이론 사이클타임은 어떻게 구하나요?","acceptedAnswer":{"@type":"Answer","text":"설비 제조사가 제공하는 정격 속도 또는 실측 최고속도 구간의 평균값을 사용하며, 너무 낙관적으로 잡으면 성능 수치가 실제보다 낮게 나올 수 있습니다."}}
+  ]
+}
+</script>
+
+<script>
+function fmt(v,d=1){ return (v||0).toFixed(d); }
+
+function calc(){
+  const planned = parseFloat(document.getElementById('plannedTime').value)||0;
+  const downtime = parseFloat(document.getElementById('downtime').value)||0;
+  const idealCycle = parseFloat(document.getElementById('idealCycle').value)||0;
+  const totalCount = parseFloat(document.getElementById('totalCount').value)||0;
+  const goodCount = parseFloat(document.getElementById('goodCount').value)||0;
+
+  const runTime = Math.max(planned - downtime, 0);
+  const availability = planned>0 ? runTime/planned : 0;
+  const performance = runTime>0 ? Math.min((idealCycle*totalCount)/runTime, 1.2) : 0;
+  const quality = totalCount>0 ? goodCount/totalCount : 0;
+  const oee = availability * performance * quality;
+
+  const factors = [
+    {name:'가동률 (Availability)', formula:'가동시간 ÷ 계획시간', value:availability, color:'#2563EB'},
+    {name:'성능 (Performance)', formula:'(이론CT × 생산량) ÷ 가동시간', value:performance, color:'#0F766E'},
+    {name:'양품률 (Quality)', formula:'양품수량 ÷ 총생산량', value:quality, color:'#B45309'},
+  ];
+
+  document.getElementById('factorWrap').innerHTML = factors.map(f=>`
+    <div class="factor-row">
+      <div class="factor-ring" style="background:${f.color};">${(f.value*100).toFixed(0)}%</div>
+      <div class="factor-info">
+        <div class="factor-name">${f.name}</div>
+        <div class="factor-formula">${f.formula}</div>
+      </div>
+    </div>
+  `).join('');
+
+  let cls = 'poor', label = '개선 시급';
+  if(oee >= 0.85){ cls='world-class'; label='세계 최고 수준'; }
+  else if(oee >= 0.60){ cls='typical'; label='일반적인 수준'; }
+
+  const resultWrap = document.getElementById('resultWrap');
+  const oeePct = Math.min(oee*100, 100);
+  resultWrap.innerHTML = `
+    <div class="oee-result ${cls}">
+      <div class="value">${(oee*100).toFixed(1)}%</div>
+      <div class="label">${label}</div>
+    </div>
+    <div class="benchmark-bar">
+      <div class="benchmark-fill" style="width:${oeePct}%;"></div>
+      <div class="benchmark-marker" style="left:40%;"></div>
+      <div class="benchmark-marker-label" style="left:40%;">40%</div>
+      <div class="benchmark-marker" style="left:60%;"></div>
+      <div class="benchmark-marker-label" style="left:60%;">60%</div>
+      <div class="benchmark-marker" style="left:85%;"></div>
+      <div class="benchmark-marker-label" style="left:85%;">85%(세계최고)</div>
+    </div>
+  `;
+}
+
+calc();
+</script>
+</body>
+</html>
