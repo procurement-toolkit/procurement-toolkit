@@ -91,6 +91,19 @@
   .warning-box{background:var(--warning-light);border:1px solid #FDE68A;border-radius:var(--radius);padding:12px 14px;font-size:12px;color:#78350F;margin-top:14px;line-height:1.6}
   .notice-box{background:var(--accent-light);border:1px solid #BFDBFE;border-radius:var(--radius);padding:10px 14px;font-size:12px;color:#1E40AF;margin-top:14px;line-height:1.6}
 
+  .btn-excel{width:100%;padding:12px;border:2px solid var(--accent);border-radius:8px;background:#fff;color:var(--accent);font-size:13.5px;font-weight:700;cursor:pointer;margin-top:14px}
+  .btn-excel:hover{background:var(--accent-light)}
+
+  .ad-gate-overlay{position:fixed;inset:0;background:rgba(15,23,42,.7);display:flex;align-items:center;justify-content:center;z-index:9999;padding:20px}
+  .ad-gate-box{background:#fff;border-radius:14px;max-width:420px;width:100%;padding:24px;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,.3)}
+  .ad-gate-box h3{font-size:16px;font-weight:800;color:var(--slate-900);margin-bottom:8px}
+  .ad-gate-box p{font-size:12.5px;color:var(--slate-500);margin-bottom:16px;line-height:1.6}
+  .ad-gate-slot{border:1px dashed var(--slate-300);border-radius:8px;min-height:100px;display:flex;align-items:center;justify-content:center;margin-bottom:16px;overflow:hidden}
+  .ad-gate-timer{font-size:13px;font-weight:700;color:var(--slate-600);margin-bottom:12px}
+  .ad-gate-btn{width:100%;padding:12px;border:none;border-radius:8px;background:var(--accent);color:#fff;font-size:13.5px;font-weight:700;cursor:pointer}
+  .ad-gate-btn:disabled{background:var(--slate-300);cursor:not-allowed}
+  .ad-gate-cancel{margin-top:10px;font-size:12px;color:var(--slate-400);background:none;border:none;cursor:pointer;text-decoration:underline}
+
   .sim-row{display:flex;align-items:center;gap:10px;margin-top:10px}
   .sim-row input[type=range]{flex:1}
   .sim-val{font-size:13px;font-weight:700;color:var(--slate-800);min-width:52px;text-align:right}
@@ -136,6 +149,7 @@
   gtag('js', new Date());
   gtag('config', 'G-W1YBL5BGGK');
 </script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/exceljs/4.4.0/exceljs.min.js"></script>
 </head>
 <body>
 <svg width="0" height="0" style="position:absolute;" aria-hidden="true">
@@ -199,6 +213,7 @@
         </div>
         <div id="exposureBreakdown"></div>
         <div id="concentrationWarning"></div>
+        <button class="btn-excel" onclick="requestExcelDownload()">📊 Download FX Exposure Analysis (Excel)</button>
       </div>
     </div>
   </aside>
@@ -234,6 +249,24 @@
       <details class="faq-item"><summary>What level of currency concentration is risky?</summary><p>There's no universal threshold, but as a practical rule of thumb, once a single currency crosses 50% of total purchase exposure, your overall cost becomes heavily dependent on that one currency's movement — a reasonable point to consider diversifying.</p></details>
       <details class="faq-item"><summary>Do I need to hedge my FX exposure?</summary><p>Not necessarily. If your exposure is small or your margins have enough cushion, absorbing the risk without hedging can be a reasonable choice. Either way, you need to measure the exposure first before that decision is even possible.</p></details>
     </div>
+  </div>
+</div>
+
+<div class="ad-gate-overlay" id="adGateOverlay" style="display:none;">
+  <div class="ad-gate-box">
+    <h3>📊 Preparing Your Excel File</h3>
+    <p>Please wait while this ad is shown. Your download will start automatically once it's ready.</p>
+    <div class="ad-gate-slot">
+      <ins class="adsbygoogle"
+         style="display:block;width:100%;"
+         data-ad-client="ca-pub-4642197702620430"
+         data-ad-slot="2863170310"
+         data-ad-format="auto"
+         data-full-width-responsive="true"></ins>
+    </div>
+    <div class="ad-gate-timer" id="adGateTimer">Download available in 5s</div>
+    <button class="ad-gate-btn" id="adGateBtn" disabled onclick="completeAdGateDownload()">Start Download</button>
+    <button class="ad-gate-cancel" onclick="closeAdGate()">Cancel</button>
   </div>
 </div>
 
@@ -363,11 +396,112 @@ function calc(){
     <tbody>${impactRows}
       <tr style="font-weight:800;"><td>Total</td><td class="num">$${fmt(totalKrw)}</td><td class="num ${totalCls}">${totalSign}$${fmt(totalDiff)}</td></tr>
     </tbody>`;
+
+  window._fxData = { withKrw: withKrw.filter(r=>r.amount>0), totalKrw, simPct, totalDiff };
 }
 
 addRow('EUR', 350000, 1.09);
 addRow('CNY', 150000, 0.14);
 addRow('JPY', 80000, 0.0068);
+
+// ===== Excel Download (via ad gate) =====
+let adGateTimerInterval = null;
+
+function requestExcelDownload(){
+  if(!window._fxData || window._fxData.totalKrw<=0){
+    alert('Please enter purchase amounts by currency first.');
+    return;
+  }
+  document.getElementById('adGateOverlay').style.display = 'flex';
+  let seconds = 5;
+  const timerEl = document.getElementById('adGateTimer');
+  const btnEl = document.getElementById('adGateBtn');
+  btnEl.disabled = true;
+  timerEl.textContent = `Download available in ${seconds}s`;
+  try{ (adsbygoogle = window.adsbygoogle || []).push({}); }catch(e){}
+
+  clearInterval(adGateTimerInterval);
+  adGateTimerInterval = setInterval(()=>{
+    seconds--;
+    if(seconds <= 0){
+      clearInterval(adGateTimerInterval);
+      timerEl.textContent = 'Ready to download!';
+      btnEl.disabled = false;
+    } else {
+      timerEl.textContent = `Download available in ${seconds}s`;
+    }
+  }, 1000);
+}
+
+function closeAdGate(){
+  clearInterval(adGateTimerInterval);
+  document.getElementById('adGateOverlay').style.display = 'none';
+}
+
+function completeAdGateDownload(){
+  closeAdGate();
+  downloadExcel();
+  if(window.amplitude) window.amplitude.track('Download', {type:'excel', tool:'fx-exposure-calculator'});
+}
+
+async function downloadExcel(){
+  const d = window._fxData;
+  if(!d) return;
+  const NAVY = 'FF0F172A', SUCCESS_LIGHT = 'FFD1FAE5', DANGER_LIGHT = 'FFFEE2E2', SLATE_LIGHT = 'FFF1F5F9';
+
+  const wb = new ExcelJS.Workbook();
+  wb.creator = 'CBM Lab';
+  wb.created = new Date();
+
+  const ws = wb.addWorksheet('FX Exposure Analysis');
+  ws.columns = [{width:12},{width:16},{width:14},{width:16},{width:12}];
+
+  ws.mergeCells('A1:E1');
+  ws.getCell('A1').value = 'CBM Lab — FX Exposure Analysis';
+  ws.getCell('A1').font = { bold:true, size:14, color:{argb:'FFFFFFFF'} };
+  ws.getCell('A1').fill = { type:'pattern', pattern:'solid', fgColor:{argb:NAVY} };
+  ws.getRow(1).height = 26;
+
+  ws.getCell('A2').value = `Generated: ${new Date().toLocaleDateString('en-US')}`;
+  ws.getCell('A2').font = { size:10, color:{argb:'FF64748B'} };
+
+  const h = ws.getRow(4);
+  h.values = ['Currency', 'Annual Purchase', 'FX Rate', 'USD Equivalent', '% of Total'];
+  h.font = { bold:true };
+  h.eachCell(c=>{ c.fill = { type:'pattern', pattern:'solid', fgColor:{argb:SLATE_LIGHT} }; });
+
+  d.withKrw.forEach(r=>{
+    const row = ws.addRow([r.currency, r.amount, r.rate, r.krw, d.totalKrw>0 ? r.krw/d.totalKrw : 0]);
+    row.getCell(2).numFmt = '#,##0';
+    row.getCell(4).numFmt = '"$"#,##0';
+    row.getCell(5).numFmt = '0.0%';
+  });
+
+  const totalRow = ws.addRow(['Total', '', '', d.totalKrw, 1]);
+  totalRow.font = { bold:true };
+  totalRow.eachCell(c=>{ c.fill = { type:'pattern', pattern:'solid', fgColor:{argb:SUCCESS_LIGHT} }; });
+  totalRow.getCell(4).numFmt = '"$"#,##0';
+  totalRow.getCell(5).numFmt = '0.0%';
+
+  ws.addRow([]);
+  const simHeaderRow = ws.addRow([`Scenario: all currencies move ${d.simPct>=0?'+':''}${d.simPct}%`, '', '', '', '']);
+  simHeaderRow.font = { bold:true };
+  const simRow = ws.addRow(['Total USD-Equivalent Change', '', '', d.totalDiff, '']);
+  simRow.font = { bold:true };
+  simRow.eachCell(c=>{ c.fill = { type:'pattern', pattern:'solid', fgColor:{argb: d.totalDiff>=0?DANGER_LIGHT:SUCCESS_LIGHT} }; });
+  simRow.getCell(4).numFmt = '"$"#,##0;[Red]-"$"#,##0';
+
+  const buffer = await wb.xlsx.writeBuffer();
+  const blob = new Blob([buffer], {type:'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'CBMLab-FXExposure-Analysis.xlsx';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
 </script>
 </body>
 </html>

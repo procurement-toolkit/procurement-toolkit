@@ -90,6 +90,19 @@
   .breakdown-row .v{font-weight:700;color:var(--slate-800)}
 
   .notice-box{background:var(--accent-light);border:1px solid #BFDBFE;border-radius:var(--radius);padding:10px 14px;font-size:12px;color:#1E40AF;margin-top:14px;line-height:1.6}
+
+  .btn-excel{width:100%;padding:12px;border:2px solid var(--accent);border-radius:8px;background:#fff;color:var(--accent);font-size:13.5px;font-weight:700;cursor:pointer;margin-top:14px}
+  .btn-excel:hover{background:var(--accent-light)}
+
+  .ad-gate-overlay{position:fixed;inset:0;background:rgba(15,23,42,.7);display:flex;align-items:center;justify-content:center;z-index:9999;padding:20px}
+  .ad-gate-box{background:#fff;border-radius:14px;max-width:420px;width:100%;padding:24px;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,.3)}
+  .ad-gate-box h3{font-size:16px;font-weight:800;color:var(--slate-900);margin-bottom:8px}
+  .ad-gate-box p{font-size:12.5px;color:var(--slate-500);margin-bottom:16px;line-height:1.6}
+  .ad-gate-slot{border:1px dashed var(--slate-300);border-radius:8px;min-height:100px;display:flex;align-items:center;justify-content:center;margin-bottom:16px;overflow:hidden}
+  .ad-gate-timer{font-size:13px;font-weight:700;color:var(--slate-600);margin-bottom:12px}
+  .ad-gate-btn{width:100%;padding:12px;border:none;border-radius:8px;background:var(--accent);color:#fff;font-size:13.5px;font-weight:700;cursor:pointer}
+  .ad-gate-btn:disabled{background:var(--slate-300);cursor:not-allowed}
+  .ad-gate-cancel{margin-top:10px;font-size:12px;color:var(--slate-400);background:none;border:none;cursor:pointer;text-decoration:underline}
   .warn-box{background:var(--warn-light);border:1px solid #FDE68A;border-radius:var(--radius);padding:12px 14px;font-size:12px;color:#78350F;margin-top:14px;line-height:1.6}
 
   .threshold-table{width:100%;border-collapse:collapse;font-size:12px;margin-top:6px}
@@ -130,6 +143,7 @@
   gtag('js', new Date());
   gtag('config', 'G-W1YBL5BGGK');
 </script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/exceljs/4.4.0/exceljs.min.js"></script>
 </head>
 <body>
 <svg width="0" height="0" style="position:absolute;" aria-hidden="true">
@@ -219,6 +233,7 @@
       <div class="card-body">
         <div id="resultWrap"></div>
         <div id="breakdownWrap"></div>
+        <button class="btn-excel" onclick="requestExcelDownload()">📊 RVC 계산결과 엑셀 다운로드</button>
       </div>
     </div>
   </aside>
@@ -247,6 +262,24 @@
       <details class="faq-item"><summary>조정가격(AV)은 판매가격과 같은 건가요?</summary><p>보통 수출자의 거래가격(FOB 가격 등)을 기준으로 하되, 협정별로 운임·수수료 등의 포함·제외 항목이 다를 수 있습니다. 정확한 정의는 해당 협정의 "가치산정 규정"을 확인하세요.</p></details>
       <details class="faq-item"><summary>RVC 기준을 충족하지 못하면 어떻게 하나요?</summary><p>특혜관세 대신 일반(MFN) 관세율이 적용됩니다. 재료 소싱을 역내산으로 일부 전환하거나, 다른 원산지 판정 기준(관세분류변경기준 등)이 적용 가능한지 확인해볼 수 있습니다.</p></details>
     </div>
+  </div>
+</div>
+
+<div class="ad-gate-overlay" id="adGateOverlay" style="display:none;">
+  <div class="ad-gate-box">
+    <h3>📊 엑셀 파일 준비 중</h3>
+    <p>아래 광고가 노출되는 동안 잠시만 기다려주세요. 완료되면 자동으로 다운로드가 시작됩니다.</p>
+    <div class="ad-gate-slot">
+      <ins class="adsbygoogle"
+         style="display:block;width:100%;"
+         data-ad-client="ca-pub-4642197702620430"
+         data-ad-slot="2863170310"
+         data-ad-format="auto"
+         data-full-width-responsive="true"></ins>
+    </div>
+    <div class="ad-gate-timer" id="adGateTimer">5초 후 다운로드 가능</div>
+    <button class="ad-gate-btn" id="adGateBtn" disabled onclick="completeAdGateDownload()">다운로드 시작</button>
+    <button class="ad-gate-cancel" onclick="closeAdGate()">취소</button>
   </div>
 </div>
 
@@ -317,9 +350,106 @@ function calc(){
     <div class="breakdown-row"><span class="k">역외산 재료가치 (VNM)</span><span class="v">${fmtMoney(vnm)}</span></div>
     <div class="breakdown-row"><span class="k">필요 기준</span><span class="v">${fmt(threshold,0)}%</span></div>
   `;
+
+  window._rvcData = { method, av, vom, vnm, rvc, threshold, pass };
 }
 
 calc();
+
+// ===== 엑셀 다운로드 (광고 게이트 경유) =====
+let adGateTimerInterval = null;
+
+function requestExcelDownload(){
+  if(!window._rvcData || !window._rvcData.av){
+    alert('먼저 조정가격을 입력해주세요.');
+    return;
+  }
+  document.getElementById('adGateOverlay').style.display = 'flex';
+  let seconds = 5;
+  const timerEl = document.getElementById('adGateTimer');
+  const btnEl = document.getElementById('adGateBtn');
+  btnEl.disabled = true;
+  timerEl.textContent = `${seconds}초 후 다운로드 가능`;
+  try{ (adsbygoogle = window.adsbygoogle || []).push({}); }catch(e){}
+
+  clearInterval(adGateTimerInterval);
+  adGateTimerInterval = setInterval(()=>{
+    seconds--;
+    if(seconds <= 0){
+      clearInterval(adGateTimerInterval);
+      timerEl.textContent = '다운로드 준비 완료!';
+      btnEl.disabled = false;
+    } else {
+      timerEl.textContent = `${seconds}초 후 다운로드 가능`;
+    }
+  }, 1000);
+}
+
+function closeAdGate(){
+  clearInterval(adGateTimerInterval);
+  document.getElementById('adGateOverlay').style.display = 'none';
+}
+
+function completeAdGateDownload(){
+  closeAdGate();
+  downloadExcel();
+  if(window.amplitude) window.amplitude.track('Download', {type:'excel', tool:'rvc-calculator'});
+}
+
+async function downloadExcel(){
+  const d = window._rvcData;
+  if(!d) return;
+  const NAVY = 'FF0F172A', SUCCESS_LIGHT = 'FFD1FAE5', DANGER_LIGHT = 'FFFEE2E2', SLATE_LIGHT = 'FFF1F5F9';
+
+  const wb = new ExcelJS.Workbook();
+  wb.creator = 'CBM Lab';
+  wb.created = new Date();
+
+  const ws = wb.addWorksheet('RVC 계산결과');
+  ws.columns = [{width:28},{width:18}];
+
+  ws.mergeCells('A1:B1');
+  ws.getCell('A1').value = 'CBM Lab — 원산지 규정(RVC) 계산결과';
+  ws.getCell('A1').font = { bold:true, size:14, color:{argb:'FFFFFFFF'} };
+  ws.getCell('A1').fill = { type:'pattern', pattern:'solid', fgColor:{argb:NAVY} };
+  ws.getRow(1).height = 26;
+
+  ws.getCell('A2').value = `계산 방식: ${d.method==='buildup'?'Build-up':'Build-down'}   |   생성일: ${new Date().toLocaleDateString('ko-KR')}`;
+  ws.getCell('A2').font = { size:10, color:{argb:'FF64748B'} };
+  ws.mergeCells('A2:B2');
+
+  const h = ws.getRow(4);
+  h.values = ['항목', '값'];
+  h.font = { bold:true };
+  h.eachCell(c=>{ c.fill = { type:'pattern', pattern:'solid', fgColor:{argb:SLATE_LIGHT} }; });
+
+  const rows = [
+    ['조정가격 (AV)', d.av], ['역내산 재료가치 (VOM)', d.vom], ['역외산 재료가치 (VNM)', d.vnm],
+  ];
+  rows.forEach(([label,val])=>{ const row = ws.addRow([label, val]); row.getCell(2).numFmt = '#,##0.00'; });
+
+  const rvcRow = ws.addRow(['계산된 RVC', d.rvc/100]);
+  rvcRow.font = { bold:true };
+  rvcRow.getCell(2).numFmt = '0.0%';
+
+  const thRow = ws.addRow(['필요 기준', d.threshold/100]);
+  thRow.getCell(2).numFmt = '0.0%';
+
+  const verdictRow = ws.addRow([d.pass ? '✅ 기준 충족 (특혜관세 자격 가능성 있음)' : '❌ 기준 미달 (특혜관세 자격 미충족 가능성)', '']);
+  verdictRow.font = { bold:true };
+  verdictRow.eachCell(c=>{ c.fill = { type:'pattern', pattern:'solid', fgColor:{argb: d.pass?SUCCESS_LIGHT:DANGER_LIGHT} }; });
+
+  const buffer = await wb.xlsx.writeBuffer();
+  const blob = new Blob([buffer], {type:'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'CBMLab-RVC계산결과.xlsx';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
 </script>
 </body>
 </html>

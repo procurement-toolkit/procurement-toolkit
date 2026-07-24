@@ -90,6 +90,19 @@
   .warn-box{background:var(--warn-light);border:1px solid #FDE68A;border-radius:var(--radius);padding:12px 14px;font-size:12px;color:#78350F;margin-top:14px;line-height:1.6}
   .notice-box{background:var(--accent-light);border:1px solid #BFDBFE;border-radius:var(--radius);padding:10px 14px;font-size:12px;color:#1E40AF;margin-top:14px;line-height:1.6}
 
+  .btn-excel{width:100%;padding:12px;border:2px solid var(--accent);border-radius:8px;background:#fff;color:var(--accent);font-size:13.5px;font-weight:700;cursor:pointer;margin-top:14px}
+  .btn-excel:hover{background:var(--accent-light)}
+
+  .ad-gate-overlay{position:fixed;inset:0;background:rgba(15,23,42,.7);display:flex;align-items:center;justify-content:center;z-index:9999;padding:20px}
+  .ad-gate-box{background:#fff;border-radius:14px;max-width:420px;width:100%;padding:24px;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,.3)}
+  .ad-gate-box h3{font-size:16px;font-weight:800;color:var(--slate-900);margin-bottom:8px}
+  .ad-gate-box p{font-size:12.5px;color:var(--slate-500);margin-bottom:16px;line-height:1.6}
+  .ad-gate-slot{border:1px dashed var(--slate-300);border-radius:8px;min-height:100px;display:flex;align-items:center;justify-content:center;margin-bottom:16px;overflow:hidden}
+  .ad-gate-timer{font-size:13px;font-weight:700;color:var(--slate-600);margin-bottom:12px}
+  .ad-gate-btn{width:100%;padding:12px;border:none;border-radius:8px;background:var(--accent);color:#fff;font-size:13.5px;font-weight:700;cursor:pointer}
+  .ad-gate-btn:disabled{background:var(--slate-300);cursor:not-allowed}
+  .ad-gate-cancel{margin-top:10px;font-size:12px;color:var(--slate-400);background:none;border:none;cursor:pointer;text-decoration:underline}
+
   .faq-item{border-bottom:1px solid var(--slate-100);padding:12px 0}
   .faq-item:last-child{border-bottom:none}
   .faq-item summary{cursor:pointer;font-weight:700;font-size:13px;color:var(--slate-800);list-style:none;outline:none}
@@ -124,6 +137,7 @@
   gtag('js', new Date());
   gtag('config', 'G-W1YBL5BGGK');
 </script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/exceljs/4.4.0/exceljs.min.js"></script>
 </head>
 <body>
 <svg width="0" height="0" style="position:absolute;" aria-hidden="true">
@@ -207,6 +221,7 @@
           </div>
         </div>
         <div id="breakdownWrap"></div>
+        <button class="btn-excel" onclick="requestExcelDownload()">📊 Download Payment Terms Analysis (Excel)</button>
         <div class="warn-box">⚠ This calculation is for reference only. Real decisions should also weigh your current cash position, the supplier relationship, and the specific contract terms.</div>
       </div>
     </div>
@@ -230,6 +245,24 @@
       <details class="faq-item"><summary>Why does the number come out so high (like 36.7%)?</summary><p>A 2% discount seems small, but it applies to just 20 days (the gap between the discount period and the full term), so annualizing it multiplies the effect substantially. Discounts concentrated in a short window naturally produce large annualized figures — that's expected.</p></details>
       <details class="faq-item"><summary>If the annualized cost is higher than my cost of capital, should I always take the discount?</summary><p>Generally yes — delaying payment would effectively mean paying "interest" more expensive than your own borrowing cost. That said, if cash is genuinely tight right now, you may not have the funds to take the discount even when it's theoretically favorable.</p></details>
     </div>
+  </div>
+</div>
+
+<div class="ad-gate-overlay" id="adGateOverlay" style="display:none;">
+  <div class="ad-gate-box">
+    <h3>📊 Preparing Your Excel File</h3>
+    <p>Please wait while this ad is shown. Your download will start automatically once it's ready.</p>
+    <div class="ad-gate-slot">
+      <ins class="adsbygoogle"
+         style="display:block;width:100%;"
+         data-ad-client="ca-pub-4642197702620430"
+         data-ad-slot="2863170310"
+         data-ad-format="auto"
+         data-full-width-responsive="true"></ins>
+    </div>
+    <div class="ad-gate-timer" id="adGateTimer">Download available in 5s</div>
+    <button class="ad-gate-btn" id="adGateBtn" disabled onclick="completeAdGateDownload()">Start Download</button>
+    <button class="ad-gate-cancel" onclick="closeAdGate()">Cancel</button>
   </div>
 </div>
 
@@ -300,9 +333,106 @@ function calc(){
     return `<tr><td>${t.d}/${t.dd} net ${t.f}</td><td class="num">${r.toFixed(1)}%</td></tr>`;
   }).join('');
   document.getElementById('refTable').innerHTML = `<thead><tr><th>Terms</th><th style="text-align:right;">Annualized Cost</th></tr></thead><tbody>${refBody}</tbody>`;
+
+  window._paytermData = { invoiceAmount, discountPct, discountDays, fullDays, costOfCapital, rate, discountAmount, netIfDiscounted, take };
 }
 
 calc();
+
+// ===== Excel Download (via ad gate) =====
+let adGateTimerInterval = null;
+
+function requestExcelDownload(){
+  if(!window._paytermData || !window._paytermData.invoiceAmount){
+    alert('Please enter the invoice amount first.');
+    return;
+  }
+  document.getElementById('adGateOverlay').style.display = 'flex';
+  let seconds = 5;
+  const timerEl = document.getElementById('adGateTimer');
+  const btnEl = document.getElementById('adGateBtn');
+  btnEl.disabled = true;
+  timerEl.textContent = `Download available in ${seconds}s`;
+  try{ (adsbygoogle = window.adsbygoogle || []).push({}); }catch(e){}
+
+  clearInterval(adGateTimerInterval);
+  adGateTimerInterval = setInterval(()=>{
+    seconds--;
+    if(seconds <= 0){
+      clearInterval(adGateTimerInterval);
+      timerEl.textContent = 'Ready to download!';
+      btnEl.disabled = false;
+    } else {
+      timerEl.textContent = `Download available in ${seconds}s`;
+    }
+  }, 1000);
+}
+
+function closeAdGate(){
+  clearInterval(adGateTimerInterval);
+  document.getElementById('adGateOverlay').style.display = 'none';
+}
+
+function completeAdGateDownload(){
+  closeAdGate();
+  downloadExcel();
+  if(window.amplitude) window.amplitude.track('Download', {type:'excel', tool:'payment-terms-cost-calculator'});
+}
+
+async function downloadExcel(){
+  const d = window._paytermData;
+  if(!d) return;
+  const NAVY = 'FF0F172A', SUCCESS_LIGHT = 'FFD1FAE5', WARN_LIGHT = 'FFFEF3C7', SLATE_LIGHT = 'FFF1F5F9';
+
+  const wb = new ExcelJS.Workbook();
+  wb.creator = 'CBM Lab';
+  wb.created = new Date();
+
+  const ws = wb.addWorksheet('Payment Terms Analysis');
+  ws.columns = [{width:30},{width:18}];
+
+  ws.mergeCells('A1:B1');
+  ws.getCell('A1').value = 'CBM Lab — Payment Terms Cost Analysis';
+  ws.getCell('A1').font = { bold:true, size:14, color:{argb:'FFFFFFFF'} };
+  ws.getCell('A1').fill = { type:'pattern', pattern:'solid', fgColor:{argb:NAVY} };
+  ws.getRow(1).height = 26;
+
+  ws.getCell('A2').value = `Terms: ${fmt(d.discountPct,1)}/${fmt(d.discountDays,0)} net ${fmt(d.fullDays,0)}   |   Generated: ${new Date().toLocaleDateString('en-US')}`;
+  ws.getCell('A2').font = { size:10, color:{argb:'FF64748B'} };
+  ws.mergeCells('A2:B2');
+
+  const h = ws.getRow(4);
+  h.values = ['Item', 'Value'];
+  h.font = { bold:true };
+  h.eachCell(c=>{ c.fill = { type:'pattern', pattern:'solid', fgColor:{argb:SLATE_LIGHT} }; });
+
+  const rows = [
+    ['Original Invoice Amount', d.invoiceAmount],
+    ['Discount Amount', d.discountAmount],
+    ['Amount if Paid Early', d.netIfDiscounted],
+  ];
+  rows.forEach(([label,val])=>{ const row = ws.addRow([label, val]); row.getCell(2).numFmt = '#,##0'; });
+
+  const rateRow = ws.addRow(['Annualized Cost of Skipping', d.rate/100]);
+  rateRow.getCell(2).numFmt = '0.0%';
+  const coRow = ws.addRow(['Cost of Capital', d.costOfCapital/100]);
+  coRow.getCell(2).numFmt = '0.0%';
+
+  const verdictRow = ws.addRow([d.take ? '✅ Take the discount' : '⏳ Skipping the discount is fine', '']);
+  verdictRow.font = { bold:true };
+  verdictRow.eachCell(c=>{ c.fill = { type:'pattern', pattern:'solid', fgColor:{argb: d.take?SUCCESS_LIGHT:WARN_LIGHT} }; });
+
+  const buffer = await wb.xlsx.writeBuffer();
+  const blob = new Blob([buffer], {type:'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'CBMLab-PaymentTerms-Analysis.xlsx';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
 </script>
 </body>
 </html>

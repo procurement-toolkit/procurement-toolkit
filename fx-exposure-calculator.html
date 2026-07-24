@@ -91,6 +91,19 @@
   .warning-box{background:var(--warning-light);border:1px solid #FDE68A;border-radius:var(--radius);padding:12px 14px;font-size:12px;color:#78350F;margin-top:14px;line-height:1.6}
   .notice-box{background:var(--accent-light);border:1px solid #BFDBFE;border-radius:var(--radius);padding:10px 14px;font-size:12px;color:#1E40AF;margin-top:14px;line-height:1.6}
 
+  .btn-excel{width:100%;padding:12px;border:2px solid var(--accent);border-radius:8px;background:#fff;color:var(--accent);font-size:13.5px;font-weight:700;cursor:pointer;margin-top:14px}
+  .btn-excel:hover{background:var(--accent-light)}
+
+  .ad-gate-overlay{position:fixed;inset:0;background:rgba(15,23,42,.7);display:flex;align-items:center;justify-content:center;z-index:9999;padding:20px}
+  .ad-gate-box{background:#fff;border-radius:14px;max-width:420px;width:100%;padding:24px;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,.3)}
+  .ad-gate-box h3{font-size:16px;font-weight:800;color:var(--slate-900);margin-bottom:8px}
+  .ad-gate-box p{font-size:12.5px;color:var(--slate-500);margin-bottom:16px;line-height:1.6}
+  .ad-gate-slot{border:1px dashed var(--slate-300);border-radius:8px;min-height:100px;display:flex;align-items:center;justify-content:center;margin-bottom:16px;overflow:hidden}
+  .ad-gate-timer{font-size:13px;font-weight:700;color:var(--slate-600);margin-bottom:12px}
+  .ad-gate-btn{width:100%;padding:12px;border:none;border-radius:8px;background:var(--accent);color:#fff;font-size:13.5px;font-weight:700;cursor:pointer}
+  .ad-gate-btn:disabled{background:var(--slate-300);cursor:not-allowed}
+  .ad-gate-cancel{margin-top:10px;font-size:12px;color:var(--slate-400);background:none;border:none;cursor:pointer;text-decoration:underline}
+
   .sim-row{display:flex;align-items:center;gap:10px;margin-top:10px}
   .sim-row input[type=range]{flex:1}
   .sim-val{font-size:13px;font-weight:700;color:var(--slate-800);min-width:52px;text-align:right}
@@ -136,6 +149,7 @@
   gtag('js', new Date());
   gtag('config', 'G-W1YBL5BGGK');
 </script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/exceljs/4.4.0/exceljs.min.js"></script>
 </head>
 <body>
 <svg width="0" height="0" style="position:absolute;" aria-hidden="true">
@@ -199,6 +213,7 @@
         </div>
         <div id="exposureBreakdown"></div>
         <div id="concentrationWarning"></div>
+        <button class="btn-excel" onclick="requestExcelDownload()">📊 환노출 분석 엑셀 다운로드</button>
       </div>
     </div>
   </aside>
@@ -234,6 +249,24 @@
       <details class="faq-item"><summary>통화 집중도는 어느 정도가 위험한가요?</summary><p>정해진 기준은 없지만, 실무적으로 단일 통화가 전체 구매액의 50%를 넘으면 그 통화 하나의 변동에 원가 전체가 크게 흔들릴 수 있어 분산을 고려해볼 시점으로 봅니다.</p></details>
       <details class="faq-item"><summary>환헤지는 꼭 해야 하나요?</summary><p>필수는 아닙니다. 노출 규모가 작거나 마진에 여유가 있다면 헤지 없이 감수하는 것도 합리적인 선택일 수 있습니다. 다만 노출 규모를 먼저 파악해야 그 판단 자체가 가능합니다.</p></details>
     </div>
+  </div>
+</div>
+
+<div class="ad-gate-overlay" id="adGateOverlay" style="display:none;">
+  <div class="ad-gate-box">
+    <h3>📊 엑셀 파일 준비 중</h3>
+    <p>아래 광고가 노출되는 동안 잠시만 기다려주세요. 완료되면 자동으로 다운로드가 시작됩니다.</p>
+    <div class="ad-gate-slot">
+      <ins class="adsbygoogle"
+         style="display:block;width:100%;"
+         data-ad-client="ca-pub-4642197702620430"
+         data-ad-slot="2863170310"
+         data-ad-format="auto"
+         data-full-width-responsive="true"></ins>
+    </div>
+    <div class="ad-gate-timer" id="adGateTimer">5초 후 다운로드 가능</div>
+    <button class="ad-gate-btn" id="adGateBtn" disabled onclick="completeAdGateDownload()">다운로드 시작</button>
+    <button class="ad-gate-cancel" onclick="closeAdGate()">취소</button>
   </div>
 </div>
 
@@ -363,11 +396,112 @@ function calc(){
     <tbody>${impactRows}
       <tr style="font-weight:800;"><td>합계</td><td class="num">₩${fmt(totalKrw)}</td><td class="num ${totalCls}">${totalSign}₩${fmt(totalDiff)}</td></tr>
     </tbody>`;
+
+  window._fxData = { withKrw: withKrw.filter(r=>r.amount>0), totalKrw, simPct, totalDiff };
 }
 
 addRow('USD', 500000, 1380);
 addRow('CNY', 200000, 190);
 addRow('JPY', 100000, 9.2);
+
+// ===== 엑셀 다운로드 (광고 게이트 경유) =====
+let adGateTimerInterval = null;
+
+function requestExcelDownload(){
+  if(!window._fxData || window._fxData.totalKrw<=0){
+    alert('먼저 통화별 구매액을 입력해주세요.');
+    return;
+  }
+  document.getElementById('adGateOverlay').style.display = 'flex';
+  let seconds = 5;
+  const timerEl = document.getElementById('adGateTimer');
+  const btnEl = document.getElementById('adGateBtn');
+  btnEl.disabled = true;
+  timerEl.textContent = `${seconds}초 후 다운로드 가능`;
+  try{ (adsbygoogle = window.adsbygoogle || []).push({}); }catch(e){}
+
+  clearInterval(adGateTimerInterval);
+  adGateTimerInterval = setInterval(()=>{
+    seconds--;
+    if(seconds <= 0){
+      clearInterval(adGateTimerInterval);
+      timerEl.textContent = '다운로드 준비 완료!';
+      btnEl.disabled = false;
+    } else {
+      timerEl.textContent = `${seconds}초 후 다운로드 가능`;
+    }
+  }, 1000);
+}
+
+function closeAdGate(){
+  clearInterval(adGateTimerInterval);
+  document.getElementById('adGateOverlay').style.display = 'none';
+}
+
+function completeAdGateDownload(){
+  closeAdGate();
+  downloadExcel();
+  if(window.amplitude) window.amplitude.track('Download', {type:'excel', tool:'fx-exposure-calculator'});
+}
+
+async function downloadExcel(){
+  const d = window._fxData;
+  if(!d) return;
+  const NAVY = 'FF0F172A', SUCCESS_LIGHT = 'FFD1FAE5', DANGER_LIGHT = 'FFFEE2E2', SLATE_LIGHT = 'FFF1F5F9';
+
+  const wb = new ExcelJS.Workbook();
+  wb.creator = 'CBM Lab';
+  wb.created = new Date();
+
+  const ws = wb.addWorksheet('환노출 분석');
+  ws.columns = [{width:12},{width:16},{width:14},{width:16},{width:12}];
+
+  ws.mergeCells('A1:E1');
+  ws.getCell('A1').value = 'CBM Lab — 환노출(FX Exposure) 분석';
+  ws.getCell('A1').font = { bold:true, size:14, color:{argb:'FFFFFFFF'} };
+  ws.getCell('A1').fill = { type:'pattern', pattern:'solid', fgColor:{argb:NAVY} };
+  ws.getRow(1).height = 26;
+
+  ws.getCell('A2').value = `생성일: ${new Date().toLocaleDateString('ko-KR')}`;
+  ws.getCell('A2').font = { size:10, color:{argb:'FF64748B'} };
+
+  const h = ws.getRow(4);
+  h.values = ['통화', '연간 구매액', '적용 환율', '원화 환산액', '비중(%)'];
+  h.font = { bold:true };
+  h.eachCell(c=>{ c.fill = { type:'pattern', pattern:'solid', fgColor:{argb:SLATE_LIGHT} }; });
+
+  d.withKrw.forEach(r=>{
+    const row = ws.addRow([r.currency, r.amount, r.rate, r.krw, d.totalKrw>0 ? r.krw/d.totalKrw : 0]);
+    row.getCell(2).numFmt = '#,##0';
+    row.getCell(4).numFmt = '"₩"#,##0';
+    row.getCell(5).numFmt = '0.0%';
+  });
+
+  const totalRow = ws.addRow(['합계', '', '', d.totalKrw, 1]);
+  totalRow.font = { bold:true };
+  totalRow.eachCell(c=>{ c.fill = { type:'pattern', pattern:'solid', fgColor:{argb:SUCCESS_LIGHT} }; });
+  totalRow.getCell(4).numFmt = '"₩"#,##0';
+  totalRow.getCell(5).numFmt = '0.0%';
+
+  ws.addRow([]);
+  const simHeaderRow = ws.addRow([`시나리오: 전 통화 ${d.simPct>=0?'+':''}${d.simPct}% 변동 시`, '', '', '', '']);
+  simHeaderRow.font = { bold:true };
+  const simRow = ws.addRow(['원화환산 총 변동액', '', '', d.totalDiff, '']);
+  simRow.font = { bold:true };
+  simRow.eachCell(c=>{ c.fill = { type:'pattern', pattern:'solid', fgColor:{argb: d.totalDiff>=0?DANGER_LIGHT:SUCCESS_LIGHT} }; });
+  simRow.getCell(4).numFmt = '"₩"#,##0;[Red]-"₩"#,##0';
+
+  const buffer = await wb.xlsx.writeBuffer();
+  const blob = new Blob([buffer], {type:'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'CBMLab-환노출분석.xlsx';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
 </script>
 </body>
 </html>

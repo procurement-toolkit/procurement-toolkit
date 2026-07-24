@@ -90,6 +90,19 @@
   .warn-box{background:var(--warn-light);border:1px solid #FDE68A;border-radius:var(--radius);padding:12px 14px;font-size:12px;color:#78350F;margin-top:14px;line-height:1.6}
   .notice-box{background:var(--accent-light);border:1px solid #BFDBFE;border-radius:var(--radius);padding:10px 14px;font-size:12px;color:#1E40AF;margin-top:14px;line-height:1.6}
 
+  .btn-excel{width:100%;padding:12px;border:2px solid var(--accent);border-radius:8px;background:#fff;color:var(--accent);font-size:13.5px;font-weight:700;cursor:pointer;margin-top:14px}
+  .btn-excel:hover{background:var(--accent-light)}
+
+  .ad-gate-overlay{position:fixed;inset:0;background:rgba(15,23,42,.7);display:flex;align-items:center;justify-content:center;z-index:9999;padding:20px}
+  .ad-gate-box{background:#fff;border-radius:14px;max-width:420px;width:100%;padding:24px;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,.3)}
+  .ad-gate-box h3{font-size:16px;font-weight:800;color:var(--slate-900);margin-bottom:8px}
+  .ad-gate-box p{font-size:12.5px;color:var(--slate-500);margin-bottom:16px;line-height:1.6}
+  .ad-gate-slot{border:1px dashed var(--slate-300);border-radius:8px;min-height:100px;display:flex;align-items:center;justify-content:center;margin-bottom:16px;overflow:hidden}
+  .ad-gate-timer{font-size:13px;font-weight:700;color:var(--slate-600);margin-bottom:12px}
+  .ad-gate-btn{width:100%;padding:12px;border:none;border-radius:8px;background:var(--accent);color:#fff;font-size:13.5px;font-weight:700;cursor:pointer}
+  .ad-gate-btn:disabled{background:var(--slate-300);cursor:not-allowed}
+  .ad-gate-cancel{margin-top:10px;font-size:12px;color:var(--slate-400);background:none;border:none;cursor:pointer;text-decoration:underline}
+
   .faq-item{border-bottom:1px solid var(--slate-100);padding:12px 0}
   .faq-item:last-child{border-bottom:none}
   .faq-item summary{cursor:pointer;font-weight:700;font-size:13px;color:var(--slate-800);list-style:none;outline:none}
@@ -124,6 +137,7 @@
   gtag('js', new Date());
   gtag('config', 'G-W1YBL5BGGK');
 </script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/exceljs/4.4.0/exceljs.min.js"></script>
 </head>
 <body>
 <svg width="0" height="0" style="position:absolute;" aria-hidden="true">
@@ -207,6 +221,7 @@
           </div>
         </div>
         <div id="breakdownWrap"></div>
+        <button class="btn-excel" onclick="requestExcelDownload()">📊 결제조건 분석 엑셀 다운로드</button>
         <div class="warn-box">⚠ 이 계산은 참고용입니다. 실제 의사결정 시에는 현재 자금 상황, 공급업체와의 관계, 세부 계약 조건도 함께 고려하세요.</div>
       </div>
     </div>
@@ -230,6 +245,24 @@
       <details class="faq-item"><summary>왜 36.7%처럼 높은 숫자가 나오나요?</summary><p>2%라는 할인율 자체는 작아 보여도, 그게 단 20일(할인기한과 전체기한의 차이) 동안의 이득이라 1년으로 환산하면 배수가 커집니다. 짧은 기간에 몰린 할인일수록 연환산하면 숫자가 커지는 게 정상입니다.</p></details>
       <details class="faq-item"><summary>연환산 비용이 자금조달 비용보다 높으면 무조건 할인을 받아야 하나요?</summary><p>일반적으로는 맞습니다 — 자금조달 비용보다 비싼 '이자'를 내면서 결제를 늦추는 셈이니까요. 다만 지금 당장 현금이 부족하다면, 이론적으로 유리해도 실제로 할인을 받을 자금 자체가 없을 수 있습니다.</p></details>
     </div>
+  </div>
+</div>
+
+<div class="ad-gate-overlay" id="adGateOverlay" style="display:none;">
+  <div class="ad-gate-box">
+    <h3>📊 엑셀 파일 준비 중</h3>
+    <p>아래 광고가 노출되는 동안 잠시만 기다려주세요. 완료되면 자동으로 다운로드가 시작됩니다.</p>
+    <div class="ad-gate-slot">
+      <ins class="adsbygoogle"
+         style="display:block;width:100%;"
+         data-ad-client="ca-pub-4642197702620430"
+         data-ad-slot="2863170310"
+         data-ad-format="auto"
+         data-full-width-responsive="true"></ins>
+    </div>
+    <div class="ad-gate-timer" id="adGateTimer">5초 후 다운로드 가능</div>
+    <button class="ad-gate-btn" id="adGateBtn" disabled onclick="completeAdGateDownload()">다운로드 시작</button>
+    <button class="ad-gate-cancel" onclick="closeAdGate()">취소</button>
   </div>
 </div>
 
@@ -300,9 +333,106 @@ function calc(){
     return `<tr><td>${t.d}/${t.dd} net ${t.f}</td><td class="num">${r.toFixed(1)}%</td></tr>`;
   }).join('');
   document.getElementById('refTable').innerHTML = `<thead><tr><th>조건</th><th style="text-align:right;">연환산 비용</th></tr></thead><tbody>${refBody}</tbody>`;
+
+  window._paytermData = { invoiceAmount, discountPct, discountDays, fullDays, costOfCapital, rate, discountAmount, netIfDiscounted, take };
 }
 
 calc();
+
+// ===== 엑셀 다운로드 (광고 게이트 경유) =====
+let adGateTimerInterval = null;
+
+function requestExcelDownload(){
+  if(!window._paytermData || !window._paytermData.invoiceAmount){
+    alert('먼저 인보이스 금액을 입력해주세요.');
+    return;
+  }
+  document.getElementById('adGateOverlay').style.display = 'flex';
+  let seconds = 5;
+  const timerEl = document.getElementById('adGateTimer');
+  const btnEl = document.getElementById('adGateBtn');
+  btnEl.disabled = true;
+  timerEl.textContent = `${seconds}초 후 다운로드 가능`;
+  try{ (adsbygoogle = window.adsbygoogle || []).push({}); }catch(e){}
+
+  clearInterval(adGateTimerInterval);
+  adGateTimerInterval = setInterval(()=>{
+    seconds--;
+    if(seconds <= 0){
+      clearInterval(adGateTimerInterval);
+      timerEl.textContent = '다운로드 준비 완료!';
+      btnEl.disabled = false;
+    } else {
+      timerEl.textContent = `${seconds}초 후 다운로드 가능`;
+    }
+  }, 1000);
+}
+
+function closeAdGate(){
+  clearInterval(adGateTimerInterval);
+  document.getElementById('adGateOverlay').style.display = 'none';
+}
+
+function completeAdGateDownload(){
+  closeAdGate();
+  downloadExcel();
+  if(window.amplitude) window.amplitude.track('Download', {type:'excel', tool:'payment-terms-cost-calculator'});
+}
+
+async function downloadExcel(){
+  const d = window._paytermData;
+  if(!d) return;
+  const NAVY = 'FF0F172A', SUCCESS_LIGHT = 'FFD1FAE5', WARN_LIGHT = 'FFFEF3C7', SLATE_LIGHT = 'FFF1F5F9';
+
+  const wb = new ExcelJS.Workbook();
+  wb.creator = 'CBM Lab';
+  wb.created = new Date();
+
+  const ws = wb.addWorksheet('결제조건 분석');
+  ws.columns = [{width:30},{width:18}];
+
+  ws.mergeCells('A1:B1');
+  ws.getCell('A1').value = 'CBM Lab — 결제조건 비용 분석';
+  ws.getCell('A1').font = { bold:true, size:14, color:{argb:'FFFFFFFF'} };
+  ws.getCell('A1').fill = { type:'pattern', pattern:'solid', fgColor:{argb:NAVY} };
+  ws.getRow(1).height = 26;
+
+  ws.getCell('A2').value = `조건: ${fmt(d.discountPct,1)}/${fmt(d.discountDays,0)} net ${fmt(d.fullDays,0)}   |   생성일: ${new Date().toLocaleDateString('ko-KR')}`;
+  ws.getCell('A2').font = { size:10, color:{argb:'FF64748B'} };
+  ws.mergeCells('A2:B2');
+
+  const h = ws.getRow(4);
+  h.values = ['항목', '값'];
+  h.font = { bold:true };
+  h.eachCell(c=>{ c.fill = { type:'pattern', pattern:'solid', fgColor:{argb:SLATE_LIGHT} }; });
+
+  const rows = [
+    ['원래 인보이스 금액', d.invoiceAmount],
+    ['할인 금액', d.discountAmount],
+    ['할인 받을 시 결제액', d.netIfDiscounted],
+  ];
+  rows.forEach(([label,val])=>{ const row = ws.addRow([label, val]); row.getCell(2).numFmt = '#,##0'; });
+
+  const rateRow = ws.addRow(['할인 포기 시 연환산 비용', d.rate/100]);
+  rateRow.getCell(2).numFmt = '0.0%';
+  const coRow = ws.addRow(['자금조달 비용', d.costOfCapital/100]);
+  coRow.getCell(2).numFmt = '0.0%';
+
+  const verdictRow = ws.addRow([d.take ? '✅ 할인을 받으세요' : '⏳ 할인 안 받아도 괜찮음', '']);
+  verdictRow.font = { bold:true };
+  verdictRow.eachCell(c=>{ c.fill = { type:'pattern', pattern:'solid', fgColor:{argb: d.take?SUCCESS_LIGHT:WARN_LIGHT} }; });
+
+  const buffer = await wb.xlsx.writeBuffer();
+  const blob = new Blob([buffer], {type:'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'CBMLab-결제조건분석.xlsx';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
 </script>
 </body>
 </html>
