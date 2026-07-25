@@ -155,6 +155,10 @@
   @media print{.ad-area-main,.ad-main-box,.ad-placeholder{display:none !important}}
 
   .faq-wrap{max-width:1100px;margin:20px auto 0;padding:0 24px}
+  .about-wrap{max-width:1200px;margin:0 auto;padding:0 24px 20px}
+  .about-section{font-size:13px;color:var(--slate-600);line-height:1.8}
+  .about-section h3{font-size:14px;font-weight:700;color:var(--slate-800);margin:16px 0 8px}
+  .about-section h3:first-child{margin-top:0}
   .faq-item{border-bottom:1px solid var(--slate-100);padding:12px 0}
   .faq-item:last-child{border-bottom:none}
   .faq-item summary{cursor:pointer;font-weight:700;font-size:13px;color:var(--slate-800);list-style:none;outline:none}
@@ -347,6 +351,18 @@
       <details class="faq-item"><summary>Is customs duty calculated on FOB value or CIF value?</summary><p>It depends on the importing country. Most countries (EU, most of Asia, etc.) assess duty on the CIF value (goods + freight + insurance), while the United States is a notable exception and assesses duty on the FOB value. Always check the specific rule for your destination country.</p></details>
       <details class="faq-item"><summary>What exactly does 'landed cost' include?</summary><p>Landed cost is the true total cost of getting goods into your warehouse: goods value, international freight, insurance, customs duty, VAT/sales tax, customs broker fees, and inland transportation. Looking at the goods price alone often overstates your actual margin.</p></details>
       <details class="faq-item"><summary>Why is VAT/sales tax calculated on top of the duty-inclusive amount rather than the goods price?</summary><p>In most jurisdictions, import VAT is assessed on (customs value + duty), not on the goods price alone. This means a higher duty rate also indirectly increases the VAT amount, compounding the cost impact.</p></details>
+    </div>
+  </div>
+</div>
+
+<div class="about-wrap">
+  <div class="card">
+    <div class="card-header"><div class="card-title">What Is Landed Cost?</div></div>
+    <div class="card-body about-section">
+      <h3>Why isn't the goods price alone enough to judge cost?</h3>
+      <p>The goods price is only part of the true landed cost. International freight, insurance, customs duty, VAT/sales tax, customs broker fees, and inland transportation all need to be added to know the real per-unit cost hitting your warehouse. Calculating margin off the goods price alone is a common way to end up selling at a much thinner margin than expected. Because Incoterms (FOB vs CIF) change whether freight and insurance are already baked into the quoted price, comparing unit prices across different terms without adjusting is risky.</p>
+      <h3>How should I use the result?</h3>
+      <p>If you're sourcing across multiple currencies, also check the <a href="fx-exposure-calculator.html" style="color:#2563EB;">FX Exposure Calculator</a> for your currency concentration risk. If you're importing from an FTA partner country, checking preferential tariff eligibility with the <a href="rvc-calculator.html" style="color:#2563EB;">RVC Calculator</a> is another way to lower landed cost. If customs clearance or unloading looks like it might run late, the <a href="demurrage-detention-calculator.html" style="color:#2563EB;">Demurrage &amp; Detention Cost Calculator</a> is worth a look too.</p>
     </div>
   </div>
 </div>

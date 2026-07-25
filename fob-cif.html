@@ -524,6 +524,10 @@
   @media print{.ad-area-main,.ad-main-box,.ad-placeholder{display:none !important}}
 
   .faq-wrap{max-width:1100px;margin:20px auto 0;padding:0 24px}
+  .about-wrap{max-width:1200px;margin:0 auto;padding:0 24px 20px}
+  .about-section{font-size:13px;color:var(--slate-600);line-height:1.8}
+  .about-section h3{font-size:14px;font-weight:700;color:var(--slate-800);margin:16px 0 8px}
+  .about-section h3:first-child{margin-top:0}
   .faq-item{border-bottom:1px solid var(--slate-100);padding:12px 0}
   .faq-item:last-child{border-bottom:none}
   .faq-item summary{cursor:pointer;font-weight:700;font-size:13px;color:var(--slate-800);list-style:none;outline:none}
@@ -798,6 +802,18 @@
       <details class="faq-item"><summary>관세는 정확히 어떤 금액을 기준으로 부과되나요?</summary><p>한국을 포함한 대부분 국가는 CIF 과세가격(상품가+운임+보험료의 합)을 기준으로 관세를 부과합니다. FOB 조건으로 수입하더라도 관세 계산 시에는 운임·보험료를 더해 CIF 상당액으로 환산해서 과세하는 것이 일반적입니다.</p></details>
       <details class="faq-item"><summary>랜디드 코스트(Landed Cost)란 정확히 무엇을 포함하나요?</summary><p>랜디드 코스트는 상품이 최종적으로 내 창고에 들어오기까지 발생하는 모든 비용의 합입니다. 상품가, 국제운임, 보험료, 관세, 부가세, 통관수수료, 국내 운송비까지 포함해야 실제 원가를 정확히 알 수 있습니다. 상품가만 보고 원가를 판단하면 실제 마진이 예상보다 낮아지는 경우가 많습니다.</p></details>
       <details class="faq-item"><summary>부가세는 왜 상품가가 아니라 관세를 더한 금액에 부과되나요?</summary><p>부가세는 '과세가격 + 관세'를 기준으로 부과되는 것이 원칙입니다. 관세를 낸 이후의 금액에 다시 부가세가 붙는 구조라, 관세율이 높을수록 부가세 부담도 함께 늘어납니다.</p></details>
+    </div>
+  </div>
+</div>
+
+<div class="about-wrap">
+  <div class="card">
+    <div class="card-header"><div class="card-title">랜디드 코스트(수입원가)란?</div></div>
+    <div class="card-body about-section">
+      <h3>왜 상품가만 보고 원가를 판단하면 안 되나요?</h3>
+      <p>상품가는 전체 수입원가의 일부일 뿐입니다. 국제운임, 보험료, 관세, 부가세, 통관수수료, 국내 운송비까지 다 더해야 "내 창고에 실제로 들어오는 개당 원가"를 알 수 있습니다. 상품가만 보고 마진을 계산하면, 실제로는 예상보다 훨씬 낮은 마진으로 판매하고 있는 경우가 흔합니다. 특히 Incoterms 조건(FOB인지 CIF인지)에 따라 운임·보험료가 이미 포함됐는지가 달라서, 조건이 다른 견적끼리 단가만 비교하는 건 위험합니다.</p>
+      <h3>계산 결과를 어떻게 활용하면 좋을까요?</h3>
+      <p>여러 통화로 소싱하고 있다면 <a href="fx-exposure-calculator.html" style="color:#2563EB;">환노출 계산기</a>로 환율 리스크 집중도도 함께 확인해보세요. FTA 협정국에서 수입한다면 <a href="rvc-calculator.html" style="color:#2563EB;">RVC 계산기</a>로 협정관세 적용 가능 여부를 미리 검토하는 것도 원가를 낮추는 방법입니다. 통관·하차가 예정보다 늦어질 것 같다면 <a href="demurrage-detention-calculator.html" style="color:#2563EB;">디머리지·디텐션 비용 계산기</a>도 참고하세요.</p>
     </div>
   </div>
 </div>

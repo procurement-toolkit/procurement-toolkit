@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Free spend analysis dashboard for procurement. Visualize annual spend by category or supplier with a donut chart and bar chart, and instantly see where spend is concentrated and where to prioritize negotiation.">
+<meta name="keywords" content="spend analysis dashboard, procurement spend visualization, spend by category, supplier spend analysis, supply chain analytics">
+<title>Spend Analysis Dashboard — CBM Lab</title>
+<link rel="icon" href="../favicon.ico" sizes="any">
+<link rel="icon" href="../favicon.ico" type="image/x-icon">
+<link rel="apple-touch-icon" href="../apple-touch-icon.png">
+<link rel="canonical" href="https://procurement-toolkit-eight.vercel.app/en/spend-analysis-dashboard.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="CBM Lab">
+<meta property="og:locale" content="en_US">
+<meta property="og:title" content="Spend Analysis Dashboard — CBM Lab">
+<meta property="og:description" content="Free spend analysis dashboard. Visualize annual spend by category or supplier with a donut chart and bar chart.">
+<meta property="og:url" content="https://procurement-toolkit-eight.vercel.app/en/spend-analysis-dashboard.html">
+<meta property="og:image" content="https://procurement-toolkit-eight.vercel.app/assets/hero-team.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Spend Analysis Dashboard — CBM Lab">
+<meta name="twitter:description" content="Free spend analysis dashboard. Visualize annual spend by category or supplier with a donut chart and bar chart.">
+<meta name="twitter:image" content="https://procurement-toolkit-eight.vercel.app/assets/hero-team.jpg">
+
+<link rel="alternate" hreflang="ko" href="https://procurement-toolkit-eight.vercel.app/spend-analysis-dashboard.html">
+<link rel="alternate" hreflang="en" href="https://procurement-toolkit-eight.vercel.app/en/spend-analysis-dashboard.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@800;900&display=swap" rel="stylesheet">
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  :root{--accent:#2563EB;--accent-light:#DBEAFE;--accent-dark:#1D4ED8;--slate-50:#F8FAFC;--slate-100:#F1F5F9;--slate-200:#E2E8F0;--slate-300:#CBD5E1;--slate-400:#94A3B8;--slate-500:#64748B;--slate-600:#475569;--slate-700:#334155;--slate-800:#1E293B;--slate-900:#0F172A;--success:#0F766E;--success-light:#D1FAE5;--warn:#B45309;--warn-light:#FEF3C7;--danger:#B91C1C;--radius:8px;--radius-lg:12px;--shadow-sm:0 1px 2px rgba(0,0,0,.05);font-family:'Inter','Pretendard',system-ui,-apple-system,sans-serif}
+  body{background:var(--slate-50);color:var(--slate-800);font-size:14px;line-height:1.6}
+  header{background:#fff;border-bottom:1px solid var(--slate-200)}
+  .header-inner{max-width:1300px;margin:0 auto;padding:16px 24px;display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}
+  .logo-mark{font-size:20px;font-weight:800;color:var(--slate-900);text-decoration:none;font-family:'Space Grotesk','Pretendard',sans-serif;letter-spacing:-0.4px;}
+  .nav-right{display:flex;align-items:center;gap:10px}
+  .nav-link{font-size:13px;font-weight:600;color:var(--slate-500);text-decoration:none;padding:7px 12px;border-radius:6px}
+  .nav-link:hover{background:var(--slate-100)}
+  .lang-switch{font-size:12px;font-weight:700;color:var(--accent);text-decoration:none;padding:6px 12px;border:1px solid var(--accent-light);border-radius:999px;background:var(--accent-light)}
+  .lang-switch:hover{background:#BFDBFE}
+
+  .hero{background:#fff;border-bottom:1px solid var(--slate-200);padding:28px 24px 24px}
+  .hero-inner{max-width:1300px;margin:0 auto}
+  .hero h1{font-size:24px;font-weight:700;color:var(--slate-900);margin-bottom:6px;letter-spacing:-0.3px}
+  .hero p{font-size:14px;color:var(--slate-500);max-width:760px}
+  .hero-tags{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}
+  .tag{background:var(--slate-100);color:var(--slate-600);font-size:11px;font-weight:500;padding:3px 10px;border-radius:4px;border:1px solid var(--slate-200)}
+
+  .main{max-width:1300px;margin:0 auto;padding:28px 24px 60px}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+  .card{background:#fff;border:1px solid var(--slate-200);border-radius:var(--radius-lg);box-shadow:var(--shadow-sm);margin-bottom:20px}
+  .card-header{padding:16px 20px;border-bottom:1px solid var(--slate-100)}
+  .card-title{font-size:14px;font-weight:700;color:var(--slate-800)}
+  .card-body{padding:20px;overflow-x:auto}
+
+  .spend-table{width:100%;border-collapse:collapse;min-width:520px}
+  .spend-table th{font-size:10.5px;color:var(--slate-400);text-transform:uppercase;text-align:left;padding:8px 10px;border-bottom:2px solid var(--slate-100)}
+  .spend-table td{padding:6px 10px;border-bottom:1px solid var(--slate-100)}
+  .spend-table input{width:100%;border:1px solid var(--slate-200);border-radius:6px;padding:7px 8px;font-size:13px;font-family:inherit}
+  .del-btn{width:26px;height:26px;border:1px solid var(--slate-200);border-radius:6px;background:#fff;color:var(--slate-400);cursor:pointer}
+  .del-btn:hover{border-color:var(--danger);color:var(--danger)}
+  .btn-add-row{width:100%;padding:9px;border:1px dashed var(--slate-300);border-radius:8px;background:#fff;color:var(--slate-500);font-size:12px;font-weight:600;cursor:pointer;margin-top:10px}
+  .btn-add-row:hover{border-color:var(--accent);color:var(--accent)}
+  .color-dot{width:10px;height:10px;border-radius:3px;display:inline-block;margin-right:6px;vertical-align:middle}
+
+  .donut-wrap{display:flex;align-items:center;gap:24px;flex-wrap:wrap;justify-content:center}
+  .donut-center-label{font-size:11px;color:var(--slate-400);text-align:center}
+  .donut-center-value{font-size:20px;font-weight:800;color:var(--slate-900);text-align:center}
+  .legend{display:flex;flex-direction:column;gap:8px;font-size:12.5px}
+  .legend-item{display:flex;align-items:center;gap:8px;color:var(--slate-600)}
+  .legend-item b{color:var(--slate-800);margin-left:auto}
+
+  .bar-row{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+  .bar-label{width:120px;font-size:12px;color:var(--slate-600);flex-shrink:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .bar-track{flex:1;height:22px;background:var(--slate-100);border-radius:5px;overflow:hidden}
+  .bar-fill{height:100%;border-radius:5px;display:flex;align-items:center;justify-content:flex-end;padding-right:8px;color:#fff;font-size:10.5px;font-weight:700;min-width:36px}
+
+  .stat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:16px}
+  .stat-box{background:var(--slate-50);border-radius:10px;padding:14px;text-align:center}
+  .stat-box .label{font-size:10.5px;color:var(--slate-500);text-transform:uppercase}
+  .stat-box .value{font-size:18px;font-weight:800;color:var(--slate-900);margin-top:4px}
+
+  .notice-box{background:var(--accent-light);border:1px solid #BFDBFE;border-radius:var(--radius);padding:10px 14px;font-size:12px;color:#1E40AF;margin-top:14px;line-height:1.6}
+  .warn-box{background:var(--warn-light);border:1px solid #FDE68A;border-radius:var(--radius);padding:12px 14px;font-size:12px;color:#78350F;margin-top:14px;line-height:1.6}
+
+  .about-section{font-size:13px;color:var(--slate-600);line-height:1.8}
+  .about-section h3{font-size:14px;font-weight:700;color:var(--slate-800);margin:16px 0 8px}
+  .about-section h3:first-child{margin-top:0}
+
+  .faq-item{border-bottom:1px solid var(--slate-100);padding:12px 0}
+  .faq-item:last-child{border-bottom:none}
+  .faq-item summary{cursor:pointer;font-weight:700;font-size:13px;color:var(--slate-800);list-style:none;outline:none}
+  .faq-item summary::-webkit-details-marker{display:none}
+  .faq-item summary::before{content:'Q. ';color:var(--accent)}
+  .faq-item p{margin-top:8px;font-size:12.5px;color:var(--slate-600);line-height:1.7;padding-left:2px}
+
+  .ad-area-main{max-width:1300px;margin:0 auto;padding:0 24px 28px}
+  .ad-main-box{border:1px dashed #CBD5E1;border-radius:10px;background:#fff;height:90px;display:flex;flex-direction:column;align-items:center;justify-content:center;color:var(--slate-400);font-size:12px;gap:4px}
+  .ad-main-box strong{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:#94A3B8}
+  .faq-wrap{max-width:1100px;margin:20px auto 0;padding:0 24px}
+  .about-wrap{max-width:1300px;margin:0 auto;padding:0 24px 20px}
+
+  footer{background:#0F172A;color:#94A3B8;padding:24px;font-size:12px}
+  .footer-inner{max-width:1300px;margin:0 auto;display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
+  .footer-logo{font-size:15px;font-weight:800;color:#fff;font-family:'Space Grotesk','Pretendard',sans-serif;}
+  .footer-link{color:#94A3B8;text-decoration:none;font-size:11px;margin-right:14px}
+
+  @media print{.ad-area-main,.ad-main-box,header,footer{display:none !important}}
+  @media (max-width:900px){.grid2{grid-template-columns:1fr}}
+  @media (max-width:640px){.ad-area-main{padding:0 16px 20px}.faq-wrap,.about-wrap{padding:0 16px}.stat-grid{grid-template-columns:1fr}.bar-label{width:80px}}
+</style>
+
+<script src="https://cdn.amplitude.com/script/d4aa9301e01f4600b5eeb018e160aa7c.js"></script>
+<script>
+  window.amplitude.init("d4aa9301e01f4600b5eeb018e160aa7c", { fetchRemoteConfig: true, autocapture: true });
+  window.amplitude.track('CBM Page View', {category: 'calc', page: 'spend-analysis-dashboard', lang: 'en'});
+</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-W1YBL5BGGK"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-W1YBL5BGGK');
+</script>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute;" aria-hidden="true">
+  <defs>
+    <linearGradient id="cbmGradH" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#14B8A6"/><stop offset="100%" stop-color="#0B2A4A"/></linearGradient>
+    <linearGradient id="cbmGradF" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#2DD4BF"/><stop offset="100%" stop-color="#5B9EFF"/></linearGradient>
+  </defs>
+</svg>
+<header><div class="header-inner">
+  <a href="index.html" class="logo-mark"><svg width="26" height="26" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align:middle;margin-right:8px;flex-shrink:0;"><path d="M20 2.5L36.5 11.5V28.5L20 37.5L3.5 28.5V11.5L20 2.5Z" stroke="url(#cbmGradH)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M20 2.5V20M20 20L36.5 11.5M20 20L3.5 11.5" stroke="url(#cbmGradH)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/></svg><span style="font-family:'Montserrat','Space Grotesk',sans-serif;font-weight:800;letter-spacing:-1.1px;background:linear-gradient(90deg,#14B8A6 0%,#1E7A8C 45%,#0B2A4A 100%);-webkit-background-clip:text;background-clip:text;color:transparent;">CBMLab</span></a>
+  <div class="nav-right">
+    <a href="index.html" class="nav-link">← All Tools</a>
+    <a href="../spend-analysis-dashboard.html" class="lang-switch">KOR</a>
+  </div>
+</div></header>
+
+<section class="hero"><div class="hero-inner">
+  <h1>Spend Analysis Dashboard</h1>
+  <p>A table of spend by category or supplier hides a lot. Visualize it as a donut chart and bar chart, and you'll see where spend is concentrated and where to negotiate first in about three seconds.</p>
+  <div class="hero-tags"><span class="tag">Spend Visualization</span><span class="tag">Category Analysis</span><span class="tag">Negotiation Priority</span></div>
+</div></section>
+
+<div class="main">
+  <div class="card">
+    <div class="card-header"><div class="card-title">Enter Annual Spend by Category or Supplier</div></div>
+    <div class="card-body">
+      <table class="spend-table" id="spendTable"></table>
+      <button class="btn-add-row" onclick="addRow()">+ Add Item</button>
+    </div>
+  </div>
+
+  <div class="stat-grid" id="statGrid"></div>
+
+  <div class="grid2">
+    <div class="card">
+      <div class="card-header"><div class="card-title">Spend Share (Donut Chart)</div></div>
+      <div class="card-body">
+        <div class="donut-wrap" id="donutWrap"></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header"><div class="card-title">Spend Ranking (Bar Chart)</div></div>
+      <div class="card-body" id="barWrap"></div>
+    </div>
+  </div>
+
+  <div class="warn-box">⚠ This tool visualizes exactly the numbers you enter. For accurate decisions, make sure your category classifications and supplier mapping match your internal ERP/procurement system.</div>
+</div>
+
+<div class="about-wrap">
+  <div class="card">
+    <div class="card-header"><div class="card-title">What Is Spend Analysis?</div></div>
+    <div class="card-body about-section">
+      <h3>Why break spend down by category?</h3>
+      <p>Looking at total spend alone only tells you whether it went up or down from last year. Breaking it down by category or supplier reveals where spend is concentrated (so you know where to focus negotiating power) and where supplier dependence is too high (a risk factor) — all at once.</p>
+      <h3>How should I use this dashboard?</h3>
+      <p>Start with your top 2-3 categories by spend share — review the target cost with the <a href="should-cost-calculator.html" style="color:#2563EB;">Should Cost Calculator</a>, or consider a re-bid with the <a href="rfq-comparison-tool.html" style="color:#2563EB;">RFQ Comparison Tool</a>. If a category has many line items, break it down further with the <a href="abc-inventory-analysis.html" style="color:#2563EB;">ABC Inventory Analysis Tool</a>.</p>
+    </div>
+  </div>
+</div>
+
+<!-- AD -->
+<div class="ad-area-main" role="complementary" aria-label="Advertisement area">
+  <div class="ad-main-box"><strong>Advertisement</strong>Google AdSense</div>
+</div>
+
+<div class="faq-wrap">
+  <div class="card">
+    <div class="card-header"><div class="card-title">Frequently Asked Questions</div></div>
+    <div class="card-body">
+      <details class="faq-item"><summary>How should I split categories?</summary><p>There's no fixed answer. Common approaches split by nature (raw materials/components/MRO/services) or simply reuse the internal accounting chart of accounts. If you already have an ERP classification, reusing it directly is easiest.</p></details>
+      <details class="faq-item"><summary>Is a high share in one category always bad?</summary><p>Not necessarily — core raw materials naturally carry a high share. A high share does mean a small negotiation improvement has a large dollar impact, which makes it a useful prioritization signal.</p></details>
+      <details class="faq-item"><summary>Should I also look at supplier concentration?</summary><p>Yes — separately from category concentration, supplier concentration (dependence on one vendor) matters too. Even if no single category dominates, one supplier covering multiple categories can itself be a risk.</p></details>
+    </div>
+  </div>
+</div>
+
+<footer><div class="footer-inner">
+  <div class="footer-logo"><svg width="24" height="24" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align:middle;margin-right:9px;flex-shrink:0;"><path d="M20 2.5L36.5 11.5V28.5L20 37.5L3.5 28.5V11.5L20 2.5Z" stroke="url(#cbmGradF)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M20 2.5V20M20 20L36.5 11.5M20 20L3.5 11.5" stroke="url(#cbmGradF)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/></svg>CBM<span style="color:#2563EB;">Lab</span></div>
+  <nav><a href="index.html" class="footer-link">All Tools</a><a href="privacy.html" class="footer-link">Privacy Policy</a></nav>
+</div></footer>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {"@type":"Question","name":"How should I split categories?","acceptedAnswer":{"@type":"Answer","text":"There is no fixed answer; common approaches split by nature (raw materials, components, MRO, services) or reuse the internal chart of accounts."}},
+    {"@type":"Question","name":"Is a high share in one category always bad?","acceptedAnswer":{"@type":"Answer","text":"Not necessarily, since core raw materials naturally carry a high share, and a high share means negotiation improvements have a larger dollar impact."}},
+    {"@type":"Question","name":"Should I also look at supplier concentration?","acceptedAnswer":{"@type":"Answer","text":"Yes, supplier concentration is an important risk factor separate from category concentration."}}
+  ]
+}
+</script>
+
+<script>
+const COLORS = ['#2563EB','#0F766E','#B45309','#7C3AED','#DC2626','#0891B2','#65A30D','#DB2777'];
+
+let items = [];
+let itemCounter = 0;
+
+function addRow(name, value){
+  itemCounter++;
+  items.push({id: itemCounter, name: name||'', value: value??0});
+  render();
+}
+function removeRow(id){
+  items = items.filter(i=>i.id!==id);
+  render();
+}
+function updateRow(id, field, value, isText){
+  const it = items.find(i=>i.id===id);
+  if(!it) return;
+  it[field] = isText ? value : (parseFloat(value)||0);
+  render();
+}
+
+function fmt(v){ return Math.round(v||0).toLocaleString('en-US'); }
+
+function polarToCartesian(cx, cy, r, angleDeg){
+  const rad = (angleDeg - 90) * Math.PI / 180;
+  return { x: cx + r * Math.cos(rad), y: cy + r * Math.sin(rad) };
+}
+function describeArc(cx, cy, r, startAngle, endAngle){
+  const start = polarToCartesian(cx, cy, r, endAngle);
+  const end = polarToCartesian(cx, cy, r, startAngle);
+  const largeArcFlag = endAngle - startAngle <= 180 ? "0" : "1";
+  return `M ${cx} ${cy} L ${start.x.toFixed(2)} ${start.y.toFixed(2)} A ${r} ${r} 0 ${largeArcFlag} 0 ${end.x.toFixed(2)} ${end.y.toFixed(2)} Z`;
+}
+
+function render(){
+  // Table
+  const table = document.getElementById('spendTable');
+  let html = '<thead><tr><th style="width:50%">Category / Supplier</th><th style="width:35%">Annual Spend</th><th></th></tr></thead><tbody>';
+  items.forEach((it,i)=>{
+    html += `<tr>
+      <td><span class="color-dot" style="background:${COLORS[i%COLORS.length]};"></span><input type="text" value="${it.name}" placeholder="e.g. Raw Material A" oninput="updateRow(${it.id},'name',this.value,true)"></td>
+      <td><input type="number" value="${it.value}" oninput="updateRow(${it.id},'value',this.value)"></td>
+      <td><button class="del-btn" onclick="removeRow(${it.id})">✕</button></td>
+    </tr>`;
+  });
+  html += '</tbody>';
+  table.innerHTML = html;
+
+  const total = items.reduce((s,it)=>s+it.value,0);
+  const sorted = [...items].sort((a,b)=>b.value-a.value);
+
+  // Stats
+  const statGrid = document.getElementById('statGrid');
+  const topShare = sorted.length>0 && total>0 ? (sorted[0].value/total*100) : 0;
+  statGrid.innerHTML = `
+    <div class="stat-box"><div class="label">Total Spend</div><div class="value">$${fmt(total)}</div></div>
+    <div class="stat-box"><div class="label">Items</div><div class="value">${items.length}</div></div>
+    <div class="stat-box"><div class="label">Top Share</div><div class="value">${topShare.toFixed(1)}%</div></div>
+  `;
+
+  // Donut chart
+  const donutWrap = document.getElementById('donutWrap');
+  if(total<=0 || items.length===0){
+    donutWrap.innerHTML = '<div style="color:var(--slate-400);font-size:13px;">Enter items to see the chart.</div>';
+  } else {
+    let cumAngle = 0;
+    const segs = sorted.map((it,i)=>{
+      const pct = it.value/total*100;
+      const angle = pct/100*360;
+      const path = items.length===1 ? null : describeArc(160,160,140,cumAngle,cumAngle+angle);
+      cumAngle += angle;
+      return {...it, pct, path, color: COLORS[items.indexOf(it)%COLORS.length]};
+    });
+
+    let svgContent;
+    if(items.length===1){
+      svgContent = `<circle cx="160" cy="160" r="140" fill="${segs[0].color}"/><circle cx="160" cy="160" r="80" fill="#fff"/>`;
+    } else {
+      svgContent = segs.map(s=>`<path d="${s.path}" fill="${s.color}"/>`).join('') + `<circle cx="160" cy="160" r="80" fill="#fff"/>`;
+    }
+
+    donutWrap.innerHTML = `
+      <svg width="320" height="320" viewBox="0 0 320 320">
+        ${svgContent}
+        <text x="160" y="152" text-anchor="middle" font-size="11" fill="#94A3B8" font-family="Inter">Total Spend</text>
+        <text x="160" y="176" text-anchor="middle" font-size="18" font-weight="800" fill="#0F172A" font-family="Inter">$${fmt(total)}</text>
+      </svg>
+      <div class="legend">${segs.map(s=>`<div class="legend-item"><span class="color-dot" style="background:${s.color};"></span>${s.name||'(unnamed)'}<b>${s.pct.toFixed(1)}%</b></div>`).join('')}</div>
+    `;
+  }
+
+  // Bar chart
+  const barWrap = document.getElementById('barWrap');
+  if(total<=0 || items.length===0){
+    barWrap.innerHTML = '<div style="color:var(--slate-400);font-size:13px;">Enter items to see the chart.</div>';
+  } else {
+    const maxVal = sorted[0].value;
+    barWrap.innerHTML = sorted.map(it=>{
+      const idx = items.indexOf(it);
+      const widthPct = maxVal>0 ? (it.value/maxVal*100) : 0;
+      return `<div class="bar-row">
+        <div class="bar-label">${it.name||'(unnamed)'}</div>
+        <div class="bar-track"><div class="bar-fill" style="width:${widthPct}%;background:${COLORS[idx%COLORS.length]};">$${fmt(it.value)}</div></div>
+      </div>`;
+    }).join('');
+  }
+}
+
+addRow('Raw Material A (Aluminum)', 45000000);
+addRow('Packaging', 12000000);
+addRow('Component B (Electronics)', 8000000);
+addRow('MRO (Consumables)', 5000000);
+addRow('Freight & Logistics', 6500000);
+</script>
+</body>
+</html>
