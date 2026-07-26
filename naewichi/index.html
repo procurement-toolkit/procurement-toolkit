@@ -45,7 +45,13 @@
   .search-box input::placeholder{color:#A7BBCF;}
   .search-box .icon{position:absolute;left:14px;top:50%;transform:translateY(-50%);font-size:16px;opacity:.6;}
 
-  .chips{display:flex;gap:8px;overflow-x:auto;padding:12px 0 6px;scrollbar-width:none;-ms-overflow-style:none;}
+  .chips-wrap{position:relative;margin:0 -16px;}
+  .chips-wrap::after{
+    content:"";position:absolute;top:0;right:0;bottom:6px;width:36px;
+    background:linear-gradient(to right, transparent, var(--bg));
+    pointer-events:none;
+  }
+  .chips{display:flex;gap:8px;overflow-x:auto;padding:12px 28px 6px 16px;scrollbar-width:none;-ms-overflow-style:none;}
   .chips::-webkit-scrollbar{display:none;}
   .chip{
     flex-shrink:0;padding:8px 14px;border-radius:999px;background:var(--card);
@@ -98,7 +104,9 @@
     <input type="text" id="searchInput" placeholder="예: 커피, 출퇴근, 연봉..." oninput="renderTiles()">
   </div>
 
-  <div class="chips" id="chipRow"></div>
+  <div class="chips-wrap">
+    <div class="chips" id="chipRow"></div>
+  </div>
 
   <div id="tileArea"></div>
 
