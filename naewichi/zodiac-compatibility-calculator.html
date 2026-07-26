@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>띠 궁합 보기 - 무료 궁합 계산기 | 내위치</title>
+<meta name="description" content="나와 상대방의 띠를 고르면 재미로 보는 궁합 점수와 코멘트를 바로 확인할 수 있어요. 12띠 기준 무료 궁합 보기.">
+<meta property="og:title" content="우리 둘의 띠 궁합은 몇 점일까?">
+<meta property="og:description" content="띠 두 개만 고르면 바로 나오는 궁합 계산기 - 내위치">
+<meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Jua&family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#3A1E3E; --card:#4E2A54; --ink:#FBEFFA; --ink-soft:#CBA6CB;
+    --coral:#FF7EB6; --coral-dark:#D9548F; --mint:#7EE8C6; --mint-dark:#3FBF9C;
+    --yellow:#F4C95D; --line:#623A66;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;background:var(--bg);font-family:'Noto Sans KR', sans-serif;color:var(--ink);-webkit-font-smoothing:antialiased;}
+  .wrap{max-width:480px;margin:0 auto;padding:0 20px 60px;}
+  .brandbar{display:flex;align-items:baseline;gap:6px;padding:18px 0 0;text-decoration:none;}
+  .brandbar .b1{font-family:'Jua',sans-serif;font-size:20px;color:var(--ink);}
+  .brandbar .b2{font-size:11px;color:var(--ink-soft);}
+  .hero{text-align:center;padding:18px 0 8px;}
+  .hero h1{font-family:'Jua',sans-serif;font-size:26px;line-height:1.4;margin:0 0 6px;color:var(--ink);}
+  .hero p{font-size:14px;color:var(--ink-soft);margin:0;}
+  .card{background:var(--card);border-radius:20px;padding:22px 20px;margin-top:18px;box-shadow:0 6px 0 var(--line);}
+  .card h2{font-family:'Jua',sans-serif;font-size:17px;margin:0 0 14px;color:var(--ink);}
+  .field{margin-bottom:14px;}
+  .field label{display:block;font-size:13px;font-weight:500;color:var(--ink-soft);margin-bottom:6px;}
+  select{
+    width:100%;padding:12px 14px;font-size:15px;font-family:'Noto Sans KR',sans-serif;
+    border:2px solid var(--line);border-radius:12px;background:#341838;color:var(--ink);
+    appearance:none;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='14' height='9'><path d='M1 1l6 6 6-6' stroke='%23CBA6CB' stroke-width='2' fill='none'/></svg>");
+    background-repeat:no-repeat;background-position:right 14px center;
+  }
+  select:focus{outline:none;border-color:var(--coral);}
+  .go-btn{
+    width:100%;padding:14px;margin-top:6px;background:var(--coral);color:#fff;border:none;
+    border-radius:14px;font-family:'Jua',sans-serif;font-size:17px;cursor:pointer;
+    box-shadow:0 5px 0 var(--coral-dark);transition:transform .05s;
+  }
+  .go-btn:active{transform:translateY(3px);box-shadow:0 2px 0 var(--coral-dark);}
+  .result{display:none;margin-top:20px;text-align:center;}
+  .result.show{display:block;}
+  .pair-emoji{font-size:48px;margin-bottom:8px;}
+  .score-num{font-family:'Jua',sans-serif;font-size:44px;color:var(--coral);margin:0;}
+  .score-label{font-size:13px;color:var(--ink-soft);margin:0 0 16px;}
+  .score-bar-wide{position:relative;height:16px;background:var(--bg);border-radius:8px;border:2px solid var(--line);overflow:hidden;margin-bottom:16px;}
+  .score-fill-wide{height:100%;border-radius:7px;background:linear-gradient(90deg,var(--mint),var(--coral));transition:width .8s cubic-bezier(.34,1.56,.64,1);}
+  .comment-box{
+    background:var(--bg);border-radius:14px;padding:16px;text-align:left;
+    font-size:14px;line-height:1.7;color:var(--ink);margin-bottom:16px;
+  }
+  .share-btn{
+    width:100%;padding:13px;background:#341838;color:var(--ink);
+    border:2px solid var(--line);border-radius:14px;font-family:'Noto Sans KR',sans-serif;
+    font-weight:700;font-size:14px;cursor:pointer;
+  }
+  .disclaimer{font-size:11px;color:var(--ink-soft);text-align:center;margin-top:12px;line-height:1.6;}
+  .related{margin-top:28px;}
+  .related h3{font-family:'Jua',sans-serif;font-size:15px;margin:0 0 10px;color:var(--ink-soft);}
+  .related-grid{display:flex;flex-direction:column;gap:8px;}
+  .related-item{
+    display:flex;align-items:center;gap:10px;background:var(--card);border-radius:14px;
+    padding:12px 14px;text-decoration:none;color:var(--ink);border:2px solid var(--line);
+  }
+  .related-item .emoji{font-size:20px;}
+  .related-item .txt{font-size:13px;font-weight:500;}
+  .footer-link{display:block;text-align:center;margin-top:26px;font-size:12px;color:var(--ink-soft);text-decoration:none;}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <a class="brandbar" href="index.html">
+    <span class="b1">내위치</span>
+    <span class="b2">by CBM Lab</span>
+  </a>
+
+  <div class="hero">
+    <h1>우리 둘의 궁합,<br>몇 점일까?</h1>
+    <p>나랑 상대방 띠만 골라봐요</p>
+  </div>
+
+  <div class="card">
+    <h2>우리는 이래요</h2>
+    <div class="field">
+      <label for="me">내 띠</label>
+      <select id="me">
+        <option value="쥐">🐭 쥐띠</option>
+        <option value="소">🐮 소띠</option>
+        <option value="호랑이">🐯 호랑이띠</option>
+        <option value="토끼">🐰 토끼띠</option>
+        <option value="용">🐉 용띠</option>
+        <option value="뱀">🐍 뱀띠</option>
+        <option value="말">🐴 말띠</option>
+        <option value="양">🐐 양띠</option>
+        <option value="원숭이" selected>🐒 원숭이띠</option>
+        <option value="닭">🐔 닭띠</option>
+        <option value="개">🐶 개띠</option>
+        <option value="돼지">🐷 돼지띠</option>
+      </select>
+    </div>
+    <div class="field">
+      <label for="partner">상대방 띠</label>
+      <select id="partner">
+        <option value="쥐">🐭 쥐띠</option>
+        <option value="소">🐮 소띠</option>
+        <option value="호랑이">🐯 호랑이띠</option>
+        <option value="토끼">🐰 토끼띠</option>
+        <option value="용" selected>🐉 용띠</option>
+        <option value="뱀">🐍 뱀띠</option>
+        <option value="말">🐴 말띠</option>
+        <option value="양">🐐 양띠</option>
+        <option value="원숭이">🐒 원숭이띠</option>
+        <option value="닭">🐔 닭띠</option>
+        <option value="개">🐶 개띠</option>
+        <option value="돼지">🐷 돼지띠</option>
+      </select>
+    </div>
+    <button class="go-btn" onclick="showResult()">궁합 보기 →</button>
+
+    <div class="result" id="resultBox">
+      <div class="pair-emoji" id="pairEmoji"></div>
+      <p class="score-num" id="scoreNum"></p>
+      <p class="score-label">궁합 점수</p>
+      <div class="score-bar-wide"><div class="score-fill-wide" id="scoreFill"></div></div>
+      <div class="comment-box" id="commentBox"></div>
+
+      <button class="share-btn" onclick="shareResult()">📤 카톡으로 궁합 결과 공유하기</button>
+      <p class="disclaimer">🔮 재미로 보는 콘텐츠입니다.</p>
+    </div>
+  </div>
+
+  <div class="related">
+    <h3>다른 사람들이 본 랭킹</h3>
+    <div class="related-grid">
+      <a class="related-item" href="daily-fortune-calculator.html">
+        <span class="emoji">🔮</span><span class="txt">오늘의 운세 보기</span>
+      </a>
+      <a class="related-item" href="job-change-calculator.html">
+        <span class="emoji">💼</span><span class="txt">내 이직 횟수 vs 내 나이대</span>
+      </a>
+    </div>
+  </div>
+
+  <a class="footer-link" href="../index.html">CBM Lab의 다른 무역 도구 보기 →</a>
+</div>
+
+<script>
+const animals = ["쥐","소","호랑이","토끼","용","뱀","말","양","원숭이","닭","개","돼지"];
+const emojiMap = {"쥐":"🐭","소":"🐮","호랑이":"🐯","토끼":"🐰","용":"🐉","뱀":"🐍","말":"🐴","양":"🐐","원숭이":"🐒","닭":"🐔","개":"🐶","돼지":"🐷"};
+
+// 전통 삼합(트리오 궁합) / 육합(짝꿍 궁합) / 상충(반대) 관계
+const samhap = [["쥐","용","원숭이"],["소","뱀","닭"],["호랑이","말","개"],["토끼","양","돼지"]];
+const yukhap = { "쥐":"소","소":"쥐","호랑이":"돼지","돼지":"호랑이","토끼":"개","개":"토끼","용":"닭","닭":"용","뱀":"원숭이","원숭이":"뱀","말":"양","양":"말" };
+
+function hashStr(str){
+  let h = 0;
+  for(let i=0;i<str.length;i++){ h = (h*31 + str.charCodeAt(i)) | 0; }
+  return Math.abs(h);
+}
+
+function sameSamhap(a,b){
+  return samhap.some(trio => trio.includes(a) && trio.includes(b));
+}
+function isChungdol(a,b){
+  const ia = animals.indexOf(a), ib = animals.indexOf(b);
+  return Math.abs(ia-ib) === 6;
+}
+
+const greatMsgs = [
+  "말이 잘 통하고 같이 있으면 편안한 조합이에요. 티키타카가 잘 맞을 거예요.",
+  "서로의 부족한 부분을 채워주는 찰떡궁합. 함께라면 뭐든 해낼 것 같아요.",
+  "취향이 비슷해서 같이 하는 일마다 즐거울 조합이에요.",
+  "만나면 만날수록 편해지는 관계, 오래 갈 인연이에요."
+];
+const goodMsgs = [
+  "무난하게 잘 맞는 편이에요. 서로 배려하면 더 좋아질 조합.",
+  "가끔 티격태격해도 금방 풀리는 사이예요.",
+  "처음엔 어색해도 알아갈수록 매력이 보이는 조합이에요.",
+  "서로 다른 매력에 끌리는, 은근히 잘 어울리는 궁합이에요."
+];
+const midMsgs = [
+  "노력이 조금 필요한 궁합이지만, 그만큼 특별해질 수 있어요.",
+  "서로 다른 스타일이라 배울 점이 많은 관계예요.",
+  "잔잔하지만 꾸준한 케미가 매력인 조합이에요.",
+  "티키타카보다는 각자의 속도를 존중하는 게 좋은 궁합이에요."
+];
+const lowMsgs = [
+  "성향이 정반대라 부딪힐 수 있지만, 그만큼 서로에게 자극이 되는 사이예요.",
+  "이해하는 데 시간이 좀 걸리는 궁합이에요. 대화가 열쇠!",
+  "다른 게 매력일 수도 있어요. 인내심을 챙겨두면 좋아요.",
+  "재미로 보면 극과 극, 그래도 안 맞는 사람 없죠."
+];
+
+function showResult(){
+  const me = document.getElementById('me').value;
+  const partner = document.getElementById('partner').value;
+  const pairSeed = [me, partner].sort().join("-");
+
+  document.getElementById('pairEmoji').textContent = emojiMap[me] + " 💛 " + emojiMap[partner];
+
+  let score, msgPool;
+  if(me === partner){
+    score = 70 + (hashStr(pairSeed) % 16);
+    msgPool = goodMsgs;
+  } else if(sameSamhap(me, partner)){
+    score = 88 + (hashStr(pairSeed) % 11);
+    msgPool = greatMsgs;
+  } else if(yukhap[me] === partner){
+    score = 82 + (hashStr(pairSeed) % 13);
+    msgPool = greatMsgs;
+  } else if(isChungdol(me, partner)){
+    score = 32 + (hashStr(pairSeed) % 19);
+    msgPool = lowMsgs;
+  } else {
+    score = 58 + (hashStr(pairSeed) % 22);
+    msgPool = score >= 70 ? goodMsgs : midMsgs;
+  }
+
+  const msg = msgPool[hashStr(pairSeed+"msg") % msgPool.length];
+
+  document.getElementById('scoreNum').textContent = score+"점";
+  document.getElementById('scoreFill').style.width = score+"%";
+  document.getElementById('commentBox').textContent = `${me}띠 × ${partner}띠 — ${msg}`;
+
+  document.getElementById('resultBox').classList.add('show');
+}
+
+function shareResult(){
+  const me = document.getElementById('me').value;
+  const partner = document.getElementById('partner').value;
+  if(navigator.share){
+    navigator.share({title:'띠 궁합 보기 - 내위치', text: me+'띠 x '+partner+'띠 궁합을 확인해보세요', url: location.href});
+  } else {
+    navigator.clipboard.writeText(location.href);
+    alert('링크가 복사됐어요! 카톡에 붙여넣기 해보세요.');
+  }
+}
+</script>
+</body>
+</html>
