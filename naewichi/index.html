@@ -45,14 +45,8 @@
   .search-box input::placeholder{color:#A7BBCF;}
   .search-box .icon{position:absolute;left:14px;top:50%;transform:translateY(-50%);font-size:16px;opacity:.6;}
 
-  .chips-wrap{position:relative;margin:0 -16px;}
-  .chips-wrap::after{
-    content:"";position:absolute;top:0;right:0;bottom:6px;width:36px;
-    background:linear-gradient(to right, transparent, var(--bg));
-    pointer-events:none;
-  }
-  .chips{display:flex;gap:8px;overflow-x:auto;padding:12px 28px 6px 16px;scrollbar-width:none;-ms-overflow-style:none;}
-  .chips::-webkit-scrollbar{display:none;}
+  .chips-wrap{margin:0;}
+  .chips{display:flex;flex-wrap:wrap;gap:8px;padding:12px 0 6px;}
   .chip{
     flex-shrink:0;padding:8px 14px;border-radius:999px;background:var(--card);
     border:2px solid var(--line);font-size:13px;font-weight:700;color:var(--ink-soft);
@@ -85,6 +79,8 @@
 
   .count-note{font-size:11px;color:var(--ink-soft);text-align:center;margin-top:14px;}
 </style>
+<script>window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };</script>
+<script defer src="/_vercel/insights/script.js"></script>
 </head>
 <body>
 <div class="wrap">
@@ -117,30 +113,12 @@
 
 <script>
 // ============================================================
-// 콘텐츠 DB — 새 랭킹 페이지를 추가할 땐 이 배열에 한 줄만 추가하면
-// 허브 페이지, 검색, 카테고리 필터에 자동 반영됩니다.
+// 콘텐츠 DB는 items.json에서 불러옵니다.
+// GitHub Actions가 Vercel Analytics API로 조회수를 가져와서
+// 이 JSON 파일의 views 값만 자동으로 갱신합니다.
 // ============================================================
-const items = [
-  { title:"내 출퇴근 시간 vs 전국 평균", sub:"매일 몇 분씩 버리고 있을까", emoji:"🚌", url:"commute-time-calculator.html", cat:"time" },
-  { title:"내 커피값 vs 또래 평균", sub:"한 달에 얼마나 마시는 걸까", emoji:"☕", url:"coffee-spending-calculator.html", cat:"money" },
-  { title:"내 이직 횟수 vs 내 나이대", sub:"평균보다 많이 옮겼을까", emoji:"💼", url:"job-change-calculator.html", cat:"work" },
-  { title:"내 순자산 vs 또래 평균", sub:"저축은 잘 하고 있는 걸까", emoji:"🐷", url:"savings-calculator.html", cat:"money" },
-  { title:"내 외식비 vs 또래 평균", sub:"사 먹는 데 얼마나 쓸까", emoji:"🍽️", url:"dining-expense-calculator.html", cat:"money" },
-  { title:"내 대출상환액 vs 내 나이대", sub:"매달 얼마씩 갚고 있을까", emoji:"🏦", url:"loan-repayment-calculator.html", cat:"money" },
-  { title:"내 OTT 구독 개수 vs 전국 평균", sub:"넷플릭스 말고 또 뭘 볼까", emoji:"📺", url:"ott-subscription-calculator.html", cat:"money" },
-  { title:"오늘의 운세 (12띠)", sub:"오늘 하루, 내 운은 어떨까", emoji:"🔮", url:"daily-fortune-calculator.html", cat:"fortune" },
-  { title:"띠 궁합 보기", sub:"우리 둘의 궁합은 몇 점일까", emoji:"💞", url:"zodiac-compatibility-calculator.html", cat:"fortune" },
-];
-
-const categories = [
-  { id:"all", label:"전체", emoji:"✨" },
-  { id:"money", label:"돈", emoji:"💰" },
-  { id:"time", label:"시간", emoji:"⏰" },
-  { id:"work", label:"일", emoji:"💼" },
-  { id:"fortune", label:"운세", emoji:"🔮" },
-  { id:"health", label:"건강", emoji:"🏃" },
-  { id:"life", label:"생활", emoji:"🏠" },
-];
+let items = [];
+let categories = [{ id:"all", label:"전체", emoji:"✨" }];
 
 let activeCat = "all";
 
@@ -163,6 +141,8 @@ function renderTiles(){
   if(q){
     filtered = filtered.filter(it => (it.title + it.sub).toLowerCase().includes(q));
   }
+  // 조회수(views) 높은 순으로 정렬 - 실제 데이터 연결 전까지는 동일값이라 등록 순서 유지
+  filtered = filtered.slice().sort((a,b) => b.views - a.views);
 
   const area = document.getElementById('tileArea');
   const note = document.getElementById('countNote');
@@ -187,8 +167,20 @@ function renderTiles(){
   note.textContent = `현재 ${items.length}개 랭킹 운영 중 · 계속 추가돼요`;
 }
 
-renderChips();
-renderTiles();
+async function init(){
+  try{
+    const res = await fetch('items.json', { cache: 'no-store' });
+    const data = await res.json();
+    items = data.items || [];
+    categories = data.categories || categories;
+  } catch(e){
+    // items.json을 못 불러와도 빈 상태로 안전하게 표시
+    items = [];
+  }
+  renderChips();
+  renderTiles();
+}
+init();
 </script>
 </body>
 </html>
