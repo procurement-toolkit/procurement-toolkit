@@ -89,8 +89,25 @@
   <div class="card">
     <h2>우리는 이래요</h2>
     <div class="field">
-      <label for="myYear">내 출생연도</label>
-      <select id="myYear"></select>
+      <label for="myCalType">내 양력/음력</label>
+      <select id="myCalType" onchange="toggleLeap('my')">
+        <option value="solar" selected>양력</option>
+        <option value="lunar">음력</option>
+      </select>
+    </div>
+    <div class="field" id="myLeapWrap" style="display:none;">
+      <label style="display:flex;align-items:center;gap:8px;cursor:pointer;">
+        <input type="checkbox" id="myIsLeap" style="width:16px;height:16px;">
+        <span style="font-size:13px;color:var(--ink-soft);">윤달로 태어났어요</span>
+      </label>
+    </div>
+    <div class="field">
+      <label>내 생년월일</label>
+      <div style="display:flex;gap:6px;">
+        <select id="myYear" style="flex:1.3"></select>
+        <select id="myMonth" style="flex:1"></select>
+        <select id="myDay" style="flex:1"></select>
+      </div>
     </div>
     <div class="field">
       <label for="myGender">내 성별</label>
@@ -101,8 +118,25 @@
       </select>
     </div>
     <div class="field">
-      <label for="partnerYear">상대방 출생연도</label>
-      <select id="partnerYear"></select>
+      <label for="partnerCalType">상대방 양력/음력</label>
+      <select id="partnerCalType" onchange="toggleLeap('partner')">
+        <option value="solar" selected>양력</option>
+        <option value="lunar">음력</option>
+      </select>
+    </div>
+    <div class="field" id="partnerLeapWrap" style="display:none;">
+      <label style="display:flex;align-items:center;gap:8px;cursor:pointer;">
+        <input type="checkbox" id="partnerIsLeap" style="width:16px;height:16px;">
+        <span style="font-size:13px;color:var(--ink-soft);">윤달로 태어났어요</span>
+      </label>
+    </div>
+    <div class="field">
+      <label>상대방 생년월일</label>
+      <div style="display:flex;gap:6px;">
+        <select id="partnerYear" style="flex:1.3"></select>
+        <select id="partnerMonth" style="flex:1"></select>
+        <select id="partnerDay" style="flex:1"></select>
+      </div>
     </div>
     <div class="field">
       <label for="partnerGender">상대방 성별</label>
@@ -141,6 +175,7 @@
   <a class="footer-link" href="../index.html">CBM Lab의 다른 무역 도구 보기 →</a>
 </div>
 
+<script src="lib/solarlunar.min.js"></script>
 <script>
 const animals = ["쥐","소","호랑이","토끼","용","뱀","말","양","원숭이","닭","개","돼지"];
 const emojiMap = {"쥐":"🐭","소":"🐮","호랑이":"🐯","토끼":"🐰","용":"🐉","뱀":"🐍","말":"🐴","양":"🐐","원숭이":"🐒","닭":"🐔","개":"🐶","돼지":"🐷"};
@@ -160,18 +195,71 @@ function yearToAnimal(year){
   return animals[idx];
 }
 
-function populateYearSelect(elId, defaultAgo){
-  const sel = document.getElementById(elId);
-  const nowYear = new Date().getFullYear();
-  for(let y = nowYear - 10; y >= nowYear - 85; y--){
-    const opt = document.createElement('option');
-    opt.value = y; opt.textContent = y + "년생 (" + yearToAnimal(y) + "띠)";
-    if(y === nowYear - defaultAgo) opt.selected = true;
-    sel.appendChild(opt);
+function getLunarYear(calType, y, m, d){
+  if(calType === 'lunar') return y;
+  try{
+    const lib = (window.solarLunar && window.solarLunar.default) ? window.solarLunar.default : window.solarLunar;
+    const r = lib.solar2lunar(y, m, d);
+    return r.lYear;
+  } catch(e){
+    return y;
   }
 }
-populateYearSelect('myYear', 28);
-populateYearSelect('partnerYear', 30);
+
+function toggleLeap(who){
+  const calType = document.getElementById(who+'CalType').value;
+  document.getElementById(who+'LeapWrap').style.display = calType === 'lunar' ? 'block' : 'none';
+}
+
+function populateDateSelects(prefix, defaultAgo){
+  const yearSel = document.getElementById(prefix+'Year');
+  const monthSel = document.getElementById(prefix+'Month');
+  const daySel = document.getElementById(prefix+'Day');
+  const nowYear = new Date().getFullYear();
+
+  for(let y = nowYear - 10; y >= nowYear - 85; y--){
+    const opt = document.createElement('option');
+    opt.value = y; opt.textContent = y + "년";
+    if(y === nowYear - defaultAgo) opt.selected = true;
+    yearSel.appendChild(opt);
+  }
+  for(let m = 1; m <= 12; m++){
+    const opt = document.createElement('option');
+    opt.value = m; opt.textContent = m + "월";
+    if(m === 6) opt.selected = true;
+    monthSel.appendChild(opt);
+  }
+  function rebuildDays(){
+    const month = Number(monthSel.value);
+    const calType = document.getElementById(prefix+'CalType').value;
+    const maxDay = calType === 'lunar' ? 30 : ([4,6,9,11].includes(month) ? 30 : (month===2 ? 28 : 31));
+    const prevVal = daySel.value;
+    daySel.innerHTML = '';
+    for(let d = 1; d <= maxDay; d++){
+      const opt = document.createElement('option');
+      opt.value = d; opt.textContent = d + "일";
+      if(d === 15) opt.selected = true;
+      daySel.appendChild(opt);
+    }
+    if(prevVal && Number(prevVal) <= maxDay) daySel.value = prevVal;
+  }
+  monthSel.addEventListener('change', rebuildDays);
+  document.getElementById(prefix+'CalType').addEventListener('change', rebuildDays);
+  rebuildDays();
+}
+populateDateSelects('my', 28);
+populateDateSelects('partner', 30);
+
+function readPerson(prefix){
+  const calType = document.getElementById(prefix+'CalType').value;
+  const y = Number(document.getElementById(prefix+'Year').value);
+  const m = Number(document.getElementById(prefix+'Month').value);
+  const d = Number(document.getElementById(prefix+'Day').value);
+  const gender = document.getElementById(prefix+'Gender').value;
+  const lunarYear = getLunarYear(calType, y, m, d);
+  const animal = yearToAnimal(lunarYear);
+  return { calType, y, m, d, gender, animal };
+}
 
 function sameSamhap(a,b){
   return samhap.some(trio => trio.includes(a) && trio.includes(b));
@@ -207,13 +295,10 @@ const lowMsgs = [
 ];
 
 function showResult(){
-  const myYear = Number(document.getElementById('myYear').value);
-  const partnerYear = Number(document.getElementById('partnerYear').value);
-  const myGender = document.getElementById('myGender').value;
-  const partnerGender = document.getElementById('partnerGender').value;
-  const me = yearToAnimal(myYear);
-  const partner = yearToAnimal(partnerYear);
-  const pairSeed = [myYear+myGender, partnerYear+partnerGender].sort().join("-");
+  const myP = readPerson('my');
+  const partnerP = readPerson('partner');
+  const me = myP.animal, partner = partnerP.animal;
+  const pairSeed = [myP.y+"-"+myP.m+"-"+myP.d+myP.gender, partnerP.y+"-"+partnerP.m+"-"+partnerP.d+partnerP.gender].sort().join("|");
 
   document.getElementById('pairEmoji').textContent = emojiMap[me] + " 💛 " + emojiMap[partner];
 
@@ -239,16 +324,14 @@ function showResult(){
 
   document.getElementById('scoreNum').textContent = score+"점";
   document.getElementById('scoreFill').style.width = score+"%";
-  document.getElementById('commentBox').textContent = `${myYear}년생 ${me}띠 × ${partnerYear}년생 ${partner}띠 — ${msg}`;
+  document.getElementById('commentBox').textContent = `${myP.y}년 ${myP.m}월생 ${me}띠 × ${partnerP.y}년 ${partnerP.m}월생 ${partner}띠 — ${msg}`;
 
   document.getElementById('resultBox').classList.add('show');
 }
 
 function shareResult(){
-  const myYear = Number(document.getElementById('myYear').value);
-  const partnerYear = Number(document.getElementById('partnerYear').value);
-  const me = yearToAnimal(myYear);
-  const partner = yearToAnimal(partnerYear);
+  const me = readPerson('my').animal;
+  const partner = readPerson('partner').animal;
   if(navigator.share){
     navigator.share({title:'띠 궁합 보기 - 내위치', text: me+'띠 x '+partner+'띠 궁합을 확인해보세요', url: location.href});
   } else {
