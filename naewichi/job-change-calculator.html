@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>내 이직 횟수 계산기 - 내 나이대 평균과 비교해보기 | 내위치</title>
+<meta name="description" content="내 나이와 이직 횟수를 입력하면 같은 나이대 평균과 바로 비교해드려요. KDI·한국고용정보원 이직 트렌드 조사 데이터 기반, 내 이직 횟수가 많은 편인지 확인해보세요.">
+<meta property="og:title" content="내 이직 횟수, 내 나이대에서 많은 편일까?">
+<meta property="og:description" content="입력하면 바로 비교되는 이직 횟수 계산기 - 내위치">
+<meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Jua&family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#EEF3EA; --card:#FFFFFF; --ink:#2C3B24; --ink-soft:#6E8060;
+    --coral:#E8A33D; --coral-dark:#B87A1E; --mint:#5FA8D3; --mint-dark:#2E6E96;
+    --yellow:#FFD166; --line:#DCE7D3;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;background:var(--bg);font-family:'Noto Sans KR', sans-serif;color:var(--ink);-webkit-font-smoothing:antialiased;}
+  .wrap{max-width:480px;margin:0 auto;padding:0 20px 60px;}
+
+  .brandbar{display:flex;align-items:baseline;gap:6px;padding:18px 0 0;text-decoration:none;}
+  .brandbar .b1{font-family:'Jua',sans-serif;font-size:20px;color:var(--ink);}
+  .brandbar .b2{font-size:11px;color:var(--ink-soft);}
+
+  .hero{text-align:center;padding:18px 0 8px;}
+  .hero h1{font-family:'Jua',sans-serif;font-size:26px;line-height:1.4;margin:0 0 6px;color:var(--ink);}
+  .hero p{font-size:14px;color:var(--ink-soft);margin:0;}
+
+  .mascot{display:block;margin:14px auto 4px;width:200px;height:140px;}
+
+  .card{background:var(--card);border-radius:20px;padding:22px 20px;margin-top:18px;box-shadow:0 6px 0 var(--line);}
+  .card h2{font-family:'Jua',sans-serif;font-size:17px;margin:0 0 14px;color:var(--ink);}
+
+  .field{margin-bottom:14px;}
+  .field label{display:block;font-size:13px;font-weight:500;color:var(--ink-soft);margin-bottom:6px;}
+  select{
+    width:100%;padding:12px 14px;font-size:15px;font-family:'Noto Sans KR',sans-serif;
+    border:2px solid var(--line);border-radius:12px;background:#fff;color:var(--ink);
+    appearance:none;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='14' height='9'><path d='M1 1l6 6 6-6' stroke='%236E8060' stroke-width='2' fill='none'/></svg>");
+    background-repeat:no-repeat;background-position:right 14px center;
+  }
+  select:focus{outline:none;border-color:var(--coral);}
+
+  .go-btn{
+    width:100%;padding:14px;margin-top:6px;background:var(--coral);color:#fff;border:none;
+    border-radius:14px;font-family:'Jua',sans-serif;font-size:17px;cursor:pointer;
+    box-shadow:0 5px 0 var(--coral-dark);transition:transform .05s;
+  }
+  .go-btn:active{transform:translateY(3px);box-shadow:0 2px 0 var(--coral-dark);}
+
+  .result{display:none;margin-top:20px;}
+  .result.show{display:block;}
+  .headline-result{text-align:center;font-family:'Jua',sans-serif;font-size:22px;color:var(--ink);margin-bottom:6px;line-height:1.5;}
+  .headline-result .num{color:var(--coral-dark);font-size:30px;}
+  .sub-result{text-align:center;font-size:13px;color:var(--ink-soft);margin-bottom:20px;}
+
+  .track-row{margin-bottom:16px;}
+  .track-label{display:flex;justify-content:space-between;font-size:13px;font-weight:500;margin-bottom:6px;}
+  .track-label .me{color:var(--coral-dark);}
+  .track-label .avg{color:var(--mint-dark);}
+  .track{position:relative;height:34px;background:var(--bg);border-radius:17px;border:2px solid var(--line);overflow:visible;}
+  .track-fill{
+    position:absolute;left:0;top:0;bottom:0;border-radius:17px;
+    display:flex;align-items:center;justify-content:flex-end;padding-right:10px;
+    font-size:12px;font-weight:700;color:#fff;transition:width .8s cubic-bezier(.34,1.56,.64,1);
+  }
+  .track-fill.me{background:var(--coral);}
+  .track-fill.avg{background:var(--mint);}
+  .track-icon{position:absolute;top:50%;transform:translate(-50%,-50%);font-size:20px;}
+
+  .badge{
+    display:inline-block;background:var(--yellow);color:#7A5A00;font-size:12px;font-weight:700;
+    padding:5px 12px;border-radius:999px;margin:0 auto 14px;display:table;
+  }
+
+  .share-btn{
+    width:100%;padding:13px;margin-top:6px;background:#fff;color:var(--ink);
+    border:2px solid var(--line);border-radius:14px;font-family:'Noto Sans KR',sans-serif;
+    font-weight:700;font-size:14px;cursor:pointer;
+  }
+
+  .source{font-size:11px;color:var(--ink-soft);text-align:center;margin-top:12px;line-height:1.6;}
+
+  .related{margin-top:28px;}
+  .related h3{font-family:'Jua',sans-serif;font-size:15px;margin:0 0 10px;color:var(--ink-soft);}
+  .related-grid{display:flex;flex-direction:column;gap:8px;}
+  .related-item{
+    display:flex;align-items:center;gap:10px;background:var(--card);border-radius:14px;
+    padding:12px 14px;text-decoration:none;color:var(--ink);border:2px solid var(--line);
+  }
+  .related-item .emoji{font-size:20px;}
+  .related-item .txt{font-size:13px;font-weight:500;}
+
+  .footer-link{display:block;text-align:center;margin-top:26px;font-size:12px;color:var(--ink-soft);text-decoration:none;}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <a class="brandbar" href="index.html">
+    <span class="b1">내위치</span>
+    <span class="b2">by CBM Lab</span>
+  </a>
+
+  <div class="hero">
+    <h1>내 이직 횟수,<br>내 나이대에서 많은 편일까?</h1>
+    <p>나이랑 이직 횟수만 골라봐요</p>
+  </div>
+
+  <svg class="mascot" viewBox="0 0 200 140" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="이직 서류가방을 든 귀여운 캐릭터 일러스트">
+    <ellipse cx="100" cy="128" rx="70" ry="7" fill="#DCE7D3"/>
+    <circle cx="100" cy="58" r="26" fill="#FFE0B3"/>
+    <path d="M78 48 q22 -18 44 0 q2 -20 -22 -22 q-24 2 -22 22" fill="#4A3A2C"/>
+    <circle cx="90" cy="58" r="3" fill="#2C3B24"/>
+    <circle cx="110" cy="58" r="3" fill="#2C3B24"/>
+    <path d="M90 68 q10 6 20 0" fill="none" stroke="#2C3B24" stroke-width="2.5" stroke-linecap="round"/>
+    <rect x="70" y="84" width="60" height="40" rx="8" fill="#E8A33D"/>
+    <rect x="82" y="76" width="36" height="16" rx="6" fill="none" stroke="#B87A1E" stroke-width="5"/>
+    <rect x="94" y="98" width="12" height="10" rx="2" fill="#B87A1E"/>
+  </svg>
+
+  <div class="card">
+    <h2>나는 이래요</h2>
+    <div class="field">
+      <label for="age">나이대</label>
+      <select id="age">
+        <option value="20s">20대</option>
+        <option value="30s" selected>30대</option>
+        <option value="40s">40대</option>
+        <option value="50s">50대 이상</option>
+      </select>
+    </div>
+    <div class="field">
+      <label for="count">지금까지 이직 횟수</label>
+      <select id="count">
+        <option value="0">이직 경험 없음</option>
+        <option value="1">1회</option>
+        <option value="2" selected>2회</option>
+        <option value="3">3회</option>
+        <option value="4">4회</option>
+        <option value="5">5회 이상</option>
+      </select>
+    </div>
+    <button class="go-btn" onclick="showResult()">비교해보기 →</button>
+
+    <div class="result" id="resultBox">
+      <div class="badge" id="badgeText"></div>
+      <div class="headline-result" id="headlineText"></div>
+      <div class="sub-result" id="subText"></div>
+
+      <div class="track-row">
+        <div class="track-label"><span class="me">나</span><span id="meMin"></span></div>
+        <div class="track" id="meTrack">
+          <div class="track-fill me" id="meFill"><span class="track-icon">🏃</span></div>
+        </div>
+      </div>
+      <div class="track-row">
+        <div class="track-label"><span class="avg">내 나이대 평균</span><span id="avgMin"></span></div>
+        <div class="track" id="avgTrack">
+          <div class="track-fill avg" id="avgFill"><span class="track-icon">👥</span></div>
+        </div>
+      </div>
+
+      <button class="share-btn" onclick="shareResult()">📤 카톡으로 결과 자랑하기</button>
+      <p class="source">출처: KDI 「근로자 이직 트렌드 조사」(한국고용정보원), 연령대별 이직 경험 비율 및 평균 이직 횟수 기반 추정치</p>
+    </div>
+  </div>
+
+  <div class="related">
+    <h3>다른 사람들이 본 랭킹</h3>
+    <div class="related-grid">
+      <a class="related-item" href="commute-time-calculator.html">
+        <span class="emoji">🚌</span><span class="txt">내 출퇴근 시간 vs 전국 평균</span>
+      </a>
+      <a class="related-item" href="coffee-spending-calculator.html">
+        <span class="emoji">☕</span><span class="txt">내 커피값 vs 또래 평균</span>
+      </a>
+    </div>
+  </div>
+
+  <a class="footer-link" href="../index.html">CBM Lab의 다른 무역 도구 보기 →</a>
+</div>
+
+<script>
+// KDI/한국고용정보원 이직 트렌드 조사 기반 추정치
+// 이직 경험자 평균 2.8회, 연령대별 이직 경험 비율(20대 49.6%, 30대 67.0%, 40대 79.8%)을 반영한 나이대별 평균 이직 횟수 추정
+const avgByAge = { "20s": 1.1, "30s": 2.0, "40s": 2.8, "50s": 3.3 };
+const ageLabel = { "20s": "20대", "30s": "30대", "40s": "40대", "50s": "50대 이상" };
+
+function showResult(){
+  const age = document.getElementById('age').value;
+  const myCount = Number(document.getElementById('count').value);
+  const avg = avgByAge[age];
+
+  const diff = myCount - avg;
+  const badge = document.getElementById('badgeText');
+  const headline = document.getElementById('headlineText');
+  const sub = document.getElementById('subText');
+
+  let badgeMsg, headMsg, subMsg;
+  if(myCount === 0){
+    badgeMsg = "한 우물 파는 중"; headMsg = `이직 경험 <span class="num">0회</span>`;
+    subMsg = "이 정도면 진득함이 무기죠.";
+  } else if(diff <= -1.5){
+    badgeMsg = "안정 지향형"; headMsg = `${ageLabel[age]} 평균보다 <span class="num">적어요</span>`;
+    subMsg = "한 곳에서 꾸준히 쌓아가는 스타일이네요.";
+  } else if(diff < 0.5){
+    badgeMsg = "딱 평균"; headMsg = `${ageLabel[age]} 평균과 <span class="num">비슷해요</span>`;
+    subMsg = "이 나이대에서는 흔한 이직 패턴이에요.";
+  } else if(diff <= 1.5){
+    badgeMsg = "적당히 도전하는 편"; headMsg = `${ageLabel[age]} 평균보다 <span class="num">많아요</span>`;
+    subMsg = "이력서에 쓸 이야기가 좀 있으시겠어요.";
+  } else {
+    badgeMsg = "이직 마스터"; headMsg = `${ageLabel[age]} 평균보다 <span class="num">훨씬 많아요</span>`;
+    subMsg = "그만큼 다양한 경험치를 쌓으셨겠네요.";
+  }
+
+  badge.textContent = badgeMsg;
+  headline.innerHTML = headMsg;
+  sub.textContent = subMsg;
+
+  document.getElementById('meMin').textContent = myCount+'회';
+  document.getElementById('avgMin').textContent = avg.toFixed(1)+'회';
+
+  const maxScale = Math.max(myCount, avg, 3) * 1.3;
+  document.getElementById('meFill').style.width = (myCount/maxScale*100)+'%';
+  document.getElementById('avgFill').style.width = (avg/maxScale*100)+'%';
+
+  document.getElementById('resultBox').classList.add('show');
+}
+
+function shareResult(){
+  const text = document.getElementById('headlineText').textContent;
+  if(navigator.share){
+    navigator.share({title:'내 이직 횟수 비교 - 내위치', text: '내 이직 횟수: ' + text, url: location.href});
+  } else {
+    navigator.clipboard.writeText(location.href);
+    alert('링크가 복사됐어요! 카톡에 붙여넣기 해보세요.');
+  }
+}
+</script>
+</body>
+</html>
