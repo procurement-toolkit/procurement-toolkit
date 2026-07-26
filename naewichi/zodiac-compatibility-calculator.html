@@ -89,37 +89,27 @@
   <div class="card">
     <h2>우리는 이래요</h2>
     <div class="field">
-      <label for="me">내 띠</label>
-      <select id="me">
-        <option value="쥐">🐭 쥐띠</option>
-        <option value="소">🐮 소띠</option>
-        <option value="호랑이">🐯 호랑이띠</option>
-        <option value="토끼">🐰 토끼띠</option>
-        <option value="용">🐉 용띠</option>
-        <option value="뱀">🐍 뱀띠</option>
-        <option value="말">🐴 말띠</option>
-        <option value="양">🐐 양띠</option>
-        <option value="원숭이" selected>🐒 원숭이띠</option>
-        <option value="닭">🐔 닭띠</option>
-        <option value="개">🐶 개띠</option>
-        <option value="돼지">🐷 돼지띠</option>
+      <label for="myYear">내 출생연도</label>
+      <select id="myYear"></select>
+    </div>
+    <div class="field">
+      <label for="myGender">내 성별</label>
+      <select id="myGender">
+        <option value="m">남성</option>
+        <option value="f">여성</option>
+        <option value="n">비공개</option>
       </select>
     </div>
     <div class="field">
-      <label for="partner">상대방 띠</label>
-      <select id="partner">
-        <option value="쥐">🐭 쥐띠</option>
-        <option value="소">🐮 소띠</option>
-        <option value="호랑이">🐯 호랑이띠</option>
-        <option value="토끼">🐰 토끼띠</option>
-        <option value="용" selected>🐉 용띠</option>
-        <option value="뱀">🐍 뱀띠</option>
-        <option value="말">🐴 말띠</option>
-        <option value="양">🐐 양띠</option>
-        <option value="원숭이">🐒 원숭이띠</option>
-        <option value="닭">🐔 닭띠</option>
-        <option value="개">🐶 개띠</option>
-        <option value="돼지">🐷 돼지띠</option>
+      <label for="partnerYear">상대방 출생연도</label>
+      <select id="partnerYear"></select>
+    </div>
+    <div class="field">
+      <label for="partnerGender">상대방 성별</label>
+      <select id="partnerGender">
+        <option value="m">남성</option>
+        <option value="f">여성</option>
+        <option value="n">비공개</option>
       </select>
     </div>
     <button class="go-btn" onclick="showResult()">궁합 보기 →</button>
@@ -165,6 +155,24 @@ function hashStr(str){
   return Math.abs(h);
 }
 
+function yearToAnimal(year){
+  const idx = (((year % 12) - 4) + 12) % 12;
+  return animals[idx];
+}
+
+function populateYearSelect(elId, defaultAgo){
+  const sel = document.getElementById(elId);
+  const nowYear = new Date().getFullYear();
+  for(let y = nowYear - 10; y >= nowYear - 85; y--){
+    const opt = document.createElement('option');
+    opt.value = y; opt.textContent = y + "년생 (" + yearToAnimal(y) + "띠)";
+    if(y === nowYear - defaultAgo) opt.selected = true;
+    sel.appendChild(opt);
+  }
+}
+populateYearSelect('myYear', 28);
+populateYearSelect('partnerYear', 30);
+
 function sameSamhap(a,b){
   return samhap.some(trio => trio.includes(a) && trio.includes(b));
 }
@@ -199,9 +207,13 @@ const lowMsgs = [
 ];
 
 function showResult(){
-  const me = document.getElementById('me').value;
-  const partner = document.getElementById('partner').value;
-  const pairSeed = [me, partner].sort().join("-");
+  const myYear = Number(document.getElementById('myYear').value);
+  const partnerYear = Number(document.getElementById('partnerYear').value);
+  const myGender = document.getElementById('myGender').value;
+  const partnerGender = document.getElementById('partnerGender').value;
+  const me = yearToAnimal(myYear);
+  const partner = yearToAnimal(partnerYear);
+  const pairSeed = [myYear+myGender, partnerYear+partnerGender].sort().join("-");
 
   document.getElementById('pairEmoji').textContent = emojiMap[me] + " 💛 " + emojiMap[partner];
 
@@ -227,14 +239,16 @@ function showResult(){
 
   document.getElementById('scoreNum').textContent = score+"점";
   document.getElementById('scoreFill').style.width = score+"%";
-  document.getElementById('commentBox').textContent = `${me}띠 × ${partner}띠 — ${msg}`;
+  document.getElementById('commentBox').textContent = `${myYear}년생 ${me}띠 × ${partnerYear}년생 ${partner}띠 — ${msg}`;
 
   document.getElementById('resultBox').classList.add('show');
 }
 
 function shareResult(){
-  const me = document.getElementById('me').value;
-  const partner = document.getElementById('partner').value;
+  const myYear = Number(document.getElementById('myYear').value);
+  const partnerYear = Number(document.getElementById('partnerYear').value);
+  const me = yearToAnimal(myYear);
+  const partner = yearToAnimal(partnerYear);
   if(navigator.share){
     navigator.share({title:'띠 궁합 보기 - 내위치', text: me+'띠 x '+partner+'띠 궁합을 확인해보세요', url: location.href});
   } else {

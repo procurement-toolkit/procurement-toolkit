@@ -98,20 +98,15 @@
   <div class="card">
     <h2>나는 이래요</h2>
     <div class="field">
-      <label for="animal">내 띠</label>
-      <select id="animal">
-        <option value="쥐">🐭 쥐띠</option>
-        <option value="소">🐮 소띠</option>
-        <option value="호랑이">🐯 호랑이띠</option>
-        <option value="토끼">🐰 토끼띠</option>
-        <option value="용">🐉 용띠</option>
-        <option value="뱀">🐍 뱀띠</option>
-        <option value="말">🐴 말띠</option>
-        <option value="양">🐐 양띠</option>
-        <option value="원숭이" selected>🐒 원숭이띠</option>
-        <option value="닭">🐔 닭띠</option>
-        <option value="개">🐶 개띠</option>
-        <option value="돼지">🐷 돼지띠</option>
+      <label for="birthYear">출생연도</label>
+      <select id="birthYear"></select>
+    </div>
+    <div class="field">
+      <label for="gender">성별</label>
+      <select id="gender">
+        <option value="m">남성</option>
+        <option value="f">여성</option>
+        <option value="n">비공개</option>
       </select>
     </div>
     <button class="go-btn" onclick="showResult()">오늘의 운세 보기 →</button>
@@ -164,7 +159,23 @@
 </div>
 
 <script>
+const animals = ["쥐","소","호랑이","토끼","용","뱀","말","양","원숭이","닭","개","돼지"];
 const emojiMap = {"쥐":"🐭","소":"🐮","호랑이":"🐯","토끼":"🐰","용":"🐉","뱀":"🐍","말":"🐴","양":"🐐","원숭이":"🐒","닭":"🐔","개":"🐶","돼지":"🐷"};
+
+function yearToAnimal(year){
+  const idx = (((year % 12) - 4) + 12) % 12;
+  return animals[idx];
+}
+
+// 출생연도 셀렉트 옵션 채우기 (올해 기준 만 10세 ~ 만 85세)
+const yearSelect = document.getElementById('birthYear');
+const nowYear = new Date().getFullYear();
+for(let y = nowYear - 10; y >= nowYear - 85; y--){
+  const opt = document.createElement('option');
+  opt.value = y; opt.textContent = y + "년생 (" + yearToAnimal(y) + "띠)";
+  if(y === nowYear - 28) opt.selected = true;
+  yearSelect.appendChild(opt);
+}
 
 const totalMsgs = [
   "오늘은 뜻밖의 좋은 소식이 들려올 예감이에요",
@@ -235,11 +246,13 @@ const today = todayStr();
 document.getElementById('dateTag').textContent = "📅 " + today + " 기준 오늘의 운세";
 
 function showResult(){
-  const animal = document.getElementById('animal').value;
-  const baseSeed = today + animal;
+  const birthYear = Number(document.getElementById('birthYear').value);
+  const gender = document.getElementById('gender').value;
+  const animal = yearToAnimal(birthYear);
+  const baseSeed = today + animal + birthYear + gender;
 
   document.getElementById('mascotEmoji').textContent = emojiMap[animal];
-  document.getElementById('headlineText').textContent = animal+"띠, 오늘의 운세";
+  document.getElementById('headlineText').textContent = birthYear+"년생 "+animal+"띠, 오늘의 운세";
   document.getElementById('subText').textContent = pick(totalMsgs, baseSeed+"total");
 
   const moneyP = pctFor(baseSeed+"money");
@@ -264,7 +277,8 @@ function showResult(){
 }
 
 function shareResult(){
-  const animal = document.getElementById('animal').value;
+  const birthYear = Number(document.getElementById('birthYear').value);
+  const animal = yearToAnimal(birthYear);
   if(navigator.share){
     navigator.share({title:'오늘의 운세 - 내위치', text: animal+'띠 오늘의 운세를 확인해보세요', url: location.href});
   } else {
