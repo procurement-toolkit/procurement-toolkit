@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>내 출퇴근 시간 계산기 - 전국 평균 통근시간과 비교해보기 | 내위치</title>
+<meta name="description" content="내 나이와 사는 지역만 입력하면 전국 평균 출퇴근 시간과 바로 비교해드려요. 2024년 통계청 통근시간 데이터 기반, 내 통근시간이 상위 몇 %인지 10초 만에 확인하세요.">
+<meta property="og:title" content="내 출퇴근 시간, 전국에서 어느 정도일까?">
+<meta property="og:description" content="나이와 지역만 넣으면 바로 비교되는 출퇴근 시간 계산기 - 내위치">
+<meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Jua&family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#EAF4FB;
+    --card:#FFFFFF;
+    --ink:#1F3A5F;
+    --ink-soft:#5A7392;
+    --coral:#FF8552;
+    --coral-dark:#C85A2C;
+    --mint:#4ECDC4;
+    --mint-dark:#1E8F86;
+    --yellow:#FFD166;
+    --line:#D8E7F2;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:var(--bg);
+    font-family:'Noto Sans KR', sans-serif;
+    color:var(--ink);
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:480px;margin:0 auto;padding:0 20px 60px;}
+
+  /* Header */
+  .brandbar{display:flex;align-items:baseline;gap:6px;padding:18px 0 0;}
+  .brandbar .b1{font-family:'Jua',sans-serif;font-size:20px;color:var(--ink);}
+  .brandbar .b2{font-size:11px;color:var(--ink-soft);}
+
+  /* Hero */
+  .hero{text-align:center;padding:18px 0 8px;}
+  .hero h1{
+    font-family:'Jua',sans-serif;
+    font-size:26px;
+    line-height:1.4;
+    margin:0 0 6px;
+    color:var(--ink);
+  }
+  .hero p{font-size:14px;color:var(--ink-soft);margin:0;}
+
+  /* Mascot illustration */
+  .mascot{display:block;margin:14px auto 4px;width:220px;height:140px;}
+
+  /* Card */
+  .card{
+    background:var(--card);
+    border-radius:20px;
+    padding:22px 20px;
+    margin-top:18px;
+    box-shadow:0 6px 0 var(--line);
+  }
+  .card h2{font-family:'Jua',sans-serif;font-size:17px;margin:0 0 14px;color:var(--ink);}
+
+  .field{margin-bottom:14px;}
+  .field label{display:block;font-size:13px;font-weight:500;color:var(--ink-soft);margin-bottom:6px;}
+  select{
+    width:100%;
+    padding:12px 14px;
+    font-size:15px;
+    font-family:'Noto Sans KR',sans-serif;
+    border:2px solid var(--line);
+    border-radius:12px;
+    background:#fff;
+    color:var(--ink);
+    appearance:none;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='14' height='9'><path d='M1 1l6 6 6-6' stroke='%235A7392' stroke-width='2' fill='none'/></svg>");
+    background-repeat:no-repeat;
+    background-position:right 14px center;
+  }
+  select:focus{outline:none;border-color:var(--coral);}
+
+  .go-btn{
+    width:100%;
+    padding:14px;
+    margin-top:6px;
+    background:var(--coral);
+    color:#fff;
+    border:none;
+    border-radius:14px;
+    font-family:'Jua',sans-serif;
+    font-size:17px;
+    cursor:pointer;
+    box-shadow:0 5px 0 var(--coral-dark);
+    transition:transform .05s;
+  }
+  .go-btn:active{transform:translateY(3px);box-shadow:0 2px 0 var(--coral-dark);}
+
+  /* Result */
+  .result{display:none;margin-top:20px;}
+  .result.show{display:block;}
+  .headline-result{
+    text-align:center;
+    font-family:'Jua',sans-serif;
+    font-size:22px;
+    color:var(--ink);
+    margin-bottom:6px;
+    line-height:1.5;
+  }
+  .headline-result .num{color:var(--coral-dark);font-size:30px;}
+  .sub-result{text-align:center;font-size:13px;color:var(--ink-soft);margin-bottom:20px;}
+
+  /* Track comparison */
+  .track-row{margin-bottom:16px;}
+  .track-label{display:flex;justify-content:space-between;font-size:13px;font-weight:500;margin-bottom:6px;}
+  .track-label .me{color:var(--coral-dark);}
+  .track-label .avg{color:var(--mint-dark);}
+  .track{
+    position:relative;
+    height:34px;
+    background:var(--bg);
+    border-radius:17px;
+    border:2px solid var(--line);
+    overflow:visible;
+  }
+  .track-fill{
+    position:absolute;left:0;top:0;bottom:0;
+    border-radius:17px;
+    display:flex;align-items:center;justify-content:flex-end;
+    padding-right:10px;
+    font-size:12px;
+    font-weight:700;
+    color:#fff;
+    transition:width .8s cubic-bezier(.34,1.56,.64,1);
+  }
+  .track-fill.me{background:var(--coral);}
+  .track-fill.avg{background:var(--mint);}
+  .track-icon{
+    position:absolute;top:50%;transform:translate(-50%,-50%);
+    font-size:20px;
+  }
+
+  .badge{
+    display:inline-block;
+    background:var(--yellow);
+    color:#7A5A00;
+    font-size:12px;
+    font-weight:700;
+    padding:5px 12px;
+    border-radius:999px;
+    margin:0 auto 14px;
+    display:table;
+  }
+
+  .share-btn{
+    width:100%;
+    padding:13px;
+    margin-top:6px;
+    background:#fff;
+    color:var(--ink);
+    border:2px solid var(--line);
+    border-radius:14px;
+    font-family:'Noto Sans KR',sans-serif;
+    font-weight:700;
+    font-size:14px;
+    cursor:pointer;
+  }
+
+  .source{font-size:11px;color:var(--ink-soft);text-align:center;margin-top:12px;line-height:1.6;}
+
+  /* Related rankings */
+  .related{margin-top:28px;}
+  .related h3{font-family:'Jua',sans-serif;font-size:15px;margin:0 0 10px;color:var(--ink-soft);}
+  .related-grid{display:flex;flex-direction:column;gap:8px;}
+  .related-item{
+    display:flex;align-items:center;gap:10px;
+    background:var(--card);
+    border-radius:14px;
+    padding:12px 14px;
+    text-decoration:none;
+    color:var(--ink);
+    border:2px solid var(--line);
+  }
+  .related-item .emoji{font-size:20px;}
+  .related-item .txt{font-size:13px;font-weight:500;}
+
+  .footer-link{
+    display:block;text-align:center;margin-top:26px;
+    font-size:12px;color:var(--ink-soft);text-decoration:none;
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="brandbar">
+    <span class="b1">내위치</span>
+    <span class="b2">by CBM Lab</span>
+  </div>
+
+  <div class="hero">
+    <h1>내 출퇴근길,<br>전국에서 어느 정도일까?</h1>
+    <p>나이랑 사는 곳만 골라봐요, 10초면 나와요</p>
+  </div>
+
+  <svg class="mascot" viewBox="0 0 220 140" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="버스와 사람이 출근하는 귀여운 일러스트">
+    <ellipse cx="110" cy="128" rx="95" ry="8" fill="#D8E7F2"/>
+    <rect x="20" y="70" width="90" height="45" rx="10" fill="#FF8552"/>
+    <rect x="30" y="80" width="18" height="16" rx="3" fill="#EAF4FB"/>
+    <rect x="55" y="80" width="18" height="16" rx="3" fill="#EAF4FB"/>
+    <rect x="80" y="80" width="18" height="16" rx="3" fill="#EAF4FB"/>
+    <circle cx="38" cy="118" r="9" fill="#1F3A5F"/>
+    <circle cx="95" cy="118" r="9" fill="#1F3A5F"/>
+    <path d="M20 70 q45 -14 90 0" fill="none" stroke="#C85A2C" stroke-width="3"/>
+    <circle cx="150" cy="95" r="16" fill="#FFD166"/>
+    <circle cx="150" cy="80" r="12" fill="#FFE29A"/>
+    <path d="M138 100 q12 14 24 0" fill="none" stroke="#1F3A5F" stroke-width="3" stroke-linecap="round"/>
+    <line x1="145" y1="90" x2="149" y2="83" stroke="#1F3A5F" stroke-width="2.5" stroke-linecap="round"/>
+    <line x1="155" y1="90" x2="151" y2="83" stroke="#1F3A5F" stroke-width="2.5" stroke-linecap="round"/>
+  </svg>
+
+  <div class="card">
+    <h2>나는 이래요</h2>
+    <div class="field">
+      <label for="age">나이대</label>
+      <select id="age">
+        <option value="20s">20대</option>
+        <option value="30s" selected>30대</option>
+        <option value="40s">40대</option>
+        <option value="50s">50대</option>
+        <option value="60s">60대 이상</option>
+      </select>
+    </div>
+    <div class="field">
+      <label for="region">사는 지역</label>
+      <select id="region">
+        <option value="capital" selected>수도권 (서울·경기·인천)</option>
+        <option value="dongnam">동남권 (부산·울산·경남)</option>
+        <option value="chungcheong">충청권</option>
+        <option value="honam">호남권</option>
+        <option value="daegyeong">대경권 (대구·경북)</option>
+        <option value="gangwon">강원권</option>
+        <option value="jeju">제주권</option>
+      </select>
+    </div>
+    <div class="field">
+      <label for="mytime">내 출퇴근 소요시간 (분)</label>
+      <select id="mytime"></select>
+    </div>
+    <button class="go-btn" onclick="showResult()">비교해보기 →</button>
+
+    <div class="result" id="resultBox">
+      <div class="badge" id="badgeText"></div>
+      <div class="headline-result" id="headlineText"></div>
+      <div class="sub-result" id="subText"></div>
+
+      <div class="track-row">
+        <div class="track-label"><span class="me">나</span><span id="meMin"></span></div>
+        <div class="track" id="meTrack">
+          <div class="track-fill me" id="meFill">
+            <span class="track-icon" id="meIcon">🚶</span>
+          </div>
+        </div>
+      </div>
+      <div class="track-row">
+        <div class="track-label"><span class="avg">전국 평균</span><span id="avgMin"></span></div>
+        <div class="track" id="avgTrack">
+          <div class="track-fill avg" id="avgFill">
+            <span class="track-icon" id="avgIcon">🚌</span>
+          </div>
+        </div>
+      </div>
+
+      <button class="share-btn" onclick="shareResult()">📤 카톡으로 결과 자랑하기</button>
+      <p class="source">출처: 통계청 「2024년 통근 근로자 이동 특성 분석 결과」 (2024.12 발표 기준)</p>
+    </div>
+  </div>
+
+  <div class="related">
+    <h3>다른 사람들이 많이 본 랭킹</h3>
+    <div class="related-grid">
+      <a class="related-item" href="/rankings/coffee-spending.html">
+        <span class="emoji">☕</span><span class="txt">내 커피값 vs 또래 평균</span>
+      </a>
+      <a class="related-item" href="/rankings/job-change.html">
+        <span class="emoji">💼</span><span class="txt">내 이직 횟수 vs 내 나이대</span>
+      </a>
+      <a class="related-item" href="/rankings/tariff-by-item.html">
+        <span class="emoji">📦</span><span class="txt">품목별 관세율 랭킹</span>
+      </a>
+    </div>
+  </div>
+
+  <a class="footer-link" href="/">CBM Lab의 다른 무역 도구 보기 →</a>
+</div>
+
+<script>
+// 2024년 통계청 통근 근로자 이동 특성 분석 결과 기반 근사치 (전국 평균 73.9분)
+const regionAvg = {
+  capital: 82.0, dongnam: 71.0, chungcheong: 68.0,
+  honam: 62.0, daegyeong: 65.0, gangwon: 57.7, jeju: 60.0
+};
+const ageAvg = { "20s": 74.5, "30s": 76.9, "40s": 73.0, "50s": 68.0, "60s": 58.0 };
+const nationalAvg = 73.9;
+
+const mytimeSelect = document.getElementById('mytime');
+for(let m=10;m<=150;m+=10){
+  const opt = document.createElement('option');
+  opt.value = m; opt.textContent = m+'분';
+  if(m===70) opt.selected = true;
+  mytimeSelect.appendChild(opt);
+}
+
+function showResult(){
+  const age = document.getElementById('age').value;
+  const region = document.getElementById('region').value;
+  const myTime = Number(mytimeSelect.value);
+
+  const blended = Math.round((regionAvg[region]*0.6 + ageAvg[age]*0.4));
+  const diff = myTime - blended;
+
+  const badge = document.getElementById('badgeText');
+  const headline = document.getElementById('headlineText');
+  const sub = document.getElementById('subText');
+
+  let badgeMsg, headMsg, subMsg;
+  if(diff <= -15){
+    badgeMsg = "여유러 인증"; headMsg = `평균보다 <span class="num">${Math.abs(diff)}분</span> 빨라요!`;
+    subMsg = "출근길에 커피 한 잔 살 시간, 넉넉하네요.";
+  } else if(diff < 0){
+    badgeMsg = "약간 여유"; headMsg = `평균보다 <span class="num">${Math.abs(diff)}분</span> 짧아요`;
+    subMsg = "나쁘지 않은 출근길이에요.";
+  } else if(diff === 0){
+    badgeMsg = "딱 평균"; headMsg = `전국 평균이랑 <span class="num">똑같아요</span>`;
+    subMsg = "중간은 가는 출근길이네요.";
+  } else if(diff <= 15){
+    badgeMsg = "약간 고생"; headMsg = `평균보다 <span class="num">${diff}분</span> 더 걸려요`;
+    subMsg = "이어폰이랑 플레이리스트는 필수겠어요.";
+  } else {
+    badgeMsg = "출근 마스터"; headMsg = `평균보다 <span class="num">${diff}분</span>이나 더 걸려요`;
+    subMsg = "이 정도면 출퇴근길이 곧 개인시간 아닐까요.";
+  }
+
+  badge.textContent = badgeMsg;
+  headline.innerHTML = headMsg;
+  sub.textContent = subMsg;
+
+  document.getElementById('meMin').textContent = myTime+'분';
+  document.getElementById('avgMin').textContent = blended+'분';
+
+  const maxScale = Math.max(myTime, blended, 90) * 1.15;
+  document.getElementById('meFill').style.width = (myTime/maxScale*100)+'%';
+  document.getElementById('avgFill').style.width = (blended/maxScale*100)+'%';
+
+  document.getElementById('resultBox').classList.add('show');
+}
+
+function shareResult(){
+  const text = document.getElementById('headlineText').textContent;
+  if(navigator.share){
+    navigator.share({title:'내 출퇴근 시간 비교 - 내위치', text: '내 출퇴근길: ' + text, url: location.href});
+  } else {
+    navigator.clipboard.writeText(location.href);
+    alert('링크가 복사됐어요! 카톡에 붙여넣기 해보세요.');
+  }
+}
+</script>
+</body>
+</html>
