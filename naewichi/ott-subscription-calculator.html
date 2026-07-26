@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>내 OTT 구독 개수 계산기 - 전국 평균과 비교해보기 | 내위치</title>
+<meta name="description" content="넷플릭스, 티빙, 웨이브 등 구독 중인 OTT 개수를 입력하면 전국 평균과 바로 비교해드려요. 문화체육관광부·한국콘텐츠진흥원 콘텐츠 이용행태조사 데이터 기반.">
+<meta property="og:title" content="내 OTT 구독 개수, 전국 평균보다 많을까?">
+<meta property="og:description" content="입력하면 바로 비교되는 OTT 구독 개수 계산기 - 내위치">
+<meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Jua&family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#1C1C2B; --card:#2A2A3D; --ink:#F1F1FA; --ink-soft:#9E9EB8;
+    --coral:#FF5C7A; --coral-dark:#D63F5F; --mint:#5CD9C6; --mint-dark:#33A897;
+    --yellow:#FFD166; --line:#3B3B54;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;background:var(--bg);font-family:'Noto Sans KR', sans-serif;color:var(--ink);-webkit-font-smoothing:antialiased;}
+  .wrap{max-width:480px;margin:0 auto;padding:0 20px 60px;}
+  .brandbar{display:flex;align-items:baseline;gap:6px;padding:18px 0 0;text-decoration:none;}
+  .brandbar .b1{font-family:'Jua',sans-serif;font-size:20px;color:var(--ink);}
+  .brandbar .b2{font-size:11px;color:var(--ink-soft);}
+  .hero{text-align:center;padding:18px 0 8px;}
+  .hero h1{font-family:'Jua',sans-serif;font-size:26px;line-height:1.4;margin:0 0 6px;color:var(--ink);}
+  .hero p{font-size:14px;color:var(--ink-soft);margin:0;}
+  .mascot{display:block;margin:14px auto 4px;width:200px;height:140px;}
+  .card{background:var(--card);border-radius:20px;padding:22px 20px;margin-top:18px;box-shadow:0 6px 0 var(--line);}
+  .card h2{font-family:'Jua',sans-serif;font-size:17px;margin:0 0 14px;color:var(--ink);}
+  .field{margin-bottom:14px;}
+  .field label{display:block;font-size:13px;font-weight:500;color:var(--ink-soft);margin-bottom:6px;}
+  select{
+    width:100%;padding:12px 14px;font-size:15px;font-family:'Noto Sans KR',sans-serif;
+    border:2px solid var(--line);border-radius:12px;background:#22222f;color:var(--ink);
+    appearance:none;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='14' height='9'><path d='M1 1l6 6 6-6' stroke='%239E9EB8' stroke-width='2' fill='none'/></svg>");
+    background-repeat:no-repeat;background-position:right 14px center;
+  }
+  select:focus{outline:none;border-color:var(--coral);}
+  .go-btn{
+    width:100%;padding:14px;margin-top:6px;background:var(--coral);color:#fff;border:none;
+    border-radius:14px;font-family:'Jua',sans-serif;font-size:17px;cursor:pointer;
+    box-shadow:0 5px 0 var(--coral-dark);transition:transform .05s;
+  }
+  .go-btn:active{transform:translateY(3px);box-shadow:0 2px 0 var(--coral-dark);}
+  .result{display:none;margin-top:20px;}
+  .result.show{display:block;}
+  .headline-result{text-align:center;font-family:'Jua',sans-serif;font-size:22px;color:var(--ink);margin-bottom:6px;line-height:1.5;}
+  .headline-result .num{color:var(--coral);font-size:28px;}
+  .sub-result{text-align:center;font-size:13px;color:var(--ink-soft);margin-bottom:20px;}
+  .track-row{margin-bottom:16px;}
+  .track-label{display:flex;justify-content:space-between;font-size:13px;font-weight:500;margin-bottom:6px;}
+  .track-label .me{color:var(--coral);}
+  .track-label .avg{color:var(--mint);}
+  .track{position:relative;height:34px;background:var(--bg);border-radius:17px;border:2px solid var(--line);overflow:visible;}
+  .track-fill{
+    position:absolute;left:0;top:0;bottom:0;border-radius:17px;
+    display:flex;align-items:center;justify-content:flex-end;padding-right:10px;
+    font-size:12px;font-weight:700;color:#1C1C2B;transition:width .8s cubic-bezier(.34,1.56,.64,1);
+  }
+  .track-fill.me{background:var(--coral);}
+  .track-fill.avg{background:var(--mint);}
+  .track-icon{position:absolute;top:50%;transform:translate(-50%,-50%);font-size:20px;}
+  .badge{
+    display:inline-block;background:var(--yellow);color:#3A2A00;font-size:12px;font-weight:700;
+    padding:5px 12px;border-radius:999px;margin:0 auto 14px;display:table;
+  }
+  .share-btn{
+    width:100%;padding:13px;margin-top:6px;background:#22222f;color:var(--ink);
+    border:2px solid var(--line);border-radius:14px;font-family:'Noto Sans KR',sans-serif;
+    font-weight:700;font-size:14px;cursor:pointer;
+  }
+  .source{font-size:11px;color:var(--ink-soft);text-align:center;margin-top:12px;line-height:1.6;}
+  .related{margin-top:28px;}
+  .related h3{font-family:'Jua',sans-serif;font-size:15px;margin:0 0 10px;color:var(--ink-soft);}
+  .related-grid{display:flex;flex-direction:column;gap:8px;}
+  .related-item{
+    display:flex;align-items:center;gap:10px;background:var(--card);border-radius:14px;
+    padding:12px 14px;text-decoration:none;color:var(--ink);border:2px solid var(--line);
+  }
+  .related-item .emoji{font-size:20px;}
+  .related-item .txt{font-size:13px;font-weight:500;}
+  .footer-link{display:block;text-align:center;margin-top:26px;font-size:12px;color:var(--ink-soft);text-decoration:none;}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <a class="brandbar" href="index.html">
+    <span class="b1">내위치</span>
+    <span class="b2">by CBM Lab</span>
+  </a>
+
+  <div class="hero">
+    <h1>내 OTT 구독 개수,<br>전국 평균보다 많을까?</h1>
+    <p>지금 구독 중인 개수만 골라봐요</p>
+  </div>
+
+  <svg class="mascot" viewBox="0 0 200 140" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="귀여운 리모컨과 팝콘 캐릭터 일러스트">
+    <ellipse cx="100" cy="128" rx="70" ry="7" fill="#3B3B54"/>
+    <path d="M70 60 h60 l6 60 h-72 z" fill="#FFD166"/>
+    <path d="M76 60 l-4 -18 h56 l-4 18 z" fill="#FFE29A"/>
+    <rect x="66" y="55" width="8" height="10" fill="#F1F1FA" opacity=".4"/>
+    <rect x="86" y="55" width="8" height="10" fill="#F1F1FA" opacity=".4"/>
+    <rect x="106" y="55" width="8" height="10" fill="#F1F1FA" opacity=".4"/>
+    <rect x="126" y="55" width="8" height="10" fill="#F1F1FA" opacity=".4"/>
+    <rect x="140" y="90" width="26" height="40" rx="8" fill="#5CD9C6"/>
+    <circle cx="153" cy="102" r="4" fill="#1C1C2B"/>
+    <circle cx="153" cy="114" r="4" fill="#1C1C2B"/>
+  </svg>
+
+  <div class="card">
+    <h2>나는 이래요</h2>
+    <div class="field">
+      <label for="count">지금 구독 중인 OTT 개수</label>
+      <select id="count">
+        <option value="0">없음</option>
+        <option value="1">1개</option>
+        <option value="2" selected>2개</option>
+        <option value="3">3개</option>
+        <option value="4">4개 이상</option>
+      </select>
+    </div>
+    <button class="go-btn" onclick="showResult()">비교해보기 →</button>
+
+    <div class="result" id="resultBox">
+      <div class="badge" id="badgeText"></div>
+      <div class="headline-result" id="headlineText"></div>
+      <div class="sub-result" id="subText"></div>
+
+      <div class="track-row">
+        <div class="track-label"><span class="me">나</span><span id="meMin"></span></div>
+        <div class="track" id="meTrack">
+          <div class="track-fill me" id="meFill"><span class="track-icon">📺</span></div>
+        </div>
+      </div>
+      <div class="track-row">
+        <div class="track-label"><span class="avg">전국 평균</span><span id="avgMin"></span></div>
+        <div class="track" id="avgTrack">
+          <div class="track-fill avg" id="avgFill"><span class="track-icon">📊</span></div>
+        </div>
+      </div>
+
+      <button class="share-btn" onclick="shareResult()">📤 카톡으로 결과 자랑하기</button>
+      <p class="source">출처: 문화체육관광부·한국콘텐츠진흥원 「2025 콘텐츠 이용행태조사」(국가승인통계) - OTT 이용률 89.1%, 평균 구독 2.1개</p>
+    </div>
+  </div>
+
+  <div class="related">
+    <h3>다른 사람들이 본 랭킹</h3>
+    <div class="related-grid">
+      <a class="related-item" href="coffee-spending-calculator.html">
+        <span class="emoji">☕</span><span class="txt">내 커피값 vs 또래 평균</span>
+      </a>
+      <a class="related-item" href="dining-expense-calculator.html">
+        <span class="emoji">🍽️</span><span class="txt">내 외식비 vs 또래 평균</span>
+      </a>
+    </div>
+  </div>
+
+  <a class="footer-link" href="../index.html">CBM Lab의 다른 무역 도구 보기 →</a>
+</div>
+
+<script>
+// 문체부·콘진원 2025 콘텐츠 이용행태조사(국가승인통계) 기반: 전국 평균 OTT 구독 개수 2.1개
+const nationalAvg = 2.1;
+
+function showResult(){
+  const myCount = Number(document.getElementById('count').value);
+  const diff = myCount - nationalAvg;
+
+  const badge = document.getElementById('badgeText');
+  const headline = document.getElementById('headlineText');
+  const sub = document.getElementById('subText');
+
+  let badgeMsg, headMsg, subMsg;
+  if(myCount === 0){
+    badgeMsg = "구독 프리"; headMsg = `구독 중인 OTT <span class="num">0개</span>`;
+    subMsg = "혹시 가족 계정으로 다 보고 계신 건 아니고요?";
+  } else if(diff <= -1){
+    badgeMsg = "미니멀 시청러"; headMsg = `전국 평균보다 <span class="num">적게</span> 구독해요`;
+    subMsg = "필요한 것만 딱 보는 스타일이시네요.";
+  } else if(diff < 0.5){
+    badgeMsg = "딱 평균"; headMsg = `전국 평균과 <span class="num">비슷해요</span>`;
+    subMsg = "무난한 구독 생활이에요.";
+  } else if(diff <= 1.5){
+    badgeMsg = "콘텐츠 러버"; headMsg = `전국 평균보다 <span class="num">많이</span> 구독해요`;
+    subMsg = "볼 게 많아서 행복한 고민이시겠어요.";
+  } else {
+    badgeMsg = "구독 만렙"; headMsg = `전국 평균보다 <span class="num">훨씬 많이</span> 구독해요`;
+    subMsg = "이 정도면 한 달에 영화관 한 번 갈 돈이네요.";
+  }
+
+  badge.textContent = badgeMsg;
+  headline.innerHTML = headMsg;
+  sub.textContent = subMsg;
+
+  document.getElementById('meMin').textContent = myCount+'개';
+  document.getElementById('avgMin').textContent = nationalAvg+'개';
+
+  const maxScale = Math.max(myCount, nationalAvg, 2) * 1.3;
+  document.getElementById('meFill').style.width = (myCount/maxScale*100)+'%';
+  document.getElementById('avgFill').style.width = (nationalAvg/maxScale*100)+'%';
+
+  document.getElementById('resultBox').classList.add('show');
+}
+
+function shareResult(){
+  const text = document.getElementById('headlineText').textContent;
+  if(navigator.share){
+    navigator.share({title:'내 OTT 구독 개수 비교 - 내위치', text: '내 OTT 구독 개수: ' + text, url: location.href});
+  } else {
+    navigator.clipboard.writeText(location.href);
+    alert('링크가 복사됐어요! 카톡에 붙여넣기 해보세요.');
+  }
+}
+</script>
+</body>
+</html>
