@@ -17,6 +17,8 @@
     { "title": "내 대출상환액 vs 내 나이대", "sub": "매달 얼마씩 갚고 있을까", "emoji": "🏦", "url": "loan-repayment-calculator.html", "cat": "money", "views": 0 },
     { "title": "내 OTT 구독 개수 vs 전국 평균", "sub": "넷플릭스 말고 또 뭘 볼까", "emoji": "📺", "url": "ott-subscription-calculator.html", "cat": "money", "views": 0 },
     { "title": "오늘의 운세 (12띠)", "sub": "오늘 하루, 내 운은 어떨까", "emoji": "🔮", "url": "daily-fortune-calculator.html", "cat": "fortune", "views": 0 },
-    { "title": "띠 궁합 보기", "sub": "우리 둘의 궁합은 몇 점일까", "emoji": "💞", "url": "zodiac-compatibility-calculator.html", "cat": "fortune", "views": 0 }
+    { "title": "띠 궁합 보기", "sub": "우리 둘의 궁합은 몇 점일까", "emoji": "💞", "url": "zodiac-compatibility-calculator.html", "cat": "fortune", "views": 0 },
+    { "title": "내 수면시간 vs 내 나이대", "sub": "잠은 잘 자고 있는 걸까", "emoji": "🌙", "url": "sleep-time-calculator.html", "cat": "time", "views": 0 },
+    { "title": "내 연차 소진율 vs 전국 평균", "sub": "휴가는 잘 챙겨 쓰고 있을까", "emoji": "🏖️", "url": "annual-leave-calculator.html", "cat": "work", "views": 0 }
   ]
 }

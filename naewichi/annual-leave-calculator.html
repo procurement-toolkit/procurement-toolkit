@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>내 연차 소진율 계산기 - 전국 평균과 비교해보기 | 내위치</title>
+<meta name="description" content="올해 부여받은 연차와 실제 사용한 연차를 입력하면 전국 평균 소진율과 바로 비교해드려요. 문화체육관광부 근로자 휴가조사 데이터 기반.">
+<meta property="og:title" content="내 연차 소진율, 전국 평균보다 높을까?">
+<meta property="og:description" content="입력하면 바로 비교되는 연차 소진율 계산기 - 내위치">
+<meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Jua&family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#E8F6F3; --card:#FFFFFF; --ink:#0F4C3A; --ink-soft:#4C8B78;
+    --coral:#2FBF9E; --coral-dark:#1E9179; --mint:#FFB84D; --mint-dark:#D9922E;
+    --yellow:#FFD166; --line:#CDEBE2;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;background:var(--bg);font-family:'Noto Sans KR', sans-serif;color:var(--ink);-webkit-font-smoothing:antialiased;}
+  .wrap{max-width:480px;margin:0 auto;padding:0 20px 60px;}
+  .brandbar{display:flex;align-items:baseline;gap:6px;padding:18px 0 0;text-decoration:none;}
+  .brandbar .b1{font-family:'Jua',sans-serif;font-size:20px;color:var(--ink);}
+  .brandbar .b2{font-size:11px;color:var(--ink-soft);}
+  .hero{text-align:center;padding:18px 0 8px;}
+  .hero h1{font-family:'Jua',sans-serif;font-size:26px;line-height:1.4;margin:0 0 6px;color:var(--ink);}
+  .hero p{font-size:14px;color:var(--ink-soft);margin:0;}
+  .mascot{display:block;margin:14px auto 4px;width:200px;height:140px;}
+  .card{background:var(--card);border-radius:20px;padding:22px 20px;margin-top:18px;box-shadow:0 6px 0 var(--line);}
+  .card h2{font-family:'Jua',sans-serif;font-size:17px;margin:0 0 14px;color:var(--ink);}
+  .field{margin-bottom:14px;}
+  .field label{display:block;font-size:13px;font-weight:500;color:var(--ink-soft);margin-bottom:6px;}
+  select{
+    width:100%;padding:12px 14px;font-size:15px;font-family:'Noto Sans KR',sans-serif;
+    border:2px solid var(--line);border-radius:12px;background:#fff;color:var(--ink);
+    appearance:none;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='14' height='9'><path d='M1 1l6 6 6-6' stroke='%234C8B78' stroke-width='2' fill='none'/></svg>");
+    background-repeat:no-repeat;background-position:right 14px center;
+  }
+  select:focus{outline:none;border-color:var(--coral);}
+  .go-btn{
+    width:100%;padding:14px;margin-top:6px;background:var(--coral);color:#fff;border:none;
+    border-radius:14px;font-family:'Jua',sans-serif;font-size:17px;cursor:pointer;
+    box-shadow:0 5px 0 var(--coral-dark);transition:transform .05s;
+  }
+  .go-btn:active{transform:translateY(3px);box-shadow:0 2px 0 var(--coral-dark);}
+  .result{display:none;margin-top:20px;}
+  .result.show{display:block;}
+  .headline-result{text-align:center;font-family:'Jua',sans-serif;font-size:22px;color:var(--ink);margin-bottom:6px;line-height:1.5;}
+  .headline-result .num{color:var(--coral-dark);font-size:28px;}
+  .sub-result{text-align:center;font-size:13px;color:var(--ink-soft);margin-bottom:20px;}
+  .track-row{margin-bottom:16px;}
+  .track-label{display:flex;justify-content:space-between;font-size:13px;font-weight:500;margin-bottom:6px;}
+  .track-label .me{color:var(--coral-dark);}
+  .track-label .avg{color:var(--mint-dark);}
+  .track{position:relative;height:34px;background:var(--bg);border-radius:17px;border:2px solid var(--line);overflow:visible;}
+  .track-fill{
+    position:absolute;left:0;top:0;bottom:0;border-radius:17px;
+    display:flex;align-items:center;justify-content:flex-end;padding-right:10px;
+    font-size:12px;font-weight:700;color:#fff;transition:width .8s cubic-bezier(.34,1.56,.64,1);
+  }
+  .track-fill.me{background:var(--coral);}
+  .track-fill.avg{background:var(--mint);}
+  .track-icon{position:absolute;top:50%;transform:translate(-50%,-50%);font-size:20px;}
+  .badge{
+    display:inline-block;background:var(--yellow);color:#7A5A00;font-size:12px;font-weight:700;
+    padding:5px 12px;border-radius:999px;margin:0 auto 14px;display:table;
+  }
+  .share-btn{
+    width:100%;padding:13px;margin-top:6px;background:#fff;color:var(--ink);
+    border:2px solid var(--line);border-radius:14px;font-family:'Noto Sans KR',sans-serif;
+    font-weight:700;font-size:14px;cursor:pointer;
+  }
+  .source{font-size:11px;color:var(--ink-soft);text-align:center;margin-top:12px;line-height:1.6;}
+  .related{margin-top:28px;}
+  .related h3{font-family:'Jua',sans-serif;font-size:15px;margin:0 0 10px;color:var(--ink-soft);}
+  .related-grid{display:flex;flex-direction:column;gap:8px;}
+  .related-item{
+    display:flex;align-items:center;gap:10px;background:var(--card);border-radius:14px;
+    padding:12px 14px;text-decoration:none;color:var(--ink);border:2px solid var(--line);
+  }
+  .related-item .emoji{font-size:20px;}
+  .related-item .txt{font-size:13px;font-weight:500;}
+  .footer-link{display:block;text-align:center;margin-top:26px;font-size:12px;color:var(--ink-soft);text-decoration:none;}
+</style>
+<script>window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };</script>
+<script defer src="/_vercel/insights/script.js"></script>
+</head>
+<body>
+<div class="wrap">
+
+  <a class="brandbar" href="index.html">
+    <span class="b1">내위치</span>
+    <span class="b2">by CBM Lab</span>
+  </a>
+
+  <div class="hero">
+    <h1>내 연차 소진율,<br>전국 평균보다 높을까?</h1>
+    <p>부여받은 연차와 쓴 연차만 골라봐요</p>
+  </div>
+
+  <svg class="mascot" viewBox="0 0 200 140" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="선베드에 누워 쉬는 귀여운 캐릭터 일러스트">
+    <ellipse cx="100" cy="128" rx="70" ry="7" fill="#CDEBE2"/>
+    <path d="M30 110 h140" stroke="#2FBF9E" stroke-width="6" stroke-linecap="round"/>
+    <path d="M40 110 l10 -30 h100 l10 30" fill="none" stroke="#2FBF9E" stroke-width="6" stroke-linejoin="round"/>
+    <ellipse cx="100" cy="88" rx="20" ry="18" fill="#FFD166"/>
+    <circle cx="93" cy="86" r="2.5" fill="#0F4C3A"/>
+    <circle cx="107" cy="86" r="2.5" fill="#0F4C3A"/>
+    <path d="M92 94 q8 6 16 0" fill="none" stroke="#0F4C3A" stroke-width="2.5" stroke-linecap="round"/>
+    <rect x="70" y="30" width="14" height="40" rx="7" fill="#FF8552"/>
+    <path d="M70 30 a7 7 0 0 1 14 0" fill="#FF8552"/>
+    <text x="130" y="45" font-size="20">🌴</text>
+  </svg>
+
+  <div class="card">
+    <h2>나는 이래요</h2>
+    <div class="field">
+      <label for="granted">올해 부여받은 연차 (일)</label>
+      <select id="granted">
+        <option value="11">11일</option>
+        <option value="15">15일</option>
+        <option value="16">16일</option>
+        <option value="17" selected>17일</option>
+        <option value="20">20일</option>
+        <option value="25">25일 이상</option>
+      </select>
+    </div>
+    <div class="field">
+      <label for="used">실제로 사용한 연차 (일)</label>
+      <select id="used"></select>
+    </div>
+    <button class="go-btn" onclick="showResult()">비교해보기 →</button>
+
+    <div class="result" id="resultBox">
+      <div class="badge" id="badgeText"></div>
+      <div class="headline-result" id="headlineText"></div>
+      <div class="sub-result" id="subText"></div>
+
+      <div class="track-row">
+        <div class="track-label"><span class="me">나</span><span id="meMin"></span></div>
+        <div class="track" id="meTrack">
+          <div class="track-fill me" id="meFill"><span class="track-icon">🏖️</span></div>
+        </div>
+      </div>
+      <div class="track-row">
+        <div class="track-label"><span class="avg">전국 평균</span><span id="avgMin"></span></div>
+        <div class="track" id="avgTrack">
+          <div class="track-fill avg" id="avgFill"><span class="track-icon">📊</span></div>
+        </div>
+      </div>
+
+      <button class="share-btn" onclick="shareResult()">📤 카톡으로 결과 자랑하기</button>
+      <p class="source">출처: 문화체육관광부·한국문화관광연구원 「2025년 근로자 휴가조사」 (부여 연차 16.7일 중 13.2일 사용, 소진율 79.4%)</p>
+    </div>
+  </div>
+
+  <div class="related">
+    <h3>다른 사람들이 본 랭킹</h3>
+    <div class="related-grid">
+      <a class="related-item" href="sleep-time-calculator.html">
+        <span class="emoji">🌙</span><span class="txt">내 수면시간 vs 내 나이대</span>
+      </a>
+      <a class="related-item" href="job-change-calculator.html">
+        <span class="emoji">💼</span><span class="txt">내 이직 횟수 vs 내 나이대</span>
+      </a>
+    </div>
+  </div>
+
+  <a class="footer-link" href="../index.html">CBM Lab의 다른 무역 도구 보기 →</a>
+</div>
+
+<script>
+const nationalRate = 79.4; // 문체부 2025 근로자휴가조사 기준 전국 평균 연차 소진율(%)
+
+const usedSelect = document.getElementById('used');
+const grantedSelect = document.getElementById('granted');
+
+function rebuildUsedOptions(){
+  const granted = Number(grantedSelect.value);
+  const prevVal = usedSelect.value;
+  usedSelect.innerHTML = '';
+  for(let d = 0; d <= granted; d++){
+    const opt = document.createElement('option');
+    opt.value = d; opt.textContent = d + "일";
+    if(d === Math.round(granted*0.6)) opt.selected = true;
+    usedSelect.appendChild(opt);
+  }
+  if(prevVal && Number(prevVal) <= granted) usedSelect.value = prevVal;
+}
+grantedSelect.addEventListener('change', rebuildUsedOptions);
+rebuildUsedOptions();
+
+function showResult(){
+  const granted = Number(grantedSelect.value);
+  const used = Number(usedSelect.value);
+  const myRate = granted > 0 ? Math.round((used/granted)*1000)/10 : 0;
+  const diff = myRate - nationalRate;
+
+  const badge = document.getElementById('badgeText');
+  const headline = document.getElementById('headlineText');
+  const sub = document.getElementById('subText');
+
+  let badgeMsg, headMsg, subMsg;
+  if(myRate >= 99){
+    badgeMsg = "연차 소진 만렙"; headMsg = `소진율 <span class="num">${myRate}%</span>, 완주하셨네요`;
+    subMsg = "남길 연차가 없는 완벽한 한 해였어요.";
+  } else if(diff <= -30){
+    badgeMsg = "연차 적립왕"; headMsg = `전국 평균보다 <span class="num">${Math.abs(diff).toFixed(1)}%p</span> 낮아요`;
+    subMsg = "혹시 눈치 보여서 못 쓰신 건 아니죠?";
+  } else if(diff < -5){
+    badgeMsg = "조금 아껴쓰는 편"; headMsg = `전국 평균보다 <span class="num">${Math.abs(diff).toFixed(1)}%p</span> 낮아요`;
+    subMsg = "남은 연차, 눈치 보지 말고 쓰세요.";
+  } else if(diff <= 5){
+    badgeMsg = "딱 평균"; headMsg = `전국 평균과 <span class="num">비슷해요</span>`;
+    subMsg = "무난하게 연차를 쓰고 계시네요.";
+  } else if(diff <= 20){
+    badgeMsg = "휴가 마스터"; headMsg = `전국 평균보다 <span class="num">${diff.toFixed(1)}%p</span> 높아요`;
+    subMsg = "일과 삶의 균형, 잘 챙기고 계세요.";
+  } else {
+    badgeMsg = "연차 소진 전문가"; headMsg = `전국 평균보다 <span class="num">${diff.toFixed(1)}%p</span>나 높아요`;
+    subMsg = "휴가 계획 세우는 노하우 좀 알려주세요.";
+  }
+
+  badge.textContent = badgeMsg;
+  headline.innerHTML = headMsg;
+  sub.textContent = subMsg;
+
+  document.getElementById('meMin').textContent = myRate+'% ('+used+'/'+granted+'일)';
+  document.getElementById('avgMin').textContent = nationalRate+'% (13.2/16.7일)';
+
+  document.getElementById('meFill').style.width = Math.min(myRate,100)+'%';
+  document.getElementById('avgFill').style.width = nationalRate+'%';
+
+  document.getElementById('resultBox').classList.add('show');
+}
+
+function shareResult(){
+  const text = document.getElementById('headlineText').textContent;
+  if(navigator.share){
+    navigator.share({title:'내 연차 소진율 비교 - 내위치', text: '내 연차 소진율: ' + text, url: location.href});
+  } else {
+    navigator.clipboard.writeText(location.href);
+    alert('링크가 복사됐어요! 카톡에 붙여넣기 해보세요.');
+  }
+}
+</script>
+</body>
+</html>
