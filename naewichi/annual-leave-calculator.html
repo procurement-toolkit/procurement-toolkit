@@ -126,6 +126,14 @@
   <div class="card">
     <h2>나는 이래요</h2>
     <div class="field">
+      <label for="ageband">나이대</label>
+      <select id="ageband">
+        <option value="2030" selected>20·30대</option>
+        <option value="40s">40대</option>
+        <option value="50plus">50대 이상</option>
+      </select>
+    </div>
+    <div class="field">
       <label for="granted">올해 부여받은 연차 (일)</label>
       <select id="granted">
         <option value="11">11일</option>
@@ -166,7 +174,7 @@
       </div>
 
       <button class="share-btn" onclick="shareResult()">📤 카톡으로 결과 자랑하기</button>
-      <p class="source">출처: 문화체육관광부·한국문화관광연구원 「2025년 근로자 휴가조사」 (부여 연차 16.7일 중 13.2일 사용, 소진율 79.4%)</p>
+      <p class="source">출처: 문화체육관광부·한국문화관광연구원 「2025년 근로자 휴가조사」 (부여 연차 16.7일 중 13.2일 사용, 소진율 79.4%), 한국보건사회연구원 「2022년 전국 일-생활 균형 실태조사」 나이대별 연차 사용 현황</p>
     </div>
   </div>
 
@@ -187,6 +195,11 @@
 
 <script>
 const nationalRate = 79.4; // 문체부 2025 근로자휴가조사 기준 전국 평균 연차 소진율(%)
+// 한국보건사회연구원 「2022년 전국 일-생활 균형 실태조사」 기반 나이대별 소진율(%)
+// 19~29세: 15.05일 부여/11.25일 사용 → 74.8%, 50~59세: 18.04일 부여/11.56일 사용 → 64.1%
+// 40대는 두 구간 사이 값으로 추정(보간)
+const ageRate = { "2030": 74.8, "40s": 69.0, "50plus": 64.1 };
+const ageLabelLeave = { "2030": "20·30대", "40s": "40대", "50plus": "50대 이상" };
 
 const usedSelect = document.getElementById('used');
 const grantedSelect = document.getElementById('granted');
@@ -207,10 +220,12 @@ grantedSelect.addEventListener('change', rebuildUsedOptions);
 rebuildUsedOptions();
 
 function showResult(){
+  const ageband = document.getElementById('ageband').value;
   const granted = Number(grantedSelect.value);
   const used = Number(usedSelect.value);
   const myRate = granted > 0 ? Math.round((used/granted)*1000)/10 : 0;
-  const diff = myRate - nationalRate;
+  const avgForAge = ageRate[ageband];
+  const diff = myRate - avgForAge;
 
   const badge = document.getElementById('badgeText');
   const headline = document.getElementById('headlineText');
@@ -221,19 +236,19 @@ function showResult(){
     badgeMsg = "연차 소진 만렙"; headMsg = `소진율 <span class="num">${myRate}%</span>, 완주하셨네요`;
     subMsg = "남길 연차가 없는 완벽한 한 해였어요.";
   } else if(diff <= -30){
-    badgeMsg = "연차 적립왕"; headMsg = `전국 평균보다 <span class="num">${Math.abs(diff).toFixed(1)}%p</span> 낮아요`;
+    badgeMsg = "연차 적립왕"; headMsg = `${ageLabelLeave[ageband]} 평균보다 <span class="num">${Math.abs(diff).toFixed(1)}%p</span> 낮아요`;
     subMsg = "혹시 눈치 보여서 못 쓰신 건 아니죠?";
   } else if(diff < -5){
-    badgeMsg = "조금 아껴쓰는 편"; headMsg = `전국 평균보다 <span class="num">${Math.abs(diff).toFixed(1)}%p</span> 낮아요`;
+    badgeMsg = "조금 아껴쓰는 편"; headMsg = `${ageLabelLeave[ageband]} 평균보다 <span class="num">${Math.abs(diff).toFixed(1)}%p</span> 낮아요`;
     subMsg = "남은 연차, 눈치 보지 말고 쓰세요.";
   } else if(diff <= 5){
-    badgeMsg = "딱 평균"; headMsg = `전국 평균과 <span class="num">비슷해요</span>`;
+    badgeMsg = "딱 평균"; headMsg = `${ageLabelLeave[ageband]} 평균과 <span class="num">비슷해요</span>`;
     subMsg = "무난하게 연차를 쓰고 계시네요.";
   } else if(diff <= 20){
-    badgeMsg = "휴가 마스터"; headMsg = `전국 평균보다 <span class="num">${diff.toFixed(1)}%p</span> 높아요`;
+    badgeMsg = "휴가 마스터"; headMsg = `${ageLabelLeave[ageband]} 평균보다 <span class="num">${diff.toFixed(1)}%p</span> 높아요`;
     subMsg = "일과 삶의 균형, 잘 챙기고 계세요.";
   } else {
-    badgeMsg = "연차 소진 전문가"; headMsg = `전국 평균보다 <span class="num">${diff.toFixed(1)}%p</span>나 높아요`;
+    badgeMsg = "연차 소진 전문가"; headMsg = `${ageLabelLeave[ageband]} 평균보다 <span class="num">${diff.toFixed(1)}%p</span>나 높아요`;
     subMsg = "휴가 계획 세우는 노하우 좀 알려주세요.";
   }
 
@@ -242,12 +257,12 @@ function showResult(){
   sub.textContent = subMsg;
 
   document.getElementById('meMin').textContent = myRate+'% ('+used+'/'+granted+'일)';
-  document.getElementById('avgMin').textContent = nationalRate+'% (13.2/16.7일)';
+  document.getElementById('avgMin').textContent = avgForAge+'% ('+ageLabelLeave[ageband]+' 평균)';
 
   document.getElementById('meFill').style.width = Math.min(myRate,100)+'%';
-  document.getElementById('avgFill').style.width = nationalRate+'%';
+  document.getElementById('avgFill').style.width = avgForAge+'%';
 
-  document.getElementById('whyText').textContent = `전국 평균 소진율이 79.4%로 역대 최고치를 기록한 이유는, 문체부 분석에 따르면 주 52시간제가 자리잡고 '워라밸' 문화가 확산되면서 눈치 보지 않고 연차를 쓰는 분위기가 퍼졌기 때문이에요. 연차 사용 목적 1위도 '여행'(35%)으로, 실제로 쉬려고 쓰는 경우가 늘고 있어요.`;
+  document.getElementById('whyText').textContent = `전국 평균 소진율은 79.4%로 역대 최고치인데, 나이대별로 보면 온도차가 있어요. 한국보건사회연구원 조사에서 20·30대는 부여받은 연차 자체가 적어서(약 15일) 상대적으로 소진율이 74.8%로 높게 나오는 반면, 50대 이상은 부여 연차가 더 많은데도(약 18일) 실제 사용 일수는 비슷해서 소진율이 64.1%로 낮아지는 경향이 있어요. 즉 나이가 많을수록 '더 받고도 덜 쓰는' 패턴이에요.`;
 
   document.getElementById('resultBox').classList.add('show');
 }

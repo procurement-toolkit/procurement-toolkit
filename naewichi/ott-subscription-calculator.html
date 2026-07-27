@@ -126,6 +126,16 @@
   <div class="card">
     <h2>나는 이래요</h2>
     <div class="field">
+      <label for="ageband">나이대</label>
+      <select id="ageband">
+        <option value="10s">10대</option>
+        <option value="20s">20대</option>
+        <option value="30s" selected>30대</option>
+        <option value="40s">40대</option>
+        <option value="50s">50대</option>
+      </select>
+    </div>
+    <div class="field">
       <label for="count">지금 구독 중인 OTT 개수</label>
       <select id="count">
         <option value="0">없음</option>
@@ -133,6 +143,16 @@
         <option value="2" selected>2개</option>
         <option value="3">3개</option>
         <option value="4">4개 이상</option>
+      </select>
+    </div>
+    <div class="field">
+      <label for="watchtime">하루 평균 OTT 시청시간</label>
+      <select id="watchtime">
+        <option value="20">30분 이하</option>
+        <option value="45">30분~1시간</option>
+        <option value="75" selected>1~1시간 30분</option>
+        <option value="105">1시간 30분~2시간</option>
+        <option value="150">2시간 이상</option>
       </select>
     </div>
     <button class="go-btn" onclick="showResult()">비교해보기 →</button>
@@ -155,13 +175,26 @@
         </div>
       </div>
 
+      <div class="track-row">
+        <div class="track-label"><span class="me">나 (시청시간)</span><span id="meTimeMin"></span></div>
+        <div class="track" id="meTimeTrack">
+          <div class="track-fill me" id="meTimeFill"><span class="track-icon">⏱️</span></div>
+        </div>
+      </div>
+      <div class="track-row">
+        <div class="track-label"><span class="avg" id="ageTimeLabel">나이대 평균 시청시간</span><span id="avgTimeMin"></span></div>
+        <div class="track" id="avgTimeTrack">
+          <div class="track-fill avg" id="avgTimeFill"><span class="track-icon">📊</span></div>
+        </div>
+      </div>
+
             <div class="why-box">
         <p class="why-title">💡 왜 이런 결과가 나왔을까요?</p>
         <p class="why-text" id="whyText"></p>
       </div>
 
       <button class="share-btn" onclick="shareResult()">📤 카톡으로 결과 자랑하기</button>
-      <p class="source">출처: 문화체육관광부·한국콘텐츠진흥원 「2025 콘텐츠 이용행태조사」(국가승인통계) - OTT 이용률 89.1%, 평균 구독 2.1개</p>
+      <p class="source">출처: 문화체육관광부·한국콘텐츠진흥원 「2025 콘텐츠 이용행태조사」(국가승인통계) - OTT 이용률 89.1%, 평균 구독 2.1개 / CJ메조미디어 「2025 타겟 리포트」 연령대별 일평균 OTT 시청시간</p>
     </div>
   </div>
 
@@ -183,9 +216,15 @@
 <script>
 // 문체부·콘진원 2025 콘텐츠 이용행태조사(국가승인통계) 기반: 전국 평균 OTT 구독 개수 2.1개
 const nationalAvg = 2.1;
+// CJ메조미디어 「2025 타겟 리포트」 기반: 연령대별 일평균 OTT 시청시간(분)
+const watchTimeByAge = { "10s": 40, "20s": 58, "30s": 63, "40s": 61, "50s": 50 };
+const ageLabelOtt = { "10s": "10대", "20s": "20대", "30s": "30대", "40s": "40대", "50s": "50대" };
 
 function showResult(){
+  const ageband = document.getElementById('ageband').value;
   const myCount = Number(document.getElementById('count').value);
+  const myWatch = Number(document.getElementById('watchtime').value);
+  const avgWatch = watchTimeByAge[ageband];
   const diff = myCount - nationalAvg;
 
   const badge = document.getElementById('badgeText');
@@ -221,7 +260,14 @@ function showResult(){
   document.getElementById('meFill').style.width = (myCount/maxScale*100)+'%';
   document.getElementById('avgFill').style.width = (nationalAvg/maxScale*100)+'%';
 
-  document.getElementById('whyText').textContent = `문체부·콘진원 조사에서 평균 구독 개수가 2.1개까지 늘어난 이유는, OTT마다 독점 콘텐츠(오리지널 시리즈)를 갖추면서 한 곳만 구독해서는 보고 싶은 걸 다 볼 수 없는 구조가 됐기 때문이에요. 그래서 여러 개를 번갈아 구독하거나 동시에 유지하는 사람이 늘고 있어요.`;
+  document.getElementById('meTimeMin').textContent = myWatch+'분';
+  document.getElementById('avgTimeMin').textContent = avgWatch+'분';
+  document.getElementById('ageTimeLabel').textContent = ageLabelOtt[ageband]+' 평균 시청시간';
+  const maxScaleTime = Math.max(myWatch, avgWatch, 60) * 1.2;
+  document.getElementById('meTimeFill').style.width = (myWatch/maxScaleTime*100)+'%';
+  document.getElementById('avgTimeFill').style.width = (avgWatch/maxScaleTime*100)+'%';
+
+  document.getElementById('whyText').textContent = `문체부·콘진원 조사에서 평균 구독 개수가 2.1개까지 늘어난 이유는, OTT마다 독점 콘텐츠(오리지널 시리즈)를 갖추면서 한 곳만 구독해서는 보고 싶은 걸 다 볼 수 없는 구조가 됐기 때문이에요. 시청시간을 보면 CJ메조미디어 조사에서 30대가 하루 63분으로 가장 길게 나타나는데, 육아·퇴근 후 휴식 시간에 OTT를 몰아보는 경향이 반영된 것으로 풀이돼요. 반면 10대는 40분으로 짧은 편인데, 숏폼 콘텐츠 쪽으로 시청 시간이 분산되기 때문이에요.`;
 
   document.getElementById('resultBox').classList.add('show');
 }
