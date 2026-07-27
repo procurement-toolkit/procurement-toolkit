@@ -130,6 +130,15 @@
       </select>
     </div>
     <div class="field">
+      <label for="lifeStage">나이 (생애주기)</label>
+      <select id="lifeStage">
+        <option value="baby">1세 미만 (아기)</option>
+        <option value="young" selected>1~2세 (어린 성체)</option>
+        <option value="middle">3~5세 (중장년기)</option>
+        <option value="senior">6세 이상 (노년기)</option>
+      </select>
+    </div>
+    <div class="field">
       <label for="cost">한 마리당 월평균 지출</label>
       <select id="cost">
         <option value="3">3만원 이하</option>
@@ -166,7 +175,7 @@
       </div>
 
       <button class="share-btn" onclick="shareResult()">📤 카톡으로 결과 자랑하기</button>
-      <p class="source">출처: 농림축산식품부 「2025년 반려동물 양육현황조사」(국가승인통계, 2026.2 발표)</p>
+      <p class="source">출처: 농림축산식품부 「2025년 반려동물 양육현황조사」(국가승인통계, 2026.2 발표), KB금융지주 「2025 한국반려동물 보고서」 생애주기별 치료비 분석</p>
     </div>
   </div>
 
@@ -189,11 +198,16 @@
 // 농림축산식품부 2025년 반려동물 양육현황조사(국가승인통계) 기반, 마리당 월평균 양육비(만원)
 const avgByType = { dog: 13.5, cat: 9.2, other: 12.1 };
 const typeLabel = { dog: "반려견", cat: "반려묘", other: "반려동물 전체" };
+const lifeStageLabel = { baby: "1세 미만", young: "1~2세", middle: "3~5세", senior: "6세 이상" };
+// KB금융 반려동물 보고서에서 '중장년기(3~4세)'와 '노년기(6~7세) 이후' 치료비가 크게 증가한다고 분석
+// 이를 반영해 생애주기별 배율을 추정 적용 (아기 활발한 예방접종·용품비 vs 노년기 치료비 급증)
+const lifeStageRatio = { baby: 1.08, young: 1.0, middle: 1.12, senior: 1.35 };
 
 function showResult(){
   const type = document.getElementById('petType').value;
+  const lifeStage = document.getElementById('lifeStage').value;
   const myCost = Number(document.getElementById('cost').value);
-  const avg = avgByType[type];
+  const avg = Math.round(avgByType[type] * lifeStageRatio[lifeStage] * 10) / 10;
   const diff = myCost - avg;
 
   const badge = document.getElementById('badgeText');
@@ -219,7 +233,7 @@ function showResult(){
   badge.textContent = badgeMsg;
   headline.innerHTML = headMsg;
   sub.textContent = subMsg;
-  document.getElementById('avgLabel').textContent = typeLabel[type]+' 평균';
+  document.getElementById('avgLabel').textContent = typeLabel[type]+' · '+lifeStageLabel[lifeStage]+' 평균';
 
   document.getElementById('meMin').textContent = myCost+'만원';
   document.getElementById('avgMin').textContent = avg+'만원';
@@ -229,11 +243,11 @@ function showResult(){
   document.getElementById('avgFill').style.width = (avg/maxScale*100)+'%';
 
   if(type === 'dog'){
-    why.textContent = `농식품부 조사에서 반려견 양육비(13.5만원)가 반려묘(9.2만원)보다 높은 이유는, 개는 산책·미용·훈련 등 관리해야 할 항목이 상대적으로 더 많기 때문이에요. 사료·간식비가 전체 지출의 35% 이상을 차지하는 것도 공통적인 특징이에요.`;
+    why.textContent = `농식품부 조사에서 반려견 양육비(13.5만원)가 반려묘(9.2만원)보다 높은 이유는, 개는 산책·미용·훈련 등 관리해야 할 항목이 상대적으로 더 많기 때문이에요. 사료·간식비가 전체 지출의 35% 이상을 차지하는 것도 공통적인 특징이에요. 여기에 KB금융 반려동물 보고서를 보면 중장년기(3~4세)와 노년기(6~7세) 이후 치료비가 크게 늘어나는 경향이 있어서, ${lifeStageLabel[lifeStage]} 구간의 배율을 반영했어요.`;
   } else if(type === 'cat'){
-    why.textContent = `반려묘의 양육비가 반려견보다 낮게 나타나는 이유는, 고양이는 산책이나 미용 같은 정기 서비스 비용이 상대적으로 적게 들기 때문이에요. 다만 병원비(사고·상해·질병 치료)는 나이가 들수록 급격히 늘어나는 경향이 있어요.`;
+    why.textContent = `반려묘의 양육비가 반려견보다 낮게 나타나는 이유는, 고양이는 산책이나 미용 같은 정기 서비스 비용이 상대적으로 적게 들기 때문이에요. 다만 병원비(사고·상해·질병 치료)는 나이가 들수록 급격히 늘어나는 경향이 있어서, ${lifeStageLabel[lifeStage]} 구간의 배율을 반영했어요.`;
   } else {
-    why.textContent = `반려동물 전체 평균(12.1만원)은 사료·간식비가 절반 가까이를 차지하고, 병원비와 미용·위생관리비가 그 뒤를 이어요. 최근에는 돌봄·훈련 서비스 지출 비중도 꾸준히 늘어나는 추세예요.`;
+    why.textContent = `반려동물 전체 평균(12.1만원)은 사료·간식비가 절반 가까이를 차지하고, 병원비와 미용·위생관리비가 그 뒤를 이어요. 최근에는 돌봄·훈련 서비스 지출 비중도 꾸준히 늘어나는 추세예요. 나이가 들수록 치료비 비중이 커지는 경향도 반영해서 ${lifeStageLabel[lifeStage]} 구간의 배율을 적용했어요.`;
   }
 
   document.getElementById('resultBox').classList.add('show');

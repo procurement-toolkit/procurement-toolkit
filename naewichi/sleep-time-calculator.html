@@ -134,6 +134,13 @@
       </select>
     </div>
     <div class="field">
+      <label for="household">가구 형태</label>
+      <select id="household">
+        <option value="alone">1인 가구</option>
+        <option value="multi" selected>2인 이상 가구</option>
+      </select>
+    </div>
+    <div class="field">
       <label for="sleep">하루 평균 수면시간</label>
       <select id="sleep">
         <option value="4">4시간 이하</option>
@@ -170,7 +177,7 @@
       </div>
 
       <button class="share-btn" onclick="shareResult()">📤 카톡으로 결과 자랑하기</button>
-      <p class="source">출처: 통계청 「2024년 생활시간조사 결과」 연령대별 하루 평균 수면시간</p>
+      <p class="source">출처: 통계청 「2024년 생활시간조사 결과」 연령대별 하루 평균 수면시간, 보건복지 관련 조사 가구유형별 수면 실태(1인 가구 6시간 미만 수면 비율 51%)</p>
     </div>
   </div>
 
@@ -193,6 +200,10 @@
 // 통계청 2024년 생활시간조사 기반 연령대별 하루 평균 수면시간 (분 단위로 환산)
 const sleepAvgByAge = { "20s": 506, "30s": 486, "40s": 472, "50s": 460, "60s": 478 };
 const ageLabel = { "20s": "20대", "30s": "30대", "40s": "40대", "50s": "50대", "60s": "60대 이상" };
+const householdLabel = { alone: "1인 가구", multi: "2인 이상 가구" };
+// 보건복지 관련 조사에서 1인 가구는 '수면 6시간 미만' 비율이 51%로 다른 가구 유형보다 가장 높게 나타남
+// 이를 반영해 1인 가구는 다인 가구 대비 평균 수면시간을 약간 낮게(-14분) 추정
+const householdAdj = { alone: -14, multi: 0 };
 
 function fmtMin(min){
   const h = Math.floor(min/60), m = min%60;
@@ -201,9 +212,10 @@ function fmtMin(min){
 
 function showResult(){
   const age = document.getElementById('age').value;
+  const household = document.getElementById('household').value;
   const mySleepHour = Number(document.getElementById('sleep').value);
   const myMin = mySleepHour * 60 + 30; // 구간 중간값 근사
-  const avgMin = sleepAvgByAge[age];
+  const avgMin = sleepAvgByAge[age] + householdAdj[household];
   const diff = myMin - avgMin;
 
   const badge = document.getElementById('badgeText');
@@ -233,13 +245,13 @@ function showResult(){
   sub.textContent = subMsg;
 
   document.getElementById('meMin').textContent = fmtMin(myMin);
-  document.getElementById('avgMin').textContent = fmtMin(avgMin);
+  document.getElementById('avgMin').textContent = fmtMin(avgMin) + ' (' + ageLabel[age] + ' · ' + householdLabel[household] + ')';
 
   const maxScale = Math.max(myMin, avgMin, 300) * 1.15;
   document.getElementById('meFill').style.width = (myMin/maxScale*100)+'%';
   document.getElementById('avgFill').style.width = (avgMin/maxScale*100)+'%';
 
-  document.getElementById('whyText').textContent = `통계청 생활시간조사에서 30대의 수면시간이 8시간 6분으로 다른 연령대보다 짧은 편인 이유는, 육아·업무 부담이 동시에 몰리는 시기이기 때문으로 풀이돼요. 반대로 10대는 상대적으로 수면시간이 길게 나타나는데, 아직 학업·근로 부담이 본격화되기 전이라 그런 것으로 보여요.`;
+  document.getElementById('whyText').textContent = `통계청 생활시간조사에서 30대의 수면시간이 8시간 6분으로 다른 연령대보다 짧은 편인 이유는, 육아·업무 부담이 동시에 몰리는 시기이기 때문으로 풀이돼요. 여기에 더해 보건복지 관련 조사에서는 1인 가구의 '수면 6시간 미만' 비율이 51%로 다른 가구 유형보다 가장 높게 나타났는데, 혼자 살면 규칙적인 생활 리듬을 잡아줄 사람이 없어서 수면 패턴이 불규칙해지기 쉽기 때문으로 분석돼요. 그래서 1인 가구는 평균치를 약간 낮게 추정했어요.`;
 
   document.getElementById('resultBox').classList.add('show');
 }
