@@ -232,7 +232,15 @@ function showResult(){
   document.getElementById('meFill').style.width = (myRepay/maxScale*100)+'%';
   document.getElementById('avgFill').style.width = (avg/maxScale*100)+'%';
 
-  document.getElementById('whyText').textContent = `가계금융복지조사에서 대출상환액은 3040대에서 가장 높게 나타나는데, 이 시기에 주택담보대출을 새로 시작하는 경우가 많기 때문이에요. 내집마련이 활발한 시기와 상환 부담이 커지는 시기가 겹치는 셈이죠.`;
+  let whyMsg;
+  if(myRepay === 0){
+    whyMsg = `대출이 없다는 건 가계금융복지조사 기준으로도 상대적으로 드문 케이스예요. ${ageLabel[age]}는 특히 주택담보대출을 새로 시작하는 시기와 겹치는 경우가 많아서, 대출상환 부담이 없다는 건 이미 내집마련을 마쳤거나 무주택으로 전세·월세에 거주 중일 가능성이 커요.`;
+  } else if(diff < 0){
+    whyMsg = `${ageLabel[age]} 평균보다 상환액이 적다는 건, 대출 원금 자체가 적거나 낮은 금리로 받았을 가능성을 보여줘요. 가계금융복지조사에서 대출상환 부담은 주택 구입 시점과 대출 규모에 크게 좌우되는 항목이에요.`;
+  } else {
+    whyMsg = `가계금융복지조사에서 대출상환액은 3040대에서 가장 높게 나타나는데, 이 시기에 주택담보대출을 새로 시작하는 경우가 많기 때문이에요. 내집마련이 활발한 시기와 상환 부담이 커지는 시기가 겹치는 셈이죠.`;
+  }
+  document.getElementById('whyText').textContent = whyMsg;
 
   document.getElementById('resultBox').classList.add('show');
 }

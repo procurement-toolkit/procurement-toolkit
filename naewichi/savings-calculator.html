@@ -260,7 +260,15 @@ function showResult(){
   document.getElementById('meFill').style.width = (myNet/maxScale*100)+'%';
   document.getElementById('avgFill').style.width = (avg/maxScale*100)+'%';
 
-  document.getElementById('whyText').textContent = `가계금융복지조사에서 순자산은 50대에서 정점(약 5억 5천만원)을 찍고 60대 이후 소폭 줄어드는 패턴을 보여요. 소득이 쌓이는 기간(근속연수)이 길어질수록 자산도 늘어나다가, 은퇴 이후엔 자산을 인출해 생활비로 쓰기 시작하기 때문으로 풀이됩니다.`;
+  let whyMsg;
+  if(diff < -avg*0.3){
+    whyMsg = `가계금융복지조사에서 순자산은 소득이 쌓이는 기간(근속연수)에 크게 좌우돼요. ${ageLabel[age]} 평균보다 낮다고 해서 뒤처진 건 아니에요 — 자산은 특히 40~50대에 급격히 늘어나는 구조라, 이르게 형성되지 않는 게 오히려 일반적이에요.`;
+  } else if(diff <= avg*0.3){
+    whyMsg = `가계금융복지조사에서 순자산은 50대에서 정점(약 5억 5천만원)을 찍고 60대 이후 소폭 줄어드는 패턴을 보여요. 소득이 쌓이는 기간(근속연수)이 길어질수록 자산도 늘어나다가, 은퇴 이후엔 자산을 인출해 생활비로 쓰기 시작하기 때문으로 풀이됩니다.`;
+  } else {
+    whyMsg = `${ageLabel[age]} 평균을 웃도는 순자산은 보통 부동산 자산 비중이 높거나, 이른 시기부터 자산을 형성한 경우에 나타나요. 가계금융복지조사에서도 순자산 상위 가구일수록 거주 부동산과 금융자산을 함께 늘려온 경향이 뚜렷했어요.`;
+  }
+  document.getElementById('whyText').textContent = whyMsg;
 
   document.getElementById('resultBox').classList.add('show');
 }

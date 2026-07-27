@@ -247,7 +247,15 @@ function showResult(){
   document.getElementById('meFill').style.width = (myCount/maxScale*100)+'%';
   document.getElementById('avgFill').style.width = (avg/maxScale*100)+'%';
 
-  document.getElementById('whyText').textContent = `KDI 조사에서 40대의 이직 경험률(79.8%)이 20대(49.6%)보다 훨씬 높은 이유는 단순합니다 — 나이가 많을수록 사회생활 연차가 길어서 이직할 기회 자체가 더 많았기 때문이에요. 그래서 나이대별 평균 이직 횟수도 연령이 높아질수록 자연스럽게 늘어나도록 계산했어요.`;
+  let whyMsg;
+  if(myCount === 0){
+    whyMsg = `한 회사에 계속 머무르는 건 KDI 조사 기준으로 보면 ${ageLabel[age]}에서도 소수에 속하는 선택이에요. 특히 40대 이상은 79.8%가 이직 경험이 있다고 답할 만큼 이직이 흔해진 요즘, 한 우물을 파는 건 오히려 눈에 띄는 이력이에요.`;
+  } else if(diff < 0){
+    whyMsg = `KDI 조사에서 이직 횟수는 나이와 함께 늘어나는 경향이 뚜렷해요. 사회생활 연차가 쌓일수록 이직 기회 자체가 늘어나기 때문인데, 당신은 ${ageLabel[age]} 평균보다 이직을 적게 한 편이라 비교적 안정적인 커리어 패턴을 보이고 있어요.`;
+  } else {
+    whyMsg = `KDI 조사에서 40대의 이직 경험률(79.8%)이 20대(49.6%)보다 훨씬 높은 이유는 단순합니다 — 나이가 많을수록 사회생활 연차가 길어서 이직할 기회 자체가 더 많았기 때문이에요. 당신처럼 ${ageLabel[age]} 평균보다 이직이 많은 경우는, 그만큼 다양한 산업·직무 경험을 쌓았을 가능성이 커요.`;
+  }
+  document.getElementById('whyText').textContent = whyMsg;
 
   document.getElementById('resultBox').classList.add('show');
 }

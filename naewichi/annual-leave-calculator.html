@@ -262,7 +262,17 @@ function showResult(){
   document.getElementById('meFill').style.width = Math.min(myRate,100)+'%';
   document.getElementById('avgFill').style.width = avgForAge+'%';
 
-  document.getElementById('whyText').textContent = `전국 평균 소진율은 79.4%로 역대 최고치인데, 나이대별로 보면 온도차가 있어요. 한국보건사회연구원 조사에서 20·30대는 부여받은 연차 자체가 적어서(약 15일) 상대적으로 소진율이 74.8%로 높게 나오는 반면, 50대 이상은 부여 연차가 더 많은데도(약 18일) 실제 사용 일수는 비슷해서 소진율이 64.1%로 낮아지는 경향이 있어요. 즉 나이가 많을수록 '더 받고도 덜 쓰는' 패턴이에요.`;
+  let whyMsg;
+  if(myRate >= 99){
+    whyMsg = `100% 소진은 문체부 조사 기준으로도 상위권에 속해요. 연차 미소진 사유 1위가 '업무량 과다·대체인력 부족'(39.9%)인 걸 감안하면, 온전히 다 쓰셨다는 건 업무 공백을 스스로 잘 관리하고 계시다는 뜻이에요.`;
+  } else if(diff < -5){
+    whyMsg = `${ageLabelLeave[ageband]} 평균보다 소진율이 낮은 이유로는 보통 '업무량 과다·대체인력 부족'(39.9%)이나 '눈치'(15.2%)가 꼽혀요. 한국보건사회연구원 조사에서도 미사용 연차의 상당수가 이런 이유로 소멸되는 것으로 나타났어요.`;
+  } else if(diff <= 5){
+    whyMsg = `전국 평균 소진율은 79.4%로 역대 최고치인데, 나이대별로 보면 온도차가 있어요. 한국보건사회연구원 조사에서 20·30대는 부여받은 연차 자체가 적어서(약 15일) 상대적으로 소진율이 74.8%로 높게 나오는 반면, 50대 이상은 부여 연차가 더 많은데도(약 18일) 실제 사용 일수는 비슷해서 소진율이 64.1%로 낮아지는 경향이 있어요.`;
+  } else {
+    whyMsg = `평균보다 소진율이 높은 건, 문체부 조사에서 연차 사용 목적 1위인 '여행'(35%)처럼 계획적으로 휴가를 써왔다는 뜻이에요. 최근 워라밸 문화 확산으로 이런 적극적인 연차 사용이 전반적으로 늘고 있는 추세예요.`;
+  }
+  document.getElementById('whyText').textContent = whyMsg;
 
   document.getElementById('resultBox').classList.add('show');
 }

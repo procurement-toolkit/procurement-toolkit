@@ -267,7 +267,16 @@ function showResult(){
   document.getElementById('meTimeFill').style.width = (myWatch/maxScaleTime*100)+'%';
   document.getElementById('avgTimeFill').style.width = (avgWatch/maxScaleTime*100)+'%';
 
-  document.getElementById('whyText').textContent = `문체부·콘진원 조사에서 평균 구독 개수가 2.1개까지 늘어난 이유는, OTT마다 독점 콘텐츠(오리지널 시리즈)를 갖추면서 한 곳만 구독해서는 보고 싶은 걸 다 볼 수 없는 구조가 됐기 때문이에요. 시청시간을 보면 CJ메조미디어 조사에서 30대가 하루 63분으로 가장 길게 나타나는데, 육아·퇴근 후 휴식 시간에 OTT를 몰아보는 경향이 반영된 것으로 풀이돼요. 반면 10대는 40분으로 짧은 편인데, 숏폼 콘텐츠 쪽으로 시청 시간이 분산되기 때문이에요.`;
+  let whyMsg;
+  if(myCount === 0){
+    whyMsg = `OTT를 하나도 구독 안 하는 건 문체부·콘진원 조사 기준으로 소수에 속해요(OTT 이용률 89.1%). 가족 계정 공유나 유튜브 무료 시청으로 대체하고 계실 가능성이 높아요.`;
+  } else if(diff <= 0){
+    whyMsg = `전국 평균(2.1개)보다 적게 구독하는 건, 필요한 콘텐츠가 한두 곳에 집중돼 있거나 무료·광고형 요금제를 활용하고 계신 경우가 많아요. 실제로 넷플릭스·티빙 광고 요금제 이용자의 87.3%가 계속 이용하겠다고 답할 만큼, 저비용 시청 방식이 자리잡고 있어요.`;
+  } else {
+    whyMsg = `문체부·콘진원 조사에서 평균 구독 개수가 2.1개까지 늘어난 이유는, OTT마다 독점 콘텐츠(오리지널 시리즈)를 갖추면서 한 곳만 구독해서는 보고 싶은 걸 다 볼 수 없는 구조가 됐기 때문이에요. 여러 개를 동시에 유지하시는 건, 그만큼 다양한 콘텐츠를 챙겨보고 계신다는 뜻이에요.`;
+  }
+  whyMsg += ` 시청시간을 보면 CJ메조미디어 조사에서 30대가 하루 63분으로 가장 길게 나타나는데, 퇴근 후 휴식 시간에 몰아보는 경향이 반영된 것으로 풀이돼요. 반면 10대는 40분으로 짧은 편인데, 숏폼 콘텐츠 쪽으로 시청 시간이 분산되기 때문이에요.`;
+  document.getElementById('whyText').textContent = whyMsg;
 
   document.getElementById('resultBox').classList.add('show');
 }

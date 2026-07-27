@@ -363,7 +363,15 @@ function showResult(){
   document.getElementById('avgFill').style.width = (blended/maxScale*100)+'%';
 
   const regionLabel = {capital:"수도권",dongnam:"동남권",chungcheong:"충청권",honam:"호남권",daegyeong:"대경권",gangwon:"강원권",jeju:"제주권"}[region];
-  document.getElementById('whyText').textContent = `통계청 조사에 따르면 통근시간은 인구가 밀집된 ${regionLabel} 같은 대도시권일수록 길어지는 경향이 뚜렷해요. 이동 거리가 늘어나고 대중교통 환승이 많아지기 때문이죠. 나이대별로는 30대가 76.9분으로 가장 길었는데, 이 시기에 직장과 주거지가 멀어지는 경우(내집마련, 이직 등)가 많아서로 풀이돼요.`;
+  let whyMsg;
+  if(diff <= -15){
+    whyMsg = `${regionLabel}은 전국에서 통근시간이 긴 편에 속하는 지역인데, 그 안에서도 당신은 평균보다 훨씬 빨리 다니는 편이에요. 직주근접(직장과 집이 가까운) 위치이거나, 대중교통 환승 없이 한 번에 이동하는 경로일 가능성이 높아요.`;
+  } else if(diff <= 15){
+    whyMsg = `통계청 조사에 따르면 통근시간은 인구가 밀집된 ${regionLabel} 같은 대도시권일수록 길어지는 경향이 뚜렷해요. 이동 거리가 늘어나고 대중교통 환승이 많아지기 때문이죠. 나이대별로는 30대가 76.9분으로 가장 길었는데, 이 시기에 직장과 주거지가 멀어지는 경우(내집마련, 이직 등)가 많아서로 풀이돼요.`;
+  } else {
+    whyMsg = `평균보다 훨씬 오래 걸리는 이유는 대개 두 가지예요 — 집값 부담으로 직장에서 먼 지역에 거주하거나, 환승이 여러 번 필요한 경로이거나. 특히 ${regionLabel}처럼 밀집도가 높은 지역은 출퇴근 시간대 혼잡으로 실제 소요시간이 지도상 거리보다 훨씬 길어지는 경우가 많아요.`;
+  }
+  document.getElementById('whyText').textContent = whyMsg;
 
   document.getElementById('resultBox').classList.add('show');
 }

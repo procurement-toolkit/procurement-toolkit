@@ -262,7 +262,15 @@ function showResult(){
   document.getElementById('meFill').style.width = (myMonthly/maxScale*100)+'%';
   document.getElementById('avgFill').style.width = (avgForAge/maxScale*100)+'%';
 
-  document.getElementById('whyText').textContent = `한국소비자단체협의회 조사에서 성인 1인당 월평균 커피 지출이 10만원을 넘긴 이유는, 커피가 이제 기호식품을 넘어 '작업 공간 이용료'나 '만남의 장소 비용' 성격을 함께 갖게 됐기 때문이에요. 여기에 나이대별 소비 패턴을 보면 40대가 주간 10.23잔으로 가장 많이 마시는데, 이는 업무 중 카페인 의존도가 높아지는 시기이기 때문으로 풀이돼요. 반면 20대는 6.72잔으로 상대적으로 적은데, 아직 사회초년생이라 커피값에 좀 더 신중한 경향이 반영된 것으로 보여요.`;
+  let whyMsg;
+  if(myMonthly === 0){
+    whyMsg = `커피를 아예 안 마시는 경우는 전체 소비자 중 소수에 속해요. 한국소비자단체협의회 조사에서도 성인 대부분이 어떤 형태로든 커피를 소비하는 것으로 나타나서, 커피값 지출이 0원인 건 꽤 드문 케이스예요.`;
+  } else if(diff < 0){
+    whyMsg = `가격대가 저렴한 브랜드를 이용하거나 잔 수가 적으면 지출이 쉽게 평균 아래로 내려가요. ${ageLabelCoffee[ageband]} 평균은 주간 ${weeklyCupsByAge[ageband]}잔 수준인데, 이보다 적게 마시거나 가성비 좋은 선택을 하고 계신 것 같아요.`;
+  } else {
+    whyMsg = `한국소비자단체협의회 조사에서 성인 1인당 월평균 커피 지출이 10만원을 넘긴 이유는, 커피가 이제 기호식품을 넘어 '작업 공간 이용료'나 '만남의 장소 비용' 성격을 함께 갖게 됐기 때문이에요. ${ageLabelCoffee[ageband]}는 주간 ${weeklyCupsByAge[ageband]}잔으로 조사됐는데, 여기에 스페셜티 카페 이용이 늘면서 잔당 단가도 함께 오르는 추세예요.`;
+  }
+  document.getElementById('whyText').textContent = whyMsg;
 
   document.getElementById('resultBox').classList.add('show');
 }

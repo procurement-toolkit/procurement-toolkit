@@ -251,7 +251,15 @@ function showResult(){
   document.getElementById('meFill').style.width = (myMin/maxScale*100)+'%';
   document.getElementById('avgFill').style.width = (avgMin/maxScale*100)+'%';
 
-  document.getElementById('whyText').textContent = `통계청 생활시간조사에서 30대의 수면시간이 8시간 6분으로 다른 연령대보다 짧은 편인 이유는, 육아·업무 부담이 동시에 몰리는 시기이기 때문으로 풀이돼요. 여기에 더해 보건복지 관련 조사에서는 1인 가구의 '수면 6시간 미만' 비율이 51%로 다른 가구 유형보다 가장 높게 나타났는데, 혼자 살면 규칙적인 생활 리듬을 잡아줄 사람이 없어서 수면 패턴이 불규칙해지기 쉽기 때문으로 분석돼요. 그래서 1인 가구는 평균치를 약간 낮게 추정했어요.`;
+  let whyMsg;
+  if(diff < -15){
+    whyMsg = `평균보다 수면시간이 짧은 편인데, 보건복지 관련 조사에서 1인 가구의 '수면 6시간 미만' 비율이 51%로 가장 높게 나타난 걸 보면, 혼자 사는 경우 생활 리듬을 잡아줄 사람이 없어서 수면이 불규칙해지기 쉬워요. ${ageLabel[age]}는 특히 업무·개인 시간 확보를 위해 수면을 줄이는 경향도 있어요.`;
+  } else if(diff <= 15){
+    whyMsg = `통계청 생활시간조사에서 30대의 수면시간이 8시간 6분으로 다른 연령대보다 짧은 편인 이유는, 육아·업무 부담이 동시에 몰리는 시기이기 때문으로 풀이돼요. 당신의 수면시간은 ${ageLabel[age]} · ${householdLabel[household]} 평균과 비슷한 수준이에요.`;
+  } else {
+    whyMsg = `평균보다 넉넉하게 자는 편인데, 생활시간조사에서도 수면 만족도가 높은 사람일수록 규칙적인 취침·기상 패턴을 유지하는 경향이 있었어요. ${householdLabel[household]}는 특히 함께 사는 사람과 생활 리듬을 맞추기 쉬워서 수면의 질이 안정적인 경우가 많아요.`;
+  }
+  document.getElementById('whyText').textContent = whyMsg;
 
   document.getElementById('resultBox').classList.add('show');
 }
