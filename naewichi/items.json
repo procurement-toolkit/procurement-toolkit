@@ -22,6 +22,7 @@
     { "title": "내 연차 소진율 vs 전국 평균", "sub": "휴가는 잘 챙겨 쓰고 있을까", "emoji": "🏖️", "url": "annual-leave-calculator.html", "cat": "work", "views": 0 },
     { "title": "내 축의금 vs 관계별 평균", "sub": "이 정도면 적당한 걸까", "emoji": "💌", "url": "wedding-gift-calculator.html", "cat": "life", "views": 0 },
     { "title": "내 명절 용돈 vs 또래 평균", "sub": "이번 설엔 얼마나 드렸을까", "emoji": "🧧", "url": "holiday-money-calculator.html", "cat": "life", "views": 0 },
-    { "title": "내 반려동물 양육비 vs 평균", "sub": "우리 아이한테 얼마나 쓸까", "emoji": "🐾", "url": "pet-cost-calculator.html", "cat": "life", "views": 0 }
+    { "title": "내 반려동물 양육비 vs 평균", "sub": "우리 아이한테 얼마나 쓸까", "emoji": "🐾", "url": "pet-cost-calculator.html", "cat": "life", "views": 0 },
+    { "title": "내 헬스장 출석률 vs 전국 평균", "sub": "회원권, 본전은 뽑고 있을까", "emoji": "🏋️", "url": "gym-attendance-calculator.html", "cat": "health", "views": 0 }
   ]
 }

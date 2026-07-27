@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>내 헬스장 출석률 계산기 - 전국 평균과 비교해보기 | 내위치</title>
+<meta name="description" content="이번 달 헬스장(운동시설)에 몇 번 갔는지 입력하면 전국 평균 출석 실태와 바로 비교해드려요. 한국건강증진개발원·인크루트 조사 데이터 기반.">
+<meta property="og:title" content="내 헬스장 출석률, 전국 평균보다 나을까?">
+<meta property="og:description" content="입력하면 바로 비교되는 헬스장 출석률 계산기 - 내위치">
+<meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Jua&family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#EAF2FF; --card:#FFFFFF; --ink:#1B2E5C; --ink-soft:#5C6E9E;
+    --coral:#FF6B4A; --coral-dark:#D9492A; --mint:#4A9EFF; --mint-dark:#2A78D9;
+    --yellow:#FFD166; --line:#D3E1F7;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;background:var(--bg);font-family:'Noto Sans KR', sans-serif;color:var(--ink);-webkit-font-smoothing:antialiased;}
+  .wrap{max-width:480px;margin:0 auto;padding:0 20px 60px;}
+  .brandbar{display:flex;align-items:baseline;gap:6px;padding:18px 0 0;text-decoration:none;}
+  .brandbar .b1{font-family:'Jua',sans-serif;font-size:20px;color:var(--ink);}
+  .brandbar .b2{font-size:11px;color:var(--ink-soft);}
+  .hero{text-align:center;padding:18px 0 8px;}
+  .hero h1{font-family:'Jua',sans-serif;font-size:26px;line-height:1.4;margin:0 0 6px;color:var(--ink);}
+  .hero p{font-size:14px;color:var(--ink-soft);margin:0;}
+  .mascot{display:block;margin:14px auto 4px;width:200px;height:140px;}
+  .card{background:var(--card);border-radius:20px;padding:22px 20px;margin-top:18px;box-shadow:0 6px 0 var(--line);}
+  .card h2{font-family:'Jua',sans-serif;font-size:17px;margin:0 0 14px;color:var(--ink);}
+  .field{margin-bottom:14px;}
+  .field label{display:block;font-size:13px;font-weight:500;color:var(--ink-soft);margin-bottom:6px;}
+  select{
+    width:100%;padding:12px 14px;font-size:15px;font-family:'Noto Sans KR',sans-serif;
+    border:2px solid var(--line);border-radius:12px;background:#fff;color:var(--ink);
+    appearance:none;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='14' height='9'><path d='M1 1l6 6 6-6' stroke='%235C6E9E' stroke-width='2' fill='none'/></svg>");
+    background-repeat:no-repeat;background-position:right 14px center;
+  }
+  select:focus{outline:none;border-color:var(--coral);}
+  .go-btn{
+    width:100%;padding:14px;margin-top:6px;background:var(--coral);color:#fff;border:none;
+    border-radius:14px;font-family:'Jua',sans-serif;font-size:17px;cursor:pointer;
+    box-shadow:0 5px 0 var(--coral-dark);transition:transform .05s;
+  }
+  .go-btn:active{transform:translateY(3px);box-shadow:0 2px 0 var(--coral-dark);}
+  .result{display:none;margin-top:20px;}
+  .result.show{display:block;}
+  .headline-result{text-align:center;font-family:'Jua',sans-serif;font-size:22px;color:var(--ink);margin-bottom:6px;line-height:1.5;}
+  .headline-result .num{color:var(--coral-dark);font-size:28px;}
+  .sub-result{text-align:center;font-size:13px;color:var(--ink-soft);margin-bottom:20px;}
+  .track-row{margin-bottom:16px;}
+  .track-label{display:flex;justify-content:space-between;font-size:13px;font-weight:500;margin-bottom:6px;}
+  .track-label .me{color:var(--coral-dark);}
+  .track-label .avg{color:var(--mint-dark);}
+  .track{position:relative;height:34px;background:var(--bg);border-radius:17px;border:2px solid var(--line);overflow:visible;}
+  .track-fill{
+    position:absolute;left:0;top:0;bottom:0;border-radius:17px;
+    display:flex;align-items:center;justify-content:flex-end;padding-right:10px;
+    font-size:12px;font-weight:700;color:#fff;transition:width .8s cubic-bezier(.34,1.56,.64,1);
+  }
+  .track-fill.me{background:var(--coral);}
+  .track-fill.avg{background:var(--mint);}
+  .track-icon{position:absolute;top:50%;transform:translate(-50%,-50%);font-size:20px;}
+  .badge{
+    display:inline-block;background:var(--yellow);color:#7A5A00;font-size:12px;font-weight:700;
+    padding:5px 12px;border-radius:999px;margin:0 auto 14px;display:table;
+  }
+  .why-box{background:var(--bg);border-radius:14px;padding:16px;margin:18px 0;border:2px dashed var(--line);}
+  .why-box .why-title{font-family:'Jua',sans-serif;font-size:14px;margin:0 0 8px;display:flex;align-items:center;gap:6px;}
+  .why-box p.why-text{font-size:13px;line-height:1.7;margin:0;}
+  .share-btn{
+    width:100%;padding:13px;margin-top:6px;background:#fff;color:var(--ink);
+    border:2px solid var(--line);border-radius:14px;font-family:'Noto Sans KR',sans-serif;
+    font-weight:700;font-size:14px;cursor:pointer;
+  }
+  .source{font-size:11px;color:var(--ink-soft);text-align:center;margin-top:12px;line-height:1.6;}
+  .related{margin-top:28px;}
+  .related h3{font-family:'Jua',sans-serif;font-size:15px;margin:0 0 10px;color:var(--ink-soft);}
+  .related-grid{display:flex;flex-direction:column;gap:8px;}
+  .related-item{
+    display:flex;align-items:center;gap:10px;background:var(--card);border-radius:14px;
+    padding:12px 14px;text-decoration:none;color:var(--ink);border:2px solid var(--line);
+  }
+  .related-item .emoji{font-size:20px;}
+  .related-item .txt{font-size:13px;font-weight:500;}
+  .footer-link{display:block;text-align:center;margin-top:26px;font-size:12px;color:var(--ink-soft);text-decoration:none;}
+</style>
+<script>window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };</script>
+<script defer src="/_vercel/insights/script.js"></script>
+</head>
+<body>
+<div class="wrap">
+
+  <a class="brandbar" href="index.html">
+    <span class="b1">내위치</span>
+    <span class="b2">by CBM Lab</span>
+  </a>
+
+  <div class="hero">
+    <h1>내 헬스장 출석률,<br>전국 평균보다 나을까?</h1>
+    <p>등록 후 상황이랑 이번 달 횟수만 골라봐요</p>
+  </div>
+
+  <svg class="mascot" viewBox="0 0 200 140" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="먼지 쌓인 아령을 보는 귀여운 캐릭터 일러스트">
+    <ellipse cx="100" cy="128" rx="70" ry="7" fill="#D3E1F7"/>
+    <rect x="60" y="95" width="80" height="10" rx="5" fill="#5C6E9E"/>
+    <circle cx="65" cy="100" r="16" fill="#1B2E5C"/>
+    <circle cx="135" cy="100" r="16" fill="#1B2E5C"/>
+    <text x="100" y="80" font-size="16" text-anchor="middle" fill="#B9C4E0">· · ·</text>
+    <circle cx="100" cy="55" r="18" fill="#FFE0B3"/>
+    <circle cx="94" cy="53" r="2.5" fill="#1B2E5C"/>
+    <circle cx="106" cy="53" r="2.5" fill="#1B2E5C"/>
+    <path d="M92 62 q8 -3 16 0" fill="none" stroke="#1B2E5C" stroke-width="2.5" stroke-linecap="round"/>
+  </svg>
+
+  <div class="card">
+    <h2>나는 이래요</h2>
+    <div class="field">
+      <label for="period">헬스장(운동시설) 등록한 지</label>
+      <select id="period">
+        <option value="new">1개월 이내</option>
+        <option value="mid" selected>1~6개월</option>
+        <option value="long">6개월 이상</option>
+      </select>
+    </div>
+    <div class="field">
+      <label for="visits">이번 달 실제로 간 횟수</label>
+      <select id="visits">
+        <option value="0">0회 (한 번도 안 감)</option>
+        <option value="2">1~3회</option>
+        <option value="6" selected>4~8회</option>
+        <option value="12">9~15회</option>
+        <option value="20">16회 이상</option>
+      </select>
+    </div>
+    <button class="go-btn" onclick="showResult()">비교해보기 →</button>
+
+    <div class="result" id="resultBox">
+      <div class="badge" id="badgeText"></div>
+      <div class="headline-result" id="headlineText"></div>
+      <div class="sub-result" id="subText"></div>
+
+      <div class="track-row">
+        <div class="track-label"><span class="me">나</span><span id="meMin"></span></div>
+        <div class="track" id="meTrack">
+          <div class="track-fill me" id="meFill"><span class="track-icon">🏋️</span></div>
+        </div>
+      </div>
+      <div class="track-row">
+        <div class="track-label"><span class="avg">전국 평균 예상 출석</span><span id="avgMin"></span></div>
+        <div class="track" id="avgTrack">
+          <div class="track-fill avg" id="avgFill"><span class="track-icon">📊</span></div>
+        </div>
+      </div>
+
+      <div class="why-box">
+        <p class="why-title">💡 왜 이런 결과가 나왔을까요?</p>
+        <p class="why-text" id="whyText"></p>
+      </div>
+
+      <button class="share-btn" onclick="shareResult()">📤 카톡으로 결과 자랑하기</button>
+      <p class="source">출처: 한국건강증진개발원·인크루트 「직장인 유료운동시설 이용 실태」 조사 (등록 후 1개월 이내 포기 71%, 장기간 미이용 61%)</p>
+    </div>
+  </div>
+
+  <div class="related">
+    <h3>다른 사람들이 본 랭킹</h3>
+    <div class="related-grid">
+      <a class="related-item" href="sleep-time-calculator.html">
+        <span class="emoji">🌙</span><span class="txt">내 수면시간 vs 내 나이대</span>
+      </a>
+      <a class="related-item" href="ott-subscription-calculator.html">
+        <span class="emoji">📺</span><span class="txt">내 OTT 구독 개수 vs 전국 평균</span>
+      </a>
+    </div>
+  </div>
+
+  <a class="footer-link" href="../index.html">CBM Lab의 다른 무역 도구 보기 →</a>
+</div>
+
+<script>
+// 한국건강증진개발원·인크루트 조사 기반: 등록 후 1개월 내 포기 71%, 장기 미이용 61%
+// 이를 반영해 등록 경과 기간별 '예상 평균 출석 횟수'를 보수적으로 추정
+const avgByPeriod = { new: 3, mid: 5, long: 4 };
+const periodLabel = { new: "1개월 이내 등록자", mid: "1~6개월 등록자", long: "6개월 이상 등록자" };
+
+function showResult(){
+  const period = document.getElementById('period').value;
+  const myVisits = Number(document.getElementById('visits').value);
+  const avg = avgByPeriod[period];
+  const diff = myVisits - avg;
+
+  const badge = document.getElementById('badgeText');
+  const headline = document.getElementById('headlineText');
+  const sub = document.getElementById('subText');
+  const why = document.getElementById('whyText');
+
+  let badgeMsg, headMsg, subMsg;
+  if(myVisits === 0){
+    badgeMsg = "회원권 기부 천사"; headMsg = `이번 달 출석 <span class="num">0회</span>`;
+    subMsg = "혹시 헬스장에 월세를 내고 계신 건 아닌지...";
+  } else if(diff <= -3){
+    badgeMsg = "평균보다 적게 감"; headMsg = `평균 예상보다 <span class="num">${Math.abs(diff)}회</span> 적어요`;
+    subMsg = "괜찮아요, 등록만 해도 절반은 한 거예요.";
+  } else if(diff <= 3){
+    badgeMsg = "딱 평균"; headMsg = `평균 예상과 <span class="num">비슷해요</span>`;
+    subMsg = "이 정도면 흔한 헬스장 라이프예요.";
+  } else if(diff <= 10){
+    badgeMsg = "꾸준함 상위권"; headMsg = `평균보다 <span class="num">${diff}회</span> 더 갔어요`;
+    subMsg = "많은 분들이 포기하는 구간에서 꾸준히 가고 계시네요.";
+  } else {
+    badgeMsg = "헬스장 지분 있는 사람"; headMsg = `평균보다 <span class="num">${diff}회</span>나 더 갔어요`;
+    subMsg = "이 정도면 헬스장 사장님이 반겨줄 만한 분이에요.";
+  }
+
+  badge.textContent = badgeMsg;
+  headline.innerHTML = headMsg;
+  sub.textContent = subMsg;
+
+  document.getElementById('meMin').textContent = myVisits+'회';
+  document.getElementById('avgMin').textContent = avg+'회 정도 ('+periodLabel[period]+')';
+
+  const maxScale = Math.max(myVisits, avg, 10) * 1.2;
+  document.getElementById('meFill').style.width = (myVisits/maxScale*100)+'%';
+  document.getElementById('avgFill').style.width = (avg/maxScale*100)+'%';
+
+  if(period === 'new'){
+    why.textContent = `한국건강증진개발원·인크루트 조사에서 유료 운동시설 등록자의 71%가 1개월 이내에 운동을 포기한다고 답했어요. 가장 큰 이유는 '업무·일상 일정이 불규칙해서'(36%)와 '동기부여 상실'(30%)이었죠. 그래서 등록 초반 평균 출석 횟수를 낮게 잡았어요.`;
+  } else if(period === 'mid'){
+    why.textContent = `등록 후 1~6개월 사이는 초반의 의욕이 한풀 꺾이면서 출석이 들쭉날쭉해지는 시기예요. 실제로 직장인의 61%가 회원권을 등록하고도 장기간 이용하지 않는다고 답할 만큼, 이 구간에서 이탈이 많이 발생해요.`;
+  } else {
+    why.textContent = `6개월 이상 꾸준히 다니고 있다면, 사실 이미 초반 이탈 구간(71%가 포기하는 1개월, 61%가 안 가는 장기 구간)을 넘긴 상위권에 속하는 거예요. 습관으로 자리잡은 경우가 많아서 평균 출석도 소폭 회복되는 경향이 있어요.`;
+  }
+
+  document.getElementById('resultBox').classList.add('show');
+}
+
+function shareResult(){
+  const text = document.getElementById('headlineText').textContent;
+  if(navigator.share){
+    navigator.share({title:'내 헬스장 출석률 비교 - 내위치', text: '내 헬스장 출석률: ' + text, url: location.href});
+  } else {
+    navigator.clipboard.writeText(location.href);
+    alert('링크가 복사됐어요! 카톡에 붙여넣기 해보세요.');
+  }
+}
+</script>
+</body>
+</html>
