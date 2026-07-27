@@ -133,6 +133,24 @@
       </select>
     </div>
     <div class="field">
+      <label for="region">결혼식 지역</label>
+      <select id="region">
+        <option value="seoul" selected>서울</option>
+        <option value="busan">부산</option>
+        <option value="gwangju">광주</option>
+        <option value="incheon">인천</option>
+        <option value="other">기타 지역</option>
+      </select>
+    </div>
+    <div class="field">
+      <label for="ageband">내 나이대</label>
+      <select id="ageband">
+        <option value="2030" selected>20·30대</option>
+        <option value="4050">40·50대</option>
+        <option value="60plus">60대 이상</option>
+      </select>
+    </div>
+    <div class="field">
       <label for="amount">실제로 낸(낼) 축의금</label>
       <select id="amount">
         <option value="3">3만원</option>
@@ -191,7 +209,7 @@
 
 <script>
 // NH농협은행(2026.5) + 인크루트(2025) 조사 기반
-// 관계별 적정 축의금 평균 (만원)
+// 관계별 적정 축의금 평균 (만원) - 인크루트 관계별 가이드 기준
 const relationAvg = {
   acquaintance: 5,
   coworker: 7,
@@ -203,6 +221,14 @@ const relationLabel = {
   acquaintance: "그냥 아는 사이", coworker: "업무적으로 자주 보는 사이",
   friend: "친한 친구/동료", close: "절친한 친구", veryclose: "정말 친한 친구"
 };
+// 지역별 실제 평균 축의금 (만원) - NH농협은행 2026.5 리포트, 전국 평균 11.7만원 대비 비율로 환산
+const regionAvgRaw = { seoul: 13.4, busan: 12.8, gwangju: 12.4, incheon: 11.9, other: 10.5 };
+const regionLabel = { seoul: "서울", busan: "부산", gwangju: "광주", incheon: "인천", other: "기타 지역" };
+const nationalAvgRaw = 11.7;
+// 나이대별 실제 평균 축의금 (만원) - NH농협은행 2026.5 리포트
+const ageAvgRaw = { "2030": 13.8, "4050": 10.7, "60plus": 11.8 };
+const ageLabel = { "2030": "20·30대", "4050": "40·50대", "60plus": "60대 이상" };
+
 // 전체 금액대별 분포 (NH농협은행 2025년 기준, 계좌송금 533만 건 분석)
 const distribution = [
   { amt: 5, pct: 42.3 },
@@ -212,8 +238,15 @@ const distribution = [
 
 function showResult(){
   const relation = document.getElementById('relation').value;
+  const region = document.getElementById('region').value;
+  const ageband = document.getElementById('ageband').value;
   const myAmount = Number(document.getElementById('amount').value);
-  const avg = relationAvg[relation];
+
+  const baseAvg = relationAvg[relation];
+  const regionRatio = regionAvgRaw[region] / nationalAvgRaw;
+  const ageRatio = ageAvgRaw[ageband] / nationalAvgRaw;
+  // 관계 기준액에 지역·나이대 실제 비율을 완만하게 반영 (과도한 복합승수 방지)
+  const avg = Math.round(baseAvg * (1 + (regionRatio-1)*0.6 + (ageRatio-1)*0.6) * 10) / 10;
   const diff = myAmount - avg;
 
   const badge = document.getElementById('badgeText');
@@ -241,20 +274,20 @@ function showResult(){
   sub.textContent = subMsg;
 
   document.getElementById('meMin').textContent = myAmount+'만원';
-  document.getElementById('avgMin').textContent = avg+'만원 ('+relationLabel[relation]+')';
+  document.getElementById('avgMin').textContent = avg+'만원 ('+regionLabel[region]+' · '+ageLabel[ageband]+' · '+relationLabel[relation]+')';
 
   const maxScale = Math.max(myAmount, avg, 15) * 1.2;
   document.getElementById('meFill').style.width = (myAmount/maxScale*100)+'%';
   document.getElementById('avgFill').style.width = (avg/maxScale*100)+'%';
 
-  // "왜 이런 결과가 나왔을까" 설명: 관계별 기준 + 전체 분포 상 위치를 함께 설명
+  // "왜 이런 결과가 나왔을까" 설명: 관계별 기준 + 지역·나이대 실제 데이터 + 전체 분포 상 위치를 함께 설명
   let closestBucket = distribution[0];
   let minDist = Math.abs(myAmount - distribution[0].amt);
   for(const d of distribution){
     const dist = Math.abs(myAmount - d.amt);
     if(dist < minDist){ minDist = dist; closestBucket = d; }
   }
-  why.textContent = `인크루트 조사에 따르면 '${relationLabel[relation]}'인 경우 보통 ${avg}만원 안팎이 기준으로 꼽혀요. 전체 축의금 이체 데이터를 보면 ${closestBucket.amt}만원대를 낸 사람이 전체의 ${closestBucket.pct}%로, 당신과 비슷한 금액대를 선택한 사람이 꽤 많은 편이에요. 관계가 가까울수록 금액이 커지는 경향이 뚜렷하다는 점도 참고하세요.`;
+  why.textContent = `인크루트 조사에 따르면 '${relationLabel[relation]}'인 경우 보통 ${baseAvg}만원 안팎이 기준이에요. 여기에 NH농협은행 데이터를 반영하면, ${regionLabel[region]}은 전국 평균(11.7만원)보다 축의금이 ${regionAvgRaw[region] > nationalAvgRaw ? '높은' : '낮은'} 지역(${regionAvgRaw[region]}만원)이고, ${ageLabel[ageband]}는 나이대 평균이 ${ageAvgRaw[ageband]}만원으로 나타나요. 이 둘을 함께 반영해서 ${avg}만원을 기준으로 잡았어요. 참고로 전체 축의금 이체 데이터에서는 ${closestBucket.amt}만원대를 낸 사람이 전체의 ${closestBucket.pct}%로, 당신과 비슷한 금액대를 선택한 사람도 꽤 많은 편이에요.`;
 
   document.getElementById('resultBox').classList.add('show');
 }
