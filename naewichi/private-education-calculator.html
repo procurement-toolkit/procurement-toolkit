@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>내 사교육비 계산기 - 학교급·소득·지역별 평균과 비교해보기 | 내위치</title>
+<meta name="description" content="자녀 학교급, 가구 소득수준, 거주 지역을 입력하면 우리 아이 사교육비가 평균과 비교해 어느 정도인지 바로 확인할 수 있어요. 국가데이터처 2025년 초중고 사교육비조사(2026.3 발표) 공식 데이터 기반.">
+<meta property="og:title" content="우리 아이 사교육비, 또래 평균과 비교하면?">
+<meta property="og:description" content="학교급·소득·지역까지 반영해서 비교하는 사교육비 계산기 - 내위치">
+<meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Jua&family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#EEF3FB; --card:#FFFFFF; --ink:#1D2E5C; --ink-soft:#5C6C99;
+    --coral:#4A6FE0; --coral-dark:#2F4FBE; --mint:#F2B84B; --mint-dark:#D3961F;
+    --yellow:#FFD166; --line:#DCE5F5;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;background:var(--bg);font-family:'Noto Sans KR', sans-serif;color:var(--ink);-webkit-font-smoothing:antialiased;}
+  .wrap{max-width:480px;margin:0 auto;padding:0 20px 60px;}
+  .brandbar{display:flex;align-items:baseline;gap:6px;padding:18px 0 0;text-decoration:none;}
+  .brandbar .b1{font-family:'Jua',sans-serif;font-size:20px;color:var(--ink);}
+  .brandbar .b2{font-size:11px;color:var(--ink-soft);}
+  .hero{text-align:center;padding:18px 0 8px;}
+  .hero h1{font-family:'Jua',sans-serif;font-size:26px;line-height:1.4;margin:0 0 6px;color:var(--ink);}
+  .hero p{font-size:14px;color:var(--ink-soft);margin:0;}
+  .mascot{display:block;margin:14px auto 4px;width:200px;height:140px;}
+  .card{background:var(--card);border-radius:20px;padding:22px 20px;margin-top:18px;box-shadow:0 6px 0 var(--line);}
+  .card h2{font-family:'Jua',sans-serif;font-size:17px;margin:0 0 14px;color:var(--ink);}
+  .field{margin-bottom:14px;}
+  .field label{display:block;font-size:13px;font-weight:500;color:var(--ink-soft);margin-bottom:6px;}
+  select{
+    width:100%;padding:12px 14px;font-size:15px;font-family:'Noto Sans KR',sans-serif;
+    border:2px solid var(--line);border-radius:12px;background:#fff;color:var(--ink);
+    appearance:none;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='14' height='9'><path d='M1 1l6 6 6-6' stroke='%235C6C99' stroke-width='2' fill='none'/></svg>");
+    background-repeat:no-repeat;background-position:right 14px center;
+  }
+  select:focus{outline:none;border-color:var(--coral);}
+  .go-btn{
+    width:100%;padding:14px;margin-top:6px;background:var(--coral);color:#fff;border:none;
+    border-radius:14px;font-family:'Jua',sans-serif;font-size:17px;cursor:pointer;
+    box-shadow:0 5px 0 var(--coral-dark);transition:transform .05s;
+  }
+  .go-btn:active{transform:translateY(3px);box-shadow:0 2px 0 var(--coral-dark);}
+  .result{display:none;margin-top:20px;}
+  .result.show{display:block;}
+  .headline-result{text-align:center;font-family:'Jua',sans-serif;font-size:21px;color:var(--ink);margin-bottom:6px;line-height:1.5;}
+  .headline-result .num{color:var(--coral-dark);font-size:27px;}
+  .sub-result{text-align:center;font-size:13px;color:var(--ink-soft);margin-bottom:18px;}
+  .track-row{margin-bottom:14px;}
+  .track-label{display:flex;justify-content:space-between;font-size:13px;font-weight:500;margin-bottom:6px;}
+  .track-label .me{color:var(--coral-dark);}
+  .track-label .avg{color:var(--mint-dark);}
+  .track{position:relative;height:32px;background:var(--bg);border-radius:16px;border:2px solid var(--line);overflow:visible;}
+  .track-fill{
+    position:absolute;left:0;top:0;bottom:0;border-radius:16px;
+    display:flex;align-items:center;justify-content:flex-end;padding-right:10px;
+    font-size:12px;font-weight:700;color:#fff;transition:width .8s cubic-bezier(.34,1.56,.64,1);
+  }
+  .track-fill.me{background:var(--coral);}
+  .track-fill.avg{background:var(--mint);}
+  .track-icon{position:absolute;top:50%;transform:translate(-50%,-50%);font-size:18px;}
+  .badge{
+    display:inline-block;background:var(--yellow);color:#7A5A00;font-size:12px;font-weight:700;
+    padding:5px 12px;border-radius:999px;margin:0 auto 14px;display:table;
+  }
+  .divider{border:none;border-top:2px dashed var(--line);margin:20px 0;}
+  .section-label{font-family:'Jua',sans-serif;font-size:13px;color:var(--ink-soft);margin:0 0 10px;}
+  .why-box{background:var(--bg);border-radius:14px;padding:16px;margin:18px 0;border:2px dashed var(--line);}
+  .why-box .why-title{font-family:'Jua',sans-serif;font-size:14px;margin:0 0 8px;display:flex;align-items:center;gap:6px;}
+  .why-box p.why-text{font-size:13px;line-height:1.7;margin:0;}
+  .share-btn{
+    width:100%;padding:13px;margin-top:6px;background:#fff;color:var(--ink);
+    border:2px solid var(--line);border-radius:14px;font-family:'Noto Sans KR',sans-serif;
+    font-weight:700;font-size:14px;cursor:pointer;
+  }
+  .source{font-size:11px;color:var(--ink-soft);text-align:center;margin-top:12px;line-height:1.6;}
+  .related{margin-top:28px;}
+  .related h3{font-family:'Jua',sans-serif;font-size:15px;margin:0 0 10px;color:var(--ink-soft);}
+  .related-grid{display:flex;flex-direction:column;gap:8px;}
+  .related-item{
+    display:flex;align-items:center;gap:10px;background:var(--card);border-radius:14px;
+    padding:12px 14px;text-decoration:none;color:var(--ink);border:2px solid var(--line);
+  }
+  .related-item .emoji{font-size:20px;}
+  .related-item .txt{font-size:13px;font-weight:500;}
+  .footer-link{display:block;text-align:center;margin-top:26px;font-size:12px;color:var(--ink-soft);text-decoration:none;}
+</style>
+<script>window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };</script>
+<script defer src="/_vercel/insights/script.js"></script>
+</head>
+<body>
+<div class="wrap">
+
+  <a class="brandbar" href="index.html">
+    <span class="b1">내위치</span>
+    <span class="b2">by CBM Lab</span>
+  </a>
+
+  <div class="hero">
+    <h1>우리 아이 사교육비,<br>또래 평균과 비교하면?</h1>
+    <p>학교급·소득·지역까지 반영해서 비교해드려요</p>
+  </div>
+
+  <svg class="mascot" viewBox="0 0 200 140" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="졸업모를 쓴 귀여운 학생 캐릭터와 책 일러스트">
+    <ellipse cx="100" cy="128" rx="70" ry="7" fill="#DCE5F5"/>
+    <rect x="70" y="70" width="60" height="55" rx="8" fill="#4A6FE0"/>
+    <circle cx="100" cy="60" r="22" fill="#FFE0B3"/>
+    <circle cx="92" cy="58" r="2.5" fill="#1D2E5C"/>
+    <circle cx="108" cy="58" r="2.5" fill="#1D2E5C"/>
+    <path d="M91 66 q9 5 18 0" fill="none" stroke="#1D2E5C" stroke-width="2.5" stroke-linecap="round"/>
+    <polygon points="100,32 140,44 100,56 60,44" fill="#1D2E5C"/>
+    <rect x="97" y="44" width="6" height="22" fill="#1D2E5C"/>
+    <circle cx="100" cy="68" r="3" fill="#F2B84B"/>
+    <rect x="30" y="95" width="26" height="30" rx="2" fill="#F2B84B"/>
+    <rect x="34" y="90" width="26" height="30" rx="2" fill="#4A6FE0"/>
+    <rect x="145" y="95" width="26" height="30" rx="2" fill="#4A6FE0"/>
+  </svg>
+
+  <div class="card">
+    <h2>우리 아이는 이래요</h2>
+    <div class="field">
+      <label for="schoolLevel">자녀 학교급</label>
+      <select id="schoolLevel">
+        <option value="es">초등학교</option>
+        <option value="ms" selected>중학교</option>
+        <option value="hs">고등학교</option>
+      </select>
+    </div>
+    <div class="field">
+      <label for="income">가구 월평균 소득</label>
+      <select id="income">
+        <option value="low">300만원 미만</option>
+        <option value="midlow">300~500만원</option>
+        <option value="midhigh" selected>500~800만원</option>
+        <option value="high">800만원 이상</option>
+      </select>
+    </div>
+    <div class="field">
+      <label for="region">거주 지역</label>
+      <select id="region">
+        <option value="seoul">서울</option>
+        <option value="other" selected>서울 외 지역</option>
+      </select>
+    </div>
+    <div class="field">
+      <label for="spending">한 달 사교육비 지출 (학원비+과외비 등 합산)</label>
+      <select id="spending">
+        <option value="0">0원 (사교육 안 함)</option>
+        <option value="15">15만원 이하</option>
+        <option value="30">15~40만원</option>
+        <option value="55" selected>40~70만원</option>
+        <option value="85">70~100만원</option>
+        <option value="120">100~150만원</option>
+        <option value="180">150만원 이상</option>
+      </select>
+    </div>
+    <button class="go-btn" onclick="showResult()">비교해보기 →</button>
+
+    <div class="result" id="resultBox">
+      <div class="badge" id="badgeText"></div>
+      <div class="headline-result" id="headlineText"></div>
+      <div class="sub-result" id="subText"></div>
+
+      <p class="section-label">📊 우리 아이와 비슷한 조건의 평균</p>
+      <div class="track-row">
+        <div class="track-label"><span class="me">우리 아이</span><span id="meMin"></span></div>
+        <div class="track" id="meTrack">
+          <div class="track-fill me" id="meFill"><span class="track-icon">✏️</span></div>
+        </div>
+      </div>
+      <div class="track-row">
+        <div class="track-label"><span class="avg" id="avgLabel">조건별 평균</span><span id="avgMin"></span></div>
+        <div class="track" id="avgTrack">
+          <div class="track-fill avg" id="avgFill"><span class="track-icon">📊</span></div>
+        </div>
+      </div>
+
+      <hr class="divider">
+      <p class="section-label">🎯 실제로 사교육 받는 아이들끼리 비교하면?</p>
+      <div class="track-row">
+        <div class="track-label"><span class="me">우리 아이</span><span id="meMin2"></span></div>
+        <div class="track" id="meTrack2">
+          <div class="track-fill me" id="meFill2"><span class="track-icon">✏️</span></div>
+        </div>
+      </div>
+      <div class="track-row">
+        <div class="track-label"><span class="avg">참여 학생만의 평균</span><span id="avgMin2"></span></div>
+        <div class="track" id="avgTrack2">
+          <div class="track-fill avg" id="avgFill2"><span class="track-icon">📊</span></div>
+        </div>
+      </div>
+      <p class="sub-result" id="participationNote" style="margin-top:10px;"></p>
+
+      <div class="why-box">
+        <p class="why-title">💡 왜 이런 결과가 나왔을까요?</p>
+        <p class="why-text" id="whyText"></p>
+      </div>
+
+      <button class="share-btn" onclick="shareResult()">📤 카톡으로 결과 자랑하기</button>
+      <p class="source">출처: 국가데이터처·교육부 「2025년 초중고 사교육비조사」(2026.3 발표, 전국 3,000여 학급 7만 4천여 명 조사)</p>
+    </div>
+  </div>
+
+  <div class="related">
+    <h3>다른 사람들이 본 랭킹</h3>
+    <div class="related-grid">
+      <a class="related-item" href="savings-calculator.html">
+        <span class="emoji">🐷</span><span class="txt">내 순자산 vs 또래 평균</span>
+      </a>
+      <a class="related-item" href="wedding-gift-calculator.html">
+        <span class="emoji">💌</span><span class="txt">내 축의금 vs 관계별 평균</span>
+      </a>
+    </div>
+  </div>
+
+  <a class="footer-link" href="../index.html">CBM Lab의 다른 무역 도구 보기 →</a>
+</div>
+
+<script>
+// 국가데이터처·교육부 「2025년 초중고 사교육비조사」(2026.3 발표) 기반 실제 수치 (만원)
+
+// 학교급별 - 전체학생 기준(사교육 미참여 포함) / 참여학생만 기준 / 참여율(%)
+const schoolData = {
+  es: { all: 43.3, participant: 51.2, rate: 84.4, label: "초등학교" },
+  ms: { all: 46.1, participant: 63.2, rate: 73.0, label: "중학교" },
+  hs: { all: 49.9, participant: 79.3, rate: 63.0, label: "고등학교" }
+};
+const nationalAvgAll = 45.8; // 전체 평균 (전체학생 기준)
+
+// 소득수준별 비율 - 300만원미만 19.2만원, 800만원이상 66.2만원(실측), 중간 구간은 두 값 사이 보간 추정치
+const incomeRatioRaw = { low: 19.2, midlow: 33.0, midhigh: 50.0, high: 66.2 };
+const incomeLabel = { low: "월소득 300만원 미만", midlow: "월소득 300~500만원", midhigh: "월소득 500~800만원", high: "월소득 800만원 이상" };
+
+// 지역별 - 서울 66.3만원(실측, 전국 최고), 그 외 지역은 전국 평균 역산 추정치
+const regionRaw = { seoul: 66.3, other: 41.6 };
+const regionLabel = { seoul: "서울", other: "서울 외 지역" };
+
+function showResult(){
+  const schoolLevel = document.getElementById('schoolLevel').value;
+  const income = document.getElementById('income').value;
+  const region = document.getElementById('region').value;
+  const mySpending = Number(document.getElementById('spending').value);
+
+  const school = schoolData[schoolLevel];
+  const incomeRatio = incomeRatioRaw[income] / nationalAvgAll;
+  const regionRatio = regionRaw[region] / nationalAvgAll;
+
+  // 학교급 기준액에 소득·지역 비율을 완만하게 반영 (과도한 복합승수 방지)
+  const avgAll = Math.round(school.all * (1 + (incomeRatio-1)*0.55 + (regionRatio-1)*0.55) * 10) / 10;
+  const avgParticipant = Math.round(school.participant * (1 + (incomeRatio-1)*0.55 + (regionRatio-1)*0.55) * 10) / 10;
+
+  const diff = mySpending - avgAll;
+  const diffParticipant = mySpending - avgParticipant;
+
+  const badge = document.getElementById('badgeText');
+  const headline = document.getElementById('headlineText');
+  const sub = document.getElementById('subText');
+  const why = document.getElementById('whyText');
+
+  let badgeMsg, headMsg, subMsg;
+  if(mySpending === 0){
+    badgeMsg = "사교육 프리"; headMsg = `사교육비 <span class="num">0원</span>`;
+    subMsg = `${school.label}의 사교육 참여율은 ${school.rate}%예요. 안 하는 쪽도 결코 소수는 아니에요.`;
+  } else if(diff <= -20){
+    badgeMsg = "알뜰하게 챙기는 편"; headMsg = `조건별 평균보다 <span class="num">${Math.abs(diff).toFixed(1)}만원</span> 적어요`;
+    subMsg = "선택과 집중을 잘하고 계신 것 같아요.";
+  } else if(diff < 0){
+    badgeMsg = "평균보다 살짝 적음"; headMsg = `조건별 평균보다 <span class="num">${Math.abs(diff).toFixed(1)}만원</span> 적어요`;
+    subMsg = "무난한 수준이에요.";
+  } else if(diff <= 10){
+    badgeMsg = "딱 평균"; headMsg = `조건별 평균과 <span class="num">비슷해요</span>`;
+    subMsg = "비슷한 조건의 또래와 큰 차이가 없어요.";
+  } else if(diff <= 35){
+    badgeMsg = "적극적으로 투자하는 편"; headMsg = `조건별 평균보다 <span class="num">${diff.toFixed(1)}만원</span> 많아요`;
+    subMsg = "교육에 좀 더 힘을 싣고 계시네요.";
+  } else {
+    badgeMsg = "사교육 풀코스"; headMsg = `조건별 평균보다 <span class="num">${diff.toFixed(1)}만원</span>이나 많아요`;
+    subMsg = "이 정도면 여러 과목을 병행하고 계실 것 같아요.";
+  }
+
+  badge.textContent = badgeMsg;
+  headline.innerHTML = headMsg;
+  sub.textContent = subMsg;
+
+  document.getElementById('avgLabel').textContent = school.label+' · '+incomeLabel[income]+' · '+regionLabel[region];
+  document.getElementById('meMin').textContent = mySpending+'만원';
+  document.getElementById('avgMin').textContent = avgAll+'만원';
+
+  const maxScale = Math.max(mySpending, avgAll, 40) * 1.2;
+  document.getElementById('meFill').style.width = (mySpending/maxScale*100)+'%';
+  document.getElementById('avgFill').style.width = (avgAll/maxScale*100)+'%';
+
+  document.getElementById('meMin2').textContent = mySpending+'만원';
+  document.getElementById('avgMin2').textContent = avgParticipant+'만원';
+  const maxScale2 = Math.max(mySpending, avgParticipant, 50) * 1.2;
+  document.getElementById('meFill2').style.width = (mySpending/maxScale2*100)+'%';
+  document.getElementById('avgFill2').style.width = (avgParticipant/maxScale2*100)+'%';
+
+  document.getElementById('participationNote').textContent =
+    `${school.label} 학생 중 ${school.rate}%만 사교육에 참여해요. 그래서 '전체 평균'과 '참여 학생만의 평균'이 이렇게 차이 나는 거예요.`;
+
+  // 왜 이런 결과가 나왔을까 - 방향과 학교급에 따라 다르게 설명
+  let whyMsg;
+  if(mySpending === 0){
+    whyMsg = `국가데이터처 조사에서 ${school.label}의 사교육 미참여 비율은 ${(100-school.rate).toFixed(1)}%예요. 특히 고등학교로 갈수록 미참여 비율이 높아지는데(참여율 63%), 학습 방식이 자기주도학습이나 인터넷 강의로 옮겨가는 경우가 많기 때문으로 풀이돼요.`;
+  } else if(diff < -10){
+    whyMsg = `${incomeLabel[income]} · ${regionLabel[region]} 조건에서는 평균 지출이 ${avgAll}만원 정도인데, 이보다 적게 쓰는 건 특정 과목에만 선택적으로 투자하거나 인터넷 강의처럼 상대적으로 저렴한 방식을 활용하고 계신 경우가 많아요.`;
+  } else if(diff <= 10){
+    whyMsg = `국가데이터처 조사에서 사교육비는 학교급이 올라갈수록(초 43.3만원 → 중 46.1만원 → 고 49.9만원), 그리고 소득이 높을수록(300만원 미만 19.2만원 vs 800만원 이상 66.2만원) 뚜렷하게 늘어나는 경향을 보여요. ${school.label} · ${incomeLabel[income]} 조건에서는 이 정도가 평균적인 수준이에요.`;
+  } else {
+    whyMsg = `평균을 웃도는 지출은 보통 여러 과목(국영수 전 과목)을 동시에 수강하거나, 개인과외처럼 상대적으로 단가가 높은 방식을 택한 경우에 나타나요. 특히 ${regionLabel[region]==='서울' ? '서울은 전국에서 사교육비가 가장 높은 지역(66.3만원)이라' : '고소득층일수록'} 이런 경향이 더 뚜렷해요.`;
+  }
+  why.textContent = whyMsg;
+
+  document.getElementById('resultBox').classList.add('show');
+}
+
+function shareResult(){
+  const text = document.getElementById('headlineText').textContent;
+  if(navigator.share){
+    navigator.share({title:'내 사교육비 비교 - 내위치', text: '우리 아이 사교육비: ' + text, url: location.href});
+  } else {
+    navigator.clipboard.writeText(location.href);
+    alert('링크가 복사됐어요! 카톡에 붙여넣기 해보세요.');
+  }
+}
+</script>
+</body>
+</html>

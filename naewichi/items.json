@@ -24,6 +24,7 @@
     { "title": "내 명절 용돈 vs 또래 평균", "sub": "이번 설엔 얼마나 드렸을까", "emoji": "🧧", "url": "holiday-money-calculator.html", "cat": "life", "views": 0 },
     { "title": "내 반려동물 양육비 vs 평균", "sub": "우리 아이한테 얼마나 쓸까", "emoji": "🐾", "url": "pet-cost-calculator.html", "cat": "life", "views": 0 },
     { "title": "내 헬스장 출석률 vs 전국 평균", "sub": "회원권, 본전은 뽑고 있을까", "emoji": "🏋️", "url": "gym-attendance-calculator.html", "cat": "health", "views": 0 },
-    { "title": "내 택배 수령 횟수 vs 전국 평균", "sub": "이번 달 몇 개나 받았을까", "emoji": "📦", "url": "parcel-count-calculator.html", "cat": "life", "views": 0 }
+    { "title": "내 택배 수령 횟수 vs 전국 평균", "sub": "이번 달 몇 개나 받았을까", "emoji": "📦", "url": "parcel-count-calculator.html", "cat": "life", "views": 0 },
+    { "title": "우리 아이 사교육비 vs 조건별 평균", "sub": "학교급·소득·지역까지 비교해보기", "emoji": "✏️", "url": "private-education-calculator.html", "cat": "life", "views": 0 }
   ]
 }
