@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>내 명절 용돈 계산기 - 또래 평균과 비교해보기 | 내위치</title>
+<meta name="description" content="설날·추석 명절 용돈이나 세뱃돈으로 얼마를 드리는지(주는지) 입력하면 또래 평균과 바로 비교해드려요. 카카오페이·KB국민카드 조사 데이터 기반.">
+<meta property="og:title" content="내 명절 용돈, 또래 평균과 비교하면?">
+<meta property="og:description" content="입력하면 바로 비교되는 명절 용돈 계산기 - 내위치">
+<meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Jua&family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#FCEFEF; --card:#FFFFFF; --ink:#7A1F2B; --ink-soft:#B06A70;
+    --coral:#D94F5C; --coral-dark:#A6323D; --mint:#E8B84D; --mint-dark:#C6941F;
+    --yellow:#FFD166; --line:#F5D9DA;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;background:var(--bg);font-family:'Noto Sans KR', sans-serif;color:var(--ink);-webkit-font-smoothing:antialiased;}
+  .wrap{max-width:480px;margin:0 auto;padding:0 20px 60px;}
+  .brandbar{display:flex;align-items:baseline;gap:6px;padding:18px 0 0;text-decoration:none;}
+  .brandbar .b1{font-family:'Jua',sans-serif;font-size:20px;color:var(--ink);}
+  .brandbar .b2{font-size:11px;color:var(--ink-soft);}
+  .hero{text-align:center;padding:18px 0 8px;}
+  .hero h1{font-family:'Jua',sans-serif;font-size:26px;line-height:1.4;margin:0 0 6px;color:var(--ink);}
+  .hero p{font-size:14px;color:var(--ink-soft);margin:0;}
+  .mascot{display:block;margin:14px auto 4px;width:200px;height:140px;}
+  .card{background:var(--card);border-radius:20px;padding:22px 20px;margin-top:18px;box-shadow:0 6px 0 var(--line);}
+  .card h2{font-family:'Jua',sans-serif;font-size:17px;margin:0 0 14px;color:var(--ink);}
+  .field{margin-bottom:14px;}
+  .field label{display:block;font-size:13px;font-weight:500;color:var(--ink-soft);margin-bottom:6px;}
+  select{
+    width:100%;padding:12px 14px;font-size:15px;font-family:'Noto Sans KR',sans-serif;
+    border:2px solid var(--line);border-radius:12px;background:#fff;color:var(--ink);
+    appearance:none;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='14' height='9'><path d='M1 1l6 6 6-6' stroke='%23B06A70' stroke-width='2' fill='none'/></svg>");
+    background-repeat:no-repeat;background-position:right 14px center;
+  }
+  select:focus{outline:none;border-color:var(--coral);}
+  .go-btn{
+    width:100%;padding:14px;margin-top:6px;background:var(--coral);color:#fff;border:none;
+    border-radius:14px;font-family:'Jua',sans-serif;font-size:17px;cursor:pointer;
+    box-shadow:0 5px 0 var(--coral-dark);transition:transform .05s;
+  }
+  .go-btn:active{transform:translateY(3px);box-shadow:0 2px 0 var(--coral-dark);}
+  .result{display:none;margin-top:20px;}
+  .result.show{display:block;}
+  .headline-result{text-align:center;font-family:'Jua',sans-serif;font-size:22px;color:var(--ink);margin-bottom:6px;line-height:1.5;}
+  .headline-result .num{color:var(--coral-dark);font-size:28px;}
+  .sub-result{text-align:center;font-size:13px;color:var(--ink-soft);margin-bottom:20px;}
+  .track-row{margin-bottom:16px;}
+  .track-label{display:flex;justify-content:space-between;font-size:13px;font-weight:500;margin-bottom:6px;}
+  .track-label .me{color:var(--coral-dark);}
+  .track-label .avg{color:var(--mint-dark);}
+  .track{position:relative;height:34px;background:var(--bg);border-radius:17px;border:2px solid var(--line);overflow:visible;}
+  .track-fill{
+    position:absolute;left:0;top:0;bottom:0;border-radius:17px;
+    display:flex;align-items:center;justify-content:flex-end;padding-right:10px;
+    font-size:12px;font-weight:700;color:#fff;transition:width .8s cubic-bezier(.34,1.56,.64,1);
+  }
+  .track-fill.me{background:var(--coral);}
+  .track-fill.avg{background:var(--mint);}
+  .track-icon{position:absolute;top:50%;transform:translate(-50%,-50%);font-size:20px;}
+  .badge{
+    display:inline-block;background:var(--yellow);color:#7A5A00;font-size:12px;font-weight:700;
+    padding:5px 12px;border-radius:999px;margin:0 auto 14px;display:table;
+  }
+  .why-box{
+    background:var(--bg);border-radius:14px;padding:16px;margin:18px 0;
+    border:2px dashed var(--line);
+  }
+  .why-box .why-title{font-family:'Jua',sans-serif;font-size:14px;margin:0 0 8px;display:flex;align-items:center;gap:6px;}
+  .why-box p.why-text{font-size:13px;line-height:1.7;margin:0;}
+  .share-btn{
+    width:100%;padding:13px;margin-top:6px;background:#fff;color:var(--ink);
+    border:2px solid var(--line);border-radius:14px;font-family:'Noto Sans KR',sans-serif;
+    font-weight:700;font-size:14px;cursor:pointer;
+  }
+  .source{font-size:11px;color:var(--ink-soft);text-align:center;margin-top:12px;line-height:1.6;}
+  .related{margin-top:28px;}
+  .related h3{font-family:'Jua',sans-serif;font-size:15px;margin:0 0 10px;color:var(--ink-soft);}
+  .related-grid{display:flex;flex-direction:column;gap:8px;}
+  .related-item{
+    display:flex;align-items:center;gap:10px;background:var(--card);border-radius:14px;
+    padding:12px 14px;text-decoration:none;color:var(--ink);border:2px solid var(--line);
+  }
+  .related-item .emoji{font-size:20px;}
+  .related-item .txt{font-size:13px;font-weight:500;}
+  .footer-link{display:block;text-align:center;margin-top:26px;font-size:12px;color:var(--ink-soft);text-decoration:none;}
+</style>
+<script>window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };</script>
+<script defer src="/_vercel/insights/script.js"></script>
+</head>
+<body>
+<div class="wrap">
+
+  <a class="brandbar" href="index.html">
+    <span class="b1">내위치</span>
+    <span class="b2">by CBM Lab</span>
+  </a>
+
+  <div class="hero">
+    <h1>내 명절 용돈,<br>또래 평균과 비교하면?</h1>
+    <p>드리는 대상이랑 금액만 골라봐요</p>
+  </div>
+
+  <svg class="mascot" viewBox="0 0 200 140" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="세뱃돈 봉투를 든 귀여운 한복 캐릭터 일러스트">
+    <ellipse cx="100" cy="128" rx="70" ry="7" fill="#F5D9DA"/>
+    <path d="M75 60 q25 -20 50 0 l-6 55 q-19 8 -38 0 z" fill="#D94F5C"/>
+    <path d="M82 60 q18 -14 36 0" fill="none" stroke="#FFD166" stroke-width="4"/>
+    <circle cx="100" cy="45" r="18" fill="#FFE0B3"/>
+    <circle cx="93" cy="43" r="2.5" fill="#7A1F2B"/>
+    <circle cx="107" cy="43" r="2.5" fill="#7A1F2B"/>
+    <path d="M92 51 q8 5 16 0" fill="none" stroke="#7A1F2B" stroke-width="2.5" stroke-linecap="round"/>
+    <rect x="128" y="70" width="34" height="24" rx="4" fill="#FFFFFF" stroke="#C6941F" stroke-width="3"/>
+    <text x="145" y="88" font-size="14" text-anchor="middle" fill="#7A1F2B" font-family="Jua">福</text>
+  </svg>
+
+  <div class="card">
+    <h2>나는 이래요</h2>
+    <div class="field">
+      <label for="type">어떤 용돈인가요?</label>
+      <select id="type" onchange="rebuildAgeOptions()">
+        <option value="parent">부모님께 드리는 명절 용돈</option>
+        <option value="kids">조카·자녀에게 주는 세뱃돈</option>
+      </select>
+    </div>
+    <div class="field">
+      <label for="age">내 나이대</label>
+      <select id="age">
+        <option value="20s">20대</option>
+        <option value="30s" selected>30대</option>
+        <option value="40s">40대</option>
+      </select>
+    </div>
+    <div class="field">
+      <label for="amount">실제로 드린(준) 금액</label>
+      <select id="amount">
+        <option value="3">3만원</option>
+        <option value="5">5만원</option>
+        <option value="7">7만원</option>
+        <option value="10" selected>10만원</option>
+        <option value="15">15만원</option>
+        <option value="20">20만원</option>
+        <option value="30">30만원 이상</option>
+      </select>
+    </div>
+    <button class="go-btn" onclick="showResult()">비교해보기 →</button>
+
+    <div class="result" id="resultBox">
+      <div class="badge" id="badgeText"></div>
+      <div class="headline-result" id="headlineText"></div>
+      <div class="sub-result" id="subText"></div>
+
+      <div class="track-row">
+        <div class="track-label"><span class="me">나</span><span id="meMin"></span></div>
+        <div class="track" id="meTrack">
+          <div class="track-fill me" id="meFill"><span class="track-icon">🧧</span></div>
+        </div>
+      </div>
+      <div class="track-row">
+        <div class="track-label"><span class="avg">같은 나이대 평균</span><span id="avgMin"></span></div>
+        <div class="track" id="avgTrack">
+          <div class="track-fill avg" id="avgFill"><span class="track-icon">📊</span></div>
+        </div>
+      </div>
+
+      <div class="why-box">
+        <p class="why-title">💡 왜 이런 결과가 나왔을까요?</p>
+        <p class="why-text" id="whyText"></p>
+      </div>
+
+      <button class="share-btn" onclick="shareResult()">📤 카톡으로 결과 자랑하기</button>
+      <p class="source">출처: 카카오페이 「설 송금봉투 데이터」(2026.2), KB국민카드 고객 패널 조사(2026.2)</p>
+    </div>
+  </div>
+
+  <div class="related">
+    <h3>다른 사람들이 본 랭킹</h3>
+    <div class="related-grid">
+      <a class="related-item" href="wedding-gift-calculator.html">
+        <span class="emoji">💌</span><span class="txt">내 축의금 vs 관계별 평균</span>
+      </a>
+      <a class="related-item" href="savings-calculator.html">
+        <span class="emoji">🐷</span><span class="txt">내 순자산 vs 또래 평균</span>
+      </a>
+    </div>
+  </div>
+
+  <a class="footer-link" href="../index.html">CBM Lab의 다른 무역 도구 보기 →</a>
+</div>
+
+<script>
+// 카카오페이(2026.2) + KB국민카드(2026.2) 조사 기반, 나이대별 평균 (만원)
+const avgData = {
+  parent: { "20s": 19, "30s": 22, "40s": 23 },
+  kids:   { "20s": 7.3, "30s": 12.2, "40s": 12.4 }
+};
+const typeLabel = { parent: "부모님께 드리는 명절 용돈", kids: "조카·자녀에게 주는 세뱃돈" };
+const ageLabel = { "20s": "20대", "30s": "30대", "40s": "40대" };
+
+function rebuildAgeOptions(){
+  // 두 유형 다 20~40대 데이터만 있어서 옵션은 고정, 향후 확장 대비 함수만 분리
+}
+
+function showResult(){
+  const type = document.getElementById('type').value;
+  const age = document.getElementById('age').value;
+  const myAmount = Number(document.getElementById('amount').value);
+  const avg = avgData[type][age];
+  const diff = myAmount - avg;
+
+  const badge = document.getElementById('badgeText');
+  const headline = document.getElementById('headlineText');
+  const sub = document.getElementById('subText');
+  const why = document.getElementById('whyText');
+
+  let badgeMsg, headMsg, subMsg;
+  if(Math.abs(diff) <= avg*0.15){
+    badgeMsg = "딱 국룰"; headMsg = `${ageLabel[age]} 평균과 <span class="num">비슷해요</span>`;
+    subMsg = "무난하고 적당한 금액이에요.";
+  } else if(diff < 0){
+    badgeMsg = "실속형"; headMsg = `${ageLabel[age]} 평균보다 <span class="num">${Math.abs(diff).toFixed(1)}만원</span> 적어요`;
+    subMsg = "형편에 맞게 준비하신 것 같아요.";
+  } else if(diff <= avg*0.5){
+    badgeMsg = "넉넉하게 챙기는 편"; headMsg = `${ageLabel[age]} 평균보다 <span class="num">${diff.toFixed(1)}만원</span> 많아요`;
+    subMsg = "마음을 좀 더 크게 표현하셨네요.";
+  } else {
+    badgeMsg = "명절 인심 대장"; headMsg = `${ageLabel[age]} 평균보다 <span class="num">${diff.toFixed(1)}만원</span>이나 많아요`;
+    subMsg = "이 정도면 온 가족이 든든해할 금액이에요.";
+  }
+
+  badge.textContent = badgeMsg;
+  headline.innerHTML = headMsg;
+  sub.textContent = subMsg;
+
+  document.getElementById('meMin').textContent = myAmount+'만원';
+  document.getElementById('avgMin').textContent = avg+'만원 ('+typeLabel[type]+', '+ageLabel[age]+')';
+
+  const maxScale = Math.max(myAmount, avg, 10) * 1.2;
+  document.getElementById('meFill').style.width = (myAmount/maxScale*100)+'%';
+  document.getElementById('avgFill').style.width = (avg/maxScale*100)+'%';
+
+  if(type === 'parent'){
+    why.textContent = `카카오페이 데이터에서 부모님께 드리는 명절 용돈은 나이가 들수록 조금씩 늘어나는 경향이 있어요(20대 19만원 → 40대 23만원). 소득이 안정되는 시기와 맞물려 자연스럽게 금액도 올라가는 것으로 보여요.`;
+  } else {
+    why.textContent = `KB국민카드 데이터에서 세뱃돈은 20대(7.3만원)보다 30·40대(12만원대)가 훨씬 높은데, 이 시기에 본인 자녀나 조카가 생기면서 챙겨야 할 대상과 지출 규모가 함께 늘어나기 때문으로 풀이돼요.`;
+  }
+
+  document.getElementById('resultBox').classList.add('show');
+}
+
+function shareResult(){
+  const text = document.getElementById('headlineText').textContent;
+  if(navigator.share){
+    navigator.share({title:'내 명절 용돈 비교 - 내위치', text: '내 명절 용돈: ' + text, url: location.href});
+  } else {
+    navigator.clipboard.writeText(location.href);
+    alert('링크가 복사됐어요! 카톡에 붙여넣기 해보세요.');
+  }
+}
+</script>
+</body>
+</html>
