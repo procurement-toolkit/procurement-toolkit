@@ -133,17 +133,23 @@
     <div class="field">
       <label for="income">가구 월평균 소득</label>
       <select id="income">
-        <option value="low">300만원 미만</option>
-        <option value="midlow">300~500만원</option>
-        <option value="midhigh" selected>500~800만원</option>
-        <option value="high">800만원 이상</option>
+        <option value="under300">300만원 미만</option>
+        <option value="300to400">300~400만원</option>
+        <option value="400to500">400~500만원</option>
+        <option value="500to600" selected>500~600만원</option>
+        <option value="600to800">600~800만원</option>
+        <option value="over800">800만원 이상</option>
       </select>
     </div>
     <div class="field">
       <label for="region">거주 지역</label>
       <select id="region">
         <option value="seoul">서울</option>
-        <option value="other" selected>서울 외 지역</option>
+        <option value="gyeonggi" selected>경기</option>
+        <option value="sejong">세종</option>
+        <option value="metro">광역시 (부산·대구·인천·대전·울산 등)</option>
+        <option value="midcity">중소도시</option>
+        <option value="rural">읍면지역</option>
       </select>
     </div>
     <div class="field">
@@ -201,7 +207,7 @@
       </div>
 
       <button class="share-btn" onclick="shareResult()">📤 카톡으로 결과 자랑하기</button>
-      <p class="source">출처: 국가데이터처·교육부 「2025년 초중고 사교육비조사」(2026.3 발표, 전국 3,000여 학급 7만 4천여 명 조사)</p>
+      <p class="source">출처: 국가데이터처·교육부 「2025년 초중고 사교육비조사」(2026.3 발표, 전국 3,000여 학급 7만 4천여 명 조사) - 지역유형별·시도별·소득구간별 세부 데이터 포함</p>
     </div>
   </div>
 
@@ -231,13 +237,20 @@ const schoolData = {
 };
 const nationalAvgAll = 45.8; // 전체 평균 (전체학생 기준)
 
-// 소득수준별 비율 - 300만원미만 19.2만원, 800만원이상 66.2만원(실측), 중간 구간은 두 값 사이 보간 추정치
-const incomeRatioRaw = { low: 19.2, midlow: 33.0, midhigh: 50.0, high: 66.2 };
-const incomeLabel = { low: "월소득 300만원 미만", midlow: "월소득 300~500만원", midhigh: "월소득 500~800만원", high: "월소득 800만원 이상" };
+// 소득수준별 실측치 (만원) - 300만원 미만/300~400/400~500/500~600/800만원 이상은 정부 브리핑 실측 인용,
+// 600~800만원 구간은 500~600(54)과 800이상(77.9) 사이 보간 추정치
+const incomeRatioRaw = {
+  under300: 19.2, "300to400": 39.0, "400to500": 47.0,
+  "500to600": 54.0, "600to800": 66.0, over800: 77.9
+};
+const incomeLabel = {
+  under300: "월소득 300만원 미만", "300to400": "월소득 300~400만원", "400to500": "월소득 400~500만원",
+  "500to600": "월소득 500~600만원", "600to800": "월소득 600~800만원", over800: "월소득 800만원 이상"
+};
 
-// 지역별 - 서울 66.3만원(실측, 전국 최고), 그 외 지역은 전국 평균 역산 추정치
-const regionRaw = { seoul: 66.3, other: 41.6 };
-const regionLabel = { seoul: "서울", other: "서울 외 지역" };
+// 지역별 실측치 (만원) - 국가데이터처 2025년 조사, 시도별·지역유형별 전체학생 1인당 월평균
+const regionRaw = { seoul: 66.3, gyeonggi: 49.9, sejong: 45.8, metro: 43.6, midcity: 44.8, rural: 32.5 };
+const regionLabel = { seoul: "서울", gyeonggi: "경기", sejong: "세종", metro: "광역시", midcity: "중소도시", rural: "읍면지역" };
 
 function showResult(){
   const schoolLevel = document.getElementById('schoolLevel').value;
@@ -312,7 +325,7 @@ function showResult(){
   } else if(diff <= 10){
     whyMsg = `국가데이터처 조사에서 사교육비는 학교급이 올라갈수록(초 43.3만원 → 중 46.1만원 → 고 49.9만원), 그리고 소득이 높을수록(300만원 미만 19.2만원 vs 800만원 이상 66.2만원) 뚜렷하게 늘어나는 경향을 보여요. ${school.label} · ${incomeLabel[income]} 조건에서는 이 정도가 평균적인 수준이에요.`;
   } else {
-    whyMsg = `평균을 웃도는 지출은 보통 여러 과목(국영수 전 과목)을 동시에 수강하거나, 개인과외처럼 상대적으로 단가가 높은 방식을 택한 경우에 나타나요. 특히 ${regionLabel[region]==='서울' ? '서울은 전국에서 사교육비가 가장 높은 지역(66.3만원)이라' : '고소득층일수록'} 이런 경향이 더 뚜렷해요.`;
+    whyMsg = `평균을 웃도는 지출은 보통 여러 과목(국영수 전 과목)을 동시에 수강하거나, 개인과외처럼 상대적으로 단가가 높은 방식을 택한 경우에 나타나요. 특히 ${region==='seoul' ? '서울은 전국에서 사교육비가 가장 높은 지역(66.3만원)이라' : region==='rural' ? '읍면지역 평균(32.5만원)이 낮은 편이라 그만큼 도드라져 보이지만,' : '고소득층일수록'} 이런 경향이 더 뚜렷해요.`;
   }
   why.textContent = whyMsg;
 
