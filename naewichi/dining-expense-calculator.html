@@ -124,6 +124,13 @@
   <div class="card">
     <h2>나는 이래요</h2>
     <div class="field">
+      <label for="household">가구 형태</label>
+      <select id="household">
+        <option value="alone">1인 가구</option>
+        <option value="multi" selected>2인 이상 가구</option>
+      </select>
+    </div>
+    <div class="field">
       <label for="dining">한 달 외식비 지출</label>
       <select id="dining">
         <option value="5">10만원 이하</option>
@@ -159,7 +166,7 @@
       </div>
 
       <button class="share-btn" onclick="shareResult()">📤 카톡으로 결과 자랑하기</button>
-      <p class="source">출처: 통계청 「가계동향조사」 가구당 소비지출 중 외식·숙박 항목 기반 근사치</p>
+      <p class="source">출처: 통계청 「가계동향조사」 가구당 소비지출 중 외식·숙박 항목 기반 근사치, 통계청 「통계플러스 2023 가을호」 1인가구 음식·숙박 지출 현황</p>
     </div>
   </div>
 
@@ -180,10 +187,15 @@
 
 <script>
 // 통계청 가계동향조사 기반 가구 외식비 근사치 (만원)
-const avgDining = 38;
+// 통계청 「통계플러스 2023 가을호」 기반: 1인가구 음식·숙박(외식) 지출 월 27.6만원
+// 2인 이상 가구는 기존 가계동향조사 근사치(38만원)를 유지
+const avgDiningByHousehold = { alone: 27.6, multi: 38 };
+const householdLabelDining = { alone: "1인 가구", multi: "2인 이상 가구" };
 
 function showResult(){
+  const household = document.getElementById('household').value;
   const myDining = Number(document.getElementById('dining').value);
+  const avgDining = avgDiningByHousehold[household];
   const diff = myDining - avgDining;
 
   const badge = document.getElementById('badgeText');
@@ -198,7 +210,7 @@ function showResult(){
     badgeMsg = "적당히 사 먹는 편"; headMsg = `평균보다 <span class="num">${Math.abs(diff)}만원</span> 적어요`;
     subMsg = "균형 잡힌 외식 습관이네요.";
   } else if(diff <= 15){
-    badgeMsg = "딱 평균"; headMsg = `전국 평균과 <span class="num">비슷해요</span>`;
+    badgeMsg = "딱 평균"; headMsg = `${householdLabelDining[household]} 평균과 <span class="num">비슷해요</span>`;
     subMsg = "무난한 외식 라이프예요.";
   } else if(diff <= 40){
     badgeMsg = "미식 탐험가"; headMsg = `평균보다 <span class="num">${diff}만원</span> 더 써요`;
@@ -213,19 +225,19 @@ function showResult(){
   sub.textContent = subMsg;
 
   document.getElementById('meMin').textContent = myDining+'만원';
-  document.getElementById('avgMin').textContent = avgDining+'만원';
+  document.getElementById('avgMin').textContent = avgDining+'만원 ('+householdLabelDining[household]+')';
 
   const maxScale = Math.max(myDining, avgDining, 30) * 1.15;
   document.getElementById('meFill').style.width = (myDining/maxScale*100)+'%';
   document.getElementById('avgFill').style.width = (avgDining/maxScale*100)+'%';
 
   let whyMsg;
-  if(diff < 0){
-    whyMsg = `외식비가 평균보다 적다는 건, 통계청 가계동향조사 기준으로 봤을 때 집밥 비중이 높거나 배달앱 이용이 적은 편이라는 뜻이에요. 최근 배달앱·혼밥 문화 확산으로 전체 평균이 계속 오르는 추세인 걸 감안하면, 꽤 절제된 소비 패턴이에요.`;
+  if(diff <= -20){
+    whyMsg = `외식비가 평균보다 적다는 건, 통계청 통계플러스 기준으로 봤을 때 집밥 비중이 높거나 배달앱 이용이 적은 편이라는 뜻이에요. 최근 배달앱·혼밥 문화 확산으로 전체 평균이 계속 오르는 추세인 걸 감안하면, 꽤 절제된 소비 패턴이에요.`;
   } else if(diff <= 15){
-    whyMsg = `통계청 가계동향조사에서 외식비는 소득수준과 1인가구 비율에 따라 편차가 큰 항목으로 꼽혀요. 최근 배달앱 이용 증가와 혼밥 문화 확산으로 외식·배달 지출 비중 자체가 꾸준히 늘어나는 추세라, 평균값도 매년 조금씩 올라가고 있어요.`;
+    whyMsg = `통계청 통계플러스 조사에서 ${householdLabelDining[household]}의 음식·숙박 지출이 이만큼 나온 이유는, 1인 가구는 자가 비율이 낮고 배달음식 이용이 잦은 반면, 2인 이상 가구는 외식이 가족 단위 이벤트 성격을 띠면서 건당 지출이 커지는 경향이 있기 때문이에요.`;
   } else {
-    whyMsg = `평균을 크게 웃도는 외식비는 보통 배달 이용 빈도가 높거나, 프리미엄 외식(오마카세·파인다이닝 등) 이용이 잦은 경우에 나타나요. 가계동향조사에서도 소득 상위 가구일수록 외식·서비스 지출 비중이 더 크게 나타나는 경향이 있어요.`;
+    whyMsg = `평균을 크게 웃도는 외식비는 보통 배달 이용 빈도가 높거나, 프리미엄 외식(오마카세·파인다이닝 등) 이용이 잦은 경우에 나타나요. 특히 ${householdLabelDining[household]}는 통계상 평균 자체가 상대적으로 ${household==='alone'?'낮게':'높게'} 형성돼 있어서, 그 이상으로 쓴다는 건 확실히 미식에 진심이라는 뜻이에요.`;
   }
   document.getElementById('whyText').textContent = whyMsg;
 

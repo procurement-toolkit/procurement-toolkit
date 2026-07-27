@@ -147,6 +147,13 @@
       </select>
     </div>
     <div class="field">
+      <label for="gender">성별</label>
+      <select id="gender">
+        <option value="m">남성</option>
+        <option value="f">여성</option>
+      </select>
+    </div>
+    <div class="field">
       <label for="count">지금까지 이직 횟수</label>
       <select id="count">
         <option value="0">이직 경험 없음</option>
@@ -183,7 +190,7 @@
       </div>
 
       <button class="share-btn" onclick="shareResult()">📤 카톡으로 결과 자랑하기</button>
-      <p class="source">출처: KDI 「근로자 이직 트렌드 조사」(한국고용정보원), 연령대별 이직 경험 비율 및 평균 이직 횟수 기반 추정치</p>
+      <p class="source">출처: KDI 「근로자 이직 트렌드 조사」(한국고용정보원), 연령대별 이직 경험 비율 및 평균 이직 횟수 기반 추정치, 한국고용정보원 청년패널조사(YP2021) 성별 이직 횟수</p>
     </div>
   </div>
 
@@ -206,12 +213,16 @@
 // KDI/한국고용정보원 이직 트렌드 조사 기반 추정치
 // 이직 경험자 평균 2.8회, 연령대별 이직 경험 비율(20대 49.6%, 30대 67.0%, 40대 79.8%)을 반영한 나이대별 평균 이직 횟수 추정
 const avgByAge = { "20s": 1.1, "30s": 2.0, "40s": 2.8, "50s": 3.3 };
+// 한국고용정보원 청년패널조사(2026) 기반: 여성 평균 이직 1.78회, 남성 1.62회 → 여성이 남성 대비 약 9.9% 더 많음
+const genderRatio = { m: 0.95, f: 1.05 };
+const genderLabel = { m: "남성", f: "여성" };
 const ageLabel = { "20s": "20대", "30s": "30대", "40s": "40대", "50s": "50대 이상" };
 
 function showResult(){
   const age = document.getElementById('age').value;
+  const gender = document.getElementById('gender').value;
   const myCount = Number(document.getElementById('count').value);
-  const avg = avgByAge[age];
+  const avg = Math.round(avgByAge[age] * genderRatio[gender] * 10) / 10;
 
   const diff = myCount - avg;
   const badge = document.getElementById('badgeText');
@@ -241,7 +252,7 @@ function showResult(){
   sub.textContent = subMsg;
 
   document.getElementById('meMin').textContent = myCount+'회';
-  document.getElementById('avgMin').textContent = avg.toFixed(1)+'회';
+  document.getElementById('avgMin').textContent = avg.toFixed(1)+'회 ('+ageLabel[age]+' · '+genderLabel[gender]+')';
 
   const maxScale = Math.max(myCount, avg, 3) * 1.3;
   document.getElementById('meFill').style.width = (myCount/maxScale*100)+'%';
@@ -253,7 +264,7 @@ function showResult(){
   } else if(diff < 0){
     whyMsg = `KDI 조사에서 이직 횟수는 나이와 함께 늘어나는 경향이 뚜렷해요. 사회생활 연차가 쌓일수록 이직 기회 자체가 늘어나기 때문인데, 당신은 ${ageLabel[age]} 평균보다 이직을 적게 한 편이라 비교적 안정적인 커리어 패턴을 보이고 있어요.`;
   } else {
-    whyMsg = `KDI 조사에서 40대의 이직 경험률(79.8%)이 20대(49.6%)보다 훨씬 높은 이유는 단순합니다 — 나이가 많을수록 사회생활 연차가 길어서 이직할 기회 자체가 더 많았기 때문이에요. 당신처럼 ${ageLabel[age]} 평균보다 이직이 많은 경우는, 그만큼 다양한 산업·직무 경험을 쌓았을 가능성이 커요.`;
+    whyMsg = `KDI 조사에서 40대의 이직 경험률(79.8%)이 20대(49.6%)보다 훨씬 높은 이유는 단순합니다 — 나이가 많을수록 사회생활 연차가 길어서 이직할 기회 자체가 더 많았기 때문이에요. 당신처럼 ${ageLabel[age]} 평균보다 이직이 많은 경우는, 그만큼 다양한 산업·직무 경험을 쌓았을 가능성이 커요. 참고로 한국고용정보원 청년패널조사에서는 여성의 평균 이직 횟수(1.78회)가 남성(1.62회)보다 많게 나타났는데, 경력단절 이후 재취업 과정에서 이직이 한 번 더 발생하는 경우가 많기 때문으로 분석돼요.`;
   }
   document.getElementById('whyText').textContent = whyMsg;
 
