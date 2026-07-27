@@ -180,6 +180,16 @@
   .related-item.soon{opacity:.5;pointer-events:none;}
   .related-item .badge-soon{margin-left:auto;font-size:10px;background:var(--line);color:var(--ink-soft);padding:3px 8px;border-radius:999px;}
 
+
+  .why-box{
+    background:var(--bg);border-radius:14px;padding:16px;margin:18px 0;
+    border:2px dashed var(--line);
+  }
+  .why-box .why-title{
+    font-family:'Jua',sans-serif;font-size:14px;margin:0 0 8px;
+    display:flex;align-items:center;gap:6px;
+  }
+  .why-box p.why-text{font-size:13px;line-height:1.7;margin:0;}
   .footer-link{
     display:block;text-align:center;margin-top:26px;
     font-size:12px;color:var(--ink-soft);text-decoration:none;
@@ -269,6 +279,11 @@
         </div>
       </div>
 
+            <div class="why-box">
+        <p class="why-title">💡 왜 이런 결과가 나왔을까요?</p>
+        <p class="why-text" id="whyText"></p>
+      </div>
+
       <button class="share-btn" onclick="shareResult()">📤 카톡으로 결과 자랑하기</button>
       <p class="source">출처: 통계청 「2024년 통근 근로자 이동 특성 분석 결과」 (2024.12 발표 기준)</p>
     </div>
@@ -346,6 +361,9 @@ function showResult(){
   const maxScale = Math.max(myTime, blended, 90) * 1.15;
   document.getElementById('meFill').style.width = (myTime/maxScale*100)+'%';
   document.getElementById('avgFill').style.width = (blended/maxScale*100)+'%';
+
+  const regionLabel = {capital:"수도권",dongnam:"동남권",chungcheong:"충청권",honam:"호남권",daegyeong:"대경권",gangwon:"강원권",jeju:"제주권"}[region];
+  document.getElementById('whyText').textContent = `통계청 조사에 따르면 통근시간은 인구가 밀집된 ${regionLabel} 같은 대도시권일수록 길어지는 경향이 뚜렷해요. 이동 거리가 늘어나고 대중교통 환승이 많아지기 때문이죠. 나이대별로는 30대가 76.9분으로 가장 길었는데, 이 시기에 직장과 주거지가 멀어지는 경우(내집마련, 이직 등)가 많아서로 풀이돼요.`;
 
   document.getElementById('resultBox').classList.add('show');
 }

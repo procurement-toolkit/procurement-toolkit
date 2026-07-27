@@ -82,6 +82,16 @@
   }
   .related-item .emoji{font-size:20px;}
   .related-item .txt{font-size:13px;font-weight:500;}
+
+  .why-box{
+    background:var(--bg);border-radius:14px;padding:16px;margin:18px 0;
+    border:2px dashed var(--line);
+  }
+  .why-box .why-title{
+    font-family:'Jua',sans-serif;font-size:14px;margin:0 0 8px;
+    display:flex;align-items:center;gap:6px;
+  }
+  .why-box p.why-text{font-size:13px;line-height:1.7;margin:0;}
   .footer-link{display:block;text-align:center;margin-top:26px;font-size:12px;color:var(--ink-soft);text-decoration:none;}
 </style>
 <script>window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };</script>
@@ -145,6 +155,11 @@
         </div>
       </div>
 
+            <div class="why-box">
+        <p class="why-title">💡 왜 이런 결과가 나왔을까요?</p>
+        <p class="why-text" id="whyText"></p>
+      </div>
+
       <button class="share-btn" onclick="shareResult()">📤 카톡으로 결과 자랑하기</button>
       <p class="source">출처: 문화체육관광부·한국콘텐츠진흥원 「2025 콘텐츠 이용행태조사」(국가승인통계) - OTT 이용률 89.1%, 평균 구독 2.1개</p>
     </div>
@@ -205,6 +220,8 @@ function showResult(){
   const maxScale = Math.max(myCount, nationalAvg, 2) * 1.3;
   document.getElementById('meFill').style.width = (myCount/maxScale*100)+'%';
   document.getElementById('avgFill').style.width = (nationalAvg/maxScale*100)+'%';
+
+  document.getElementById('whyText').textContent = `문체부·콘진원 조사에서 평균 구독 개수가 2.1개까지 늘어난 이유는, OTT마다 독점 콘텐츠(오리지널 시리즈)를 갖추면서 한 곳만 구독해서는 보고 싶은 걸 다 볼 수 없는 구조가 됐기 때문이에요. 그래서 여러 개를 번갈아 구독하거나 동시에 유지하는 사람이 늘고 있어요.`;
 
   document.getElementById('resultBox').classList.add('show');
 }

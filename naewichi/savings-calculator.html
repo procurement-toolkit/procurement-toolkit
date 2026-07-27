@@ -95,6 +95,16 @@
   .related-item .emoji{font-size:20px;}
   .related-item .txt{font-size:13px;font-weight:500;}
 
+
+  .why-box{
+    background:var(--bg);border-radius:14px;padding:16px;margin:18px 0;
+    border:2px dashed var(--line);
+  }
+  .why-box .why-title{
+    font-family:'Jua',sans-serif;font-size:14px;margin:0 0 8px;
+    display:flex;align-items:center;gap:6px;
+  }
+  .why-box p.why-text{font-size:13px;line-height:1.7;margin:0;}
   .footer-link{display:block;text-align:center;margin-top:26px;font-size:12px;color:var(--ink-soft);text-decoration:none;}
 </style>
 <script>window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };</script>
@@ -172,6 +182,11 @@
         </div>
       </div>
 
+            <div class="why-box">
+        <p class="why-title">💡 왜 이런 결과가 나왔을까요?</p>
+        <p class="why-text" id="whyText"></p>
+      </div>
+
       <button class="share-btn" onclick="shareResult()">📤 카톡으로 결과 자랑하기</button>
       <p class="source">출처: 한국은행·통계청·금융감독원 「2025년 가계금융복지조사」 연령대별 자산·부채 통계 기반 추정치 (20대·60대는 조사구간 특성상 근사치 포함)</p>
     </div>
@@ -244,6 +259,8 @@ function showResult(){
   const maxScale = Math.max(myNet, avg, 5000) * 1.15;
   document.getElementById('meFill').style.width = (myNet/maxScale*100)+'%';
   document.getElementById('avgFill').style.width = (avg/maxScale*100)+'%';
+
+  document.getElementById('whyText').textContent = `가계금융복지조사에서 순자산은 50대에서 정점(약 5억 5천만원)을 찍고 60대 이후 소폭 줄어드는 패턴을 보여요. 소득이 쌓이는 기간(근속연수)이 길어질수록 자산도 늘어나다가, 은퇴 이후엔 자산을 인출해 생활비로 쓰기 시작하기 때문으로 풀이됩니다.`;
 
   document.getElementById('resultBox').classList.add('show');
 }

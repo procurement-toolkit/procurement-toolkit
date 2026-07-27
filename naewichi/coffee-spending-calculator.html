@@ -95,6 +95,16 @@
   .related-item .emoji{font-size:20px;}
   .related-item .txt{font-size:13px;font-weight:500;}
 
+
+  .why-box{
+    background:var(--bg);border-radius:14px;padding:16px;margin:18px 0;
+    border:2px dashed var(--line);
+  }
+  .why-box .why-title{
+    font-family:'Jua',sans-serif;font-size:14px;margin:0 0 8px;
+    display:flex;align-items:center;gap:6px;
+  }
+  .why-box p.why-text{font-size:13px;line-height:1.7;margin:0;}
   .footer-link{display:block;text-align:center;margin-top:26px;font-size:12px;color:var(--ink-soft);text-decoration:none;}
 </style>
 <script>window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };</script>
@@ -167,6 +177,11 @@
         </div>
       </div>
 
+            <div class="why-box">
+        <p class="why-title">💡 왜 이런 결과가 나왔을까요?</p>
+        <p class="why-text" id="whyText"></p>
+      </div>
+
       <button class="share-btn" onclick="shareResult()">📤 카톡으로 결과 자랑하기</button>
       <p class="source">출처: 한국소비자단체협의회 「커피 소비자 인식 및 지출비용 조사」, 사람인 「직장인 커피 소비」 조사</p>
     </div>
@@ -229,6 +244,8 @@ function showResult(){
   const maxScale = Math.max(myMonthly, avgMonthly, 50000) * 1.15;
   document.getElementById('meFill').style.width = (myMonthly/maxScale*100)+'%';
   document.getElementById('avgFill').style.width = (avgMonthly/maxScale*100)+'%';
+
+  document.getElementById('whyText').textContent = `한국소비자단체협의회 조사에서 성인 1인당 월평균 커피 지출이 10만원을 넘긴 이유는, 커피가 이제 기호식품을 넘어 '작업 공간 이용료'나 '만남의 장소 비용' 성격을 함께 갖게 됐기 때문이에요. 하루 잔 수보다도 어떤 가격대의 카페를 주로 가는지가 총액에 더 큰 영향을 줘요.`;
 
   document.getElementById('resultBox').classList.add('show');
 }

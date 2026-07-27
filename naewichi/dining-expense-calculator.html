@@ -82,6 +82,16 @@
   }
   .related-item .emoji{font-size:20px;}
   .related-item .txt{font-size:13px;font-weight:500;}
+
+  .why-box{
+    background:var(--bg);border-radius:14px;padding:16px;margin:18px 0;
+    border:2px dashed var(--line);
+  }
+  .why-box .why-title{
+    font-family:'Jua',sans-serif;font-size:14px;margin:0 0 8px;
+    display:flex;align-items:center;gap:6px;
+  }
+  .why-box p.why-text{font-size:13px;line-height:1.7;margin:0;}
   .footer-link{display:block;text-align:center;margin-top:26px;font-size:12px;color:var(--ink-soft);text-decoration:none;}
 </style>
 <script>window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };</script>
@@ -141,6 +151,11 @@
         <div class="track" id="avgTrack">
           <div class="track-fill avg" id="avgFill"><span class="track-icon">📊</span></div>
         </div>
+      </div>
+
+            <div class="why-box">
+        <p class="why-title">💡 왜 이런 결과가 나왔을까요?</p>
+        <p class="why-text" id="whyText"></p>
       </div>
 
       <button class="share-btn" onclick="shareResult()">📤 카톡으로 결과 자랑하기</button>
@@ -203,6 +218,8 @@ function showResult(){
   const maxScale = Math.max(myDining, avgDining, 30) * 1.15;
   document.getElementById('meFill').style.width = (myDining/maxScale*100)+'%';
   document.getElementById('avgFill').style.width = (avgDining/maxScale*100)+'%';
+
+  document.getElementById('whyText').textContent = `통계청 가계동향조사에서 외식비는 소득수준과 1인가구 비율에 따라 편차가 큰 항목으로 꼽혀요. 최근 배달앱 이용 증가와 혼밥 문화 확산으로 외식·배달 지출 비중 자체가 꾸준히 늘어나는 추세라, 평균값도 매년 조금씩 올라가고 있어요.`;
 
   document.getElementById('resultBox').classList.add('show');
 }

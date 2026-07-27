@@ -70,6 +70,16 @@
   }
   .related-item .emoji{font-size:20px;}
   .related-item .txt{font-size:13px;font-weight:500;}
+
+  .why-box{
+    background:var(--bg);border-radius:14px;padding:16px;margin:18px 0;
+    border:2px dashed var(--line);
+  }
+  .why-box .why-title{
+    font-family:'Jua',sans-serif;font-size:14px;margin:0 0 8px;
+    display:flex;align-items:center;gap:6px;
+  }
+  .why-box p.why-text{font-size:13px;line-height:1.7;margin:0;}
   .footer-link{display:block;text-align:center;margin-top:26px;font-size:12px;color:var(--ink-soft);text-decoration:none;}
 </style>
 <script>window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };</script>
@@ -156,6 +166,11 @@
       <p class="score-label">궁합 점수</p>
       <div class="score-bar-wide"><div class="score-fill-wide" id="scoreFill"></div></div>
       <div class="comment-box" id="commentBox"></div>
+
+            <div class="why-box">
+        <p class="why-title">💡 왜 이런 결과가 나왔을까요?</p>
+        <p class="why-text" id="whyText"></p>
+      </div>
 
       <button class="share-btn" onclick="shareResult()">📤 카톡으로 궁합 결과 공유하기</button>
       <p class="disclaimer">🔮 재미로 보는 콘텐츠입니다.</p>
@@ -327,6 +342,16 @@ function showResult(){
   document.getElementById('scoreNum').textContent = score+"점";
   document.getElementById('scoreFill').style.width = score+"%";
   document.getElementById('commentBox').textContent = `${myP.y}년 ${myP.m}월생 ${me}띠 × ${partnerP.y}년 ${partnerP.m}월생 ${partner}띠 — ${msg}`;
+
+  let whyMsg;
+  if(sameSamhap(me, partner) || yukhap[me] === partner){
+    whyMsg = `전통 사주에서 '삼합' 또는 '육합' 관계로 분류되는 조합이라 점수를 높게 잡았어요 (예: 쥐·용·원숭이띠는 삼합, 쥐·소띠는 육합). 다만 이것도 전통 개념을 재미로 풀어낸 콘텐츠라, 실제 관계는 두 분이 만들어가는 거겠죠.`;
+  } else if(isChungdol(me, partner)){
+    whyMsg = `띠 순환에서 정반대(상충) 위치에 있는 조합이라 점수를 낮게 잡았어요. 전통적으로 '충(沖)' 관계라 불리는 궁합인데, 성향이 정반대라 오히려 서로에게 자극이 되는 경우도 많다고 해요.`;
+  } else {
+    whyMsg = `삼합·육합·상충 어디에도 속하지 않는 조합이라 중간 점수대로 잡았어요. 세부 점수는 두 분의 생년월일을 조합해서 매번 조금씩 다르게 나와요.`;
+  }
+  document.getElementById('whyText').textContent = whyMsg;
 
   document.getElementById('resultBox').classList.add('show');
 }
