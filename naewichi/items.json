@@ -28,6 +28,10 @@
     { "title": "내 택배 수령 횟수 vs 전국 평균", "sub": "이번 달 몇 개나 받았을까", "emoji": "📦", "url": "parcel-count-calculator.html", "cat": "life", "views": 0 },
     { "title": "우리 아이 사교육비 vs 조건별 평균", "sub": "학교급·소득·지역까지 비교해보기", "emoji": "✏️", "url": "private-education-calculator.html", "cat": "life", "views": 0 },
     { "title": "평균 초혼연령, 지역마다 다르다?", "sub": "부담 갖지 않고 참고만 하세요", "emoji": "💍", "url": "marriage-age-calculator.html", "cat": "life", "views": 0 },
-    { "title": "회사 노예 측정기", "sub": "당신의 노예 지수는 몇 %?", "emoji": "🐴", "url": "office-slave-meter.html", "cat": "meme", "views": 0 }
+    { "title": "회사 노예 측정기", "sub": "당신의 노예 지수는 몇 %?", "emoji": "🐴", "url": "office-slave-meter.html", "cat": "meme", "views": 0 },
+    { "title": "월급 삭제 시뮬레이터", "sub": "내 월급이 사라지는 과정", "emoji": "💸", "url": "salary-delete-simulator.html", "cat": "meme", "views": 0 },
+    { "title": "나의 아저씨 지수", "sub": "몇 % 아저씨일까", "emoji": "🍵", "url": "ahjussi-index-test.html", "cat": "meme", "views": 0 },
+    { "title": "퇴사 확률 계산기", "sub": "이번 달 마음속 사직서는 몇 %", "emoji": "📝", "url": "resignation-probability-calculator.html", "cat": "meme", "views": 0 },
+    { "title": "나의 꼰대력 테스트", "sub": "웃자고 하는 자기성찰 테스트", "emoji": "📢", "url": "kkondae-test.html", "cat": "meme", "views": 0 }
   ]
 }

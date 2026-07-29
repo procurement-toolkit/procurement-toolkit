@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>월급 삭제 시뮬레이터 - 내 월급이 사라지는 과정 | 내위치</title>
+<meta name="description" content="세전 월급을 입력하면 4대보험, 소득세, 카드값, 대출까지 순서대로 빠져나가는 과정을 보여드려요. 이번 달 진짜 자유롭게 쓸 수 있는 돈은 얼마일까요?">
+<meta property="og:title" content="내 월급, 어디까지 살아남을까?">
+<meta property="og:description" content="세전 월급이 실제로 사라지는 과정 - 내위치">
+<meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Jua&family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#12151F; --card:#1D2130; --ink:#F2F3FA; --ink-soft:#8D91B0;
+    --coral:#5CFFB0; --coral-dark:#2FCF88; --mint:#FF5C5C; --mint-dark:#D63F3F;
+    --yellow:#FFC94D; --line:#2C3046;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;background:var(--bg);font-family:'Noto Sans KR', sans-serif;color:var(--ink);-webkit-font-smoothing:antialiased;}
+  .wrap{max-width:480px;margin:0 auto;padding:0 20px 60px;}
+  .brandbar{display:flex;align-items:baseline;gap:6px;padding:18px 0 0;text-decoration:none;}
+  .brandbar .b1{font-family:'Jua',sans-serif;font-size:20px;color:var(--ink);}
+  .brandbar .b2{font-size:11px;color:var(--ink-soft);}
+  .hero{text-align:center;padding:18px 0 8px;}
+  .hero h1{font-family:'Jua',sans-serif;font-size:25px;line-height:1.4;margin:0 0 6px;color:var(--ink);}
+  .hero p{font-size:14px;color:var(--ink-soft);margin:0;}
+  .card{background:var(--card);border-radius:20px;padding:22px 20px;margin-top:18px;box-shadow:0 6px 0 var(--line);}
+  .card h2{font-family:'Jua',sans-serif;font-size:16px;margin:0 0 14px;color:var(--ink);}
+  .field{margin-bottom:14px;}
+  .field label{display:block;font-size:13px;font-weight:500;color:var(--ink-soft);margin-bottom:6px;}
+  select{
+    width:100%;padding:12px 14px;font-size:15px;font-family:'Noto Sans KR',sans-serif;
+    border:2px solid var(--line);border-radius:12px;background:#171a26;color:var(--ink);
+    appearance:none;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='14' height='9'><path d='M1 1l6 6 6-6' stroke='%238D91B0' stroke-width='2' fill='none'/></svg>");
+    background-repeat:no-repeat;background-position:right 14px center;
+  }
+  select:focus{outline:none;border-color:var(--coral);}
+  .go-btn{
+    width:100%;padding:15px;margin-top:8px;background:var(--coral);color:#06301E;border:none;
+    border-radius:14px;font-family:'Jua',sans-serif;font-size:18px;cursor:pointer;
+    box-shadow:0 5px 0 var(--coral-dark);transition:transform .05s;
+  }
+  .go-btn:active{transform:translateY(3px);box-shadow:0 2px 0 var(--coral-dark);}
+
+  .result{display:none;margin-top:22px;}
+  .result.show{display:block;}
+
+  .waterfall{background:var(--card);border-radius:20px;padding:18px 18px 6px;border:2px solid var(--line);}
+  .wf-row{
+    display:flex;justify-content:space-between;align-items:center;
+    padding:11px 0;border-bottom:1px solid var(--line);font-size:13.5px;
+  }
+  .wf-row:last-child{border-bottom:none;}
+  .wf-row .wf-label{color:var(--ink-soft);}
+  .wf-row .wf-amount{font-weight:700;color:var(--mint);}
+  .wf-row.start .wf-label{color:var(--ink);font-weight:700;font-size:14.5px;}
+  .wf-row.start .wf-amount{color:var(--ink);font-size:16px;}
+  .wf-row.final{border-top:2px dashed var(--line);margin-top:4px;padding-top:16px;}
+  .wf-row.final .wf-label{color:var(--ink);font-weight:700;font-size:14.5px;}
+  .wf-row.final .wf-amount{color:var(--coral);font-size:18px;}
+
+  .result-card{
+    text-align:center;background:linear-gradient(180deg,#1A2A22,#12151F);
+    border:2px solid var(--line);border-radius:22px;padding:26px 20px;margin-top:16px;
+  }
+  .result-emoji{font-size:56px;line-height:1;margin-bottom:6px;}
+  .result-title{font-family:'Jua',sans-serif;font-size:16px;color:var(--ink-soft);margin:0 0 4px;}
+  .result-amount{font-family:'Jua',sans-serif;font-size:34px;color:var(--coral);margin:6px 0;word-break:break-all;}
+  .result-line{font-size:13.5px;color:var(--ink-soft);margin:8px 0 0;line-height:1.7;}
+
+  .why-box{background:var(--bg);border-radius:14px;padding:16px;margin:18px 0;border:2px dashed var(--line);}
+  .why-box .why-title{font-family:'Jua',sans-serif;font-size:14px;margin:0 0 8px;display:flex;align-items:center;gap:6px;}
+  .why-box p.why-text{font-size:13px;line-height:1.7;margin:0;color:var(--ink);}
+
+  .share-btn{
+    width:100%;padding:14px;margin-top:6px;background:var(--yellow);color:#3A2A00;
+    border:none;border-radius:14px;font-family:'Jua',sans-serif;font-weight:700;font-size:15px;cursor:pointer;
+    box-shadow:0 5px 0 #D9A62E;
+  }
+  .share-btn:active{transform:translateY(3px);box-shadow:0 2px 0 #D9A62E;}
+
+  .disclaimer{font-size:11px;color:var(--ink-soft);text-align:center;margin-top:14px;line-height:1.6;}
+
+  .related{margin-top:28px;}
+  .related h3{font-family:'Jua',sans-serif;font-size:15px;margin:0 0 10px;color:var(--ink-soft);}
+  .related-grid{display:flex;flex-direction:column;gap:8px;}
+  .related-item{
+    display:flex;align-items:center;gap:10px;background:var(--card);border-radius:14px;
+    padding:12px 14px;text-decoration:none;color:var(--ink);border:2px solid var(--line);
+  }
+  .related-item .emoji{font-size:20px;}
+  .related-item .txt{font-size:13px;font-weight:500;}
+  .footer-link{display:block;text-align:center;margin-top:26px;font-size:12px;color:var(--ink-soft);text-decoration:none;}
+</style>
+<script>window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };</script>
+<script defer src="/_vercel/insights/script.js"></script>
+</head>
+<body>
+<div class="wrap">
+
+  <a class="brandbar" href="index.html">
+    <span class="b1">내위치</span>
+    <span class="b2">by CBM Lab</span>
+  </a>
+
+  <div class="hero">
+    <h1>월급 삭제 시뮬레이터</h1>
+    <p>세전 월급이 진짜로 사라지는 과정을 보여드려요</p>
+  </div>
+
+  <div class="card">
+    <h2>이번 달 내 상황</h2>
+    <div class="field">
+      <label for="salary">세전 월급 (실수령액 아님)</label>
+      <select id="salary">
+        <option value="200">200만원대</option>
+        <option value="250">250만원대</option>
+        <option value="300" selected>300만원대</option>
+        <option value="350">350만원대</option>
+        <option value="400">400만원대</option>
+        <option value="450">450만원대</option>
+        <option value="500">500만원대</option>
+        <option value="600">600만원대</option>
+        <option value="700">700만원대</option>
+        <option value="800">800만원대</option>
+        <option value="900">900만원대</option>
+        <option value="1000">1000만원 이상</option>
+      </select>
+    </div>
+    <div class="field">
+      <label for="card">이번 달 카드값</label>
+      <select id="card">
+        <option value="0">0원 (안 씀)</option>
+        <option value="50">50만원대</option>
+        <option value="100" selected>100만원대</option>
+        <option value="150">150만원대</option>
+        <option value="200">200만원대</option>
+        <option value="300">300만원 이상</option>
+      </select>
+    </div>
+    <div class="field">
+      <label for="loan">대출 상환액 (있다면)</label>
+      <select id="loan">
+        <option value="0" selected>없음</option>
+        <option value="30">30만원대</option>
+        <option value="60">60만원대</option>
+        <option value="100">100만원대</option>
+        <option value="150">150만원 이상</option>
+      </select>
+    </div>
+    <div class="field">
+      <label for="saving">고정 저축·적금·보험료</label>
+      <select id="saving">
+        <option value="0">0원</option>
+        <option value="20">20만원대</option>
+        <option value="50" selected>50만원대</option>
+        <option value="100">100만원대</option>
+        <option value="150">150만원 이상</option>
+      </select>
+    </div>
+    <button class="go-btn" onclick="showResult()">삭제 시작 →</button>
+  </div>
+
+  <div class="result" id="resultBox">
+    <div class="waterfall" id="waterfallList"></div>
+
+    <div class="result-card">
+      <div class="result-emoji" id="resultEmoji"></div>
+      <p class="result-title">이번 달 진짜 자유롭게 쓸 수 있는 돈</p>
+      <p class="result-amount" id="resultAmount"></p>
+      <p class="result-line" id="resultLine"></p>
+    </div>
+
+    <div class="why-box">
+      <p class="why-title">💡 뭐가 제일 크게 갉아먹었나요?</p>
+      <p class="why-text" id="whyText"></p>
+    </div>
+
+    <button class="share-btn" onclick="shareResult()">📤 카톡으로 현실 자랑(?)하기</button>
+    <p class="disclaimer">🎭 2026년 4대보험 요율(국민연금 9.5%·건강보험 7.19%·고용보험 0.9%) 기준으로 계산했지만, 소득세는 부양가족 수에 따라 실제와 다를 수 있는 근사치예요. 재미로 봐주세요.</p>
+  </div>
+
+  <div class="related">
+    <h3>다른 사람들이 본 랭킹</h3>
+    <div class="related-grid">
+      <a class="related-item" href="office-slave-meter.html">
+        <span class="emoji">🐴</span><span class="txt">회사 노예 측정기</span>
+      </a>
+      <a class="related-item" href="savings-calculator.html">
+        <span class="emoji">🐷</span><span class="txt">내 순자산 vs 또래 평균</span>
+      </a>
+    </div>
+  </div>
+
+  <a class="footer-link" href="../index.html">CBM Lab의 다른 무역 도구 보기 →</a>
+</div>
+
+<script>
+// 2026년 실제 요율: 국민연금 9.5%(근로자 4.75%), 건강보험 7.19%(근로자 3.595%),
+// 장기요양보험(건강보험료의 약 12.95%), 고용보험 근로자부담 0.9%
+// 소득세는 1인가구·본인 1명 기준 간이세액표 근사치 (부양가족 있으면 실제보다 적게 나올 수 있음)
+const incomeTaxApprox = {
+  200: 1.0, 250: 1.6, 300: 2.8, 350: 3.5, 400: 4.3, 450: 5.1,
+  500: 5.9, 600: 7.2, 700: 8.4, 800: 9.6, 900: 10.7, 1000: 11.8
+};
+
+function fmt(v){
+  return Math.round(v).toLocaleString() + '원';
+}
+
+function showResult(){
+  const salary = Number(document.getElementById('salary').value) * 10000;
+  const card = Number(document.getElementById('card').value) * 10000;
+  const loan = Number(document.getElementById('loan').value) * 10000;
+  const saving = Number(document.getElementById('saving').value) * 10000;
+
+  const salaryManwon = Number(document.getElementById('salary').value);
+
+  const pension = salary * 0.0475;
+  const health = salary * 0.03595;
+  const longterm = health * 0.1295;
+  const employment = salary * 0.009;
+  const incomeTaxRate = incomeTaxApprox[salaryManwon] / 100;
+  const incomeTax = salary * incomeTaxRate;
+  const localTax = incomeTax * 0.1;
+
+  const totalDeduction = pension + health + longterm + employment + incomeTax + localTax;
+  const netPay = salary - totalDeduction;
+  const afterFixed = netPay - card - loan - saving;
+
+  const steps = [
+    { label: "세전 월급", amount: salary, cls: "start" },
+    { label: "국민연금 (4.75%)", amount: -pension },
+    { label: "건강보험 (3.595%)", amount: -health },
+    { label: "장기요양보험", amount: -longterm },
+    { label: "고용보험 (0.9%)", amount: -employment },
+    { label: "소득세 (근사치)", amount: -incomeTax },
+    { label: "지방소득세", amount: -localTax },
+    { label: "→ 세후 실수령액", amount: netPay, cls: "final" },
+    { label: "카드값", amount: -card },
+    { label: "대출 상환", amount: -loan },
+    { label: "고정 저축·보험료", amount: -saving },
+  ];
+
+  const waterfallHtml = steps.map(s => {
+    const amountText = s.cls === 'start' || s.cls === 'final' ? fmt(s.amount) : (s.amount < 0 ? '- ' + fmt(Math.abs(s.amount)) : fmt(s.amount));
+    return `<div class="wf-row ${s.cls || ''}"><span class="wf-label">${s.label}</span><span class="wf-amount">${amountText}</span></div>`;
+  }).join('');
+  document.getElementById('waterfallList').innerHTML = waterfallHtml;
+
+  let emoji, line;
+  if(afterFixed < 0){
+    emoji = "💀";
+    line = "이번 달은 이미 마이너스예요. 다음 달 월급을 미리 당겨쓰는 삶, 응원합니다.";
+  } else if(afterFixed < 200000){
+    emoji = "😭";
+    line = "편의점 삼각김밥과 아이스아메리카노 정도로 버티는 달이 되겠네요.";
+  } else if(afterFixed < 500000){
+    emoji = "😅";
+    line = "여유는 없지만 숨은 쉴 수 있는 정도예요.";
+  } else if(afterFixed < 1000000){
+    emoji = "🙂";
+    line = "이 정도면 나쁘지 않아요. 갑자기 생긴 약속 정도는 감당 가능해요.";
+  } else {
+    emoji = "🤑";
+    line = "이번 달은 좀 여유가 있네요. 미래의 나를 위해 저축을 조금 더 늘려보는 건 어때요.";
+  }
+
+  document.getElementById('resultEmoji').textContent = emoji;
+  document.getElementById('resultAmount').textContent = fmt(afterFixed);
+  document.getElementById('resultLine').textContent = line;
+
+  // 뭐가 제일 크게 갉아먹었는지 - 4대보험+세금 합계 vs 카드값 vs 대출 vs 저축 비교
+  const items = [
+    { name: "4대보험+세금", amount: totalDeduction },
+    { name: "카드값", amount: card },
+    { name: "대출 상환", amount: loan },
+    { name: "고정 저축·보험료", amount: saving }
+  ].sort((a,b) => b.amount - a.amount);
+
+  const top = items[0];
+  const totalOut = salary - Math.max(afterFixed, 0);
+  const topPct = totalOut > 0 ? Math.round(top.amount / totalOut * 100) : 0;
+
+  let whyMsg;
+  if(top.name === "4대보험+세금"){
+    whyMsg = `가장 크게 빠진 건 4대보험과 세금이에요 (전체 지출의 약 ${topPct}%). 이건 법으로 정해진 항목이라 조절할 수 없는 부분이지만, 그만큼 국민연금·건강보험 혜택으로 나중에 돌아온다는 것도 잊지 마세요.`;
+  } else if(top.name === "카드값"){
+    whyMsg = `이번 달은 카드값이 가장 큰 지출이었어요 (전체 지출의 약 ${topPct}%). 4대보험·세금보다도 카드값이 더 크게 나갔다는 건, 이번 달 소비가 꽤 있었다는 뜻이겠죠.`;
+  } else if(top.name === "대출 상환"){
+    whyMsg = `대출 상환액이 이번 달 가장 큰 지출이었어요 (전체 지출의 약 ${topPct}%). 원금이 크거나 금리가 높은 대출을 갖고 계실 가능성이 높아요.`;
+  } else {
+    whyMsg = `고정 저축·보험료가 가장 큰 지출이었어요 (전체 지출의 약 ${topPct}%). 당장은 아쉽지만, 미래의 나에게 가장 이득이 되는 지출이기도 해요.`;
+  }
+  document.getElementById('whyText').textContent = whyMsg;
+
+  document.getElementById('resultBox').classList.add('show');
+  document.getElementById('resultBox').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function shareResult(){
+  const amount = document.getElementById('resultAmount').textContent;
+  if(navigator.share){
+    navigator.share({title:'월급 삭제 시뮬레이터 - 내위치', text: `이번 달 내가 자유롭게 쓸 수 있는 돈: ${amount}`, url: location.href});
+  } else {
+    navigator.clipboard.writeText(location.href);
+    alert('링크가 복사됐어요! 카톡에 붙여넣기 해보세요.');
+  }
+}
+</script>
+</body>
+</html>

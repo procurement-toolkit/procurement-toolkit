@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>나의 꼰대력 테스트 - 몇 % 꼰대일까 | 내위치</title>
+<meta name="description" content="말버릇, 후배 대하는 태도까지 입력하면 내 꼰대력을 알려드려요. 자기 성찰용으로도, 웃자고 하는 콘텐츠로도 즐겨보세요.">
+<meta property="og:title" content="당신의 꼰대력은 몇 %?">
+<meta property="og:description" content="10초면 나오는 꼰대력 테스트 - 내위치">
+<meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Jua&family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#1B1F1A; --card:#262C24; --ink:#F0F5EE; --ink-soft:#9DAE97;
+    --coral:#8FBF4D; --coral-dark:#679433; --mint:#4DA6BF; --mint-dark:#337E94;
+    --yellow:#FFC94D; --line:#38402F;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;background:var(--bg);font-family:'Noto Sans KR', sans-serif;color:var(--ink);-webkit-font-smoothing:antialiased;}
+  .wrap{max-width:480px;margin:0 auto;padding:0 20px 60px;}
+  .brandbar{display:flex;align-items:baseline;gap:6px;padding:18px 0 0;text-decoration:none;}
+  .brandbar .b1{font-family:'Jua',sans-serif;font-size:20px;color:var(--ink);}
+  .brandbar .b2{font-size:11px;color:var(--ink-soft);}
+  .hero{text-align:center;padding:18px 0 8px;}
+  .hero h1{font-family:'Jua',sans-serif;font-size:25px;line-height:1.4;margin:0 0 6px;color:var(--ink);}
+  .hero p{font-size:14px;color:var(--ink-soft);margin:0;}
+  .card{background:var(--card);border-radius:20px;padding:22px 20px;margin-top:18px;box-shadow:0 6px 0 var(--line);}
+  .card h2{font-family:'Jua',sans-serif;font-size:16px;margin:0 0 14px;color:var(--ink);}
+  .field{margin-bottom:14px;}
+  .field label{display:block;font-size:13px;font-weight:500;color:var(--ink-soft);margin-bottom:6px;}
+  select{
+    width:100%;padding:12px 14px;font-size:15px;font-family:'Noto Sans KR',sans-serif;
+    border:2px solid var(--line);border-radius:12px;background:#1f231d;color:var(--ink);
+    appearance:none;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='14' height='9'><path d='M1 1l6 6 6-6' stroke='%239DAE97' stroke-width='2' fill='none'/></svg>");
+    background-repeat:no-repeat;background-position:right 14px center;
+  }
+  select:focus{outline:none;border-color:var(--coral);}
+  .go-btn{
+    width:100%;padding:15px;margin-top:8px;background:var(--coral);color:#1A2E0C;border:none;
+    border-radius:14px;font-family:'Jua',sans-serif;font-size:18px;cursor:pointer;
+    box-shadow:0 5px 0 var(--coral-dark);transition:transform .05s;
+  }
+  .go-btn:active{transform:translateY(3px);box-shadow:0 2px 0 var(--coral-dark);}
+
+  .result{display:none;margin-top:22px;}
+  .result.show{display:block;}
+  .result-card{
+    background:linear-gradient(180deg,#2A3026,#1B1F1A);
+    border:2px solid var(--line);border-radius:22px;padding:28px 20px;text-align:center;
+  }
+  .result-emoji{font-size:64px;line-height:1;margin-bottom:8px;}
+  .result-tier{font-family:'Jua',sans-serif;font-size:22px;color:var(--ink);margin:0 0 4px;}
+  .result-pct{font-family:'Jua',sans-serif;font-size:52px;color:var(--coral);margin:6px 0;}
+  .result-pct span{font-size:22px;color:var(--ink-soft);}
+  .result-line{font-size:14px;color:var(--ink-soft);margin:8px 0 0;line-height:1.6;}
+
+  .meter{position:relative;height:22px;background:var(--bg);border-radius:11px;border:2px solid var(--line);margin:20px 0 6px;overflow:hidden;}
+  .meter-fill{height:100%;border-radius:9px;background:linear-gradient(90deg,#4DA6BF,#8FBF4D);transition:width 1s cubic-bezier(.34,1.56,.64,1);}
+  .meter-labels{display:flex;justify-content:space-between;font-size:11px;color:var(--ink-soft);}
+
+  .factors{margin-top:22px;}
+  .factors h3{font-family:'Jua',sans-serif;font-size:14px;color:var(--ink-soft);margin:0 0 10px;}
+  .factor-item{
+    display:flex;justify-content:space-between;align-items:center;gap:10px;
+    background:var(--bg);border-radius:12px;padding:11px 14px;margin-bottom:8px;border:1px solid var(--line);
+  }
+  .factor-item .ftxt{font-size:13px;color:var(--ink);}
+  .factor-item .fscore{font-size:12px;font-weight:700;padding:3px 9px;border-radius:999px;flex-shrink:0;}
+  .fscore.low{background:#1E3A2E;color:#7FE0A8;}
+  .fscore.mid{background:#3A331E;color:#FFC94D;}
+  .fscore.high{background:#3A241E;color:#E08F5C;}
+
+  .share-btn{
+    width:100%;padding:14px;margin-top:20px;background:var(--mint);color:#0C242E;
+    border:none;border-radius:14px;font-family:'Jua',sans-serif;font-weight:700;font-size:15px;cursor:pointer;
+    box-shadow:0 5px 0 var(--mint-dark);
+  }
+  .share-btn:active{transform:translateY(3px);box-shadow:0 2px 0 var(--mint-dark);}
+  .disclaimer{font-size:11px;color:var(--ink-soft);text-align:center;margin-top:14px;line-height:1.6;}
+
+  .related{margin-top:28px;}
+  .related h3{font-family:'Jua',sans-serif;font-size:15px;margin:0 0 10px;color:var(--ink-soft);}
+  .related-grid{display:flex;flex-direction:column;gap:8px;}
+  .related-item{
+    display:flex;align-items:center;gap:10px;background:var(--card);border-radius:14px;
+    padding:12px 14px;text-decoration:none;color:var(--ink);border:2px solid var(--line);
+  }
+  .related-item .emoji{font-size:20px;}
+  .related-item .txt{font-size:13px;font-weight:500;}
+  .footer-link{display:block;text-align:center;margin-top:26px;font-size:12px;color:var(--ink-soft);text-decoration:none;}
+</style>
+<script>window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };</script>
+<script defer src="/_vercel/insights/script.js"></script>
+</head>
+<body>
+<div class="wrap">
+
+  <a class="brandbar" href="index.html">
+    <span class="b1">내위치</span>
+    <span class="b2">by CBM Lab</span>
+  </a>
+
+  <div class="hero">
+    <h1>나의 꼰대력 테스트</h1>
+    <p>웃자고 하는 테스트니 편하게 골라보세요</p>
+  </div>
+
+  <div class="card">
+    <h2>나는 이래요</h2>
+    <div class="field">
+      <label for="oldtimes">"나 때는 말이야" 얼마나 자주 쓰나요</label>
+      <select id="oldtimes">
+        <option value="0">거의 안 씀</option>
+        <option value="2" selected>가끔 씀</option>
+        <option value="4">자주 씀</option>
+      </select>
+    </div>
+    <div class="field">
+      <label for="advice">요청 안 해도 조언하는 편인가요</label>
+      <select id="advice">
+        <option value="0">요청받을 때만</option>
+        <option value="2" selected>가끔 먼저 말함</option>
+        <option value="4">항상 먼저 말함</option>
+      </select>
+    </div>
+    <div class="field">
+      <label for="overtime_view">정시 퇴근하는 후배를 보면?</label>
+      <select id="overtime_view">
+        <option value="0">당연한 거지</option>
+        <option value="2" selected>부럽다 정도 생각</option>
+        <option value="4">열정이 부족해 보임</option>
+      </select>
+    </div>
+    <div class="field">
+      <label for="reply">카톡 답장 늦으면?</label>
+      <select id="reply">
+        <option value="0">신경 안 씀</option>
+        <option value="2" selected>살짝 서운함</option>
+        <option value="4">예의가 없다고 생각함</option>
+      </select>
+    </div>
+    <div class="field">
+      <label for="dinner">회식·야근에 대한 생각</label>
+      <select id="dinner">
+        <option value="0">각자 사정 존중</option>
+        <option value="2" selected>가끔은 필요하다고 생각</option>
+        <option value="4">단합에 필수라고 생각</option>
+      </select>
+    </div>
+    <div class="field">
+      <label for="mzterm">MZ·신조어 트렌드에 대한 태도</label>
+      <select id="mzterm">
+        <option value="0">재미있게 받아들임</option>
+        <option value="2" selected>가끔 낯설게 느낌</option>
+        <option value="4">이해하기 어렵고 거부감 있음</option>
+      </select>
+    </div>
+    <div class="field">
+      <label for="generalize">내 경험을 일반화해서 말하는 편인가요</label>
+      <select id="generalize">
+        <option value="0">사람마다 다르다고 생각</option>
+        <option value="2" selected>가끔 비교하게 됨</option>
+        <option value="4">내 방식이 맞다고 자주 얘기함</option>
+      </select>
+    </div>
+    <button class="go-btn" onclick="showResult()">꼰대력 확인하기 →</button>
+  </div>
+
+  <div class="result" id="resultBox">
+    <div class="result-card">
+      <div class="result-emoji" id="resultEmoji"></div>
+      <p class="result-tier" id="resultTier"></p>
+      <p class="result-pct" id="resultPct"></p>
+      <p class="result-line" id="resultLine"></p>
+      <div class="meter"><div class="meter-fill" id="meterFill"></div></div>
+      <div class="meter-labels"><span>🌱 소통왕</span><span>👴 꼰대</span></div>
+    </div>
+
+    <div class="factors">
+      <h3>💡 꼰대력을 끌어올린 항목</h3>
+      <div id="factorsList"></div>
+    </div>
+
+    <button class="share-btn" onclick="shareResult()">📤 카톡으로 결과 자랑(?)하기</button>
+    <p class="disclaimer">🎭 재미로 보는 자기성찰형 콘텐츠입니다. 결과가 높게 나와도 너무 자책하지 마세요.</p>
+  </div>
+
+  <div class="related">
+    <h3>다른 사람들이 본 랭킹</h3>
+    <div class="related-grid">
+      <a class="related-item" href="ahjussi-index-test.html">
+        <span class="emoji">🍵</span><span class="txt">나의 아저씨 지수</span>
+      </a>
+      <a class="related-item" href="resignation-probability-calculator.html">
+        <span class="emoji">📝</span><span class="txt">퇴사 확률 계산기</span>
+      </a>
+    </div>
+  </div>
+
+  <a class="footer-link" href="../index.html">CBM Lab의 다른 무역 도구 보기 →</a>
+</div>
+
+<script>
+const factorMeta = {
+  oldtimes: { getText: v => ({0:"'나 때는' 거의 안 씀",2:"'나 때는' 가끔 씀",4:"'나 때는' 애용"}[v]) },
+  advice: { getText: v => ({0:"요청할 때만 조언",2:"가끔 먼저 조언",4:"항상 먼저 조언"}[v]) },
+  overtime_view: { getText: v => ({0:"정시퇴근 당연시",2:"정시퇴근 부러워함",4:"정시퇴근을 열정부족으로 봄"}[v]) },
+  reply: { getText: v => ({0:"답장 늦어도 신경 안 씀",2:"답장 늦으면 살짝 서운함",4:"답장 늦으면 예의없다 생각"}[v]) },
+  dinner: { getText: v => ({0:"회식·야근 강요 안 함",2:"가끔 회식 필요하다 생각",4:"회식을 단합필수로 여김"}[v]) },
+  mzterm: { getText: v => ({0:"신조어 재밌게 수용",2:"신조어 가끔 낯섦",4:"신조어 거부감"}[v]) },
+  generalize: { getText: v => ({0:"경험 일반화 안 함",2:"가끔 비교하게 됨",4:"내 방식이 맞다고 자주 말함"}[v]) }
+};
+
+const tiers = [
+  { max: 20, emoji: "🌱", name: "소통왕", line: "꼰대력이 거의 없어요. 후배들이 편하게 느낄 것 같아요." },
+  { max: 45, emoji: "😐", name: "살짝 꼰대력 감지", line: "아직은 괜찮지만, 가끔 조심할 필요는 있어요." },
+  { max: 70, emoji: "📢", name: "회식은 국룰이라 생각하는 편", line: "본인은 모를 수 있지만, 후배들 사이에선 조금 유명할지도요." },
+  { max: 100, emoji: "👴", name: "인간문화재급 꼰대", line: "이 정도면 꼰대력 마스터예요. 그래도 자각하고 계신 것만으로도 반은 성공이에요." }
+];
+
+function showResult(){
+  const values = {};
+  let total = 0;
+  const maxPerItem = { oldtimes:4, advice:4, overtime_view:4, reply:4, dinner:4, mzterm:4, generalize:4 };
+  const maxTotal = Object.values(maxPerItem).reduce((a,b)=>a+b,0);
+
+  for(const key of Object.keys(factorMeta)){
+    const v = Number(document.getElementById(key).value);
+    values[key] = v;
+    total += v;
+  }
+
+  const pct = Math.round(total / maxTotal * 100);
+  const tier = tiers.find(t => pct <= t.max);
+
+  document.getElementById('resultEmoji').textContent = tier.emoji;
+  document.getElementById('resultTier').textContent = tier.name;
+  document.getElementById('resultPct').innerHTML = pct + '<span>% 꼰대력</span>';
+  document.getElementById('resultLine').textContent = tier.line;
+  document.getElementById('meterFill').style.width = pct + '%';
+
+  const sorted = Object.entries(values).filter(([k,v]) => v > 0).sort((a,b) => b[1]-a[1]).slice(0,3);
+  const factorsList = document.getElementById('factorsList');
+  if(sorted.length === 0){
+    factorsList.innerHTML = '<div class="factor-item"><span class="ftxt">튀는 항목이 없어요. 전반적으로 균형 잡힌 편이에요.</span></div>';
+  } else {
+    factorsList.innerHTML = sorted.map(([key, v]) => {
+      const scoreClass = v >= 4 ? 'high' : (v >= 2 ? 'mid' : 'low');
+      const scoreLabel = v >= 4 ? '심각' : (v >= 2 ? '주의' : '양호');
+      return `<div class="factor-item"><span class="ftxt">${factorMeta[key].getText(v)}</span><span class="fscore ${scoreClass}">${scoreLabel}</span></div>`;
+    }).join('');
+  }
+
+  document.getElementById('resultBox').classList.add('show');
+  document.getElementById('resultBox').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function shareResult(){
+  const pct = document.getElementById('resultPct').textContent;
+  const tier = document.getElementById('resultTier').textContent;
+  const text = `나의 꼰대력: ${pct} (${tier})`;
+  if(navigator.share){
+    navigator.share({title:'꼰대력 테스트 - 내위치', text: text, url: location.href});
+  } else {
+    navigator.clipboard.writeText(location.href);
+    alert('링크가 복사됐어요! 카톡에 붙여넣기 해보세요.');
+  }
+}
+</script>
+</body>
+</html>
