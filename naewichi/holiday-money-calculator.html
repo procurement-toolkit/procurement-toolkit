@@ -125,9 +125,10 @@
       <select id="type" onchange="rebuildAgeOptions()">
         <option value="parent">부모님께 드리는 명절 용돈</option>
         <option value="kids">조카·자녀에게 주는 세뱃돈</option>
+        <option value="student">학생인 내가 받는 세뱃돈</option>
       </select>
     </div>
-    <div class="field">
+    <div class="field" id="ageFieldWrap">
       <label for="age">내 나이대</label>
       <select id="age">
         <option value="20s">20대</option>
@@ -136,7 +137,7 @@
       </select>
     </div>
     <div class="field">
-      <label for="amount">실제로 드린(준) 금액</label>
+      <label for="amount">실제로 드린(준/받은) 금액</label>
       <select id="amount">
         <option value="3">3만원</option>
         <option value="5">5만원</option>
@@ -196,18 +197,22 @@
 // 카카오페이(2026.2) + KB국민카드(2026.2) 조사 기반, 나이대별 평균 (만원)
 const avgData = {
   parent: { "20s": 19, "30s": 22, "40s": 23 },
-  kids:   { "20s": 7.3, "30s": 12.2, "40s": 12.4 }
+  kids:   { "20s": 7.3, "30s": 12.2, "40s": 12.4 },
+  student: { "all": 7.4 } // 카카오페이: 중고등학생이 받는 세뱃돈 평균 7.4만원 (나이 구분 없는 전체 평균)
 };
-const typeLabel = { parent: "부모님께 드리는 명절 용돈", kids: "조카·자녀에게 주는 세뱃돈" };
-const ageLabel = { "20s": "20대", "30s": "30대", "40s": "40대" };
+const typeLabel = { parent: "부모님께 드리는 명절 용돈", kids: "조카·자녀에게 주는 세뱃돈", student: "학생인 내가 받는 세뱃돈" };
+const ageLabel = { "20s": "20대", "30s": "30대", "40s": "40대", "all": "중고생 전체" };
 
 function rebuildAgeOptions(){
-  // 두 유형 다 20~40대 데이터만 있어서 옵션은 고정, 향후 확장 대비 함수만 분리
+  const type = document.getElementById('type').value;
+  const ageWrap = document.getElementById('ageFieldWrap');
+  // 학생 모드는 나이대 구분 없는 단일 평균이라 나이대 선택 숨김
+  ageWrap.style.display = (type === 'student') ? 'none' : 'block';
 }
 
 function showResult(){
   const type = document.getElementById('type').value;
-  const age = document.getElementById('age').value;
+  const age = type === 'student' ? 'all' : document.getElementById('age').value;
   const myAmount = Number(document.getElementById('amount').value);
   const avg = avgData[type][age];
   const diff = myAmount - avg;
@@ -245,8 +250,10 @@ function showResult(){
 
   if(type === 'parent'){
     why.textContent = `카카오페이 데이터에서 부모님께 드리는 명절 용돈은 나이가 들수록 조금씩 늘어나는 경향이 있어요(20대 19만원 → 40대 23만원). 소득이 안정되는 시기와 맞물려 자연스럽게 금액도 올라가는 것으로 보여요.`;
-  } else {
+  } else if(type === 'kids'){
     why.textContent = `KB국민카드 데이터에서 세뱃돈은 20대(7.3만원)보다 30·40대(12만원대)가 훨씬 높은데, 이 시기에 본인 자녀나 조카가 생기면서 챙겨야 할 대상과 지출 규모가 함께 늘어나기 때문으로 풀이돼요.`;
+  } else {
+    why.textContent = `재미있는 건, 세뱃돈 '적정 금액'에 대한 세대 간 인식차가 꽤 커요. 카카오페이 투표에서 세뱃돈을 받는 10대의 60%는 10만원이 적당하다고 답한 반면, 주는 입장인 40~60대의 70%는 5만원이 적당하다고 답했어요. 실제 평균(7.4만원)은 그 중간 어디쯤에서 타협된 결과인 셈이에요.`;
   }
 
   document.getElementById('resultBox').classList.add('show');

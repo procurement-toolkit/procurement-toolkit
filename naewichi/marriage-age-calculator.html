@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>평균 초혼연령 비교 - 지역·성별로 알아보기 | 내위치</title>
+<meta name="description" content="내 결혼 나이(또는 계획)를 지역별·성별 평균 초혼연령과 비교해볼 수 있어요. 국가데이터처 2025년 혼인·이혼 통계 기반, 부담 없이 참고만 하는 정보성 콘텐츠입니다.">
+<meta property="og:title" content="평균 초혼연령, 지역별로 다르다?">
+<meta property="og:description" content="지역·성별 평균 초혼연령을 확인해보는 콘텐츠 - 내위치">
+<meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Jua&family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#FBF2ED; --card:#FFFFFF; --ink:#5C3A2E; --ink-soft:#9C7A6C;
+    --coral:#D98255; --coral-dark:#B8623A; --mint:#7FADA0; --mint-dark:#4F8778;
+    --yellow:#FFD166; --line:#F0DED2;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;background:var(--bg);font-family:'Noto Sans KR', sans-serif;color:var(--ink);-webkit-font-smoothing:antialiased;}
+  .wrap{max-width:480px;margin:0 auto;padding:0 20px 60px;}
+  .brandbar{display:flex;align-items:baseline;gap:6px;padding:18px 0 0;text-decoration:none;}
+  .brandbar .b1{font-family:'Jua',sans-serif;font-size:20px;color:var(--ink);}
+  .brandbar .b2{font-size:11px;color:var(--ink-soft);}
+  .hero{text-align:center;padding:18px 0 8px;}
+  .hero h1{font-family:'Jua',sans-serif;font-size:24px;line-height:1.4;margin:0 0 6px;color:var(--ink);}
+  .hero p{font-size:14px;color:var(--ink-soft);margin:0;}
+  .mascot{display:block;margin:14px auto 4px;width:200px;height:140px;}
+  .card{background:var(--card);border-radius:20px;padding:22px 20px;margin-top:18px;box-shadow:0 6px 0 var(--line);}
+  .card h2{font-family:'Jua',sans-serif;font-size:17px;margin:0 0 14px;color:var(--ink);}
+  .field{margin-bottom:14px;}
+  .field label{display:block;font-size:13px;font-weight:500;color:var(--ink-soft);margin-bottom:6px;}
+  select{
+    width:100%;padding:12px 14px;font-size:15px;font-family:'Noto Sans KR',sans-serif;
+    border:2px solid var(--line);border-radius:12px;background:#fff;color:var(--ink);
+    appearance:none;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='14' height='9'><path d='M1 1l6 6 6-6' stroke='%239C7A6C' stroke-width='2' fill='none'/></svg>");
+    background-repeat:no-repeat;background-position:right 14px center;
+  }
+  select:focus{outline:none;border-color:var(--coral);}
+  .go-btn{
+    width:100%;padding:14px;margin-top:6px;background:var(--coral);color:#fff;border:none;
+    border-radius:14px;font-family:'Jua',sans-serif;font-size:17px;cursor:pointer;
+    box-shadow:0 5px 0 var(--coral-dark);transition:transform .05s;
+  }
+  .go-btn:active{transform:translateY(3px);box-shadow:0 2px 0 var(--coral-dark);}
+  .result{display:none;margin-top:20px;}
+  .result.show{display:block;}
+  .headline-result{text-align:center;font-family:'Jua',sans-serif;font-size:21px;color:var(--ink);margin-bottom:6px;line-height:1.5;}
+  .headline-result .num{color:var(--coral-dark);font-size:27px;}
+  .sub-result{text-align:center;font-size:13px;color:var(--ink-soft);margin-bottom:20px;}
+  .track-row{margin-bottom:16px;}
+  .track-label{display:flex;justify-content:space-between;font-size:13px;font-weight:500;margin-bottom:6px;}
+  .track-label .me{color:var(--coral-dark);}
+  .track-label .avg{color:var(--mint-dark);}
+  .track{position:relative;height:32px;background:var(--bg);border-radius:16px;border:2px solid var(--line);overflow:visible;}
+  .track-fill{
+    position:absolute;left:0;top:0;bottom:0;border-radius:16px;
+    display:flex;align-items:center;justify-content:flex-end;padding-right:10px;
+    font-size:12px;font-weight:700;color:#fff;transition:width .8s cubic-bezier(.34,1.56,.64,1);
+  }
+  .track-fill.me{background:var(--coral);}
+  .track-fill.avg{background:var(--mint);}
+  .track-icon{position:absolute;top:50%;transform:translate(-50%,-50%);font-size:18px;}
+  .badge{
+    display:inline-block;background:var(--yellow);color:#7A5A00;font-size:12px;font-weight:700;
+    padding:5px 12px;border-radius:999px;margin:0 auto 14px;display:table;
+  }
+  .info-panel{
+    background:var(--bg);border-radius:14px;padding:18px;text-align:center;margin-top:8px;
+  }
+  .info-panel .big-num{font-family:'Jua',sans-serif;font-size:26px;color:var(--coral-dark);margin:6px 0;}
+  .info-panel p{font-size:13px;color:var(--ink-soft);margin:0;line-height:1.6;}
+  .why-box{background:var(--bg);border-radius:14px;padding:16px;margin:18px 0;border:2px dashed var(--line);}
+  .why-box .why-title{font-family:'Jua',sans-serif;font-size:14px;margin:0 0 8px;display:flex;align-items:center;gap:6px;}
+  .why-box p.why-text{font-size:13px;line-height:1.7;margin:0;}
+  .share-btn{
+    width:100%;padding:13px;margin-top:6px;background:#fff;color:var(--ink);
+    border:2px solid var(--line);border-radius:14px;font-family:'Noto Sans KR',sans-serif;
+    font-weight:700;font-size:14px;cursor:pointer;
+  }
+  .source{font-size:11px;color:var(--ink-soft);text-align:center;margin-top:12px;line-height:1.6;}
+  .related{margin-top:28px;}
+  .related h3{font-family:'Jua',sans-serif;font-size:15px;margin:0 0 10px;color:var(--ink-soft);}
+  .related-grid{display:flex;flex-direction:column;gap:8px;}
+  .related-item{
+    display:flex;align-items:center;gap:10px;background:var(--card);border-radius:14px;
+    padding:12px 14px;text-decoration:none;color:var(--ink);border:2px solid var(--line);
+  }
+  .related-item .emoji{font-size:20px;}
+  .related-item .txt{font-size:13px;font-weight:500;}
+  .footer-link{display:block;text-align:center;margin-top:26px;font-size:12px;color:var(--ink-soft);text-decoration:none;}
+</style>
+<script>window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };</script>
+<script defer src="/_vercel/insights/script.js"></script>
+</head>
+<body>
+<div class="wrap">
+
+  <a class="brandbar" href="index.html">
+    <span class="b1">내위치</span>
+    <span class="b2">by CBM Lab</span>
+  </a>
+
+  <div class="hero">
+    <h1>평균 초혼연령,<br>지역마다 다르다?</h1>
+    <p>부담 갖지 않고 참고만 하세요</p>
+  </div>
+
+  <svg class="mascot" viewBox="0 0 200 140" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="반지와 달력 아이콘의 귀여운 일러스트">
+    <ellipse cx="100" cy="128" rx="70" ry="7" fill="#F0DED2"/>
+    <circle cx="100" cy="75" r="30" fill="none" stroke="#D98255" stroke-width="10"/>
+    <polygon points="100,45 108,60 92,60" fill="#FFD166"/>
+    <circle cx="60" cy="50" r="4" fill="#7FADA0"/>
+    <circle cx="140" cy="55" r="3" fill="#7FADA0"/>
+    <circle cx="150" cy="90" r="4" fill="#D98255"/>
+  </svg>
+
+  <div class="card">
+    <h2>나는 이래요</h2>
+    <div class="field">
+      <label for="gender">성별</label>
+      <select id="gender">
+        <option value="m">남성</option>
+        <option value="f">여성</option>
+      </select>
+    </div>
+    <div class="field">
+      <label for="region">지역</label>
+      <select id="region">
+        <option value="seoul">서울</option>
+        <option value="daejeon">대전</option>
+        <option value="ulsan">울산</option>
+        <option value="chungbuk">충북</option>
+        <option value="jeonnam">전남</option>
+        <option value="other" selected>그 외 지역</option>
+      </select>
+    </div>
+    <div class="field">
+      <label for="status">결혼 상태</label>
+      <select id="status" onchange="toggleAgeField()">
+        <option value="single" selected>아직 미혼이에요</option>
+        <option value="firstmarried">초혼으로 결혼했어요</option>
+        <option value="remarried">재혼으로 결혼했어요</option>
+      </select>
+    </div>
+    <div class="field" id="ageFieldWrap" style="display:none;">
+      <label for="myAge">결혼한 나이</label>
+      <select id="myAge"></select>
+    </div>
+    <button class="go-btn" onclick="showResult()">확인해보기 →</button>
+
+    <div class="result" id="resultBox">
+      <div id="singlePanel" style="display:none;">
+        <div class="info-panel">
+          <p>참고로 알아두시면 좋은 정보예요</p>
+          <p class="big-num" id="singleAvgText"></p>
+          <p id="singleSubText"></p>
+        </div>
+      </div>
+
+      <div id="marriedPanel" style="display:none;">
+        <div class="badge" id="badgeText"></div>
+        <div class="headline-result" id="headlineText"></div>
+        <div class="sub-result" id="subText"></div>
+
+        <div class="track-row">
+          <div class="track-label"><span class="me">나</span><span id="meMin"></span></div>
+          <div class="track" id="meTrack">
+            <div class="track-fill me" id="meFill"><span class="track-icon">💍</span></div>
+          </div>
+        </div>
+        <div class="track-row">
+          <div class="track-label"><span class="avg" id="avgLabel">지역·성별 평균</span><span id="avgMin"></span></div>
+          <div class="track" id="avgTrack">
+            <div class="track-fill avg" id="avgFill"><span class="track-icon">📊</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="why-box">
+        <p class="why-title">💡 이런 배경이 있어요</p>
+        <p class="why-text" id="whyText"></p>
+      </div>
+
+      <button class="share-btn" onclick="shareResult()">📤 카톡으로 공유하기</button>
+      <p class="source">출처: 국가데이터처 「2025년 혼인·이혼 통계」(2026.3 발표)</p>
+    </div>
+  </div>
+
+  <div class="related">
+    <h3>다른 사람들이 본 랭킹</h3>
+    <div class="related-grid">
+      <a class="related-item" href="wedding-gift-calculator.html">
+        <span class="emoji">💌</span><span class="txt">내 축의금 vs 관계별 평균</span>
+      </a>
+      <a class="related-item" href="savings-calculator.html">
+        <span class="emoji">🐷</span><span class="txt">내 순자산 vs 또래 평균</span>
+      </a>
+    </div>
+  </div>
+
+  <a class="footer-link" href="../index.html">CBM Lab의 다른 무역 도구 보기 →</a>
+</div>
+
+<script>
+// 국가데이터처 「2025년 혼인·이혼 통계」(2026.3 발표) 기반 실제 수치
+const nationalAvg = { m: 33.9, f: 31.6 };
+// 지역별 실측치가 있는 곳만 반영, 나머지는 전국 평균을 사용
+const regionAvg = {
+  seoul: { m: 34.2, f: 32.4 },
+  daejeon: { m: 33.2, f: nationalAvg.f },
+  ulsan: { m: 33.2, f: nationalAvg.f },
+  chungbuk: { m: nationalAvg.m, f: 31.0 },
+  jeonnam: { m: nationalAvg.m, f: 31.0 },
+  other: { m: nationalAvg.m, f: nationalAvg.f }
+};
+const regionLabel = { seoul: "서울", daejeon: "대전", ulsan: "울산", chungbuk: "충북", jeonnam: "전남", other: "그 외 지역" };
+const genderLabel = { m: "남성", f: "여성" };
+const remarriageAvg = { m: 51.9, f: 47.5 };
+
+const myAgeSelect = document.getElementById('myAge');
+for(let a = 19; a <= 60; a++){
+  const opt = document.createElement('option');
+  opt.value = a; opt.textContent = a + "세";
+  if(a === 32) opt.selected = true;
+  myAgeSelect.appendChild(opt);
+}
+
+function toggleAgeField(){
+  const status = document.getElementById('status').value;
+  document.getElementById('ageFieldWrap').style.display = (status === 'single') ? 'none' : 'block';
+}
+
+function showResult(){
+  const gender = document.getElementById('gender').value;
+  const region = document.getElementById('region').value;
+  const status = document.getElementById('status').value;
+
+  const singlePanel = document.getElementById('singlePanel');
+  const marriedPanel = document.getElementById('marriedPanel');
+  const why = document.getElementById('whyText');
+
+  if(status === 'single'){
+    marriedPanel.style.display = 'none';
+    singlePanel.style.display = 'block';
+    const avg = regionAvg[region][gender];
+    document.getElementById('singleAvgText').textContent = avg + '세';
+    document.getElementById('singleSubText').textContent =
+      `${regionLabel[region]} · ${genderLabel[gender]}의 평균 초혼연령은 ${avg}세예요. 결혼은 정해진 시기가 있는 게 아니니, 이 숫자는 그냥 재미로만 봐주세요.`;
+    why.textContent = `평균 초혼연령은 최근 10년간 꾸준히 높아지고 있어요(2015년 대비 남자 +1.3세, 여자 +1.6세). 결혼 시기 자체가 다양해지고 있다는 뜻이라, 평균과 다르다고 특별한 의미는 없어요.`;
+  } else {
+    singlePanel.style.display = 'none';
+    marriedPanel.style.display = 'block';
+
+    const myAge = Number(document.getElementById('myAge').value);
+    const avg = status === 'remarried' ? remarriageAvg[gender] : regionAvg[region][gender];
+    const diff = myAge - avg;
+    const avgLabelText = status === 'remarried' ? '전국 재혼 평균' : regionLabel[region]+' · '+genderLabel[gender]+' 평균';
+
+    const badge = document.getElementById('badgeText');
+    const headline = document.getElementById('headlineText');
+    const sub = document.getElementById('subText');
+
+    let badgeMsg, headMsg, subMsg;
+    if(Math.abs(diff) <= 1){
+      badgeMsg = "평균과 비슷"; headMsg = `평균과 <span class="num">비슷한 시기</span>에 하셨어요`;
+      subMsg = "요즘 흐름과 잘 맞는 시기예요.";
+    } else if(diff < 0){
+      badgeMsg = "평균보다 이른 편"; headMsg = `평균보다 <span class="num">${Math.abs(diff).toFixed(1)}세</span> 이르게 하셨어요`;
+      subMsg = "빠르든 늦든, 본인에게 맞는 시기가 제일 중요하죠.";
+    } else {
+      badgeMsg = "평균보다 늦은 편"; headMsg = `평균보다 <span class="num">${diff.toFixed(1)}세</span> 늦게 하셨어요`;
+      subMsg = "최근엔 이 정도도 흔한 흐름이에요.";
+    }
+
+    badge.textContent = badgeMsg;
+    headline.innerHTML = headMsg;
+    sub.textContent = subMsg;
+
+    document.getElementById('avgLabel').textContent = avgLabelText;
+    document.getElementById('meMin').textContent = myAge+'세';
+    document.getElementById('avgMin').textContent = avg+'세';
+
+    const maxScale = Math.max(myAge, avg, 30) * 1.15;
+    document.getElementById('meFill').style.width = (myAge/maxScale*100)+'%';
+    document.getElementById('avgFill').style.width = (avg/maxScale*100)+'%';
+
+    if(status === 'remarried'){
+      why.textContent = `재혼 평균연령(남 51.9세, 여 47.5세)은 초혼 평균보다 훨씬 높은데, 이는 자연스러운 결과예요. 재혼은 대개 첫 결혼과 자녀 양육 등을 거친 이후에 이뤄지는 경우가 많기 때문이에요.`;
+    } else {
+      why.textContent = `${regionLabel[region]}의 평균 초혼연령이 이 정도로 나타나는 배경에는 지역 경제 구조가 있어요. 예를 들어 서울은 학업·취업을 위해 정착 시기가 늦어지는 경향이, 지방 중소도시는 상대적으로 이른 정착 경향이 있다고 분석돼요. 전국적으로도 초혼연령은 10년 전보다 남자 1.3세, 여자 1.6세 늘어난 추세예요.`;
+    }
+  }
+
+  document.getElementById('resultBox').classList.add('show');
+}
+
+function shareResult(){
+  if(navigator.share){
+    navigator.share({title:'평균 초혼연령 비교 - 내위치', text: '지역별·성별 평균 초혼연령을 확인해보세요', url: location.href});
+  } else {
+    navigator.clipboard.writeText(location.href);
+    alert('링크가 복사됐어요! 카톡에 붙여넣기 해보세요.');
+  }
+}
+</script>
+</body>
+</html>
