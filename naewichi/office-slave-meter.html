@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>회사 노예 측정기 - 나는 얼마나 회사에 충성 중인가 | 내위치</title>
+<meta name="description" content="출근시간, 퇴근시간, 야근, 업무 카톡까지 입력하면 내 노예 지수를 알려드려요. 일반 직장인부터 CEO보다 오래 있는 사람까지, 결과 캡처해서 공유해보세요.">
+<meta property="og:title" content="당신의 노예 지수는 몇 %?">
+<meta property="og:description" content="10초면 나오는 회사 노예 측정기 - 내위치">
+<meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Jua&family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#191A23; --card:#24263A; --ink:#F3F4FB; --ink-soft:#9296B8;
+    --coral:#FF5C5C; --coral-dark:#D63F3F; --mint:#FFC94D; --mint-dark:#D9A62E;
+    --yellow:#FFC94D; --line:#33364D;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;background:var(--bg);font-family:'Noto Sans KR', sans-serif;color:var(--ink);-webkit-font-smoothing:antialiased;}
+  .wrap{max-width:480px;margin:0 auto;padding:0 20px 60px;}
+  .brandbar{display:flex;align-items:baseline;gap:6px;padding:18px 0 0;text-decoration:none;}
+  .brandbar .b1{font-family:'Jua',sans-serif;font-size:20px;color:var(--ink);}
+  .brandbar .b2{font-size:11px;color:var(--ink-soft);}
+  .hero{text-align:center;padding:18px 0 8px;}
+  .hero h1{font-family:'Jua',sans-serif;font-size:25px;line-height:1.4;margin:0 0 6px;color:var(--ink);}
+  .hero p{font-size:14px;color:var(--ink-soft);margin:0;}
+  .card{background:var(--card);border-radius:20px;padding:22px 20px;margin-top:18px;box-shadow:0 6px 0 var(--line);}
+  .card h2{font-family:'Jua',sans-serif;font-size:16px;margin:0 0 14px;color:var(--ink);}
+  .field{margin-bottom:14px;}
+  .field label{display:block;font-size:13px;font-weight:500;color:var(--ink-soft);margin-bottom:6px;}
+  select{
+    width:100%;padding:12px 14px;font-size:15px;font-family:'Noto Sans KR',sans-serif;
+    border:2px solid var(--line);border-radius:12px;background:#1e202e;color:var(--ink);
+    appearance:none;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='14' height='9'><path d='M1 1l6 6 6-6' stroke='%239296B8' stroke-width='2' fill='none'/></svg>");
+    background-repeat:no-repeat;background-position:right 14px center;
+  }
+  select:focus{outline:none;border-color:var(--coral);}
+  .go-btn{
+    width:100%;padding:15px;margin-top:8px;background:var(--coral);color:#fff;border:none;
+    border-radius:14px;font-family:'Jua',sans-serif;font-size:18px;cursor:pointer;
+    box-shadow:0 5px 0 var(--coral-dark);transition:transform .05s;
+  }
+  .go-btn:active{transform:translateY(3px);box-shadow:0 2px 0 var(--coral-dark);}
+
+  .result{display:none;margin-top:22px;}
+  .result.show{display:block;}
+
+  .result-card{
+    background:linear-gradient(180deg,#20222E,#191A23);
+    border:2px solid var(--line);border-radius:22px;padding:28px 20px;text-align:center;
+  }
+  .result-emoji{font-size:64px;line-height:1;margin-bottom:8px;}
+  .result-tier{font-family:'Jua',sans-serif;font-size:22px;color:var(--ink);margin:0 0 4px;}
+  .result-pct{font-family:'Jua',sans-serif;font-size:52px;color:var(--coral);margin:6px 0;}
+  .result-pct span{font-size:22px;color:var(--ink-soft);}
+  .result-line{font-size:14px;color:var(--ink-soft);margin:8px 0 0;line-height:1.6;}
+
+  .meter{position:relative;height:22px;background:var(--bg);border-radius:11px;border:2px solid var(--line);margin:20px 0 6px;overflow:hidden;}
+  .meter-fill{height:100%;border-radius:9px;background:linear-gradient(90deg,#FFC94D,#FF5C5C);transition:width 1s cubic-bezier(.34,1.56,.64,1);}
+  .meter-labels{display:flex;justify-content:space-between;font-size:11px;color:var(--ink-soft);}
+
+  .factors{margin-top:22px;}
+  .factors h3{font-family:'Jua',sans-serif;font-size:14px;color:var(--ink-soft);margin:0 0 10px;}
+  .factor-item{
+    display:flex;justify-content:space-between;align-items:center;gap:10px;
+    background:var(--bg);border-radius:12px;padding:11px 14px;margin-bottom:8px;border:1px solid var(--line);
+  }
+  .factor-item .ftxt{font-size:13px;color:var(--ink);}
+  .factor-item .fscore{font-size:12px;font-weight:700;padding:3px 9px;border-radius:999px;flex-shrink:0;}
+  .fscore.low{background:#1E3A2E;color:#7FE0A8;}
+  .fscore.mid{background:#3A331E;color:#FFC94D;}
+  .fscore.high{background:#3A1E1E;color:#FF8888;}
+
+  .share-btn{
+    width:100%;padding:14px;margin-top:20px;background:var(--mint);color:#3A2A00;
+    border:none;border-radius:14px;font-family:'Jua',sans-serif;font-weight:700;font-size:15px;cursor:pointer;
+    box-shadow:0 5px 0 var(--mint-dark);
+  }
+  .share-btn:active{transform:translateY(3px);box-shadow:0 2px 0 var(--mint-dark);}
+
+  .disclaimer{font-size:11px;color:var(--ink-soft);text-align:center;margin-top:14px;line-height:1.6;}
+
+  .related{margin-top:28px;}
+  .related h3{font-family:'Jua',sans-serif;font-size:15px;margin:0 0 10px;color:var(--ink-soft);}
+  .related-grid{display:flex;flex-direction:column;gap:8px;}
+  .related-item{
+    display:flex;align-items:center;gap:10px;background:var(--card);border-radius:14px;
+    padding:12px 14px;text-decoration:none;color:var(--ink);border:2px solid var(--line);
+  }
+  .related-item .emoji{font-size:20px;}
+  .related-item .txt{font-size:13px;font-weight:500;}
+  .footer-link{display:block;text-align:center;margin-top:26px;font-size:12px;color:var(--ink-soft);text-decoration:none;}
+</style>
+<script>window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };</script>
+<script defer src="/_vercel/insights/script.js"></script>
+</head>
+<body>
+<div class="wrap">
+
+  <a class="brandbar" href="index.html">
+    <span class="b1">내위치</span>
+    <span class="b2">by CBM Lab</span>
+  </a>
+
+  <div class="hero">
+    <h1>회사 노예 측정기</h1>
+    <p>솔직하게 골라보세요, 10초면 나와요</p>
+  </div>
+
+  <div class="card">
+    <h2>오늘 하루는 이랬어요</h2>
+    <div class="field">
+      <label for="arrival">출근 시간</label>
+      <select id="arrival">
+        <option value="0">9시 이후</option>
+        <option value="1" selected>9시</option>
+        <option value="2">8시~9시</option>
+        <option value="3">7시~8시</option>
+        <option value="4">7시 이전</option>
+      </select>
+    </div>
+    <div class="field">
+      <label for="departure">퇴근 시간</label>
+      <select id="departure">
+        <option value="0">정시 (6시 전후)</option>
+        <option value="1" selected>1시간 정도 늦게</option>
+        <option value="2">2시간 정도 늦게</option>
+        <option value="3">3시간 이상 늦게</option>
+        <option value="4">자정 넘어서</option>
+      </select>
+    </div>
+    <div class="field">
+      <label for="lunch">점심시간, 실제로 쉬는 정도</label>
+      <select id="lunch">
+        <option value="0">1시간 이상 여유롭게</option>
+        <option value="1" selected>딱 1시간</option>
+        <option value="2">30분 정도</option>
+        <option value="4">거의 못 쉼 (일하며 먹음)</option>
+      </select>
+    </div>
+    <div class="field">
+      <label for="overtime">일주일에 야근하는 날</label>
+      <select id="overtime">
+        <option value="0">0일</option>
+        <option value="1" selected>1~2일</option>
+        <option value="2">3~4일</option>
+        <option value="4">거의 매일</option>
+      </select>
+    </div>
+    <div class="field">
+      <label for="messenger">업무 카톡·메신저 오는 시간대</label>
+      <select id="messenger">
+        <option value="0">업무시간에만</option>
+        <option value="1" selected>퇴근 후 저녁까지</option>
+        <option value="2">주말에도 옴</option>
+        <option value="4">24시간 상시</option>
+      </select>
+    </div>
+    <div class="field">
+      <label for="leave">연차, 쓰고 싶을 때 쓰는 정도</label>
+      <select id="leave">
+        <option value="0">눈치 안 보고 자유롭게</option>
+        <option value="2" selected>어느 정도 눈치 봄</option>
+        <option value="4">거의 못 씀</option>
+      </select>
+    </div>
+    <button class="go-btn" onclick="showResult()">노예 지수 확인하기 →</button>
+  </div>
+
+  <div class="result" id="resultBox">
+    <div class="result-card">
+      <div class="result-emoji" id="resultEmoji"></div>
+      <p class="result-tier" id="resultTier"></p>
+      <p class="result-pct" id="resultPct"></p>
+      <p class="result-line" id="resultLine"></p>
+
+      <div class="meter">
+        <div class="meter-fill" id="meterFill"></div>
+      </div>
+      <div class="meter-labels">
+        <span>🐴 일반 직장인</span>
+        <span>👑 노예</span>
+      </div>
+    </div>
+
+    <div class="factors">
+      <h3>💡 결정적이었던 항목</h3>
+      <div id="factorsList"></div>
+    </div>
+
+    <button class="share-btn" onclick="shareResult()">📤 결과 카톡으로 자랑(?)하기</button>
+    <p class="disclaimer">🎭 재미로 보는 콘텐츠입니다. 진짜 노동 상담은 고용노동부 상담센터(1350)를 이용해보세요.</p>
+  </div>
+
+  <div class="related">
+    <h3>다른 사람들이 본 랭킹</h3>
+    <div class="related-grid">
+      <a class="related-item" href="annual-leave-calculator.html">
+        <span class="emoji">🏖️</span><span class="txt">내 연차 소진율 vs 전국 평균</span>
+      </a>
+      <a class="related-item" href="commute-time-calculator.html">
+        <span class="emoji">🚌</span><span class="txt">내 출퇴근 시간 vs 전국 평균</span>
+      </a>
+    </div>
+  </div>
+
+  <a class="footer-link" href="../index.html">CBM Lab의 다른 무역 도구 보기 →</a>
+</div>
+
+<script>
+const factorMeta = {
+  arrival: { label: "출근 시간", getText: v => ["9시 이후 출근", "9시 출근", "8~9시 출근", "7~8시 출근", "7시 이전 출근"][v] },
+  departure: { label: "퇴근 시간", getText: v => ["정시 퇴근", "1시간 늦은 퇴근", "2시간 늦은 퇴근", "3시간 이상 늦은 퇴근", "자정 넘은 퇴근"][v] },
+  lunch: { label: "점심시간", getText: v => ({0:"여유로운 점심",1:"딱 1시간 점심",2:"30분 점심",4:"점심시간 없음"}[v]) },
+  overtime: { label: "야근 빈도", getText: v => ({0:"야근 없음",1:"주 1~2회 야근",2:"주 3~4회 야근",4:"거의 매일 야근"}[v]) },
+  messenger: { label: "업무 메신저", getText: v => ({0:"업무시간에만 연락",1:"저녁까지 연락 옴",2:"주말에도 연락 옴",4:"24시간 상시 대기"}[v]) },
+  leave: { label: "연차 사용", getText: v => ({0:"연차 자유롭게 사용",2:"연차 눈치 보며 사용",4:"연차 거의 못 씀"}[v]) }
+};
+
+const tiers = [
+  { max: 20, emoji: "🐴", name: "일반 직장인", line: "워라밸이 살아있는 편이에요. 이 정도면 회사도 사람 취급 하는 곳이네요." },
+  { max: 45, emoji: "🐂", name: "일개미", line: "열심히는 살고 있지만, 아직 도망칠 힘은 남아있는 상태예요." },
+  { max: 70, emoji: "🫏", name: "회사의 충직한 노예", line: "회사가 없으면 못 사는 게 아니라, 회사가 당신 없으면 못 굴러가는 수준이에요." },
+  { max: 100, emoji: "👑", name: "CEO보다 회사에 오래 있는 사람", line: "사장님도 퇴근한 시간에 당신은 아직 사무실에 있을 확률이 높아요." }
+];
+
+function showResult(){
+  const values = {};
+  let total = 0;
+  const maxPerItem = { arrival:4, departure:4, lunch:4, overtime:4, messenger:4, leave:4 };
+  const maxTotal = Object.values(maxPerItem).reduce((a,b)=>a+b,0);
+
+  for(const key of Object.keys(factorMeta)){
+    const v = Number(document.getElementById(key).value);
+    values[key] = v;
+    total += v;
+  }
+
+  const pct = Math.round(total / maxTotal * 100);
+  const tier = tiers.find(t => pct <= t.max);
+
+  document.getElementById('resultEmoji').textContent = tier.emoji;
+  document.getElementById('resultTier').textContent = tier.name;
+  document.getElementById('resultPct').innerHTML = pct + '<span>% 노예 지수</span>';
+  document.getElementById('resultLine').textContent = tier.line;
+  document.getElementById('meterFill').style.width = pct + '%';
+
+  // 결정적이었던 항목 (점수 높은 순 2~3개, 0점인 항목은 제외)
+  const sorted = Object.entries(values)
+    .filter(([k,v]) => v > 0)
+    .sort((a,b) => b[1] - a[1])
+    .slice(0, 3);
+
+  const factorsList = document.getElementById('factorsList');
+  if(sorted.length === 0){
+    factorsList.innerHTML = '<div class="factor-item"><span class="ftxt">특별히 튀는 항목이 없어요. 전체적으로 균형 잡힌 워라밸이네요.</span></div>';
+  } else {
+    factorsList.innerHTML = sorted.map(([key, v]) => {
+      const meta = factorMeta[key];
+      const scoreClass = v >= 4 ? 'high' : (v >= 2 ? 'mid' : 'low');
+      const scoreLabel = v >= 4 ? '심각' : (v >= 2 ? '주의' : '양호');
+      return `<div class="factor-item">
+        <span class="ftxt">${meta.getText(v)}</span>
+        <span class="fscore ${scoreClass}">${scoreLabel}</span>
+      </div>`;
+    }).join('');
+  }
+
+  document.getElementById('resultBox').classList.add('show');
+  document.getElementById('resultBox').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function shareResult(){
+  const pct = document.getElementById('resultPct').textContent;
+  const tier = document.getElementById('resultTier').textContent;
+  const text = `나의 회사 노예 지수: ${pct} (${tier})`;
+  if(navigator.share){
+    navigator.share({title:'회사 노예 측정기 - 내위치', text: text, url: location.href});
+  } else {
+    navigator.clipboard.writeText(location.href);
+    alert('링크가 복사됐어요! 카톡에 붙여넣기 해보세요.');
+  }
+}
+</script>
+</body>
+</html>
