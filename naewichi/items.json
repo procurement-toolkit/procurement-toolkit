@@ -32,6 +32,12 @@
     { "title": "월급 삭제 시뮬레이터", "sub": "내 월급이 사라지는 과정", "emoji": "💸", "url": "salary-delete-simulator.html", "cat": "meme", "views": 0 },
     { "title": "나의 아저씨 지수", "sub": "몇 % 아저씨일까", "emoji": "🍵", "url": "ahjussi-index-test.html", "cat": "meme", "views": 0 },
     { "title": "퇴사 확률 계산기", "sub": "이번 달 마음속 사직서는 몇 %", "emoji": "📝", "url": "resignation-probability-calculator.html", "cat": "meme", "views": 0 },
-    { "title": "나의 꼰대력 테스트", "sub": "웃자고 하는 자기성찰 테스트", "emoji": "📢", "url": "kkondae-test.html", "cat": "meme", "views": 0 }
+    { "title": "나의 꼰대력 테스트", "sub": "웃자고 하는 자기성찰 테스트", "emoji": "📢", "url": "kkondae-test.html", "cat": "meme", "views": 0 },
+    { "title": "내 인생은 GTA 몇 %인가", "sub": "사고·경찰서·벌금·음주로 알아보기", "emoji": "💥", "url": "gta-life-percentage.html", "cat": "meme", "views": 0 },
+    { "title": "ChatGPT 의존도 테스트", "sub": "AI가 당신보다 당신을 더 잘 안다", "emoji": "🤖", "url": "ai-dependency-test.html", "cat": "meme", "views": 0 },
+    { "title": "인생 버튼", "sub": "누르면 뭐가 나올지 아무도 몰라요", "emoji": "🔘", "url": "life-button.html", "cat": "meme", "views": 0 },
+    { "title": "최악의 상사 궁합 테스트", "sub": "나와 상극인 상사 유형은", "emoji": "🎭", "url": "worst-boss-match.html", "cat": "meme", "views": 0 },
+    { "title": "오늘의 점심 추천", "sub": "못 정하겠으면 눌러보세요", "emoji": "🍚", "url": "lunch-recommender.html", "cat": "meme", "views": 0 },
+    { "title": "나를 팩폭해주는 AI", "sub": "욕은 안 해요, 근데 아플 수 있어요", "emoji": "🎯", "url": "fact-punch-ai.html", "cat": "meme", "views": 0 }
   ]
 }

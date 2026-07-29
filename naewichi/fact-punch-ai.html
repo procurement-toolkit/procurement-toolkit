@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>나를 팩폭해주는 AI - 욕은 안 해요, 그런데 아파요 | 내위치</title>
+<meta name="description" content="취미, 직업, 나이대를 입력하면 당신의 하루를 정확하게 팩폭해드려요. 웃프지만 사실일 확률이 높습니다.">
+<meta property="og:title" content="AI가 당신을 팩폭합니다">
+<meta property="og:description" content="10초면 나오는 팩폭 생성기 - 내위치">
+<meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Jua&family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#181B1F; --card:#232830; --ink:#EEF1F5; --ink-soft:#8E96A5;
+    --coral:#5C8FE0; --coral-dark:#3E6DB8; --mint:#E05C8F; --mint-dark:#B83E6D;
+    --yellow:#FFC94D; --line:#2E3540;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;background:var(--bg);font-family:'Noto Sans KR', sans-serif;color:var(--ink);-webkit-font-smoothing:antialiased;}
+  .wrap{max-width:480px;margin:0 auto;padding:0 20px 60px;}
+  .brandbar{display:flex;align-items:baseline;gap:6px;padding:18px 0 0;text-decoration:none;}
+  .brandbar .b1{font-family:'Jua',sans-serif;font-size:20px;color:var(--ink);}
+  .brandbar .b2{font-size:11px;color:var(--ink-soft);}
+  .hero{text-align:center;padding:18px 0 8px;}
+  .hero h1{font-family:'Jua',sans-serif;font-size:24px;line-height:1.4;margin:0 0 6px;color:var(--ink);}
+  .hero p{font-size:14px;color:var(--ink-soft);margin:0;}
+  .card{background:var(--card);border-radius:20px;padding:22px 20px;margin-top:18px;box-shadow:0 6px 0 var(--line);}
+  .card h2{font-family:'Jua',sans-serif;font-size:16px;margin:0 0 14px;color:var(--ink);}
+  .field{margin-bottom:14px;}
+  .field label{display:block;font-size:13px;font-weight:500;color:var(--ink-soft);margin-bottom:6px;}
+  select{
+    width:100%;padding:12px 14px;font-size:15px;font-family:'Noto Sans KR',sans-serif;
+    border:2px solid var(--line);border-radius:12px;background:#1c2027;color:var(--ink);
+    appearance:none;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='14' height='9'><path d='M1 1l6 6 6-6' stroke='%238E96A5' stroke-width='2' fill='none'/></svg>");
+    background-repeat:no-repeat;background-position:right 14px center;
+  }
+  select:focus{outline:none;border-color:var(--coral);}
+  .go-btn{
+    width:100%;padding:15px;margin-top:8px;background:var(--coral);color:#fff;border:none;
+    border-radius:14px;font-family:'Jua',sans-serif;font-size:18px;cursor:pointer;
+    box-shadow:0 5px 0 var(--coral-dark);transition:transform .05s;
+  }
+  .go-btn:active{transform:translateY(3px);box-shadow:0 2px 0 var(--coral-dark);}
+
+  .result{display:none;margin-top:22px;}
+  .result.show{display:block;}
+  .result-card{
+    background:linear-gradient(180deg,#232A38,#181B1F);
+    border:2px solid var(--line);border-radius:22px;padding:28px 22px;text-align:center;
+  }
+  .result-emoji{font-size:44px;margin-bottom:10px;}
+  .result-text{font-family:'Jua',sans-serif;font-size:19px;color:var(--ink);line-height:1.9;margin:0;}
+  .result-text .hl{color:var(--mint);}
+
+  .share-btn{
+    width:100%;padding:14px;margin-top:20px;background:var(--yellow);color:#3A2A00;
+    border:none;border-radius:14px;font-family:'Jua',sans-serif;font-weight:700;font-size:15px;cursor:pointer;
+    box-shadow:0 5px 0 #B8942E;
+  }
+  .share-btn:active{transform:translateY(3px);box-shadow:0 2px 0 #B8942E;}
+  .disclaimer{font-size:11px;color:var(--ink-soft);text-align:center;margin-top:14px;line-height:1.6;}
+
+  .related{margin-top:28px;}
+  .related h3{font-family:'Jua',sans-serif;font-size:15px;margin:0 0 10px;color:var(--ink-soft);}
+  .related-grid{display:flex;flex-direction:column;gap:8px;}
+  .related-item{
+    display:flex;align-items:center;gap:10px;background:var(--card);border-radius:14px;
+    padding:12px 14px;text-decoration:none;color:var(--ink);border:2px solid var(--line);
+  }
+  .related-item .emoji{font-size:20px;}
+  .related-item .txt{font-size:13px;font-weight:500;}
+  .footer-link{display:block;text-align:center;margin-top:26px;font-size:12px;color:var(--ink-soft);text-decoration:none;}
+</style>
+<script>window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };</script>
+<script defer src="/_vercel/insights/script.js"></script>
+</head>
+<body>
+<div class="wrap">
+
+  <a class="brandbar" href="index.html">
+    <span class="b1">내위치</span>
+    <span class="b2">by CBM Lab</span>
+  </a>
+
+  <div class="hero">
+    <h1>나를 팩폭해주는 AI</h1>
+    <p>욕은 안 해요, 근데 아플 수 있어요</p>
+  </div>
+
+  <div class="card">
+    <h2>나는 이래요</h2>
+    <div class="field">
+      <label for="hobby">요즘 취미</label>
+      <select id="hobby">
+        <option value="netflix">넷플릭스·OTT 시청</option>
+        <option value="game">게임</option>
+        <option value="workout">운동·헬스</option>
+        <option value="reading">독서</option>
+        <option value="cafe">카페 투어</option>
+        <option value="none" selected>딱히 없음</option>
+      </select>
+    </div>
+    <div class="field">
+      <label for="job">직업 형태</label>
+      <select id="job">
+        <option value="office" selected>회사원</option>
+        <option value="student">학생</option>
+        <option value="freelance">프리랜서</option>
+        <option value="job_seeking">취업준비 중</option>
+      </select>
+    </div>
+    <div class="field">
+      <label for="age">나이대</label>
+      <select id="age">
+        <option value="20s">20대</option>
+        <option value="30s" selected>30대</option>
+        <option value="40s">40대 이상</option>
+      </select>
+    </div>
+    <button class="go-btn" onclick="showResult()">팩폭 받기 →</button>
+  </div>
+
+  <div class="result" id="resultBox">
+    <div class="result-card">
+      <div class="result-emoji">🎯</div>
+      <p class="result-text" id="resultText"></p>
+    </div>
+    <button class="share-btn" onclick="shareResult()">📤 카톡으로 결과 자랑(?)하기</button>
+    <p class="disclaimer">🎭 조합해서 만들어지는 재미 콘텐츠입니다. 너무 정곡을 찔러도 웃고 넘어가주세요.</p>
+  </div>
+
+  <div class="related">
+    <h3>다른 사람들이 본 랭킹</h3>
+    <div class="related-grid">
+      <a class="related-item" href="ai-dependency-test.html">
+        <span class="emoji">🤖</span><span class="txt">ChatGPT 의존도 테스트</span>
+      </a>
+      <a class="related-item" href="office-slave-meter.html">
+        <span class="emoji">🐴</span><span class="txt">회사 노예 측정기</span>
+      </a>
+    </div>
+  </div>
+
+  <a class="footer-link" href="../index.html">CBM Lab의 다른 무역 도구 보기 →</a>
+</div>
+
+<script>
+// 취미별 "저녁 시간" 팩폭 문구 뱅크
+const hobbyLines = {
+  netflix: [
+    "퇴근 후 <span class=\"hl\">넷플릭스</span>를 켜지만, <span class=\"hl\">30분 동안 뭘 볼지</span> 고르다가 잠듭니다.",
+    "'딱 한 편만' 이라고 말하고 <span class=\"hl\">시즌 전체</span>를 정주행합니다.",
+    "보고 싶은 건 쌓여만 가고, <span class=\"hl\">보는 건 광고</span>뿐입니다."
+  ],
+  game: [
+    "'딱 한 판만' 이라고 말하고 <span class=\"hl\">새벽 2시</span>가 됩니다.",
+    "게임 실력은 안 늘어도 <span class=\"hl\">현질</span>은 늡니다.",
+    "패치노트는 정독해도 <span class=\"hl\">할 일 목록</span>은 안 읽습니다."
+  ],
+  workout: [
+    "헬스장 등록은 했지만 <span class=\"hl\">출석 인증샷</span>이 운동의 전부입니다.",
+    "'오늘은 진짜 간다'를 <span class=\"hl\">일주일째</span> 말하고 있습니다.",
+    "운동복은 샀는데 <span class=\"hl\">태그</span>는 아직 안 뗐습니다."
+  ],
+  reading: [
+    "책은 <span class=\"hl\">3권째</span> 사놓고 1권도 다 안 읽었습니다.",
+    "독서 앱은 깔았지만 <span class=\"hl\">SNS 앱</span>을 더 많이 켭니다.",
+    "'올해는 한 달에 한 권'을 <span class=\"hl\">1월에만</span> 지켰습니다."
+  ],
+  cafe: [
+    "카페에서 <span class=\"hl\">사진만 찍고</span> 커피는 반도 안 마십니다.",
+    "'분위기 좋은 카페 가서 집중해야지' 하고 <span class=\"hl\">인스타만</span> 합니다.",
+    "카페 투어는 하는데 <span class=\"hl\">집 앞 카페</span>는 안 가봤습니다."
+  ],
+  none: [
+    "취미가 없다고 하지만, 사실 <span class=\"hl\">폰 스크롤</span>이 취미입니다.",
+    "'취미를 만들어야지'라고 <span class=\"hl\">매년</span> 다짐만 합니다.",
+    "쉬는 날엔 <span class=\"hl\">아무것도 안 하기</span>가 가장 큰 취미입니다."
+  ]
+};
+
+const jobLines = {
+  office: [
+    "출근할 땐 커피가 필요하고, 퇴근할 땐 <span class=\"hl\">아무 생각</span>이 필요합니다.",
+    "월요일이 제일 힘들다고 하지만, 사실 <span class=\"hl\">화요일도</span> 못지않게 힘듭니다.",
+    "'다음 주까지 완료' 라고 하면 <span class=\"hl\">전날</span> 시작합니다."
+  ],
+  student: [
+    "시험 기간엔 <span class=\"hl\">방 청소</span>가 제일 하고 싶어집니다.",
+    "'내일부터 계획적으로'가 <span class=\"hl\">매일</span>의 다짐입니다.",
+    "과제는 미루고 <span class=\"hl\">유튜브 알고리즘</span>을 정복합니다."
+  ],
+  freelance: [
+    "출퇴근이 자유롭다고 하지만, 사실 <span class=\"hl\">퇴근이 없습니다.</span>",
+    "마감 전날에야 <span class=\"hl\">집중력</span>이 폭발합니다.",
+    "'오늘은 일찍 시작해야지' 하고 <span class=\"hl\">점심때</span> 컴퓨터를 켭니다."
+  ],
+  job_seeking: [
+    "자소서는 <span class=\"hl\">복사 붙여넣기</span>가 반, 새로 쓰는 게 반입니다.",
+    "'오늘은 3개 지원해야지' 하고 <span class=\"hl\">1개</span> 지원하고 뿌듯해합니다.",
+    "합격 메일 알림음에 <span class=\"hl\">심장</span>이 먼저 반응합니다."
+  ]
+};
+
+const ageLines = {
+  "20s": [
+    "'아직 젊으니까'라는 말로 <span class=\"hl\">모든 걸</span> 합리화합니다.",
+    "체력은 아직 괜찮은데 <span class=\"hl\">지갑 체력</span>이 부족합니다."
+  ],
+  "30s": [
+    "'예전 같지 않다'는 말을 <span class=\"hl\">벌써</span> 실감하고 있습니다.",
+    "건강검진 결과를 보고 <span class=\"hl\">운동</span>을 결심했다가 다음 날 잊습니다."
+  ],
+  "40s": [
+    "체력은 줄었는데 <span class=\"hl\">책임</span>은 늘었습니다.",
+    "'요즘 애들은'이라는 말이 <span class=\"hl\">입 밖으로</span> 나오려는 걸 참습니다."
+  ]
+};
+
+function pick(arr, seed){
+  let h = 0;
+  for(let i=0;i<seed.length;i++){ h = (h*31 + seed.charCodeAt(i)) | 0; }
+  return arr[Math.abs(h) % arr.length];
+}
+
+function showResult(){
+  const hobby = document.getElementById('hobby').value;
+  const job = document.getElementById('job').value;
+  const age = document.getElementById('age').value;
+
+  const seed = hobby + job + age + Date.now();
+  const line1 = pick(hobbyLines[hobby], seed + "1");
+  const line2 = pick(jobLines[job], seed + "2");
+  const line3 = pick(ageLines[age], seed + "3");
+
+  document.getElementById('resultText').innerHTML = `${line1}<br><br>${line2}<br><br>${line3}`;
+  document.getElementById('resultBox').classList.add('show');
+  document.getElementById('resultBox').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function shareResult(){
+  const text = document.getElementById('resultText').textContent;
+  if(navigator.share){
+    navigator.share({title:'팩폭 AI - 내위치', text: text, url: location.href});
+  } else {
+    navigator.clipboard.writeText(location.href);
+    alert('링크가 복사됐어요! 카톡에 붙여넣기 해보세요.');
+  }
+}
+</script>
+</body>
+</html>

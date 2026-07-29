@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>오늘의 점심 추천 - 못 정하겠으면 눌러보세요 | 내위치</title>
+<meta name="description" content="점심 메뉴 못 정하셨나요? 버튼 하나로 랜덤 추천 받아보세요. 가끔은 뜻밖의 결과도 나와요.">
+<meta property="og:title" content="오늘의 점심, 뭐 먹지?">
+<meta property="og:description" content="누르면 바로 나오는 점심 추천 - 내위치">
+<meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Jua&family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#1E1810; --card:#2B2216; --ink:#F7F0E6; --ink-soft:#BCA98C;
+    --coral:#E0923D; --coral-dark:#B8712A; --mint:#8FBF4D; --mint-dark:#679433;
+    --yellow:#FFC94D; --line:#402F1E;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;background:var(--bg);font-family:'Noto Sans KR', sans-serif;color:var(--ink);-webkit-font-smoothing:antialiased;}
+  .wrap{max-width:480px;margin:0 auto;padding:0 20px 60px;}
+  .brandbar{display:flex;align-items:baseline;gap:6px;padding:18px 0 0;text-decoration:none;}
+  .brandbar .b1{font-family:'Jua',sans-serif;font-size:20px;color:var(--ink);}
+  .brandbar .b2{font-size:11px;color:var(--ink-soft);}
+  .hero{text-align:center;padding:18px 0 8px;}
+  .hero h1{font-family:'Jua',sans-serif;font-size:25px;line-height:1.4;margin:0 0 6px;color:var(--ink);}
+  .hero p{font-size:14px;color:var(--ink-soft);margin:0;}
+
+  .spin-zone{
+    background:var(--card);border-radius:20px;padding:30px 20px;margin-top:22px;text-align:center;
+    border:2px solid var(--line);min-height:110px;display:flex;align-items:center;justify-content:center;
+  }
+  .spin-text{font-family:'Jua',sans-serif;font-size:26px;color:var(--ink);transition:opacity .1s;}
+
+  .go-btn{
+    width:100%;padding:16px;margin-top:16px;background:var(--coral);color:#fff;border:none;
+    border-radius:14px;font-family:'Jua',sans-serif;font-size:18px;cursor:pointer;
+    box-shadow:0 5px 0 var(--coral-dark);transition:transform .05s;
+  }
+  .go-btn:active{transform:translateY(3px);box-shadow:0 2px 0 var(--coral-dark);}
+
+  .punchline{
+    display:none;background:var(--bg);border-radius:14px;padding:16px;margin-top:16px;
+    text-align:center;font-size:14px;color:var(--ink-soft);border:2px dashed var(--line);line-height:1.7;
+  }
+  .punchline.show{display:block;}
+
+  .share-btn{
+    display:none;width:100%;padding:13px;margin-top:12px;background:var(--mint);color:#0C2E0C;
+    border:none;border-radius:14px;font-family:'Jua',sans-serif;font-weight:700;font-size:14px;cursor:pointer;
+    box-shadow:0 5px 0 var(--mint-dark);
+  }
+  .share-btn.show{display:block;}
+  .share-btn:active{transform:translateY(3px);box-shadow:0 2px 0 var(--mint-dark);}
+
+  .disclaimer{font-size:11px;color:var(--ink-soft);text-align:center;margin-top:14px;line-height:1.6;}
+
+  .related{margin-top:28px;}
+  .related h3{font-family:'Jua',sans-serif;font-size:15px;margin:0 0 10px;color:var(--ink-soft);}
+  .related-grid{display:flex;flex-direction:column;gap:8px;}
+  .related-item{
+    display:flex;align-items:center;gap:10px;background:var(--card);border-radius:14px;
+    padding:12px 14px;text-decoration:none;color:var(--ink);border:2px solid var(--line);
+  }
+  .related-item .emoji{font-size:20px;}
+  .related-item .txt{font-size:13px;font-weight:500;}
+  .footer-link{display:block;text-align:center;margin-top:26px;font-size:12px;color:var(--ink-soft);text-decoration:none;}
+</style>
+<script>window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };</script>
+<script defer src="/_vercel/insights/script.js"></script>
+</head>
+<body>
+<div class="wrap">
+
+  <a class="brandbar" href="index.html">
+    <span class="b1">내위치</span>
+    <span class="b2">by CBM Lab</span>
+  </a>
+
+  <div class="hero">
+    <h1>오늘의 점심 추천</h1>
+    <p>못 정하겠으면 그냥 눌러보세요</p>
+  </div>
+
+  <div class="spin-zone">
+    <p class="spin-text" id="spinText">?</p>
+  </div>
+
+  <button class="go-btn" onclick="spin()">돌리기 →</button>
+
+  <div class="punchline" id="punchline"></div>
+  <button class="share-btn" id="shareBtn" onclick="shareResult()">📤 카톡으로 공유하기</button>
+  <p class="disclaimer">🎭 완전 랜덤 재미 콘텐츠입니다. 실제 메뉴 선택은 본인 책임이에요.</p>
+
+  <div class="related">
+    <h3>다른 사람들이 본 랭킹</h3>
+    <div class="related-grid">
+      <a class="related-item" href="life-button.html">
+        <span class="emoji">🔘</span><span class="txt">인생 버튼</span>
+      </a>
+      <a class="related-item" href="office-slave-meter.html">
+        <span class="emoji">🐴</span><span class="txt">회사 노예 측정기</span>
+      </a>
+    </div>
+  </div>
+
+  <a class="footer-link" href="../index.html">CBM Lab의 다른 무역 도구 보기 →</a>
+</div>
+
+<script>
+const menus = ["김치찌개","된장찌개","제육볶음","돈까스","순두부찌개","비빔밥","냉면","칼국수","떡볶이","마라탕","초밥","파스타","샐러드","도시락","라면","국밥","짜장면","짬뽕","김밥","샌드위치"];
+
+const punchlines = [
+  "아니 그냥 부장님 따라가세요.",
+  "근데 이거 어제도 드시지 않았어요?",
+  "이 메뉴, 사실 아무 의미 없습니다.",
+  "결정 장애 해결 완료. 축하드립니다.",
+  "이걸로 골랐다고 나중에 딴소리하기 없기예요.",
+  "오늘도 다이어트는 내일부터입니다.",
+  "이 메뉴 먹고 오후 회의 버티세요.",
+  "사실 뭘 먹어도 큰 차이는 없어요."
+];
+
+function spin(){
+  const spinText = document.getElementById('spinText');
+  const punchline = document.getElementById('punchline');
+  const shareBtn = document.getElementById('shareBtn');
+  punchline.classList.remove('show');
+  shareBtn.classList.remove('show');
+
+  let count = 0;
+  const maxSpins = 18;
+  const interval = setInterval(() => {
+    const randomMenu = menus[Math.floor(Math.random() * menus.length)];
+    spinText.textContent = randomMenu;
+    count++;
+    if(count >= maxSpins){
+      clearInterval(interval);
+      const finalMenu = menus[Math.floor(Math.random() * menus.length)];
+      spinText.textContent = finalMenu;
+      const line = punchlines[Math.floor(Math.random() * punchlines.length)];
+      setTimeout(() => {
+        punchline.textContent = line;
+        punchline.classList.add('show');
+        shareBtn.classList.add('show');
+      }, 300);
+    }
+  }, 80);
+}
+
+function shareResult(){
+  const menu = document.getElementById('spinText').textContent;
+  const line = document.getElementById('punchline').textContent;
+  const text = `오늘의 점심 추천: ${menu} — ${line}`;
+  if(navigator.share){
+    navigator.share({title:'오늘의 점심 추천 - 내위치', text: text, url: location.href});
+  } else {
+    navigator.clipboard.writeText(location.href);
+    alert('링크가 복사됐어요! 카톡에 붙여넣기 해보세요.');
+  }
+}
+</script>
+</body>
+</html>

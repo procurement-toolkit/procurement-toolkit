@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>인생 버튼 - 눌러보면 뭐가 나올까 | 내위치</title>
+<meta name="description" content="버튼 하나만 누르면 랜덤으로 웃긴 인생 시나리오가 나와요. 몇 번이고 눌러서 새로운 결과를 확인해보세요.">
+<meta property="og:title" content="인생 버튼, 눌러볼까요?">
+<meta property="og:description" content="누를 때마다 다른 결과가 나오는 인생 버튼 - 내위치">
+<meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Jua&family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#1B1622; --card:#26202F; --ink:#F4F0FA; --ink-soft:#A497BC;
+    --coral:#B85CE0; --coral-dark:#943EB8; --mint:#5CE0C6; --mint-dark:#3EB8A0;
+    --yellow:#FFC94D; --line:#3A3148;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;background:var(--bg);font-family:'Noto Sans KR', sans-serif;color:var(--ink);-webkit-font-smoothing:antialiased;}
+  .wrap{max-width:480px;margin:0 auto;padding:0 20px 60px;}
+  .brandbar{display:flex;align-items:baseline;gap:6px;padding:18px 0 0;text-decoration:none;}
+  .brandbar .b1{font-family:'Jua',sans-serif;font-size:20px;color:var(--ink);}
+  .brandbar .b2{font-size:11px;color:var(--ink-soft);}
+  .hero{text-align:center;padding:18px 0 8px;}
+  .hero h1{font-family:'Jua',sans-serif;font-size:25px;line-height:1.4;margin:0 0 6px;color:var(--ink);}
+  .hero p{font-size:14px;color:var(--ink-soft);margin:0;}
+
+  .button-zone{text-align:center;margin-top:30px;}
+  .fate-btn{
+    width:180px;height:180px;border-radius:50%;background:linear-gradient(180deg,var(--coral),var(--coral-dark));
+    border:none;color:#fff;font-family:'Jua',sans-serif;font-size:22px;cursor:pointer;
+    box-shadow:0 8px 0 var(--coral-dark), 0 12px 24px rgba(0,0,0,0.4);
+    transition:transform .06s;
+  }
+  .fate-btn:active{transform:translateY(6px);box-shadow:0 2px 0 var(--coral-dark);}
+
+  .story-card{
+    display:none;background:var(--card);border-radius:20px;padding:26px 22px;margin-top:28px;
+    border:2px solid var(--line);text-align:center;min-height:120px;
+  }
+  .story-card.show{display:block;}
+  .story-line{font-family:'Jua',sans-serif;font-size:19px;color:var(--ink);line-height:1.8;margin:0;opacity:0;transition:opacity .4s;}
+  .story-line.visible{opacity:1;}
+  .story-arrow{font-size:20px;color:var(--ink-soft);margin:6px 0;}
+
+  .again-btn{
+    width:100%;padding:14px;margin-top:20px;background:var(--mint);color:#052E24;
+    border:none;border-radius:14px;font-family:'Jua',sans-serif;font-weight:700;font-size:15px;cursor:pointer;
+    box-shadow:0 5px 0 var(--mint-dark);display:none;
+  }
+  .again-btn.show{display:block;}
+  .again-btn:active{transform:translateY(3px);box-shadow:0 2px 0 var(--mint-dark);}
+
+  .share-btn{
+    width:100%;padding:13px;margin-top:10px;background:#fff;color:#1B1622;
+    border:none;border-radius:14px;font-family:'Noto Sans KR',sans-serif;font-weight:700;font-size:14px;cursor:pointer;
+    display:none;
+  }
+  .share-btn.show{display:block;}
+
+  .disclaimer{font-size:11px;color:var(--ink-soft);text-align:center;margin-top:14px;line-height:1.6;}
+
+  .related{margin-top:32px;}
+  .related h3{font-family:'Jua',sans-serif;font-size:15px;margin:0 0 10px;color:var(--ink-soft);}
+  .related-grid{display:flex;flex-direction:column;gap:8px;}
+  .related-item{
+    display:flex;align-items:center;gap:10px;background:var(--card);border-radius:14px;
+    padding:12px 14px;text-decoration:none;color:var(--ink);border:2px solid var(--line);
+  }
+  .related-item .emoji{font-size:20px;}
+  .related-item .txt{font-size:13px;font-weight:500;}
+  .footer-link{display:block;text-align:center;margin-top:26px;font-size:12px;color:var(--ink-soft);text-decoration:none;}
+</style>
+<script>window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };</script>
+<script defer src="/_vercel/insights/script.js"></script>
+</head>
+<body>
+<div class="wrap">
+
+  <a class="brandbar" href="index.html">
+    <span class="b1">내위치</span>
+    <span class="b2">by CBM Lab</span>
+  </a>
+
+  <div class="hero">
+    <h1>인생 버튼</h1>
+    <p>누르면 뭐가 나올지, 아무도 몰라요</p>
+  </div>
+
+  <div class="button-zone">
+    <button class="fate-btn" id="fateBtn" onclick="pressButton()">누르기</button>
+  </div>
+
+  <div class="story-card" id="storyCard"></div>
+
+  <button class="again-btn" id="againBtn" onclick="pressButton()">🔄 다시 눌러보기</button>
+  <button class="share-btn" id="shareBtn" onclick="shareResult()">📤 카톡으로 공유하기</button>
+  <p class="disclaimer">🎭 완전히 랜덤으로 나오는 재미 콘텐츠입니다.</p>
+
+  <div class="related">
+    <h3>다른 사람들이 본 랭킹</h3>
+    <div class="related-grid">
+      <a class="related-item" href="office-slave-meter.html">
+        <span class="emoji">🐴</span><span class="txt">회사 노예 측정기</span>
+      </a>
+      <a class="related-item" href="resignation-probability-calculator.html">
+        <span class="emoji">📝</span><span class="txt">퇴사 확률 계산기</span>
+      </a>
+    </div>
+  </div>
+
+  <a class="footer-link" href="../index.html">CBM Lab의 다른 무역 도구 보기 →</a>
+</div>
+
+<script>
+const stories = [
+  ["오늘 퇴사한다", "...", "실패.", "내일도 출근입니다."],
+  ["사직서 제출", "↓", "팀장 휴가", "다음 주에 다시 내세요."],
+  ["로또 1등 상상", "↓", "번호 확인", "5개 틀렸습니다."],
+  ["다이어트 시작", "↓", "3일 후", "치킨이 도착했습니다."],
+  ["일찍 자기로 결심", "↓", "새벽 2시", "유튜브 알고리즘이 이겼습니다."],
+  ["헬스장 등록", "↓", "한 달 후", "출석 1회, 회비는 완납했습니다."],
+  ["오늘부터 갓생", "↓", "알람 5개 설정", "전부 끄고 다시 잤습니다."],
+  ["연봉협상 시도", "↓", "팀장과 면담", "'내년에 잘해봅시다'로 끝났습니다."],
+  ["돈 아끼기로 결심", "↓", "쿠팡 접속", "장바구니가 늘었습니다."],
+  ["커피 끊기로 결심", "↓", "출근길", "손에 아메리카노가 있습니다."],
+  ["일찍 퇴근 계획", "↓", "5시 50분", "팀장이 회의를 잡았습니다."],
+  ["주식 매수", "↓", "다음 날", "물렸습니다."],
+  ["새해 목표: 독서 50권", "↓", "12월", "3권 읽었습니다. 그 중 1권은 표지만."],
+  ["소개팅 성공 예감", "↓", "대화 시작", "정적이 흘렀습니다."],
+  ["부장님이 커피 사줌", "↓", "대신", "야근 얘기가 시작됩니다."],
+  ["오늘은 정시퇴근", "↓", "5시 58분", "'급한 거 하나만' 카톡이 왔습니다."],
+  ["당근마켓 판매 시도", "↓", "일주일 후", "조회수 3, 채팅 0."],
+  ["금연 결심", "↓", "스트레스 받는 순간", "편의점으로 향합니다."],
+  ["오늘은 집에서 저녁", "↓", "냉장고 열어봄", "배달앱을 켭니다."],
+  ["아침형 인간 도전", "↓", "3일차", "다시 올빼미로 복귀했습니다."]
+];
+
+let lastIndex = -1;
+
+function pressButton(){
+  document.getElementById('fateBtn').textContent = "다시!";
+  const card = document.getElementById('storyCard');
+  card.classList.remove('show');
+  card.innerHTML = '';
+
+  let idx;
+  do { idx = Math.floor(Math.random() * stories.length); } while(idx === lastIndex && stories.length > 1);
+  lastIndex = idx;
+  const story = stories[idx];
+
+  setTimeout(() => {
+    card.classList.add('show');
+    story.forEach((line, i) => {
+      const isArrow = line === "↓" || line === "...";
+      const el = document.createElement('p');
+      el.className = isArrow ? 'story-arrow' : 'story-line';
+      el.textContent = line;
+      card.appendChild(el);
+      setTimeout(() => { el.classList.add('visible'); }, i * 500 + 100);
+    });
+  }, 150);
+
+  document.getElementById('againBtn').classList.add('show');
+  document.getElementById('shareBtn').classList.add('show');
+}
+
+function shareResult(){
+  const lines = Array.from(document.querySelectorAll('#storyCard p')).map(p => p.textContent).join(' ');
+  if(navigator.share){
+    navigator.share({title:'인생 버튼 - 내위치', text: lines, url: location.href});
+  } else {
+    navigator.clipboard.writeText(location.href);
+    alert('링크가 복사됐어요! 카톡에 붙여넣기 해보세요.');
+  }
+}
+</script>
+</body>
+</html>
