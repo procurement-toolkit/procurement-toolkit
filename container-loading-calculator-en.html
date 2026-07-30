@@ -1,0 +1,2274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4642197702620430"
+     crossorigin="anonymous"></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Free container loading calculator. Enter multiple box sizes and see how many fit in a 20ft, 40ft, or 40ft High Cube container, with a premium 3D visualization, AI-powered load optimization, and multi-container planning.">
+<meta name="keywords" content="container loading calculator, container loading plan, 20ft 40ft container capacity, cargo loading calculator, logistics planning tool">
+<title>Container Loading Calculator for Logistics (20ft / 40ft) — CBM Lab</title>
+<link rel="icon" href="../favicon.ico" sizes="any">
+<link rel="icon" href="../favicon.ico" type="image/x-icon">
+<link rel="apple-touch-icon" href="../apple-touch-icon.png">
+<link rel="canonical" href="https://procurement-toolkit-eight.vercel.app/en/container-loading-calculator.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="CBM Lab">
+<meta property="og:locale" content="en_US">
+<meta property="og:title" content="Container Loading Calculator for Logistics (20ft / 40ft) — CBM Lab">
+<meta property="og:description" content="Free container loading calculator. Enter multiple box sizes and see how many fit in a 20ft, 40ft, or 40ft High Cube container, with a premium 3D visualization, AI-powered load optimization, and multi-container planning.">
+<meta property="og:url" content="https://procurement-toolkit-eight.vercel.app/en/container-loading-calculator.html">
+<meta property="og:image" content="https://procurement-toolkit-eight.vercel.app/assets/hero-team.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Container Loading Calculator for Logistics (20ft / 40ft) — CBM Lab">
+<meta name="twitter:description" content="Free container loading calculator. Enter multiple box sizes and see how many fit in a 20ft, 40ft, or 40ft High Cube container, with a premium 3D visualization, AI-powered load optimization, and multi-container planning.">
+<meta name="twitter:image" content="https://procurement-toolkit-eight.vercel.app/assets/hero-team.jpg">
+
+<link rel="alternate" hreflang="ko" href="https://procurement-toolkit-eight.vercel.app/container-loading-visualizer.html">
+<link rel="alternate" hreflang="en" href="https://procurement-toolkit-eight.vercel.app/en/container-loading-calculator.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@800;900&display=swap" rel="stylesheet">
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  :root{--accent:#2563EB;--accent-light:#DBEAFE;--accent-dark:#1D4ED8;--slate-50:#F8FAFC;--slate-100:#F1F5F9;--slate-200:#E2E8F0;--slate-300:#CBD5E1;--slate-400:#94A3B8;--slate-500:#64748B;--slate-600:#475569;--slate-700:#334155;--slate-800:#1E293B;--slate-900:#0F172A;--success:#0F766E;--success-light:#CCFBF1;--danger:#DC2626;--danger-light:#FEE2E2;--radius:8px;--radius-lg:12px;--shadow-sm:0 1px 2px rgba(0,0,0,.05);--card-bg:#fff;--body-bg:var(--slate-50);--scene-bg-a:#EEF2F7;--scene-bg-b:#F8FAFC;font-family:'Pretendard','Apple SD Gothic Neo',system-ui,-apple-system,sans-serif}
+  [data-theme="dark"]{--slate-50:#0B1120;--slate-100:#151E2E;--slate-200:#243144;--slate-300:#374357;--slate-400:#647089;--slate-500:#94A0B8;--slate-600:#B7C1D6;--slate-700:#D3DAE8;--slate-800:#EEF1F6;--slate-900:#F8FAFC;--card-bg:#111927;--body-bg:#0B1120;--accent-light:#1B2C4D;--scene-bg-a:#0F1826;--scene-bg-b:#141E30;--danger-light:#3A1418;--success-light:#0C2A26;}
+  [data-theme="dark"] body{background:var(--body-bg)}
+  [data-theme="dark"] header,[data-theme="dark"] .hero,[data-theme="dark"] .card,[data-theme="dark"] .ad-main-box{background:var(--card-bg)}
+  [data-theme="dark"] .item-table input,[data-theme="dark"] select.inp,[data-theme="dark"] .inp{background:var(--card-bg);color:var(--slate-800)}
+  body{background:var(--body-bg);color:var(--slate-800);font-size:14px;line-height:1.6;transition:background .2s}
+  header{background:var(--card-bg);border-bottom:1px solid var(--slate-200)}
+  .header-inner{max-width:1320px;margin:0 auto;padding:16px 24px;display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}
+  .logo-mark{font-size:20px;font-weight:800;color:var(--slate-900);text-decoration:none;font-family:'Space Grotesk','Pretendard',sans-serif;letter-spacing:-0.4px;}
+  .logo-mark span{color:var(--accent);font-weight:500}
+  .nav-link{font-size:13px;font-weight:600;color:var(--slate-500);text-decoration:none;padding:7px 12px;border-radius:6px}
+  .nav-link:hover{background:var(--slate-100)}
+  .theme-toggle{width:34px;height:34px;border-radius:8px;border:1px solid var(--slate-200);background:var(--card-bg);cursor:pointer;font-size:15px;display:flex;align-items:center;justify-content:center}
+  .theme-toggle:hover{border-color:var(--accent)}
+  .hero{background:var(--card-bg);border-bottom:1px solid var(--slate-200);padding:28px 24px 24px}
+  .hero-inner{max-width:1320px;margin:0 auto}
+  .hero h1{font-size:22px;font-weight:700;color:var(--slate-900);margin-bottom:6px}
+  .hero p{font-size:14px;color:var(--slate-500);max-width:680px}
+  .main{max-width:1320px;margin:0 auto;padding:28px 24px 60px;display:grid;grid-template-columns:460px 1fr;gap:24px;align-items:start}
+  .card{background:var(--card-bg);border:1px solid var(--slate-200);border-radius:var(--radius-lg);box-shadow:var(--shadow-sm);margin-bottom:20px}
+  .card-header{padding:16px 20px;border-bottom:1px solid var(--slate-100);display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+  .card-title{font-size:14px;font-weight:600;color:var(--slate-800)}
+  .card-body{padding:20px}
+  .field-group{margin-bottom:12px}
+  .field-label{font-size:12px;font-weight:600;color:var(--slate-600);margin-bottom:6px;display:block}
+  .inp,select.inp{width:100%;border:1px solid var(--slate-200);border-radius:6px;padding:8px 10px;font-size:13px;font-family:inherit;background:var(--card-bg);color:var(--slate-800)}
+  .inp:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px rgba(37,99,235,.1)}
+
+  .row-2col{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .toggle-row{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:9px 0;border-top:1px solid var(--slate-100)}
+  .toggle-row:first-child{border-top:none}
+  .toggle-label{font-size:12.5px;font-weight:600;color:var(--slate-700);display:flex;align-items:center;gap:6px}
+  .toggle-label .hint{font-weight:400;color:var(--slate-400);font-size:11px}
+  .switch{position:relative;width:38px;height:22px;flex-shrink:0}
+  .switch input{opacity:0;width:0;height:0}
+  .slider-switch{position:absolute;cursor:pointer;top:0;left:0;right:0;bottom:0;background:var(--slate-300);border-radius:999px;transition:.2s}
+  .slider-switch:before{position:absolute;content:"";height:16px;width:16px;left:3px;bottom:3px;background:#fff;border-radius:50%;transition:.2s}
+  .switch input:checked + .slider-switch{background:var(--accent)}
+  .switch input:checked + .slider-switch:before{transform:translateX(16px)}
+
+  .preset-row{display:flex;gap:6px;margin-bottom:10px;flex-wrap:wrap}
+  .preset-chip{font-size:11px;padding:5px 10px;border:1px solid var(--slate-200);border-radius:999px;background:var(--card-bg);color:var(--slate-600);cursor:pointer;font-family:inherit}
+  .preset-chip:hover{border-color:var(--accent);color:var(--accent)}
+
+  .item-table-wrap{overflow-x:visible}
+  .item-table{width:100%;border-collapse:collapse;table-layout:fixed}
+  .item-table col.col-name{width:24%}
+  .item-table col.col-dim{width:13%}
+  .item-table col.col-qty{width:13%}
+  .item-table col.col-wt{width:12%}
+  .item-table col.col-del{width:8%}
+  .item-table thead th{padding:6px 6px;text-align:left;font-size:10px;font-weight:700;color:var(--slate-400);text-transform:uppercase;white-space:nowrap}
+  .item-table thead th:last-child{text-align:center}
+  .item-table tbody td{padding:5px 4px}
+  .item-table tbody td:last-child{text-align:center}
+  .item-table input{width:100%;border:1px solid var(--slate-200);border-radius:5px;padding:7px 6px;font-size:12.5px;font-family:inherit;font-variant-numeric:tabular-nums;background:var(--card-bg);color:var(--slate-800)}
+  .item-table tbody td:first-child{display:flex;align-items:center;gap:5px}
+  .item-table input.name-inp{width:auto;flex:1;min-width:0}
+  .item-table input.dim-inp{width:100%;min-width:40px;text-align:center}
+  .item-table tr.row-error input{border-color:var(--danger);background:var(--danger-light)}
+  .color-dot{display:inline-block;width:11px;height:11px;border-radius:50%;margin-right:4px;vertical-align:middle;flex-shrink:0}
+  .btn-del-row{width:24px;height:24px;border:1px solid var(--slate-200);border-radius:5px;background:var(--card-bg);color:var(--slate-400);cursor:pointer;font-size:11px}
+  .btn-del-row:hover{border-color:var(--danger);color:var(--danger)}
+  .btn-add-row{display:block;width:100%;padding:8px;border:1px dashed var(--slate-300);border-radius:6px;background:transparent;color:var(--slate-500);font-size:12px;cursor:pointer;margin-top:8px;font-family:inherit}
+  .btn-add-row:hover{border-color:var(--accent);color:var(--accent)}
+  .row-error-msg{font-size:11px;color:var(--danger);margin-top:2px;display:flex;align-items:center;gap:4px}
+
+  .notice-box{background:var(--accent-light);border:1px solid #BFDBFE;border-radius:var(--radius);padding:10px 14px;font-size:12px;color:#1E40AF;margin-top:14px}
+  [data-theme="dark"] .notice-box{color:#93C5FD;border-color:#1E3A5F}
+  .warn-box{background:var(--danger-light);border:1px solid #FECACA;border-radius:var(--radius);padding:10px 14px;font-size:12.5px;color:#991B1B;margin-top:10px;line-height:1.6}
+  [data-theme="dark"] .warn-box{color:#FCA5A5;border-color:#5C2328}
+  .warn-box strong{display:block;margin-bottom:4px}
+  .weight-warn{background:#FFF7ED;border:1px solid #FED7AA;border-radius:var(--radius);padding:10px 14px;font-size:12.5px;color:#9A3412;margin-top:10px;line-height:1.6}
+  [data-theme="dark"] .weight-warn{background:#2A1B0E;border-color:#5C3A1E;color:#FDBA74}
+  .weight-warn strong{display:block;margin-bottom:4px}
+
+  .view-toggle{display:flex;background:var(--slate-100);border-radius:8px;padding:3px;gap:2px}
+  .view-btn{padding:7px 16px;border:none;background:transparent;border-radius:6px;font-size:12.5px;font-weight:700;color:var(--slate-500);cursor:pointer;font-family:inherit}
+  .view-btn.active{background:var(--card-bg);color:var(--accent);box-shadow:var(--shadow-sm)}
+  .scene-wrap{width:100%;display:none;margin-top:14px}
+  .scene-wrap.active{display:block}
+
+  .elevation-svg-wrap{width:100%;overflow-x:auto}
+
+  .scene{width:100%;height:442px;perspective:1100px;display:flex;align-items:center;justify-content:center;cursor:grab;touch-action:none;background:linear-gradient(180deg,var(--scene-bg-a),var(--scene-bg-b));border-radius:8px;overflow:hidden;position:relative;transition:opacity .15s}
+  .scene:active{cursor:grabbing}
+  .scene.recalculating{opacity:.55}
+  .rig{position:relative;width:90%;height:90%;max-width:546px}
+  .rig svg{display:block;width:100%;height:100%;overflow:visible}
+  .edge{position:absolute;background:#334155;top:0;left:0}
+  .cube-group{position:absolute;top:0;left:0;transform-style:preserve-3d}
+  .face{position:absolute;top:0;left:0;backface-visibility:hidden}
+  .scene-controls{display:flex;align-items:center;justify-content:center;gap:12px;margin-top:10px;font-size:11.5px;color:var(--slate-500);flex-wrap:wrap}
+  .scene-controls input[type=range]{width:110px}
+  .scene-tool-btn{font-size:11px;padding:5px 10px;border:1px solid var(--slate-200);border-radius:6px;background:var(--card-bg);color:var(--slate-600);cursor:pointer;font-family:inherit}
+  .scene-tool-btn:hover{border-color:var(--accent);color:var(--accent)}
+  .scene-tool-btn.on{background:var(--accent-light);border-color:var(--accent);color:var(--accent-dark)}
+  .view-tab-btn{font-weight:700;min-width:44px;}
+  .view-tab-btn.active{background:var(--slate-800);border-color:var(--slate-800);color:#fff;}
+  [data-theme="dark"] .view-tab-btn.active{background:var(--accent);border-color:var(--accent);}
+  .box-info-panel{
+    margin-top:10px;background:var(--slate-50);border:1px solid var(--slate-200);border-radius:10px;
+    padding:12px 14px;font-size:12px;
+  }
+  .box-info-panel .bip-title{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:14px;margin-bottom:6px;display:flex;justify-content:space-between;align-items:center;}
+  .box-info-panel .bip-close{cursor:pointer;color:var(--slate-400);font-size:14px;background:none;border:none;}
+  .box-info-panel .bip-row{display:flex;justify-content:space-between;padding:2px 0;color:var(--slate-600);}
+  .box-info-panel .bip-row b{color:var(--slate-800);}
+  .scene-hint{font-size:11px;color:var(--slate-400);text-align:center;margin-top:6px}
+
+  .legend{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:10px;font-size:11.5px;color:var(--slate-600)}
+  .legend .item{display:flex;align-items:center;gap:5px}
+
+  .result-summary{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:16px}
+  .result-item{background:var(--slate-50);border:1px solid var(--slate-100);border-radius:var(--radius);padding:12px 14px;text-align:center}
+  .result-item .r-label{font-size:10.5px;font-weight:700;color:var(--slate-400);text-transform:uppercase}
+  .result-item .r-value{font-size:18px;font-weight:800;color:var(--accent-dark);margin-top:2px}
+  .util-bar{height:20px;background:var(--slate-100);border-radius:999px;overflow:hidden;margin-top:14px;display:flex}
+  .util-seg{height:100%;display:flex;align-items:center;justify-content:center;font-size:10px;color:#fff;font-weight:700}
+
+  .result-table{width:100%;border-collapse:collapse;margin-top:16px;font-size:12.5px}
+  .result-table th,.result-table td{padding:8px 10px;text-align:left;border-bottom:1px solid var(--slate-100)}
+  .result-table th{font-size:10.5px;color:var(--slate-400);text-transform:uppercase;font-weight:700}
+  .shortfall{color:var(--danger);font-weight:700}
+
+  .compare-table{width:100%;border-collapse:collapse;font-size:12.5px}
+  .compare-table th,.compare-table td{padding:9px 12px;text-align:center;border-bottom:1px solid var(--slate-100)}
+  .compare-table th{font-size:10.5px;color:var(--slate-400);text-transform:uppercase;font-weight:700;text-align:left}
+  .compare-table td:first-child,.compare-table th:first-child{text-align:left;font-weight:700;color:var(--slate-800)}
+  .compare-table tr.current{background:var(--accent-light)}
+  .badge-ok{background:var(--success-light);color:var(--success);font-size:11px;font-weight:700;padding:3px 9px;border-radius:999px}
+  .badge-no{background:var(--danger-light);color:var(--danger);font-size:11px;font-weight:700;padding:3px 9px;border-radius:999px}
+
+  .toolbar-btn-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+  .toolbar-btn{flex:1;min-width:120px;padding:9px 12px;border:1px solid var(--slate-200);border-radius:8px;background:var(--card-bg);color:var(--slate-700);font-size:12.5px;font-weight:700;cursor:pointer;font-family:inherit;display:flex;align-items:center;justify-content:center;gap:6px}
+  .toolbar-btn:hover{border-color:var(--accent);color:var(--accent)}
+  .toolbar-btn.primary{background:var(--accent);border-color:var(--accent);color:#fff}
+  .toolbar-btn.primary:hover{background:var(--accent-dark);color:#fff}
+  .toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--slate-900);color:#fff;padding:10px 18px;border-radius:8px;font-size:12.5px;opacity:0;pointer-events:none;transition:.25s;z-index:999;box-shadow:0 8px 24px rgba(0,0,0,.25)}
+  .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+  /* Container spec panel */
+  .spec-panel{background:var(--slate-50);border:1px solid var(--slate-100);border-radius:var(--radius);padding:14px 16px;margin-top:4px;margin-bottom:14px}
+  .spec-panel-title{font-size:11px;font-weight:700;color:var(--slate-500);text-transform:uppercase;letter-spacing:.4px;margin-bottom:10px;display:flex;align-items:center;gap:6px}
+  .spec-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px 16px}
+  .spec-grid .full{grid-column:1/-1;border-top:1px dashed var(--slate-200);margin-top:4px;padding-top:8px}
+  .spec-row{display:flex;justify-content:space-between;font-size:12px;padding:2px 0}
+  .spec-row .sk{color:var(--slate-500)}
+  .spec-row .sv{color:var(--slate-800);font-weight:700;font-variant-numeric:tabular-nums}
+
+  /* Dashboard layout (3D + info panel) */
+  .viz-dashboard{display:grid;grid-template-columns:1fr 260px;gap:16px;align-items:start}
+  @media (max-width:1180px){.viz-dashboard{grid-template-columns:1fr}}
+  .dash-col{display:flex;flex-direction:column;gap:12px}
+  .dash-card{background:var(--slate-50);border:1px solid var(--slate-100);border-radius:var(--radius);padding:12px 14px}
+  .dash-card-title{font-size:10.5px;font-weight:700;color:var(--slate-400);text-transform:uppercase;letter-spacing:.4px;margin-bottom:8px}
+
+  /* Score / star ratings */
+  .score-hero{text-align:center;padding:6px 0 2px}
+  .score-num{font-size:34px;font-weight:800;color:var(--accent-dark);font-family:'Space Grotesk',sans-serif}
+  .score-num span{font-size:15px;color:var(--slate-400);font-weight:600}
+  .score-label{font-size:11px;color:var(--slate-500);margin-top:2px}
+  .stars{color:#F59E0B;letter-spacing:1px;font-size:13px}
+  .rating-row{display:flex;justify-content:space-between;align-items:center;font-size:11.5px;padding:5px 0;border-top:1px solid var(--slate-100)}
+  .rating-row:first-of-type{border-top:none}
+  .rating-row .rlabel{color:var(--slate-600);font-weight:600}
+  .rating-row .rval{color:var(--slate-500)}
+
+  /* Enhanced summary metric grid */
+  .metric-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:14px}
+  .metric-card{background:var(--slate-50);border:1px solid var(--slate-100);border-radius:var(--radius);padding:11px 13px}
+  .metric-card .m-label{font-size:10px;font-weight:700;color:var(--slate-400);text-transform:uppercase;letter-spacing:.3px}
+  .metric-card .m-value{font-size:17px;font-weight:800;color:var(--accent-dark);margin-top:3px;font-variant-numeric:tabular-nums}
+  .metric-card .m-sub{font-size:10.5px;color:var(--slate-400);margin-top:1px}
+  .metric-card.warn .m-value{color:var(--danger)}
+  .metric-card.ok .m-value{color:var(--success)}
+
+  /* Center of gravity */
+  .cog-bar-wrap{margin-top:8px}
+  .cog-track{position:relative;height:26px;background:var(--slate-100);border-radius:6px;overflow:hidden}
+  .cog-fill-front{position:absolute;left:0;top:0;bottom:0;background:linear-gradient(90deg,#2563EB,#60A5FA)}
+  .cog-fill-back{position:absolute;right:0;top:0;bottom:0;background:linear-gradient(90deg,#F59E0B,#FBBF24)}
+  .cog-marker{position:absolute;top:-4px;width:2px;height:34px;background:var(--slate-900)}
+  .cog-marker::after{content:'▼';position:absolute;top:-11px;left:50%;transform:translateX(-50%);font-size:9px;color:var(--slate-900)}
+  .cog-labels{display:flex;justify-content:space-between;font-size:10.5px;color:var(--slate-500);margin-top:4px}
+  .cog-xyz{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:10px}
+  .cog-xyz div{text-align:center;background:var(--card-bg);border:1px solid var(--slate-100);border-radius:6px;padding:6px 4px}
+  .cog-xyz .xk{font-size:9.5px;color:var(--slate-400);text-transform:uppercase}
+  .cog-xyz .xv{font-size:12px;font-weight:700;color:var(--slate-800);font-variant-numeric:tabular-nums}
+
+  /* Remaining space */
+  .remain-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:6px 12px;font-size:11.5px}
+  .remain-grid .rk{color:var(--slate-500)}
+  .remain-grid .rv{color:var(--slate-800);font-weight:700;float:right}
+  .remain-suggest{margin-top:10px;padding:9px 11px;background:var(--success-light);border-radius:6px;font-size:11.5px;color:var(--success);line-height:1.6}
+  [data-theme="dark"] .remain-suggest{color:#5EEAD4}
+
+  /* Loading rules checklist */
+  .rule-list{list-style:none;font-size:11.5px;color:var(--slate-600);display:flex;flex-direction:column;gap:5px}
+  .rule-list li{display:flex;align-items:center;gap:6px}
+  .rule-list li.off{color:var(--slate-400);text-decoration:line-through;opacity:.7}
+  .rule-check{color:var(--success);font-weight:800}
+  .rule-check.off{color:var(--slate-400)}
+
+  /* Item-by-item breakdown */
+  .stat-table{width:100%;border-collapse:collapse;font-size:11.5px}
+  .stat-table th,.stat-table td{padding:6px 7px;text-align:right;border-bottom:1px solid var(--slate-100)}
+  .stat-table th{font-size:9.5px;color:var(--slate-400);text-transform:uppercase;font-weight:700}
+  .stat-table td:first-child,.stat-table th:first-child{text-align:left}
+
+  /* Loading order animation */
+  .anim-controls{display:flex;align-items:center;justify-content:center;gap:10px;margin-top:10px}
+  .anim-btn{width:34px;height:34px;border-radius:8px;border:1px solid var(--slate-200);background:var(--card-bg);color:var(--slate-600);cursor:pointer;font-size:13px;display:flex;align-items:center;justify-content:center}
+  .anim-btn:hover{border-color:var(--accent);color:var(--accent)}
+  .anim-progress{font-size:12px;color:var(--slate-500);min-width:90px;text-align:center;font-variant-numeric:tabular-nums}
+  .anim-slider{flex:1;max-width:200px}
+
+  /* Container comparison - recommendation stars */
+  .rec-stars{color:#F59E0B;font-size:12px}
+  .rec-best{background:var(--success-light);color:var(--success);font-size:10.5px;font-weight:700;padding:2px 8px;border-radius:999px;margin-left:6px}
+
+  /* Print report only (hidden otherwise) */
+  #printReport{display:none;}
+  @media print{
+    body *{visibility:hidden;}
+    #printReport, #printReport *{visibility:visible;}
+    #printReport{display:block;position:absolute;top:0;left:0;width:100%;padding:20px;}
+  }
+
+  /* AI optimization modal */
+  .opt-backdrop{position:fixed;inset:0;background:rgba(15,23,42,0.55);z-index:1000;display:flex;align-items:center;justify-content:center;padding:20px;}
+  .opt-modal{background:var(--card-bg);border-radius:16px;max-width:480px;width:100%;padding:24px;box-shadow:0 20px 60px rgba(0,0,0,.35);}
+  .opt-modal h3{font-family:'Space Grotesk',sans-serif;font-size:17px;margin-bottom:4px;color:var(--slate-800);}
+  .opt-modal .opt-sub{font-size:12px;color:var(--slate-500);margin-bottom:16px;}
+  .opt-compare{display:grid;grid-template-columns:1fr auto 1fr;gap:10px;align-items:center;margin-bottom:16px;}
+  .opt-col{text-align:center;}
+  .opt-col .opt-label{font-size:10.5px;color:var(--slate-400);text-transform:uppercase;font-weight:700;margin-bottom:8px;}
+  .opt-arrow{font-size:20px;color:var(--accent);}
+  .opt-metric{font-size:11.5px;color:var(--slate-600);padding:4px 0;display:flex;justify-content:space-between;}
+  .opt-metric b{color:var(--slate-800);}
+  .opt-metric.improved b{color:var(--success);}
+  .opt-actions{display:flex;gap:8px;margin-top:6px;}
+
+  /* 3D expand view modal */
+  .expand-backdrop{position:fixed;inset:0;background:rgba(15,23,42,0.75);z-index:1100;display:flex;flex-direction:column;padding:20px;}
+  .expand-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;flex-wrap:wrap;gap:10px;}
+  .expand-header .expand-tabs{display:flex;gap:6px;}
+  .expand-close-btn{background:#fff;border:none;border-radius:8px;padding:8px 16px;font-weight:700;font-size:13px;cursor:pointer;color:var(--slate-800);}
+  .expand-close-btn:hover{background:var(--slate-200);}
+  .expand-scene-wrap{flex:1;background:linear-gradient(180deg,var(--scene-bg-a),var(--scene-bg-b));border-radius:12px;overflow:hidden;position:relative;cursor:grab;}
+  .expand-scene-wrap:active{cursor:grabbing;}
+  .expand-rig{width:100%;height:100%;display:flex;align-items:center;justify-content:center;}
+  .expand-rig svg{width:92%;height:92%;overflow:visible;}
+
+  /* Loading Score donut chart */
+  .score-donut-wrap{display:flex;flex-direction:column;align-items:center;padding:4px 0 2px;}
+  .score-donut-num{font-family:'Space Grotesk',sans-serif;font-size:22px;font-weight:800;fill:var(--accent-dark);}
+  .score-donut-sub{font-size:9px;fill:var(--slate-400);}
+
+  /* Insight card */
+  .insight-card{
+    background:linear-gradient(135deg, var(--accent-light), rgba(37,99,235,0.04));
+    border:1px solid var(--accent-light);border-left:3px solid var(--accent);border-radius:10px;
+    padding:12px 14px;margin-top:10px;display:flex;gap:10px;align-items:flex-start;
+  }
+  .insight-card .insight-icon{font-size:18px;flex-shrink:0;}
+  .insight-card .insight-text{font-size:12px;color:var(--slate-700);line-height:1.6;}
+  .insight-card .insight-text b{color:var(--accent-dark);}
+
+  /* Ad gate modal before download */
+  .adgate-backdrop{position:fixed;inset:0;background:rgba(15,23,42,0.7);z-index:1200;display:flex;align-items:center;justify-content:center;padding:20px;}
+  .adgate-modal{background:var(--card-bg);border-radius:16px;max-width:420px;width:100%;padding:22px;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,.35);}
+  .adgate-slot{background:var(--slate-100);border:1px dashed var(--slate-300);border-radius:10px;height:160px;display:flex;align-items:center;justify-content:center;color:var(--slate-400);font-size:12px;margin-bottom:14px;}
+  .adgate-timer{font-family:'Space Grotesk',sans-serif;font-size:15px;font-weight:700;color:var(--slate-600);margin-bottom:10px;}
+  .adgate-btn{width:100%;padding:12px;border:none;border-radius:10px;font-weight:700;font-size:14px;cursor:pointer;}
+  .adgate-btn.disabled{background:var(--slate-200);color:var(--slate-400);cursor:not-allowed;}
+  .adgate-btn.ready{background:var(--accent);color:#fff;}
+
+  /* Multi-container result */
+  .multi-step-row{display:flex;justify-content:space-between;align-items:center;padding:9px 12px;background:var(--slate-50);border-radius:8px;margin-bottom:6px;font-size:12.5px;}
+  .multi-total{font-family:'Space Grotesk',sans-serif;font-size:18px;font-weight:800;color:var(--accent-dark);text-align:center;padding:10px 0;}
+
+  footer{background:var(--slate-900);color:var(--slate-400);padding:24px;font-size:12px}
+  .footer-inner{max-width:1320px;margin:0 auto;display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
+  .footer-logo{font-size:15px;font-weight:800;color:#fff;font-family:'Space Grotesk','Pretendard',sans-serif;letter-spacing:-0.4px;}
+  .footer-logo span{color:var(--accent);font-weight:500}
+  .footer-link{color:var(--slate-500);text-decoration:none;font-size:11px;margin-right:14px}
+  @media (max-width:900px){.main{grid-template-columns:1fr}}
+
+  .ad-area-main{max-width:1200px;margin:24px auto 0;padding:0 24px 28px}
+  .ad-main-box{border:1px dashed #CBD5E1;border-radius:var(--radius,10px);background:#fff;height:90px;display:flex;flex-direction:column;align-items:center;justify-content:center;color:var(--slate-400,#94A3B8);font-size:12px;gap:4px}
+  .ad-main-box strong{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:#94A3B8}
+  @media (max-width:640px){.ad-area-main{padding:0 16px 20px}}
+
+  @media print{.ad-area-main,.ad-main-box,.ad-placeholder{display:none !important}}
+
+  .faq-wrap{max-width:1100px;margin:20px auto 0;padding:0 24px}
+  .faq-item{border-bottom:1px solid var(--slate-100);padding:12px 0}
+  .faq-item:last-child{border-bottom:none}
+  .faq-item summary{cursor:pointer;font-weight:700;font-size:13px;color:var(--slate-800);list-style:none;outline:none}
+  .faq-item summary::-webkit-details-marker{display:none}
+  .faq-item summary::before{content:'Q. ';color:var(--accent)}
+  .faq-item p{margin-top:8px;font-size:12.5px;color:var(--slate-600);line-height:1.7;padding-left:2px}
+  @media (max-width:640px){.faq-wrap{padding:0 16px}}
+</style>
+<script src="https://cdn.amplitude.com/script/d4aa9301e01f4600b5eeb018e160aa7c.js"></script>
+<script>
+  window.amplitude.init("d4aa9301e01f4600b5eeb018e160aa7c", {
+    fetchRemoteConfig: true,
+    autocapture: true,
+  });
+  window.amplitude.track('CBM Page View', {category: 'calc', page: 'container-loading-calculator', lang: 'en'});
+</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-W1YBL5BGGK"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-W1YBL5BGGK');
+</script>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute;" aria-hidden="true">
+  <defs>
+    <linearGradient id="cbmGradH" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#14B8A6"/>
+      <stop offset="100%" stop-color="#0B2A4A"/>
+    </linearGradient>
+    <linearGradient id="cbmGradF" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#2DD4BF"/>
+      <stop offset="100%" stop-color="#5B9EFF"/>
+    </linearGradient>
+  </defs>
+</svg>
+
+<header><div class="header-inner">
+  <a href="../index.html" class="logo-mark"><svg width="26" height="26" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align:middle;margin-right:8px;flex-shrink:0;"><path d="M20 2.5L36.5 11.5V28.5L20 37.5L3.5 28.5V11.5L20 2.5Z" stroke="url(#cbmGradH)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M20 2.5V20M20 20L36.5 11.5M20 20L3.5 11.5" stroke="url(#cbmGradH)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/></svg><span style="font-family:'Montserrat','Space Grotesk',sans-serif;font-weight:800;letter-spacing:-1.1px;background:linear-gradient(90deg,#14B8A6 0%,#1E7A8C 45%,#0B2A4A 100%);-webkit-background-clip:text;background-clip:text;color:transparent;">CBMLab</span></a>
+  <div style="display:flex;align-items:center;gap:10px"><a href="../index.html" class="nav-link">← All tools</a><a href="../container-loading-visualizer.html" class="nav-link" style="font-size:12px;font-weight:700;color:var(--accent);padding:6px 12px;border:1px solid var(--accent-light);border-radius:999px;background:var(--accent-light);">KOR</a><button class="theme-toggle" id="themeToggle" onclick="toggleTheme()" title="Toggle dark mode" aria-label="Toggle dark mode">🌙</button></div>
+</div></header>
+
+<section class="hero"><div class="hero-inner">
+  <h1>Container Loading Calculator (2D/3D)</h1>
+  <p>Enter multiple box sizes at once and see them loaded section by section inside the container, grouped by item type. Instantly flags oversized boxes or insufficient space, and lets you compare across container types — plus AI-powered load optimization and multi-container planning.</p>
+</div></section>
+
+<div class="main">
+  <section>
+    <div class="card">
+      <div class="card-header"><div class="card-title">Container &amp; Box Specs</div></div>
+      <div class="card-body">
+        <div class="field-group">
+          <label class="field-label">Container Type</label>
+          <select class="inp" id="containerType" onchange="calc()">
+            <option value="20">20ft (589.8 × 235.2 × 239.3 cm)</option>
+            <option value="40" selected>40ft (1203.2 × 235.2 × 239.3 cm)</option>
+            <option value="40hc">40ft High Cube (1203.2 × 235.2 × 269.8 cm)</option>
+          </select>
+        </div>
+
+        <div class="spec-panel" id="specPanel"></div>
+
+        <div class="field-group">
+          <label class="field-label">Box Specs (multiple sizes supported, cm·kg)</label>
+          <div class="preset-row" id="presetRow"></div>
+          <div class="toolbar-btn-row" style="margin-top:0;margin-bottom:10px;">
+            <button class="toolbar-btn" onclick="document.getElementById('csvFileInput').click()">📑 Bulk CSV upload</button>
+            <input type="file" id="csvFileInput" accept=".csv" style="display:none" onchange="if(this.files[0]) importCsvFile(this.files[0])">
+            <button class="toolbar-btn" onclick="downloadCsvTemplate()">Get CSV template</button>
+          </div>
+          <div class="toolbar-btn-row" style="margin-top:0;margin-bottom:10px;">
+            <select class="inp" id="skuLibrarySelect" style="flex:1.4;"></select>
+            <button class="toolbar-btn" onclick="loadSkuFromLibrary()">Load</button>
+            <button class="toolbar-btn" onclick="saveSkuToLibrary()">＋ Save current items</button>
+            <button class="toolbar-btn" onclick="deleteSkuFromLibrary()">Delete</button>
+          </div>
+          <div class="item-table-wrap">
+            <table class="item-table">
+              <colgroup>
+                <col class="col-name"><col class="col-dim"><col class="col-dim"><col class="col-dim"><col class="col-qty"><col class="col-wt"><col class="col-del">
+              </colgroup>
+              <thead><tr><th>Item Name</th><th>L</th><th>W</th><th>H</th><th>Qty</th><th>Weight(kg)</th><th></th></tr></thead>
+              <tbody id="itemBody"></tbody>
+            </table>
+          </div>
+          <button class="btn-add-row" onclick="addItem()">+ Add box spec</button>
+          <div id="errorMsgs"></div>
+        </div>
+
+        <div class="field-group" style="margin-top:18px;">
+          <label class="field-label">Loading Options</label>
+          <div class="toggle-row">
+            <span class="toggle-label">Allow box rotation <span class="hint">(auto-optimize length/width orientation)</span></span>
+            <label class="switch"><input type="checkbox" id="allowRotation" onchange="calc()"><span class="slider-switch"></span></label>
+          </div>
+          <div class="toggle-row">
+            <span class="toggle-label">Pallet mode <span class="hint">(applies a realistic utilization discount)</span></span>
+            <label class="switch"><input type="checkbox" id="palletMode" onchange="calc()"><span class="slider-switch"></span></label>
+          </div>
+          <div class="toggle-row" id="palletEfficiencyRow" style="display:none;">
+            <span class="toggle-label">Pallet efficiency <span class="hint" id="palletEffValue">88%</span></span>
+            <input type="range" id="palletEfficiency" min="80" max="95" value="88" oninput="onPalletEffChange()" style="width:120px;">
+          </div>
+        </div>
+
+        <div class="notice-box">Items load in the order entered, filling the container lengthwise section by section (one type occupies the front section, the next continues after). Turning on "Allow box rotation" automatically picks whichever orientation (length/width swapped) fits more per item. Actual loading also depends on cargo securing rules and more — confirm the exact plan with your forwarder.</div>
+
+        <div id="shortfallWarning"></div>
+        <div id="weightWarning"></div>
+
+        <div class="toolbar-btn-row">
+          <button class="toolbar-btn" onclick="saveConfig()">💾 Save settings</button>
+          <button class="toolbar-btn" onclick="loadConfig()">📂 Load</button>
+          <button class="toolbar-btn" onclick="exportConfigFile()">⬇ Export JSON</button>
+          <button class="toolbar-btn" onclick="document.getElementById('importFileInput').click()">📤 Import JSON</button>
+          <input type="file" id="importFileInput" accept=".json" style="display:none" onchange="if(this.files[0]) importConfigFile(this.files[0])">
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header"><div class="card-title">Compare by Container Type</div></div>
+      <div class="card-body" style="padding-top:14px;">
+        <table class="compare-table" id="compareTable"></table>
+      </div>
+    </div>
+  </section>
+
+  <aside>
+    <div class="card">
+      <div class="card-header">
+        <div class="card-title">Loading Visualization</div>
+        <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
+          <div class="view-toggle">
+            <button class="view-btn active" id="btn2d" onclick="setView('2d')">Preview (fixed angle)</button>
+            <button class="view-btn" id="btn3d" onclick="setView('3d')">3D (drag to rotate)</button>
+          </div>
+          <button class="scene-tool-btn" onclick="expandScene()" title="Expand the 3D view">⤢ Expand</button>
+        </div>
+      </div>
+      <div class="card-body">
+
+        <div class="viz-dashboard">
+          <div>
+            <div class="scene-wrap active" id="wrap2d">
+              <div class="scene" id="scenePreview"><div class="rig" id="rigPreview"></div></div>
+              <div class="legend" id="legendPreview"></div>
+              <div class="scene-hint">Each box shown represents actual placed quantity. Switch to the "3D" tab to rotate the view.</div>
+            </div>
+
+            <div class="scene-wrap" id="wrap3d">
+              <div class="scene" id="scene3d"><div class="rig" id="rig3d"></div></div>
+              <div class="scene-controls">
+                <button class="scene-tool-btn view-tab-btn active" data-view="iso" onclick="setViewPreset('iso')">3D</button>
+                <button class="scene-tool-btn view-tab-btn" data-view="top" onclick="setViewPreset('top')">Top</button>
+                <button class="scene-tool-btn view-tab-btn" data-view="front" onclick="setViewPreset('front')">Front</button>
+                <button class="scene-tool-btn view-tab-btn" data-view="side" onclick="setViewPreset('side')">Side</button>
+              </div>
+              <div style="display:none;">
+                <input type="range" id="rotY" min="-180" max="180" value="-32" oninput="applyRotation()">
+                <input type="range" id="rotX" min="0" max="70" value="24" oninput="applyRotation()">
+                <button id="autoRotateBtn" onclick="toggleAutoRotate()">Auto-rotate</button>
+              </div>
+              <div class="scene-controls">
+                <label style="display:flex;align-items:center;gap:6px;">✂️ Cross-section <input type="range" id="crossSection" min="10" max="100" value="100" oninput="onCrossSectionChange()" style="width:130px;"><span id="crossSectionLabel">100%</span></label>
+              </div>
+              <div class="legend" id="legend3d"></div>
+              <div class="box-info-panel" id="boxInfoPanel" style="display:none;"></div>
+              <div class="scene-hint" id="sceneHint3d">In 3D mode, drag with your mouse (or finger) to rotate freely. Click a box to see its details.</div>
+            </div>
+
+            <div class="anim-controls">
+              <button class="scene-tool-btn" id="animModeBtn" onclick="toggleAnimMode()">▶ Watch loading order</button>
+              <div id="animPlayer" style="display:none;align-items:center;gap:10px;">
+                <button class="anim-btn" onclick="animStepBy(-1)">⏮</button>
+                <button class="anim-btn" id="animPlayBtn" onclick="animPlayPause()">▶</button>
+                <button class="anim-btn" onclick="animStepBy(1)">⏭</button>
+                <input type="range" class="anim-slider" id="animSlider" min="0" max="1" value="0" oninput="animSliderChange()">
+                <span class="anim-progress" id="animProgress">0 / 0</span>
+              </div>
+            </div>
+
+            <div class="util-bar" id="utilBar"></div>
+
+            <div class="dash-card" style="margin-top:14px;">
+              <div class="dash-card-title">✓ Loading Rules Applied</div>
+              <ul class="rule-list" id="ruleList"></ul>
+            </div>
+          </div>
+
+          <div class="dash-col">
+            <div class="dash-card">
+              <div class="dash-card-title">Loading Score</div>
+              <div class="score-hero">
+                <div class="score-donut-wrap">
+                  <svg width="110" height="110" viewBox="0 0 120 120">
+                    <circle cx="60" cy="60" r="50" fill="none" stroke="var(--slate-100)" stroke-width="10"/>
+                    <circle id="scoreDonutArc" cx="60" cy="60" r="50" fill="none" stroke="var(--accent)" stroke-width="10" stroke-linecap="round" transform="rotate(-90 60 60)" style="transition:stroke-dashoffset .6s ease, stroke .3s;"/>
+                    <text x="60" y="57" text-anchor="middle" class="score-donut-num" id="scoreDonutNum">-</text>
+                    <text x="60" y="73" text-anchor="middle" class="score-donut-sub">/ 100</text>
+                  </svg>
+                </div>
+                <div class="score-label" id="scoreLabel">-</div>
+                <span id="scoreNum" style="display:none;"></span>
+              </div>
+              <div id="ratingRows"></div>
+            </div>
+
+            <div class="dash-card">
+              <div class="dash-card-title">Center of Gravity</div>
+              <div class="cog-bar-wrap">
+                <div class="cog-track">
+                  <div class="cog-fill-front" id="cogFillFront"></div>
+                  <div class="cog-marker" id="cogMarker"></div>
+                </div>
+                <div class="cog-labels"><span>Front (door)</span><span>Rear</span></div>
+              </div>
+              <div class="cog-xyz">
+                <div><div class="xk">X (length)</div><div class="xv" id="cogX">-</div></div>
+                <div><div class="xk">Y (left/right)</div><div class="xv" id="cogY">-</div></div>
+                <div><div class="xk">Z (height)</div><div class="xv" id="cogZ">-</div></div>
+              </div>
+            </div>
+
+            <div class="dash-card">
+              <div class="dash-card-title">Remaining Space Analysis</div>
+              <div class="remain-grid" id="remainGrid"></div>
+              <div class="insight-card" id="remainSuggest" style="display:none;"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="metric-grid" id="metricGrid"></div>
+
+        <div class="dash-card" style="margin-top:14px;">
+          <div class="dash-card-title">Item-by-item breakdown</div>
+          <table class="stat-table" id="statTable"></table>
+        </div>
+
+        <div class="toolbar-btn-row">
+          <button class="toolbar-btn primary" onclick="optimizeLoading()" style="background:linear-gradient(90deg,#7C3AED,#2563EB);border-color:transparent;">🤖 AI Load Optimization</button>
+          <button class="toolbar-btn" onclick="optimizeMultiContainer()">📦 Multi-Container Optimization</button>
+        </div>
+        <div class="toolbar-btn-row">
+          <button class="toolbar-btn" onclick="exportImageGated()">🖼 Save result as image (PNG)</button>
+          <button class="toolbar-btn" onclick="printReportGated()">📄 Generate PDF report</button>
+          <button class="toolbar-btn" onclick="generateShareLink()">🔗 Create share link</button>
+        </div>
+      </div>
+    </div>
+  </aside>
+</div>
+
+<div id="printReport"></div>
+
+
+<div class="main" style="max-width:1100px;margin:0 auto;padding:0 24px 40px;">
+  <div class="card">
+    <div class="card-header"><div class="card-title">Why simulate your loading plan in advance</div></div>
+    <div class="card-body" style="font-size:12.5px;color:var(--slate-600);line-height:1.7;">
+<p>Estimating how many boxes fit just by eyeballing the specs often leaves you with leftover space or, worse, not enough room — meaning you need another container. It gets even trickier when you're loading several different item types together.</p>
+<p><b>How teams use this:</b> Check expected capacity across 20ft/40ft containers before finalizing an order quantity, or visually work out the best loading sequence when mixing multiple SKUs to make the most of the available space.</p>
+</div>
+  </div>
+</div>
+
+<!-- AD (bottom banner) -->
+
+<div class="faq-wrap">
+  <div class="card">
+    <div class="card-header"><div class="card-title">Frequently Asked Questions</div></div>
+    <div class="card-body">
+      <details class="faq-item"><summary>Why is actual container utilization lower than the theoretical maximum?</summary><p>Theoretical capacity is just the container's internal dimensions multiplied out, but real-world loading loses space to pallet gaps and irregular cargo shapes. Practical utilization is typically 85-92% of theoretical capacity.</p></details>
+      <details class="faq-item"><summary>Should I choose a 20ft or 40ft container?</summary><p>Heavy but compact cargo often fits better in a 20ft container (which hits its weight limit before running out of space), while bulky but lightweight cargo makes better use of a 40ft container's extra volume. Compare both volume and weight limits, not just one.</p></details>
+      <details class="faq-item"><summary>Why does loading order matter when mixing multiple SKUs in one container?</summary><p>Placing heavy, bulky items first (on the floor and toward the back) keeps the load stable, then filling remaining gaps with smaller items maximizes space use. Poor sequencing can mean cargo that should theoretically fit doesn't actually fit.</p></details>
+    </div>
+  </div>
+</div>
+
+<div class="ad-area-main" role="complementary" aria-label="Advertisement area">
+  <ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-4642197702620430"
+     data-ad-slot="2863170310"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+
+<footer><div class="footer-inner">
+  <div class="footer-logo"><svg width="24" height="24" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align:middle;margin-right:9px;flex-shrink:0;"><path d="M20 2.5L36.5 11.5V28.5L20 37.5L3.5 28.5V11.5L20 2.5Z" stroke="url(#cbmGradF)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M20 2.5V20M20 20L36.5 11.5M20 20L3.5 11.5" stroke="url(#cbmGradF)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/></svg>CBM<span>Lab</span></div>
+  <nav><a href="../index.html" class="footer-link">All Tools</a><a href="../privacy.html" class="footer-link">Privacy Policy</a></nav>
+</div></footer>
+
+
+<script>
+const CONTAINERS = {
+  '20': {l:589.8, w:235.2, h:239.3, name:'20ft', maxPayload:28200, maxGross:30480, doorW:234.0, doorH:228.0},
+  '40': {l:1203.2, w:235.2, h:239.3, name:'40ft', maxPayload:26700, maxGross:30480, doorW:234.0, doorH:228.0},
+  '40hc': {l:1203.2, w:235.2, h:269.8, name:'40ft HC', maxPayload:26300, maxGross:30480, doorW:234.0, doorH:258.5}
+};
+const COLORS = ['#4A6FA5','#8A7654','#6B7A5E','#B5602E','#5C6670','#7D5A6B','#6B8299','#8F6849'];
+// Navy, Olive/Tan, Olive Green, Burnt Orange, Slate, Muted Plum, Steel Blue, Rust
+
+// Common standard box size presets (cm, kg) - click once to auto-fill a new row
+const BOX_PRESETS = [
+  {label:'Small parcel', l:35, w:25, h:20, weight:5},
+  {label:'Medium parcel', l:45, w:35, h:30, weight:10},
+  {label:'Large parcel', l:60, w:45, h:40, weight:15},
+  {label:'Post office box (M)', l:40, w:30, h:25, weight:8},
+  {label:'Standard pallet (1100×1100)', l:110, w:110, h:15, weight:20},
+  {label:'US pallet (48×40in)', l:121.9, w:101.6, h:15, weight:20},
+  {label:'Apparel carton', l:50, w:35, h:35, weight:8},
+  {label:'Large appliance box', l:80, w:60, h:60, weight:25}
+];
+
+let items = [];
+let itemCounter = 0;
+let currentView = '2d';
+let rotY = -32, rotX = 24;
+let lastContainer = null, lastResult = null;
+let currentResult = null;
+let autoRotateTimer = null;
+let animMode = false, animStep = 0, animMaxStep = 1, animPlaying = false, animTimer = null;
+
+function renderPresetChips(){
+  const row = document.getElementById('presetRow');
+  if(!row) return;
+  row.innerHTML = BOX_PRESETS.map((p,i)=>
+    `<button type="button" class="preset-chip" onclick="addFromPreset(${i})">+ ${p.label}</button>`
+  ).join('');
+}
+function addFromPreset(idx){
+  const p = BOX_PRESETS[idx];
+  addItem(p.label, p.l, p.w, p.h, 10, p.weight);
+  showToast(`Added "${p.label}" spec`);
+}
+
+function addItem(name, l, w, h, qty, weight){
+  const color = COLORS[itemCounter % COLORS.length]; // Color is fixed at creation time (doesn't change on delete)
+  itemCounter++;
+  items.push({id:itemCounter, name:name||('Box '+String.fromCharCode(64+items.length+1)), l:l??60, w:w??40, h:h??40, qty:qty??50, weight:weight??0, color});
+  renderItemRows();
+}
+function removeItem(id){
+  items = items.filter(i=>i.id!==id);
+  if(items.length===0) addItem();
+  else renderItemRows();
+}
+function updateItem(id, field, val){
+  const it = items.find(i=>i.id===id); if(!it) return;
+  it[field] = (field==='name') ? val : (parseFloat(val)||0);
+  calc();
+}
+
+function renderItemRows(){
+  const body = document.getElementById('itemBody');
+  body.innerHTML = items.map(it=>`
+    <tr>
+      <td><span class="color-dot" style="background:${it.color}"></span><input class="inp name-inp" value="${it.name}" oninput="updateItem(${it.id},'name',this.value)" onchange="updateItem(${it.id},'name',this.value)"></td>
+      <td><input class="inp dim-inp" type="number" value="${it.l}" oninput="updateItem(${it.id},'l',this.value)" onchange="updateItem(${it.id},'l',this.value)"></td>
+      <td><input class="inp dim-inp" type="number" value="${it.w}" oninput="updateItem(${it.id},'w',this.value)" onchange="updateItem(${it.id},'w',this.value)"></td>
+      <td><input class="inp dim-inp" type="number" value="${it.h}" oninput="updateItem(${it.id},'h',this.value)" onchange="updateItem(${it.id},'h',this.value)"></td>
+      <td><input class="inp dim-inp" type="number" value="${it.qty}" oninput="updateItem(${it.id},'qty',this.value)" onchange="updateItem(${it.id},'qty',this.value)"></td>
+      <td><input class="inp dim-inp" type="number" value="${it.weight||0}" oninput="updateItem(${it.id},'weight',this.value)" onchange="updateItem(${it.id},'weight',this.value)"></td>
+      <td><button class="btn-del-row" onclick="removeItem(${it.id})" ${items.length<=1?'disabled':''}>✕</button></td>
+    </tr>
+  `).join('');
+  calc();
+}
+
+function fmt(n){ return Math.round(n||0).toLocaleString('en-US'); }
+
+// ===== Section-by-section (side-by-side) packing =====
+
+// When rotation is allowed, pick whichever of the two orientations (original / length-width swapped) fits more
+function bestOrientation(it, container, allowRotation){
+  const candidates = [{l:it.l, w:it.w, rotated:false}];
+  if(allowRotation && it.l !== it.w) candidates.push({l:it.w, w:it.l, rotated:true});
+
+  let best = null;
+  candidates.forEach(o=>{
+    const fitsW = o.w > 0 && o.w <= container.w;
+    const fitsL = o.l > 0 && o.l <= container.l;
+    const fitsH = it.h > 0 && it.h <= container.h;
+    if(!fitsW || !fitsL || !fitsH) return;
+    const rows = Math.floor(container.w / o.w);
+    const layers = Math.floor(container.h / it.h);
+    const perColumn = rows * layers;
+    if(!best || perColumn > best.perColumn || (perColumn===best.perColumn && o.l < best.l)){
+      best = {l:o.l, w:o.w, rotated:o.rotated, rows, layers, perColumn};
+    }
+  });
+  return best;
+}
+
+function pack(container, itemList, allowRotation){
+  let usedLength = 0;
+  const sections = [];
+
+  itemList.forEach(it => {
+    const orient = bestOrientation(it, container, allowRotation);
+
+    if(!orient){
+      const fitsW = it.w > 0 && it.w <= container.w;
+      const fitsH = it.h > 0 && it.h <= container.h;
+      const fitsL = it.l > 0 && it.l <= container.l;
+      const rotFitsW = it.l > 0 && it.l <= container.w;
+      const rotFitsL = it.w > 0 && it.w <= container.l;
+      let reason;
+      if(!fitsH) reason = `Height (${it.h}cm) exceeds container height (${container.h}cm)`;
+      else if(allowRotation && !(fitsL||rotFitsL)) reason = `Even with rotation, the length (${it.l}/${it.w}cm) exceeds the container length (${container.l}cm)`;
+      else if(allowRotation && !(fitsW||rotFitsW)) reason = `Even with rotation, the width (${it.l}/${it.w}cm) exceeds the container width (${container.w}cm)`;
+      else reason = !fitsL ? `Length (${it.l}cm) exceeds container length (${container.l}cm)` :
+                     !fitsW ? `Width (${it.w}cm) exceeds container width (${container.w}cm)` :
+                     `This size doesn't fit the container`;
+      sections.push({item:it, color:it.color, error:true, errorReason: reason,
+        rows:0, layers:0, colsUsed:0, perColumn:0, placedQty:0, lengthUsedCm:0, startLengthCm:usedLength, rotated:false, effL:it.l, effW:it.w});
+      return;
+    }
+
+    const { l:effL, w:effW, rows, layers, perColumn, rotated } = orient;
+    const remainingLength = container.l - usedLength;
+    const maxColsBySpace = Math.floor(remainingLength / effL);
+    const colsNeeded = perColumn > 0 ? Math.ceil(it.qty / perColumn) : 0;
+    const colsUsed = Math.max(0, Math.min(maxColsBySpace, colsNeeded));
+    const placedQty = Math.min(it.qty, colsUsed * perColumn);
+    const lengthUsedCm = colsUsed * effL;
+    const startLengthCm = usedLength;
+    usedLength += lengthUsedCm;
+
+    sections.push({item:it, color:it.color, error:false, rows, layers, colsUsed, perColumn, placedQty, lengthUsedCm, startLengthCm, rotated, effL, effW});
+  });
+
+  return { sections, usedLength, remainingLength: container.l - usedLength };
+}
+
+function calcForContainer(containerKey){
+  const allowRotation = document.getElementById('allowRotation') ? document.getElementById('allowRotation').checked : false;
+  return pack(CONTAINERS[containerKey], items, allowRotation);
+
+}
+
+function calc(){
+  const containerKey = document.getElementById('containerType').value;
+  const container = CONTAINERS[containerKey];
+  const result = calcForContainer(containerKey);
+  currentResult = { container, result };
+
+  // Oversized-item error messages
+  const errorSections = result.sections.filter(s=>s.error);
+  document.getElementById('errorMsgs').innerHTML = errorSections.map(s=>
+    `<div class="row-error-msg">⚠ <strong>${s.item.name}</strong>: ${s.errorReason} — this box can't be loaded into the current container.</div>`
+  ).join('');
+
+  // Base summary figures
+  const totalRequested = items.reduce((a,i)=>a+i.qty,0);
+  const totalPlaced = result.sections.reduce((a,s)=>a+s.placedQty,0);
+  const sectionsUsed = result.sections.filter(s=>s.colsUsed>0).length;
+  const totalWeight = result.sections.reduce((a,s)=> a + (s.error?0:s.placedQty*(s.item.weight||0)), 0);
+
+  const palletMode = document.getElementById('palletMode') && document.getElementById('palletMode').checked;
+  const palletEff = palletMode ? (Number(document.getElementById('palletEfficiency').value) / 100) : 1;
+  const displayPlaced = Math.floor(totalPlaced * palletEff);
+
+  let usedVolume = 0;
+  result.sections.forEach(s=>{ usedVolume += s.placedQty * s.item.l * s.item.w * s.item.h; });
+  const containerVolume = container.l*container.w*container.h;
+  const rawUtil = Math.min(100, (usedVolume/containerVolume)*100);
+  const util = rawUtil * palletEff;
+  const weightUtil = container.maxPayload>0 ? Math.min(100,(totalWeight/container.maxPayload)*100) : 0;
+  const placementRate = totalRequested>0 ? Math.min(100,(totalPlaced/totalRequested)*100) : 100;
+
+  // Remaining space
+  const remainLengthCm = result.remainingLength;
+  const remainVolumeM3 = (remainLengthCm * container.w * container.h) / 1e6;
+
+  // Approximate leftover width/height based on the last valid section
+  const lastValid = [...result.sections].reverse().find(s=>!s.error && s.colsUsed>0);
+  const remainWidthCm = lastValid ? container.w - lastValid.rows*lastValid.effW : container.w;
+  const remainHeightCm = lastValid ? container.h - lastValid.layers*lastValid.item.h : container.h;
+
+  document.getElementById('remainGrid').innerHTML = `
+    <div><span class="rk">Remaining length</span><span class="rv">${fmt(remainLengthCm)}mm</span></div>
+    <div><span class="rk">Remaining width (approx.)</span><span class="rv">${fmt(remainWidthCm)}mm</span></div>
+    <div><span class="rk">Remaining height (approx.)</span><span class="rv">${fmt(remainHeightCm)}mm</span></div>
+    <div><span class="rk">Remaining volume</span><span class="rv">${remainVolumeM3.toFixed(2)}㎥</span></div>
+  `;
+  const suggestBox = document.getElementById('remainSuggest');
+  ghostSuggestion = null;
+  if(lastValid && remainLengthCm > 0){
+    const effL = lastValid.effL;
+    const extraCols = Math.floor(remainLengthCm / effL);
+    const extraQty = extraCols * lastValid.perColumn;
+    suggestBox.style.display = 'flex';
+    if(extraQty>0){
+      ghostSuggestion = { startX: lastValid.startLengthCm + lastValid.colsUsed*effL, effL, effW: lastValid.effW, h: lastValid.item.h, rows: lastValid.rows, layers: lastValid.layers, cols: extraCols, color: lastValid.color };
+      suggestBox.innerHTML = `<span class="insight-icon">🤖</span><span class="insight-text"><b>AI recommendation:</b> the remaining space (${fmt(remainLengthCm)}mm) looks like it could fit about <b>${fmt(extraQty)} more</b> "${lastValid.item.name}". <button class="scene-tool-btn" style="margin-left:6px;" onclick="toggleGhostPreview()" id="ghostPreviewBtn">👻 3D preview</button></span>`;
+    } else {
+      suggestBox.innerHTML = `<span class="insight-icon">ℹ️</span><span class="insight-text">There's remaining space, but no more of the last item fits based on its dimensions.</span>`;
+    }
+  } else {
+    suggestBox.style.display = 'flex';
+    suggestBox.innerHTML = `<span class="insight-icon">✅</span><span class="insight-text">Almost no length-wise space left (fully loaded).</span>`;
+  }
+
+  // Enhanced summary metric grid
+  const overCap = totalWeight > container.maxPayload;
+  document.getElementById('metricGrid').innerHTML = `
+    <div class="metric-card"><div class="m-label">Loadable qty (theoretical)</div><div class="m-value">${fmt(totalPlaced)}</div><div class="m-sub">Boxes</div></div>
+    <div class="metric-card"><div class="m-label">Actual load${palletMode?' (pallet-adjusted)':''}</div><div class="m-value">${fmt(displayPlaced)}</div><div class="m-sub">/ requested ${fmt(totalRequested)}</div></div>
+    <div class="metric-card ${placementRate>=99.5?'ok':(placementRate<80?'warn':'')}"><div class="m-label">Fill rate</div><div class="m-value">${placementRate.toFixed(1)}%</div><div class="m-sub">loaded / requested</div></div>
+    <div class="metric-card"><div class="m-label">Space utilization</div><div class="m-value">${util.toFixed(1)}%</div><div class="m-sub">${palletMode?`theoretical ${rawUtil.toFixed(0)}%`:'&nbsp;'}</div></div>
+    <div class="metric-card ${overCap?'warn':''}"><div class="m-label">Weight utilization</div><div class="m-value">${weightUtil.toFixed(1)}%</div><div class="m-sub">${fmt(totalWeight)}kg</div></div>
+    <div class="metric-card"><div class="m-label">Sections used</div><div class="m-value">${sectionsUsed}</div><div class="m-sub">${items.length} item type(s)</div></div>
+    <div class="metric-card"><div class="m-label">Remaining space</div><div class="m-value">${remainVolumeM3.toFixed(2)}㎥</div><div class="m-sub">${fmt(remainLengthCm)}mm left</div></div>
+    <div class="metric-card ${overCap?'warn':'ok'}"><div class="m-label">Vs. max payload</div><div class="m-value">${overCap?'Over':fmt(container.maxPayload-totalWeight)+'kg'}</div><div class="m-sub">${overCap?'':'to spare'}</div></div>
+  `;
+
+  // Item-by-item breakdown
+  document.getElementById('statTable').innerHTML = `
+    <thead><tr><th>Item</th><th>Size</th><th>Qty</th><th>Volume</th><th>Weight</th><th>Share</th></tr></thead>
+    <tbody>${result.sections.map(s=>{
+      if(s.error) return `<tr><td style="text-align:left"><span class="color-dot" style="background:${s.color}"></span>${s.item.name}</td><td colspan="4" class="shortfall">Oversized</td></tr>`;
+      const vol = (s.placedQty*s.item.l*s.item.w*s.item.h)/1e6;
+      const wt = s.placedQty*(s.item.weight||0);
+      const share = containerVolume>0 ? (s.placedQty*s.item.l*s.item.w*s.item.h)/containerVolume*100 : 0;
+      const rotTag = s.rotated ? ' ↻' : '';
+      return `<tr>
+        <td style="text-align:left"><span class="color-dot" style="background:${s.color}"></span>${s.item.name}${rotTag}</td>
+        <td>${s.item.l}×${s.item.w}×${s.item.h}</td>
+        <td>${fmt(s.placedQty)}${s.placedQty<s.item.qty?'<span class="shortfall">*</span>':''}</td>
+        <td>${vol.toFixed(3)}㎥</td>
+        <td>${fmt(wt)}kg</td>
+        <td>${share.toFixed(1)}%</td>
+      </tr>`;
+    }).join('')}</tbody>
+  `;
+
+  const utilBar = document.getElementById('utilBar');
+  utilBar.innerHTML = result.sections.filter(s=>!s.error && s.placedQty>0).map(s=>{
+    const vol = s.placedQty*s.item.l*s.item.w*s.item.h;
+    const pct = (vol/containerVolume)*100*palletEff;
+    return `<div class="util-seg" style="width:${pct}%;background:${s.color};">${pct>=8?pct.toFixed(0)+'%':''}</div>`;
+  }).join('');
+
+  // Center of gravity
+  const cog = computeCenterOfGravity(container, result);
+  renderCogPanel(container, cog);
+
+  // Loading rules checklist
+  const allowRotation = document.getElementById('allowRotation').checked;
+  document.getElementById('ruleList').innerHTML = `
+    <li><span class="rule-check">✓</span> Same-item grouping (sequential section placement)</li>
+    <li class="${allowRotation?'':'off'}"><span class="rule-check ${allowRotation?'':'off'}">${allowRotation?'✓':'✕'}</span> Box rotation allowed (auto-optimized orientation)</li>
+    <li class="${palletMode?'':'off'}"><span class="rule-check ${palletMode?'':'off'}">${palletMode?'✓':'✕'}</span> Pallet loading adjustment applied</li>
+    <li><span class="rule-check">✓</span> Stacking within height limit (stack allowed)</li>
+    <li class="${overCap?'off':''}"><span class="rule-check ${overCap?'off':''}">${overCap?'✕':'✓'}</span> Within weight limit</li>
+  `;
+
+  // Loading Score / star ratings
+  renderScorePanel(container, result, util, weightUtil, cog, sectionsUsed, totalRequested, totalPlaced);
+
+  // Shortfall warning + alternatives
+  renderShortfallWarning(container, result, totalRequested, totalPlaced);
+
+  // Weight limit warning
+  renderWeightWarning(container, result);
+
+  // Container spec panel
+  renderSpecPanel(container);
+
+  // Container comparison table
+  renderCompareTable(containerKey);
+
+  // Update animation slider range
+  setupAnimRange(result);
+
+  // Visualization (both preview + 3D use the same renderer)
+  lastContainer = container; lastResult = result;
+  const stepLimit = animMode ? animStep : undefined;
+  renderScene('rigPreview', 'legendPreview', container, result, false, stepLimit);
+  renderScene('rig3d', 'legend3d', container, result, true, stepLimit);
+}
+
+// ===== Container spec panel =====
+function renderSpecPanel(container){
+  const panel = document.getElementById('specPanel');
+  const volume = (container.l*container.w*container.h/1e6).toFixed(1);
+  const floorArea = (container.l*container.w/1e4).toFixed(1);
+  const tare = container.maxGross - container.maxPayload;
+  panel.innerHTML = `
+    <div class="spec-panel-title">📦 ${container.name} Container Specification</div>
+    <div class="spec-grid">
+      <div class="spec-row"><span class="sk">Internal length</span><span class="sv">${(container.l/100).toFixed(2)}m</span></div>
+      <div class="spec-row"><span class="sk">Internal width</span><span class="sv">${(container.w/100).toFixed(2)}m</span></div>
+      <div class="spec-row"><span class="sk">Internal height</span><span class="sv">${(container.h/100).toFixed(2)}m</span></div>
+      <div class="spec-row"><span class="sk">Door width</span><span class="sv">${(container.doorW/100).toFixed(2)}m</span></div>
+      <div class="spec-row"><span class="sk">Door height</span><span class="sv">${(container.doorH/100).toFixed(2)}m</span></div>
+      <div class="spec-row"><span class="sk">Floor area</span><span class="sv">${floorArea}㎡</span></div>
+      <div class="spec-row full"><span class="sk">Internal volume</span><span class="sv">${volume}㎥</span></div>
+      <div class="spec-row"><span class="sk">Max payload</span><span class="sv">${fmt(container.maxPayload)}kg</span></div>
+      <div class="spec-row"><span class="sk">Max gross weight</span><span class="sv">${fmt(container.maxGross)}kg</span></div>
+      <div class="spec-row full"><span class="sk">Tare weight</span><span class="sv">approx. ${fmt(tare)}kg</span></div>
+    </div>
+  `;
+}
+
+// ===== Center of gravity calculation =====
+function computeCenterOfGravity(container, result){
+  let sumWX = 0, sumWZfloor = 0, totalW = 0;
+  result.sections.forEach(s=>{
+    if(s.error || s.placedQty<=0) return;
+    const w = s.item.weight||0;
+    if(w<=0) return;
+    const effL = s.effL || s.item.l;
+    const perColumn = s.perColumn || 1;
+    for(let c=0;c<s.colsUsed;c++){
+      const colX = s.startLengthCm + c*effL + effL/2;
+      const already = c*perColumn;
+      const remaining = s.placedQty - already;
+      const inThisCol = Math.max(0, Math.min(perColumn, remaining));
+      if(inThisCol<=0) continue;
+      const colWeight = inThisCol * w;
+      sumWX += colX * colWeight;
+      totalW += colWeight;
+
+      let placedInCol = 0;
+      for(let l=0; l<s.layers && placedInCol<inThisCol; l++){
+        const rowsAvail = Math.min(s.rows, inThisCol-placedInCol);
+        if(rowsAvail<=0) break;
+        const layerWeight = rowsAvail*w;
+        const zFromFloor = container.h - (l+0.5)*s.item.h;
+        sumWZfloor += zFromFloor*layerWeight;
+        placedInCol += rowsAvail;
+      }
+    }
+  });
+  if(totalW<=0) return null;
+  return { x: sumWX/totalW, zFromFloor: sumWZfloor/totalW, totalWeight: totalW };
+}
+
+function renderCogPanel(container, cog){
+  const fillFront = document.getElementById('cogFillFront');
+  const marker = document.getElementById('cogMarker');
+  const cogXEl = document.getElementById('cogX');
+  const cogYEl = document.getElementById('cogY');
+  const cogZEl = document.getElementById('cogZ');
+  if(!cog){
+    fillFront.style.width = '50%';
+    marker.style.left = '50%';
+    cogXEl.textContent = '-'; cogYEl.textContent = '-'; cogZEl.textContent = '-';
+    return;
+  }
+  const pctFromFront = Math.max(0, Math.min(100, (cog.x/container.l)*100));
+  fillFront.style.width = pctFromFront + '%';
+  marker.style.left = pctFromFront + '%';
+  cogXEl.textContent = (cog.x/100).toFixed(2)+'m';
+  cogYEl.textContent = 'Center';
+  cogZEl.textContent = (cog.zFromFloor/100).toFixed(2)+'m';
+}
+
+// ===== Loading Score / star ratings =====
+function starsFor(pct){
+  const n = Math.max(0, Math.min(5, Math.round(pct/20)));
+  return '★'.repeat(n) + '☆'.repeat(5-n);
+}
+function renderScorePanel(container, result, util, weightUtil, cog, sectionsUsed, totalRequested, totalPlaced){
+  const pctFromFront = cog ? (cog.x/container.l)*100 : 50;
+  const balanceScore = 100 - Math.abs(pctFromFront-50)*2;
+  const fulfillmentRate = totalRequested>0 ? Math.min(100,(totalPlaced/totalRequested)*100) : 100;
+  const remainWaste = Math.max(0, 100-util);
+  const remainScore = Math.max(0, 100-remainWaste);
+  const unloadEase = sectionsUsed<=4 ? 100 : sectionsUsed<=6 ? 75 : 50;
+
+  const overall = Math.round(util*0.4 + balanceScore*0.2 + fulfillmentRate*0.25 + unloadEase*0.15);
+
+  document.getElementById('scoreNum').innerHTML = overall + '<span>/100</span>';
+  document.getElementById('scoreLabel').textContent =
+    overall>=85 ? 'An excellent loading plan' : overall>=65 ? 'A reasonable loading plan' : 'There\'s room to improve';
+
+  // Update donut chart
+  const circumference = 2 * Math.PI * 50;
+  const donutArc = document.getElementById('scoreDonutArc');
+  const donutColor = overall>=85 ? 'var(--success)' : overall>=65 ? 'var(--accent)' : 'var(--danger)';
+  donutArc.style.strokeDasharray = `${circumference}`;
+  donutArc.style.strokeDashoffset = `${circumference * (1 - overall/100)}`;
+  donutArc.style.stroke = donutColor;
+  document.getElementById('scoreDonutNum').textContent = overall;
+
+  document.getElementById('ratingRows').innerHTML = `
+    <div class="rating-row"><span class="rlabel">Space utilization</span><span class="rval">${util.toFixed(0)}% <span class="stars">${starsFor(util)}</span></span></div>
+    <div class="rating-row"><span class="rlabel">Weight distribution</span><span class="rval">${balanceScore>=85?'Excellent':balanceScore>=65?'Good':'Fair'} <span class="stars">${starsFor(balanceScore)}</span></span></div>
+    <div class="rating-row"><span class="rlabel">Center of gravity</span><span class="rval">${Math.abs(pctFromFront-50)<=10?'Good':'Caution'} <span class="stars">${starsFor(100-Math.abs(pctFromFront-50)*2)}</span></span></div>
+    <div class="rating-row"><span class="rlabel">Empty space</span><span class="rval">${remainWaste<10?'Low':remainWaste<25?'Moderate':'High'} <span class="stars">${starsFor(remainScore)}</span></span></div>
+    <div class="rating-row"><span class="rlabel">Unloading ease</span><span class="rval">${unloadEase>=85?'Good':'Fair'} <span class="stars">${starsFor(unloadEase)}</span></span></div>
+  `;
+}
+
+function renderShortfallWarning(container, result, totalRequested, totalPlaced){
+  const box = document.getElementById('shortfallWarning');
+  const shortItems = result.sections.filter(s => s.error || s.placedQty < s.item.qty);
+  if(shortItems.length === 0 || totalPlaced >= totalRequested){ box.innerHTML=''; return; }
+
+  const lines = shortItems.map(s=>{
+    if(s.error) return `${s.item.name}: oversized, so none of the ${fmt(s.item.qty)} can be loaded`;
+    const shortQty = s.item.qty - s.placedQty;
+    const perColumn = s.perColumn || 1;
+    const effL = s.effL || s.item.l;
+    const perFullContainer = Math.floor(container.l / effL) * perColumn;
+    const extraContainers = perFullContainer>0 ? Math.ceil(shortQty / perFullContainer) : '?';
+    return `${s.item.name}: ${fmt(shortQty)} short → about ${extraContainers} more same-size container(s) needed (estimate assuming this item alone)`;
+  });
+
+  box.innerHTML = `<div class="warn-box"><strong>⚠ Not everything fits — check alternatives</strong>${lines.join('<br>')}<br><br>Check the "Compare by Container Type" table below to see if a larger container would fit everything.</div>`;
+}
+
+function renderWeightWarning(container, result){
+  const box = document.getElementById('weightWarning');
+  const totalWeight = result.sections.reduce((a,s)=> a + (s.error?0:s.placedQty*(s.item.weight||0)), 0);
+  if(totalWeight <= 0){ box.innerHTML=''; return; }
+  const maxPayload = container.maxPayload;
+  if(totalWeight > maxPayload){
+    const overBy = totalWeight - maxPayload;
+    box.innerHTML = `<div class="weight-warn"><strong>⚖ Weight limit warning</strong>Total cargo weight is about ${fmt(totalWeight)}kg, which may exceed the typical max payload (approx. ${fmt(maxPayload)}kg) for a ${container.name} container by ${fmt(overBy)}kg. Even if it fits by volume, the weight limit may mean you can't actually load it all — adjust quantities per item or confirm the real container weight limit with your forwarder.</div>`;
+  } else {
+    box.innerHTML = `<div class="notice-box">Total cargo weight is about ${fmt(totalWeight)}kg, which is within the typical max payload (approx. ${fmt(maxPayload)}kg) for a ${container.name} container.</div>`;
+  }
+}
+function renderCompareTable(currentKey){
+  const totalRequested = items.reduce((a,i)=>a+i.qty,0);
+  const computed = Object.keys(CONTAINERS).map(key=>{
+    const c = CONTAINERS[key];
+    const r = calcForContainer(key);
+    const totalPlaced = r.sections.reduce((a,s)=>a+s.placedQty,0);
+    let usedVolume = 0;
+    r.sections.forEach(s=>{ usedVolume += s.placedQty*s.item.l*s.item.w*s.item.h; });
+    const util = Math.min(100, (usedVolume/(c.l*c.w*c.h))*100);
+    const allFit = totalPlaced >= totalRequested && !r.sections.some(s=>s.error);
+    const totalWeight = r.sections.reduce((a,s)=> a + (s.error?0:s.placedQty*(s.item.weight||0)), 0);
+    const weightOk = totalWeight <= c.maxPayload;
+    return { key, c, totalPlaced, util, allFit, weightOk };
+  });
+
+  // Recommendation score: prefer combos that fit everything + are within weight limit,
+  // with higher utilization, favoring smaller (more cost-efficient) containers
+  const sizeOrder = { '20':0, '40':1, '40hc':2 };
+  const eligible = computed.filter(x=>x.allFit && x.weightOk);
+  let recommendedKey = null;
+  if(eligible.length>0){
+    recommendedKey = eligible.sort((a,b)=> sizeOrder[a.key]-sizeOrder[b.key] || b.util-a.util)[0].key;
+  } else {
+    recommendedKey = computed.sort((a,b)=>b.util-a.util)[0].key;
+  }
+
+  const rows = computed.map(x=>{
+    const { key, c, totalPlaced, util, allFit, weightOk } = x;
+    const isRecommended = key === recommendedKey;
+    const starRating = starsFor(util);
+    return `<tr class="${key===currentKey?'current':''}">
+      <td>${c.name}${key===currentKey?' (selected)':''}${isRecommended?'<span class="rec-best">Recommended</span>':''}</td>
+      <td>${fmt(totalPlaced)} / ${fmt(totalRequested)}</td>
+      <td>${util.toFixed(0)}% <span class="rec-stars">${starRating}</span></td>
+      <td>${allFit ? '<span class="badge-ok">Fits everything</span>' : '<span class="badge-no">Not enough space</span>'}${!weightOk?' <span class="badge-no">Over weight</span>':''}</td>
+    </tr>`;
+  }).join('');
+
+  document.getElementById('compareTable').innerHTML = `
+    <thead><tr><th>Container</th><th>Loaded / Requested</th><th>Utilization</th><th>Status</th></tr></thead>
+    <tbody>${rows}</tbody>
+  `;
+}
+
+// ===== Individual box renderer (shared by preview/3D) =====
+const MAX_TOTAL_BOXES = 140; // Cap on individually-rendered boxes for performance
+
+function setView(v){
+  currentView = v;
+  document.getElementById('btn2d').classList.toggle('active', v==='2d');
+  document.getElementById('btn3d').classList.toggle('active', v==='3d');
+  document.getElementById('wrap2d').classList.toggle('active', v==='2d');
+  document.getElementById('wrap3d').classList.toggle('active', v==='3d');
+}
+function applyRotation(){
+  rotY = parseFloat(document.getElementById('rotY').value);
+  rotX = parseFloat(document.getElementById('rotX').value);
+  renderScene('rig3d', 'legend3d', lastContainer, lastResult, true, animMode ? animStep : undefined);
+}
+
+function shade(hex, factor){
+  const n = parseInt(hex.slice(1),16);
+  let r=(n>>16)&255, g=(n>>8)&255, b=n&255;
+  r=Math.min(255,Math.round(r*factor)); g=Math.min(255,Math.round(g*factor)); b=Math.min(255,Math.round(b*factor));
+  return `rgb(${r},${g},${b})`;
+}
+
+// ===== 3D → 2D projection (isometric) math =====
+// World coordinates: X=length axis, Y=height (+ is up), Z=width/depth axis. Container center is the origin.
+function deg2rad(d){ return d*Math.PI/180; }
+function rotatePoint(x,y,z,rotXdeg,rotYdeg){
+  const ry = deg2rad(rotYdeg), rx = deg2rad(rotXdeg);
+  const x1 = x*Math.cos(ry) + z*Math.sin(ry);
+  const z1 = -x*Math.sin(ry) + z*Math.cos(ry);
+  const y2 = y*Math.cos(rx) - z1*Math.sin(rx);
+  const z2 = y*Math.sin(rx) + z1*Math.cos(rx);
+  return [x1, y2, z2];
+}
+
+const FACE_DEFS = [
+  {n:[0,0,1],  key:'front',  c:(w,h,d)=>[[-w/2,-h/2,d/2],[w/2,-h/2,d/2],[w/2,h/2,d/2],[-w/2,h/2,d/2]]},
+  {n:[0,0,-1], key:'back',   c:(w,h,d)=>[[w/2,-h/2,-d/2],[-w/2,-h/2,-d/2],[-w/2,h/2,-d/2],[w/2,h/2,-d/2]]},
+  {n:[1,0,0],  key:'side',   c:(w,h,d)=>[[w/2,-h/2,d/2],[w/2,-h/2,-d/2],[w/2,h/2,-d/2],[w/2,h/2,d/2]]},
+  {n:[-1,0,0], key:'side',   c:(w,h,d)=>[[-w/2,-h/2,-d/2],[-w/2,-h/2,d/2],[-w/2,h/2,d/2],[-w/2,h/2,-d/2]]},
+  {n:[0,1,0],  key:'top',    c:(w,h,d)=>[[-w/2,h/2,d/2],[w/2,h/2,d/2],[w/2,h/2,-d/2],[-w/2,h/2,-d/2]]},
+  {n:[0,-1,0], key:'bottom', c:(w,h,d)=>[[-w/2,-h/2,-d/2],[w/2,-h/2,-d/2],[w/2,-h/2,d/2],[-w/2,-h/2,d/2]]}
+];
+
+// Compute the visible faces of one box (center cx,cy,cz / size w,h,d), including backface culling
+function buildFacesForBox(cx,cy,cz,w,h,d,color,rotXdeg,rotYdeg){
+  const shades = {front:shade(color,1.0), back:shade(color,0.7), side:shade(color,0.82), top:shade(color,1.16), bottom:shade(color,0.58)};
+  const faces = [];
+  FACE_DEFS.forEach(fd=>{
+    const rn = rotatePoint(fd.n[0],fd.n[1],fd.n[2],rotXdeg,rotYdeg);
+    if(rn[2] >= -0.001) return; // Skip faces pointing away from the camera
+    const pts = fd.c(w,h,d).map(([lx,ly,lz])=>{
+      const [rx,ry,rz] = rotatePoint(lx+cx, ly+cy, lz+cz, rotXdeg, rotYdeg);
+      return {sx:rx, sy:ry, z:rz};
+    });
+    const avgZ = pts.reduce((s,p)=>s+p.z,0)/pts.length;
+    faces.push({pointsStr: pts.map(p=>`${p.sx.toFixed(1)},${p.sy.toFixed(1)}`).join(' '), depth:avgZ, fill:shades[fd.key], isTop: fd.key==='top'});
+  });
+  return faces;
+}
+
+// Rotate and project the container's 12 wireframe edges
+function buildWireEdges(L,H,D,rotXdeg,rotYdeg){
+  const c = [-1,1];
+  const corners3 = {};
+  c.forEach(sx=>c.forEach(sy=>c.forEach(sz=>{
+    const key = `${sx}${sy}${sz}`;
+    const [rx,ry,rz] = rotatePoint(sx*L/2, sy*H/2, sz*D/2, rotXdeg, rotYdeg);
+    corners3[key] = {sx:rx, sy:ry, z:rz};
+  })));
+  const pairs = [
+    ['-1-1-1','1-1-1'],['-1-11','1-11'],['-111','111'],['-11-1','11-1'],
+    ['-1-1-1','-1-11'],['1-1-1','1-11'],['-11-1','-111'],['11-1','111'],
+    ['-1-1-1','-11-1'],['1-1-1','11-1'],['-1-11','-111'],['1-11','111']
+  ];
+  return pairs.map(([a,b])=>({p1:corners3[a], p2:corners3[b], depth:(corners3[a].z+corners3[b].z)/2}));
+}
+
+function buildBoxList(container, result){
+  const totalPlaced = result.sections.reduce((a,s)=>a+(s.error?0:s.placedQty),0);
+  const budget = Math.min(MAX_TOTAL_BOXES, totalPlaced || 1);
+  let boxes = [];
+  let overflowNote = false;
+
+  result.sections.forEach((s, sIdx)=>{
+    if(s.error || s.colsUsed<=0 || s.placedQty<=0) return;
+    const shareRaw = totalPlaced>0 ? (s.placedQty/totalPlaced)*budget : 0;
+    let renderCount = Math.max(1, Math.round(shareRaw));
+    renderCount = Math.min(renderCount, s.placedQty);
+    if(renderCount < s.placedQty) overflowNote = true;
+
+    let placed = 0;
+    outer:
+    for(let c=0;c<s.colsUsed;c++){
+      for(let l=0;l<s.layers;l++){
+        for(let r=0;r<s.rows;r++){
+          if(placed >= renderCount) break outer;
+          boxes.push({
+            color: s.color,
+            l: s.effL ?? s.item.l, w: s.effW ?? s.item.w, h: s.item.h,
+            xCm: s.startLengthCm + c*(s.effL ?? s.item.l) + (s.effL ?? s.item.l)/2,
+            layerIdx: l, rowIdx: r,
+            sectionIdx: sIdx, isBottomLayer: (l === s.layers-1),
+            isLabelAnchor: (c===0 && l===0 && r===0),
+            itemName: s.item.name, itemWeight: s.item.weight||0
+          });
+          placed++;
+        }
+      }
+    }
+  });
+  return { boxes, overflowNote, totalPlaced, rendered: boxes.length };
+}
+
+// ===== Container interior details (frame, wall ribs, floor corrugation, door) =====
+function buildContainerDetails(L,H,D,rX,rY,containerReal,viewMode){
+  const proj = (x,y,z)=>rotatePoint(x,y,z,rX,rY);
+  let svg = '';
+
+  // Floor corrugation (depth-direction lines) - subtle
+  const floorRibs = 6;
+  for(let i=1;i<floorRibs;i++){
+    const z = -D/2 + (D/floorRibs)*i;
+    const p1 = proj(-L/2,-H/2,z), p2 = proj(L/2,-H/2,z);
+    svg += `<line x1="${p1[0].toFixed(1)}" y1="${p1[1].toFixed(1)}" x2="${p2[0].toFixed(1)}" y2="${p2[1].toFixed(1)}" stroke="#B8C2D0" stroke-width="0.35" opacity="0.4"/>`;
+  }
+
+  // Side wall ribs (vertical lines, both walls) - subtle
+  const wallRibs = 9;
+  [1,-1].forEach(sz=>{
+    for(let i=1;i<wallRibs;i++){
+      const x = -L/2 + (L/wallRibs)*i;
+      const p1 = proj(x,-H/2,sz*D/2), p2 = proj(x,H/2,sz*D/2);
+      svg += `<line x1="${p1[0].toFixed(1)}" y1="${p1[1].toFixed(1)}" x2="${p2[0].toFixed(1)}" y2="${p2[1].toFixed(1)}" stroke="#B8C2D0" stroke-width="0.3" opacity="0.3"/>`;
+    }
+  });
+
+  // Frame corner posts (4 vertical edges)
+  [[-1,-1],[1,-1],[1,1],[-1,1]].forEach(([sx,sz])=>{
+    const p1 = proj(sx*L/2,-H/2,sz*D/2), p2 = proj(sx*L/2,H/2,sz*D/2);
+    svg += `<line x1="${p1[0].toFixed(1)}" y1="${p1[1].toFixed(1)}" x2="${p2[0].toFixed(1)}" y2="${p2[1].toFixed(1)}" stroke="#94A3B8" stroke-width="1.1" opacity="0.75"/>`;
+  });
+
+  // Door indicator - small and subtle, shown only in Front view (omitted in 3D/Top/Side to avoid clutter)
+  if(containerReal && viewMode === 'front'){
+    const doorWRatio = containerReal.doorW/containerReal.w, doorHRatio = containerReal.doorH/containerReal.h;
+    const dw = D*doorWRatio, dh = H*doorHRatio;
+    const doorCorners = [[-L/2,-H/2,-dw/2],[-L/2,-H/2,dw/2],[-L/2,-H/2+dh,dw/2],[-L/2,-H/2+dh,-dw/2]];
+    const doorPts = doorCorners.map(([x,y,z])=>proj(x,y,z));
+    svg += `<polygon points="${doorPts.map(p=>p[0].toFixed(1)+','+p[1].toFixed(1)).join(' ')}" fill="none" stroke="#94A3B8" stroke-width="0.8" stroke-dasharray="2.5 2" opacity="0.7"/>`;
+    const doorLabelPt = proj(-L/2, -H/2-6, 0);
+    svg += `<text x="${doorLabelPt[0].toFixed(1)}" y="${doorLabelPt[1].toFixed(1)}" font-size="6" fill="#94A3B8" text-anchor="middle">Door</text>`;
+  }
+
+  return svg;
+}
+
+// ===== Dimension Lines - shown only in Top/Front/Side views, each showing only its relevant dimensions =====
+function buildDimensionLines(L,H,D,rX,rY,containerReal,viewMode){
+  const proj = (x,y,z)=>rotatePoint(x,y,z,rX,rY);
+  let svg = '';
+  const off = 14;
+
+  const drawHDim = (p1,p2,label) => {
+    const y = Math.max(p1[1],p2[1]) + off;
+    let s = `<line x1="${p1[0].toFixed(1)}" y1="${y.toFixed(1)}" x2="${p2[0].toFixed(1)}" y2="${y.toFixed(1)}" stroke="#94A3B8" stroke-width="0.5"/>`;
+    s += `<line x1="${p1[0].toFixed(1)}" y1="${p1[1].toFixed(1)}" x2="${p1[0].toFixed(1)}" y2="${y.toFixed(1)}" stroke="#CBD5E1" stroke-width="0.4"/>`;
+    s += `<line x1="${p2[0].toFixed(1)}" y1="${p2[1].toFixed(1)}" x2="${p2[0].toFixed(1)}" y2="${y.toFixed(1)}" stroke="#CBD5E1" stroke-width="0.4"/>`;
+    s += `<text x="${((p1[0]+p2[0])/2).toFixed(1)}" y="${(y+8).toFixed(1)}" font-size="6" fill="#94A3B8" text-anchor="middle">${label}</text>`;
+    return s;
+  };
+  const drawVDim = (p1,p2,label) => {
+    const x = Math.min(p1[0],p2[0]) - off;
+    let s = `<line x1="${x.toFixed(1)}" y1="${p1[1].toFixed(1)}" x2="${x.toFixed(1)}" y2="${p2[1].toFixed(1)}" stroke="#94A3B8" stroke-width="0.5"/>`;
+    s += `<line x1="${p1[0].toFixed(1)}" y1="${p1[1].toFixed(1)}" x2="${x.toFixed(1)}" y2="${p1[1].toFixed(1)}" stroke="#CBD5E1" stroke-width="0.4"/>`;
+    s += `<line x1="${p2[0].toFixed(1)}" y1="${p2[1].toFixed(1)}" x2="${x.toFixed(1)}" y2="${p2[1].toFixed(1)}" stroke="#CBD5E1" stroke-width="0.4"/>`;
+    s += `<text x="${(x-3).toFixed(1)}" y="${((p1[1]+p2[1])/2).toFixed(1)}" font-size="6" fill="#94A3B8" text-anchor="end">${label}</text>`;
+    return s;
+  };
+
+  if(viewMode === 'top'){
+    // Top view: show length only
+    svg += drawHDim(proj(-L/2,-H/2,-D/2), proj(L/2,-H/2,-D/2), fmt(containerReal.l*10)+'mm');
+  } else if(viewMode === 'front'){
+    // Front (door) view: width + height
+    svg += drawHDim(proj(L/2,-H/2,-D/2), proj(L/2,-H/2,D/2), fmt(containerReal.w*10)+'mm');
+    svg += drawVDim(proj(L/2,-H/2,D/2), proj(L/2,H/2,D/2), fmt(containerReal.h*10)+'mm');
+  } else if(viewMode === 'side'){
+    // Side view: length + height
+    svg += drawHDim(proj(-L/2,-H/2,-D/2), proj(L/2,-H/2,-D/2), fmt(containerReal.l*10)+'mm');
+    svg += drawVDim(proj(-L/2,-H/2,-D/2), proj(-L/2,H/2,-D/2), fmt(containerReal.h*10)+'mm');
+  }
+
+  return svg;
+}
+
+
+let boxMetaStore = {};
+let crossSectionPct = 100;
+let ghostSuggestion = null;
+let ghostPreviewOn = false;
+let boxMetaCounter = 0;
+
+function renderScene(rigId, legendId, container, result, useSliderRotation, stepLimit){
+  const rig = document.getElementById(rigId);
+  if(!rig) return;
+  const maxDim = Math.max(container.l, container.w, container.h);
+  const scale = 100 / maxDim;
+  const L = container.l*scale, H = container.h*scale, D = container.w*scale;
+  const rX = useSliderRotation ? rotX : 22, rY = useSliderRotation ? rotY : -30;
+  const viewMode = useSliderRotation ? currentViewMode : 'iso';
+  const isOrtho = useSliderRotation && viewMode !== 'iso';
+
+  const { boxes: allBoxes, overflowNote } = buildBoxList(container, result);
+  let boxes = (typeof stepLimit === 'number') ? allBoxes.slice(0, stepLimit) : allBoxes;
+  const cutoffCm = container.l * (crossSectionPct/100);
+  const isCut = crossSectionPct < 100;
+  if(isCut){ boxes = boxes.filter(b => b.xCm <= cutoffCm); }
+
+  // Compute each box's depth (center z') and sort farthest-first (Painter's algorithm)
+  const withDepth = boxes.map(b=>{
+    const bw=b.l*scale, bh=b.h*scale, bd=b.w*scale;
+    const offX = -L/2 + b.xCm*scale;
+    const offY = H/2 - (b.layerIdx+0.5)*bh;
+    const offZ = D/2 - (b.rowIdx+0.5)*bd;
+    const [,,cz] = rotatePoint(offX,offY,offZ,rX,rY);
+    return {bw,bh,bd,offX,offY,offZ,color:b.color,depth:cz,
+      isBottomLayer:b.isBottomLayer, itemName:b.itemName, itemWeight:b.itemWeight,
+      realL:b.l, realW:b.w, realH:b.h};
+  }).sort((a,b)=>b.depth-a.depth);
+
+  if(rigId === 'rig3d'){ boxMetaStore = {}; boxMetaCounter = 0; }
+
+  let boxGroups = [];
+  const shadowEllipses = [];
+  withDepth.forEach(b=>{
+    const faces = buildFacesForBox(b.offX,b.offY,b.offZ,b.bw,b.bh,b.bd,b.color,rX,rY);
+    const polys = faces.map(f=>`<polygon points="${f.pointsStr}" fill="${f.fill}" stroke="rgba(15,23,42,.16)" stroke-width="0.6" stroke-linejoin="round"/>`).join('');
+    let onclickAttr = '';
+    if(rigId === 'rig3d'){
+      const idx = boxMetaCounter++;
+      boxMetaStore[idx] = { name:b.itemName, l:b.realL, w:b.realW, h:b.realH, weight:b.itemWeight };
+      onclickAttr = ` onclick="selectBox(${idx})" style="cursor:pointer;"`;
+    }
+    boxGroups.push(`<g${onclickAttr}>${polys}</g>`);
+    if(b.isBottomLayer){
+      const [sx,sy] = rotatePoint(b.offX, H/2, b.offZ, rX, rY);
+      shadowEllipses.push(`<ellipse cx="${sx.toFixed(1)}" cy="${(sy+1.5).toFixed(1)}" rx="${(b.bw*0.46).toFixed(1)}" ry="${(b.bd*0.22).toFixed(1)}" fill="rgba(15,23,42,0.16)"/>`);
+    }
+  });
+
+  const edges = buildWireEdges(L,H,D,rX,rY);
+  const containerDetails = buildContainerDetails(L,H,D,rX,rY,container,viewMode);
+  const dimensionLines = isOrtho ? buildDimensionLines(L,H,D,rX,rY,container,viewMode) : '';
+
+  let cutPlaneSvg = '';
+  if(isCut){
+    const cutX = -L/2 + L*(crossSectionPct/100);
+    const corners = [[cutX,-H/2,-D/2],[cutX,-H/2,D/2],[cutX,H/2,D/2],[cutX,H/2,-D/2]].map(([x,y,z])=>rotatePoint(x,y,z,rX,rY));
+    cutPlaneSvg = `<polygon points="${corners.map(p=>p[0].toFixed(1)+','+p[1].toFixed(1)).join(' ')}" fill="rgba(37,99,235,0.10)" stroke="#2563EB" stroke-width="1" stroke-dasharray="4 3"/>`;
+  }
+
+  // Compute the on-screen bounds
+  let minX=Infinity,maxX=-Infinity,minY=Infinity,maxY=-Infinity;
+  const track=(sx,sy)=>{ if(sx<minX)minX=sx; if(sx>maxX)maxX=sx; if(sy<minY)minY=sy; if(sy>maxY)maxY=sy; };
+  edges.forEach(e=>{ track(e.p1.sx,e.p1.sy); track(e.p2.sx,e.p2.sy); });
+  const boxPointRe = /(-?[\d.]+),(-?[\d.]+)/g;
+  boxGroups.forEach(g=>{ let m; while((m=boxPointRe.exec(g))){ track(Number(m[1]),Number(m[2])); } });
+  if(!isFinite(minX)){ minX=-100; maxX=100; minY=-100; maxY=100; }
+  const pad = isOrtho ? 40 : 30;
+  const vw = (maxX-minX)+pad*2, vh = (maxY-minY)+pad*2;
+
+  let svg = `<svg viewBox="${minX-pad} ${minY-pad} ${vw} ${vh}" width="100%" height="100%" preserveAspectRatio="xMidYMid meet">`;
+  svg += `<defs><marker id="arrowHead" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#94A3B8"/></marker></defs>`;
+
+  // Fill the floor lightly to remove the "floating" look
+  const floorCorners = [[-L/2,H/2,-D/2],[L/2,H/2,-D/2],[L/2,H/2,D/2],[-L/2,H/2,D/2]].map(([x,y,z])=>rotatePoint(x,y,z,rX,rY));
+  svg += `<polygon points="${floorCorners.map(p=>p[0].toFixed(1)+','+p[1].toFixed(1)).join(' ')}" fill="rgba(148,163,184,0.14)"/>`;
+
+  svg += containerDetails;
+  edges.forEach(e=>{
+    svg += `<line x1="${e.p1.sx.toFixed(1)}" y1="${e.p1.sy.toFixed(1)}" x2="${e.p2.sx.toFixed(1)}" y2="${e.p2.sy.toFixed(1)}" stroke="#CBD5E1" stroke-width="0.5" opacity="0.8"/>`;
+  });
+  shadowEllipses.forEach(s=>{ svg += s; });
+  boxGroups.forEach(g=>{ svg += g; });
+  if(ghostPreviewOn && ghostSuggestion && rigId==='rig3d'){
+    const gs = ghostSuggestion;
+    for(let c=0;c<gs.cols;c++){
+      for(let l=0;l<gs.layers;l++){
+        for(let r=0;r<gs.rows;r++){
+          const bw=gs.effL*scale, bh=gs.h*scale, bd=gs.effW*scale;
+          const gx = -L/2 + (gs.startX + c*gs.effL + gs.effL/2)*scale;
+          const gy = H/2 - (l+0.5)*bh;
+          const gz = D/2 - (r+0.5)*bd;
+          const ghostFaces = buildFacesForBox(gx,gy,gz,bw,bh,bd,gs.color,rX,rY);
+          ghostFaces.forEach(f=>{
+            svg += `<polygon points="${f.pointsStr}" fill="${gs.color}" fill-opacity="0.28" stroke="${gs.color}" stroke-width="1" stroke-dasharray="2 2"/>`;
+          });
+        }
+      }
+    }
+  }
+  svg += cutPlaneSvg;
+  svg += dimensionLines;
+  svg += `</svg>`;
+  rig.innerHTML = svg;
+  if(rigId === 'rig3d' && typeof syncExpandedScene === 'function') syncExpandedScene();
+
+  const legend = document.getElementById(legendId);
+  if(legend){
+    legend.innerHTML = result.sections.filter(s=>!s.error && s.colsUsed>0).map(s=>
+      `<span class="item"><span class="color-dot" style="background:${s.color}"></span>${s.item.name}: ${fmt(s.placedQty)}</span>`
+    ).join('') + (overflowNote ? `<span class="item" style="color:var(--slate-400);">(only a sample shown for performance — see the table above for actual quantities)</span>` : '');
+  }
+}
+
+function selectBox(idx){
+  const meta = boxMetaStore[idx];
+  if(!meta) return;
+  const vol = (meta.l*meta.w*meta.h/1e6).toFixed(3);
+  const html = `
+    <div class="bip-title"><span>${meta.name}</span><button class="bip-close" onclick="closeBoxInfo()">✕</button></div>
+    <div class="bip-row"><span>Size</span><b>${meta.l} × ${meta.w} × ${meta.h} cm</b></div>
+    <div class="bip-row"><span>Weight</span><b>${meta.weight>0?fmt(meta.weight)+'kg':'-'}</b></div>
+    <div class="bip-row"><span>Volume</span><b>${vol}㎥</b></div>
+  `;
+  const panel = document.getElementById('boxInfoPanel');
+  panel.style.display = 'block';
+  panel.innerHTML = html;
+  const panelExp = document.getElementById('boxInfoPanelExpanded');
+  if(panelExp){
+    panelExp.style.display = 'block';
+    panelExp.innerHTML = html;
+  }
+}
+function closeBoxInfo(){
+  document.getElementById('boxInfoPanel').style.display = 'none';
+  const panelExp = document.getElementById('boxInfoPanelExpanded');
+  if(panelExp) panelExp.style.display = 'none';
+}
+
+
+(function initDrag(){
+  const scene = document.getElementById('scene3d');
+  let dragging=false, lastX=0, lastY=0;
+  const start=(x,y)=>{ if(currentViewMode!=='iso') return; dragging=true;lastX=x;lastY=y;stopAutoRotate();};
+  const move=(x,y)=>{
+    if(!dragging || currentViewMode!=='iso') return;
+    rotY += (x-lastX)*0.4; rotX -= (y-lastY)*0.3;
+    rotX = Math.max(0, Math.min(70, rotX));
+    document.getElementById('rotY').value = Math.max(-180, Math.min(180, rotY));
+    document.getElementById('rotX').value = rotX;
+    lastX=x; lastY=y; applyRotation();
+  };
+  const end=()=>{dragging=false;};
+  scene.addEventListener('mousedown', e=>start(e.clientX,e.clientY));
+  window.addEventListener('mousemove', e=>move(e.clientX,e.clientY));
+  window.addEventListener('mouseup', end);
+  scene.addEventListener('touchstart', e=>start(e.touches[0].clientX,e.touches[0].clientY), {passive:true});
+  scene.addEventListener('touchmove', e=>move(e.touches[0].clientX,e.touches[0].clientY), {passive:true});
+  scene.addEventListener('touchend', end);
+})();
+
+// ===== View controls: reset view / auto-rotate =====
+function resetView(){
+  stopAutoRotate();
+  rotY = -32; rotX = 24;
+  document.getElementById('rotY').value = rotY;
+  document.getElementById('rotX').value = rotX;
+  applyRotation();
+}
+let currentViewMode = 'iso';
+function setViewPreset(name){
+  stopAutoRotate();
+  currentViewMode = name;
+  // front: width×height (view from the door), side: length×height (profile), top: length×width (overhead), iso: free rotation
+  const presets = { iso:{x:24,y:-32}, front:{x:0,y:90}, side:{x:0,y:0}, top:{x:89,y:0} };
+  const p = presets[name] || presets.iso;
+  rotX = p.x; rotY = p.y;
+  document.getElementById('rotY').value = rotY;
+  document.getElementById('rotX').value = rotX;
+  document.querySelectorAll('.view-tab-btn').forEach(b=>b.classList.toggle('active', b.dataset.view===name));
+  const hint = document.getElementById('sceneHint3d');
+  if(hint){
+    hint.textContent = name==='iso'
+      ? 'In 3D mode, drag with your mouse (or finger) to rotate freely. Click a box to see its details.'
+      : 'This is a fixed projection view. Click a box to see its details.';
+  }
+  applyRotation();
+}
+
+function toggleGhostPreview(){
+  ghostPreviewOn = !ghostPreviewOn;
+  const btn = document.getElementById('ghostPreviewBtn');
+  if(btn) btn.textContent = ghostPreviewOn ? '✕ Hide preview' : '👻 3D preview';
+  if(lastContainer && lastResult){
+    const stepLimit = animMode ? animStep : undefined;
+    renderScene('rigPreview', 'legendPreview', lastContainer, lastResult, false, stepLimit);
+    renderScene('rig3d', 'legend3d', lastContainer, lastResult, true, stepLimit);
+    if(ghostPreviewOn) setView('3d');
+  }
+}
+
+function onCrossSectionChange(){
+  crossSectionPct = Number(document.getElementById('crossSection').value);
+  document.getElementById('crossSectionLabel').textContent = crossSectionPct + '%';
+  const expLabel = document.getElementById('crossSectionLabelExpanded');
+  if(expLabel) expLabel.textContent = crossSectionPct + '%';
+  const expSlider = document.getElementById('crossSectionExpanded');
+  if(expSlider) expSlider.value = crossSectionPct;
+  // Cross-section is a pure display filter, so just redraw without a full recalculation (performance optimization)
+  if(lastContainer && lastResult){
+    const stepLimit = animMode ? animStep : undefined;
+    renderScene('rigPreview', 'legendPreview', lastContainer, lastResult, false, stepLimit);
+    renderScene('rig3d', 'legend3d', lastContainer, lastResult, true, stepLimit);
+  }
+}
+
+// ===== 3D expand view (modal) =====
+let sceneExpanded = false;
+function expandScene(){
+  if(document.getElementById('expandBackdrop')) return;
+  sceneExpanded = true;
+  const backdrop = document.createElement('div');
+  backdrop.className = 'expand-backdrop';
+  backdrop.id = 'expandBackdrop';
+  backdrop.innerHTML = `
+    <div class="expand-header">
+      <div class="expand-tabs">
+        <button class="scene-tool-btn view-tab-btn ${currentViewMode==='iso'?'active':''}" data-view="iso" onclick="setViewPreset('iso')" style="background:#fff;">3D</button>
+        <button class="scene-tool-btn view-tab-btn ${currentViewMode==='top'?'active':''}" data-view="top" onclick="setViewPreset('top')" style="background:#fff;">Top</button>
+        <button class="scene-tool-btn view-tab-btn ${currentViewMode==='front'?'active':''}" data-view="front" onclick="setViewPreset('front')" style="background:#fff;">Front</button>
+        <button class="scene-tool-btn view-tab-btn ${currentViewMode==='side'?'active':''}" data-view="side" onclick="setViewPreset('side')" style="background:#fff;">Side</button>
+      </div>
+      <button class="expand-close-btn" onclick="collapseScene()">✕ Back to normal view</button>
+    </div>
+    <div class="expand-scene-wrap" id="expandSceneWrap">
+      <div class="expand-rig" id="rigExpanded"></div>
+      <div class="box-info-panel" id="boxInfoPanelExpanded" style="display:none;position:absolute;top:16px;left:16px;max-width:240px;box-shadow:0 8px 24px rgba(0,0,0,.25);"></div>
+      <div class="scene-controls" id="crossSectionRowExpanded" style="position:absolute;bottom:12px;left:50%;transform:translateX(-50%);background:rgba(255,255,255,0.92);padding:6px 14px;border-radius:999px;"></div>
+    </div>
+  `;
+  document.body.appendChild(backdrop);
+  document.getElementById('crossSectionRowExpanded').innerHTML =
+    `✂️ Cross-section <input type="range" id="crossSectionExpanded" min="10" max="100" value="${crossSectionPct}" oninput="onCrossSectionChangeExpanded()" style="width:140px;vertical-align:middle;"> <span id="crossSectionLabelExpanded">${crossSectionPct}%</span>`;
+  initExpandDrag();
+  syncExpandedScene();
+}
+function onCrossSectionChangeExpanded(){
+  const v = document.getElementById('crossSectionExpanded').value;
+  document.getElementById('crossSection').value = v;
+  onCrossSectionChange();
+}
+function collapseScene(){
+  sceneExpanded = false;
+  const el = document.getElementById('expandBackdrop');
+  if(el) el.remove();
+}
+function syncExpandedScene(){
+  if(!sceneExpanded) return;
+  const src = document.getElementById('rig3d');
+  const target = document.getElementById('rigExpanded');
+  if(src && target) target.innerHTML = src.innerHTML;
+}
+function initExpandDrag(){
+  const wrap = document.getElementById('expandSceneWrap');
+  if(!wrap) return;
+  let dragging=false, lastX=0, lastY=0;
+  const start=(x,y)=>{ if(currentViewMode!=='iso') return; dragging=true; lastX=x; lastY=y; };
+  const move=(x,y)=>{
+    if(!dragging || currentViewMode!=='iso') return;
+    rotY += (x-lastX)*0.4; rotX -= (y-lastY)*0.3;
+    rotX = Math.max(0, Math.min(70, rotX));
+    document.getElementById('rotY').value = Math.max(-180, Math.min(180, rotY));
+    document.getElementById('rotX').value = rotX;
+    lastX=x; lastY=y; applyRotation();
+  };
+  const end=()=>{dragging=false;};
+  wrap.addEventListener('mousedown', e=>start(e.clientX,e.clientY));
+  window.addEventListener('mousemove', e=>move(e.clientX,e.clientY));
+  window.addEventListener('mouseup', end);
+  wrap.addEventListener('touchstart', e=>start(e.touches[0].clientX,e.touches[0].clientY), {passive:true});
+  wrap.addEventListener('touchmove', e=>move(e.touches[0].clientX,e.touches[0].clientY), {passive:true});
+  wrap.addEventListener('touchend', end);
+}
+
+function toggleAutoRotate(){
+  const btn = document.getElementById('autoRotateBtn');
+  if(autoRotateTimer){
+    stopAutoRotate();
+  } else {
+    btn.textContent = '⏸ Stop rotating';
+    btn.classList.add('on');
+    autoRotateTimer = setInterval(()=>{
+      rotY += 0.8;
+      if(rotY > 180) rotY -= 360;
+      document.getElementById('rotY').value = rotY;
+      applyRotation();
+    }, 30);
+  }
+}
+function stopAutoRotate(){
+  if(autoRotateTimer){ clearInterval(autoRotateTimer); autoRotateTimer = null; }
+  const btn = document.getElementById('autoRotateBtn');
+  if(btn){ btn.textContent = '▶ Auto-rotate'; btn.classList.remove('on'); }
+}
+
+// ===== Loading order animation =====
+function setupAnimRange(result){
+  const { rendered } = buildBoxList(lastContainer || CONTAINERS[document.getElementById('containerType').value], result);
+  animMaxStep = Math.max(1, rendered);
+  const slider = document.getElementById('animSlider');
+  if(slider){
+    slider.max = animMaxStep;
+    if(animStep > animMaxStep) animStep = animMaxStep;
+    slider.value = animMode ? animStep : animMaxStep;
+  }
+  updateAnimProgress();
+}
+function updateAnimProgress(){
+  const el = document.getElementById('animProgress');
+  if(el) el.textContent = `${fmt(animStep)} / ${fmt(animMaxStep)}`;
+}
+function toggleAnimMode(){
+  animMode = !animMode;
+  const btn = document.getElementById('animModeBtn');
+  const player = document.getElementById('animPlayer');
+  if(animMode){
+    btn.textContent = '✕ Exit loading order view';
+    btn.classList.add('on');
+    player.style.display = 'flex';
+    animStep = 1;
+  } else {
+    btn.textContent = '▶ Watch loading order';
+    btn.classList.remove('on');
+    player.style.display = 'none';
+    stopAnimPlay();
+    animStep = animMaxStep;
+  }
+  document.getElementById('animSlider').value = animStep;
+  updateAnimProgress();
+  renderScene('rigPreview', 'legendPreview', lastContainer, lastResult, false, animMode ? animStep : undefined);
+  renderScene('rig3d', 'legend3d', lastContainer, lastResult, true, animMode ? animStep : undefined);
+}
+function animStepBy(delta){
+  if(!animMode) return;
+  animStep = Math.max(0, Math.min(animMaxStep, animStep + delta));
+  document.getElementById('animSlider').value = animStep;
+  updateAnimProgress();
+  renderScene('rigPreview', 'legendPreview', lastContainer, lastResult, false, animStep);
+  renderScene('rig3d', 'legend3d', lastContainer, lastResult, true, animStep);
+}
+function animSliderChange(){
+  animStep = Number(document.getElementById('animSlider').value);
+  updateAnimProgress();
+  renderScene('rigPreview', 'legendPreview', lastContainer, lastResult, false, animStep);
+  renderScene('rig3d', 'legend3d', lastContainer, lastResult, true, animStep);
+}
+function animPlayPause(){
+  if(animPlaying){ stopAnimPlay(); return; }
+  animPlaying = true;
+  document.getElementById('animPlayBtn').textContent = '⏸';
+  animTimer = setInterval(()=>{
+    if(animStep >= animMaxStep){ stopAnimPlay(); return; }
+    animStepBy(Math.max(1, Math.round(animMaxStep/40)));
+  }, 120);
+}
+function stopAnimPlay(){
+  animPlaying = false;
+  if(animTimer){ clearInterval(animTimer); animTimer = null; }
+  const btn = document.getElementById('animPlayBtn');
+  if(btn) btn.textContent = '▶';
+}
+
+// ===== AI Load Optimization =====
+function evaluateOrdering(orderedItems, container, allowRotation){
+  const result = pack(container, orderedItems, allowRotation);
+  const totalRequested = orderedItems.reduce((a,i)=>a+i.qty,0);
+  const totalPlaced = result.sections.reduce((a,s)=>a+s.placedQty,0);
+  let usedVolume = 0; result.sections.forEach(s=>{ usedVolume += s.placedQty*s.item.l*s.item.w*s.item.h; });
+  const containerVolume = container.l*container.w*container.h;
+  const util = Math.min(100,(usedVolume/containerVolume)*100);
+  const fulfillment = totalRequested>0 ? Math.min(100,(totalPlaced/totalRequested)*100) : 100;
+  const cog = computeCenterOfGravity(container, result);
+  const pctFromFront = cog ? (cog.x/container.l)*100 : 50;
+  const balanceScore = 100 - Math.abs(pctFromFront-50)*2;
+  const remainVolM3 = (result.remainingLength*container.w*container.h)/1e6;
+  const score = util*0.45 + balanceScore*0.35 + fulfillment*0.20;
+  return { result, util, fulfillment, balanceScore, pctFromFront, score, totalPlaced, totalRequested, remainVolM3 };
+}
+
+function generatePermutations(arr){
+  if(arr.length<=1) return [arr];
+  let result=[];
+  arr.forEach((item,i)=>{
+    const rest = arr.slice(0,i).concat(arr.slice(i+1));
+    generatePermutations(rest).forEach(p=>result.push([item,...p]));
+  });
+  return result;
+}
+
+function optimizeLoading(){
+  if(items.length < 2){ showToast('Optimization only makes sense with 2+ items'); return; }
+  const containerKey = document.getElementById('containerType').value;
+  const container = CONTAINERS[containerKey];
+  const allowRotation = document.getElementById('allowRotation').checked;
+
+  const before = evaluateOrdering(items, container, allowRotation);
+
+  let candidates;
+  if(items.length <= 7){
+    candidates = generatePermutations(items);
+  } else {
+    candidates = [items, [...items].reverse(),
+      [...items].sort((a,b)=>(b.weight||0)-(a.weight||0)),
+      [...items].sort((a,b)=>(a.weight||0)-(b.weight||0))];
+    for(let i=0;i<40;i++){ candidates.push([...items].sort(()=>Math.random()-0.5)); }
+  }
+
+  let best = before, bestOrder = items;
+  candidates.forEach(cand=>{
+    const evalR = evaluateOrdering(cand, container, allowRotation);
+    if(evalR.score > best.score + 0.001){ best = evalR; bestOrder = cand; }
+  });
+
+  showOptimizeModal(before, best, bestOrder);
+}
+
+function showOptimizeModal(before, after, bestOrder){
+  const improved = after.score > before.score + 0.5;
+  const backdrop = document.createElement('div');
+  backdrop.className = 'opt-backdrop';
+  backdrop.id = 'optBackdrop';
+
+  const metricRow = (label, beforeVal, afterVal, betterIsHigher=true) => {
+    const diff = afterVal - beforeVal;
+    const isImproved = betterIsHigher ? diff > 0.3 : diff < -0.3;
+    return `<div class="opt-metric ${isImproved?'improved':''}"><span>${label}</span><b>${beforeVal.toFixed(1)} → ${afterVal.toFixed(1)}</b></div>`;
+  };
+
+  backdrop.innerHTML = `
+    <div class="opt-modal">
+      <h3>🤖 AI Load Optimization ${improved ? 'Result' : '- Already a good layout'}</h3>
+      <p class="opt-sub">${improved ? 'Reordering the items could improve things like this.' : "We tried several orderings, but the current layout is already close to optimal."}</p>
+      <div class="opt-compare">
+        <div class="opt-col"><div class="opt-label">Before</div></div>
+        <div class="opt-arrow">→</div>
+        <div class="opt-col"><div class="opt-label">After</div></div>
+      </div>
+      ${metricRow('Space utilization (%)', before.util, after.util)}
+      ${metricRow('Center of gravity position (center=50)', before.pctFromFront, after.pctFromFront, false)}
+      ${metricRow('Fulfillment rate (%)', before.fulfillment, after.fulfillment)}
+      ${metricRow('Remaining volume (㎥)', before.remainVolM3, after.remainVolM3, false)}
+      <div class="opt-metric" style="border-top:1px solid var(--slate-100);margin-top:6px;padding-top:8px;"><span><b>Overall score</b></span><b>${before.score.toFixed(1)} → ${after.score.toFixed(1)}</b></div>
+      <div class="opt-actions">
+        ${improved ? `<button class="toolbar-btn primary" onclick="applyOptimization()">✓ Apply this layout</button>` : ''}
+        <button class="toolbar-btn" onclick="closeOptimizeModal()">Close</button>
+      </div>
+    </div>
+  `;
+  document.body.appendChild(backdrop);
+  window.__pendingOptimizedOrder = bestOrder;
+}
+function closeOptimizeModal(){
+  const el = document.getElementById('optBackdrop');
+  if(el) el.remove();
+  window.__pendingOptimizedOrder = null;
+}
+function applyOptimization(){
+  if(window.__pendingOptimizedOrder){
+    items = window.__pendingOptimizedOrder;
+    renderItemRows();
+    showToast('✅ Optimized layout applied');
+  }
+  closeOptimizeModal();
+}
+
+// ===== PDF report generation (saved as PDF via the browser's print dialog) =====
+function printReport(){
+  if(!lastContainer || !lastResult){ showToast('Please calculate a result first'); return; }
+  const container = lastContainer, result = lastResult;
+  const totalRequested = items.reduce((a,i)=>a+i.qty,0);
+  const totalPlaced = result.sections.reduce((a,s)=>a+s.placedQty,0);
+  const totalWeight = result.sections.reduce((a,s)=> a + (s.error?0:s.placedQty*(s.item.weight||0)), 0);
+  let usedVolume = 0; result.sections.forEach(s=>{ usedVolume += s.placedQty*s.item.l*s.item.w*s.item.h; });
+  const containerVolume = container.l*container.w*container.h;
+  const util = Math.min(100, (usedVolume/containerVolume)*100);
+  const weightUtil = container.maxPayload>0 ? Math.min(100,(totalWeight/container.maxPayload)*100) : 0;
+  const now = new Date().toLocaleString('ko-KR');
+  const scoreNum = document.getElementById('scoreNum').textContent;
+
+  const rows = result.sections.map(s=>{
+    if(s.error) return `<tr><td>${s.item.name}</td><td colspan="5" style="color:#DC2626;">Oversized — cannot be loaded</td></tr>`;
+    const vol = (s.placedQty*s.item.l*s.item.w*s.item.h/1e6).toFixed(3);
+    const wt = fmt(s.placedQty*(s.item.weight||0));
+    return `<tr><td>${s.item.name}${s.rotated?' (rotated)':''}</td><td>${s.item.l}×${s.item.w}×${s.item.h}cm</td><td>${fmt(s.placedQty)}/${fmt(s.item.qty)}</td><td>${vol}㎥</td><td>${wt}kg</td></tr>`;
+  }).join('');
+
+  const svgEl = document.querySelector('#rigPreview svg');
+  const svgHtml = svgEl ? svgEl.outerHTML : '';
+
+  document.getElementById('printReport').innerHTML = `
+    <div style="font-family:'Pretendard',sans-serif;color:#1E293B;max-width:800px;margin:0 auto;">
+      <div style="display:flex;justify-content:space-between;align-items:center;border-bottom:3px solid #2563EB;padding-bottom:12px;margin-bottom:20px;">
+        <div style="font-size:22px;font-weight:800;">CBM<span style="color:#2563EB;">Lab</span> Container Loading Report</div>
+        <div style="font-size:11px;color:#64748B;">Generated: ${now}</div>
+      </div>
+
+      <div style="display:flex;gap:20px;margin-bottom:20px;">
+        <div style="flex:1;border:1px solid #E2E8F0;border-radius:8px;padding:14px;text-align:center;">
+          <div style="font-size:10px;color:#94A3B8;text-transform:uppercase;">Loading Score</div>
+          <div style="font-size:28px;font-weight:800;color:#2563EB;">${scoreNum}</div>
+        </div>
+        <div style="flex:2;border:1px solid #E2E8F0;border-radius:8px;padding:14px;">
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;font-size:12px;">
+            <div><b>Container</b><br>${container.name}</div>
+            <div><b>Fill rate</b><br>${((totalPlaced/(totalRequested||1))*100).toFixed(1)}%</div>
+            <div><b>Space utilization</b><br>${util.toFixed(1)}%</div>
+            <div><b>Total loaded</b><br>${fmt(totalPlaced)} / ${fmt(totalRequested)}</div>
+            <div><b>Total weight</b><br>${fmt(totalWeight)}kg</div>
+            <div><b>Weight utilization</b><br>${weightUtil.toFixed(1)}%</div>
+          </div>
+        </div>
+      </div>
+
+      <div style="margin-bottom:20px;">
+        <div style="font-size:13px;font-weight:700;margin-bottom:8px;">📦 Container Specification</div>
+        <div style="font-size:11.5px;line-height:1.8;">
+          Internal dimensions: ${(container.l/100).toFixed(2)} × ${(container.w/100).toFixed(2)} × ${(container.h/100).toFixed(2)}m &nbsp;|&nbsp;
+          Volume: ${(containerVolume/1e6).toFixed(1)}㎥ &nbsp;|&nbsp;
+          Max payload: ${fmt(container.maxPayload)}kg
+        </div>
+      </div>
+
+      <div style="margin-bottom:20px;text-align:center;">
+        <div style="font-size:13px;font-weight:700;margin-bottom:8px;text-align:left;">🧊 Loading Visualization</div>
+        <div style="border:1px solid #E2E8F0;border-radius:8px;padding:10px;display:inline-block;width:100%;">${svgHtml}</div>
+      </div>
+
+      <div style="margin-bottom:20px;">
+        <div style="font-size:13px;font-weight:700;margin-bottom:8px;">📋 Item-by-item Loading Detail</div>
+        <table style="width:100%;border-collapse:collapse;font-size:11.5px;">
+          <thead><tr style="background:#F1F5F9;"><th style="padding:6px;text-align:left;">Item</th><th style="padding:6px;text-align:left;">Size</th><th style="padding:6px;text-align:left;">Loaded/Requested</th><th style="padding:6px;text-align:left;">Volume</th><th style="padding:6px;text-align:left;">Weight</th></tr></thead>
+          <tbody>${rows}</tbody>
+        </table>
+      </div>
+
+      <div style="font-size:10.5px;color:#94A3B8;border-top:1px solid #E2E8F0;padding-top:10px;">
+        This report is an estimate generated by the CBM Lab container loading tool. Actual loading may vary based on cargo shape, securing rules, and more. procurement-toolkit-eight.vercel.app
+      </div>
+    </div>
+  `;
+
+  window.print();
+}
+
+// ===== Dark mode =====
+function toggleTheme(){
+  const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+  setTheme(!isDark);
+}
+function setTheme(dark){
+  document.documentElement.setAttribute('data-theme', dark ? 'dark' : 'light');
+  document.getElementById('themeToggle').textContent = dark ? '☀️' : '🌙';
+  try{ localStorage.setItem('cbmlab_container_theme', dark ? 'dark' : 'light'); }catch(e){}
+}
+
+// ===== Toast notifications =====
+let toastTimer = null;
+function showToast(msg){
+  let el = document.getElementById('toastEl');
+  if(!el){
+    el = document.createElement('div');
+    el.id = 'toastEl';
+    el.className = 'toast';
+    document.body.appendChild(el);
+  }
+  el.textContent = msg;
+  el.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(()=>{ el.classList.remove('show'); }, 2400);
+}
+
+// ===== Save / load settings / export JSON =====
+function currentConfigObject(){
+  return {
+    containerType: document.getElementById('containerType').value,
+    allowRotation: document.getElementById('allowRotation').checked,
+    palletMode: document.getElementById('palletMode').checked,
+    palletEfficiency: document.getElementById('palletEfficiency').value,
+    items: items.map(it=>({name:it.name, l:it.l, w:it.w, h:it.h, qty:it.qty, weight:it.weight}))
+  };
+}
+function applyConfigObject(cfg){
+  if(!cfg || !Array.isArray(cfg.items)) return false;
+  document.getElementById('containerType').value = cfg.containerType || '40';
+  document.getElementById('allowRotation').checked = !!cfg.allowRotation;
+  document.getElementById('palletMode').checked = !!cfg.palletMode;
+  if(cfg.palletEfficiency) document.getElementById('palletEfficiency').value = cfg.palletEfficiency;
+  document.getElementById('palletEfficiencyRow').style.display = cfg.palletMode ? 'flex' : 'none';
+  document.getElementById('palletEffValue').textContent = (cfg.palletEfficiency||88) + '%';
+
+  items = [];
+  itemCounter = 0;
+  cfg.items.forEach(it => addItem(it.name, it.l, it.w, it.h, it.qty, it.weight));
+  if(cfg.items.length===0) addItem();
+  return true;
+}
+function saveConfig(){
+  try{
+    localStorage.setItem('cbmlab_container_config', JSON.stringify(currentConfigObject()));
+    showToast('✅ Settings saved to your browser');
+  }catch(e){ showToast('Save failed'); }
+}
+function loadConfig(){
+  try{
+    const raw = localStorage.getItem('cbmlab_container_config');
+    if(!raw){ showToast('No saved settings found'); return; }
+    const cfg = JSON.parse(raw);
+    applyConfigObject(cfg);
+    showToast('📂 Loaded your saved settings');
+  }catch(e){ showToast('Load failed'); }
+}
+function exportConfigFile(){
+  const cfg = currentConfigObject();
+  const blob = new Blob([JSON.stringify(cfg, null, 2)], {type:'application/json'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = 'container-loading-config.json';
+  document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+  showToast('⬇ Exported as a JSON file');
+}
+function importConfigFile(file){
+  const reader = new FileReader();
+  reader.onload = e=>{
+    try{
+      const cfg = JSON.parse(e.target.result);
+      applyConfigObject(cfg);
+      showToast('📂 Loaded settings from file');
+    }catch(err){ showToast('Failed to read the file'); }
+  };
+  reader.readAsText(file);
+}
+
+// ===== Bulk CSV upload =====
+function downloadCsvTemplate(){
+  const csv = 'Item Name,Length L(cm),Width W(cm),Height H(cm),Qty,Weight(kg)\nBoxA,60,40,40,50,10\nBoxB,60,100,40,30,15\n';
+  const blob = new Blob(['\uFEFF'+csv], {type:'text/csv;charset=utf-8'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = 'container-items-template.csv';
+  document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+  showToast('CSV template downloaded');
+}
+function importCsvFile(file){
+  const reader = new FileReader();
+  reader.onload = e=>{
+    try{
+      const text = e.target.result.replace(/^\uFEFF/, '');
+      const lines = text.split(/\r?\n/).filter(l=>l.trim().length>0);
+      if(lines.length < 2){ showToast('No data rows found in the CSV'); return; }
+      const dataLines = lines.slice(1); // Skip the first line, treated as the header
+      const newItems = [];
+      dataLines.forEach(line=>{
+        const cols = line.split(',').map(c=>c.trim());
+        if(cols.length < 5) return;
+        const [name, l, w, h, qty, weight] = cols;
+        if(!name || isNaN(Number(l)) || isNaN(Number(w)) || isNaN(Number(h)) || isNaN(Number(qty))) return;
+        newItems.push({ name, l:Number(l), w:Number(w), h:Number(h), qty:Number(qty), weight:Number(weight)||0 });
+      });
+      if(newItems.length === 0){ showToast("Couldn't find any valid data rows. Please check the template format"); return; }
+      items = [];
+      itemCounter = 0;
+      newItems.forEach(it=>addItem(it.name, it.l, it.w, it.h, it.qty, it.weight));
+      showToast(`✅ Loaded ${newItems.length} item(s) from the CSV`);
+    }catch(err){ showToast('Failed to read the CSV. Please check the template format'); }
+  };
+  reader.readAsText(file, 'utf-8');
+}
+
+// ===== Master SKU library (save multiple named sets) =====
+function getSkuLibrary(){
+  try{ return JSON.parse(localStorage.getItem('cbmlab_sku_library') || '{}'); }catch(e){ return {}; }
+}
+function renderSkuLibrarySelect(){
+  const lib = getSkuLibrary();
+  const sel = document.getElementById('skuLibrarySelect');
+  if(!sel) return;
+  const names = Object.keys(lib);
+  sel.innerHTML = names.length>0
+    ? names.map(n=>`<option value="${n}">${n} (${lib[n].items.length} item(s))</option>`).join('')
+    : `<option value="">No saved SKU sets</option>`;
+}
+function saveSkuToLibrary(){
+  if(items.length===0){ showToast('No items to save'); return; }
+  const name = prompt('What would you like to name this item set?', 'My Cargo Set ' + (Object.keys(getSkuLibrary()).length+1));
+  if(!name) return;
+  const lib = getSkuLibrary();
+  lib[name] = { items: items.map(it=>({name:it.name,l:it.l,w:it.w,h:it.h,qty:it.qty,weight:it.weight})), savedAt: new Date().toISOString() };
+  localStorage.setItem('cbmlab_sku_library', JSON.stringify(lib));
+  renderSkuLibrarySelect();
+  document.getElementById('skuLibrarySelect').value = name;
+  showToast(`💾 Saved as "${name}"`);
+}
+function loadSkuFromLibrary(){
+  const name = document.getElementById('skuLibrarySelect').value;
+  const lib = getSkuLibrary();
+  if(!name || !lib[name]){ showToast('Please select a set to load'); return; }
+  items = [];
+  itemCounter = 0;
+  lib[name].items.forEach(it=>addItem(it.name, it.l, it.w, it.h, it.qty, it.weight));
+  showToast(`📂 Loaded "${name}"`);
+}
+function deleteSkuFromLibrary(){
+  const name = document.getElementById('skuLibrarySelect').value;
+  const lib = getSkuLibrary();
+  if(!name || !lib[name]){ showToast('Please select a set to delete'); return; }
+  if(!confirm(`Delete "${name}"?`)) return;
+  delete lib[name];
+  localStorage.setItem('cbmlab_sku_library', JSON.stringify(lib));
+  renderSkuLibrarySelect();
+  showToast('Deleted');
+}
+
+// ===== Generate share link (config encoded into the URL, no server needed) =====
+function generateShareLink(){
+  try{
+    const cfg = currentConfigObject();
+    const encoded = btoa(unescape(encodeURIComponent(JSON.stringify(cfg))));
+    const url = location.origin + location.pathname + '?cfg=' + encoded;
+    if(url.length > 7500){
+      showToast('Too many items to share as a link. Please use JSON export instead');
+      return;
+    }
+    navigator.clipboard.writeText(url).then(()=>{
+      showToast('🔗 Share link copied! Paste it into a message or email');
+    }).catch(()=>{
+      prompt('Copy the link below to share it:', url);
+    });
+  }catch(e){
+    showToast('Failed to create the share link');
+  }
+}
+function loadFromShareLinkIfPresent(){
+  const params = new URLSearchParams(location.search);
+  const encoded = params.get('cfg');
+  if(!encoded) return;
+  try{
+    const cfg = JSON.parse(decodeURIComponent(escape(atob(encoded))));
+    applyConfigObject(cfg);
+    showToast('🔗 Loaded the shared loading setup');
+  }catch(e){
+    console.error('Failed to parse the share link', e);
+  }
+}
+
+// ===== 5-second ad gate before download =====
+function runWithAdGate(actualFn){
+  const backdrop = document.createElement('div');
+  backdrop.className = 'adgate-backdrop';
+  backdrop.id = 'adGateBackdrop';
+  backdrop.innerHTML = `
+    <div class="adgate-modal">
+      <div class="adgate-slot">Ad space<br>(your download will start shortly)</div>
+      <div class="adgate-timer" id="adGateTimer">Download available in 5s</div>
+      <button class="adgate-btn disabled" id="adGateBtn" disabled>Please wait...</button>
+    </div>
+  `;
+  document.body.appendChild(backdrop);
+  let remaining = 5;
+  const timerEl = document.getElementById('adGateTimer');
+  const btn = document.getElementById('adGateBtn');
+  const interval = setInterval(()=>{
+    remaining--;
+    if(remaining <= 0){
+      clearInterval(interval);
+      timerEl.textContent = 'Ready to download';
+      btn.disabled = false;
+      btn.textContent = '⬇ Download';
+      btn.classList.remove('disabled'); btn.classList.add('ready');
+      btn.onclick = ()=>{ backdrop.remove(); actualFn(); };
+    } else {
+      timerEl.textContent = `Download available in ${remaining}s`;
+    }
+  }, 1000);
+}
+function exportImageGated(){ runWithAdGate(exportImage); }
+function printReportGated(){ runWithAdGate(printReport); }
+
+// ===== Multi-container optimization =====
+function optimizeMultiContainer(){
+  if(items.length===0 || items.every(i=>i.qty<=0)){ showToast('Please enter some items'); return; }
+  const allowRotation = document.getElementById('allowRotation').checked;
+  let remaining = items.map(i=>({...i}));
+  const planSteps = [];
+  let safety = 0;
+
+  while(remaining.some(i=>i.qty>0) && safety < 20){
+    safety++;
+    let bestKey=null, bestResult=null, bestUtil=-1, bestPlaced=0;
+    Object.keys(CONTAINERS).forEach(key=>{
+      const c = CONTAINERS[key];
+      const activeItems = remaining.filter(i=>i.qty>0);
+      const r = pack(c, activeItems, allowRotation);
+      let usedVolume=0; const placedTotal = r.sections.reduce((a,s)=>a+(s.error?0:s.placedQty),0);
+      r.sections.forEach(s=>{ if(!s.error) usedVolume += s.placedQty*s.item.l*s.item.w*s.item.h; });
+      const util = usedVolume/(c.l*c.w*c.h);
+      if(placedTotal>0 && util>bestUtil){ bestUtil=util; bestKey=key; bestResult=r; bestPlaced=placedTotal; }
+    });
+    if(!bestResult || bestPlaced===0) break; // Remaining items don't fit in any container (oversized)
+
+    planSteps.push({ key:bestKey, util:bestUtil*100, placed:bestPlaced });
+    bestResult.sections.forEach(s=>{
+      if(s.error) return;
+      const ref = remaining.find(i=>i.name===s.item.name);
+      if(ref) ref.qty = Math.max(0, ref.qty - s.placedQty);
+    });
+  }
+
+  const stillShort = remaining.filter(i=>i.qty>0);
+  showMultiContainerModal(planSteps, stillShort);
+}
+function showMultiContainerModal(planSteps, stillShort){
+  const counts = {};
+  planSteps.forEach(s=>{ counts[s.key] = (counts[s.key]||0)+1; });
+  const summary = Object.keys(counts).map(k=>`${CONTAINERS[k].name} ×${counts[k]}`).join(' + ');
+
+  const backdrop = document.createElement('div');
+  backdrop.className = 'opt-backdrop';
+  backdrop.id = 'multiBackdrop';
+  backdrop.innerHTML = `
+    <div class="opt-modal">
+      <h3>📦 Multi-Container Optimization Result</h3>
+      <p class="opt-sub">${planSteps.length===0 ? "Couldn't find a combination that fits." : 'To load this volume, you\'ll need the combination below.'}</p>
+      ${planSteps.length>0 ? `<div class="multi-total">${summary}<br><span style="font-size:12px;color:var(--slate-500);font-weight:500;">${planSteps.length} total</span></div>` : ''}
+      ${planSteps.map((s,i)=>`<div class="multi-step-row"><span>#${i+1} — ${CONTAINERS[s.key].name}</span><span><b>${s.util.toFixed(0)}%</b> utilized · ${fmt(s.placed)} loaded</span></div>`).join('')}
+      ${stillShort.length>0 ? `<div class="warn-box" style="margin-top:12px;"><strong>⚠ Some items don't fit in any container</strong>${stillShort.map(i=>`${i.name}: ${fmt(i.qty)} left`).join('<br>')}</div>` : ''}
+      <div class="opt-actions">
+        <button class="toolbar-btn" onclick="document.getElementById('multiBackdrop').remove()">Close</button>
+      </div>
+    </div>
+  `;
+  document.body.appendChild(backdrop);
+}
+
+// ===== Export result as a PNG image =====
+function exportImage(){
+  const activeRigId = currentView==='3d' ? 'rig3d' : 'rigPreview';
+  const svgEl = document.querySelector('#'+activeRigId+' svg');
+  if(!svgEl){ showToast('Please calculate a result first'); return; }
+
+  const svgClone = svgEl.cloneNode(true);
+  const bbox = svgEl.viewBox.baseVal;
+  const scaleFactor = 3; // High-resolution output
+  const outW = 900, outH = 620;
+
+  const serializer = new XMLSerializer();
+  const svgStr = serializer.serializeToString(svgClone);
+  const svgBlob = new Blob([svgStr], {type:'image/svg+xml;charset=utf-8'});
+  const url = URL.createObjectURL(svgBlob);
+
+  const img = new Image();
+  img.onload = ()=>{
+    const canvas = document.createElement('canvas');
+    canvas.width = outW*scaleFactor; canvas.height = outH*scaleFactor;
+    const ctx = canvas.getContext('2d');
+    const isDark = document.documentElement.getAttribute('data-theme')==='dark';
+    ctx.fillStyle = isDark ? '#0B1120' : '#F8FAFC';
+    ctx.fillRect(0,0,canvas.width,canvas.height);
+
+    // Header text (summary info)
+    ctx.fillStyle = isDark ? '#EEF1F6' : '#1E293B';
+    ctx.font = `700 ${26*scaleFactor/3}px 'Pretendard', sans-serif`;
+    ctx.fillText('Container Loading Visualization — CBM Lab', 24*scaleFactor/3, 40*scaleFactor/3);
+
+    const sceneAreaY = 60*scaleFactor/3;
+    const sceneAreaH = canvas.height - sceneAreaY - 90*scaleFactor/3;
+    const svgAspect = bbox.width / bbox.height;
+    let drawW = canvas.width - 48*scaleFactor/3, drawH = drawW/svgAspect;
+    if(drawH > sceneAreaH){ drawH = sceneAreaH; drawW = drawH*svgAspect; }
+    const drawX = (canvas.width-drawW)/2;
+    ctx.drawImage(img, drawX, sceneAreaY, drawW, drawH);
+
+    // Bottom summary
+    const summaryY = canvas.height - 60*scaleFactor/3;
+    ctx.font = `600 ${14*scaleFactor/3}px 'Pretendard', sans-serif`;
+    ctx.fillStyle = isDark ? '#94A0B8' : '#475569';
+    const container = lastContainer;
+    let sections = '-', placed = '-', util = '-';
+    if(lastContainer && lastResult){
+      const sUsed = lastResult.sections.filter(s=>s.colsUsed>0).length;
+      const tPlaced = lastResult.sections.reduce((a,s)=>a+s.placedQty,0);
+      const tReq = items.reduce((a,i)=>a+i.qty,0);
+      let uVol = 0; lastResult.sections.forEach(s=>{ uVol += s.placedQty*s.item.l*s.item.w*s.item.h; });
+      const cVol = lastContainer.l*lastContainer.w*lastContainer.h;
+      sections = String(sUsed);
+      placed = fmt(tPlaced) + ' / ' + fmt(tReq);
+      util = Math.min(100,(uVol/cVol)*100).toFixed(0) + '%';
+    }
+    ctx.fillText(`${container ? container.name : ''} · Sections ${sections} · Loaded ${placed} · Utilization ${util}`, 24*scaleFactor/3, summaryY);
+    ctx.font = `400 ${11*scaleFactor/3}px 'Pretendard', sans-serif`;
+    ctx.fillText('procurement-toolkit-eight.vercel.app', 24*scaleFactor/3, summaryY + 20*scaleFactor/3);
+
+    URL.revokeObjectURL(url);
+    canvas.toBlob(blob=>{
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = 'container-loading-result.png';
+      document.body.appendChild(a); a.click(); document.body.removeChild(a);
+      showToast('🖼 Image saved');
+    }, 'image/png');
+  };
+  img.onerror = ()=>{ URL.revokeObjectURL(url); showToast('Failed to generate the image'); };
+  img.src = url;
+}
+
+// ===== Initialization =====
+renderPresetChips();
+renderSkuLibrarySelect();
+try{
+  const savedTheme = localStorage.getItem('cbmlab_container_theme');
+  if(savedTheme === 'dark') setTheme(true);
+}catch(e){}
+
+addItem('Box A', 60, 40, 40, 2);
+addItem('Box B', 60, 100, 40, 2);
+addItem('Box C', 100, 40, 100, 1);
+addItem('Box D', 100, 40, 40, 2);
+loadFromShareLinkIfPresent();
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Why is actual container utilization lower than the theoretical maximum?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Theoretical capacity is just the container's internal dimensions multiplied out, but real-world loading loses space to pallet gaps and irregular cargo shapes. Practical utilization is typically 85-92% of theoretical capacity."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Should I choose a 20ft or 40ft container?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Heavy but compact cargo often fits better in a 20ft container (which hits its weight limit before running out of space), while bulky but lightweight cargo makes better use of a 40ft container's extra volume. Compare both volume and weight limits, not just one."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Why does loading order matter when mixing multiple SKUs in one container?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Placing heavy, bulky items first (on the floor and toward the back) keeps the load stable, then filling remaining gaps with smaller items maximizes space use. Poor sequencing can mean cargo that should theoretically fit doesn't actually fit."
+      }
+    }
+  ]
+}
+</script>
+</body>
+</html>
