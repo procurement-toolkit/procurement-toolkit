@@ -472,6 +472,9 @@
                 <input type="range" id="rotX" min="0" max="70" value="24" oninput="applyRotation()">
                 <button id="autoRotateBtn" onclick="toggleAutoRotate()">자동회전</button>
               </div>
+              <div class="scene-controls">
+                <label style="display:flex;align-items:center;gap:6px;">✂️ 단면 보기 <input type="range" id="crossSection" min="10" max="100" value="100" oninput="onCrossSectionChange()" style="width:130px;"><span id="crossSectionLabel">100%</span></label>
+              </div>
               <div class="legend" id="legend3d"></div>
               <div class="box-info-panel" id="boxInfoPanel" style="display:none;"></div>
               <div class="scene-hint" id="sceneHint3d">3D 화면에서는 마우스(또는 손가락)로 드래그해서 자유롭게 회전할 수 있어요. 박스를 클릭하면 상세 정보가 나와요.</div>
@@ -1270,6 +1273,7 @@ function buildDimensionLines(L,H,D,rX,rY,containerReal,viewMode){
 
 
 let boxMetaStore = {};
+let crossSectionPct = 100;
 let boxMetaCounter = 0;
 
 function renderScene(rigId, legendId, container, result, useSliderRotation, stepLimit){
@@ -1283,7 +1287,10 @@ function renderScene(rigId, legendId, container, result, useSliderRotation, step
   const isOrtho = useSliderRotation && viewMode !== 'iso';
 
   const { boxes: allBoxes, overflowNote } = buildBoxList(container, result);
-  const boxes = (typeof stepLimit === 'number') ? allBoxes.slice(0, stepLimit) : allBoxes;
+  let boxes = (typeof stepLimit === 'number') ? allBoxes.slice(0, stepLimit) : allBoxes;
+  const cutoffCm = container.l * (crossSectionPct/100);
+  const isCut = crossSectionPct < 100;
+  if(isCut){ boxes = boxes.filter(b => b.xCm <= cutoffCm); }
 
   // 박스별 깊이(중심 z') 계산 후 먼 것부터 정렬 (Painter's algorithm)
   const withDepth = boxes.map(b=>{
@@ -1321,6 +1328,13 @@ function renderScene(rigId, legendId, container, result, useSliderRotation, step
   const containerDetails = buildContainerDetails(L,H,D,rX,rY,container,viewMode);
   const dimensionLines = isOrtho ? buildDimensionLines(L,H,D,rX,rY,container,viewMode) : '';
 
+  let cutPlaneSvg = '';
+  if(isCut){
+    const cutX = -L/2 + L*(crossSectionPct/100);
+    const corners = [[cutX,-H/2,-D/2],[cutX,-H/2,D/2],[cutX,H/2,D/2],[cutX,H/2,-D/2]].map(([x,y,z])=>rotatePoint(x,y,z,rX,rY));
+    cutPlaneSvg = `<polygon points="${corners.map(p=>p[0].toFixed(1)+','+p[1].toFixed(1)).join(' ')}" fill="rgba(37,99,235,0.10)" stroke="#2563EB" stroke-width="1" stroke-dasharray="4 3"/>`;
+  }
+
   // 화면 범위 계산
   let minX=Infinity,maxX=-Infinity,minY=Infinity,maxY=-Infinity;
   const track=(sx,sy)=>{ if(sx<minX)minX=sx; if(sx>maxX)maxX=sx; if(sy<minY)minY=sy; if(sy>maxY)maxY=sy; };
@@ -1344,6 +1358,7 @@ function renderScene(rigId, legendId, container, result, useSliderRotation, step
   });
   shadowEllipses.forEach(s=>{ svg += s; });
   boxGroups.forEach(g=>{ svg += g; });
+  svg += cutPlaneSvg;
   svg += dimensionLines;
   svg += `</svg>`;
   rig.innerHTML = svg;
@@ -1360,18 +1375,26 @@ function renderScene(rigId, legendId, container, result, useSliderRotation, step
 function selectBox(idx){
   const meta = boxMetaStore[idx];
   if(!meta) return;
-  const panel = document.getElementById('boxInfoPanel');
   const vol = (meta.l*meta.w*meta.h/1e6).toFixed(3);
-  panel.style.display = 'block';
-  panel.innerHTML = `
+  const html = `
     <div class="bip-title"><span>${meta.name}</span><button class="bip-close" onclick="closeBoxInfo()">✕</button></div>
     <div class="bip-row"><span>규격</span><b>${meta.l} × ${meta.w} × ${meta.h} cm</b></div>
     <div class="bip-row"><span>중량</span><b>${meta.weight>0?fmt(meta.weight)+'kg':'-'}</b></div>
     <div class="bip-row"><span>부피</span><b>${vol}㎥</b></div>
   `;
+  const panel = document.getElementById('boxInfoPanel');
+  panel.style.display = 'block';
+  panel.innerHTML = html;
+  const panelExp = document.getElementById('boxInfoPanelExpanded');
+  if(panelExp){
+    panelExp.style.display = 'block';
+    panelExp.innerHTML = html;
+  }
 }
 function closeBoxInfo(){
   document.getElementById('boxInfoPanel').style.display = 'none';
+  const panelExp = document.getElementById('boxInfoPanelExpanded');
+  if(panelExp) panelExp.style.display = 'none';
 }
 
 
@@ -1424,6 +1447,21 @@ function setViewPreset(name){
   applyRotation();
 }
 
+function onCrossSectionChange(){
+  crossSectionPct = Number(document.getElementById('crossSection').value);
+  document.getElementById('crossSectionLabel').textContent = crossSectionPct + '%';
+  const expLabel = document.getElementById('crossSectionLabelExpanded');
+  if(expLabel) expLabel.textContent = crossSectionPct + '%';
+  const expSlider = document.getElementById('crossSectionExpanded');
+  if(expSlider) expSlider.value = crossSectionPct;
+  // 단면 보기는 순수 시각화 필터라 전체 재계산 없이 화면만 다시 그림 (성능 최적화)
+  if(lastContainer && lastResult){
+    const stepLimit = animMode ? animStep : undefined;
+    renderScene('rigPreview', 'legendPreview', lastContainer, lastResult, false, stepLimit);
+    renderScene('rig3d', 'legend3d', lastContainer, lastResult, true, stepLimit);
+  }
+}
+
 // ===== 3D 크게 보기 (확대 모달) =====
 let sceneExpanded = false;
 function expandScene(){
@@ -1444,11 +1482,20 @@ function expandScene(){
     </div>
     <div class="expand-scene-wrap" id="expandSceneWrap">
       <div class="expand-rig" id="rigExpanded"></div>
+      <div class="box-info-panel" id="boxInfoPanelExpanded" style="display:none;position:absolute;top:16px;left:16px;max-width:240px;box-shadow:0 8px 24px rgba(0,0,0,.25);"></div>
+      <div class="scene-controls" id="crossSectionRowExpanded" style="position:absolute;bottom:12px;left:50%;transform:translateX(-50%);background:rgba(255,255,255,0.92);padding:6px 14px;border-radius:999px;"></div>
     </div>
   `;
   document.body.appendChild(backdrop);
+  document.getElementById('crossSectionRowExpanded').innerHTML =
+    `✂️ 단면 보기 <input type="range" id="crossSectionExpanded" min="10" max="100" value="${crossSectionPct}" oninput="onCrossSectionChangeExpanded()" style="width:140px;vertical-align:middle;"> <span id="crossSectionLabelExpanded">${crossSectionPct}%</span>`;
   initExpandDrag();
   syncExpandedScene();
+}
+function onCrossSectionChangeExpanded(){
+  const v = document.getElementById('crossSectionExpanded').value;
+  document.getElementById('crossSection').value = v;
+  onCrossSectionChange();
 }
 function collapseScene(){
   sceneExpanded = false;
