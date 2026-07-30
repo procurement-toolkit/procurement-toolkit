@@ -303,6 +303,19 @@
   .insight-card .insight-text{font-size:12px;color:var(--slate-700);line-height:1.6;}
   .insight-card .insight-text b{color:var(--accent-dark);}
 
+  /* 다운로드 전 광고 게이트 모달 */
+  .adgate-backdrop{position:fixed;inset:0;background:rgba(15,23,42,0.7);z-index:1200;display:flex;align-items:center;justify-content:center;padding:20px;}
+  .adgate-modal{background:var(--card-bg);border-radius:16px;max-width:420px;width:100%;padding:22px;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,.35);}
+  .adgate-slot{background:var(--slate-100);border:1px dashed var(--slate-300);border-radius:10px;height:160px;display:flex;align-items:center;justify-content:center;color:var(--slate-400);font-size:12px;margin-bottom:14px;}
+  .adgate-timer{font-family:'Space Grotesk',sans-serif;font-size:15px;font-weight:700;color:var(--slate-600);margin-bottom:10px;}
+  .adgate-btn{width:100%;padding:12px;border:none;border-radius:10px;font-weight:700;font-size:14px;cursor:pointer;}
+  .adgate-btn.disabled{background:var(--slate-200);color:var(--slate-400);cursor:not-allowed;}
+  .adgate-btn.ready{background:var(--accent);color:#fff;}
+
+  /* 다중 컨테이너 결과 */
+  .multi-step-row{display:flex;justify-content:space-between;align-items:center;padding:9px 12px;background:var(--slate-50);border-radius:8px;margin-bottom:6px;font-size:12.5px;}
+  .multi-total{font-family:'Space Grotesk',sans-serif;font-size:18px;font-weight:800;color:var(--accent-dark);text-align:center;padding:10px 0;}
+
   footer{background:var(--slate-900);color:var(--slate-400);padding:24px;font-size:12px}
   .footer-inner{max-width:1320px;margin:0 auto;display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
   .footer-logo{font-size:15px;font-weight:800;color:#fff;font-family:'Space Grotesk','Pretendard',sans-serif;letter-spacing:-0.4px;}
@@ -385,6 +398,17 @@
         <div class="field-group">
           <label class="field-label">박스 규격 (여러 종류 입력 가능, cm·kg)</label>
           <div class="preset-row" id="presetRow"></div>
+          <div class="toolbar-btn-row" style="margin-top:0;margin-bottom:10px;">
+            <button class="toolbar-btn" onclick="document.getElementById('csvFileInput').click()">📑 CSV 일괄 업로드</button>
+            <input type="file" id="csvFileInput" accept=".csv" style="display:none" onchange="if(this.files[0]) importCsvFile(this.files[0])">
+            <button class="toolbar-btn" onclick="downloadCsvTemplate()">CSV 양식 받기</button>
+          </div>
+          <div class="toolbar-btn-row" style="margin-top:0;margin-bottom:10px;">
+            <select class="inp" id="skuLibrarySelect" style="flex:1.4;"></select>
+            <button class="toolbar-btn" onclick="loadSkuFromLibrary()">불러오기</button>
+            <button class="toolbar-btn" onclick="saveSkuToLibrary()">＋ 현재 품목 저장</button>
+            <button class="toolbar-btn" onclick="deleteSkuFromLibrary()">삭제</button>
+          </div>
           <div class="item-table-wrap">
             <table class="item-table">
               <colgroup>
@@ -550,10 +574,12 @@
 
         <div class="toolbar-btn-row">
           <button class="toolbar-btn primary" onclick="optimizeLoading()" style="background:linear-gradient(90deg,#7C3AED,#2563EB);border-color:transparent;">🤖 AI 적재 최적화</button>
+          <button class="toolbar-btn" onclick="optimizeMultiContainer()">📦 다중 컨테이너 최적화</button>
         </div>
         <div class="toolbar-btn-row">
-          <button class="toolbar-btn" onclick="exportImage()">🖼 결과 이미지로 저장 (PNG)</button>
-          <button class="toolbar-btn" onclick="printReport()">📄 PDF 리포트 생성</button>
+          <button class="toolbar-btn" onclick="exportImageGated()">🖼 결과 이미지로 저장 (PNG)</button>
+          <button class="toolbar-btn" onclick="printReportGated()">📄 PDF 리포트 생성</button>
+          <button class="toolbar-btn" onclick="generateShareLink()">🔗 공유 링크 생성</button>
         </div>
       </div>
     </div>
@@ -796,14 +822,18 @@ function calc(){
     <div><span class="rk">잔여 부피</span><span class="rv">${remainVolumeM3.toFixed(2)}㎥</span></div>
   `;
   const suggestBox = document.getElementById('remainSuggest');
+  ghostSuggestion = null;
   if(lastValid && remainLengthCm > 0){
     const effL = lastValid.effL;
     const extraCols = Math.floor(remainLengthCm / effL);
     const extraQty = extraCols * lastValid.perColumn;
     suggestBox.style.display = 'flex';
-    suggestBox.innerHTML = extraQty>0
-      ? `<span class="insight-icon">🤖</span><span class="insight-text"><b>AI 추천:</b> 남은 공간(${fmt(remainLengthCm)}mm)에 "${lastValid.item.name}" 기준 약 <b>${fmt(extraQty)}개</b> 추가 적재가 가능해 보여요.</span>`
-      : `<span class="insight-icon">ℹ️</span><span class="insight-text">남은 공간이 있지만, 마지막 품목 기준으로는 추가 적재가 어려워요.</span>`;
+    if(extraQty>0){
+      ghostSuggestion = { startX: lastValid.startLengthCm + lastValid.colsUsed*effL, effL, effW: lastValid.effW, h: lastValid.item.h, rows: lastValid.rows, layers: lastValid.layers, cols: extraCols, color: lastValid.color };
+      suggestBox.innerHTML = `<span class="insight-icon">🤖</span><span class="insight-text"><b>AI 추천:</b> 남은 공간(${fmt(remainLengthCm)}mm)에 "${lastValid.item.name}" 기준 약 <b>${fmt(extraQty)}개</b> 추가 적재가 가능해 보여요. <button class="scene-tool-btn" style="margin-left:6px;" onclick="toggleGhostPreview()" id="ghostPreviewBtn">👻 3D 미리보기</button></span>`;
+    } else {
+      suggestBox.innerHTML = `<span class="insight-icon">ℹ️</span><span class="insight-text">남은 공간이 있지만, 마지막 품목 기준으로는 추가 적재가 어려워요.</span>`;
+    }
   } else {
     suggestBox.style.display = 'flex';
     suggestBox.innerHTML = `<span class="insight-icon">✅</span><span class="insight-text">남은 길이 방향 공간이 거의 없어요 (풀로 적재됨).</span>`;
@@ -1274,6 +1304,8 @@ function buildDimensionLines(L,H,D,rX,rY,containerReal,viewMode){
 
 let boxMetaStore = {};
 let crossSectionPct = 100;
+let ghostSuggestion = null;
+let ghostPreviewOn = false;
 let boxMetaCounter = 0;
 
 function renderScene(rigId, legendId, container, result, useSliderRotation, stepLimit){
@@ -1358,6 +1390,23 @@ function renderScene(rigId, legendId, container, result, useSliderRotation, step
   });
   shadowEllipses.forEach(s=>{ svg += s; });
   boxGroups.forEach(g=>{ svg += g; });
+  if(ghostPreviewOn && ghostSuggestion && rigId==='rig3d'){
+    const gs = ghostSuggestion;
+    for(let c=0;c<gs.cols;c++){
+      for(let l=0;l<gs.layers;l++){
+        for(let r=0;r<gs.rows;r++){
+          const bw=gs.effL*scale, bh=gs.h*scale, bd=gs.effW*scale;
+          const gx = -L/2 + (gs.startX + c*gs.effL + gs.effL/2)*scale;
+          const gy = H/2 - (l+0.5)*bh;
+          const gz = D/2 - (r+0.5)*bd;
+          const ghostFaces = buildFacesForBox(gx,gy,gz,bw,bh,bd,gs.color,rX,rY);
+          ghostFaces.forEach(f=>{
+            svg += `<polygon points="${f.pointsStr}" fill="${gs.color}" fill-opacity="0.28" stroke="${gs.color}" stroke-width="1" stroke-dasharray="2 2"/>`;
+          });
+        }
+      }
+    }
+  }
   svg += cutPlaneSvg;
   svg += dimensionLines;
   svg += `</svg>`;
@@ -1445,6 +1494,18 @@ function setViewPreset(name){
       : '고정된 투상도예요. 박스를 클릭하면 상세 정보가 나와요.';
   }
   applyRotation();
+}
+
+function toggleGhostPreview(){
+  ghostPreviewOn = !ghostPreviewOn;
+  const btn = document.getElementById('ghostPreviewBtn');
+  if(btn) btn.textContent = ghostPreviewOn ? '✕ 미리보기 끄기' : '👻 3D 미리보기';
+  if(lastContainer && lastResult){
+    const stepLimit = animMode ? animStep : undefined;
+    renderScene('rigPreview', 'legendPreview', lastContainer, lastResult, false, stepLimit);
+    renderScene('rig3d', 'legend3d', lastContainer, lastResult, true, stepLimit);
+    if(ghostPreviewOn) setView('3d');
+  }
 }
 
 function onCrossSectionChange(){
@@ -1889,6 +1950,208 @@ function importConfigFile(file){
   reader.readAsText(file);
 }
 
+// ===== CSV 일괄 업로드 =====
+function downloadCsvTemplate(){
+  const csv = '품목명,가로L(cm),세로W(cm),높이H(cm),수량,중량(kg)\n박스A,60,40,40,50,10\n박스B,60,100,40,30,15\n';
+  const blob = new Blob(['\uFEFF'+csv], {type:'text/csv;charset=utf-8'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = 'container-items-template.csv';
+  document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+  showToast('CSV 양식을 다운로드했어요');
+}
+function importCsvFile(file){
+  const reader = new FileReader();
+  reader.onload = e=>{
+    try{
+      const text = e.target.result.replace(/^\uFEFF/, '');
+      const lines = text.split(/\r?\n/).filter(l=>l.trim().length>0);
+      if(lines.length < 2){ showToast('CSV에 데이터 행이 없어요'); return; }
+      const dataLines = lines.slice(1); // 첫 줄은 헤더로 간주하고 건너뜀
+      const newItems = [];
+      dataLines.forEach(line=>{
+        const cols = line.split(',').map(c=>c.trim());
+        if(cols.length < 5) return;
+        const [name, l, w, h, qty, weight] = cols;
+        if(!name || isNaN(Number(l)) || isNaN(Number(w)) || isNaN(Number(h)) || isNaN(Number(qty))) return;
+        newItems.push({ name, l:Number(l), w:Number(w), h:Number(h), qty:Number(qty), weight:Number(weight)||0 });
+      });
+      if(newItems.length === 0){ showToast('유효한 데이터 행을 찾지 못했어요. 양식을 확인해주세요'); return; }
+      items = [];
+      itemCounter = 0;
+      newItems.forEach(it=>addItem(it.name, it.l, it.w, it.h, it.qty, it.weight));
+      showToast(`✅ CSV에서 ${newItems.length}개 품목을 불러왔어요`);
+    }catch(err){ showToast('CSV를 읽는 데 실패했어요. 양식을 확인해주세요'); }
+  };
+  reader.readAsText(file, 'utf-8');
+}
+
+// ===== 마스터 SKU 라이브러리 (이름 붙여 여러 개 저장) =====
+function getSkuLibrary(){
+  try{ return JSON.parse(localStorage.getItem('cbmlab_sku_library') || '{}'); }catch(e){ return {}; }
+}
+function renderSkuLibrarySelect(){
+  const lib = getSkuLibrary();
+  const sel = document.getElementById('skuLibrarySelect');
+  if(!sel) return;
+  const names = Object.keys(lib);
+  sel.innerHTML = names.length>0
+    ? names.map(n=>`<option value="${n}">${n} (${lib[n].items.length}개 품목)</option>`).join('')
+    : `<option value="">저장된 SKU 세트 없음</option>`;
+}
+function saveSkuToLibrary(){
+  if(items.length===0){ showToast('저장할 품목이 없어요'); return; }
+  const name = prompt('이 품목 세트를 어떤 이름으로 저장할까요?', '내 화물 세트 ' + (Object.keys(getSkuLibrary()).length+1));
+  if(!name) return;
+  const lib = getSkuLibrary();
+  lib[name] = { items: items.map(it=>({name:it.name,l:it.l,w:it.w,h:it.h,qty:it.qty,weight:it.weight})), savedAt: new Date().toISOString() };
+  localStorage.setItem('cbmlab_sku_library', JSON.stringify(lib));
+  renderSkuLibrarySelect();
+  document.getElementById('skuLibrarySelect').value = name;
+  showToast(`💾 "${name}" 이름으로 저장했어요`);
+}
+function loadSkuFromLibrary(){
+  const name = document.getElementById('skuLibrarySelect').value;
+  const lib = getSkuLibrary();
+  if(!name || !lib[name]){ showToast('불러올 세트를 선택해주세요'); return; }
+  items = [];
+  itemCounter = 0;
+  lib[name].items.forEach(it=>addItem(it.name, it.l, it.w, it.h, it.qty, it.weight));
+  showToast(`📂 "${name}" 세트를 불러왔어요`);
+}
+function deleteSkuFromLibrary(){
+  const name = document.getElementById('skuLibrarySelect').value;
+  const lib = getSkuLibrary();
+  if(!name || !lib[name]){ showToast('삭제할 세트를 선택해주세요'); return; }
+  if(!confirm(`"${name}" 세트를 삭제할까요?`)) return;
+  delete lib[name];
+  localStorage.setItem('cbmlab_sku_library', JSON.stringify(lib));
+  renderSkuLibrarySelect();
+  showToast('삭제했어요');
+}
+
+// ===== 공유 링크 생성 (서버 없이 URL에 설정을 인코딩) =====
+function generateShareLink(){
+  try{
+    const cfg = currentConfigObject();
+    const encoded = btoa(unescape(encodeURIComponent(JSON.stringify(cfg))));
+    const url = location.origin + location.pathname + '?cfg=' + encoded;
+    if(url.length > 7500){
+      showToast('품목이 너무 많아 링크로 공유하기 어려워요. JSON 파일로 내보내기를 이용해주세요');
+      return;
+    }
+    navigator.clipboard.writeText(url).then(()=>{
+      showToast('🔗 공유 링크를 복사했어요! 카톡·이메일로 붙여넣어보세요');
+    }).catch(()=>{
+      prompt('아래 링크를 복사해서 공유하세요:', url);
+    });
+  }catch(e){
+    showToast('공유 링크 생성에 실패했어요');
+  }
+}
+function loadFromShareLinkIfPresent(){
+  const params = new URLSearchParams(location.search);
+  const encoded = params.get('cfg');
+  if(!encoded) return;
+  try{
+    const cfg = JSON.parse(decodeURIComponent(escape(atob(encoded))));
+    applyConfigObject(cfg);
+    showToast('🔗 공유된 적재 설정을 불러왔어요');
+  }catch(e){
+    console.error('공유 링크 파싱 실패', e);
+  }
+}
+
+// ===== 다운로드 전 5초 광고 게이트 =====
+function runWithAdGate(actualFn){
+  const backdrop = document.createElement('div');
+  backdrop.className = 'adgate-backdrop';
+  backdrop.id = 'adGateBackdrop';
+  backdrop.innerHTML = `
+    <div class="adgate-modal">
+      <div class="adgate-slot">광고 영역<br>(잠시 후 다운로드가 시작됩니다)</div>
+      <div class="adgate-timer" id="adGateTimer">5초 후 다운로드 가능</div>
+      <button class="adgate-btn disabled" id="adGateBtn" disabled>잠시만 기다려주세요...</button>
+    </div>
+  `;
+  document.body.appendChild(backdrop);
+  let remaining = 5;
+  const timerEl = document.getElementById('adGateTimer');
+  const btn = document.getElementById('adGateBtn');
+  const interval = setInterval(()=>{
+    remaining--;
+    if(remaining <= 0){
+      clearInterval(interval);
+      timerEl.textContent = '다운로드 준비 완료';
+      btn.disabled = false;
+      btn.textContent = '⬇ 다운로드';
+      btn.classList.remove('disabled'); btn.classList.add('ready');
+      btn.onclick = ()=>{ backdrop.remove(); actualFn(); };
+    } else {
+      timerEl.textContent = `${remaining}초 후 다운로드 가능`;
+    }
+  }, 1000);
+}
+function exportImageGated(){ runWithAdGate(exportImage); }
+function printReportGated(){ runWithAdGate(printReport); }
+
+// ===== 다중 컨테이너 최적화 =====
+function optimizeMultiContainer(){
+  if(items.length===0 || items.every(i=>i.qty<=0)){ showToast('품목을 입력해주세요'); return; }
+  const allowRotation = document.getElementById('allowRotation').checked;
+  let remaining = items.map(i=>({...i}));
+  const planSteps = [];
+  let safety = 0;
+
+  while(remaining.some(i=>i.qty>0) && safety < 20){
+    safety++;
+    let bestKey=null, bestResult=null, bestUtil=-1, bestPlaced=0;
+    Object.keys(CONTAINERS).forEach(key=>{
+      const c = CONTAINERS[key];
+      const activeItems = remaining.filter(i=>i.qty>0);
+      const r = pack(c, activeItems, allowRotation);
+      let usedVolume=0; const placedTotal = r.sections.reduce((a,s)=>a+(s.error?0:s.placedQty),0);
+      r.sections.forEach(s=>{ if(!s.error) usedVolume += s.placedQty*s.item.l*s.item.w*s.item.h; });
+      const util = usedVolume/(c.l*c.w*c.h);
+      if(placedTotal>0 && util>bestUtil){ bestUtil=util; bestKey=key; bestResult=r; bestPlaced=placedTotal; }
+    });
+    if(!bestResult || bestPlaced===0) break; // 남은 품목이 어떤 컨테이너에도 안 들어감 (규격 초과)
+
+    planSteps.push({ key:bestKey, util:bestUtil*100, placed:bestPlaced });
+    bestResult.sections.forEach(s=>{
+      if(s.error) return;
+      const ref = remaining.find(i=>i.name===s.item.name);
+      if(ref) ref.qty = Math.max(0, ref.qty - s.placedQty);
+    });
+  }
+
+  const stillShort = remaining.filter(i=>i.qty>0);
+  showMultiContainerModal(planSteps, stillShort);
+}
+function showMultiContainerModal(planSteps, stillShort){
+  const counts = {};
+  planSteps.forEach(s=>{ counts[s.key] = (counts[s.key]||0)+1; });
+  const summary = Object.keys(counts).map(k=>`${CONTAINERS[k].name} ×${counts[k]}`).join(' + ');
+
+  const backdrop = document.createElement('div');
+  backdrop.className = 'opt-backdrop';
+  backdrop.id = 'multiBackdrop';
+  backdrop.innerHTML = `
+    <div class="opt-modal">
+      <h3>📦 다중 컨테이너 최적화 결과</h3>
+      <p class="opt-sub">${planSteps.length===0 ? '적재 가능한 조합을 찾지 못했어요.' : '이 물량을 실으려면 아래 조합이 필요해요.'}</p>
+      ${planSteps.length>0 ? `<div class="multi-total">${summary}<br><span style="font-size:12px;color:var(--slate-500);font-weight:500;">총 ${planSteps.length}대</span></div>` : ''}
+      ${planSteps.map((s,i)=>`<div class="multi-step-row"><span>${i+1}번째 — ${CONTAINERS[s.key].name}</span><span><b>${s.util.toFixed(0)}%</b> 활용 · ${fmt(s.placed)}개 적재</span></div>`).join('')}
+      ${stillShort.length>0 ? `<div class="warn-box" style="margin-top:12px;"><strong>⚠ 일부 품목은 어떤 컨테이너에도 안 들어가요</strong>${stillShort.map(i=>`${i.name}: ${fmt(i.qty)}개 남음`).join('<br>')}</div>` : ''}
+      <div class="opt-actions">
+        <button class="toolbar-btn" onclick="document.getElementById('multiBackdrop').remove()">닫기</button>
+      </div>
+    </div>
+  `;
+  document.body.appendChild(backdrop);
+}
+
 // ===== 결과를 PNG 이미지로 내보내기 =====
 function exportImage(){
   const activeRigId = currentView==='3d' ? 'rig3d' : 'rigPreview';
@@ -1962,6 +2225,7 @@ function exportImage(){
 
 // ===== 초기화 =====
 renderPresetChips();
+renderSkuLibrarySelect();
 try{
   const savedTheme = localStorage.getItem('cbmlab_container_theme');
   if(savedTheme === 'dark') setTheme(true);
@@ -1971,6 +2235,7 @@ addItem('박스 A', 60, 40, 40, 2);
 addItem('박스 B', 60, 100, 40, 2);
 addItem('박스 C', 100, 40, 100, 1);
 addItem('박스 D', 100, 40, 40, 2);
+loadFromShareLinkIfPresent();
 </script>
 <script type="application/ld+json">
 {
