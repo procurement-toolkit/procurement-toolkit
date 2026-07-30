@@ -131,6 +131,17 @@
   .scene-tool-btn{font-size:11px;padding:5px 10px;border:1px solid var(--slate-200);border-radius:6px;background:var(--card-bg);color:var(--slate-600);cursor:pointer;font-family:inherit}
   .scene-tool-btn:hover{border-color:var(--accent);color:var(--accent)}
   .scene-tool-btn.on{background:var(--accent-light);border-color:var(--accent);color:var(--accent-dark)}
+  .view-tab-btn{font-weight:700;min-width:44px;}
+  .view-tab-btn.active{background:var(--slate-800);border-color:var(--slate-800);color:#fff;}
+  [data-theme="dark"] .view-tab-btn.active{background:var(--accent);border-color:var(--accent);}
+  .box-info-panel{
+    margin-top:10px;background:var(--slate-50);border:1px solid var(--slate-200);border-radius:10px;
+    padding:12px 14px;font-size:12px;
+  }
+  .box-info-panel .bip-title{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:14px;margin-bottom:6px;display:flex;justify-content:space-between;align-items:center;}
+  .box-info-panel .bip-close{cursor:pointer;color:var(--slate-400);font-size:14px;background:none;border:none;}
+  .box-info-panel .bip-row{display:flex;justify-content:space-between;padding:2px 0;color:var(--slate-600);}
+  .box-info-panel .bip-row b{color:var(--slate-800);}
   .scene-hint{font-size:11px;color:var(--slate-400);text-align:center;margin-top:6px}
 
   .legend{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:10px;font-size:11.5px;color:var(--slate-600)}
@@ -422,19 +433,19 @@
             <div class="scene-wrap" id="wrap3d">
               <div class="scene" id="scene3d"><div class="rig" id="rig3d"></div></div>
               <div class="scene-controls">
-                <button class="scene-tool-btn" onclick="setViewPreset('iso')">📐 등각</button>
-                <button class="scene-tool-btn" onclick="setViewPreset('front')">Front</button>
-                <button class="scene-tool-btn" onclick="setViewPreset('side')">Side</button>
-                <button class="scene-tool-btn" onclick="setViewPreset('top')">Top</button>
+                <button class="scene-tool-btn view-tab-btn active" data-view="iso" onclick="setViewPreset('iso')">3D</button>
+                <button class="scene-tool-btn view-tab-btn" data-view="top" onclick="setViewPreset('top')">Top</button>
+                <button class="scene-tool-btn view-tab-btn" data-view="front" onclick="setViewPreset('front')">Front</button>
+                <button class="scene-tool-btn view-tab-btn" data-view="side" onclick="setViewPreset('side')">Side</button>
               </div>
-              <div class="scene-controls">
-                <label>회전 <input type="range" id="rotY" min="-180" max="180" value="-32" oninput="applyRotation()"></label>
-                <label>기울기 <input type="range" id="rotX" min="0" max="70" value="24" oninput="applyRotation()"></label>
-                <button class="scene-tool-btn" onclick="resetView()">↺ 시점 초기화</button>
-                <button class="scene-tool-btn" id="autoRotateBtn" onclick="toggleAutoRotate()">▶ 자동회전</button>
+              <div style="display:none;">
+                <input type="range" id="rotY" min="-180" max="180" value="-32" oninput="applyRotation()">
+                <input type="range" id="rotX" min="0" max="70" value="24" oninput="applyRotation()">
+                <button id="autoRotateBtn" onclick="toggleAutoRotate()">자동회전</button>
               </div>
               <div class="legend" id="legend3d"></div>
-              <div class="scene-hint">마우스(또는 손가락)로 드래그해서 회전할 수 있습니다.</div>
+              <div class="box-info-panel" id="boxInfoPanel" style="display:none;"></div>
+              <div class="scene-hint" id="sceneHint3d">3D 화면에서는 마우스(또는 손가락)로 드래그해서 자유롭게 회전할 수 있어요. 박스를 클릭하면 상세 정보가 나와요.</div>
             </div>
 
             <div class="anim-controls">
@@ -1128,81 +1139,90 @@ function buildBoxList(container, result){
 }
 
 // ===== 컨테이너 내부 디테일 (프레임, 벽면 리브, 바닥 골판, 도어) =====
-function buildContainerDetails(L,H,D,rX,rY,containerReal){
+function buildContainerDetails(L,H,D,rX,rY,containerReal,viewMode){
   const proj = (x,y,z)=>rotatePoint(x,y,z,rX,rY);
   let svg = '';
 
-  // 바닥 골판 (깊이 방향 가로줄)
-  const floorRibs = 7;
+  // 바닥 골판 (깊이 방향 가로줄) - 옅게
+  const floorRibs = 6;
   for(let i=1;i<floorRibs;i++){
     const z = -D/2 + (D/floorRibs)*i;
     const p1 = proj(-L/2,-H/2,z), p2 = proj(L/2,-H/2,z);
-    svg += `<line x1="${p1[0].toFixed(1)}" y1="${p1[1].toFixed(1)}" x2="${p2[0].toFixed(1)}" y2="${p2[1].toFixed(1)}" stroke="#B8C2D0" stroke-width="0.4" opacity="0.55"/>`;
+    svg += `<line x1="${p1[0].toFixed(1)}" y1="${p1[1].toFixed(1)}" x2="${p2[0].toFixed(1)}" y2="${p2[1].toFixed(1)}" stroke="#B8C2D0" stroke-width="0.35" opacity="0.4"/>`;
   }
 
-  // 측벽 리브 (세로줄, 양쪽 벽)
-  const wallRibs = 11;
+  // 측벽 리브 (세로줄, 양쪽 벽) - 옅게
+  const wallRibs = 9;
   [1,-1].forEach(sz=>{
     for(let i=1;i<wallRibs;i++){
       const x = -L/2 + (L/wallRibs)*i;
       const p1 = proj(x,-H/2,sz*D/2), p2 = proj(x,H/2,sz*D/2);
-      svg += `<line x1="${p1[0].toFixed(1)}" y1="${p1[1].toFixed(1)}" x2="${p2[0].toFixed(1)}" y2="${p2[1].toFixed(1)}" stroke="#B8C2D0" stroke-width="0.35" opacity="0.4"/>`;
+      svg += `<line x1="${p1[0].toFixed(1)}" y1="${p1[1].toFixed(1)}" x2="${p2[0].toFixed(1)}" y2="${p2[1].toFixed(1)}" stroke="#B8C2D0" stroke-width="0.3" opacity="0.3"/>`;
     }
   });
 
-  // 프레임 코너 포스트 (4개 수직 모서리, 굵고 진하게)
+  // 프레임 코너 포스트 (4개 수직 모서리)
   [[-1,-1],[1,-1],[1,1],[-1,1]].forEach(([sx,sz])=>{
     const p1 = proj(sx*L/2,-H/2,sz*D/2), p2 = proj(sx*L/2,H/2,sz*D/2);
-    svg += `<line x1="${p1[0].toFixed(1)}" y1="${p1[1].toFixed(1)}" x2="${p2[0].toFixed(1)}" y2="${p2[1].toFixed(1)}" stroke="#475569" stroke-width="1.6"/>`;
+    svg += `<line x1="${p1[0].toFixed(1)}" y1="${p1[1].toFixed(1)}" x2="${p2[0].toFixed(1)}" y2="${p2[1].toFixed(1)}" stroke="#94A3B8" stroke-width="1.1" opacity="0.75"/>`;
   });
 
-  // 도어 윤곽 (컨테이너 앞쪽 끝, x=-L/2) - 실제 도어 치수 비율 적용
-  if(containerReal){
+  // 도어 표시 - Front 뷰에서만 작고 옅게 (3D/Top/Side에서는 생략해 시선 분산 방지)
+  if(containerReal && viewMode === 'front'){
     const doorWRatio = containerReal.doorW/containerReal.w, doorHRatio = containerReal.doorH/containerReal.h;
     const dw = D*doorWRatio, dh = H*doorHRatio;
     const doorCorners = [[-L/2,-H/2,-dw/2],[-L/2,-H/2,dw/2],[-L/2,-H/2+dh,dw/2],[-L/2,-H/2+dh,-dw/2]];
     const doorPts = doorCorners.map(([x,y,z])=>proj(x,y,z));
-    svg += `<polygon points="${doorPts.map(p=>p[0].toFixed(1)+','+p[1].toFixed(1)).join(' ')}" fill="none" stroke="#B5602E" stroke-width="1.2" stroke-dasharray="3 2"/>`;
-
-    // 적재 방향 화살표 (도어 → 안쪽)
-    const arrowStart = proj(-L/2-8, -H/2-14, 0);
-    const arrowEnd = proj(-L/2+L*0.22, -H/2-14, 0);
-    svg += `<line x1="${arrowStart[0].toFixed(1)}" y1="${arrowStart[1].toFixed(1)}" x2="${arrowEnd[0].toFixed(1)}" y2="${arrowEnd[1].toFixed(1)}" stroke="#B5602E" stroke-width="1.2" marker-end="url(#arrowHead)"/>`;
-    svg += `<text x="${arrowStart[0].toFixed(1)}" y="${(arrowStart[1]-4).toFixed(1)}" font-size="7.5" fill="#B5602E" font-weight="700">DOOR →</text>`;
+    svg += `<polygon points="${doorPts.map(p=>p[0].toFixed(1)+','+p[1].toFixed(1)).join(' ')}" fill="none" stroke="#94A3B8" stroke-width="0.8" stroke-dasharray="2.5 2" opacity="0.7"/>`;
+    const doorLabelPt = proj(-L/2, -H/2-6, 0);
+    svg += `<text x="${doorLabelPt[0].toFixed(1)}" y="${doorLabelPt[1].toFixed(1)}" font-size="6" fill="#94A3B8" text-anchor="middle">Door</text>`;
   }
 
   return svg;
 }
 
-// ===== 치수선 (Dimension Lines) =====
-function buildDimensionLines(L,H,D,rX,rY,containerReal){
+// ===== 치수선 (Dimension Lines) - Top/Front/Side 뷰에서만, 뷰별로 관련 치수만 표시 =====
+function buildDimensionLines(L,H,D,rX,rY,containerReal,viewMode){
   const proj = (x,y,z)=>rotatePoint(x,y,z,rX,rY);
   let svg = '';
-  const off = 16;
+  const off = 14;
 
-  // 길이 치수선
-  const lp1 = proj(-L/2,-H/2,-D/2), lp2 = proj(L/2,-H/2,-D/2);
-  const lY = Math.max(lp1[1],lp2[1]) + off;
-  svg += `<line x1="${lp1[0].toFixed(1)}" y1="${lY.toFixed(1)}" x2="${lp2[0].toFixed(1)}" y2="${lY.toFixed(1)}" stroke="#94A3B8" stroke-width="0.6"/>`;
-  svg += `<line x1="${lp1[0].toFixed(1)}" y1="${lp1[1].toFixed(1)}" x2="${lp1[0].toFixed(1)}" y2="${lY.toFixed(1)}" stroke="#94A3B8" stroke-width="0.4" stroke-dasharray="1.5 1.5"/>`;
-  svg += `<line x1="${lp2[0].toFixed(1)}" y1="${lp2[1].toFixed(1)}" x2="${lp2[0].toFixed(1)}" y2="${lY.toFixed(1)}" stroke="#94A3B8" stroke-width="0.4" stroke-dasharray="1.5 1.5"/>`;
-  svg += `<text x="${((lp1[0]+lp2[0])/2).toFixed(1)}" y="${(lY+9).toFixed(1)}" font-size="7.5" fill="#64748B" text-anchor="middle">${fmt(containerReal.l*10)}mm</text>`;
+  const drawHDim = (p1,p2,label) => {
+    const y = Math.max(p1[1],p2[1]) + off;
+    let s = `<line x1="${p1[0].toFixed(1)}" y1="${y.toFixed(1)}" x2="${p2[0].toFixed(1)}" y2="${y.toFixed(1)}" stroke="#94A3B8" stroke-width="0.5"/>`;
+    s += `<line x1="${p1[0].toFixed(1)}" y1="${p1[1].toFixed(1)}" x2="${p1[0].toFixed(1)}" y2="${y.toFixed(1)}" stroke="#CBD5E1" stroke-width="0.4"/>`;
+    s += `<line x1="${p2[0].toFixed(1)}" y1="${p2[1].toFixed(1)}" x2="${p2[0].toFixed(1)}" y2="${y.toFixed(1)}" stroke="#CBD5E1" stroke-width="0.4"/>`;
+    s += `<text x="${((p1[0]+p2[0])/2).toFixed(1)}" y="${(y+8).toFixed(1)}" font-size="6" fill="#94A3B8" text-anchor="middle">${label}</text>`;
+    return s;
+  };
+  const drawVDim = (p1,p2,label) => {
+    const x = Math.min(p1[0],p2[0]) - off;
+    let s = `<line x1="${x.toFixed(1)}" y1="${p1[1].toFixed(1)}" x2="${x.toFixed(1)}" y2="${p2[1].toFixed(1)}" stroke="#94A3B8" stroke-width="0.5"/>`;
+    s += `<line x1="${p1[0].toFixed(1)}" y1="${p1[1].toFixed(1)}" x2="${x.toFixed(1)}" y2="${p1[1].toFixed(1)}" stroke="#CBD5E1" stroke-width="0.4"/>`;
+    s += `<line x1="${p2[0].toFixed(1)}" y1="${p2[1].toFixed(1)}" x2="${x.toFixed(1)}" y2="${p2[1].toFixed(1)}" stroke="#CBD5E1" stroke-width="0.4"/>`;
+    s += `<text x="${(x-3).toFixed(1)}" y="${((p1[1]+p2[1])/2).toFixed(1)}" font-size="6" fill="#94A3B8" text-anchor="end">${label}</text>`;
+    return s;
+  };
 
-  // 높이 치수선
-  const hp1 = proj(-L/2,-H/2,D/2), hp2 = proj(-L/2,H/2,D/2);
-  const hX = Math.min(hp1[0],hp2[0]) - off;
-  svg += `<line x1="${hX.toFixed(1)}" y1="${hp1[1].toFixed(1)}" x2="${hX.toFixed(1)}" y2="${hp2[1].toFixed(1)}" stroke="#94A3B8" stroke-width="0.6"/>`;
-  svg += `<text x="${(hX-4).toFixed(1)}" y="${((hp1[1]+hp2[1])/2).toFixed(1)}" font-size="7.5" fill="#64748B" text-anchor="end">${fmt(containerReal.h*10)}mm</text>`;
-
-  // 폭 치수선
-  const wp1 = proj(L/2,-H/2,-D/2), wp2 = proj(L/2,-H/2,D/2);
-  const wY = Math.max(wp1[1],wp2[1]) + off;
-  svg += `<line x1="${wp1[0].toFixed(1)}" y1="${wY.toFixed(1)}" x2="${wp2[0].toFixed(1)}" y2="${wY.toFixed(1)}" stroke="#94A3B8" stroke-width="0.6"/>`;
-  svg += `<text x="${((wp1[0]+wp2[0])/2).toFixed(1)}" y="${(wY+9).toFixed(1)}" font-size="7.5" fill="#64748B" text-anchor="middle">${fmt(containerReal.w*10)}mm</text>`;
+  if(viewMode === 'top'){
+    // 위에서 본 뷰: 길이만 표시
+    svg += drawHDim(proj(-L/2,-H/2,-D/2), proj(L/2,-H/2,-D/2), fmt(containerReal.l*10)+'mm');
+  } else if(viewMode === 'front'){
+    // 도어에서 본 뷰: 폭 + 높이
+    svg += drawHDim(proj(L/2,-H/2,-D/2), proj(L/2,-H/2,D/2), fmt(containerReal.w*10)+'mm');
+    svg += drawVDim(proj(L/2,-H/2,D/2), proj(L/2,H/2,D/2), fmt(containerReal.h*10)+'mm');
+  } else if(viewMode === 'side'){
+    // 측면 뷰: 길이 + 높이
+    svg += drawHDim(proj(-L/2,-H/2,-D/2), proj(L/2,-H/2,-D/2), fmt(containerReal.l*10)+'mm');
+    svg += drawVDim(proj(-L/2,-H/2,-D/2), proj(-L/2,H/2,-D/2), fmt(containerReal.h*10)+'mm');
+  }
 
   return svg;
 }
 
+
+let boxMetaStore = {};
+let boxMetaCounter = 0;
 
 function renderScene(rigId, legendId, container, result, useSliderRotation, stepLimit){
   const rig = document.getElementById(rigId);
@@ -1211,6 +1231,8 @@ function renderScene(rigId, legendId, container, result, useSliderRotation, step
   const scale = 100 / maxDim;
   const L = container.l*scale, H = container.h*scale, D = container.w*scale;
   const rX = useSliderRotation ? rotX : 22, rY = useSliderRotation ? rotY : -30;
+  const viewMode = useSliderRotation ? currentViewMode : 'iso';
+  const isOrtho = useSliderRotation && viewMode !== 'iso';
 
   const { boxes: allBoxes, overflowNote } = buildBoxList(container, result);
   const boxes = (typeof stepLimit === 'number') ? allBoxes.slice(0, stepLimit) : allBoxes;
@@ -1223,64 +1245,57 @@ function renderScene(rigId, legendId, container, result, useSliderRotation, step
     const offZ = D/2 - (b.rowIdx+0.5)*bd;
     const [,,cz] = rotatePoint(offX,offY,offZ,rX,rY);
     return {bw,bh,bd,offX,offY,offZ,color:b.color,depth:cz,
-      isLabelAnchor:b.isLabelAnchor, isBottomLayer:b.isBottomLayer, itemName:b.itemName, itemWeight:b.itemWeight,
+      isBottomLayer:b.isBottomLayer, itemName:b.itemName, itemWeight:b.itemWeight,
       realL:b.l, realW:b.w, realH:b.h};
   }).sort((a,b)=>b.depth-a.depth);
 
-  let allFaces = [];
+  if(rigId === 'rig3d'){ boxMetaStore = {}; boxMetaCounter = 0; }
+
+  let boxGroups = [];
   const shadowEllipses = [];
-  const labels = [];
   withDepth.forEach(b=>{
-    allFaces = allFaces.concat(buildFacesForBox(b.offX,b.offY,b.offZ,b.bw,b.bh,b.bd,b.color,rX,rY));
-    if(b.isBottomLayer){
-      const [sx,sy] = rotatePoint(b.offX, H/2, b.offZ, rX, rY); // 바닥면(y=H/2 local) 기준 그림자
-      shadowEllipses.push(`<ellipse cx="${sx.toFixed(1)}" cy="${(sy+1.5).toFixed(1)}" rx="${(b.bw*0.46).toFixed(1)}" ry="${(b.bd*0.22).toFixed(1)}" fill="rgba(15,23,42,0.18)"/>`);
+    const faces = buildFacesForBox(b.offX,b.offY,b.offZ,b.bw,b.bh,b.bd,b.color,rX,rY);
+    const polys = faces.map(f=>`<polygon points="${f.pointsStr}" fill="${f.fill}" stroke="rgba(15,23,42,.16)" stroke-width="0.6" stroke-linejoin="round"/>`).join('');
+    let onclickAttr = '';
+    if(rigId === 'rig3d'){
+      const idx = boxMetaCounter++;
+      boxMetaStore[idx] = { name:b.itemName, l:b.realL, w:b.realW, h:b.realH, weight:b.itemWeight };
+      onclickAttr = ` onclick="selectBox(${idx})" style="cursor:pointer;"`;
     }
-    if(b.isLabelAnchor){
-      const [lx,ly] = rotatePoint(b.offX, b.offY - b.bh/2 - 3, b.offZ, rX, rY);
-      const dimText = `${fmt(b.realL*10)}×${fmt(b.realW*10)}×${fmt(b.realH*10)}mm`;
-      const wtText = b.itemWeight>0 ? ` · ${fmt(b.itemWeight)}kg` : '';
-      labels.push({x:lx, y:ly, name:b.itemName, sub:dimText+wtText});
+    boxGroups.push(`<g${onclickAttr}>${polys}</g>`);
+    if(b.isBottomLayer){
+      const [sx,sy] = rotatePoint(b.offX, H/2, b.offZ, rX, rY);
+      shadowEllipses.push(`<ellipse cx="${sx.toFixed(1)}" cy="${(sy+1.5).toFixed(1)}" rx="${(b.bw*0.46).toFixed(1)}" ry="${(b.bd*0.22).toFixed(1)}" fill="rgba(15,23,42,0.16)"/>`);
     }
   });
 
   const edges = buildWireEdges(L,H,D,rX,rY);
-  const containerDetails = buildContainerDetails(L,H,D,rX,rY,container);
-  const dimensionLines = buildDimensionLines(L,H,D,rX,rY,container);
+  const containerDetails = buildContainerDetails(L,H,D,rX,rY,container,viewMode);
+  const dimensionLines = isOrtho ? buildDimensionLines(L,H,D,rX,rY,container,viewMode) : '';
 
-  // 화면 범위 계산 (모든 점 기준으로 여백 포함해 자동 맞춤)
+  // 화면 범위 계산
   let minX=Infinity,maxX=-Infinity,minY=Infinity,maxY=-Infinity;
   const track=(sx,sy)=>{ if(sx<minX)minX=sx; if(sx>maxX)maxX=sx; if(sy<minY)minY=sy; if(sy>maxY)maxY=sy; };
   edges.forEach(e=>{ track(e.p1.sx,e.p1.sy); track(e.p2.sx,e.p2.sy); });
-  allFaces.forEach(f=>{ f.pointsStr.split(' ').forEach(pt=>{ const [x,y]=pt.split(',').map(Number); track(x,y); }); });
+  const boxPointRe = /(-?[\d.]+),(-?[\d.]+)/g;
+  boxGroups.forEach(g=>{ let m; while((m=boxPointRe.exec(g))){ track(Number(m[1]),Number(m[2])); } });
   if(!isFinite(minX)){ minX=-100; maxX=100; minY=-100; maxY=100; }
-  const pad = 34;
+  const pad = isOrtho ? 40 : 30;
   const vw = (maxX-minX)+pad*2, vh = (maxY-minY)+pad*2;
 
   let svg = `<svg viewBox="${minX-pad} ${minY-pad} ${vw} ${vh}" width="100%" height="100%" preserveAspectRatio="xMidYMid meet">`;
-  svg += `<defs>
-    <radialGradient id="floorGrad_${rigId}" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="rgba(15,23,42,0.26)"/><stop offset="100%" stop-color="rgba(15,23,42,0)"/></radialGradient>
-    <marker id="arrowHead" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#B5602E"/></marker>
-  </defs>`;
-  // 바닥 중심을 화면에 투상해 타원형 그림자를 깔아줌 (원근감 보강)
-  const bottomCenter = rotatePoint(0, H/2, 0, rX, rY);
-  svg += `<ellipse cx="${bottomCenter[0].toFixed(1)}" cy="${(bottomCenter[1]+6).toFixed(1)}" rx="${(L*0.62).toFixed(1)}" ry="${(L*0.62*0.22).toFixed(1)}" fill="url(#floorGrad_${rigId})"/>`;
+  svg += `<defs><marker id="arrowHead" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#94A3B8"/></marker></defs>`;
+
+  // 바닥을 옅게 채워서 "떠있는" 느낌 제거
+  const floorCorners = [[-L/2,H/2,-D/2],[L/2,H/2,-D/2],[L/2,H/2,D/2],[-L/2,H/2,D/2]].map(([x,y,z])=>rotatePoint(x,y,z,rX,rY));
+  svg += `<polygon points="${floorCorners.map(p=>p[0].toFixed(1)+','+p[1].toFixed(1)).join(' ')}" fill="rgba(148,163,184,0.14)"/>`;
+
   svg += containerDetails;
   edges.forEach(e=>{
-    svg += `<line x1="${e.p1.sx.toFixed(1)}" y1="${e.p1.sy.toFixed(1)}" x2="${e.p2.sx.toFixed(1)}" y2="${e.p2.sy.toFixed(1)}" stroke="#94A3B8" stroke-width="0.5" stroke-dasharray="1.5 1.5" opacity="0.7"/>`;
+    svg += `<line x1="${e.p1.sx.toFixed(1)}" y1="${e.p1.sy.toFixed(1)}" x2="${e.p2.sx.toFixed(1)}" y2="${e.p2.sy.toFixed(1)}" stroke="#CBD5E1" stroke-width="0.5" opacity="0.8"/>`;
   });
   shadowEllipses.forEach(s=>{ svg += s; });
-  allFaces.forEach(f=>{
-    svg += `<polygon points="${f.pointsStr}" fill="${f.fill}" stroke="rgba(15,23,42,.16)" stroke-width="0.6" stroke-linejoin="round"/>`;
-  });
-  labels.forEach(lb=>{
-    const w = Math.max(lb.name.length, lb.sub.length)*3.6 + 8;
-    svg += `<g>
-      <rect x="${(lb.x-w/2).toFixed(1)}" y="${(lb.y-16).toFixed(1)}" width="${w.toFixed(1)}" height="15" rx="2.5" fill="rgba(255,255,255,0.88)" stroke="rgba(15,23,42,0.15)" stroke-width="0.4"/>
-      <text x="${lb.x.toFixed(1)}" y="${(lb.y-8.5).toFixed(1)}" font-size="5.6" font-weight="700" fill="#1E293B" text-anchor="middle">${lb.name}</text>
-      <text x="${lb.x.toFixed(1)}" y="${(lb.y-3.5).toFixed(1)}" font-size="4.6" fill="#64748B" text-anchor="middle">${lb.sub}</text>
-    </g>`;
-  });
+  boxGroups.forEach(g=>{ svg += g; });
   svg += dimensionLines;
   svg += `</svg>`;
   rig.innerHTML = svg;
@@ -1293,12 +1308,30 @@ function renderScene(rigId, legendId, container, result, useSliderRotation, step
   }
 }
 
+function selectBox(idx){
+  const meta = boxMetaStore[idx];
+  if(!meta) return;
+  const panel = document.getElementById('boxInfoPanel');
+  const vol = (meta.l*meta.w*meta.h/1e6).toFixed(3);
+  panel.style.display = 'block';
+  panel.innerHTML = `
+    <div class="bip-title"><span>${meta.name}</span><button class="bip-close" onclick="closeBoxInfo()">✕</button></div>
+    <div class="bip-row"><span>규격</span><b>${meta.l} × ${meta.w} × ${meta.h} cm</b></div>
+    <div class="bip-row"><span>중량</span><b>${meta.weight>0?fmt(meta.weight)+'kg':'-'}</b></div>
+    <div class="bip-row"><span>부피</span><b>${vol}㎥</b></div>
+  `;
+}
+function closeBoxInfo(){
+  document.getElementById('boxInfoPanel').style.display = 'none';
+}
+
+
 (function initDrag(){
   const scene = document.getElementById('scene3d');
   let dragging=false, lastX=0, lastY=0;
-  const start=(x,y)=>{dragging=true;lastX=x;lastY=y;stopAutoRotate();};
+  const start=(x,y)=>{ if(currentViewMode!=='iso') return; dragging=true;lastX=x;lastY=y;stopAutoRotate();};
   const move=(x,y)=>{
-    if(!dragging) return;
+    if(!dragging || currentViewMode!=='iso') return;
     rotY += (x-lastX)*0.4; rotX -= (y-lastY)*0.3;
     rotX = Math.max(0, Math.min(70, rotX));
     document.getElementById('rotY').value = Math.max(-180, Math.min(180, rotY));
@@ -1322,13 +1355,23 @@ function resetView(){
   document.getElementById('rotX').value = rotX;
   applyRotation();
 }
+let currentViewMode = 'iso';
 function setViewPreset(name){
   stopAutoRotate();
-  const presets = { iso:{x:24,y:-32}, front:{x:0,y:0}, side:{x:0,y:90}, top:{x:89,y:0} };
+  currentViewMode = name;
+  // front: 폭×높이(도어에서 보는 뷰), side: 길이×높이(측면), top: 길이×폭(위에서), iso: 자유 회전
+  const presets = { iso:{x:24,y:-32}, front:{x:0,y:90}, side:{x:0,y:0}, top:{x:89,y:0} };
   const p = presets[name] || presets.iso;
   rotX = p.x; rotY = p.y;
   document.getElementById('rotY').value = rotY;
   document.getElementById('rotX').value = rotX;
+  document.querySelectorAll('.view-tab-btn').forEach(b=>b.classList.toggle('active', b.dataset.view===name));
+  const hint = document.getElementById('sceneHint3d');
+  if(hint){
+    hint.textContent = name==='iso'
+      ? '3D 화면에서는 마우스(또는 손가락)로 드래그해서 자유롭게 회전할 수 있어요. 박스를 클릭하면 상세 정보가 나와요.'
+      : '고정된 투상도예요. 박스를 클릭하면 상세 정보가 나와요.';
+  }
   applyRotation();
 }
 function toggleAutoRotate(){
