@@ -34,71 +34,103 @@
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@800;900&display=swap" rel="stylesheet">
 <style>
   *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-  :root{--accent:#2563EB;--accent-light:#DBEAFE;--accent-dark:#1D4ED8;--slate-50:#F8FAFC;--slate-100:#F1F5F9;--slate-200:#E2E8F0;--slate-300:#CBD5E1;--slate-400:#94A3B8;--slate-500:#64748B;--slate-600:#475569;--slate-700:#334155;--slate-800:#1E293B;--slate-900:#0F172A;--success:#0F766E;--success-light:#CCFBF1;--danger:#DC2626;--danger-light:#FEE2E2;--radius:8px;--radius-lg:12px;--shadow-sm:0 1px 2px rgba(0,0,0,.05);font-family:'Pretendard','Apple SD Gothic Neo',system-ui,-apple-system,sans-serif}
-  body{background:var(--slate-50);color:var(--slate-800);font-size:14px;line-height:1.6}
-  header{background:#fff;border-bottom:1px solid var(--slate-200)}
+  :root{--accent:#2563EB;--accent-light:#DBEAFE;--accent-dark:#1D4ED8;--slate-50:#F8FAFC;--slate-100:#F1F5F9;--slate-200:#E2E8F0;--slate-300:#CBD5E1;--slate-400:#94A3B8;--slate-500:#64748B;--slate-600:#475569;--slate-700:#334155;--slate-800:#1E293B;--slate-900:#0F172A;--success:#0F766E;--success-light:#CCFBF1;--danger:#DC2626;--danger-light:#FEE2E2;--radius:8px;--radius-lg:12px;--shadow-sm:0 1px 2px rgba(0,0,0,.05);--card-bg:#fff;--body-bg:var(--slate-50);--scene-bg-a:#EEF2F7;--scene-bg-b:#F8FAFC;font-family:'Pretendard','Apple SD Gothic Neo',system-ui,-apple-system,sans-serif}
+  [data-theme="dark"]{--slate-50:#0B1120;--slate-100:#151E2E;--slate-200:#243144;--slate-300:#374357;--slate-400:#647089;--slate-500:#94A0B8;--slate-600:#B7C1D6;--slate-700:#D3DAE8;--slate-800:#EEF1F6;--slate-900:#F8FAFC;--card-bg:#111927;--body-bg:#0B1120;--accent-light:#1B2C4D;--scene-bg-a:#0F1826;--scene-bg-b:#141E30;--danger-light:#3A1418;--success-light:#0C2A26;}
+  [data-theme="dark"] body{background:var(--body-bg)}
+  [data-theme="dark"] header,[data-theme="dark"] .hero,[data-theme="dark"] .card,[data-theme="dark"] .ad-main-box{background:var(--card-bg)}
+  [data-theme="dark"] .item-table input,[data-theme="dark"] select.inp,[data-theme="dark"] .inp{background:var(--card-bg);color:var(--slate-800)}
+  body{background:var(--body-bg);color:var(--slate-800);font-size:14px;line-height:1.6;transition:background .2s}
+  header{background:var(--card-bg);border-bottom:1px solid var(--slate-200)}
   .header-inner{max-width:1320px;margin:0 auto;padding:16px 24px;display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}
   .logo-mark{font-size:20px;font-weight:800;color:var(--slate-900);text-decoration:none;font-family:'Space Grotesk','Pretendard',sans-serif;letter-spacing:-0.4px;}
   .logo-mark span{color:var(--accent);font-weight:500}
   .nav-link{font-size:13px;font-weight:600;color:var(--slate-500);text-decoration:none;padding:7px 12px;border-radius:6px}
   .nav-link:hover{background:var(--slate-100)}
-  .hero{background:#fff;border-bottom:1px solid var(--slate-200);padding:28px 24px 24px}
+  .theme-toggle{width:34px;height:34px;border-radius:8px;border:1px solid var(--slate-200);background:var(--card-bg);cursor:pointer;font-size:15px;display:flex;align-items:center;justify-content:center}
+  .theme-toggle:hover{border-color:var(--accent)}
+  .hero{background:var(--card-bg);border-bottom:1px solid var(--slate-200);padding:28px 24px 24px}
   .hero-inner{max-width:1320px;margin:0 auto}
   .hero h1{font-size:22px;font-weight:700;color:var(--slate-900);margin-bottom:6px}
   .hero p{font-size:14px;color:var(--slate-500);max-width:680px}
   .main{max-width:1320px;margin:0 auto;padding:28px 24px 60px;display:grid;grid-template-columns:460px 1fr;gap:24px;align-items:start}
-  .card{background:#fff;border:1px solid var(--slate-200);border-radius:var(--radius-lg);box-shadow:var(--shadow-sm);margin-bottom:20px}
+  .card{background:var(--card-bg);border:1px solid var(--slate-200);border-radius:var(--radius-lg);box-shadow:var(--shadow-sm);margin-bottom:20px}
   .card-header{padding:16px 20px;border-bottom:1px solid var(--slate-100);display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
   .card-title{font-size:14px;font-weight:600;color:var(--slate-800)}
   .card-body{padding:20px}
   .field-group{margin-bottom:12px}
   .field-label{font-size:12px;font-weight:600;color:var(--slate-600);margin-bottom:6px;display:block}
-  .inp,select.inp{width:100%;border:1px solid var(--slate-200);border-radius:6px;padding:8px 10px;font-size:13px;font-family:inherit}
+  .inp,select.inp{width:100%;border:1px solid var(--slate-200);border-radius:6px;padding:8px 10px;font-size:13px;font-family:inherit;background:var(--card-bg);color:var(--slate-800)}
   .inp:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px rgba(37,99,235,.1)}
+
+  .row-2col{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .toggle-row{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:9px 0;border-top:1px solid var(--slate-100)}
+  .toggle-row:first-child{border-top:none}
+  .toggle-label{font-size:12.5px;font-weight:600;color:var(--slate-700);display:flex;align-items:center;gap:6px}
+  .toggle-label .hint{font-weight:400;color:var(--slate-400);font-size:11px}
+  .switch{position:relative;width:38px;height:22px;flex-shrink:0}
+  .switch input{opacity:0;width:0;height:0}
+  .slider-switch{position:absolute;cursor:pointer;top:0;left:0;right:0;bottom:0;background:var(--slate-300);border-radius:999px;transition:.2s}
+  .slider-switch:before{position:absolute;content:"";height:16px;width:16px;left:3px;bottom:3px;background:#fff;border-radius:50%;transition:.2s}
+  .switch input:checked + .slider-switch{background:var(--accent)}
+  .switch input:checked + .slider-switch:before{transform:translateX(16px)}
+
+  .preset-row{display:flex;gap:6px;margin-bottom:10px;flex-wrap:wrap}
+  .preset-chip{font-size:11px;padding:5px 10px;border:1px solid var(--slate-200);border-radius:999px;background:var(--card-bg);color:var(--slate-600);cursor:pointer;font-family:inherit}
+  .preset-chip:hover{border-color:var(--accent);color:var(--accent)}
 
   .item-table-wrap{overflow-x:visible}
   .item-table{width:100%;border-collapse:collapse;table-layout:fixed}
-  .item-table col.col-name{width:30%}
-  .item-table col.col-dim{width:15%}
-  .item-table col.col-qty{width:17%}
+  .item-table col.col-name{width:24%}
+  .item-table col.col-dim{width:13%}
+  .item-table col.col-qty{width:13%}
+  .item-table col.col-wt{width:12%}
   .item-table col.col-del{width:8%}
   .item-table thead th{padding:6px 6px;text-align:left;font-size:10px;font-weight:700;color:var(--slate-400);text-transform:uppercase;white-space:nowrap}
   .item-table thead th:last-child{text-align:center}
   .item-table tbody td{padding:5px 4px}
   .item-table tbody td:last-child{text-align:center}
-  .item-table input{width:100%;border:1px solid var(--slate-200);border-radius:5px;padding:7px 6px;font-size:12.5px;font-family:inherit;font-variant-numeric:tabular-nums}
+  .item-table input{width:100%;border:1px solid var(--slate-200);border-radius:5px;padding:7px 6px;font-size:12.5px;font-family:inherit;font-variant-numeric:tabular-nums;background:var(--card-bg);color:var(--slate-800)}
   .item-table tbody td:first-child{display:flex;align-items:center;gap:5px}
   .item-table input.name-inp{width:auto;flex:1;min-width:0}
-  .item-table input.dim-inp{width:100%;min-width:44px;text-align:center}
+  .item-table input.dim-inp{width:100%;min-width:40px;text-align:center}
   .item-table tr.row-error input{border-color:var(--danger);background:var(--danger-light)}
   .color-dot{display:inline-block;width:11px;height:11px;border-radius:50%;margin-right:4px;vertical-align:middle;flex-shrink:0}
-  .btn-del-row{width:24px;height:24px;border:1px solid var(--slate-200);border-radius:5px;background:#fff;color:var(--slate-400);cursor:pointer;font-size:11px}
+  .btn-del-row{width:24px;height:24px;border:1px solid var(--slate-200);border-radius:5px;background:var(--card-bg);color:var(--slate-400);cursor:pointer;font-size:11px}
   .btn-del-row:hover{border-color:var(--danger);color:var(--danger)}
   .btn-add-row{display:block;width:100%;padding:8px;border:1px dashed var(--slate-300);border-radius:6px;background:transparent;color:var(--slate-500);font-size:12px;cursor:pointer;margin-top:8px;font-family:inherit}
   .btn-add-row:hover{border-color:var(--accent);color:var(--accent)}
   .row-error-msg{font-size:11px;color:var(--danger);margin-top:2px;display:flex;align-items:center;gap:4px}
 
   .notice-box{background:var(--accent-light);border:1px solid #BFDBFE;border-radius:var(--radius);padding:10px 14px;font-size:12px;color:#1E40AF;margin-top:14px}
+  [data-theme="dark"] .notice-box{color:#93C5FD;border-color:#1E3A5F}
   .warn-box{background:var(--danger-light);border:1px solid #FECACA;border-radius:var(--radius);padding:10px 14px;font-size:12.5px;color:#991B1B;margin-top:10px;line-height:1.6}
+  [data-theme="dark"] .warn-box{color:#FCA5A5;border-color:#5C2328}
   .warn-box strong{display:block;margin-bottom:4px}
+  .weight-warn{background:#FFF7ED;border:1px solid #FED7AA;border-radius:var(--radius);padding:10px 14px;font-size:12.5px;color:#9A3412;margin-top:10px;line-height:1.6}
+  [data-theme="dark"] .weight-warn{background:#2A1B0E;border-color:#5C3A1E;color:#FDBA74}
+  .weight-warn strong{display:block;margin-bottom:4px}
 
   .view-toggle{display:flex;background:var(--slate-100);border-radius:8px;padding:3px;gap:2px}
   .view-btn{padding:7px 16px;border:none;background:transparent;border-radius:6px;font-size:12.5px;font-weight:700;color:var(--slate-500);cursor:pointer;font-family:inherit}
-  .view-btn.active{background:#fff;color:var(--accent);box-shadow:var(--shadow-sm)}
+  .view-btn.active{background:var(--card-bg);color:var(--accent);box-shadow:var(--shadow-sm)}
   .scene-wrap{width:100%;display:none;margin-top:14px}
   .scene-wrap.active{display:block}
 
   .elevation-svg-wrap{width:100%;overflow-x:auto}
 
-  .scene{width:100%;height:442px;perspective:1100px;display:flex;align-items:center;justify-content:center;cursor:grab;touch-action:none;background:linear-gradient(180deg,#EEF2F7,#F8FAFC);border-radius:8px;overflow:hidden}
+  .scene{width:100%;height:442px;perspective:1100px;display:flex;align-items:center;justify-content:center;cursor:grab;touch-action:none;background:linear-gradient(180deg,var(--scene-bg-a),var(--scene-bg-b));border-radius:8px;overflow:hidden;position:relative;transition:opacity .15s}
   .scene:active{cursor:grabbing}
+  .scene.recalculating{opacity:.55}
   .rig{position:relative;width:90%;height:90%;max-width:546px}
   .rig svg{display:block;width:100%;height:100%;overflow:visible}
   .edge{position:absolute;background:#334155;top:0;left:0}
   .cube-group{position:absolute;top:0;left:0;transform-style:preserve-3d}
   .face{position:absolute;top:0;left:0;backface-visibility:hidden}
-  .scene-controls{display:flex;align-items:center;justify-content:center;gap:14px;margin-top:10px;font-size:11.5px;color:var(--slate-500)}
-  .scene-controls input[type=range]{width:130px}
+  .scene-controls{display:flex;align-items:center;justify-content:center;gap:12px;margin-top:10px;font-size:11.5px;color:var(--slate-500);flex-wrap:wrap}
+  .scene-controls input[type=range]{width:110px}
+  .scene-tool-btn{font-size:11px;padding:5px 10px;border:1px solid var(--slate-200);border-radius:6px;background:var(--card-bg);color:var(--slate-600);cursor:pointer;font-family:inherit}
+  .scene-tool-btn:hover{border-color:var(--accent);color:var(--accent)}
+  .scene-tool-btn.on{background:var(--accent-light);border-color:var(--accent);color:var(--accent-dark)}
   .scene-hint{font-size:11px;color:var(--slate-400);text-align:center;margin-top:6px}
 
   .legend{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:10px;font-size:11.5px;color:var(--slate-600)}
@@ -123,6 +155,14 @@
   .compare-table tr.current{background:var(--accent-light)}
   .badge-ok{background:var(--success-light);color:var(--success);font-size:11px;font-weight:700;padding:3px 9px;border-radius:999px}
   .badge-no{background:var(--danger-light);color:var(--danger);font-size:11px;font-weight:700;padding:3px 9px;border-radius:999px}
+
+  .toolbar-btn-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+  .toolbar-btn{flex:1;min-width:120px;padding:9px 12px;border:1px solid var(--slate-200);border-radius:8px;background:var(--card-bg);color:var(--slate-700);font-size:12.5px;font-weight:700;cursor:pointer;font-family:inherit;display:flex;align-items:center;justify-content:center;gap:6px}
+  .toolbar-btn:hover{border-color:var(--accent);color:var(--accent)}
+  .toolbar-btn.primary{background:var(--accent);border-color:var(--accent);color:#fff}
+  .toolbar-btn.primary:hover{background:var(--accent-dark);color:#fff}
+  .toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--slate-900);color:#fff;padding:10px 18px;border-radius:8px;font-size:12.5px;opacity:0;pointer-events:none;transition:.25s;z-index:999;box-shadow:0 8px 24px rgba(0,0,0,.25)}
+  .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 
   footer{background:var(--slate-900);color:var(--slate-400);padding:24px;font-size:12px}
   .footer-inner{max-width:1320px;margin:0 auto;display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
@@ -179,7 +219,7 @@
 
 <header><div class="header-inner">
   <a href="index.html" class="logo-mark"><svg width="26" height="26" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align:middle;margin-right:8px;flex-shrink:0;"><path d="M20 2.5L36.5 11.5V28.5L20 37.5L3.5 28.5V11.5L20 2.5Z" stroke="url(#cbmGradH)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M20 2.5V20M20 20L36.5 11.5M20 20L3.5 11.5" stroke="url(#cbmGradH)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/></svg><span style="font-family:'Montserrat','Space Grotesk',sans-serif;font-weight:800;letter-spacing:-1.1px;background:linear-gradient(90deg,#14B8A6 0%,#1E7A8C 45%,#0B2A4A 100%);-webkit-background-clip:text;background-clip:text;color:transparent;">CBMLab</span></a>
-  <div style="display:flex;align-items:center;gap:10px"><a href="index.html" class="nav-link">← 전체 도구 보기</a><a href="en/container-loading-calculator.html" class="nav-link" style="font-size:12px;font-weight:700;color:var(--accent);padding:6px 12px;border:1px solid var(--accent-light);border-radius:999px;background:var(--accent-light);">EN</a></div>
+  <div style="display:flex;align-items:center;gap:10px"><a href="index.html" class="nav-link">← 전체 도구 보기</a><a href="en/container-loading-calculator.html" class="nav-link" style="font-size:12px;font-weight:700;color:var(--accent);padding:6px 12px;border:1px solid var(--accent-light);border-radius:999px;background:var(--accent-light);">EN</a><button class="theme-toggle" id="themeToggle" onclick="toggleTheme()" title="다크모드 전환" aria-label="다크모드 전환">🌙</button></div>
 </div></header>
 
 <section class="hero"><div class="hero-inner">
@@ -202,13 +242,14 @@
         </div>
 
         <div class="field-group">
-          <label class="field-label">박스 규격 (여러 종류 입력 가능, cm)</label>
+          <label class="field-label">박스 규격 (여러 종류 입력 가능, cm·kg)</label>
+          <div class="preset-row" id="presetRow"></div>
           <div class="item-table-wrap">
             <table class="item-table">
               <colgroup>
-                <col class="col-name"><col class="col-dim"><col class="col-dim"><col class="col-dim"><col class="col-qty"><col class="col-del">
+                <col class="col-name"><col class="col-dim"><col class="col-dim"><col class="col-dim"><col class="col-qty"><col class="col-wt"><col class="col-del">
               </colgroup>
-              <thead><tr><th>품목명</th><th>가로(L)</th><th>세로(W)</th><th>높이(H)</th><th>수량</th><th></th></tr></thead>
+              <thead><tr><th>품목명</th><th>가로(L)</th><th>세로(W)</th><th>높이(H)</th><th>수량</th><th>중량(kg)</th><th></th></tr></thead>
               <tbody id="itemBody"></tbody>
             </table>
           </div>
@@ -216,9 +257,34 @@
           <div id="errorMsgs"></div>
         </div>
 
-        <div class="notice-box">품목을 입력한 순서대로, 컨테이너 길이 방향으로 구간을 나눠 나란히 적재하는 방식으로 계산합니다 (한 종류가 앞쪽 구간을 차지하고, 다음 종류가 이어서 배치). 실제로는 팔레트 사용, 박스 회전, 화물 고정 규정에 따라 달라질 수 있어 포워더의 정확한 적재 계획을 함께 확인하세요.</div>
+        <div class="field-group" style="margin-top:18px;">
+          <label class="field-label">적재 옵션</label>
+          <div class="toggle-row">
+            <span class="toggle-label">박스 회전 허용 <span class="hint">(가로·세로 방향 자동 최적화)</span></span>
+            <label class="switch"><input type="checkbox" id="allowRotation" onchange="calc()"><span class="slider-switch"></span></label>
+          </div>
+          <div class="toggle-row">
+            <span class="toggle-label">파렛트 사용 모드 <span class="hint">(실제 활용률 보정 적용)</span></span>
+            <label class="switch"><input type="checkbox" id="palletMode" onchange="calc()"><span class="slider-switch"></span></label>
+          </div>
+          <div class="toggle-row" id="palletEfficiencyRow" style="display:none;">
+            <span class="toggle-label">파렛트 적재 효율 <span class="hint" id="palletEffValue">88%</span></span>
+            <input type="range" id="palletEfficiency" min="80" max="95" value="88" oninput="onPalletEffChange()" style="width:120px;">
+          </div>
+        </div>
+
+        <div class="notice-box">품목을 입력한 순서대로, 컨테이너 길이 방향으로 구간을 나눠 나란히 적재하는 방식으로 계산합니다 (한 종류가 앞쪽 구간을 차지하고, 다음 종류가 이어서 배치). "박스 회전 허용"을 켜면 항목별로 가로·세로 방향을 바꿔 더 많이 들어가는 쪽을 자동으로 선택합니다. 실제로는 화물 고정 규정 등에 따라 달라질 수 있어 포워더의 정확한 적재 계획을 함께 확인하세요.</div>
 
         <div id="shortfallWarning"></div>
+        <div id="weightWarning"></div>
+
+        <div class="toolbar-btn-row">
+          <button class="toolbar-btn" onclick="saveConfig()">💾 설정 저장</button>
+          <button class="toolbar-btn" onclick="loadConfig()">📂 불러오기</button>
+          <button class="toolbar-btn" onclick="exportConfigFile()">⬇ JSON 내보내기</button>
+          <button class="toolbar-btn" onclick="document.getElementById('importFileInput').click()">📤 JSON 불러오기</button>
+          <input type="file" id="importFileInput" accept=".json" style="display:none" onchange="if(this.files[0]) importConfigFile(this.files[0])">
+        </div>
       </div>
     </div>
 
@@ -251,6 +317,8 @@
           <div class="scene-controls">
             <label>회전 <input type="range" id="rotY" min="-180" max="180" value="-32" oninput="applyRotation()"></label>
             <label>기울기 <input type="range" id="rotX" min="0" max="70" value="24" oninput="applyRotation()"></label>
+            <button class="scene-tool-btn" onclick="resetView()">↺ 시점 초기화</button>
+            <button class="scene-tool-btn" id="autoRotateBtn" onclick="toggleAutoRotate()">▶ 자동회전</button>
           </div>
           <div class="legend" id="legend3d"></div>
           <div class="scene-hint">마우스(또는 손가락)로 드래그해서 회전할 수 있습니다.</div>
@@ -267,6 +335,10 @@
           <thead><tr><th>품목</th><th>사용 길이</th><th>배치 / 요청 수량</th></tr></thead>
           <tbody id="resultBody"></tbody>
         </table>
+
+        <div class="toolbar-btn-row">
+          <button class="toolbar-btn primary" onclick="exportImage()">🖼 결과 이미지로 저장 (PNG)</button>
+        </div>
       </div>
     </div>
   </aside>
@@ -314,11 +386,23 @@
 
 <script>
 const CONTAINERS = {
-  '20': {l:589.8, w:235.2, h:239.3, name:'20ft'},
-  '40': {l:1203.2, w:235.2, h:239.3, name:'40ft'},
-  '40hc': {l:1203.2, w:235.2, h:269.8, name:'40ft HC'}
+  '20': {l:589.8, w:235.2, h:239.3, name:'20ft', maxPayload:28200},
+  '40': {l:1203.2, w:235.2, h:239.3, name:'40ft', maxPayload:26700},
+  '40hc': {l:1203.2, w:235.2, h:269.8, name:'40ft HC', maxPayload:26300}
 };
 const COLORS = ['#2563EB','#F59E0B','#0F766E','#DC2626','#7C3AED','#0891B2','#DB2777','#65A30D'];
+
+// 자주 쓰는 표준 박스 규격 프리셋 (cm, kg) - 클릭 한 번으로 새 행에 자동 입력
+const BOX_PRESETS = [
+  {label:'택배 소형', l:35, w:25, h:20, weight:5},
+  {label:'택배 중형', l:45, w:35, h:30, weight:10},
+  {label:'택배 대형', l:60, w:45, h:40, weight:15},
+  {label:'우체국 5호', l:40, w:30, h:25, weight:8},
+  {label:'표준 파렛트(1100×1100)', l:110, w:110, h:15, weight:20},
+  {label:'미국 파렛트(48×40in)', l:121.9, w:101.6, h:15, weight:20},
+  {label:'의류 카톤', l:50, w:35, h:35, weight:8},
+  {label:'가전 대형박스', l:80, w:60, h:60, weight:25}
+];
 
 let items = [];
 let itemCounter = 0;
@@ -326,11 +410,25 @@ let currentView = '2d';
 let rotY = -32, rotX = 24;
 let lastContainer = null, lastResult = null;
 let currentResult = null;
+let autoRotateTimer = null;
 
-function addItem(name, l, w, h, qty){
+function renderPresetChips(){
+  const row = document.getElementById('presetRow');
+  if(!row) return;
+  row.innerHTML = BOX_PRESETS.map((p,i)=>
+    `<button type="button" class="preset-chip" onclick="addFromPreset(${i})">+ ${p.label}</button>`
+  ).join('');
+}
+function addFromPreset(idx){
+  const p = BOX_PRESETS[idx];
+  addItem(p.label, p.l, p.w, p.h, 10, p.weight);
+  showToast(`"${p.label}" 규격을 추가했어요`);
+}
+
+function addItem(name, l, w, h, qty, weight){
   const color = COLORS[itemCounter % COLORS.length]; // 생성 시점에 색을 고정 배정 (삭제해도 안 바뀜)
   itemCounter++;
-  items.push({id:itemCounter, name:name||('박스 '+String.fromCharCode(64+items.length+1)), l:l??60, w:w??40, h:h??40, qty:qty??50, color});
+  items.push({id:itemCounter, name:name||('박스 '+String.fromCharCode(64+items.length+1)), l:l??60, w:w??40, h:h??40, qty:qty??50, weight:weight??0, color});
   renderItemRows();
 }
 function removeItem(id){
@@ -353,6 +451,7 @@ function renderItemRows(){
       <td><input class="inp dim-inp" type="number" value="${it.w}" oninput="updateItem(${it.id},'w',this.value)" onchange="updateItem(${it.id},'w',this.value)"></td>
       <td><input class="inp dim-inp" type="number" value="${it.h}" oninput="updateItem(${it.id},'h',this.value)" onchange="updateItem(${it.id},'h',this.value)"></td>
       <td><input class="inp dim-inp" type="number" value="${it.qty}" oninput="updateItem(${it.id},'qty',this.value)" onchange="updateItem(${it.id},'qty',this.value)"></td>
+      <td><input class="inp dim-inp" type="number" value="${it.weight||0}" oninput="updateItem(${it.id},'weight',this.value)" onchange="updateItem(${it.id},'weight',this.value)"></td>
       <td><button class="btn-del-row" onclick="removeItem(${it.id})" ${items.length<=1?'disabled':''}>✕</button></td>
     </tr>
   `).join('');
@@ -362,44 +461,73 @@ function renderItemRows(){
 function fmt(n){ return Math.round(n||0).toLocaleString('ko-KR'); }
 
 // ===== 구간별(옆으로 나란히) 패킹 =====
-function pack(container, itemList){
+
+// 회전 허용 시 두 방향(원본/가로세로 교체) 중 더 많이 들어가는 쪽을 선택
+function bestOrientation(it, container, allowRotation){
+  const candidates = [{l:it.l, w:it.w, rotated:false}];
+  if(allowRotation && it.l !== it.w) candidates.push({l:it.w, w:it.l, rotated:true});
+
+  let best = null;
+  candidates.forEach(o=>{
+    const fitsW = o.w > 0 && o.w <= container.w;
+    const fitsL = o.l > 0 && o.l <= container.l;
+    const fitsH = it.h > 0 && it.h <= container.h;
+    if(!fitsW || !fitsL || !fitsH) return;
+    const rows = Math.floor(container.w / o.w);
+    const layers = Math.floor(container.h / it.h);
+    const perColumn = rows * layers;
+    if(!best || perColumn > best.perColumn || (perColumn===best.perColumn && o.l < best.l)){
+      best = {l:o.l, w:o.w, rotated:o.rotated, rows, layers, perColumn};
+    }
+  });
+  return best;
+}
+
+function pack(container, itemList, allowRotation){
   let usedLength = 0;
   const sections = [];
 
   itemList.forEach(it => {
-    const fitsW = it.w > 0 && it.w <= container.w;
-    const fitsH = it.h > 0 && it.h <= container.h;
-    const fitsL = it.l > 0 && it.l <= container.l;
+    const orient = bestOrientation(it, container, allowRotation);
 
-    if(!fitsW || !fitsH || !fitsL){
-      sections.push({item:it, color:it.color, error:true, errorReason:
-        !fitsL ? `가로(${it.l}cm)가 컨테이너 길이(${container.l}cm)보다 큽니다` :
-        !fitsW ? `세로(${it.w}cm)가 컨테이너 폭(${container.w}cm)보다 큽니다` :
-        `높이(${it.h}cm)가 컨테이너 높이(${container.h}cm)보다 큽니다`,
-        rows:0, layers:0, colsUsed:0, perColumn:0, placedQty:0, lengthUsedCm:0, startLengthCm:usedLength});
+    if(!orient){
+      const fitsW = it.w > 0 && it.w <= container.w;
+      const fitsH = it.h > 0 && it.h <= container.h;
+      const fitsL = it.l > 0 && it.l <= container.l;
+      const rotFitsW = it.l > 0 && it.l <= container.w;
+      const rotFitsL = it.w > 0 && it.w <= container.l;
+      let reason;
+      if(!fitsH) reason = `높이(${it.h}cm)가 컨테이너 높이(${container.h}cm)보다 큽니다`;
+      else if(allowRotation && !(fitsL||rotFitsL)) reason = `가로세로를 바꿔봐도 길이(${it.l}/${it.w}cm)가 컨테이너 길이(${container.l}cm)보다 큽니다`;
+      else if(allowRotation && !(fitsW||rotFitsW)) reason = `가로세로를 바꿔봐도 폭(${it.l}/${it.w}cm)이 컨테이너 폭(${container.w}cm)보다 큽니다`;
+      else reason = !fitsL ? `가로(${it.l}cm)가 컨테이너 길이(${container.l}cm)보다 큽니다` :
+                     !fitsW ? `세로(${it.w}cm)가 컨테이너 폭(${container.w}cm)보다 큽니다` :
+                     `규격이 컨테이너에 맞지 않습니다`;
+      sections.push({item:it, color:it.color, error:true, errorReason: reason,
+        rows:0, layers:0, colsUsed:0, perColumn:0, placedQty:0, lengthUsedCm:0, startLengthCm:usedLength, rotated:false, effL:it.l, effW:it.w});
       return;
     }
 
-    const rows = Math.floor(container.w / it.w);
-    const layers = Math.floor(container.h / it.h);
-    const perColumn = rows * layers;
+    const { l:effL, w:effW, rows, layers, perColumn, rotated } = orient;
     const remainingLength = container.l - usedLength;
-    const maxColsBySpace = Math.floor(remainingLength / it.l);
+    const maxColsBySpace = Math.floor(remainingLength / effL);
     const colsNeeded = perColumn > 0 ? Math.ceil(it.qty / perColumn) : 0;
     const colsUsed = Math.max(0, Math.min(maxColsBySpace, colsNeeded));
     const placedQty = Math.min(it.qty, colsUsed * perColumn);
-    const lengthUsedCm = colsUsed * it.l;
+    const lengthUsedCm = colsUsed * effL;
     const startLengthCm = usedLength;
     usedLength += lengthUsedCm;
 
-    sections.push({item:it, color:it.color, error:false, rows, layers, colsUsed, perColumn, placedQty, lengthUsedCm, startLengthCm});
+    sections.push({item:it, color:it.color, error:false, rows, layers, colsUsed, perColumn, placedQty, lengthUsedCm, startLengthCm, rotated, effL, effW});
   });
 
   return { sections, usedLength, remainingLength: container.l - usedLength };
 }
 
 function calcForContainer(containerKey){
-  return pack(CONTAINERS[containerKey], items);
+  const allowRotation = document.getElementById('allowRotation') ? document.getElementById('allowRotation').checked : false;
+  return pack(CONTAINERS[containerKey], items, allowRotation);
+
 }
 
 function calc(){
@@ -419,20 +547,26 @@ function calc(){
   const totalPlaced = result.sections.reduce((a,s)=>a+s.placedQty,0);
   const sectionsUsed = result.sections.filter(s=>s.colsUsed>0).length;
 
+  const palletMode = document.getElementById('palletMode') && document.getElementById('palletMode').checked;
+  const palletEff = palletMode ? (Number(document.getElementById('palletEfficiency').value) / 100) : 1;
+
+  const displayPlaced = Math.floor(totalPlaced * palletEff);
   document.getElementById('totalSections').textContent = sectionsUsed + '개';
-  document.getElementById('totalPlaced').textContent = fmt(totalPlaced) + ' / ' + fmt(totalRequested);
+  document.getElementById('totalPlaced').textContent = fmt(displayPlaced) + ' / ' + fmt(totalRequested) + (palletMode ? ` (이론상 ${fmt(totalPlaced)})` : '');
 
   let usedVolume = 0;
   result.sections.forEach(s=>{ usedVolume += s.placedQty * s.item.l * s.item.w * s.item.h; });
   const containerVolume = container.l*container.w*container.h;
-  const util = Math.min(100, (usedVolume/containerVolume)*100);
-  document.getElementById('totalUtil').textContent = util.toFixed(0)+'%';
+  const rawUtil = Math.min(100, (usedVolume/containerVolume)*100);
+  const util = rawUtil * palletEff;
+  document.getElementById('totalUtil').textContent = util.toFixed(0)+'%' + (palletMode ? ` (이론상 ${rawUtil.toFixed(0)}%)` : '');
 
   document.getElementById('resultBody').innerHTML = result.sections.map(s=>{
     if(s.error) return `<tr><td><span class="color-dot" style="background:${s.color}"></span>${s.item.name}</td><td colspan="2" class="shortfall">규격 초과 — 적재 불가</td></tr>`;
     const short = s.placedQty < s.item.qty;
+    const rotTag = s.rotated ? ' <span title="가로·세로 방향을 바꿔 적재" style="color:var(--accent);font-size:11px;">↻회전</span>' : '';
     return `<tr>
-      <td><span class="color-dot" style="background:${s.color}"></span>${s.item.name}</td>
+      <td><span class="color-dot" style="background:${s.color}"></span>${s.item.name}${rotTag}</td>
       <td>${fmt(s.lengthUsedCm)} cm</td>
       <td>${fmt(s.placedQty)} / ${fmt(s.item.qty)} ${short?'<span class="shortfall">(부족)</span>':''}</td>
     </tr>`;
@@ -441,12 +575,15 @@ function calc(){
   const utilBar = document.getElementById('utilBar');
   utilBar.innerHTML = result.sections.filter(s=>!s.error && s.placedQty>0).map(s=>{
     const vol = s.placedQty*s.item.l*s.item.w*s.item.h;
-    const pct = (vol/containerVolume)*100;
+    const pct = (vol/containerVolume)*100*palletEff;
     return `<div class="util-seg" style="width:${pct}%;background:${s.color};">${pct>=8?pct.toFixed(0)+'%':''}</div>`;
   }).join('');
 
   // 부족분 경고 + 대안 제시
   renderShortfallWarning(container, result, totalRequested, totalPlaced);
+
+  // 중량 초과 경고
+  renderWeightWarning(container, result);
 
   // 컨테이너 비교표
   renderCompareTable(containerKey);
@@ -457,6 +594,33 @@ function calc(){
   renderScene('rig3d', 'legend3d', container, result, true);
 }
 
+function renderWeightWarning(container, result){
+  const box = document.getElementById('weightWarning');
+  const totalWeight = result.sections.reduce((a,s)=> a + (s.error?0:s.placedQty*(s.item.weight||0)), 0);
+  if(totalWeight <= 0){ box.innerHTML=''; return; }
+  const maxPayload = container.maxPayload;
+  if(totalWeight > maxPayload){
+    const overBy = totalWeight - maxPayload;
+    box.innerHTML = `<div class="weight-warn"><strong>⚖ 중량 초과 주의</strong>현재 적재 화물 총중량 약 ${fmt(totalWeight)}kg으로, ${container.name} 컨테이너의 일반적 최대 적재중량(약 ${fmt(maxPayload)}kg)을 ${fmt(overBy)}kg 초과할 수 있어요. 부피상으로는 들어가더라도 실제로는 중량 제한 때문에 다 못 실을 수 있으니, 항목별 수량을 조정하거나 포워더와 실제 컨테이너 중량 한도를 꼭 확인하세요.</div>`;
+  } else {
+    box.innerHTML = `<div class="notice-box">현재 적재 화물 총중량 약 ${fmt(totalWeight)}kg으로, ${container.name} 컨테이너의 일반적 최대 적재중량(약 ${fmt(maxPayload)}kg) 이내예요.</div>`;
+  }
+}
+
+function onPalletEffChange(){
+  const v = document.getElementById('palletEfficiency').value;
+  document.getElementById('palletEffValue').textContent = v + '%';
+  calc();
+}
+(function bindPalletToggle(){
+  const palletToggle = document.getElementById('palletMode');
+  if(palletToggle){
+    palletToggle.addEventListener('change', ()=>{
+      document.getElementById('palletEfficiencyRow').style.display = palletToggle.checked ? 'flex' : 'none';
+    });
+  }
+})();
+
 function renderShortfallWarning(container, result, totalRequested, totalPlaced){
   const box = document.getElementById('shortfallWarning');
   const shortItems = result.sections.filter(s => s.error || s.placedQty < s.item.qty);
@@ -466,7 +630,8 @@ function renderShortfallWarning(container, result, totalRequested, totalPlaced){
     if(s.error) return `${s.item.name}: 규격 초과로 전량(${fmt(s.item.qty)}개) 적재 불가`;
     const shortQty = s.item.qty - s.placedQty;
     const perColumn = s.perColumn || 1;
-    const perFullContainer = Math.floor(container.l / s.item.l) * perColumn;
+    const effL = s.effL || s.item.l;
+    const perFullContainer = Math.floor(container.l / effL) * perColumn;
     const extraContainers = perFullContainer>0 ? Math.ceil(shortQty / perFullContainer) : '?';
     return `${s.item.name}: ${fmt(shortQty)}개 부족 → 같은 크기 컨테이너 약 ${extraContainers}대 추가 필요 (단독 적재 기준 추정)`;
   });
@@ -597,8 +762,8 @@ function buildBoxList(container, result){
           if(placed >= renderCount) break outer;
           boxes.push({
             color: s.color,
-            l: s.item.l, w: s.item.w, h: s.item.h,
-            xCm: s.startLengthCm + c*s.item.l + s.item.l/2,
+            l: s.effL ?? s.item.l, w: s.effW ?? s.item.w, h: s.item.h,
+            xCm: s.startLengthCm + c*(s.effL ?? s.item.l) + (s.effL ?? s.item.l)/2,
             layerIdx: l, rowIdx: r
           });
           placed++;
@@ -646,6 +811,10 @@ function renderScene(rigId, legendId, container, result, useSliderRotation){
   const vw = (maxX-minX)+pad*2, vh = (maxY-minY)+pad*2;
 
   let svg = `<svg viewBox="${minX-pad} ${minY-pad} ${vw} ${vh}" width="100%" height="100%" preserveAspectRatio="xMidYMid meet">`;
+  svg += `<defs><radialGradient id="floorGrad_${rigId}" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="rgba(15,23,42,0.28)"/><stop offset="100%" stop-color="rgba(15,23,42,0)"/></radialGradient></defs>`;
+  // 바닥 중심을 화면에 투상해 타원형 그림자를 깔아줌 (원근감 보강)
+  const bottomCenter = rotatePoint(0, H/2, 0, rX, rY);
+  svg += `<ellipse cx="${bottomCenter[0].toFixed(1)}" cy="${(bottomCenter[1]+6).toFixed(1)}" rx="${(L*0.62).toFixed(1)}" ry="${(L*0.62*0.22).toFixed(1)}" fill="url(#floorGrad_${rigId})"/>`;
   edges.forEach(e=>{
     svg += `<line x1="${e.p1.sx.toFixed(1)}" y1="${e.p1.sy.toFixed(1)}" x2="${e.p2.sx.toFixed(1)}" y2="${e.p2.sy.toFixed(1)}" stroke="#94A3B8" stroke-width="0.6" stroke-dasharray="1.5 1.5"/>`;
   });
@@ -666,7 +835,7 @@ function renderScene(rigId, legendId, container, result, useSliderRotation){
 (function initDrag(){
   const scene = document.getElementById('scene3d');
   let dragging=false, lastX=0, lastY=0;
-  const start=(x,y)=>{dragging=true;lastX=x;lastY=y;};
+  const start=(x,y)=>{dragging=true;lastX=x;lastY=y;stopAutoRotate();};
   const move=(x,y)=>{
     if(!dragging) return;
     rotY += (x-lastX)*0.4; rotX -= (y-lastY)*0.3;
@@ -683,6 +852,194 @@ function renderScene(rigId, legendId, container, result, useSliderRotation){
   scene.addEventListener('touchmove', e=>move(e.touches[0].clientX,e.touches[0].clientY), {passive:true});
   scene.addEventListener('touchend', end);
 })();
+
+// ===== 뷰 컨트롤: 시점 초기화 / 자동회전 =====
+function resetView(){
+  stopAutoRotate();
+  rotY = -32; rotX = 24;
+  document.getElementById('rotY').value = rotY;
+  document.getElementById('rotX').value = rotX;
+  applyRotation();
+}
+function toggleAutoRotate(){
+  const btn = document.getElementById('autoRotateBtn');
+  if(autoRotateTimer){
+    stopAutoRotate();
+  } else {
+    btn.textContent = '⏸ 회전 중지';
+    btn.classList.add('on');
+    autoRotateTimer = setInterval(()=>{
+      rotY += 0.8;
+      if(rotY > 180) rotY -= 360;
+      document.getElementById('rotY').value = rotY;
+      applyRotation();
+    }, 30);
+  }
+}
+function stopAutoRotate(){
+  if(autoRotateTimer){ clearInterval(autoRotateTimer); autoRotateTimer = null; }
+  const btn = document.getElementById('autoRotateBtn');
+  if(btn){ btn.textContent = '▶ 자동회전'; btn.classList.remove('on'); }
+}
+
+// ===== 다크모드 =====
+function toggleTheme(){
+  const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+  setTheme(!isDark);
+}
+function setTheme(dark){
+  document.documentElement.setAttribute('data-theme', dark ? 'dark' : 'light');
+  document.getElementById('themeToggle').textContent = dark ? '☀️' : '🌙';
+  try{ localStorage.setItem('cbmlab_container_theme', dark ? 'dark' : 'light'); }catch(e){}
+}
+
+// ===== 토스트 알림 =====
+let toastTimer = null;
+function showToast(msg){
+  let el = document.getElementById('toastEl');
+  if(!el){
+    el = document.createElement('div');
+    el.id = 'toastEl';
+    el.className = 'toast';
+    document.body.appendChild(el);
+  }
+  el.textContent = msg;
+  el.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(()=>{ el.classList.remove('show'); }, 2400);
+}
+
+// ===== 설정 저장 / 불러오기 / JSON 내보내기 =====
+function currentConfigObject(){
+  return {
+    containerType: document.getElementById('containerType').value,
+    allowRotation: document.getElementById('allowRotation').checked,
+    palletMode: document.getElementById('palletMode').checked,
+    palletEfficiency: document.getElementById('palletEfficiency').value,
+    items: items.map(it=>({name:it.name, l:it.l, w:it.w, h:it.h, qty:it.qty, weight:it.weight}))
+  };
+}
+function applyConfigObject(cfg){
+  if(!cfg || !Array.isArray(cfg.items)) return false;
+  document.getElementById('containerType').value = cfg.containerType || '40';
+  document.getElementById('allowRotation').checked = !!cfg.allowRotation;
+  document.getElementById('palletMode').checked = !!cfg.palletMode;
+  if(cfg.palletEfficiency) document.getElementById('palletEfficiency').value = cfg.palletEfficiency;
+  document.getElementById('palletEfficiencyRow').style.display = cfg.palletMode ? 'flex' : 'none';
+  document.getElementById('palletEffValue').textContent = (cfg.palletEfficiency||88) + '%';
+
+  items = [];
+  itemCounter = 0;
+  cfg.items.forEach(it => addItem(it.name, it.l, it.w, it.h, it.qty, it.weight));
+  if(cfg.items.length===0) addItem();
+  return true;
+}
+function saveConfig(){
+  try{
+    localStorage.setItem('cbmlab_container_config', JSON.stringify(currentConfigObject()));
+    showToast('✅ 현재 설정을 브라우저에 저장했어요');
+  }catch(e){ showToast('저장에 실패했어요'); }
+}
+function loadConfig(){
+  try{
+    const raw = localStorage.getItem('cbmlab_container_config');
+    if(!raw){ showToast('저장된 설정이 없어요'); return; }
+    const cfg = JSON.parse(raw);
+    applyConfigObject(cfg);
+    showToast('📂 저장된 설정을 불러왔어요');
+  }catch(e){ showToast('불러오기에 실패했어요'); }
+}
+function exportConfigFile(){
+  const cfg = currentConfigObject();
+  const blob = new Blob([JSON.stringify(cfg, null, 2)], {type:'application/json'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = 'container-loading-config.json';
+  document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+  showToast('⬇ JSON 파일로 내보냈어요');
+}
+function importConfigFile(file){
+  const reader = new FileReader();
+  reader.onload = e=>{
+    try{
+      const cfg = JSON.parse(e.target.result);
+      applyConfigObject(cfg);
+      showToast('📂 파일에서 설정을 불러왔어요');
+    }catch(err){ showToast('파일을 읽는 데 실패했어요'); }
+  };
+  reader.readAsText(file);
+}
+
+// ===== 결과를 PNG 이미지로 내보내기 =====
+function exportImage(){
+  const activeRigId = currentView==='3d' ? 'rig3d' : 'rigPreview';
+  const svgEl = document.querySelector('#'+activeRigId+' svg');
+  if(!svgEl){ showToast('먼저 결과를 계산해주세요'); return; }
+
+  const svgClone = svgEl.cloneNode(true);
+  const bbox = svgEl.viewBox.baseVal;
+  const scaleFactor = 3; // 고해상도 출력
+  const outW = 900, outH = 620;
+
+  const serializer = new XMLSerializer();
+  const svgStr = serializer.serializeToString(svgClone);
+  const svgBlob = new Blob([svgStr], {type:'image/svg+xml;charset=utf-8'});
+  const url = URL.createObjectURL(svgBlob);
+
+  const img = new Image();
+  img.onload = ()=>{
+    const canvas = document.createElement('canvas');
+    canvas.width = outW*scaleFactor; canvas.height = outH*scaleFactor;
+    const ctx = canvas.getContext('2d');
+    const isDark = document.documentElement.getAttribute('data-theme')==='dark';
+    ctx.fillStyle = isDark ? '#0B1120' : '#F8FAFC';
+    ctx.fillRect(0,0,canvas.width,canvas.height);
+
+    // 헤더 텍스트(요약 정보)
+    ctx.fillStyle = isDark ? '#EEF1F6' : '#1E293B';
+    ctx.font = `700 ${26*scaleFactor/3}px 'Pretendard', sans-serif`;
+    ctx.fillText('컨테이너 적재 시각화 — CBM Lab', 24*scaleFactor/3, 40*scaleFactor/3);
+
+    const sceneAreaY = 60*scaleFactor/3;
+    const sceneAreaH = canvas.height - sceneAreaY - 90*scaleFactor/3;
+    const svgAspect = bbox.width / bbox.height;
+    let drawW = canvas.width - 48*scaleFactor/3, drawH = drawW/svgAspect;
+    if(drawH > sceneAreaH){ drawH = sceneAreaH; drawW = drawH*svgAspect; }
+    const drawX = (canvas.width-drawW)/2;
+    ctx.drawImage(img, drawX, sceneAreaY, drawW, drawH);
+
+    // 하단 요약
+    const summaryY = canvas.height - 60*scaleFactor/3;
+    ctx.font = `600 ${14*scaleFactor/3}px 'Pretendard', sans-serif`;
+    ctx.fillStyle = isDark ? '#94A0B8' : '#475569';
+    const container = lastContainer;
+    const sections = document.getElementById('totalSections').textContent;
+    const placed = document.getElementById('totalPlaced').textContent;
+    const util = document.getElementById('totalUtil').textContent;
+    ctx.fillText(`${container ? container.name : ''} · 사용 구간 ${sections} · 배치 ${placed} · 활용률 ${util}`, 24*scaleFactor/3, summaryY);
+    ctx.font = `400 ${11*scaleFactor/3}px 'Pretendard', sans-serif`;
+    ctx.fillText('procurement-toolkit-eight.vercel.app', 24*scaleFactor/3, summaryY + 20*scaleFactor/3);
+
+    URL.revokeObjectURL(url);
+    canvas.toBlob(blob=>{
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = 'container-loading-result.png';
+      document.body.appendChild(a); a.click(); document.body.removeChild(a);
+      showToast('🖼 이미지를 저장했어요');
+    }, 'image/png');
+  };
+  img.onerror = ()=>{ URL.revokeObjectURL(url); showToast('이미지 생성에 실패했어요'); };
+  img.src = url;
+}
+
+// ===== 초기화 =====
+renderPresetChips();
+try{
+  const savedTheme = localStorage.getItem('cbmlab_container_theme');
+  if(savedTheme === 'dark') setTheme(true);
+}catch(e){}
 
 addItem('박스 A', 60, 40, 40, 2);
 addItem('박스 B', 60, 100, 40, 2);
