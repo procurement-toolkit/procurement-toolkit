@@ -252,6 +252,20 @@
     #printReport{display:block;position:absolute;top:0;left:0;width:100%;padding:20px;}
   }
 
+  /* AI 최적화 모달 */
+  .opt-backdrop{position:fixed;inset:0;background:rgba(15,23,42,0.55);z-index:1000;display:flex;align-items:center;justify-content:center;padding:20px;}
+  .opt-modal{background:var(--card-bg);border-radius:16px;max-width:480px;width:100%;padding:24px;box-shadow:0 20px 60px rgba(0,0,0,.35);}
+  .opt-modal h3{font-family:'Space Grotesk',sans-serif;font-size:17px;margin-bottom:4px;color:var(--slate-800);}
+  .opt-modal .opt-sub{font-size:12px;color:var(--slate-500);margin-bottom:16px;}
+  .opt-compare{display:grid;grid-template-columns:1fr auto 1fr;gap:10px;align-items:center;margin-bottom:16px;}
+  .opt-col{text-align:center;}
+  .opt-col .opt-label{font-size:10.5px;color:var(--slate-400);text-transform:uppercase;font-weight:700;margin-bottom:8px;}
+  .opt-arrow{font-size:20px;color:var(--accent);}
+  .opt-metric{font-size:11.5px;color:var(--slate-600);padding:4px 0;display:flex;justify-content:space-between;}
+  .opt-metric b{color:var(--slate-800);}
+  .opt-metric.improved b{color:var(--success);}
+  .opt-actions{display:flex;gap:8px;margin-top:6px;}
+
   footer{background:var(--slate-900);color:var(--slate-400);padding:24px;font-size:12px}
   .footer-inner{max-width:1320px;margin:0 auto;display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
   .footer-logo{font-size:15px;font-weight:800;color:#fff;font-family:'Space Grotesk','Pretendard',sans-serif;letter-spacing:-0.4px;}
@@ -408,6 +422,12 @@
             <div class="scene-wrap" id="wrap3d">
               <div class="scene" id="scene3d"><div class="rig" id="rig3d"></div></div>
               <div class="scene-controls">
+                <button class="scene-tool-btn" onclick="setViewPreset('iso')">📐 등각</button>
+                <button class="scene-tool-btn" onclick="setViewPreset('front')">Front</button>
+                <button class="scene-tool-btn" onclick="setViewPreset('side')">Side</button>
+                <button class="scene-tool-btn" onclick="setViewPreset('top')">Top</button>
+              </div>
+              <div class="scene-controls">
                 <label>회전 <input type="range" id="rotY" min="-180" max="180" value="-32" oninput="applyRotation()"></label>
                 <label>기울기 <input type="range" id="rotX" min="0" max="70" value="24" oninput="applyRotation()"></label>
                 <button class="scene-tool-btn" onclick="resetView()">↺ 시점 초기화</button>
@@ -478,7 +498,10 @@
         </div>
 
         <div class="toolbar-btn-row">
-          <button class="toolbar-btn primary" onclick="exportImage()">🖼 결과 이미지로 저장 (PNG)</button>
+          <button class="toolbar-btn primary" onclick="optimizeLoading()" style="background:linear-gradient(90deg,#7C3AED,#2563EB);border-color:transparent;">🤖 AI 적재 최적화</button>
+        </div>
+        <div class="toolbar-btn-row">
+          <button class="toolbar-btn" onclick="exportImage()">🖼 결과 이미지로 저장 (PNG)</button>
           <button class="toolbar-btn" onclick="printReport()">📄 PDF 리포트 생성</button>
         </div>
       </div>
@@ -534,7 +557,8 @@ const CONTAINERS = {
   '40': {l:1203.2, w:235.2, h:239.3, name:'40ft', maxPayload:26700, maxGross:30480, doorW:234.0, doorH:228.0},
   '40hc': {l:1203.2, w:235.2, h:269.8, name:'40ft HC', maxPayload:26300, maxGross:30480, doorW:234.0, doorH:258.5}
 };
-const COLORS = ['#2563EB','#F59E0B','#0F766E','#DC2626','#7C3AED','#0891B2','#DB2777','#65A30D'];
+const COLORS = ['#4A6FA5','#8A7654','#6B7A5E','#B5602E','#5C6670','#7D5A6B','#6B8299','#8F6849'];
+// Navy, Olive/Tan, Olive Green, Burnt Orange, Slate, Muted Plum, Steel Blue, Rust
 
 // 자주 쓰는 표준 박스 규격 프리셋 (cm, kg) - 클릭 한 번으로 새 행에 자동 입력
 const BOX_PRESETS = [
@@ -1035,7 +1059,7 @@ const FACE_DEFS = [
 
 // 박스 하나(중심 cx,cy,cz / 크기 w,h,d)의 보이는 면들을 계산 (백페이스 컬링 포함)
 function buildFacesForBox(cx,cy,cz,w,h,d,color,rotXdeg,rotYdeg){
-  const shades = {front:shade(color,1.0), back:shade(color,0.55), side:shade(color,0.72), top:shade(color,1.32), bottom:shade(color,0.42)};
+  const shades = {front:shade(color,1.0), back:shade(color,0.7), side:shade(color,0.82), top:shade(color,1.16), bottom:shade(color,0.58)};
   const faces = [];
   FACE_DEFS.forEach(fd=>{
     const rn = rotatePoint(fd.n[0],fd.n[1],fd.n[2],rotXdeg,rotYdeg);
@@ -1045,7 +1069,7 @@ function buildFacesForBox(cx,cy,cz,w,h,d,color,rotXdeg,rotYdeg){
       return {sx:rx, sy:ry, z:rz};
     });
     const avgZ = pts.reduce((s,p)=>s+p.z,0)/pts.length;
-    faces.push({pointsStr: pts.map(p=>`${p.sx.toFixed(1)},${p.sy.toFixed(1)}`).join(' '), depth:avgZ, fill:shades[fd.key]});
+    faces.push({pointsStr: pts.map(p=>`${p.sx.toFixed(1)},${p.sy.toFixed(1)}`).join(' '), depth:avgZ, fill:shades[fd.key], isTop: fd.key==='top'});
   });
   return faces;
 }
@@ -1073,7 +1097,7 @@ function buildBoxList(container, result){
   let boxes = [];
   let overflowNote = false;
 
-  result.sections.forEach(s=>{
+  result.sections.forEach((s, sIdx)=>{
     if(s.error || s.colsUsed<=0 || s.placedQty<=0) return;
     const shareRaw = totalPlaced>0 ? (s.placedQty/totalPlaced)*budget : 0;
     let renderCount = Math.max(1, Math.round(shareRaw));
@@ -1090,7 +1114,10 @@ function buildBoxList(container, result){
             color: s.color,
             l: s.effL ?? s.item.l, w: s.effW ?? s.item.w, h: s.item.h,
             xCm: s.startLengthCm + c*(s.effL ?? s.item.l) + (s.effL ?? s.item.l)/2,
-            layerIdx: l, rowIdx: r
+            layerIdx: l, rowIdx: r,
+            sectionIdx: sIdx, isBottomLayer: (l === s.layers-1),
+            isLabelAnchor: (c===0 && l===0 && r===0),
+            itemName: s.item.name, itemWeight: s.item.weight||0
           });
           placed++;
         }
@@ -1099,6 +1126,83 @@ function buildBoxList(container, result){
   });
   return { boxes, overflowNote, totalPlaced, rendered: boxes.length };
 }
+
+// ===== 컨테이너 내부 디테일 (프레임, 벽면 리브, 바닥 골판, 도어) =====
+function buildContainerDetails(L,H,D,rX,rY,containerReal){
+  const proj = (x,y,z)=>rotatePoint(x,y,z,rX,rY);
+  let svg = '';
+
+  // 바닥 골판 (깊이 방향 가로줄)
+  const floorRibs = 7;
+  for(let i=1;i<floorRibs;i++){
+    const z = -D/2 + (D/floorRibs)*i;
+    const p1 = proj(-L/2,-H/2,z), p2 = proj(L/2,-H/2,z);
+    svg += `<line x1="${p1[0].toFixed(1)}" y1="${p1[1].toFixed(1)}" x2="${p2[0].toFixed(1)}" y2="${p2[1].toFixed(1)}" stroke="#B8C2D0" stroke-width="0.4" opacity="0.55"/>`;
+  }
+
+  // 측벽 리브 (세로줄, 양쪽 벽)
+  const wallRibs = 11;
+  [1,-1].forEach(sz=>{
+    for(let i=1;i<wallRibs;i++){
+      const x = -L/2 + (L/wallRibs)*i;
+      const p1 = proj(x,-H/2,sz*D/2), p2 = proj(x,H/2,sz*D/2);
+      svg += `<line x1="${p1[0].toFixed(1)}" y1="${p1[1].toFixed(1)}" x2="${p2[0].toFixed(1)}" y2="${p2[1].toFixed(1)}" stroke="#B8C2D0" stroke-width="0.35" opacity="0.4"/>`;
+    }
+  });
+
+  // 프레임 코너 포스트 (4개 수직 모서리, 굵고 진하게)
+  [[-1,-1],[1,-1],[1,1],[-1,1]].forEach(([sx,sz])=>{
+    const p1 = proj(sx*L/2,-H/2,sz*D/2), p2 = proj(sx*L/2,H/2,sz*D/2);
+    svg += `<line x1="${p1[0].toFixed(1)}" y1="${p1[1].toFixed(1)}" x2="${p2[0].toFixed(1)}" y2="${p2[1].toFixed(1)}" stroke="#475569" stroke-width="1.6"/>`;
+  });
+
+  // 도어 윤곽 (컨테이너 앞쪽 끝, x=-L/2) - 실제 도어 치수 비율 적용
+  if(containerReal){
+    const doorWRatio = containerReal.doorW/containerReal.w, doorHRatio = containerReal.doorH/containerReal.h;
+    const dw = D*doorWRatio, dh = H*doorHRatio;
+    const doorCorners = [[-L/2,-H/2,-dw/2],[-L/2,-H/2,dw/2],[-L/2,-H/2+dh,dw/2],[-L/2,-H/2+dh,-dw/2]];
+    const doorPts = doorCorners.map(([x,y,z])=>proj(x,y,z));
+    svg += `<polygon points="${doorPts.map(p=>p[0].toFixed(1)+','+p[1].toFixed(1)).join(' ')}" fill="none" stroke="#B5602E" stroke-width="1.2" stroke-dasharray="3 2"/>`;
+
+    // 적재 방향 화살표 (도어 → 안쪽)
+    const arrowStart = proj(-L/2-8, -H/2-14, 0);
+    const arrowEnd = proj(-L/2+L*0.22, -H/2-14, 0);
+    svg += `<line x1="${arrowStart[0].toFixed(1)}" y1="${arrowStart[1].toFixed(1)}" x2="${arrowEnd[0].toFixed(1)}" y2="${arrowEnd[1].toFixed(1)}" stroke="#B5602E" stroke-width="1.2" marker-end="url(#arrowHead)"/>`;
+    svg += `<text x="${arrowStart[0].toFixed(1)}" y="${(arrowStart[1]-4).toFixed(1)}" font-size="7.5" fill="#B5602E" font-weight="700">DOOR →</text>`;
+  }
+
+  return svg;
+}
+
+// ===== 치수선 (Dimension Lines) =====
+function buildDimensionLines(L,H,D,rX,rY,containerReal){
+  const proj = (x,y,z)=>rotatePoint(x,y,z,rX,rY);
+  let svg = '';
+  const off = 16;
+
+  // 길이 치수선
+  const lp1 = proj(-L/2,-H/2,-D/2), lp2 = proj(L/2,-H/2,-D/2);
+  const lY = Math.max(lp1[1],lp2[1]) + off;
+  svg += `<line x1="${lp1[0].toFixed(1)}" y1="${lY.toFixed(1)}" x2="${lp2[0].toFixed(1)}" y2="${lY.toFixed(1)}" stroke="#94A3B8" stroke-width="0.6"/>`;
+  svg += `<line x1="${lp1[0].toFixed(1)}" y1="${lp1[1].toFixed(1)}" x2="${lp1[0].toFixed(1)}" y2="${lY.toFixed(1)}" stroke="#94A3B8" stroke-width="0.4" stroke-dasharray="1.5 1.5"/>`;
+  svg += `<line x1="${lp2[0].toFixed(1)}" y1="${lp2[1].toFixed(1)}" x2="${lp2[0].toFixed(1)}" y2="${lY.toFixed(1)}" stroke="#94A3B8" stroke-width="0.4" stroke-dasharray="1.5 1.5"/>`;
+  svg += `<text x="${((lp1[0]+lp2[0])/2).toFixed(1)}" y="${(lY+9).toFixed(1)}" font-size="7.5" fill="#64748B" text-anchor="middle">${fmt(containerReal.l*10)}mm</text>`;
+
+  // 높이 치수선
+  const hp1 = proj(-L/2,-H/2,D/2), hp2 = proj(-L/2,H/2,D/2);
+  const hX = Math.min(hp1[0],hp2[0]) - off;
+  svg += `<line x1="${hX.toFixed(1)}" y1="${hp1[1].toFixed(1)}" x2="${hX.toFixed(1)}" y2="${hp2[1].toFixed(1)}" stroke="#94A3B8" stroke-width="0.6"/>`;
+  svg += `<text x="${(hX-4).toFixed(1)}" y="${((hp1[1]+hp2[1])/2).toFixed(1)}" font-size="7.5" fill="#64748B" text-anchor="end">${fmt(containerReal.h*10)}mm</text>`;
+
+  // 폭 치수선
+  const wp1 = proj(L/2,-H/2,-D/2), wp2 = proj(L/2,-H/2,D/2);
+  const wY = Math.max(wp1[1],wp2[1]) + off;
+  svg += `<line x1="${wp1[0].toFixed(1)}" y1="${wY.toFixed(1)}" x2="${wp2[0].toFixed(1)}" y2="${wY.toFixed(1)}" stroke="#94A3B8" stroke-width="0.6"/>`;
+  svg += `<text x="${((wp1[0]+wp2[0])/2).toFixed(1)}" y="${(wY+9).toFixed(1)}" font-size="7.5" fill="#64748B" text-anchor="middle">${fmt(containerReal.w*10)}mm</text>`;
+
+  return svg;
+}
+
 
 function renderScene(rigId, legendId, container, result, useSliderRotation, stepLimit){
   const rig = document.getElementById(rigId);
@@ -1118,15 +1222,31 @@ function renderScene(rigId, legendId, container, result, useSliderRotation, step
     const offY = H/2 - (b.layerIdx+0.5)*bh;
     const offZ = D/2 - (b.rowIdx+0.5)*bd;
     const [,,cz] = rotatePoint(offX,offY,offZ,rX,rY);
-    return {bw,bh,bd,offX,offY,offZ,color:b.color,depth:cz};
+    return {bw,bh,bd,offX,offY,offZ,color:b.color,depth:cz,
+      isLabelAnchor:b.isLabelAnchor, isBottomLayer:b.isBottomLayer, itemName:b.itemName, itemWeight:b.itemWeight,
+      realL:b.l, realW:b.w, realH:b.h};
   }).sort((a,b)=>b.depth-a.depth);
 
   let allFaces = [];
+  const shadowEllipses = [];
+  const labels = [];
   withDepth.forEach(b=>{
     allFaces = allFaces.concat(buildFacesForBox(b.offX,b.offY,b.offZ,b.bw,b.bh,b.bd,b.color,rX,rY));
+    if(b.isBottomLayer){
+      const [sx,sy] = rotatePoint(b.offX, H/2, b.offZ, rX, rY); // 바닥면(y=H/2 local) 기준 그림자
+      shadowEllipses.push(`<ellipse cx="${sx.toFixed(1)}" cy="${(sy+1.5).toFixed(1)}" rx="${(b.bw*0.46).toFixed(1)}" ry="${(b.bd*0.22).toFixed(1)}" fill="rgba(15,23,42,0.18)"/>`);
+    }
+    if(b.isLabelAnchor){
+      const [lx,ly] = rotatePoint(b.offX, b.offY - b.bh/2 - 3, b.offZ, rX, rY);
+      const dimText = `${fmt(b.realL*10)}×${fmt(b.realW*10)}×${fmt(b.realH*10)}mm`;
+      const wtText = b.itemWeight>0 ? ` · ${fmt(b.itemWeight)}kg` : '';
+      labels.push({x:lx, y:ly, name:b.itemName, sub:dimText+wtText});
+    }
   });
 
   const edges = buildWireEdges(L,H,D,rX,rY);
+  const containerDetails = buildContainerDetails(L,H,D,rX,rY,container);
+  const dimensionLines = buildDimensionLines(L,H,D,rX,rY,container);
 
   // 화면 범위 계산 (모든 점 기준으로 여백 포함해 자동 맞춤)
   let minX=Infinity,maxX=-Infinity,minY=Infinity,maxY=-Infinity;
@@ -1134,20 +1254,34 @@ function renderScene(rigId, legendId, container, result, useSliderRotation, step
   edges.forEach(e=>{ track(e.p1.sx,e.p1.sy); track(e.p2.sx,e.p2.sy); });
   allFaces.forEach(f=>{ f.pointsStr.split(' ').forEach(pt=>{ const [x,y]=pt.split(',').map(Number); track(x,y); }); });
   if(!isFinite(minX)){ minX=-100; maxX=100; minY=-100; maxY=100; }
-  const pad = 24;
+  const pad = 34;
   const vw = (maxX-minX)+pad*2, vh = (maxY-minY)+pad*2;
 
   let svg = `<svg viewBox="${minX-pad} ${minY-pad} ${vw} ${vh}" width="100%" height="100%" preserveAspectRatio="xMidYMid meet">`;
-  svg += `<defs><radialGradient id="floorGrad_${rigId}" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="rgba(15,23,42,0.28)"/><stop offset="100%" stop-color="rgba(15,23,42,0)"/></radialGradient></defs>`;
+  svg += `<defs>
+    <radialGradient id="floorGrad_${rigId}" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="rgba(15,23,42,0.26)"/><stop offset="100%" stop-color="rgba(15,23,42,0)"/></radialGradient>
+    <marker id="arrowHead" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#B5602E"/></marker>
+  </defs>`;
   // 바닥 중심을 화면에 투상해 타원형 그림자를 깔아줌 (원근감 보강)
   const bottomCenter = rotatePoint(0, H/2, 0, rX, rY);
   svg += `<ellipse cx="${bottomCenter[0].toFixed(1)}" cy="${(bottomCenter[1]+6).toFixed(1)}" rx="${(L*0.62).toFixed(1)}" ry="${(L*0.62*0.22).toFixed(1)}" fill="url(#floorGrad_${rigId})"/>`;
+  svg += containerDetails;
   edges.forEach(e=>{
-    svg += `<line x1="${e.p1.sx.toFixed(1)}" y1="${e.p1.sy.toFixed(1)}" x2="${e.p2.sx.toFixed(1)}" y2="${e.p2.sy.toFixed(1)}" stroke="#94A3B8" stroke-width="0.6" stroke-dasharray="1.5 1.5"/>`;
+    svg += `<line x1="${e.p1.sx.toFixed(1)}" y1="${e.p1.sy.toFixed(1)}" x2="${e.p2.sx.toFixed(1)}" y2="${e.p2.sy.toFixed(1)}" stroke="#94A3B8" stroke-width="0.5" stroke-dasharray="1.5 1.5" opacity="0.7"/>`;
   });
+  shadowEllipses.forEach(s=>{ svg += s; });
   allFaces.forEach(f=>{
-    svg += `<polygon points="${f.pointsStr}" fill="${f.fill}" stroke="rgba(15,23,42,.35)" stroke-width="1" stroke-linejoin="round"/>`;
+    svg += `<polygon points="${f.pointsStr}" fill="${f.fill}" stroke="rgba(15,23,42,.16)" stroke-width="0.6" stroke-linejoin="round"/>`;
   });
+  labels.forEach(lb=>{
+    const w = Math.max(lb.name.length, lb.sub.length)*3.6 + 8;
+    svg += `<g>
+      <rect x="${(lb.x-w/2).toFixed(1)}" y="${(lb.y-16).toFixed(1)}" width="${w.toFixed(1)}" height="15" rx="2.5" fill="rgba(255,255,255,0.88)" stroke="rgba(15,23,42,0.15)" stroke-width="0.4"/>
+      <text x="${lb.x.toFixed(1)}" y="${(lb.y-8.5).toFixed(1)}" font-size="5.6" font-weight="700" fill="#1E293B" text-anchor="middle">${lb.name}</text>
+      <text x="${lb.x.toFixed(1)}" y="${(lb.y-3.5).toFixed(1)}" font-size="4.6" fill="#64748B" text-anchor="middle">${lb.sub}</text>
+    </g>`;
+  });
+  svg += dimensionLines;
   svg += `</svg>`;
   rig.innerHTML = svg;
 
@@ -1184,6 +1318,15 @@ function renderScene(rigId, legendId, container, result, useSliderRotation, step
 function resetView(){
   stopAutoRotate();
   rotY = -32; rotX = 24;
+  document.getElementById('rotY').value = rotY;
+  document.getElementById('rotX').value = rotX;
+  applyRotation();
+}
+function setViewPreset(name){
+  stopAutoRotate();
+  const presets = { iso:{x:24,y:-32}, front:{x:0,y:0}, side:{x:0,y:90}, top:{x:89,y:0} };
+  const p = presets[name] || presets.iso;
+  rotX = p.x; rotY = p.y;
   document.getElementById('rotY').value = rotY;
   document.getElementById('rotX').value = rotX;
   applyRotation();
@@ -1274,6 +1417,109 @@ function stopAnimPlay(){
   if(animTimer){ clearInterval(animTimer); animTimer = null; }
   const btn = document.getElementById('animPlayBtn');
   if(btn) btn.textContent = '▶';
+}
+
+// ===== AI 적재 최적화 =====
+function evaluateOrdering(orderedItems, container, allowRotation){
+  const result = pack(container, orderedItems, allowRotation);
+  const totalRequested = orderedItems.reduce((a,i)=>a+i.qty,0);
+  const totalPlaced = result.sections.reduce((a,s)=>a+s.placedQty,0);
+  let usedVolume = 0; result.sections.forEach(s=>{ usedVolume += s.placedQty*s.item.l*s.item.w*s.item.h; });
+  const containerVolume = container.l*container.w*container.h;
+  const util = Math.min(100,(usedVolume/containerVolume)*100);
+  const fulfillment = totalRequested>0 ? Math.min(100,(totalPlaced/totalRequested)*100) : 100;
+  const cog = computeCenterOfGravity(container, result);
+  const pctFromFront = cog ? (cog.x/container.l)*100 : 50;
+  const balanceScore = 100 - Math.abs(pctFromFront-50)*2;
+  const remainVolM3 = (result.remainingLength*container.w*container.h)/1e6;
+  const score = util*0.45 + balanceScore*0.35 + fulfillment*0.20;
+  return { result, util, fulfillment, balanceScore, pctFromFront, score, totalPlaced, totalRequested, remainVolM3 };
+}
+
+function generatePermutations(arr){
+  if(arr.length<=1) return [arr];
+  let result=[];
+  arr.forEach((item,i)=>{
+    const rest = arr.slice(0,i).concat(arr.slice(i+1));
+    generatePermutations(rest).forEach(p=>result.push([item,...p]));
+  });
+  return result;
+}
+
+function optimizeLoading(){
+  if(items.length < 2){ showToast('품목이 2개 이상일 때 최적화가 의미 있어요'); return; }
+  const containerKey = document.getElementById('containerType').value;
+  const container = CONTAINERS[containerKey];
+  const allowRotation = document.getElementById('allowRotation').checked;
+
+  const before = evaluateOrdering(items, container, allowRotation);
+
+  let candidates;
+  if(items.length <= 7){
+    candidates = generatePermutations(items);
+  } else {
+    candidates = [items, [...items].reverse(),
+      [...items].sort((a,b)=>(b.weight||0)-(a.weight||0)),
+      [...items].sort((a,b)=>(a.weight||0)-(b.weight||0))];
+    for(let i=0;i<40;i++){ candidates.push([...items].sort(()=>Math.random()-0.5)); }
+  }
+
+  let best = before, bestOrder = items;
+  candidates.forEach(cand=>{
+    const evalR = evaluateOrdering(cand, container, allowRotation);
+    if(evalR.score > best.score + 0.001){ best = evalR; bestOrder = cand; }
+  });
+
+  showOptimizeModal(before, best, bestOrder);
+}
+
+function showOptimizeModal(before, after, bestOrder){
+  const improved = after.score > before.score + 0.5;
+  const backdrop = document.createElement('div');
+  backdrop.className = 'opt-backdrop';
+  backdrop.id = 'optBackdrop';
+
+  const metricRow = (label, beforeVal, afterVal, betterIsHigher=true) => {
+    const diff = afterVal - beforeVal;
+    const isImproved = betterIsHigher ? diff > 0.3 : diff < -0.3;
+    return `<div class="opt-metric ${isImproved?'improved':''}"><span>${label}</span><b>${beforeVal.toFixed(1)} → ${afterVal.toFixed(1)}</b></div>`;
+  };
+
+  backdrop.innerHTML = `
+    <div class="opt-modal">
+      <h3>🤖 AI 적재 최적화 ${improved ? '결과' : '- 이미 좋은 배치예요'}</h3>
+      <p class="opt-sub">${improved ? '품목 배치 순서를 바꿔서 아래처럼 개선할 수 있어요.' : '여러 배치 순서를 시도해봤지만, 현재 배치가 이미 최적에 가까워요.'}</p>
+      <div class="opt-compare">
+        <div class="opt-col"><div class="opt-label">Before</div></div>
+        <div class="opt-arrow">→</div>
+        <div class="opt-col"><div class="opt-label">After</div></div>
+      </div>
+      ${metricRow('공간 활용률(%)', before.util, after.util)}
+      ${metricRow('무게중심 위치(중앙=50)', before.pctFromFront, after.pctFromFront, false)}
+      ${metricRow('충족률(%)', before.fulfillment, after.fulfillment)}
+      ${metricRow('남는 부피(㎥)', before.remainVolM3, after.remainVolM3, false)}
+      <div class="opt-metric" style="border-top:1px solid var(--slate-100);margin-top:6px;padding-top:8px;"><span><b>종합 점수</b></span><b>${before.score.toFixed(1)} → ${after.score.toFixed(1)}</b></div>
+      <div class="opt-actions">
+        ${improved ? `<button class="toolbar-btn primary" onclick="applyOptimization()">✓ 이 배치 적용하기</button>` : ''}
+        <button class="toolbar-btn" onclick="closeOptimizeModal()">닫기</button>
+      </div>
+    </div>
+  `;
+  document.body.appendChild(backdrop);
+  window.__pendingOptimizedOrder = bestOrder;
+}
+function closeOptimizeModal(){
+  const el = document.getElementById('optBackdrop');
+  if(el) el.remove();
+  window.__pendingOptimizedOrder = null;
+}
+function applyOptimization(){
+  if(window.__pendingOptimizedOrder){
+    items = window.__pendingOptimizedOrder;
+    renderItemRows();
+    showToast('✅ 최적화된 배치를 적용했어요');
+  }
+  closeOptimizeModal();
 }
 
 // ===== PDF 리포트 생성 (인쇄 다이얼로그를 통해 PDF로 저장) =====
