@@ -101,6 +101,11 @@
   .btn-add-row:hover{border-color:var(--accent);color:var(--accent)}
   .row-error-msg{font-size:11px;color:var(--danger);margin-top:2px;display:flex;align-items:center;gap:4px}
 
+  .constraint-panel{display:flex;flex-wrap:wrap;gap:10px 16px;padding:8px 4px;background:var(--slate-50);border-radius:8px;}
+  .constraint-toggle{display:flex;align-items:center;gap:5px;font-size:11.5px;color:var(--slate-600);cursor:pointer;white-space:nowrap;}
+  .constraint-toggle input[type=checkbox]{cursor:pointer;}
+  .constraint-num input[type=number]{border:1px solid var(--slate-200);border-radius:4px;padding:2px 4px;font-size:11px;}
+
   .notice-box{background:var(--accent-light);border:1px solid #BFDBFE;border-radius:var(--radius);padding:10px 14px;font-size:12px;color:#1E40AF;margin-top:14px}
   [data-theme="dark"] .notice-box{color:#93C5FD;border-color:#1E3A5F}
   .warn-box{background:var(--danger-light);border:1px solid #FECACA;border-radius:var(--radius);padding:10px 14px;font-size:12.5px;color:#991B1B;margin-top:10px;line-height:1.6}
@@ -235,6 +240,16 @@
   .rule-list{list-style:none;font-size:11.5px;color:var(--slate-600);display:flex;flex-direction:column;gap:5px}
   .rule-list li{display:flex;align-items:center;gap:6px}
   .rule-list li.off{color:var(--slate-400);text-decoration:line-through;opacity:.7}
+
+  .violation-panel{margin-top:10px;border-top:1px dashed var(--slate-200);padding-top:10px;}
+  .violation-panel-header{font-size:11px;font-weight:700;color:var(--danger);margin-bottom:6px;}
+  .violation-item{display:flex;gap:8px;align-items:flex-start;padding:6px 8px;border-radius:7px;margin-bottom:5px;font-size:11px;line-height:1.5;}
+  .violation-item.error{background:var(--danger-light);color:#7A1E1E;}
+  .violation-item.warning{background:#FFF7ED;color:#7A4A12;}
+  [data-theme="dark"] .violation-item.warning{background:#2A1B0E;color:#FDBA74;}
+  .violation-item.info{background:var(--slate-50);color:var(--slate-600);}
+  .violation-item b{display:block;}
+  .violation-item .v-detail{color:inherit;opacity:.85;font-size:10.5px;margin-top:1px;}
   .rule-check{color:var(--success);font-weight:800}
   .rule-check.off{color:var(--slate-400)}
 
@@ -293,15 +308,37 @@
   .score-donut-num{font-family:'Space Grotesk',sans-serif;font-size:22px;font-weight:800;fill:var(--accent-dark);}
   .score-donut-sub{font-size:9px;fill:var(--slate-400);}
 
-  /* 인사이트 카드 */
+  /* AI 추천 카드 - 흐르는 그라디언트 보더로 시선 집중 */
   .insight-card{
-    background:linear-gradient(135deg, var(--accent-light), rgba(37,99,235,0.04));
-    border:1px solid var(--accent-light);border-left:3px solid var(--accent);border-radius:10px;
-    padding:12px 14px;margin-top:10px;display:flex;gap:10px;align-items:flex-start;
+    position:relative;
+    background:var(--card-bg);
+    border-radius:14px;
+    padding:14px 16px;margin-top:10px;display:flex;flex-direction:column;gap:10px;
   }
-  .insight-card .insight-icon{font-size:18px;flex-shrink:0;}
-  .insight-card .insight-text{font-size:12px;color:var(--slate-700);line-height:1.6;}
+  .insight-card::before{
+    content:'';position:absolute;inset:-2px;border-radius:16px;padding:2px;
+    background:linear-gradient(120deg,#7C3AED,#2563EB,#0EA5E9,#7C3AED);
+    background-size:250% 250%;animation:aiBorderFlow 4s linear infinite;
+    -webkit-mask:linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite:xor;mask-composite:exclude;pointer-events:none;
+  }
+  @keyframes aiBorderFlow{0%{background-position:0% 50%;}100%{background-position:250% 50%;}}
+  .ghost-wire{opacity:0;animation:ghostPopIn .5s ease-out forwards, ghostBreathe 1.8s ease-in-out .5s infinite;}
+  @keyframes ghostPopIn{0%{opacity:0;}100%{opacity:1;}}
+  @keyframes ghostBreathe{0%,100%{opacity:0.55;}50%{opacity:1;}}
+  .insight-card .insight-top{display:flex;gap:10px;align-items:flex-start;}
+  .insight-card .insight-icon{font-size:19px;flex-shrink:0;animation:aiIconPulse 1.8s ease-in-out infinite;}
+  @keyframes aiIconPulse{0%,100%{transform:scale(1);}50%{transform:scale(1.15);}}
+  .insight-card .insight-text{font-size:12.5px;color:var(--slate-700);line-height:1.6;}
   .insight-card .insight-text b{color:var(--accent-dark);}
+  .insight-card .insight-actions{display:flex;gap:8px;}
+  .insight-approve-btn{
+    flex:1;padding:9px 12px;border:none;border-radius:9px;font-size:12.5px;font-weight:700;cursor:pointer;
+    background:linear-gradient(90deg,#7C3AED,#2563EB);color:#fff;
+    box-shadow:0 3px 10px rgba(37,99,235,.35);
+  }
+  .insight-approve-btn:hover{filter:brightness(1.08);}
+  .insight-approve-btn:active{transform:translateY(1px);}
 
   /* 다운로드 전 광고 게이트 모달 */
   .adgate-backdrop{position:fixed;inset:0;background:rgba(15,23,42,0.7);z-index:1200;display:flex;align-items:center;justify-content:center;padding:20px;}
@@ -315,6 +352,17 @@
   /* 다중 컨테이너 결과 */
   .multi-step-row{display:flex;justify-content:space-between;align-items:center;padding:9px 12px;background:var(--slate-50);border-radius:8px;margin-bottom:6px;font-size:12.5px;}
   .multi-total{font-family:'Space Grotesk',sans-serif;font-size:18px;font-weight:800;color:var(--accent-dark);text-align:center;padding:10px 0;}
+
+  .multi-tab-bar{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:14px;padding:10px 12px;background:var(--slate-50);border-radius:10px;border:1px solid var(--slate-100);}
+  .multi-tab-bar-label{font-size:11px;font-weight:700;color:var(--slate-500);margin-right:2px;}
+  .multi-tab-btn{padding:7px 12px;border-radius:8px;border:1px solid var(--slate-200);background:var(--card-bg);font-size:12px;font-weight:700;cursor:pointer;color:var(--slate-600);display:flex;align-items:center;gap:6px;}
+  .multi-tab-btn.active{background:var(--slate-800);border-color:var(--slate-800);color:#fff;}
+  [data-theme="dark"] .multi-tab-btn.active{background:var(--accent);border-color:var(--accent);}
+  .multi-tab-util-badge{font-size:10px;padding:1px 6px;border-radius:999px;font-weight:800;}
+  .multi-tab-util-badge.high{background:var(--success-light);color:var(--success);}
+  .multi-tab-util-badge.mid{background:#DBEAFE;color:#1D4ED8;}
+  .multi-tab-util-badge.low{background:#FEF3C7;color:#92400E;}
+  .multi-tab-exit{margin-left:auto;font-size:11.5px;color:var(--danger);background:none;border:none;cursor:pointer;font-weight:700;}
 
   footer{background:var(--slate-900);color:var(--slate-400);padding:24px;font-size:12px}
   .footer-inner{max-width:1320px;margin:0 auto;display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
@@ -475,6 +523,8 @@
       </div>
       <div class="card-body">
 
+        <div id="multiTabBar" style="display:none;"></div>
+
         <div class="viz-dashboard">
           <div>
             <div class="scene-wrap active" id="wrap2d">
@@ -518,8 +568,9 @@
             <div class="util-bar" id="utilBar"></div>
 
             <div class="dash-card" style="margin-top:14px;">
-              <div class="dash-card-title">✓ 적재 규칙 적용 현황</div>
+              <div class="dash-card-title" id="ruleCardTitle">✓ 적재 규칙 적용 현황</div>
               <ul class="rule-list" id="ruleList"></ul>
+              <div id="violationPanel"></div>
             </div>
           </div>
 
@@ -674,7 +725,8 @@ function addFromPreset(idx){
 function addItem(name, l, w, h, qty, weight){
   const color = COLORS[itemCounter % COLORS.length]; // 생성 시점에 색을 고정 배정 (삭제해도 안 바뀜)
   itemCounter++;
-  items.push({id:itemCounter, name:name||('박스 '+String.fromCharCode(64+items.length+1)), l:l??60, w:w??40, h:h??40, qty:qty??50, weight:weight??0, color});
+  items.push({id:itemCounter, name:name||('박스 '+String.fromCharCode(64+items.length+1)), l:l??60, w:w??40, h:h??40, qty:qty??50, weight:weight??0, color,
+    constraints:{floorOnly:false, maxStack:null, fragile:false, liquidPriority:false}});
   renderItemRows();
 }
 function removeItem(id){
@@ -687,10 +739,39 @@ function updateItem(id, field, val){
   it[field] = (field==='name') ? val : (parseFloat(val)||0);
   calc();
 }
+function updateConstraint(id, field, val){
+  const it = items.find(i=>i.id===id); if(!it) return;
+  if(!it.constraints) it.constraints = {floorOnly:false, maxStack:null, fragile:false, liquidPriority:false};
+  it.constraints[field] = (field==='maxStack') ? (val===''||val===null ? null : Math.max(1, parseInt(val)||1)) : val;
+  renderConstraintSummary(id);
+  calc();
+}
+function toggleConstraintRow(id){
+  const row = document.getElementById('constraintRow-'+id);
+  if(row) row.style.display = row.style.display==='none' ? 'table-row' : 'none';
+}
+function renderConstraintSummary(id){
+  const it = items.find(i=>i.id===id); if(!it) return;
+  const c = it.constraints || {};
+  const tags = [];
+  if(c.floorOnly) tags.push('하단필수');
+  if(c.liquidPriority) tags.push('우선배치');
+  if(c.maxStack) tags.push(`최대${c.maxStack}단`);
+  if(c.fragile) tags.push('파손주의');
+  const el = document.getElementById('constraintSummary-'+id);
+  if(el) el.textContent = tags.length>0 ? tags.join(' · ') : '';
+}
 
 function renderItemRows(){
   const body = document.getElementById('itemBody');
-  body.innerHTML = items.map(it=>`
+  body.innerHTML = items.map(it=>{
+    const c = it.constraints || {floorOnly:false, maxStack:null, fragile:false, liquidPriority:false};
+    const tags = [];
+    if(c.floorOnly) tags.push('하단필수');
+    if(c.liquidPriority) tags.push('우선배치');
+    if(c.maxStack) tags.push(`최대${c.maxStack}단`);
+    if(c.fragile) tags.push('파손주의');
+    return `
     <tr>
       <td><span class="color-dot" style="background:${it.color}"></span><input class="inp name-inp" value="${it.name}" oninput="updateItem(${it.id},'name',this.value)" onchange="updateItem(${it.id},'name',this.value)"></td>
       <td><input class="inp dim-inp" type="number" value="${it.l}" oninput="updateItem(${it.id},'l',this.value)" onchange="updateItem(${it.id},'l',this.value)"></td>
@@ -698,9 +779,24 @@ function renderItemRows(){
       <td><input class="inp dim-inp" type="number" value="${it.h}" oninput="updateItem(${it.id},'h',this.value)" onchange="updateItem(${it.id},'h',this.value)"></td>
       <td><input class="inp dim-inp" type="number" value="${it.qty}" oninput="updateItem(${it.id},'qty',this.value)" onchange="updateItem(${it.id},'qty',this.value)"></td>
       <td><input class="inp dim-inp" type="number" value="${it.weight||0}" oninput="updateItem(${it.id},'weight',this.value)" onchange="updateItem(${it.id},'weight',this.value)"></td>
-      <td><button class="btn-del-row" onclick="removeItem(${it.id})" ${items.length<=1?'disabled':''}>✕</button></td>
+      <td style="display:flex;gap:3px;">
+        <button class="btn-del-row" onclick="toggleConstraintRow(${it.id})" title="적재 제약 조건">⚙</button>
+        <button class="btn-del-row" onclick="removeItem(${it.id})" ${items.length<=1?'disabled':''}>✕</button>
+      </td>
     </tr>
-  `).join('');
+    <tr class="constraint-row" id="constraintRow-${it.id}" style="display:none;">
+      <td colspan="7">
+        <div class="constraint-panel">
+          <label class="constraint-toggle"><input type="checkbox" ${c.floorOnly?'checked':''} onchange="updateConstraint(${it.id},'floorOnly',this.checked)"> 하단(맨 앞구간) 필수</label>
+          <label class="constraint-toggle"><input type="checkbox" ${c.liquidPriority?'checked':''} onchange="updateConstraint(${it.id},'liquidPriority',this.checked)"> 액체·우선 배치</label>
+          <label class="constraint-toggle constraint-num"><input type="checkbox" ${c.maxStack?'checked':''} onchange="updateConstraint(${it.id},'maxStack', this.checked ? (this.parentNode.querySelector('input[type=number]').value||1) : null); this.parentNode.querySelector('input[type=number]').disabled=!this.checked;"> 최대 적층
+            <input type="number" min="1" value="${c.maxStack||3}" style="width:44px;" ${c.maxStack?'':'disabled'} onchange="updateConstraint(${it.id},'maxStack', this.value)"> 단</label>
+          <label class="constraint-toggle"><input type="checkbox" ${c.fragile?'checked':''} onchange="updateConstraint(${it.id},'fragile',this.checked)"> 파손주의 (뒤쪽 구간 배치)</label>
+        </div>
+        <div id="constraintSummary-${it.id}" style="font-size:10.5px;color:var(--accent-dark);margin-top:4px;">${tags.join(' · ')}</div>
+      </td>
+    </tr>
+  `;}).join('');
   calc();
 }
 
@@ -720,13 +816,25 @@ function bestOrientation(it, container, allowRotation){
     const fitsH = it.h > 0 && it.h <= container.h;
     if(!fitsW || !fitsL || !fitsH) return;
     const rows = Math.floor(container.w / o.w);
-    const layers = Math.floor(container.h / it.h);
+    let layers = Math.floor(container.h / it.h);
+    if(it.constraints && it.constraints.maxStack) layers = Math.min(layers, it.constraints.maxStack);
     const perColumn = rows * layers;
     if(!best || perColumn > best.perColumn || (perColumn===best.perColumn && o.l < best.l)){
       best = {l:o.l, w:o.w, rotated:o.rotated, rows, layers, perColumn};
     }
   });
   return best;
+}
+
+// 제약조건(하단필수/우선배치는 앞으로, 파손주의는 뒤로) 기준 정렬 - 나머지는 입력 순서 유지(안정 정렬)
+function sortByConstraints(itemList){
+  return itemList.map((it,idx)=>({it,idx})).sort((a,b)=>{
+    const ca = a.it.constraints||{}, cb = b.it.constraints||{};
+    const scoreA = (ca.floorOnly||ca.liquidPriority ? -1 : 0) + (ca.fragile ? 1 : 0);
+    const scoreB = (cb.floorOnly||cb.liquidPriority ? -1 : 0) + (cb.fragile ? 1 : 0);
+    if(scoreA !== scoreB) return scoreA - scoreB;
+    return a.idx - b.idx;
+  }).map(x=>x.it);
 }
 
 function pack(container, itemList, allowRotation){
@@ -772,7 +880,7 @@ function pack(container, itemList, allowRotation){
 
 function calcForContainer(containerKey){
   const allowRotation = document.getElementById('allowRotation') ? document.getElementById('allowRotation').checked : false;
-  return pack(CONTAINERS[containerKey], items, allowRotation);
+  return pack(CONTAINERS[containerKey], sortByConstraints(items), allowRotation);
 
 }
 
@@ -829,14 +937,23 @@ function calc(){
     const extraQty = extraCols * lastValid.perColumn;
     suggestBox.style.display = 'flex';
     if(extraQty>0){
-      ghostSuggestion = { startX: lastValid.startLengthCm + lastValid.colsUsed*effL, effL, effW: lastValid.effW, h: lastValid.item.h, rows: lastValid.rows, layers: lastValid.layers, cols: extraCols, color: lastValid.color };
-      suggestBox.innerHTML = `<span class="insight-icon">🤖</span><span class="insight-text"><b>AI 추천:</b> 남은 공간(${fmt(remainLengthCm)}mm)에 "${lastValid.item.name}" 기준 약 <b>${fmt(extraQty)}개</b> 추가 적재가 가능해 보여요. <button class="scene-tool-btn" style="margin-left:6px;" onclick="toggleGhostPreview()" id="ghostPreviewBtn">👻 3D 미리보기</button></span>`;
+      ghostSuggestion = { startX: lastValid.startLengthCm + lastValid.colsUsed*effL, effL, effW: lastValid.effW, h: lastValid.item.h, rows: lastValid.rows, layers: lastValid.layers, cols: extraCols, color: lastValid.color, itemName: lastValid.item.name, extraQty };
+      suggestBox.innerHTML = `
+        <div class="insight-top">
+          <span class="insight-icon">🤖</span>
+          <span class="insight-text"><b>AI 추천:</b> 남은 공간(${fmt(remainLengthCm)}mm)에 "${lastValid.item.name}" 기준 약 <b>${fmt(extraQty)}개</b> 추가 적재가 가능해 보여요.</span>
+        </div>
+        <div class="insight-actions">
+          <button class="scene-tool-btn" onclick="toggleGhostPreview()" id="ghostPreviewBtn">👻 3D 미리보기</button>
+          <button class="insight-approve-btn" onclick="approveAiSuggestion()">✓ 이 계획 승인 및 박스 추가하기</button>
+        </div>
+      `;
     } else {
-      suggestBox.innerHTML = `<span class="insight-icon">ℹ️</span><span class="insight-text">남은 공간이 있지만, 마지막 품목 기준으로는 추가 적재가 어려워요.</span>`;
+      suggestBox.innerHTML = `<div class="insight-top"><span class="insight-icon">ℹ️</span><span class="insight-text">남은 공간이 있지만, 마지막 품목 기준으로는 추가 적재가 어려워요.</span></div>`;
     }
   } else {
     suggestBox.style.display = 'flex';
-    suggestBox.innerHTML = `<span class="insight-icon">✅</span><span class="insight-text">남은 길이 방향 공간이 거의 없어요 (풀로 적재됨).</span>`;
+    suggestBox.innerHTML = `<div class="insight-top"><span class="insight-icon">✅</span><span class="insight-text">남은 길이 방향 공간이 거의 없어요 (풀로 적재됨).</span></div>`;
   }
 
   // 강화된 요약 지표 그리드
@@ -892,6 +1009,43 @@ function calc(){
     <li><span class="rule-check">✓</span> 높이 한도 내 적층 (Stack allowed)</li>
     <li class="${overCap?'off':''}"><span class="rule-check ${overCap?'off':''}">${overCap?'✕':'✓'}</span> 중량 한도 이내</li>
   `;
+
+  // 에러 디버깅 리스트 - 실제 위반 사항 + 제약조건 적용 효과
+  const violations = [];
+  if(overCap){
+    violations.push({sev:'error', title:`⚖ 중량 한도 초과`, detail:`총중량 ${fmt(totalWeight)}kg — 허용치 ${fmt(container.maxPayload)}kg보다 ${fmt(totalWeight-container.maxPayload)}kg 많음`});
+  }
+  result.sections.forEach(s=>{
+    if(s.error){
+      violations.push({sev:'error', title:`📦 ${s.item.name}: 규격 초과`, detail: s.errorReason});
+    } else if(s.placedQty < s.item.qty){
+      violations.push({sev:'warning', title:`📦 ${s.item.name}: 전량 미적재`, detail:`요청 ${fmt(s.item.qty)}개 중 ${fmt(s.item.qty-s.placedQty)}개 못 실음 (공간 부족)`});
+    }
+    const c = s.item.constraints;
+    if(c && c.maxStack){
+      const theoreticalLayers = Math.floor(container.h / s.item.h);
+      if(theoreticalLayers > c.maxStack){
+        violations.push({sev:'info', title:`📏 ${s.item.name}: 최대 적층 제약 적용됨`, detail:`이론상 ${theoreticalLayers}단 가능하지만 설정한 제약(${c.maxStack}단)으로 제한됨`});
+      }
+    }
+  });
+  document.getElementById('ruleCardTitle').textContent = violations.filter(v=>v.sev==='error').length>0 ? '⚠ 적재 규칙 적용 현황' : '✓ 적재 규칙 적용 현황';
+  const vPanel = document.getElementById('violationPanel');
+  if(violations.length === 0){
+    vPanel.innerHTML = '';
+  } else {
+    const errCount = violations.filter(v=>v.sev==='error').length;
+    const icon = {error:'🔴', warning:'⚠', info:'ℹ️'};
+    vPanel.innerHTML = `
+      <div class="violation-panel">
+        <div class="violation-panel-header">${errCount>0 ? `🔴 규칙 위반 ${errCount}건` : '참고 사항'}</div>
+        ${violations.map(v=>`<div class="violation-item ${v.sev}">
+          <span>${icon[v.sev]}</span>
+          <span><b>${v.title}</b><span class="v-detail">${v.detail}</span></span>
+        </div>`).join('')}
+      </div>
+    `;
+  }
 
   // Loading Score / 별점
   renderScorePanel(container, result, util, weightUtil, cog, sectionsUsed, totalRequested, totalPlaced);
@@ -1392,6 +1546,7 @@ function renderScene(rigId, legendId, container, result, useSliderRotation, step
   boxGroups.forEach(g=>{ svg += g; });
   if(ghostPreviewOn && ghostSuggestion && rigId==='rig3d'){
     const gs = ghostSuggestion;
+    let ghostIdx = 0;
     for(let c=0;c<gs.cols;c++){
       for(let l=0;l<gs.layers;l++){
         for(let r=0;r<gs.rows;r++){
@@ -1400,9 +1555,13 @@ function renderScene(rigId, legendId, container, result, useSliderRotation, step
           const gy = H/2 - (l+0.5)*bh;
           const gz = D/2 - (r+0.5)*bd;
           const ghostFaces = buildFacesForBox(gx,gy,gz,bw,bh,bd,gs.color,rX,rY);
+          const delay = (ghostIdx * 45) % 900;
+          svg += `<g class="ghost-wire" style="animation-delay:${delay}ms">`;
           ghostFaces.forEach(f=>{
-            svg += `<polygon points="${f.pointsStr}" fill="${gs.color}" fill-opacity="0.28" stroke="${gs.color}" stroke-width="1" stroke-dasharray="2 2"/>`;
+            svg += `<polygon points="${f.pointsStr}" fill="none" stroke="var(--accent)" stroke-width="1.1" stroke-dasharray="5 3"/>`;
           });
+          svg += `</g>`;
+          ghostIdx++;
         }
       }
     }
@@ -1506,6 +1665,24 @@ function toggleGhostPreview(){
     renderScene('rig3d', 'legend3d', lastContainer, lastResult, true, stepLimit);
     if(ghostPreviewOn) setView('3d');
   }
+}
+
+function approveAiSuggestion(){
+  if(!ghostSuggestion || !ghostSuggestion.extraQty){ showToast('추천 정보를 찾을 수 없어요'); return; }
+  // renderItemRows()가 내부에서 calc()를 다시 호출해 ghostSuggestion을 리셋하므로, 필요한 값을 먼저 로컬에 저장
+  const itemName = ghostSuggestion.itemName;
+  const extraQty = ghostSuggestion.extraQty;
+  const beforeUtil = document.getElementById('metricGrid').children[3]?.querySelector('.m-value')?.textContent || '';
+  const target = items.find(i=>i.name === itemName);
+  if(!target){
+    showToast('해당 품목을 찾을 수 없어 적용하지 못했어요');
+    return;
+  }
+  target.qty += extraQty;
+  ghostPreviewOn = false;
+  renderItemRows();
+  const afterUtil = document.getElementById('metricGrid').children[3]?.querySelector('.m-value')?.textContent || '';
+  showToast(`✅ "${itemName}" ${extraQty}개를 추가했어요. 활용률 ${beforeUtil} → ${afterUtil}`);
 }
 
 function onCrossSectionChange(){
@@ -1783,6 +1960,68 @@ function applyOptimization(){
 }
 
 // ===== PDF 리포트 생성 (인쇄 다이얼로그를 통해 PDF로 저장) =====
+// ===== 적재 순서도 - 4단계 썸네일 캡처 =====
+function buildLoadingSequenceThumbnails(container, result){
+  const { rendered } = buildBoxList(container, result);
+  if(rendered <= 0) return [];
+  const savedRotX = rotX, savedRotY = rotY, savedViewMode = currentViewMode;
+  rotX = 24; rotY = -32; currentViewMode = 'iso';
+  const steps = [0.25, 0.5, 0.75, 1.0].map(pct=>{
+    const stepLimit = Math.max(1, Math.round(rendered*pct));
+    const tempDiv = document.createElement('div');
+    tempDiv.id = 'tempSeq';
+    tempDiv.style.cssText = 'position:absolute;left:-9999px;top:-9999px;width:220px;height:160px;';
+    document.body.appendChild(tempDiv);
+    renderScene('tempSeq', null, container, result, true, stepLimit);
+    const svgEl = tempDiv.querySelector('svg');
+    const svgHtml = svgEl ? svgEl.outerHTML : '';
+    document.body.removeChild(tempDiv);
+    return { pct: Math.round(pct*100), svgHtml };
+  });
+  rotX = savedRotX; rotY = savedRotY; currentViewMode = savedViewMode;
+  return steps;
+}
+
+// ===== 3면도(Top/Front/Side) 캡처 - 현재 화면을 건드리지 않고 임시로 렌더링 =====
+function captureOrthoViews(container, result){
+  const savedRotX = rotX, savedRotY = rotY, savedViewMode = currentViewMode;
+  const presets = { top:{x:89,y:0}, front:{x:0,y:90}, side:{x:0,y:0} };
+  const captured = {};
+  ['top','front','side'].forEach(name=>{
+    const tempDiv = document.createElement('div');
+    tempDiv.id = 'tempRig_'+name;
+    tempDiv.style.cssText = 'position:absolute;left:-9999px;top:-9999px;width:280px;height:200px;';
+    document.body.appendChild(tempDiv);
+    rotX = presets[name].x; rotY = presets[name].y; currentViewMode = name;
+    renderScene('tempRig_'+name, null, container, result, true);
+    const svgEl = tempDiv.querySelector('svg');
+    captured[name] = svgEl ? svgEl.outerHTML : '';
+    document.body.removeChild(tempDiv);
+  });
+  rotX = savedRotX; rotY = savedRotY; currentViewMode = savedViewMode;
+  return captured;
+}
+
+// ===== 축하중 분산 계산 (컨테이너를 5구간으로 나눠 구간별 중량 집계) =====
+function computeWeightDistribution(container, result, bins){
+  bins = bins || 5;
+  const binWidth = container.l / bins;
+  const weights = new Array(bins).fill(0);
+  result.sections.forEach(s=>{
+    if(s.error) return;
+    const effL = s.effL || s.item.l;
+    const perColumn = s.perColumn || 1;
+    for(let c=0;c<s.colsUsed;c++){
+      const x = s.startLengthCm + c*effL + effL/2;
+      const binIdx = Math.min(bins-1, Math.max(0, Math.floor(x/binWidth)));
+      const already = c*perColumn;
+      const inThisCol = Math.max(0, Math.min(perColumn, s.placedQty-already));
+      weights[binIdx] += inThisCol * (s.item.weight||0);
+    }
+  });
+  return weights;
+}
+
 function printReport(){
   if(!lastContainer || !lastResult){ showToast('먼저 결과를 계산해주세요'); return; }
   const container = lastContainer, result = lastResult;
@@ -1805,6 +2044,10 @@ function printReport(){
 
   const svgEl = document.querySelector('#rigPreview svg');
   const svgHtml = svgEl ? svgEl.outerHTML : '';
+  const orthoViews = captureOrthoViews(container, result);
+  const weightDist = computeWeightDistribution(container, result, 5);
+  const maxDistWeight = Math.max(...weightDist, 1);
+  const loadingSequenceSteps = buildLoadingSequenceThumbnails(container, result);
 
   document.getElementById('printReport').innerHTML = `
     <div style="font-family:'Pretendard',sans-serif;color:#1E293B;max-width:800px;margin:0 auto;">
@@ -1845,6 +2088,53 @@ function printReport(){
       </div>
 
       <div style="margin-bottom:20px;">
+        <div style="font-size:13px;font-weight:700;margin-bottom:8px;">📐 3면도 (Top / Front / Side)</div>
+        <div style="display:flex;gap:10px;">
+          <div style="flex:1;border:1px solid #E2E8F0;border-radius:8px;padding:6px;text-align:center;">
+            <div style="font-size:9.5px;color:#94A3B8;margin-bottom:4px;">TOP</div>
+            <div style="height:130px;">${orthoViews.top}</div>
+          </div>
+          <div style="flex:1;border:1px solid #E2E8F0;border-radius:8px;padding:6px;text-align:center;">
+            <div style="font-size:9.5px;color:#94A3B8;margin-bottom:4px;">FRONT</div>
+            <div style="height:130px;">${orthoViews.front}</div>
+          </div>
+          <div style="flex:1;border:1px solid #E2E8F0;border-radius:8px;padding:6px;text-align:center;">
+            <div style="font-size:9.5px;color:#94A3B8;margin-bottom:4px;">SIDE</div>
+            <div style="height:130px;">${orthoViews.side}</div>
+          </div>
+        </div>
+      </div>
+
+      ${loadingSequenceSteps.length>0 ? `
+      <div style="margin-bottom:20px;">
+        <div style="font-size:13px;font-weight:700;margin-bottom:8px;">🔢 적재 순서도 (Loading Sequence)</div>
+        <div style="display:flex;gap:8px;">
+          ${loadingSequenceSteps.map(s=>`
+            <div style="flex:1;border:1px solid #E2E8F0;border-radius:8px;padding:6px;text-align:center;">
+              <div style="height:100px;">${s.svgHtml}</div>
+              <div style="font-size:9.5px;color:#64748B;margin-top:4px;">STEP ${s.pct}%</div>
+            </div>
+          `).join('<div style="align-self:center;color:#CBD5E1;">→</div>')}
+        </div>
+      </div>` : ''}
+
+      <div style="margin-bottom:20px;">
+        <div style="font-size:13px;font-weight:700;margin-bottom:8px;">⚖ 축하중 분산 (Weight Distribution, 도어 → 안쪽)</div>
+        <div style="display:flex;align-items:flex-end;gap:6px;height:70px;border-bottom:1.5px solid #94A3B8;padding:0 4px;">
+          ${weightDist.map((w,i)=>{
+            const h = maxDistWeight>0 ? Math.max(3, (w/maxDistWeight)*60) : 3;
+            return `<div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;">
+              <div style="font-size:8.5px;color:#475569;margin-bottom:2px;">${fmt(w)}kg</div>
+              <div style="width:100%;height:${h}px;background:linear-gradient(180deg,#2563EB,#7C3AED);border-radius:3px 3px 0 0;"></div>
+            </div>`;
+          }).join('')}
+        </div>
+        <div style="display:flex;justify-content:space-between;font-size:9px;color:#94A3B8;margin-top:3px;">
+          <span>도어측</span><span>중앙</span><span>안쪽</span>
+        </div>
+      </div>
+
+      <div style="margin-bottom:20px;">
         <div style="font-size:13px;font-weight:700;margin-bottom:8px;">📋 품목별 적재 내역</div>
         <table style="width:100%;border-collapse:collapse;font-size:11.5px;">
           <thead><tr style="background:#F1F5F9;"><th style="padding:6px;text-align:left;">품목</th><th style="padding:6px;text-align:left;">규격</th><th style="padding:6px;text-align:left;">배치/요청</th><th style="padding:6px;text-align:left;">부피</th><th style="padding:6px;text-align:left;">중량</th></tr></thead>
@@ -1852,8 +2142,19 @@ function printReport(){
         </table>
       </div>
 
-      <div style="font-size:10.5px;color:#94A3B8;border-top:1px solid #E2E8F0;padding-top:10px;">
-        본 리포트는 CBM Lab 컨테이너 적재 시각화 도구로 생성된 추정치이며, 실제 적재는 화물 형태·고정 규정 등에 따라 달라질 수 있습니다. procurement-toolkit-eight.vercel.app
+      <div style="font-size:10.5px;color:#94A3B8;border-top:1px solid #E2E8F0;padding-top:10px;margin-bottom:16px;">
+        본 리포트는 CBM Lab 컨테이너 적재 시각화 도구로 생성된 추정치이며, 실제 적재는 화물 형태·고정 규정 등에 따라 달라질 수 있습니다. 현장 작업 전 반드시 책임자 확인을 거쳐주세요. procurement-toolkit-eight.vercel.app
+      </div>
+
+      <div style="display:flex;gap:24px;font-size:11px;color:#334155;">
+        <div style="flex:1;">
+          <div style="border-bottom:1px solid #334155;height:36px;"></div>
+          <div style="margin-top:4px;color:#94A3B8;">작성자 서명</div>
+        </div>
+        <div style="flex:1;">
+          <div style="border-bottom:1px solid #334155;height:36px;"></div>
+          <div style="margin-top:4px;color:#94A3B8;">검수자 서명</div>
+        </div>
       </div>
     </div>
   `;
@@ -2118,7 +2419,7 @@ function optimizeMultiContainer(){
     });
     if(!bestResult || bestPlaced===0) break; // 남은 품목이 어떤 컨테이너에도 안 들어감 (규격 초과)
 
-    planSteps.push({ key:bestKey, util:bestUtil*100, placed:bestPlaced });
+    planSteps.push({ key:bestKey, util:bestUtil*100, placed:bestPlaced, result:bestResult });
     bestResult.sections.forEach(s=>{
       if(s.error) return;
       const ref = remaining.find(i=>i.name===s.item.name);
@@ -2145,11 +2446,69 @@ function showMultiContainerModal(planSteps, stillShort){
       ${planSteps.map((s,i)=>`<div class="multi-step-row"><span>${i+1}번째 — ${CONTAINERS[s.key].name}</span><span><b>${s.util.toFixed(0)}%</b> 활용 · ${fmt(s.placed)}개 적재</span></div>`).join('')}
       ${stillShort.length>0 ? `<div class="warn-box" style="margin-top:12px;"><strong>⚠ 일부 품목은 어떤 컨테이너에도 안 들어가요</strong>${stillShort.map(i=>`${i.name}: ${fmt(i.qty)}개 남음`).join('<br>')}</div>` : ''}
       <div class="opt-actions">
+        ${planSteps.length>0 ? `<button class="toolbar-btn primary" onclick="applyMultiContainerPlan()">📑 탭으로 보기</button>` : ''}
         <button class="toolbar-btn" onclick="document.getElementById('multiBackdrop').remove()">닫기</button>
       </div>
     </div>
   `;
   document.body.appendChild(backdrop);
+  window.__lastMultiPlan = planSteps;
+}
+
+// ===== 멀티 컨테이너 탭 뷰 =====
+let multiTabMode = false, multiTabPlan = null, multiTabActiveIdx = 0;
+
+function applyMultiContainerPlan(){
+  const planSteps = window.__lastMultiPlan;
+  if(!planSteps || planSteps.length===0) return;
+  multiTabMode = true;
+  multiTabPlan = planSteps;
+  multiTabActiveIdx = 0;
+  const el = document.getElementById('multiBackdrop');
+  if(el) el.remove();
+  renderMultiContainerTabs();
+  selectContainerTab(0);
+  showToast(`📑 컨테이너 ${planSteps.length}대로 나눠서 볼 수 있어요`);
+}
+
+function renderMultiContainerTabs(){
+  const bar = document.getElementById('multiTabBar');
+  bar.style.display = 'block';
+  const utilClass = u => u>=85 ? 'high' : u>=65 ? 'mid' : 'low';
+  bar.innerHTML = `
+    <div class="multi-tab-bar">
+      <span class="multi-tab-bar-label">📦 분할 적재 계획</span>
+      ${multiTabPlan.map((s,i)=>`
+        <button class="multi-tab-btn ${i===multiTabActiveIdx?'active':''}" onclick="selectContainerTab(${i})">
+          컨테이너 #${i+1} (${CONTAINERS[s.key].name})
+          <span class="multi-tab-util-badge ${utilClass(s.util)}">${s.util.toFixed(0)}%</span>
+        </button>
+      `).join('')}
+      <button class="multi-tab-exit" onclick="exitMultiTabMode()">✕ 일반 모드로</button>
+    </div>
+  `;
+}
+
+function selectContainerTab(idx){
+  multiTabActiveIdx = idx;
+  const step = multiTabPlan[idx];
+  const container = CONTAINERS[step.key];
+  lastContainer = container; lastResult = step.result;
+  renderMultiContainerTabs();
+  renderScene('rigPreview', 'legendPreview', container, step.result, false);
+  renderScene('rig3d', 'legend3d', container, step.result, true);
+  renderSpecPanel(container);
+  const cog = computeCenterOfGravity(container, step.result);
+  renderCogPanel(container, cog);
+  document.getElementById('containerType').value = step.key;
+}
+
+function exitMultiTabMode(){
+  multiTabMode = false;
+  multiTabPlan = null;
+  document.getElementById('multiTabBar').style.display = 'none';
+  calc();
+  showToast('일반 모드로 돌아왔어요');
 }
 
 // ===== 결과를 PNG 이미지로 내보내기 =====
