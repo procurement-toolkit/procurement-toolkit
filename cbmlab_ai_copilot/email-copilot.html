@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>영문 이메일 코파일럿 — CBM Lab</title>
+<style>
+  body { font-family: -apple-system, sans-serif; max-width: 720px; margin: 40px auto; padding: 0 16px; color: #222; }
+  .ctx-box { background: #f6f6f4; border: 1px solid #e0e0da; border-radius: 8px; padding: 16px; margin: 16px 0; font-size: 14px; }
+  .ctx-box.empty { color: #999; }
+  label { display: block; font-weight: 600; margin: 16px 0 6px; font-size: 14px; }
+  select, textarea, input[type=text] { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 6px; font-size: 14px; box-sizing: border-box; }
+  textarea { min-height: 90px; }
+  button#generate-btn { margin-top: 20px; padding: 12px 24px; background: #1a1a1a; color: #fff; border: none; border-radius: 6px; font-size: 15px; cursor: pointer; }
+  button#generate-btn:disabled { background: #999; cursor: not-allowed; }
+  #result { margin-top: 24px; padding: 16px; border: 1px solid #ddd; border-radius: 8px; white-space: pre-wrap; font-size: 14px; display: none; }
+  #quota-msg { font-size: 13px; color: #a33; margin-top: 8px; }
+  .license-box { margin-bottom: 24px; padding: 12px; background: #fffbe8; border: 1px solid #f0e0a0; border-radius: 8px; }
+</style>
+</head>
+<body>
+
+<h1 style="font-size:20px;">영문 이메일 코파일럿</h1>
+<p style="color:#666; font-size:14px;">계산기에서 넘어온 결과를 바탕으로 실무형 영문 이메일 초안을 만듭니다.</p>
+
+<div class="license-box">
+  <label for="license-key" style="margin-top:0;">라이선스 키</label>
+  <input type="text" id="license-key" placeholder="cbmlab-xxxxxxxx" />
+  <p style="font-size:12px;color:#888;margin:6px 0 0;">
+    아직 없으신가요? <a href="/pricing.html">Pro 플랜 안내</a>
+  </p>
+</div>
+
+<div id="context-display" class="ctx-box empty">
+  계산기에서 넘어온 데이터가 없습니다. 계산기 페이지에서 "AI로 이메일 작성" 버튼을 눌러 오시면 여기 자동으로 채워집니다.
+</div>
+
+<label for="situation">상황 유형</label>
+<select id="situation">
+  <option value="rfq">RFQ / 견적 요청</option>
+  <option value="price_pushback">가격 인하 요청</option>
+  <option value="price_increase_reject">가격 인상 통보 대응(거절/협상)</option>
+  <option value="delay_followup">납기 지연 독촉</option>
+  <option value="quality_claim">품질 이슈 / 클레임</option>
+  <option value="sample_request">샘플 요청</option>
+</select>
+
+<label for="tone">톤</label>
+<select id="tone">
+  <option value="firm_polite">단호하지만 정중하게</option>
+  <option value="soft">부드럽게, 관계 유지 중심</option>
+  <option value="urgent">긴급함을 강조</option>
+</select>
+
+<label for="extra">추가로 전달할 내용 (선택)</label>
+<textarea id="extra" placeholder="예: 다음 주 화요일까지 답변 필요, 대체 공급업체 검토 중이라는 뉘앙스 포함"></textarea>
+
+<button id="generate-btn">이메일 초안 생성</button>
+<div id="quota-msg"></div>
+<div id="result"></div>
+
+<script src="/assets/js/ai-handoff.js"></script>
+<script>
+  const ctx = CBMLabHandoff.read();
+  const ctxDisplay = document.getElementById('context-display');
+
+  if (ctx) {
+    ctxDisplay.classList.remove('empty');
+    ctxDisplay.textContent = ctx.summary;
+  }
+
+  const savedKey = CBMLabHandoff.readLicenseKey();
+  if (savedKey) document.getElementById('license-key').value = savedKey;
+
+  document.getElementById('generate-btn').addEventListener('click', async () => {
+    const btn = document.getElementById('generate-btn');
+    const resultBox = document.getElementById('result');
+    const quotaMsg = document.getElementById('quota-msg');
+    const licenseKey = document.getElementById('license-key').value.trim();
+
+    quotaMsg.textContent = '';
+
+    if (!licenseKey) {
+      quotaMsg.textContent = '라이선스 키를 입력해주세요.';
+      return;
+    }
+    CBMLabHandoff.saveLicenseKey(licenseKey);
+
+    btn.disabled = true;
+    btn.textContent = '생성 중...';
+    resultBox.style.display = 'none';
+
+    try {
+      const res = await fetch('/api/generate', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          license_key: licenseKey,
+          situation: document.getElementById('situation').value,
+          tone: document.getElementById('tone').value,
+          extra: document.getElementById('extra').value,
+          context: ctx, // 계산기 handoff 데이터 (없으면 null)
+        }),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        quotaMsg.textContent = data.message || '요청 처리 중 오류가 발생했습니다.';
+        return;
+      }
+
+      resultBox.textContent = data.text;
+      resultBox.style.display = 'block';
+    } catch (e) {
+      quotaMsg.textContent = '네트워크 오류가 발생했습니다. 잠시 후 다시 시도해주세요.';
+    } finally {
+      btn.disabled = false;
+      btn.textContent = '이메일 초안 생성';
+    }
+  });
+</script>
+</body>
+</html>

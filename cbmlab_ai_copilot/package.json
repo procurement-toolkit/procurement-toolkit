@@ -1,0 +1,11 @@
+{
+  "name": "cbmlab-api",
+  "version": "1.0.0",
+  "private": true,
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.32.0",
+    "@vercel/kv": "^2.0.0",
+    "stripe": "^17.0.0",
+    "uuid": "^9.0.1"
+  }
+}
