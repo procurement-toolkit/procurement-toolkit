@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Korea Sourcing Desk | CBM Lab</title>
+<meta name="description" content="Human-verified Korean manufacturer sourcing — RFQ analysis, factory verification, and shortlist delivery for overseas buyers.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#16232e;
+    --steel:#3e5c74;
+    --steel-soft:#6d8698;
+    --paper:#e7e2d3;
+    --paper-dark:#dcd6c4;
+    --card:#f4f1e7;
+    --kraft:#a9791f;
+    --rust:#a63d22;
+    --cargo:#46705a;
+    --line:#b9af98;
+    --ink-70:rgba(22,35,46,.7);
+    --ink-50:rgba(22,35,46,.5);
+    font-size:16px;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--paper);
+    background-image: radial-gradient(circle at 1px 1px, rgba(22,35,46,0.05) 1px, transparent 0);
+    background-size: 22px 22px;
+    color:var(--ink);
+    font-family:'Inter',system-ui,sans-serif;
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{color:inherit;}
+  img{max-width:100%;display:block;}
+
+  header.site{
+    background:var(--ink);
+    color:var(--paper);
+    padding:18px 24px;
+  }
+  .header-inner{
+    max-width:980px; margin:0 auto;
+    display:flex; align-items:center; justify-content:space-between;
+    gap:16px; flex-wrap:wrap;
+  }
+  .brand{
+    font-family:'Oswald',sans-serif; font-weight:600; letter-spacing:.04em;
+    font-size:1.05rem; text-transform:uppercase;
+    display:flex; align-items:center; gap:10px;
+  }
+  .brand .mark{width:10px;height:10px;background:var(--rust);transform:rotate(45deg);display:inline-block;flex:none;}
+  .lang-toggle{display:flex;border:1px solid rgba(231,226,211,.35);font-family:'IBM Plex Mono',monospace;font-size:.78rem;}
+  .lang-toggle button{background:none;border:none;color:var(--paper);padding:6px 14px;cursor:pointer;letter-spacing:.05em;opacity:.55;}
+  .lang-toggle button.active{opacity:1;background:rgba(231,226,211,.12);}
+
+  .container{max-width:980px;margin:0 auto;padding:0 24px;}
+
+  /* Hero */
+  .hero{padding:56px 24px 40px;border-bottom:1px dashed var(--line);}
+  .hero-inner{max-width:980px;margin:0 auto;}
+  .eyebrow{
+    font-family:'IBM Plex Mono',monospace;font-size:.74rem;letter-spacing:.14em;
+    text-transform:uppercase;color:var(--rust);
+    display:flex;align-items:center;gap:10px;margin-bottom:16px;
+  }
+  .eyebrow::before{content:"";width:26px;height:1px;background:var(--rust);}
+  h1{
+    font-family:'Oswald',sans-serif;font-weight:600;
+    font-size:clamp(2rem,5vw,3rem);
+    line-height:1.08;margin:0 0 18px;max-width:18ch;
+  }
+  .hero p.lede{max-width:58ch;color:var(--ink-70);font-size:1.06rem;margin:0 0 28px;}
+  .credentials{
+    display:flex;flex-wrap:wrap;gap:10px;
+  }
+  .cred-chip{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:.75rem;
+    border:1px solid var(--steel);
+    color:var(--steel);
+    padding:6px 12px;
+    letter-spacing:.02em;
+  }
+
+  /* Why section */
+  .why{padding:48px 24px;border-bottom:1px dashed var(--line);}
+  .why-grid{
+    max-width:980px;margin:0 auto;
+    display:grid;grid-template-columns:1fr 1fr;gap:36px;
+  }
+  @media (max-width:760px){.why-grid{grid-template-columns:1fr;}}
+  .why h2{
+    font-family:'Oswald',sans-serif;text-transform:uppercase;
+    font-size:1.3rem;font-weight:600;margin:0 0 14px;letter-spacing:.02em;
+  }
+  .why p{color:var(--ink-70);margin:0 0 12px;font-size:.98rem;}
+  .why ul{margin:0;padding-left:0;list-style:none;}
+  .why li{
+    padding:10px 0 10px 22px;
+    border-bottom:1px dashed var(--line);
+    font-size:.95rem;
+    position:relative;
+    color:var(--ink);
+  }
+  .why li::before{
+    content:"✕";
+    position:absolute;left:0;top:11px;
+    color:var(--rust);font-size:.75rem;font-weight:700;
+  }
+  .why li b{display:block;font-family:'Oswald',sans-serif;font-weight:600;font-size:.9rem;text-transform:uppercase;letter-spacing:.02em;margin-bottom:2px;}
+
+  /* Services */
+  .services{padding:52px 24px;border-bottom:1px dashed var(--line);}
+  .services h2, .process h2, .cta h2{
+    font-family:'Oswald',sans-serif;text-transform:uppercase;
+    font-size:1.5rem;font-weight:600;margin:0 0 8px;letter-spacing:.02em;
+    text-align:center;
+  }
+  .section-sub{
+    text-align:center;color:var(--ink-70);max-width:52ch;margin:0 auto 40px;font-size:.96rem;
+  }
+  .tier-grid{
+    max-width:980px;margin:0 auto;
+    display:grid;grid-template-columns:repeat(3,1fr);gap:20px;
+  }
+  @media (max-width:800px){.tier-grid{grid-template-columns:1fr;}}
+  .tier{
+    background:var(--card);border:1px solid var(--line);
+    display:flex;flex-direction:column;position:relative;
+  }
+  .tier.featured{border:2px solid var(--rust);}
+  .tier-flag{
+    position:absolute;top:-1px;right:-1px;
+    background:var(--rust);color:#fff;
+    font-family:'IBM Plex Mono',monospace;
+    font-size:.65rem;letter-spacing:.08em;text-transform:uppercase;
+    padding:5px 10px;
+  }
+  .tier-head{padding:22px 20px 16px;border-bottom:1px dashed var(--line);}
+  .tier-tag{font-family:'IBM Plex Mono',monospace;font-size:.7rem;color:var(--steel);letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px;}
+  .tier-name{font-family:'Oswald',sans-serif;font-weight:600;font-size:1.15rem;margin:0 0 10px;text-transform:uppercase;}
+  .tier-price{font-family:'IBM Plex Mono',monospace;font-size:1.5rem;color:var(--ink);}
+  .tier-price span{font-size:.75rem;color:var(--ink-50);font-family:'Inter',sans-serif;}
+  .tier-body{padding:18px 20px;flex:1;display:flex;flex-direction:column;gap:10px;}
+  .tier-body li{
+    font-size:.88rem;padding-left:16px;position:relative;color:var(--ink-70);list-style:none;
+  }
+  .tier-body li::before{content:"—";position:absolute;left:0;color:var(--kraft);}
+  .tier-cta{
+    margin:0 20px 20px;
+    display:block;text-align:center;
+    background:var(--ink);color:var(--paper);
+    text-decoration:none;
+    font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.05em;
+    font-size:.82rem;padding:12px;
+  }
+  .tier.featured .tier-cta{background:var(--rust);}
+  .tier-cta:hover{opacity:.88;}
+
+  /* Process */
+  .process{padding:52px 24px;border-bottom:1px dashed var(--line);}
+  .steps{
+    max-width:820px;margin:0 auto;
+    display:flex;flex-direction:column;
+  }
+  .step{
+    display:grid;grid-template-columns:56px 1fr;gap:18px;
+    padding:20px 0;border-bottom:1px dashed var(--line);
+  }
+  .step:last-child{border-bottom:none;}
+  .step-num{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:1.6rem;color:var(--line);font-weight:600;
+  }
+  .step h3{
+    font-family:'Oswald',sans-serif;font-size:1rem;text-transform:uppercase;
+    letter-spacing:.02em;margin:2px 0 6px;
+  }
+  .step p{margin:0;color:var(--ink-70);font-size:.92rem;max-width:56ch;}
+
+  /* Case placeholder */
+  .cases{padding:52px 24px;border-bottom:1px dashed var(--line);}
+  .case-card{
+    max-width:820px;margin:0 auto;
+    background:var(--card);border:1px dashed var(--kraft);
+    padding:26px 24px;
+  }
+  .case-card .tag{
+    font-family:'IBM Plex Mono',monospace;font-size:.7rem;color:var(--kraft);
+    letter-spacing:.1em;text-transform:uppercase;margin-bottom:10px;display:block;
+  }
+  .case-card p{margin:0 0 8px;color:var(--ink-70);font-size:.92rem;}
+  .case-card p.instruction{color:var(--rust);font-style:italic;}
+
+  /* CTA */
+  .cta{padding:60px 24px;}
+  .cta-box{
+    max-width:700px;margin:0 auto;text-align:center;
+  }
+  .contact-btn{
+    display:inline-block;
+    margin-top:8px;
+    background:var(--rust);color:#fff;text-decoration:none;
+    font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.05em;
+    font-size:.9rem;padding:14px 28px;
+  }
+  .contact-btn:hover{background:#8a331c;}
+  .contact-note{
+    margin-top:14px;font-size:.78rem;color:var(--ink-50);
+    font-family:'IBM Plex Mono',monospace;
+  }
+
+  footer{
+    text-align:center;font-family:'IBM Plex Mono',monospace;font-size:.72rem;
+    color:var(--ink-50);padding:0 24px 40px;
+  }
+
+  [data-ko]{display:none;}
+  html[lang="ko"] [data-en]{display:none;}
+  html[lang="ko"] [data-ko]{display:inline;}
+  html[lang="ko"] [data-ko].block{display:block;}
+</style>
+</head>
+<body>
+
+<header class="site">
+  <div class="header-inner">
+    <div class="brand"><span class="mark"></span>CBM LAB</div>
+    <div class="lang-toggle">
+      <button id="btn-en" class="active" onclick="setLang('en')">EN</button>
+      <button id="btn-ko" onclick="setLang('ko')">KO</button>
+    </div>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="hero-inner">
+    <div class="eyebrow"><span data-en>Sourcing Desk</span><span data-ko>소싱 데스크</span></div>
+    <h1>
+      <span data-en>20 Years Sourcing Korean Manufacturing. Verified, Not Automated.</span>
+      <span data-ko>20년 경력의 한국 제조업 소싱. AI가 아니라 사람이 검증합니다.</span>
+    </h1>
+    <p class="lede">
+      <span data-en>Any AI can draft an RFQ. None of them can walk into a factory, check who actually owns it, and tell you whether it will ship on time. That's the part we do.</span>
+      <span data-ko>RFQ 초안은 AI도 작성할 수 있습니다. 하지만 실제로 공장에 찾아가 누가 운영하는지 확인하고, 납기를 지킬 수 있는 곳인지 판단하는 건 사람만 할 수 있는 일입니다. 저희가 그 부분을 맡습니다.</span>
+    </p>
+    <div class="credentials">
+      <span class="cred-chip" data-en>20+ Years Procurement &amp; Sourcing</span><span class="cred-chip" data-ko>20년+ 구매·소싱 경력</span>
+      <span class="cred-chip">MBA</span>
+      <span class="cred-chip" data-en>Certified Interpreter</span><span class="cred-chip" data-ko>통역사 자격 보유</span>
+      <span class="cred-chip" data-en>Bilingual KR / EN</span><span class="cred-chip" data-ko>한/영 바일링구얼</span>
+    </div>
+  </div>
+</section>
+
+<section class="why">
+  <div class="why-grid">
+    <div>
+      <h2><span data-en>What a chatbot can't do</span><span data-ko>챗봇이 할 수 없는 것</span></h2>
+      <ul>
+        <li><b data-en>Verify who's actually behind the factory</b><b data-ko>공장 실소유주 확인</b><span data-en>Business registration, export history, and red flags that don't show up in a Google search.</span><span data-ko>구글 검색에는 나오지 않는 사업자 등록, 수출 이력, 위험 신호를 직접 확인합니다.</span></li>
+        <li><b data-en>Walk the production floor</b><b data-ko>생산 현장 실사</b><span data-en>Photos, QC process, and real capacity — not what's written in a sales deck.</span><span data-ko>영업자료가 아니라, 실제 사진·QC 공정·생산 여력을 직접 확인합니다.</span></li>
+        <li><b data-en>Negotiate in the room</b><b data-ko>현장 협상</b><span data-en>Price, MOQ, and payment terms move differently when a bilingual negotiator is present.</span><span data-ko>통역·협상이 가능한 사람이 함께할 때 가격·MOQ·결제 조건은 다르게 움직입니다.</span></li>
+      </ul>
+    </div>
+    <div>
+      <h2><span data-en>What we combine it with</span><span data-ko>여기에 AI를 더하면</span></h2>
+      <p><span data-en>AI still does the heavy lifting on the parts it's good at — reading your RFQ, comparing quotes side by side, drafting the paperwork. That's what keeps this fast and affordable instead of a slow, expensive traditional agency retainer.</span><span data-ko>RFQ 분석, 견적 비교, 서류 초안 작성처럼 AI가 잘하는 부분은 AI가 처리합니다. 그래서 전통적인 소싱 에이전시보다 빠르고 합리적인 비용으로 서비스를 제공할 수 있습니다.</span></p>
+      <p><span data-en>You get AI-speed research with human-verified conclusions — not a chatbot's best guess about a factory it has never seen.</span><span data-ko>결과물은 AI 수준의 속도와, 실제로 본 적 없는 공장에 대한 챗봇의 추측이 아닌, 사람이 직접 검증한 결론입니다.</span></p>
+    </div>
+  </div>
+</section>
+
+<section class="services">
+  <h2><span data-en>Services</span><span data-ko>서비스</span></h2>
+  <p class="section-sub"><span data-en>Start small to test a supplier, or bring us your full sourcing pipeline.</span><span data-ko>공급사 한 곳만 검증해보셔도 좋고, 전체 소싱 프로세스를 맡기셔도 됩니다.</span></p>
+
+  <div class="tier-grid">
+    <div class="tier">
+      <div class="tier-head">
+        <div class="tier-tag" data-en>Entry</div><div class="tier-tag" data-ko>입문</div>
+        <div class="tier-name"><span data-en>Quick Supplier Check</span><span data-ko>공급사 약식 검증</span></div>
+        <div class="tier-price">$19 <span data-en>/ per supplier</span><span data-ko>/ 공급사 1건</span></div>
+      </div>
+      <ul class="tier-body">
+        <li><span data-en>Business registration &amp; export history review</span><span data-ko>사업자 등록·수출 이력 확인</span></li>
+        <li><span data-en>Public trust &amp; risk signal check</span><span data-ko>공개된 신뢰도·리스크 신호 확인</span></li>
+        <li><span data-en>Plain-language summary + red flags</span><span data-ko>쉬운 설명의 요약 + 위험 신호</span></li>
+        <li><span data-en>Recommended next step</span><span data-ko>다음 단계 권고안</span></li>
+        <li><span data-en>Delivered in 2 business days</span><span data-ko>영업일 기준 2일 이내 전달</span></li>
+      </ul>
+      <a href="#contact" class="tier-cta"><span data-en>Start a Check</span><span data-ko>검증 요청하기</span></a>
+    </div>
+
+    <div class="tier featured">
+      <div class="tier-flag"><span data-en>Most Requested</span><span data-ko>가장 많이 찾는</span></div>
+      <div class="tier-head">
+        <div class="tier-tag" data-en>Project</div><div class="tier-tag" data-ko>프로젝트</div>
+        <div class="tier-name"><span data-en>RFQ to Shortlist</span><span data-ko>RFQ 숏리스트</span></div>
+        <div class="tier-price">$450–1,800 <span data-en>/ project</span><span data-ko>/ 프로젝트</span></div>
+      </div>
+      <ul class="tier-body">
+        <li><span data-en>Your RFQ analyzed and translated for Korean factories</span><span data-ko>RFQ 분석 후 한국 제조사용으로 번역</span></li>
+        <li><span data-en>3–5 verified factories matched and quoted</span><span data-ko>검증된 공장 3~5곳 매칭 및 견적 확보</span></li>
+        <li><span data-en>Side-by-side quote &amp; capability comparison</span><span data-ko>견적·생산능력 비교표 제공</span></li>
+        <li><span data-en>Sample coordination support</span><span data-ko>샘플 발송 조율 지원</span></li>
+        <li><span data-en>Delivered in 1–2 weeks</span><span data-ko>1~2주 이내 전달</span></li>
+      </ul>
+      <a href="#contact" class="tier-cta"><span data-en>Request a Shortlist</span><span data-ko>숏리스트 요청하기</span></a>
+    </div>
+
+    <div class="tier">
+      <div class="tier-head">
+        <div class="tier-tag" data-en>Ongoing</div><div class="tier-tag" data-ko>지속형</div>
+        <div class="tier-name"><span data-en>Sourcing Retainer</span><span data-ko>소싱 리테이너</span></div>
+        <div class="tier-price">$600–1,500 <span data-en>/ month</span><span data-ko>/ 월</span></div>
+      </div>
+      <ul class="tier-body">
+        <li><span data-en>Priority access for new RFQs</span><span data-ko>신규 RFQ 우선 처리</span></li>
+        <li><span data-en>Ongoing factory relationship management</span><span data-ko>공장 관계 지속 관리</span></li>
+        <li><span data-en>Quarterly factory re-verification</span><span data-ko>분기별 공장 재검증</span></li>
+        <li><span data-en>Direct line for negotiation support</span><span data-ko>협상 지원 직통 연락</span></li>
+        <li><span data-en>Best for repeat, recurring orders</span><span data-ko>반복 발주에 최적</span></li>
+      </ul>
+      <a href="#contact" class="tier-cta"><span data-en>Discuss a Retainer</span><span data-ko>리테이너 상담하기</span></a>
+    </div>
+  </div>
+</section>
+
+<section class="process">
+  <h2><span data-en>How it works</span><span data-ko>진행 방식</span></h2>
+  <p class="section-sub"><span data-en>The same process every time — AI handles the speed, a human handles the judgment.</span><span data-ko>매번 동일한 프로세스로 진행합니다 — 속도는 AI가, 판단은 사람이 맡습니다.</span></p>
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">01</div>
+      <div><h3><span data-en>Send your RFQ</span><span data-ko>RFQ 전달</span></h3>
+      <p><span data-en>Product, target price, MOQ, required certifications, and timeline — whatever you already have.</span><span data-ko>제품, 목표 단가, MOQ, 필요 인증, 일정 등 현재 가진 정보를 전달해 주세요.</span></p></div>
+    </div>
+    <div class="step">
+      <div class="step-num">02</div>
+      <div><h3><span data-en>AI-assisted first pass</span><span data-ko>AI 1차 분석</span></h3>
+      <p><span data-en>Your request is structured and matched against known manufacturers in the relevant category.</span><span data-ko>요청 내용을 구조화하여 해당 카테고리의 제조사 데이터와 매칭합니다.</span></p></div>
+    </div>
+    <div class="step">
+      <div class="step-num">03</div>
+      <div><h3><span data-en>Human verification</span><span data-ko>사람의 검증</span></h3>
+      <p><span data-en>Candidate factories are checked directly — registration, references, and where useful, a site visit.</span><span data-ko>후보 공장을 직접 확인합니다 — 사업자 등록, 레퍼런스, 필요 시 현장 방문까지 포함합니다.</span></p></div>
+    </div>
+    <div class="step">
+      <div class="step-num">04</div>
+      <div><h3><span data-en>Shortlist delivered</span><span data-ko>숏리스트 전달</span></h3>
+      <p><span data-en>You receive a clear comparison and a recommendation — the decision stays yours.</span><span data-ko>명확한 비교표와 추천안을 전달해 드리며, 최종 결정은 고객님이 하십니다.</span></p></div>
+    </div>
+  </div>
+</section>
+
+<section class="cases">
+  <div class="case-card">
+    <span class="tag">CASE STUDY</span>
+    <p><span data-en>[Add a real, anonymized case here once you have client sign-off — e.g. product category, region, outcome. Real case studies build far more trust than generic copy. Keep client names out unless they've explicitly agreed to be named.]</span><span data-ko>[실제 고객 동의를 받은 후, 익명화된 실제 사례를 여기에 추가하세요 — 예: 품목, 지역, 결과 등. 일반적인 문구보다 실제 사례가 훨씬 큰 신뢰를 만듭니다. 고객이 명시적으로 동의하지 않는 한 실명은 넣지 마세요.]</span></p>
+    <p class="instruction" data-en>— placeholder, replace before publishing —</p>
+    <p class="instruction" data-ko>— 발행 전 반드시 교체하세요 —</p>
+  </div>
+</section>
+
+<section class="cta" id="contact">
+  <div class="cta-box">
+    <h2><span data-en>Tell us what you're trying to source</span><span data-ko>어떤 제품을 소싱하려 하시나요?</span></h2>
+    <p><span data-en>Reply with your product, target quantity, and destination — we'll tell you honestly whether this is a fit before anything is billed.</span><span data-ko>제품, 목표 수량, 배송 국가를 알려주시면 비용 청구 전 정직하게 적합 여부를 안내해 드립니다.</span></p>
+    <a href="mailto:REPLACE-WITH-YOUR-EMAIL@example.com?subject=Sourcing%20Inquiry%20via%20CBM%20Lab" class="contact-btn">
+      <span data-en>Email the Sourcing Desk</span><span data-ko>소싱 데스크에 문의하기</span>
+    </a>
+    <div class="contact-note">
+      <span data-en>⚠ Replace the email address in this button before publishing this page.</span>
+      <span data-ko>⚠ 페이지를 게시하기 전 이 버튼의 이메일 주소를 실제 주소로 교체하세요.</span>
+    </div>
+  </div>
+</section>
+
+<footer>
+  CBM LAB — <span data-en>Logistics &amp; Procurement Toolkit</span><span data-ko>물류·구매 실무 툴킷</span>
+</footer>
+
+<script>
+function setLang(lang){
+  document.documentElement.lang = lang;
+  document.getElementById('btn-en').classList.toggle('active', lang==='en');
+  document.getElementById('btn-ko').classList.toggle('active', lang==='ko');
+}
+</script>
+
+</body>
+</html>

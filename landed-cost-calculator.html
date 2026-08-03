@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Landed Cost Calculator | CBM Lab</title>
+<meta name="description" content="Calculate the true delivered cost of goods sourced from Korea — factory price to final landed cost, duty and VAT included.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#16232e;
+    --steel:#3e5c74;
+    --steel-soft:#6d8698;
+    --paper:#e7e2d3;
+    --paper-dark:#dcd6c4;
+    --card:#f4f1e7;
+    --kraft:#a9791f;
+    --rust:#a63d22;
+    --cargo:#46705a;
+    --line:#b9af98;
+    --ink-70:rgba(22,35,46,.7);
+    --ink-50:rgba(22,35,46,.5);
+    font-size:16px;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--paper);
+    background-image:
+      radial-gradient(circle at 1px 1px, rgba(22,35,46,0.05) 1px, transparent 0);
+    background-size: 22px 22px;
+    color:var(--ink);
+    font-family:'Inter',system-ui,sans-serif;
+    line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{color:inherit;}
+
+  /* ---------- Header ---------- */
+  header.site{
+    background:var(--ink);
+    color:var(--paper);
+    padding:18px 24px;
+  }
+  .header-inner{
+    max-width:980px;
+    margin:0 auto;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:16px;
+    flex-wrap:wrap;
+  }
+  .brand{
+    font-family:'Oswald',sans-serif;
+    font-weight:600;
+    letter-spacing:.04em;
+    font-size:1.05rem;
+    text-transform:uppercase;
+    display:flex;
+    align-items:center;
+    gap:10px;
+  }
+  .brand .mark{
+    width:10px;height:10px;background:var(--rust);
+    transform:rotate(45deg);
+    display:inline-block;
+    flex:none;
+  }
+  .lang-toggle{
+    display:flex;
+    border:1px solid rgba(231,226,211,.35);
+    font-family:'IBM Plex Mono',monospace;
+    font-size:.78rem;
+  }
+  .lang-toggle button{
+    background:none;border:none;color:var(--paper);
+    padding:6px 14px;cursor:pointer;letter-spacing:.05em;
+    opacity:.55;
+  }
+  .lang-toggle button.active{opacity:1;background:rgba(231,226,211,.12);}
+
+  /* ---------- Hero ---------- */
+  .hero{
+    max-width:980px;
+    margin:0 auto;
+    padding:44px 24px 28px;
+  }
+  .eyebrow{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:.74rem;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    color:var(--rust);
+    display:flex;align-items:center;gap:10px;
+    margin-bottom:14px;
+  }
+  .eyebrow::before{
+    content:"";
+    width:26px;height:1px;background:var(--rust);
+  }
+  h1{
+    font-family:'Oswald',sans-serif;
+    font-weight:600;
+    font-size:clamp(1.8rem,4.4vw,2.6rem);
+    line-height:1.12;
+    margin:0 0 14px;
+    letter-spacing:.005em;
+  }
+  .hero p.lede{
+    max-width:56ch;
+    color:var(--ink-70);
+    font-size:1.02rem;
+    margin:0;
+  }
+
+  /* ---------- Layout ---------- */
+  .wrap{
+    max-width:980px;
+    margin:0 auto;
+    padding:0 24px 80px;
+    display:grid;
+    grid-template-columns:1.15fr 1fr;
+    gap:28px;
+    align-items:start;
+  }
+  @media (max-width:800px){
+    .wrap{grid-template-columns:1fr;}
+  }
+
+  .panel{
+    background:var(--card);
+    border:1px solid var(--line);
+    position:relative;
+  }
+  .panel::before{
+    content:"";
+    position:absolute; inset:6px;
+    border:1px solid rgba(22,35,46,.08);
+    pointer-events:none;
+  }
+  .panel-head{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:16px 20px;
+    border-bottom:1px dashed var(--line);
+  }
+  .panel-head .tag{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:.7rem;
+    letter-spacing:.12em;
+    text-transform:uppercase;
+    color:var(--steel);
+  }
+  .panel-head h2{
+    font-family:'Oswald',sans-serif;
+    font-size:1.05rem;
+    font-weight:600;
+    margin:0;
+    text-transform:uppercase;
+    letter-spacing:.03em;
+  }
+
+  .field-grid{
+    padding:20px;
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:16px;
+  }
+  .field{display:flex;flex-direction:column;gap:6px;}
+  .field.full{grid-column:1/-1;}
+  .field label{
+    font-size:.76rem;
+    font-family:'IBM Plex Mono',monospace;
+    letter-spacing:.03em;
+    color:var(--ink-70);
+    text-transform:uppercase;
+  }
+  .field input, .field select{
+    font-family:'Inter',sans-serif;
+    font-size:.95rem;
+    padding:9px 10px;
+    border:1px solid var(--line);
+    background:#fff;
+    color:var(--ink);
+  }
+  .field input:focus, .field select:focus{
+    outline:2px solid var(--steel);
+    outline-offset:1px;
+  }
+  .field .hint{font-size:.72rem;color:var(--ink-50);font-family:'Inter',sans-serif;}
+
+  .row-inline{display:grid;grid-template-columns:1fr 1fr;gap:16px;grid-column:1/-1;}
+
+  .compute-btn{
+    margin:4px 20px 20px;
+    background:var(--ink);
+    color:var(--paper);
+    border:none;
+    font-family:'Oswald',sans-serif;
+    text-transform:uppercase;
+    letter-spacing:.06em;
+    font-size:.9rem;
+    font-weight:600;
+    padding:13px 18px;
+    cursor:pointer;
+    width:calc(100% - 40px);
+  }
+  .compute-btn:hover{background:var(--rust);}
+
+  /* ---------- Manifest / results ---------- */
+  .manifest{
+    background:var(--card);
+    border:1px solid var(--line);
+    position:sticky;
+    top:20px;
+  }
+  .manifest-head{
+    padding:16px 20px;
+    border-bottom:1px dashed var(--line);
+    display:flex;justify-content:space-between;align-items:flex-start;
+  }
+  .manifest-head h2{
+    font-family:'Oswald',sans-serif;
+    font-size:1.05rem;font-weight:600;margin:0 0 4px;
+    text-transform:uppercase;letter-spacing:.03em;
+  }
+  .manifest-id{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:.72rem;color:var(--ink-50);
+  }
+  .stamp{
+    border:2px solid var(--rust);
+    color:var(--rust);
+    font-family:'Oswald',sans-serif;
+    font-size:.66rem;
+    letter-spacing:.1em;
+    text-transform:uppercase;
+    padding:4px 8px;
+    transform:rotate(-6deg);
+    white-space:nowrap;
+  }
+  .ledger{padding:18px 20px 8px;}
+  .ledger-row{
+    display:flex;justify-content:space-between;align-items:baseline;
+    padding:8px 0;
+    border-bottom:1px dashed var(--line);
+    font-family:'IBM Plex Mono',monospace;
+    font-size:.86rem;
+  }
+  .ledger-row .lbl{color:var(--ink-70);}
+  .ledger-row .val{font-weight:500;}
+  .ledger-row.sub .lbl{padding-left:14px;color:var(--ink-50);font-size:.8rem;}
+  .ledger-row.total{
+    border-bottom:none;
+    border-top:2px solid var(--ink);
+    margin-top:4px;
+    padding-top:12px;
+    font-size:1rem;
+  }
+  .ledger-row.total .lbl{
+    font-family:'Oswald',sans-serif;
+    text-transform:uppercase;
+    letter-spacing:.03em;
+    color:var(--ink);
+    font-size:.9rem;
+  }
+  .ledger-row.total .val{font-size:1.15rem;color:var(--rust);font-weight:600;}
+  .perunit{
+    margin:14px 20px 20px;
+    background:var(--ink);
+    color:var(--paper);
+    padding:14px 16px;
+    display:flex;justify-content:space-between;align-items:center;
+  }
+  .perunit .lbl{
+    font-family:'Oswald',sans-serif;
+    text-transform:uppercase;
+    font-size:.8rem;letter-spacing:.04em;
+  }
+  .perunit .val{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:1.3rem;font-weight:600;
+    color:#fff;
+  }
+  .disclaimer{
+    margin:0 20px 20px;
+    font-size:.74rem;
+    color:var(--ink-50);
+    border-left:2px solid var(--kraft);
+    padding-left:10px;
+  }
+
+  /* ---------- CTA cross-sell ---------- */
+  .crosssell{
+    max-width:980px;
+    margin:0 auto 70px;
+    padding:0 24px;
+  }
+  .crosssell-card{
+    background:var(--ink);
+    color:var(--paper);
+    padding:30px 28px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:24px;
+    flex-wrap:wrap;
+  }
+  .crosssell-card h3{
+    font-family:'Oswald',sans-serif;
+    font-size:1.2rem;
+    margin:0 0 8px;
+    text-transform:uppercase;
+    letter-spacing:.02em;
+  }
+  .crosssell-card p{
+    margin:0;
+    max-width:46ch;
+    color:rgba(231,226,211,.75);
+    font-size:.92rem;
+  }
+  .cta-btn{
+    background:var(--rust);
+    color:#fff;
+    text-decoration:none;
+    font-family:'Oswald',sans-serif;
+    text-transform:uppercase;
+    letter-spacing:.05em;
+    font-size:.85rem;
+    padding:12px 20px;
+    white-space:nowrap;
+    flex:none;
+  }
+  .cta-btn:hover{background:#8a331c;}
+
+  footer{
+    text-align:center;
+    font-family:'IBM Plex Mono',monospace;
+    font-size:.72rem;
+    color:var(--ink-50);
+    padding:0 24px 40px;
+  }
+
+  [data-ko]{display:none;}
+  html[lang="ko"] [data-en]{display:none;}
+  html[lang="ko"] [data-ko]{display:inline;}
+  html[lang="ko"] [data-ko].block{display:block;}
+</style>
+</head>
+<body>
+
+<header class="site">
+  <div class="header-inner">
+    <div class="brand"><span class="mark"></span>CBM LAB</div>
+    <div class="lang-toggle">
+      <button id="btn-en" class="active" onclick="setLang('en')">EN</button>
+      <button id="btn-ko" onclick="setLang('ko')">KO</button>
+    </div>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="eyebrow">
+    <span data-en>Logistics Utilities</span><span data-ko>물류 유틸리티</span>
+  </div>
+  <h1>
+    <span data-en>Landed Cost Calculator</span>
+    <span data-ko>관세·물류비 착지원가 계산기</span>
+  </h1>
+  <p class="lede">
+    <span data-en>What does it actually cost once it clears customs and reaches your door? Enter your factory price and shipment details — get freight, duty, VAT, and final per-unit cost, broken down like a customs manifest.</span>
+    <span data-ko>공장 출고가에서 실제 통관·배송을 마친 최종 원가는 얼마일까요? 출고가와 선적 정보를 입력하면 운임·관세·부가세를 포함한 개당 착지원가를 통관 명세서 형태로 계산해 드립니다.</span>
+  </p>
+</section>
+
+<div class="wrap">
+
+  <!-- INPUT PANEL -->
+  <div class="panel">
+    <div class="panel-head">
+      <h2><span data-en>Shipment Details</span><span data-ko>선적 정보</span></h2>
+      <span class="tag">INPUT</span>
+    </div>
+    <div class="field-grid">
+
+      <div class="field full">
+        <label><span data-en>Product / Reference</span><span data-ko>품목명 (참고용)</span></label>
+        <input type="text" id="product" placeholder="e.g. Induction Cooktop Model IH-320">
+      </div>
+
+      <div class="field">
+        <label><span data-en>Factory Unit Price</span><span data-ko>공장 출고 단가</span></label>
+        <input type="number" id="unitPrice" value="45" min="0" step="0.01">
+      </div>
+      <div class="field">
+        <label><span data-en>Currency</span><span data-ko>통화</span></label>
+        <select id="currency">
+          <option value="USD">USD</option>
+          <option value="KRW">KRW</option>
+          <option value="EUR">EUR</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label><span data-en>Quantity (units)</span><span data-ko>수량 (개)</span></label>
+        <input type="number" id="qty" value="500" min="1" step="1">
+      </div>
+      <div class="field">
+        <label><span data-en>Incoterm</span><span data-ko>인코텀즈</span></label>
+        <select id="incoterm">
+          <option value="FOB">FOB</option>
+          <option value="EXW">EXW</option>
+          <option value="CIF">CIF (freight/insurance included)</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label><span data-en>Total Freight (shipment)</span><span data-ko>총 운임 (선적 전체)</span></label>
+        <input type="number" id="freight" value="1800" min="0" step="1">
+      </div>
+      <div class="field">
+        <label><span data-en>Insurance (% of goods value)</span><span data-ko>보험료 (상품가 대비 %)</span></label>
+        <input type="number" id="insurance" value="0.5" min="0" step="0.1">
+      </div>
+
+      <div class="field full">
+        <label><span data-en>Destination Market</span><span data-ko>수입국</span></label>
+        <select id="destination" onchange="applyPreset()">
+          <option value="US" data-duty="0" data-vat="0">United States — duty varies by HS code, no federal VAT</option>
+          <option value="EU" data-duty="2.7" data-vat="19">European Union (DE reference) — avg. duty ~2.7%, VAT 19%</option>
+          <option value="UK" data-duty="2.5" data-vat="20">United Kingdom — avg. duty ~2.5%, VAT 20%</option>
+          <option value="CA" data-duty="0" data-vat="5">Canada — duty varies, GST 5%</option>
+          <option value="AU" data-duty="5" data-vat="10">Australia — avg. duty ~5%, GST 10%</option>
+          <option value="JP" data-duty="0" data-vat="10">Japan — duty varies, consumption tax 10%</option>
+          <option value="VN" data-duty="10" data-vat="10">Vietnam — avg. duty ~10%, VAT 10%</option>
+          <option value="TH" data-duty="10" data-vat="7">Thailand — avg. duty ~10%, VAT 7%</option>
+          <option value="PH" data-duty="7" data-vat="12">Philippines — avg. duty ~7%, VAT 12%</option>
+          <option value="MN" data-duty="5" data-vat="10">Mongolia — avg. duty ~5%, VAT 10%</option>
+          <option value="OTHER" data-duty="8" data-vat="10">Other — enter manually</option>
+        </select>
+        <span class="hint" data-en>Presets are rough averages — actual rates depend on your product's HS code. Always edit to your confirmed rate.</span>
+        <span class="hint" data-ko>제시된 값은 평균 추정치입니다. 실제 세율은 HS Code에 따라 다르니 확정된 세율로 반드시 수정하세요.</span>
+      </div>
+
+      <div class="row-inline">
+        <div class="field">
+          <label><span data-en>Duty Rate (%)</span><span data-ko>관세율 (%)</span></label>
+          <input type="number" id="dutyRate" value="0" min="0" step="0.1">
+        </div>
+        <div class="field">
+          <label><span data-en>VAT / GST Rate (%)</span><span data-ko>부가세율 (%)</span></label>
+          <input type="number" id="vatRate" value="0" min="0" step="0.1">
+        </div>
+      </div>
+
+      <div class="field">
+        <label><span data-en>Customs Clearance Fee (flat)</span><span data-ko>통관 수수료 (정액)</span></label>
+        <input type="number" id="clearance" value="180" min="0" step="1">
+      </div>
+      <div class="field">
+        <label><span data-en>Local Delivery (flat)</span><span data-ko>국내 배송비 (정액)</span></label>
+        <input type="number" id="delivery" value="220" min="0" step="1">
+      </div>
+
+    </div>
+    <button class="compute-btn" onclick="calculate()">
+      <span data-en>Calculate Landed Cost →</span>
+      <span data-ko>착지원가 계산하기 →</span>
+    </button>
+  </div>
+
+  <!-- RESULTS PANEL -->
+  <div class="manifest">
+    <div class="manifest-head">
+      <div>
+        <h2><span data-en>Cost Manifest</span><span data-ko>원가 명세서</span></h2>
+        <div class="manifest-id" id="manifestId">REF# —</div>
+      </div>
+      <div class="stamp"><span data-en>Estimate Only</span><span data-ko>추정치</span></div>
+    </div>
+    <div class="ledger" id="ledger">
+      <div class="ledger-row"><span class="lbl" data-en>Goods Value (Factory)</span><span class="lbl" data-ko>상품가 (공장출고)</span><span class="val" id="r-goods">—</span></div>
+      <div class="ledger-row"><span class="lbl" data-en>Freight</span><span class="lbl" data-ko>운임</span><span class="val" id="r-freight">—</span></div>
+      <div class="ledger-row"><span class="lbl" data-en>Insurance</span><span class="lbl" data-ko>보험료</span><span class="val" id="r-ins">—</span></div>
+      <div class="ledger-row sub"><span class="lbl" data-en>= CIF Value</span><span class="lbl" data-ko>= CIF 가격</span><span class="val" id="r-cif">—</span></div>
+      <div class="ledger-row"><span class="lbl" data-en>Import Duty</span><span class="lbl" data-ko>수입 관세</span><span class="val" id="r-duty">—</span></div>
+      <div class="ledger-row"><span class="lbl" data-en>VAT / GST</span><span class="lbl" data-ko>부가세</span><span class="val" id="r-vat">—</span></div>
+      <div class="ledger-row"><span class="lbl" data-en>Customs Clearance</span><span class="lbl" data-ko>통관 수수료</span><span class="val" id="r-clear">—</span></div>
+      <div class="ledger-row"><span class="lbl" data-en>Local Delivery</span><span class="lbl" data-ko>국내 배송비</span><span class="val" id="r-deliv">—</span></div>
+      <div class="ledger-row total"><span class="lbl" data-en>Total Landed Cost</span><span class="lbl" data-ko>총 착지원가</span><span class="val" id="r-total">—</span></div>
+    </div>
+    <div class="perunit">
+      <span class="lbl"><span data-en>Per-Unit Landed Cost</span><span data-ko>개당 착지원가</span></span>
+      <span class="val" id="r-perunit">—</span>
+    </div>
+    <div class="disclaimer">
+      <span data-en>Figures are planning estimates based on the rates you enter. Confirm your product's exact HS code, duty rate, and any trade-agreement preferences with a customs broker before quoting a buyer or placing an order.</span>
+      <span data-ko>본 결과는 입력한 세율을 기준으로 한 참고용 추정치입니다. 실제 견적이나 발주 전, 정확한 HS Code·관세율·FTA 협정세율 적용 여부를 관세사를 통해 반드시 확인하세요.</span>
+    </div>
+  </div>
+
+</div>
+
+<div class="crosssell">
+  <div class="crosssell-card">
+    <div>
+      <h3><span data-en>Need the factory verified, not just the math?</span><span data-ko>계산이 아니라 공급사 검증이 필요하신가요?</span></h3>
+      <p><span data-en>A calculator can't tell you if the factory is real, reliable, or worth trusting. Our sourcing desk does — with 20+ years verifying Korean manufacturers on the ground.</span><span data-ko>계산기는 그 공장이 실제로 신뢰할 수 있는지까지는 알려주지 못합니다. 20년 이상 현장에서 한국 제조사를 직접 검증해온 소싱 데스크가 도와드립니다.</span></p>
+    </div>
+    <a href="korea-sourcing-desk.html" class="cta-btn"><span data-en>See Sourcing Services</span><span data-ko>소싱 서비스 보기</span></a>
+  </div>
+</div>
+
+<footer>
+  CBM LAB — <span data-en>Logistics &amp; Procurement Toolkit</span><span data-ko>물류·구매 실무 툴킷</span>
+</footer>
+
+<script>
+function setLang(lang){
+  document.documentElement.lang = lang;
+  document.getElementById('btn-en').classList.toggle('active', lang==='en');
+  document.getElementById('btn-ko').classList.toggle('active', lang==='ko');
+}
+
+function applyPreset(){
+  const sel = document.getElementById('destination');
+  const opt = sel.options[sel.selectedIndex];
+  document.getElementById('dutyRate').value = opt.getAttribute('data-duty');
+  document.getElementById('vatRate').value = opt.getAttribute('data-vat');
+}
+
+function fmt(n, currency){
+  const symbols = {USD:'$', EUR:'€', KRW:'₩'};
+  const sym = symbols[currency] || '';
+  const decimals = currency === 'KRW' ? 0 : 2;
+  return sym + n.toLocaleString(undefined, {minimumFractionDigits:decimals, maximumFractionDigits:decimals});
+}
+
+function calculate(){
+  const unitPrice = parseFloat(document.getElementById('unitPrice').value) || 0;
+  const qty = parseFloat(document.getElementById('qty').value) || 0;
+  const currency = document.getElementById('currency').value;
+  const incoterm = document.getElementById('incoterm').value;
+  let freight = parseFloat(document.getElementById('freight').value) || 0;
+  const insurancePct = parseFloat(document.getElementById('insurance').value) || 0;
+  const dutyRate = parseFloat(document.getElementById('dutyRate').value) || 0;
+  const vatRate = parseFloat(document.getElementById('vatRate').value) || 0;
+  const clearance = parseFloat(document.getElementById('clearance').value) || 0;
+  const delivery = parseFloat(document.getElementById('delivery').value) || 0;
+
+  if (incoterm === 'CIF') { freight = 0; }
+
+  const goods = unitPrice * qty;
+  const insurance = goods * (insurancePct/100);
+  const cif = goods + freight + insurance;
+  const duty = cif * (dutyRate/100);
+  const vat = (cif + duty) * (vatRate/100);
+  const total = cif + duty + vat + clearance + delivery;
+  const perUnit = qty > 0 ? total/qty : 0;
+
+  document.getElementById('r-goods').textContent = fmt(goods, currency);
+  document.getElementById('r-freight').textContent = fmt(freight, currency);
+  document.getElementById('r-ins').textContent = fmt(insurance, currency);
+  document.getElementById('r-cif').textContent = fmt(cif, currency);
+  document.getElementById('r-duty').textContent = fmt(duty, currency);
+  document.getElementById('r-vat').textContent = fmt(vat, currency);
+  document.getElementById('r-clear').textContent = fmt(clearance, currency);
+  document.getElementById('r-deliv').textContent = fmt(delivery, currency);
+  document.getElementById('r-total').textContent = fmt(total, currency);
+  document.getElementById('r-perunit').textContent = fmt(perUnit, currency);
+
+  const ref = 'CBM-' + new Date().getFullYear() + '-' + Math.floor(1000+Math.random()*9000);
+  document.getElementById('manifestId').textContent = 'REF# ' + ref;
+}
+
+calculate();
+</script>
+
+</body>
+</html>
