@@ -7,6 +7,28 @@
 <meta name="description" content="Deeply-vetted Korean manufacturer profiles — verified business registration, export history, MOQ, and English capability. Not scraped data.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<!-- ===== ANALYTICS: replace the two placeholder IDs below with your real GA4 Measurement ID and Amplitude API key ===== -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-XXXXXXXXXX');
+</script>
+<script src="https://cdn.amplitude.com/script/YOUR_AMPLITUDE_API_KEY.js"></script>
+<script>
+  window.addEventListener('load', function(){
+    if (window.amplitude) { window.amplitude.init('YOUR_AMPLITUDE_API_KEY', { autocapture: true }); }
+  });
+  function trackEvent(name, props){
+    props = props || {};
+    if (window.gtag) gtag('event', name, props);
+    if (window.amplitude) window.amplitude.track(name, props);
+  }
+</script>
+<!-- ===== END ANALYTICS ===== -->
+
 <style>
   :root{
     --ink:#16232e;
@@ -271,7 +293,7 @@
   <div class="locked">
     <div class="count" id="lockedCount">+ [N] <span data-en>more verified suppliers</span><span data-ko>개 검증 공급사 더보기</span></div>
     <p><span data-en>The full list is shared directly with Sourcing Desk clients — it's kept out of public search so competitors can't scrape it either.</span><span data-ko>전체 리스트는 소싱 데스크 고객에게만 직접 공유합니다 — 경쟁사가 그대로 긁어가지 못하도록 공개 검색에는 노출하지 않습니다.</span></p>
-    <a href="korea-sourcing-desk.html" class="locked-cta"><span data-en>Get the Full List</span><span data-ko>전체 리스트 받기</span></a>
+    <a href="korea-sourcing-desk.html" class="locked-cta" onclick="trackEvent('click_unlock_full_list')"><span data-en>Get the Full List</span><span data-ko>전체 리스트 받기</span></a>
   </div>
 </section>
 
@@ -279,7 +301,7 @@
   <div class="submit-box">
     <h2><span data-en>Want a specific factory checked?</span><span data-ko>특정 공장을 검증받고 싶으신가요?</span></h2>
     <p><span data-en>If a supplier you're already talking to isn't on this list, we can verify them directly — same process, same standard.</span><span data-ko>이미 연락 중인 공급사가 리스트에 없다면, 동일한 기준으로 직접 검증해 드립니다.</span></p>
-    <a href="korea-sourcing-desk.html#contact" class="submit-cta"><span data-en>Request a Quick Check</span><span data-ko>약식 검증 요청하기</span></a>
+    <a href="korea-sourcing-desk.html#contact" class="submit-cta" onclick="trackEvent('click_request_check', {source:'supplier_intelligence'})"><span data-en>Request a Quick Check</span><span data-ko>약식 검증 요청하기</span></a>
   </div>
 </section>
 

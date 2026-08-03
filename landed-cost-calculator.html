@@ -7,6 +7,31 @@
 <meta name="description" content="Calculate the true delivered cost of goods sourced from Korea — factory price to final landed cost, duty and VAT included.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<!-- ===== ANALYTICS: replace the two placeholder IDs below with your real GA4 Measurement ID and Amplitude API key ===== -->
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-XXXXXXXXXX');
+</script>
+<!-- Amplitude -->
+<script src="https://cdn.amplitude.com/script/YOUR_AMPLITUDE_API_KEY.js"></script>
+<script>
+  window.addEventListener('load', function(){
+    if (window.amplitude) { window.amplitude.init('YOUR_AMPLITUDE_API_KEY', { autocapture: true }); }
+  });
+  // Shared helper — fires the same event to both GA4 and Amplitude
+  function trackEvent(name, props){
+    props = props || {};
+    if (window.gtag) gtag('event', name, props);
+    if (window.amplitude) window.amplitude.track(name, props);
+  }
+</script>
+<!-- ===== END ANALYTICS ===== -->
+
 <style>
   :root{
     --ink:#16232e;
@@ -508,7 +533,7 @@
       <h3><span data-en>Need the factory verified, not just the math?</span><span data-ko>계산이 아니라 공급사 검증이 필요하신가요?</span></h3>
       <p><span data-en>A calculator can't tell you if the factory is real, reliable, or worth trusting. Our sourcing desk does — with 20+ years verifying Korean manufacturers on the ground.</span><span data-ko>계산기는 그 공장이 실제로 신뢰할 수 있는지까지는 알려주지 못합니다. 20년 이상 현장에서 한국 제조사를 직접 검증해온 소싱 데스크가 도와드립니다.</span></p>
     </div>
-    <a href="korea-sourcing-desk.html" class="cta-btn"><span data-en>See Sourcing Services</span><span data-ko>소싱 서비스 보기</span></a>
+    <a href="korea-sourcing-desk.html" class="cta-btn" onclick="trackEvent('click_sourcing_cta', {source:'calculator'})"><span data-en>See Sourcing Services</span><span data-ko>소싱 서비스 보기</span></a>
   </div>
 </div>
 
@@ -538,6 +563,7 @@ function fmt(n, currency){
 }
 
 function calculate(){
+  trackEvent('calculate_landed_cost', { destination: document.getElementById('destination').value });
   const unitPrice = parseFloat(document.getElementById('unitPrice').value) || 0;
   const qty = parseFloat(document.getElementById('qty').value) || 0;
   const currency = document.getElementById('currency').value;
