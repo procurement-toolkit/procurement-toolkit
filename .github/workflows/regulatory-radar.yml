@@ -1,0 +1,33 @@
+name: Daily Regulatory Radar
+
+on:
+  schedule:
+    - cron: '30 22 * * *'   # 07:30 KST daily
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+jobs:
+  generate-radar:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Generate today's regulatory radar page
+        run: node scripts/generate-regulatory-radar.js
+
+      - name: Commit and push if there are changes
+        run: |
+          git config user.name "cbm-lab-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add regulatory-radar/
+          if git diff --staged --quiet; then
+            echo "No changes to commit."
+          else
+            git commit -m "Auto: regulatory radar $(date -u +'%Y-%m-%d')"
+            git push
+          fi
