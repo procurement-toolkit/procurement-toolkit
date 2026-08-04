@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Korea Export Currency &amp; Landed Cost Impact Report | CBM Lab</title>
+<meta name="description" content="Live KRW exchange rates against major sourcing currencies, with automatically computed 7/30/90-day landed cost impact. Updates on every visit — no manual maintenance.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<!-- ===== ANALYTICS: replace the two placeholder IDs below with your real GA4 Measurement ID and Amplitude API key ===== -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-XXXXXXXXXX');
+</script>
+<script src="https://cdn.amplitude.com/script/YOUR_AMPLITUDE_API_KEY.js"></script>
+<script>
+  window.addEventListener('load', function(){
+    if (window.amplitude) { window.amplitude.init('YOUR_AMPLITUDE_API_KEY', { autocapture: true }); }
+  });
+  function trackEvent(name, props){
+    props = props || {};
+    if (window.gtag) gtag('event', name, props);
+    if (window.amplitude) window.amplitude.track(name, props);
+  }
+</script>
+<!-- ===== END ANALYTICS ===== -->
+
+<style>
+  :root{
+    --ink:#16232e; --steel:#3e5c74; --paper:#e7e2d3; --card:#f4f1e7;
+    --kraft:#a9791f; --rust:#a63d22; --cargo:#46705a; --line:#b9af98;
+    --ink-70:rgba(22,35,46,.7); --ink-50:rgba(22,35,46,.5);
+    font-size:16px;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--paper);
+    background-image: radial-gradient(circle at 1px 1px, rgba(22,35,46,0.05) 1px, transparent 0);
+    background-size: 22px 22px;
+    color:var(--ink); font-family:'Inter',system-ui,sans-serif; line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{color:var(--steel);}
+
+  header.site{background:var(--ink);color:var(--paper);padding:18px 24px;}
+  .header-inner{max-width:1000px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;}
+  .brand{font-family:'Oswald',sans-serif;font-weight:600;letter-spacing:.04em;font-size:1.05rem;text-transform:uppercase;display:flex;align-items:center;gap:10px;}
+  .brand .mark{width:10px;height:10px;background:var(--rust);transform:rotate(45deg);display:inline-block;flex:none;}
+  .lang-toggle{display:flex;border:1px solid rgba(231,226,211,.35);font-family:'IBM Plex Mono',monospace;font-size:.78rem;}
+  .lang-toggle button{background:none;border:none;color:var(--paper);padding:6px 14px;cursor:pointer;letter-spacing:.05em;opacity:.55;}
+  .lang-toggle button.active{opacity:1;background:rgba(231,226,211,.12);}
+
+  .hero{max-width:1000px;margin:0 auto;padding:48px 24px 28px;border-bottom:1px dashed var(--line);}
+  .badges{display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap;}
+  .badge{font-family:'IBM Plex Mono',monospace;font-size:.7rem;letter-spacing:.08em;text-transform:uppercase;padding:5px 10px;border:1px solid var(--cargo);color:var(--cargo);}
+  h1{font-family:'Oswald',sans-serif;font-weight:600;font-size:clamp(1.8rem,4.4vw,2.5rem);line-height:1.14;margin:0 0 14px;max-width:22ch;}
+  .hero p.lede{max-width:60ch;color:var(--ink-70);font-size:1rem;margin:0 0 10px;}
+  .updated-line{font-family:'IBM Plex Mono',monospace;font-size:.78rem;color:var(--ink-50);}
+
+  .controls{max-width:1000px;margin:0 auto;padding:22px 24px 0;display:flex;gap:12px;align-items:center;flex-wrap:wrap;}
+  .controls label{font-family:'IBM Plex Mono',monospace;font-size:.78rem;color:var(--ink-70);text-transform:uppercase;letter-spacing:.03em;}
+  .controls input{
+    font-family:'IBM Plex Mono',monospace;font-size:.9rem;padding:8px 10px;border:1px solid var(--line);width:140px;background:#fff;
+  }
+
+  .grid{max-width:1000px;margin:0 auto;padding:22px 24px 60px;display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+  @media (max-width:700px){.grid{grid-template-columns:1fr;}}
+
+  .card{background:var(--card);border:1px solid var(--line);}
+  .card-top{padding:16px 18px;border-bottom:1px dashed var(--line);display:flex;justify-content:space-between;align-items:baseline;}
+  .card-top .pair{font-family:'Oswald',sans-serif;font-weight:600;font-size:1.05rem;text-transform:uppercase;}
+  .card-top .rate{font-family:'IBM Plex Mono',monospace;font-size:1.15rem;color:var(--ink);}
+  .card-body{padding:14px 18px;}
+  .delta-row{display:flex;justify-content:space-between;font-family:'IBM Plex Mono',monospace;font-size:.84rem;padding:6px 0;border-bottom:1px dashed var(--line);}
+  .delta-row:last-of-type{border-bottom:none;}
+  .delta.up{color:var(--rust);}
+  .delta.down{color:var(--cargo);}
+  .impact{
+    margin-top:12px;padding:12px 14px;background:var(--ink);color:var(--paper);font-size:.84rem;
+  }
+  .impact b{color:#fff;}
+  .loading, .error{font-family:'IBM Plex Mono',monospace;font-size:.85rem;color:var(--ink-50);padding:20px;text-align:center;}
+  .error{color:var(--rust);}
+
+  .note{max-width:1000px;margin:0 auto;padding:0 24px 50px;font-size:.82rem;color:var(--ink-50);}
+  .note b{color:var(--ink-70);}
+
+  footer{text-align:center;font-family:'IBM Plex Mono',monospace;font-size:.72rem;color:var(--ink-50);padding:0 24px 40px;}
+
+  [data-ko]{display:none;}
+  html[lang="ko"] [data-en]{display:none;}
+  html[lang="ko"] [data-ko]{display:inline;}
+</style>
+</head>
+<body>
+
+<header class="site">
+  <div class="header-inner">
+    <div class="brand"><span class="mark"></span>CBM LAB</div>
+    <div class="lang-toggle">
+      <button id="btn-en" class="active" onclick="setLang('en')">EN</button>
+      <button id="btn-ko" onclick="setLang('ko')">KO</button>
+    </div>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="badges">
+    <span class="badge"><span data-en>Live Data</span><span data-ko>실시간 데이터</span></span>
+  </div>
+  <h1><span data-en>Korea Export Currency &amp; Landed Cost Impact</span><span data-ko>원화 환율·소싱 원가 영향 리포트</span></h1>
+  <p class="lede">
+    <span data-en>Live KRW exchange rates against the currencies overseas buyers pay in, with 7-day and 30-day movement and what it actually does to a $10,000 order's landed cost. Recomputed fresh every time this page loads — nobody updates this by hand.</span>
+    <span data-ko>해외 바이어가 실제로 결제하는 통화 대비 원화 환율을 7일·30일 변동과 함께 보여주고, 이게 1만 달러 규모 발주의 착지원가에 실제로 미치는 영향을 계산합니다. 페이지를 열 때마다 새로 계산되며, 사람이 손으로 갱신하지 않습니다.</span>
+  </p>
+  <div class="updated-line" id="updatedLine"><span data-en>Loading live rates…</span><span data-ko>실시간 환율 불러오는 중…</span></div>
+</section>
+
+<div class="controls">
+  <label for="orderValue"><span data-en>Example order value (USD)</span><span data-ko>예시 주문 금액 (USD)</span></label>
+  <input type="number" id="orderValue" value="10000" min="0" step="100" onchange="renderAll()">
+</div>
+
+<div class="grid" id="grid">
+  <div class="loading"><span data-en>Fetching live rates from the European Central Bank feed…</span><span data-ko>ECB 실시간 환율 데이터를 불러오는 중…</span></div>
+</div>
+
+<div class="note">
+  <b data-en>How this works:</b><b data-ko>작동 방식:</b>
+  <span data-en> Rates are fetched live, in your browser, from the free Frankfurter.app API (sourced from the European Central Bank) — no server, no database, no manual updates. Vietnamese Dong and Mongolian Tugrik aren't covered by this free ECB-based feed, so they're excluded here rather than shown with stale or estimated numbers.</span>
+  <span data-ko> 환율은 무료 API인 Frankfurter.app(유럽중앙은행 데이터 기반)에서 방문자의 브라우저가 직접 실시간으로 가져옵니다 — 서버도, 데이터베이스도, 수동 업데이트도 없습니다. 베트남 동과 몽골 투그릭은 이 무료 ECB 기반 데이터에 포함되지 않아, 부정확한 추정치를 보여주는 대신 제외했습니다.</span>
+</div>
+
+<footer>
+  CBM LAB — <span data-en>Logistics &amp; Procurement Toolkit</span><span data-ko>물류·구매 실무 툴킷</span>
+</footer>
+
+<script>
+function setLang(lang){
+  document.documentElement.lang = lang;
+  document.getElementById('btn-en').classList.toggle('active', lang==='en');
+  document.getElementById('btn-ko').classList.toggle('active', lang==='ko');
+}
+
+const CURRENCIES = [
+  {code:'USD', en:'US Dollar', ko:'미국 달러'},
+  {code:'EUR', en:'Euro', ko:'유로'},
+  {code:'JPY', en:'Japanese Yen', ko:'일본 엔'},
+  {code:'CNY', en:'Chinese Yuan', ko:'중국 위안'},
+  {code:'GBP', en:'British Pound', ko:'영국 파운드'},
+  {code:'THB', en:'Thai Baht', ko:'태국 바트'},
+  {code:'PHP', en:'Philippine Peso', ko:'필리핀 페소'},
+  {code:'AUD', en:'Australian Dollar', ko:'호주 달러'}
+];
+
+function fmtDate(d){
+  return d.toISOString().slice(0,10);
+}
+function daysAgo(n){
+  const d = new Date();
+  d.setDate(d.getDate()-n);
+  return d;
+}
+
+let RATE_CACHE = {};
+
+async function fetchRate(code, dateStr){
+  const key = code+'|'+dateStr;
+  if (RATE_CACHE[key]) return RATE_CACHE[key];
+  const url = dateStr === 'latest'
+    ? `https://api.frankfurter.app/latest?from=${code}&to=KRW`
+    : `https://api.frankfurter.app/${dateStr}?from=${code}&to=KRW`;
+  const res = await fetch(url);
+  if (!res.ok) throw new Error('fetch failed for '+code);
+  const data = await res.json();
+  const rate = data.rates && data.rates.KRW;
+  RATE_CACHE[key] = rate;
+  return rate;
+}
+
+function pctChange(now, then){
+  if (!then) return null;
+  return ((now-then)/then)*100;
+}
+
+function deltaHtml(pct){
+  if (pct === null || isNaN(pct)) return '<span class="delta">—</span>';
+  const cls = pct >= 0 ? 'up' : 'down';
+  const sign = pct >= 0 ? '+' : '';
+  return `<span class="delta ${cls}">${sign}${pct.toFixed(2)}%</span>`;
+}
+
+async function renderAll(){
+  const grid = document.getElementById('grid');
+  const orderValue = parseFloat(document.getElementById('orderValue').value) || 0;
+  const todayStr = 'latest';
+  const d7 = fmtDate(daysAgo(7));
+  const d30 = fmtDate(daysAgo(30));
+
+  let cardsHtml = '';
+  try {
+    for (const cur of CURRENCIES) {
+      const [now, r7, r30] = await Promise.all([
+        fetchRate(cur.code, todayStr),
+        fetchRate(cur.code, d7),
+        fetchRate(cur.code, d30)
+      ]);
+      const p7 = pctChange(now, r7);
+      const p30 = pctChange(now, r30);
+
+      const costToday = orderValue * now;
+      const costThen = orderValue * (r30 || now);
+      const costDelta = costToday - costThen;
+      const deltaSign = costDelta >= 0 ? '+' : '';
+
+      cardsHtml += `
+      <div class="card">
+        <div class="card-top">
+          <span class="pair">KRW / ${cur.code}</span>
+          <span class="rate">₩${now.toLocaleString(undefined,{maximumFractionDigits:2})}</span>
+        </div>
+        <div class="card-body">
+          <div class="delta-row"><span data-en>7-day change</span><span data-ko>7일 변동</span>${deltaHtml(p7)}</div>
+          <div class="delta-row"><span data-en>30-day change</span><span data-ko>30일 변동</span>${deltaHtml(p30)}</div>
+          <div class="impact">
+            <span data-en>A $</span><span data-ko>$</span>${orderValue.toLocaleString()}<span data-en> order in ${cur.code} costs <b>₩${deltaSign}${Math.abs(costDelta).toLocaleString(undefined,{maximumFractionDigits:0})}</b> ${costDelta>=0?'more':'less'} today than 30 days ago.</span><span data-ko> 규모의 ${cur.code} 발주는 30일 전 대비 오늘 원화로 <b>${deltaSign}${Math.abs(costDelta).toLocaleString(undefined,{maximumFractionDigits:0})}원</b> ${costDelta>=0?'더 듭니다':'덜 듭니다'}.</span>
+          </div>
+        </div>
+      </div>`;
+    }
+    grid.innerHTML = cardsHtml;
+    document.documentElement.lang === 'ko';
+    document.getElementById('updatedLine').innerHTML =
+      `<span data-en>Live as of ${new Date().toLocaleString('en-US')} · source: Frankfurter.app (ECB)</span><span data-ko>${new Date().toLocaleString('ko-KR')} 기준 실시간 · 출처: Frankfurter.app (ECB)</span>`;
+    applyLangToNewNodes();
+    trackEvent('report_loaded', {order_value: orderValue});
+  } catch (e) {
+    grid.innerHTML = `<div class="error"><span data-en>Live rate data temporarily unavailable — please refresh.</span><span data-ko>실시간 환율 데이터를 일시적으로 불러올 수 없습니다 — 새로고침해 주세요.</span></div>`;
+  }
+}
+
+function applyLangToNewNodes(){
+  const lang = document.documentElement.lang || 'en';
+  setLang(lang);
+}
+
+renderAll();
+</script>
+
+</body>
+</html>
