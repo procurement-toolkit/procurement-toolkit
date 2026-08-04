@@ -1,0 +1,36 @@
+name: Daily Currency Snapshot
+
+on:
+  schedule:
+    - cron: '0 22 * * *'
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+jobs:
+  generate-snapshot:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Generate today's snapshot page
+        run: node scripts/generate-daily-snapshot.js
+
+      - name: Commit and push if there are changes
+        run: |
+          git config user.name "cbm-lab-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add rates/
+          if git diff --staged --quiet; then
+            echo "No changes to commit (already ran today)."
+          else
+            git commit -m "Auto: daily currency snapshot $(date -u +'%Y-%m-%d')"
+            git push
+          fi
