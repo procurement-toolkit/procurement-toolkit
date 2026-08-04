@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>K-NSF Certification Guide | CBM Lab</title>
+<meta name="description" content="What K-NSF food equipment certification is, how it differs from NSF, and what it means for Korean kitchen equipment manufacturers.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<!-- ===== ANALYTICS: replace the two placeholder IDs below with your real GA4 Measurement ID and Amplitude API key ===== -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-XXXXXXXXXX');
+</script>
+<script src="https://cdn.amplitude.com/script/YOUR_AMPLITUDE_API_KEY.js"></script>
+<script>
+  window.addEventListener('load', function(){
+    if (window.amplitude) { window.amplitude.init('YOUR_AMPLITUDE_API_KEY', { autocapture: true }); }
+  });
+  function trackEvent(name, props){
+    props = props || {};
+    if (window.gtag) gtag('event', name, props);
+    if (window.amplitude) window.amplitude.track(name, props);
+  }
+</script>
+<!-- ===== END ANALYTICS ===== -->
+
+<style>
+  :root{
+    --ink:#16232e; --steel:#3e5c74; --paper:#e7e2d3; --card:#f4f1e7;
+    --kraft:#a9791f; --rust:#a63d22; --cargo:#46705a; --line:#b9af98;
+    --ink-70:rgba(22,35,46,.7); --ink-50:rgba(22,35,46,.5);
+    font-size:16px;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--paper);
+    background-image: radial-gradient(circle at 1px 1px, rgba(22,35,46,0.05) 1px, transparent 0);
+    background-size: 22px 22px;
+    color:var(--ink); font-family:'Inter',system-ui,sans-serif; line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{color:var(--steel);}
+
+  header.site{background:var(--ink);color:var(--paper);padding:18px 24px;}
+  .header-inner{max-width:820px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;}
+  .brand{font-family:'Oswald',sans-serif;font-weight:600;letter-spacing:.04em;font-size:1.05rem;text-transform:uppercase;display:flex;align-items:center;gap:10px;}
+  .brand .mark{width:10px;height:10px;background:var(--rust);transform:rotate(45deg);display:inline-block;flex:none;}
+  .lang-toggle{display:flex;border:1px solid rgba(231,226,211,.35);font-family:'IBM Plex Mono',monospace;font-size:.78rem;}
+  .lang-toggle button{background:none;border:none;color:var(--paper);padding:6px 14px;cursor:pointer;letter-spacing:.05em;opacity:.55;}
+  .lang-toggle button.active{opacity:1;background:rgba(231,226,211,.12);}
+
+  .hero{max-width:820px;margin:0 auto;padding:48px 24px 30px;border-bottom:1px dashed var(--line);}
+  .badges{display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap;}
+  .badge{
+    font-family:'IBM Plex Mono',monospace;font-size:.7rem;letter-spacing:.08em;text-transform:uppercase;
+    padding:5px 10px;border:1px solid var(--rust);color:var(--rust);
+  }
+  .badge.date{border-color:var(--steel);color:var(--steel);}
+  h1{font-family:'Oswald',sans-serif;font-weight:600;font-size:clamp(1.8rem,4.4vw,2.5rem);line-height:1.14;margin:0 0 16px;}
+  .hero p.lede{max-width:60ch;color:var(--ink-70);font-size:1.02rem;margin:0;}
+
+  article{max-width:820px;margin:0 auto;padding:40px 24px;}
+  section{margin-bottom:44px;}
+  h2{font-family:'Oswald',sans-serif;text-transform:uppercase;font-size:1.15rem;font-weight:600;letter-spacing:.02em;margin:0 0 16px;padding-bottom:10px;border-bottom:1px dashed var(--line);}
+  p{color:var(--ink-70);margin:0 0 14px;font-size:.97rem;}
+  ul{padding-left:20px;color:var(--ink-70);}
+  li{margin-bottom:8px;font-size:.95rem;}
+
+  .compare{
+    display:grid;grid-template-columns:1fr 1fr;gap:0;
+    border:1px solid var(--line);margin:20px 0;
+  }
+  @media (max-width:600px){.compare{grid-template-columns:1fr;}}
+  .compare-col{padding:18px 20px;}
+  .compare-col:first-child{border-right:1px dashed var(--line);background:var(--card);}
+  @media (max-width:600px){.compare-col:first-child{border-right:none;border-bottom:1px dashed var(--line);}}
+  .compare-col h3{font-family:'Oswald',sans-serif;font-size:.9rem;text-transform:uppercase;margin:0 0 10px;letter-spacing:.02em;}
+  .compare-col ul{margin:0;padding-left:16px;}
+  .compare-col li{font-size:.86rem;margin-bottom:6px;}
+
+  .eval-steps{display:flex;flex-direction:column;gap:0;border:1px solid var(--line);margin:20px 0;}
+  .eval-step{padding:18px 20px;border-bottom:1px dashed var(--line);}
+  .eval-step:last-child{border-bottom:none;}
+  .eval-step .n{font-family:'IBM Plex Mono',monospace;color:var(--kraft);font-size:.75rem;letter-spacing:.08em;text-transform:uppercase;margin-bottom:6px;display:block;}
+  .eval-step h3{font-family:'Oswald',sans-serif;font-size:1rem;margin:0 0 6px;text-transform:uppercase;letter-spacing:.02em;}
+  .eval-step p{margin:0;font-size:.9rem;}
+
+  .gap-box{
+    background:var(--card);border:1px dashed var(--rust);padding:22px 20px;margin:20px 0;
+  }
+  .gap-box .tag{font-family:'IBM Plex Mono',monospace;font-size:.7rem;color:var(--rust);letter-spacing:.1em;text-transform:uppercase;margin-bottom:10px;display:block;}
+  .gap-box p{margin:0;font-size:.92rem;color:var(--ink);}
+
+  .who-list{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:16px 0;}
+  @media (max-width:600px){.who-list{grid-template-columns:1fr;}}
+  .who-item{background:var(--card);border:1px solid var(--line);padding:14px 16px;font-size:.9rem;}
+
+  .sources{font-size:.82rem;color:var(--ink-50);border-top:1px dashed var(--line);padding-top:16px;}
+  .sources a{color:var(--steel);}
+
+  .cta-block{
+    background:var(--ink);color:var(--paper);padding:30px 26px;text-align:center;margin-top:10px;
+  }
+  .cta-block h3{font-family:'Oswald',sans-serif;text-transform:uppercase;font-size:1.05rem;margin:0 0 10px;}
+  .cta-block p{color:rgba(231,226,211,.7);max-width:48ch;margin:0 auto 18px;font-size:.9rem;}
+  .cta-btn{
+    display:inline-block;background:var(--rust);color:#fff;text-decoration:none;
+    font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.05em;font-size:.85rem;padding:12px 22px;
+  }
+  .cta-btn:hover{background:#8a331c;}
+
+  footer{text-align:center;font-family:'IBM Plex Mono',monospace;font-size:.72rem;color:var(--ink-50);padding:0 24px 40px;}
+
+  [data-ko]{display:none;}
+  html[lang="ko"] [data-en]{display:none;}
+  html[lang="ko"] [data-ko]{display:inline;}
+  html[lang="ko"] [data-ko].block{display:block;}
+</style>
+</head>
+<body>
+
+<header class="site">
+  <div class="header-inner">
+    <div class="brand"><span class="mark"></span>CBM LAB</div>
+    <div class="lang-toggle">
+      <button id="btn-en" class="active" onclick="setLang('en')">EN</button>
+      <button id="btn-ko" onclick="setLang('ko')">KO</button>
+    </div>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="badges">
+    <span class="badge"><span data-en>New Certification</span><span data-ko>신규 인증</span></span>
+    <span class="badge date"><span data-en>Launched March 2026</span><span data-ko>2026년 3월 출시</span></span>
+  </div>
+  <h1>
+    <span data-en>K-NSF Certification: What It Is and Why It Matters for Korean Kitchen Equipment Makers</span>
+    <span data-ko>K-NSF 인증이란? 한국 주방기기 제조사가 알아야 할 것</span>
+  </h1>
+  <p class="lede">
+    <span data-en>NSF just launched a Korea-specific food equipment safety certification — and almost nobody has explained what it actually means yet. Here's a plain-language breakdown.</span>
+    <span data-ko>NSF가 한국 시장 전용 식품기기 안전 인증을 막 출시했습니다. 아직 이걸 알기 쉽게 정리한 자료가 거의 없어서, 여기서 핵심만 정리했습니다.</span>
+  </p>
+</section>
+
+<article>
+
+  <section>
+    <h2><span data-en>What K-NSF Is</span><span data-ko>K-NSF란 무엇인가</span></h2>
+    <p>
+      <span data-en>In March 2026, NSF officially launched "K-NSF," a Korea-market food equipment safety certification developed in partnership with Korea's Ministry of Food and Drug Safety (MFDS), building on an MOU the two signed in May 2024. It's administered locally through the Korea Institute for Food Safety Management Accreditation (the public HACCP-certification body).</span>
+      <span data-ko>2026년 3월, NSF는 한국 식품의약품안전처(MFDS)와 협력해 개발한 한국 시장 전용 식품기기 안전 인증 "K-NSF"를 공식 출시했습니다. 이는 2024년 5월 양 기관이 체결한 양해각서(MOU)를 기반으로 하며, 국내에서는 한국식품안전관리인증원(HACCP 인증 담당 공공기관)을 통해 운영됩니다.</span>
+    </p>
+    <p>
+      <span data-en>The certification covers food-contact equipment broadly — not just traditional cookware, but tools, machines, and devices with autonomous cooking functions and embedded software, such as cooking robots, used alone or combined with other equipment in food manufacturing, processing, or cooking.</span>
+      <span data-ko>인증 대상은 전통적인 조리기구뿐 아니라, 조리 로봇처럼 자율 조리 기능과 내장 소프트웨어를 갖춘 도구·기계·장치까지 폭넓게 포함합니다. 단독으로 쓰이든 다른 기기와 조합해 쓰이든, 식품의 제조·가공·조리에 사용되는 장비가 대상입니다.</span>
+    </p>
+  </section>
+
+  <section>
+    <h2><span data-en>K-NSF vs. Standard NSF</span><span data-ko>기존 미국 NSF 인증과 무엇이 다른가</span></h2>
+    <p><span data-en>They're not competitors — K-NSF is built to connect directly into the existing NSF system:</span><span data-ko>둘은 경쟁 관계가 아니라, K-NSF가 기존 NSF 체계와 직접 연결되도록 설계되어 있습니다:</span></p>
+    <div class="compare">
+      <div class="compare-col">
+        <h3>K-NSF</h3>
+        <ul>
+          <li><span data-en>Korea-based, MFDS-linked</span><span data-ko>한국 기반, 식약처 연계</span></li>
+          <li><span data-en>Faster / cheaper local entry point</span><span data-ko>국내 시장 진입에 더 빠르고 저렴</span></li>
+          <li><span data-en>Recognized domestically and for export</span><span data-ko>국내외 시장 모두 인정</span></li>
+        </ul>
+      </div>
+      <div class="compare-col">
+        <h3><span data-en>Standard NSF (US)</span><span data-ko>기존 NSF (미국)</span></h3>
+        <ul>
+          <li><span data-en>Globally established, 110 countries</span><span data-ko>110개국에서 통용되는 국제 표준</span></li>
+          <li><span data-en>Required for most US market entry</span><span data-ko>미국 시장 진입 시 대부분 필수</span></li>
+          <li><span data-en>K-NSF holders get evaluation credit here</span><span data-ko>K-NSF 보유 시 평가 항목 일부 인정</span></li>
+        </ul>
+      </div>
+    </div>
+    <p>
+      <span data-en>The key benefit: K-NSF is formally recognized as equivalent to NSF's globally recognized food equipment certification. Manufacturers who already hold standard NSF certification can skip most of the K-NSF in-depth evaluation, and K-NSF holders get credit toward full NSF certification later — so it works as a stepping stone toward the US market rather than a separate, redundant process.</span>
+      <span data-ko>핵심은 K-NSF가 NSF의 국제 식품기기 인증과 공식적으로 동등하게 인정된다는 점입니다. 이미 기존 NSF 인증을 보유한 제조사는 K-NSF 심층 평가 대부분을 생략할 수 있고, 반대로 K-NSF를 먼저 취득한 제조사는 이후 NSF 인증 신청 시 평가 항목 일부를 인정받습니다. 즉 별도의 중복 절차가 아니라, 미국 시장 진출을 위한 디딤돌로 설계되어 있습니다.</span>
+    </p>
+  </section>
+
+  <section>
+    <h2><span data-en>How Certification Works</span><span data-ko>인증 절차</span></h2>
+    <div class="eval-steps">
+      <div class="eval-step">
+        <span class="n"><span data-en>Stage 1</span><span data-ko>1단계</span></span>
+        <h3><span data-en>Basic Evaluation</span><span data-ko>기본 평가</span></h3>
+        <p><span data-en>Reviews the material specifications of surfaces that contact food or could be exposed to cross-contamination.</span><span data-ko>식품과 직접 접촉하거나 교차 오염에 노출될 수 있는 표면의 재질 규격을 검토합니다.</span></p>
+      </div>
+      <div class="eval-step">
+        <span class="n"><span data-en>Stage 2</span><span data-ko>2단계</span></span>
+        <h3><span data-en>In-Depth Evaluation</span><span data-ko>심층 평가</span></h3>
+        <p><span data-en>A comprehensive food-safety assessment covering materials, microbial contamination prevention, design, structure, coating, cleaning, wear resistance, impact strength, heat resistance, and adhesion.</span><span data-ko>재질, 미생물 오염 예방, 디자인, 구조, 코팅, 세척성, 마모·충격 강도, 내열성, 접착성까지 포괄하는 종합적인 식품안전성 평가입니다.</span></p>
+      </div>
+    </div>
+    <p><span data-en>Certified products are listed on NSF's official global product listing site, giving them visibility with international distributors and buyers who already use that listing to vet suppliers.</span><span data-ko>인증받은 제품은 NSF의 공식 글로벌 제품 목록 웹사이트에 등재되어, 이미 이 목록을 통해 공급사를 검토하는 해외 유통사·바이어들에게 노출됩니다.</span></p>
+  </section>
+
+  <section>
+    <h2><span data-en>Who Should Care</span><span data-ko>누가 주목해야 하는가</span></h2>
+    <div class="who-list">
+      <div class="who-item"><span data-en>Kitchen &amp; foodservice equipment manufacturers planning US or global export</span><span data-ko>미국·글로벌 수출을 계획 중인 주방·외식장비 제조사</span></div>
+      <div class="who-item"><span data-en>Cooking robot / automated food-prep device makers</span><span data-ko>조리 로봇·자동 조리기기 제조사</span></div>
+      <div class="who-item"><span data-en>Manufacturers who found standard NSF too slow or costly to start with</span><span data-ko>기존 NSF 인증이 처음 시작하기엔 느리거나 비용 부담이 컸던 제조사</span></div>
+      <div class="who-item"><span data-en>Buyers vetting Korean suppliers who claim food-safety compliance</span><span data-ko>식품안전 준수를 주장하는 한국 공급사를 검증 중인 해외 바이어</span></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="gap-box">
+      <span class="tag">⚠ <span data-en>Known Gap in This Guide</span><span data-ko>이 가이드의 한계</span></span>
+      <p><span data-en>Official sources don't yet publish standardized cost or timeline figures for K-NSF — that detail only exists with people actually going through the process. If you complete a K-NSF application, adding real cost/timeline data here would make this page far more valuable than anything currently published in English or Korean.</span><span data-ko>공식 자료에는 아직 K-NSF의 표준 비용이나 소요기간이 공개되어 있지 않습니다 — 이건 실제로 절차를 거쳐본 사람만 아는 정보입니다. 실제로 K-NSF를 신청·취득해보신다면, 그 비용·기간 데이터를 이 페이지에 추가하는 순간 현재 한/영 어디에도 없는 자료가 됩니다.</span></p>
+    </div>
+  </section>
+
+  <section class="sources">
+    <span data-en>Sources: </span><span data-ko>출처: </span>
+    <a href="https://www.newswire.co.kr/newsRead.php?no=1030257" target="_blank" rel="noopener">NSF / Korea Newswire (2026-03-16)</a> ·
+    <a href="https://www.nsf.org/kr/ko" target="_blank" rel="noopener">NSF Korea</a> ·
+    <a href="https://www.haccp.or.kr/user/content.do?pageId=PAGE_000000000000132" target="_blank" rel="noopener"><span data-en>Korea Institute for Food Safety Management Accreditation</span><span data-ko>한국식품안전관리인증원</span></a>
+  </section>
+
+  <div class="cta-block">
+    <h3><span data-en>Considering K-NSF for your product line?</span><span data-ko>귀사 제품에 K-NSF를 고려 중이신가요?</span></h3>
+    <p><span data-en>We work directly with Korean kitchen equipment manufacturers and can help you figure out whether K-NSF or standard NSF is the right first step.</span><span data-ko>한국 주방기기 제조사와 직접 협업하며, K-NSF와 기존 NSF 중 어느 쪽이 첫 단계로 맞는지 판단을 도와드립니다.</span></p>
+    <a href="korea-sourcing-desk.html#contact" class="cta-btn" onclick="trackEvent('click_sourcing_cta', {source:'knsf_guide'})"><span data-en>Ask a Question</span><span data-ko>문의하기</span></a>
+  </div>
+
+</article>
+
+<footer>
+  CBM LAB — <span data-en>Logistics &amp; Procurement Toolkit</span><span data-ko>물류·구매 실무 툴킷</span>
+</footer>
+
+<script>
+function setLang(lang){
+  document.documentElement.lang = lang;
+  document.getElementById('btn-en').classList.toggle('active', lang==='en');
+  document.getElementById('btn-ko').classList.toggle('active', lang==='ko');
+}
+</script>
+
+</body>
+</html>
