@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Data Radar | CBM LAB</title>
+<meta name="description" content="Automated, daily-updating trade and sourcing intelligence — currency impact, new regulations, public tenders, and import recall risk, all self-updating from official data sources.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#16232e; --steel:#3e5c74; --paper:#e7e2d3; --card:#f4f1e7;
+    --kraft:#a9791f; --rust:#a63d22; --cargo:#46705a; --line:#b9af98;
+    --ink-70:rgba(22,35,46,.7); --ink-50:rgba(22,35,46,.5);
+    font-size:16px;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--paper);
+    background-image: radial-gradient(circle at 1px 1px, rgba(22,35,46,0.05) 1px, transparent 0);
+    background-size: 22px 22px;
+    color:var(--ink); font-family:'Inter',system-ui,sans-serif; line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{color:var(--steel);}
+
+  header.site{background:var(--ink);color:var(--paper);padding:18px 24px;}
+  .header-inner{max-width:1000px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;}
+  .brand{font-family:'Oswald',sans-serif;font-weight:600;letter-spacing:.04em;font-size:1.05rem;text-transform:uppercase;display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--paper);}
+  .brand .mark{width:10px;height:10px;background:var(--rust);transform:rotate(45deg);display:inline-block;flex:none;}
+  .lang-toggle{display:flex;border:1px solid rgba(231,226,211,.35);font-family:'IBM Plex Mono',monospace;font-size:.78rem;}
+  .lang-toggle button{background:none;border:none;color:var(--paper);padding:6px 14px;cursor:pointer;letter-spacing:.05em;opacity:.55;}
+  .lang-toggle button.active{opacity:1;background:rgba(231,226,211,.12);}
+
+  .hero{max-width:1000px;margin:0 auto;padding:48px 24px 30px;border-bottom:1px dashed var(--line);}
+  .eyebrow{font-family:'IBM Plex Mono',monospace;font-size:.74rem;letter-spacing:.14em;text-transform:uppercase;color:var(--rust);display:flex;align-items:center;gap:10px;margin-bottom:16px;}
+  .eyebrow::before{content:"";width:26px;height:1px;background:var(--rust);}
+  h1{font-family:'Oswald',sans-serif;font-weight:600;font-size:clamp(1.9rem,4.6vw,2.7rem);line-height:1.14;margin:0 0 16px;max-width:20ch;}
+  .hero p.lede{max-width:64ch;color:var(--ink-70);font-size:1.02rem;margin:0;}
+
+  .grid{max-width:1000px;margin:0 auto;padding:40px 24px 20px;display:grid;grid-template-columns:1fr 1fr;gap:18px;}
+  @media (max-width:700px){.grid{grid-template-columns:1fr;}}
+
+  .card{background:var(--card);border:1px solid var(--line);display:flex;flex-direction:column;}
+  .card-top{padding:16px 18px;border-bottom:1px dashed var(--line);}
+  .card-top .tag{font-family:'IBM Plex Mono',monospace;font-size:.68rem;color:var(--steel);letter-spacing:.1em;text-transform:uppercase;margin-bottom:6px;}
+  .card-top h2{font-family:'Oswald',sans-serif;font-size:1.1rem;font-weight:600;margin:0;text-transform:uppercase;letter-spacing:.01em;}
+  .card-body{padding:14px 18px;flex:1;display:flex;flex-direction:column;}
+  .card-body p{font-size:.9rem;color:var(--ink-70);margin:0 0 14px;flex:1;}
+  .card-meta{font-family:'IBM Plex Mono',monospace;font-size:.72rem;color:var(--ink-50);margin-bottom:12px;}
+  .card-cta{
+    display:inline-block;text-align:center;background:var(--ink);color:var(--paper);
+    text-decoration:none;font-family:'Oswald',sans-serif;text-transform:uppercase;
+    letter-spacing:.05em;font-size:.8rem;padding:11px;
+  }
+  .card-cta:hover{background:var(--rust);}
+
+  .method{max-width:1000px;margin:0 auto;padding:36px 24px;border-top:1px dashed var(--line);}
+  .method h2{font-family:'Oswald',sans-serif;text-transform:uppercase;font-size:1.05rem;font-weight:600;margin:0 0 14px;letter-spacing:.02em;}
+  .method p{color:var(--ink-70);font-size:.92rem;max-width:70ch;margin:0 0 10px;}
+
+  .also{max-width:1000px;margin:0 auto;padding:0 24px 50px;}
+  .also h2{font-family:'Oswald',sans-serif;text-transform:uppercase;font-size:1.05rem;font-weight:600;margin:0 0 14px;letter-spacing:.02em;}
+  .also-list{display:flex;flex-wrap:wrap;gap:10px;}
+  .also-list a{
+    font-family:'IBM Plex Mono',monospace;font-size:.82rem;border:1px solid var(--line);
+    padding:8px 14px;text-decoration:none;color:var(--ink);
+  }
+  .also-list a:hover{border-color:var(--steel);color:var(--steel);}
+
+  footer{text-align:center;font-family:'IBM Plex Mono',monospace;font-size:.72rem;color:var(--ink-50);padding:0 24px 40px;}
+
+  [data-ko]{display:none;}
+  html[lang="ko"] [data-en]{display:none;}
+  html[lang="ko"] [data-ko]{display:inline;}
+</style>
+</head>
+<body>
+
+<header class="site">
+  <div class="header-inner">
+    <a href="index.html" class="brand"><span class="mark"></span>CBM LAB</a>
+    <div class="lang-toggle">
+      <button id="btn-en" class="active" onclick="setLang('en')">EN</button>
+      <button id="btn-ko" onclick="setLang('ko')">KO</button>
+    </div>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="eyebrow"><span data-en>Data Radar</span><span data-ko>데이터 레이더</span></div>
+  <h1><span data-en>Automated Trade &amp; Sourcing Intelligence</span><span data-ko>자동화된 무역·소싱 인텔리전스</span></h1>
+  <p class="lede">
+    <span data-en>Four small, self-updating feeds — currency impact, new government announcements, public tenders, and overseas recall risk. Each one pulls from an official public data source on a daily schedule and grows a new archive page on its own, with no manual editing.</span>
+    <span data-ko>매일 스스로 갱신되는 4개의 작은 피드입니다 — 환율 영향, 신규 정부 발표, 공공 입찰, 해외 리콜 리스크. 각각 공식 공개데이터를 매일 자동으로 가져와 새 아카이브 페이지를 스스로 쌓아 나가며, 사람이 손으로 편집하지 않습니다.</span>
+  </p>
+</section>
+
+<div class="grid">
+
+  <div class="card">
+    <div class="card-top">
+      <div class="tag"><span data-en>Currency</span><span data-ko>환율</span></div>
+      <h2><span data-en>Currency &amp; Landed Cost</span><span data-ko>환율·착지원가</span></h2>
+    </div>
+    <div class="card-body">
+      <p><span data-en>Live KRW rates against 8 sourcing currencies, with 7/30-day change and a computed landed-cost impact example.</span><span data-ko>8개 주요 통화 대비 원화 실시간 환율과 7·30일 변동, 계산된 착지원가 영향 예시.</span></p>
+      <div class="card-meta">Frankfurter.app (ECB)</div>
+      <a href="rates/index.html" class="card-cta"><span data-en>View Archive →</span><span data-ko>아카이브 보기 →</span></a>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-top">
+      <div class="tag"><span data-en>Regulatory</span><span data-ko>규제</span></div>
+      <h2><span data-en>New Announcement Radar</span><span data-ko>신규 발표 레이더</span></h2>
+    </div>
+    <div class="card-body">
+      <p><span data-en>Government press releases filtered to new certifications, pilot programs, and revised notices — across ministries, not one industry.</span><span data-ko>여러 정부 부처 보도자료 중 신규 인증·시범사업·고시 개정만 걸러낸 기록 — 특정 업종에 한정하지 않습니다.</span></p>
+      <div class="card-meta">MFDS RSS (<span data-en>expanding</span><span data-ko>소스 확장 중</span>)</div>
+      <a href="regulatory-radar/index.html" class="card-cta"><span data-en>View Archive →</span><span data-ko>아카이브 보기 →</span></a>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-top">
+      <div class="tag"><span data-en>Public Tenders</span><span data-ko>공공입찰</span></div>
+      <h2><span data-en>Tender Radar</span><span data-ko>입찰 레이더</span></h2>
+    </div>
+    <div class="card-body">
+      <p><span data-en>Korea's public procurement bid announcements, filtered daily to keyword-matched categories.</span><span data-ko>한국 공공조달 입찰공고를 키워드 기준으로 매일 자동 필터링한 기록.</span></p>
+      <div class="card-meta">조달청 나라장터 openAPI</div>
+      <a href="tenders/index.html" class="card-cta"><span data-en>View Archive →</span><span data-ko>아카이브 보기 →</span></a>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-top">
+      <div class="tag"><span data-en>Import Risk</span><span data-ko>수입 리스크</span></div>
+      <h2><span data-en>Import Recall Radar</span><span data-ko>수입 리콜 레이더</span></h2>
+    </div>
+    <div class="card-body">
+      <p><span data-en>US CPSC recall announcements from the last 48h — check whether anything you're sourcing overlaps.</span><span data-ko>최근 48시간 내 미국 CPSC 리콜 발표 — 지금 소싱 중인 품목과 겹치는지 확인하세요.</span></p>
+      <div class="card-meta">saferproducts.gov (CPSC)</div>
+      <a href="import-recall-radar/index.html" class="card-cta"><span data-en>View Archive →</span><span data-ko>아카이브 보기 →</span></a>
+    </div>
+  </div>
+
+</div>
+
+<section class="method">
+  <h2><span data-en>Why this exists</span><span data-ko>왜 만들었는가</span></h2>
+  <p><span data-en>These aren't written — they're computed. Each page pulls fresh data from an official source at generation time, so the numbers and matches are specific to that day, not summarized or reworded content. New pages are added automatically on a daily schedule; nothing here is manually edited after launch.</span><span data-ko>이 페이지들은 작성된 것이 아니라 계산된 것입니다. 매 생성 시점에 공식 소스에서 새 데이터를 가져오기 때문에, 숫자와 매칭 결과는 그날 하루에 고유하며 요약이나 재작성된 콘텐츠가 아닙니다. 새 페이지는 매일 자동으로 추가되며, 출시 이후 사람이 손으로 편집하는 부분은 없습니다.</span></p>
+</section>
+
+<section class="also">
+  <h2><span data-en>Also part of CBM LAB</span><span data-ko>CBM LAB의 다른 페이지</span></h2>
+  <div class="also-list">
+    <a href="landed-cost-calculator.html"><span data-en>Landed Cost Calculator</span><span data-ko>착지원가 계산기</span></a>
+    <a href="korea-supplier-intelligence.html"><span data-en>Supplier Intelligence</span><span data-ko>공급사 인텔리전스</span></a>
+    <a href="korea-sourcing-desk.html"><span data-en>Sourcing Desk</span><span data-ko>소싱 데스크</span></a>
+    <a href="k-nsf-certification-guide.html">K-NSF Guide</a>
+  </div>
+</section>
+
+<footer>
+  CBM LAB — <span data-en>Logistics &amp; Procurement Toolkit</span><span data-ko>물류·구매 실무 툴킷</span>
+</footer>
+
+<script>
+function setLang(lang){
+  document.documentElement.lang = lang;
+  document.getElementById('btn-en').classList.toggle('active', lang==='en');
+  document.getElementById('btn-ko').classList.toggle('active', lang==='ko');
+}
+</script>
+
+</body>
+</html>
