@@ -1,0 +1,35 @@
+name: Daily Tender Radar
+
+on:
+  schedule:
+    - cron: '0 23 * * *'   # 08:00 KST daily
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+jobs:
+  generate-radar:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Generate today's tender radar page
+        env:
+          DATA_GO_KR_KEY: ${{ secrets.DATA_GO_KR_KEY }}
+        run: node scripts/generate-tender-radar.js
+
+      - name: Commit and push if there are changes
+        run: |
+          git config user.name "cbm-lab-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add tenders/
+          if git diff --staged --quiet; then
+            echo "No changes to commit."
+          else
+            git commit -m "Auto: tender radar $(date -u +'%Y-%m-%d')"
+            git push
+          fi
