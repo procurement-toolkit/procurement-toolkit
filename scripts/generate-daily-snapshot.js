@@ -91,7 +91,7 @@ function renderPage(dateStr, cards) {
 </style>
 </head>
 <body>
-<header><a href="../korea-sourcing-desk.html">CBM LAB</a></header>
+<header><a href="../data-radar-hub.html">CBM LAB</a></header>
 <div class="wrap">
   <h1>Currency &amp; Landed Cost Snapshot — ${dateStr}</h1>
   <div class="sub">Auto-generated · source: Frankfurter.app (ECB) · <a href="index.html">← all snapshots</a></div>
@@ -99,7 +99,7 @@ function renderPage(dateStr, cards) {
     ${cards.join('\n    ')}
   </div>
 </div>
-<footer>CBM LAB — Logistics &amp; Procurement Toolkit · <a href="index.html">Snapshot Archive</a></footer>
+<footer>CBM LAB — Logistics &amp; Procurement Toolkit · <a href="index.html">Snapshot Archive</a> · <a href="../data-radar-hub.html">All Radars</a></footer>
 </body>
 </html>`;
 }
@@ -129,6 +129,7 @@ function renderIndex(dates) {
 </head>
 <body>
   <h1>Snapshot Archive</h1>
+  <p><a href="../data-radar-hub.html">← All Radars</a></p>
   <p>${dates.length} snapshots, auto-generated daily since ${dates.sort()[0] || ''}.</p>
   <ul>
         ${items}

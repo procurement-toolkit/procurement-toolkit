@@ -122,13 +122,13 @@ function renderPage(dateStr, matches) {
 </style>
 </head>
 <body>
-<header><a href="../korea-sourcing-desk.html">CBM LAB</a></header>
+<header><a href="../data-radar-hub.html">CBM LAB</a></header>
 <div class="wrap">
   <h1>신규 제도·발표 레이더 — ${dateStr}</h1>
   <div class="sub">자동 수집 · 출처: 정부 부처 보도자료 RSS (복수 소스) · <a href="index.html">← 전체 기록</a></div>
   ${matches.length ? rows : '<div class="empty">이 날짜에는 일치하는 발표가 없었습니다.</div>'}
 </div>
-<footer>CBM LAB — <a href="index.html">Regulatory Radar Archive</a></footer>
+<footer>CBM LAB — <a href="index.html">Regulatory Radar Archive</a> · <a href="../data-radar-hub.html">All Radars</a></footer>
 </body>
 </html>`;
 }
@@ -154,6 +154,7 @@ function renderIndex(dates) {
 </head>
 <body>
   <h1>신규 제도·발표 레이더 — 전체 기록</h1>
+  <p><a href="../data-radar-hub.html">← 전체 레이더 보기</a></p>
   <p>${dates.length}일치 자동 수집됨. 아직 아무도 정리하지 않은 신규 발표를 여기서 가장 먼저 확인할 수 있습니다.</p>
   <ul>
         ${items}
