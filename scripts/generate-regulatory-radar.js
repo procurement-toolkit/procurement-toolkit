@@ -1,9 +1,12 @@
 // generate-regulatory-radar.js
 //
-// Watches the Ministry of Food and Drug Safety's official press-release RSS
-// feed (confirmed live URL as of 2026-08) and keeps only items matching
-// food-equipment / certification keywords. This is exactly the kind of feed
-// that would have surfaced the K-NSF launch announcement the day it happened.
+// Watches one or more government ministries' official press-release RSS
+// feeds and keeps only items matching a generalized set of "something new
+// just happened" keywords (new certifications, pilot programs, revised
+// notices, support-program announcements, etc.) — industry-agnostic by
+// design. This is the pattern that has already caught real, previously
+// un-curated announcements once (see run history), so it's being scaled
+// across more sources rather than kept to a single ministry or industry.
 //
 // No API key needed — this is a public RSS feed. No npm install needed
 // (Node 18+ built-in fetch, and a small hand-rolled XML item extractor so we
@@ -12,11 +15,25 @@
 const fs = require('fs');
 const path = require('path');
 
-const RSS_URL = 'http://www.mfds.go.kr/www/rss/brd.do?brdId=ntc0021'; // MFDS 보도자료
+// Multiple ministries' RSS feeds, each tagged with a source label.
+// ⚠️ Only the MFDS entry has been confirmed live (it caught real matches on
+// the first run). The others are documented as having an RSS service but
+// their exact feed URLs weren't verified by fetching them directly — test
+// each one manually (Actions tab → Run workflow → check the log for
+// "fetched N items" per source) before trusting it long-term. If a URL is
+// wrong, that one source will just return 0 items — it won't break the rest.
+const SOURCES = [
+  { label: 'MFDS(식약처)', url: 'http://www.mfds.go.kr/www/rss/brd.do?brdId=ntc0021' },
+  // { label: 'MOTIE(산업통상자원부)', url: 'PASTE_VERIFIED_RSS_URL_HERE' },
+  // { label: 'KIPO(지식재산처)', url: 'PASTE_VERIFIED_RSS_URL_HERE' },
+  // { label: 'MSS(중소벤처기업부)', url: 'PASTE_VERIFIED_RSS_URL_HERE' },
+];
 
+// Generalized keywords — no longer tied to any single industry. This list is
+// the entire "editorial judgment" of the whole pipeline; add/remove freely.
 const KEYWORDS = [
-  '인증', 'NSF', 'K-NSF', '식품기기', '조리기기', '주방', '위생',
-  '안전관리인증', 'HACCP', '급식', '식품용기구',
+  '신규 인증', '인증제도', '시범사업', '시범운영', '제도 개선', '고시 제정',
+  '고시 개정', '지원사업 공고', '표준 제정', 'AI 활용', '신설',
 ];
 
 const RADAR_DIR = path.join(__dirname, '..', 'regulatory-radar');
@@ -50,11 +67,24 @@ function matchesKeyword(title) {
   return KEYWORDS.some((kw) => title.includes(kw));
 }
 
-async function fetchFeed() {
-  const res = await fetch(RSS_URL);
-  if (!res.ok) throw new Error(`RSS fetch failed: ${res.status}`);
-  const xml = await res.text();
-  return extractItems(xml);
+async function fetchAllFeeds() {
+  const all = [];
+  for (const source of SOURCES) {
+    try {
+      const res = await fetch(source.url);
+      if (!res.ok) {
+        console.log(`[${source.label}] fetch failed: ${res.status}`);
+        continue;
+      }
+      const xml = await res.text();
+      const items = extractItems(xml).map((it) => ({ ...it, source: source.label }));
+      console.log(`[${source.label}] fetched ${items.length} items.`);
+      all.push(...items);
+    } catch (e) {
+      console.log(`[${source.label}] error: ${e.message}`);
+    }
+  }
+  return all;
 }
 
 function renderPage(dateStr, matches) {
@@ -62,7 +92,7 @@ function renderPage(dateStr, matches) {
     .map(
       (m) => `<div class="row">
         <div class="title"><a href="${m.link}" target="_blank" rel="noopener">${m.title}</a></div>
-        <div class="meta">${m.pubDate || '—'}</div>
+        <div class="meta">${m.source || '—'} · ${m.pubDate || '—'}</div>
       </div>`
     )
     .join('\n      ');
@@ -72,8 +102,8 @@ function renderPage(dateStr, matches) {
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>식품·주방기기 규제 레이더 — ${dateStr} | CBM LAB</title>
-<meta name="description" content="식약처 보도자료 중 인증·규제 관련 신규 발표만 자동으로 걸러낸 기록 — ${dateStr}">
+<title>신규 제도·발표 레이더 — ${dateStr} | CBM LAB</title>
+<meta name="description" content="여러 정부 부처 보도자료 중 신규 제도/인증/지원사업 관련 발표만 자동으로 걸러낸 기록 — ${dateStr}">
 <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@600&family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@400;500&display=swap" rel="stylesheet">
 <style>
   :root{--ink:#16232e;--paper:#e7e2d3;--card:#f4f1e7;--line:#b9af98;}
@@ -94,8 +124,8 @@ function renderPage(dateStr, matches) {
 <body>
 <header><a href="../korea-sourcing-desk.html">CBM LAB</a></header>
 <div class="wrap">
-  <h1>식품·주방기기 규제 레이더 — ${dateStr}</h1>
-  <div class="sub">자동 수집 · 출처: 식품의약품안전처 보도자료 RSS · <a href="index.html">← 전체 기록</a></div>
+  <h1>신규 제도·발표 레이더 — ${dateStr}</h1>
+  <div class="sub">자동 수집 · 출처: 정부 부처 보도자료 RSS (복수 소스) · <a href="index.html">← 전체 기록</a></div>
   ${matches.length ? rows : '<div class="empty">이 날짜에는 일치하는 발표가 없었습니다.</div>'}
 </div>
 <footer>CBM LAB — <a href="index.html">Regulatory Radar Archive</a></footer>
@@ -123,8 +153,8 @@ function renderIndex(dates) {
 </style>
 </head>
 <body>
-  <h1>식품·주방기기 규제 레이더 — 전체 기록</h1>
-  <p>${dates.length}일치 자동 수집됨. 다음 K-NSF급 발견은 여기서 나올 수 있습니다.</p>
+  <h1>신규 제도·발표 레이더 — 전체 기록</h1>
+  <p>${dates.length}일치 자동 수집됨. 아직 아무도 정리하지 않은 신규 발표를 여기서 가장 먼저 확인할 수 있습니다.</p>
   <ul>
         ${items}
   </ul>
@@ -136,8 +166,8 @@ async function main() {
   if (!fs.existsSync(RADAR_DIR)) fs.mkdirSync(RADAR_DIR, { recursive: true });
 
   const todayStr = fmtDate(new Date());
-  const items = await fetchFeed();
-  console.log(`Fetched ${items.length} RSS items.`);
+  const items = await fetchAllFeeds();
+  console.log(`Fetched ${items.length} total RSS items across all sources.`);
   const matches = items.filter((it) => matchesKeyword(it.title));
   console.log(`${matches.length} matched keywords.`);
 
