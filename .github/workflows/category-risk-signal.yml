@@ -1,0 +1,35 @@
+name: Daily Category Risk Signal
+
+# Runs after regulatory-radar (22:30 UTC) and import-recall-radar (21:00 UTC)
+# so today's data from both is already committed when this reads it.
+on:
+  schedule:
+    - cron: '0 23 * * *'   # 08:00 KST daily
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+jobs:
+  generate-signal:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Generate today's category risk signal
+        run: node scripts/generate-category-risk-signal.js
+
+      - name: Commit and push if there are changes
+        run: |
+          git config user.name "cbm-lab-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add category-risk-signal/
+          if git diff --staged --quiet; then
+            echo "No changes to commit."
+          else
+            git commit -m "Auto: category risk signal $(date -u +'%Y-%m-%d')"
+            git push
+          fi
