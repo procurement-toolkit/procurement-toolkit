@@ -178,6 +178,14 @@ async function main() {
     'utf8'
   );
 
+  // JSON sidecar — lets other engines (e.g. category-risk-signal) read the
+  // raw matched items without having to parse the rendered HTML.
+  fs.writeFileSync(
+    path.join(RADAR_DIR, `${todayStr}.json`),
+    JSON.stringify({ date: todayStr, matches }, null, 2),
+    'utf8'
+  );
+
   const existingDates = fs
     .readdirSync(RADAR_DIR)
     .filter((f) => /^\d{4}-\d{2}-\d{2}\.html$/.test(f))

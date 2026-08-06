@@ -157,6 +157,13 @@ async function main() {
     'utf8'
   );
 
+  // JSON sidecar for downstream cross-referencing engines.
+  fs.writeFileSync(
+    path.join(RADAR_DIR, `${todayStr}.json`),
+    JSON.stringify({ date: todayStr, recalls }, null, 2),
+    'utf8'
+  );
+
   const existingDates = fs
     .readdirSync(RADAR_DIR)
     .filter((f) => /^\d{4}-\d{2}-\d{2}\.html$/.test(f))
