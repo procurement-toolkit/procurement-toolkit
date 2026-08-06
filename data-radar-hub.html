@@ -6,28 +6,30 @@
 <title>Data Radar | CBM LAB</title>
 <meta name="description" content="Automated, daily-updating trade and sourcing intelligence — currency impact, new regulations, public tenders, and import recall risk, all self-updating from official data sources.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Montserrat:wght@800;900&display=swap" rel="stylesheet">
 <style>
-  :root{
-    --ink:#16232e; --steel:#3e5c74; --paper:#e7e2d3; --card:#f4f1e7;
-    --kraft:#a9791f; --rust:#a63d22; --cargo:#46705a; --line:#b9af98;
-    --ink-70:rgba(22,35,46,.7); --ink-50:rgba(22,35,46,.5);
+    :root{
+    --ink:#0B1424; --route:#155EEF; --route-dim:#E8EFFE;
+    --paper:#F6F7F9; --card:#FFFFFF; --paper-card:#FFFFFF;
+    --kraft:#F59E0B; --rust:#155EEF; --cargo:#059669; --steel:#155EEF;
+    --line:#E4E7EC; --muted:#5B6472; --faint:#8B94A3;
+    --ink-70:rgba(11,20,36,.72); --ink-50:rgba(11,20,36,.5);
+    --font-display:'Space Grotesk','Pretendard',sans-serif;
+    --font-body:'Pretendard','Apple SD Gothic Neo',system-ui,-apple-system,sans-serif;
     font-size:16px;
   }
   *{box-sizing:border-box;}
   html,body{margin:0;padding:0;}
   body{
     background:var(--paper);
-    background-image: radial-gradient(circle at 1px 1px, rgba(22,35,46,0.05) 1px, transparent 0);
-    background-size: 22px 22px;
-    color:var(--ink); font-family:'Inter',system-ui,sans-serif; line-height:1.55;
+        color:var(--ink); font-family:var(--font-body); line-height:1.55;
     -webkit-font-smoothing:antialiased;
   }
   a{color:var(--steel);}
 
   header.site{background:var(--ink);color:var(--paper);padding:18px 24px;}
   .header-inner{max-width:1000px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;}
-  .brand{font-family:'Oswald',sans-serif;font-weight:600;letter-spacing:.04em;font-size:1.05rem;text-transform:uppercase;display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--paper);}
+  .brand{font-family:var(--font-display);font-weight:600;letter-spacing:.04em;font-size:1.05rem;text-transform:uppercase;display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--paper);}
   .brand .mark{width:10px;height:10px;background:var(--rust);transform:rotate(45deg);display:inline-block;flex:none;}
   .lang-toggle{display:flex;border:1px solid rgba(231,226,211,.35);font-family:'IBM Plex Mono',monospace;font-size:.78rem;}
   .lang-toggle button{background:none;border:none;color:var(--paper);padding:6px 14px;cursor:pointer;letter-spacing:.05em;opacity:.55;}
@@ -36,7 +38,7 @@
   .hero{max-width:1000px;margin:0 auto;padding:48px 24px 30px;border-bottom:1px dashed var(--line);}
   .eyebrow{font-family:'IBM Plex Mono',monospace;font-size:.74rem;letter-spacing:.14em;text-transform:uppercase;color:var(--rust);display:flex;align-items:center;gap:10px;margin-bottom:16px;}
   .eyebrow::before{content:"";width:26px;height:1px;background:var(--rust);}
-  h1{font-family:'Oswald',sans-serif;font-weight:600;font-size:clamp(1.9rem,4.6vw,2.7rem);line-height:1.14;margin:0 0 16px;max-width:20ch;}
+  h1{font-family:var(--font-display);font-weight:600;font-size:clamp(1.9rem,4.6vw,2.7rem);line-height:1.14;margin:0 0 16px;max-width:20ch;}
   .hero p.lede{max-width:64ch;color:var(--ink-70);font-size:1.02rem;margin:0;}
 
   .grid{max-width:1000px;margin:0 auto;padding:40px 24px 20px;display:grid;grid-template-columns:1fr 1fr;gap:18px;}
@@ -45,23 +47,23 @@
   .card{background:var(--card);border:1px solid var(--line);display:flex;flex-direction:column;}
   .card-top{padding:16px 18px;border-bottom:1px dashed var(--line);}
   .card-top .tag{font-family:'IBM Plex Mono',monospace;font-size:.68rem;color:var(--steel);letter-spacing:.1em;text-transform:uppercase;margin-bottom:6px;}
-  .card-top h2{font-family:'Oswald',sans-serif;font-size:1.1rem;font-weight:600;margin:0;text-transform:uppercase;letter-spacing:.01em;}
+  .card-top h2{font-family:var(--font-display);font-size:1.1rem;font-weight:600;margin:0;text-transform:uppercase;letter-spacing:.01em;}
   .card-body{padding:14px 18px;flex:1;display:flex;flex-direction:column;}
   .card-body p{font-size:.9rem;color:var(--ink-70);margin:0 0 14px;flex:1;}
   .card-meta{font-family:'IBM Plex Mono',monospace;font-size:.72rem;color:var(--ink-50);margin-bottom:12px;}
   .card-cta{
     display:inline-block;text-align:center;background:var(--ink);color:var(--paper);
-    text-decoration:none;font-family:'Oswald',sans-serif;text-transform:uppercase;
+    text-decoration:none;font-family:var(--font-display);text-transform:uppercase;
     letter-spacing:.05em;font-size:.8rem;padding:11px;
   }
   .card-cta:hover{background:var(--rust);}
 
   .method{max-width:1000px;margin:0 auto;padding:36px 24px;border-top:1px dashed var(--line);}
-  .method h2{font-family:'Oswald',sans-serif;text-transform:uppercase;font-size:1.05rem;font-weight:600;margin:0 0 14px;letter-spacing:.02em;}
+  .method h2{font-family:var(--font-display);text-transform:uppercase;font-size:1.05rem;font-weight:600;margin:0 0 14px;letter-spacing:.02em;}
   .method p{color:var(--ink-70);font-size:.92rem;max-width:70ch;margin:0 0 10px;}
 
   .also{max-width:1000px;margin:0 auto;padding:0 24px 50px;}
-  .also h2{font-family:'Oswald',sans-serif;text-transform:uppercase;font-size:1.05rem;font-weight:600;margin:0 0 14px;letter-spacing:.02em;}
+  .also h2{font-family:var(--font-display);text-transform:uppercase;font-size:1.05rem;font-weight:600;margin:0 0 14px;letter-spacing:.02em;}
   .also-list{display:flex;flex-wrap:wrap;gap:10px;}
   .also-list a{
     font-family:'IBM Plex Mono',monospace;font-size:.82rem;border:1px solid var(--line);
@@ -74,16 +76,39 @@
   [data-ko]{display:none;}
   html[lang="ko"] [data-en]{display:none;}
   html[lang="ko"] [data-ko]{display:inline;}
+
+  header.site{background:rgba(246,247,249,.92);backdrop-filter:blur(6px);border-bottom:1px solid var(--line);position:sticky;top:0;z-index:50;padding:0;}
+  .header-inner{max-width:1180px;margin:0 auto;padding:14px 24px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;}
+  .logo{font-family:var(--font-display);font-size:19px;font-weight:800;color:var(--ink);letter-spacing:-.5px;text-decoration:none;display:flex;align-items:center;gap:8px;}
+  .logo-tag{font-family:var(--font-display);font-size:10px;color:var(--faint);font-weight:600;letter-spacing:1px;border-left:1px solid var(--line);padding-left:10px;}
+  @media (max-width:640px){.logo-tag{display:none;}}
+  .header-right{display:flex;align-items:center;gap:16px;}
+  .back-link{font-family:var(--font-body);font-size:.82rem;color:var(--muted);text-decoration:none;font-weight:500;}
+  .back-link:hover{color:var(--route);}
+  .lang-toggle{display:flex;border:1px solid var(--line);border-radius:6px;overflow:hidden;font-family:var(--font-display);font-size:.72rem;}
+  .lang-toggle button{background:var(--paper-card);border:none;color:var(--muted);padding:6px 12px;cursor:pointer;letter-spacing:.03em;}
+  .lang-toggle button.active{background:var(--ink);color:#fff;}
 </style>
 </head>
 <body>
+<svg width="0" height="0" style="position:absolute;" aria-hidden="true">
+  <defs>
+    <linearGradient id="cbmGradH2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#14B8A6"/>
+      <stop offset="100%" stop-color="#0B2A4A"/>
+    </linearGradient>
+  </defs>
+</svg>
 
 <header class="site">
   <div class="header-inner">
-    <a href="index.html" class="brand"><span class="mark"></span>CBM LAB</a>
-    <div class="lang-toggle">
-      <button id="btn-en" class="active" onclick="setLang('en')">EN</button>
-      <button id="btn-ko" onclick="setLang('ko')">KO</button>
+    <a href="index.html" class="logo"><svg width="26" height="26" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0;"><path d="M20 2.5L36.5 11.5V28.5L20 37.5L3.5 28.5V11.5L20 2.5Z" stroke="url(#cbmGradH2)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M20 2.5V20M20 20L36.5 11.5M20 20L3.5 11.5" stroke="url(#cbmGradH2)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/></svg><span style="font-family:'Montserrat','Space Grotesk',sans-serif;font-weight:800;letter-spacing:-1.1px;background:linear-gradient(90deg,#14B8A6 0%,#1E7A8C 45%,#0B2A4A 100%);-webkit-background-clip:text;background-clip:text;color:transparent;">CBMLab</span><span class="logo-tag">TRADE &amp; PROCUREMENT TOOLKIT</span></a>
+    <div class="header-right">
+      <a href="index.html" class="back-link"><span data-en>&larr; All Tools</span><span data-ko>&larr; 전체 도구 보기</span></a>
+      <div class="lang-toggle">
+        <button id="btn-en" class="active" onclick="setLang('en')">EN</button>
+        <button id="btn-ko" onclick="setLang('ko')">KO</button>
+      </div>
     </div>
   </div>
 </header>
