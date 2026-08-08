@@ -1,0 +1,1365 @@
+{
+  "date": "2026-08-08",
+  "recalls": [
+    {
+      "RecallID": 10905,
+      "RecallNumber": "26670",
+      "RecallDate": "2026-08-06T00:00:00",
+      "Description": "This recall involves EEMB Lithium-ion Coin Battery Chargers with Rechargeable 2032 Batteries, model SKLC-0420-0040. The product includes the charger, four rechargeable 2032 lithium-ion batteries, and a USB cable. The brand name \"EEMB\" is on the front of the product and the model number \"SKLC-0420-0040\" is printed on the back.",
+      "URL": "https://www.cpsc.gov/Recalls/2026/A2batt-Recalls-EEMB-Lithium-Coin-Battery-Chargers-Due-to-Risk-of-Serious-Injury-or-Death-from-Battery-Ingestion-Violate-Mandatory-Standard-for-Consumer-Products-with-Coin-Batteries",
+      "Title": "A2batt Recalls EEMB Lithium Coin Battery Chargers Due to Risk of Serious Injury or Death from Battery Ingestion; Violate Mandatory Standard for Consumer Products with Coin Batteries",
+      "ConsumerContact": "A2batt by email at info@a2batt.com or online at www.eemb.com/Recall or www.eemb.com and click \"Charger Recall\" at the top of the page for more information.",
+      "LastPublishDate": "2026-08-07T00:00:00",
+      "Products": [
+        {
+          "Name": "EEMB Lithium-ion Coin Battery Chargers with Rechargeable 2032 Batteries",
+          "Description": "",
+          "Model": "",
+          "Type": "",
+          "CategoryID": "",
+          "NumberOfUnits": "About 4,930"
+        }
+      ],
+      "Inconjunctions": [],
+      "Images": [
+        {
+          "URL": "https://www.cpsc.gov/s3fs-public/eemb-1.png",
+          "Caption": "Recalled EEMB Lithium-ion Coin Battery Charger with Rechargeable 2032 Batteries"
+        },
+        {
+          "URL": "https://www.cpsc.gov/s3fs-public/eemb-2_0.png",
+          "Caption": "Recalled EEMB Lithium-ion Coin Battery Charger showing model"
+        }
+      ],
+      "Injuries": [
+        {
+          "Name": "None reported"
+        }
+      ],
+      "Manufacturers": [],
+      "Retailers": [
+        {
+          "Name": "Online at Amazon.com from August 2024 through March 2026 for about $14.",
+          "CompanyID": ""
+        }
+      ],
+      "Importers": [],
+      "Distributors": [
+        {
+          "Name": "EEMB USA, doing business as A2batt, Inc., of Redlands, California",
+          "CompanyID": ""
+        }
+      ],
+      "SoldAtLabel": null,
+      "ManufacturerCountries": [
+        {
+          "Country": "China"
+        }
+      ],
+      "ProductUPCs": [],
+      "Hazards": [
+        {
+          "Name": "The recalled battery chargers violate the mandatory standard for consumer products containing button cell or coin batteries, because the charger has lithium coin batteries that can be accessed easily by children. In addition, the coin batteries provided with the battery charger are not in child-resistant packaging, and the packaging does not have the warnings, as required by Reese's Law. When button cell or coin batteries are swallowed, the ingested batteries can cause serious injuries, internal chemical burns and death.",
+          "HazardType": "",
+          "HazardTypeID": ""
+        }
+      ],
+      "Remedies": [
+        {
+          "Name": "Consumers should stop using the charger immediately, remove the batteries and place them in an area that children cannot access. Contact A2batt to receive a full refund. Consumers will be asked to write \"RECALL\" on the charger. If batteries remain in packaging, dispose of the batteries according to local hazardous waste guidelines and provide a photo of the disposal to info@a2batt.com. Note: Button cell and coin batteries are hazardous. Batteries should be disposed of or recycled by following local hazardous waste procedures."
+        }
+      ],
+      "RemedyOptions": [
+        {
+          "Option": "Refund"
+        }
+      ]
+    },
+    {
+      "RecallID": 10896,
+      "RecallNumber": "26648",
+      "RecallDate": "2026-08-06T00:00:00",
+      "Description": "This recall involves DR Power PRO MAX30 30\" Deck Wide Cut Walk-Behind Power Lawn Mowers 10.6 FPT, Models: ES (WM25030DEN), MS (WM25030DMN) and MS Recon (WM25030DMNR). The lawn mowers are orange and black and have the \"DR\" logo printed on the black clippings bag, front guard, and top of the motor. The brand \"PRO MAX30\" is labeled on the front handlebars. The model and serial number are printed on the left side of the mower in front of the rear wheel. The following models and serial numbers are subject to the recall: Product Model Serial Numbers DR Power PRO MAX30 10.6 FPT ES WM25030DEN 3015894821 through 3017342386 DR Power PRO MAX30 10.6 FPT MS WM25030DMN 3015662325 through 3017342379 DR Power PRO MAX30 10.6 FPT MS Recon WM25030DMNR 3015913138 through 3015913138",
+      "URL": "https://www.cpsc.gov/Recalls/2026/DR-Power-Equipment-Recalls-Lawn-Mowers-Due-to-Risk-of-Serious-Injury-or-Death-from-Laceration-Hazard-Violate-Mandatory-Standard-for-Lawn-Mowers",
+      "Title": "DR Power Equipment Recalls Lawn Mowers Due to Risk of Serious Injury or Death from Laceration Hazard; Violate Mandatory Standard for Lawn Mowers",
+      "ConsumerContact": "DR Power Equipment toll-free at 877-221-4038 from 8:30 a.m. to 5 p.m. ET Monday through Friday, email at recall@drpower.com, or online at http://www.drpower.com/recalls or https://www.drpower.com/ and click on \"Product Recalls\" at the bottom of the page for more information.",
+      "LastPublishDate": "2026-08-07T00:00:00",
+      "Products": [
+        {
+          "Name": "DR Power PRO MAX30 30\" Walk-Behind Power Lawn Mowers",
+          "Description": "",
+          "Model": "",
+          "Type": "",
+          "CategoryID": "",
+          "NumberOfUnits": "About 320 (In addition, 9 were sold in Canada)"
+        }
+      ],
+      "Inconjunctions": [
+        {
+          "URL": "https://recalls-rappels.canada.ca/en/alert-recall/dr-power-pro-max30-30-deck-wide-cut-walk-behind-power-lawn-mowers-recalled-due"
+        }
+      ],
+      "Images": [
+        {
+          "URL": "https://www.cpsc.gov/s3fs-public/Picture5_51.png",
+          "Caption": "Recalled DR Walk-Behind Power Lawn Mower"
+        }
+      ],
+      "Injuries": [
+        {
+          "Name": "The manufacturer reported 19 incidents involving the mower blades staying engaged or not stopping after release of the blade control. No injuries have been reported."
+        }
+      ],
+      "Manufacturers": [
+        {
+          "Name": "Generac Power Systems Inc., of Waukesha, Wisconsin",
+          "CompanyID": ""
+        }
+      ],
+      "Retailers": [
+        {
+          "Name": "Independent power equipment stores nationwide and online at drpower.com from September 2024 through September 2025 for between $1,600 and $1,800.",
+          "CompanyID": ""
+        }
+      ],
+      "Importers": [],
+      "Distributors": [
+        {
+          "Name": "DR Power Equipment, of South Burlington, Vermont",
+          "CompanyID": ""
+        }
+      ],
+      "SoldAtLabel": null,
+      "ManufacturerCountries": [
+        {
+          "Country": "United States"
+        }
+      ],
+      "ProductUPCs": [],
+      "Hazards": [
+        {
+          "Name": "The recalled mowers violate the mandatory safety standard for walk-behind power lawn mowers because the blades can operate without the blade control system engaged or continue to operate even after the release of the control, posing a serious laceration hazard.",
+          "HazardType": "",
+          "HazardTypeID": ""
+        }
+      ],
+      "Remedies": [
+        {
+          "Name": "Consumers should stop using the recalled mowers immediately unless they have already received a free repair kit in the mail from DR Power and it has been installed. If the repair kit has not been installed, contact DR Power to receive updated repair instructions or schedule a free repair from an authorized dealer. Owners who have not received a repair kit should contact DR Power Equipment to receive a free repair kit or schedule a free repair from an authorized dealer."
+        }
+      ],
+      "RemedyOptions": [
+        {
+          "Option": "Repair"
+        }
+      ]
+    },
+    {
+      "RecallID": 10911,
+      "RecallNumber": "26676",
+      "RecallDate": "2026-08-06T00:00:00",
+      "Description": "This recall involves Laziza-branded 3-in-1 Dressers. The wooden dressers were sold in white, dark brown or light brown. Each dresser has three drawers, measures about 31.4 inches long, 15.4 inches wide, 31.9 inches high; and weighs 82 pounds. \"Three Drawer Dresser,\" model number WE11E5080Wx3-W or WE11E5081Rx3-W and batch number SME2025112805 or SME2025102401 are printed on a label on the back of the dresser.",
+      "URL": "https://www.cpsc.gov/Recalls/2026/Fitueyes-Recalls-Laziza-Dressers-Due-to-Risk-of-Serious-Injury-or-Death-from-Tip-Over-and-Entrapment-Hazards-Violate-Mandatory-Standard-for-Clothing-Storage-Units",
+      "Title": "Fitueyes Recalls Laziza Dressers Due to Risk of Serious Injury or Death from Tip-Over and Entrapment Hazards; Violate Mandatory Standard for Clothing Storage Units",
+      "ConsumerContact": "Fitueyes by email at lazizadresserrecall@s-homooi.com.",
+      "LastPublishDate": "2026-08-07T00:00:00",
+      "Products": [
+        {
+          "Name": "Laziza Dressers",
+          "Description": "",
+          "Model": "",
+          "Type": "",
+          "CategoryID": "",
+          "NumberOfUnits": "About 150"
+        }
+      ],
+      "Inconjunctions": [],
+      "Images": [
+        {
+          "URL": "https://www.cpsc.gov/s3fs-public/laziza-1.png",
+          "Caption": "Recalled Laziza Dresser – dark brown"
+        },
+        {
+          "URL": "https://www.cpsc.gov/s3fs-public/laziza-2.png",
+          "Caption": "Recalled Laziza Dresser - white"
+        },
+        {
+          "URL": "https://www.cpsc.gov/s3fs-public/laziza-3.png",
+          "Caption": "Recalled Laziza Dresser - light brown"
+        }
+      ],
+      "Injuries": [
+        {
+          "Name": "None reported"
+        }
+      ],
+      "Manufacturers": [],
+      "Retailers": [
+        {
+          "Name": "Online at Wayfair.com from March 2024 through April 2026 for about $870.",
+          "CompanyID": ""
+        }
+      ],
+      "Importers": [
+        {
+          "Name": "Fitueyes, Inc., of City of Industry, California",
+          "CompanyID": ""
+        }
+      ],
+      "Distributors": [],
+      "SoldAtLabel": null,
+      "ManufacturerCountries": [
+        {
+          "Country": "China"
+        }
+      ],
+      "ProductUPCs": [],
+      "Hazards": [
+        {
+          "Name": "The recalled dressers are unstable if they are not anchored to the wall, posing tip-over and entrapment hazards that can result in risks of serious injuries or death to children. The dressers violate the mandatory safety standard as required by the STURDY Act.",
+          "HazardType": "",
+          "HazardTypeID": ""
+        }
+      ],
+      "Remedies": [
+        {
+          "Name": "Consumers should stop using the recalled dressers immediately if they are not anchored to the wall and place them in an area that children cannot access. Contact Fitueyes for a full refund. Consumers will be asked to write the word \"recalled\" on the top and all sides of the dresser with a permanent marker and to submit a photo to lazizadresserrecall@s-homooi.com. Consumers should then dispose of the recalled product."
+        }
+      ],
+      "RemedyOptions": [
+        {
+          "Option": "Refund"
+        }
+      ]
+    },
+    {
+      "RecallID": 10912,
+      "RecallNumber": "26677",
+      "RecallDate": "2026-08-06T00:00:00",
+      "Description": "This recall involves Apeks model XL4, XL4+ and XL4 Ocea second stage scuba regulators sold from April 2025 through June 2026. They were sold in various colors or color combinations of black, white, gray, mint or yellow, with serial numbers between 250402212 and 260402893. The serial number is laser-etched on the side of the regulator and also appears on the shipping carton.",
+      "URL": "https://www.cpsc.gov/Recalls/2026/Head-Watersports-Recalls-Apeks-Second-Stage-Scuba-Regulators-Recalled-Due-to-Risk-of-Serious-Injury-or-Death-from-Drowning-Hazard",
+      "Title": "Head Watersports Recalls Apeks Second Stage Scuba Regulators Recalled Due to Risk of Serious Injury or Death from Drowning Hazard",
+      "ConsumerContact": "HEAD Watersports toll free at 800-874-3236 from 9 a.m. to 5 p.m. ET Monday through Friday, email RecallXL4@aqualung.com or online at https://us.apeksdiving.com/pages/recall-information-and-technical-notice, https://us.aqualung.com/pages/recall-information, https://www.head.com/en_US/recalls or https://www.head.com/en and click on \"Voluntary Recall\" at the bottom of the page for more information.",
+      "LastPublishDate": "2026-08-07T00:00:00",
+      "Products": [
+        {
+          "Name": "Apeks Second Stage Scuba Regulators",
+          "Description": "",
+          "Model": "",
+          "Type": "",
+          "CategoryID": "",
+          "NumberOfUnits": "About 1,105"
+        }
+      ],
+      "Inconjunctions": [],
+      "Images": [
+        {
+          "URL": "https://www.cpsc.gov/s3fs-public/regu-1.png",
+          "Caption": "Recalled Second Stage Regulator"
+        },
+        {
+          "URL": "https://www.cpsc.gov/s3fs-public/regu-2.png",
+          "Caption": "Location of Serial Number Etched on Recalled Regulator"
+        }
+      ],
+      "Injuries": [
+        {
+          "Name": "None reported"
+        }
+      ],
+      "Manufacturers": [],
+      "Retailers": [
+        {
+          "Name": "Authorized Apeks, Aqualung, and HEAD Watersports retailers and online at apeksdiving.com, aqualung.com and head.com from April 2025 through June 2026 for between $260 to $1,140.",
+          "CompanyID": ""
+        }
+      ],
+      "Importers": [
+        {
+          "Name": "HEAD USA, Inc. dba Head Watersports of Delray Beach, Florida",
+          "CompanyID": ""
+        }
+      ],
+      "Distributors": [],
+      "SoldAtLabel": null,
+      "ManufacturerCountries": [
+        {
+          "Country": "England"
+        }
+      ],
+      "ProductUPCs": [],
+      "Hazards": [
+        {
+          "Name": "The recalled second stage regulators can restrict air flow to the user at depths exceeding 45 meters (approximately 147 feet), posing risk of serious injury or death from a drowning hazard.",
+          "HazardType": "",
+          "HazardTypeID": ""
+        }
+      ],
+      "Remedies": [
+        {
+          "Name": "Consumers should stop using the recalled second stage scuba regulators immediately and bring the product to any HEAD Watersports Authorized Retailer who will replace the valve spindle assembly at no cost to the consumer."
+        }
+      ],
+      "RemedyOptions": [
+        {
+          "Option": "Repair"
+        }
+      ]
+    },
+    {
+      "RecallID": 10908,
+      "RecallNumber": "26673",
+      "RecallDate": "2026-08-06T00:00:00",
+      "Description": "This recall includes Laser & LED Light Mini Laser Pointer Keychains with model number KKC-6071. The model number is printed on the product packaging. The keychains were sold individually and packaged in a case of 24. The lasers come in various colors including blue, white, red, black, green and purple. Labeling wrapped around the laser is a silver sticker with black and silver lettering that reads: \"HJ, DANGER, LASER RADIATION, AVOID DIRECT EYE EXPOSURE, LASER DIODE, Wavelength: 630-650nm Max. Output: <5mW, class IIIa LASER PRODUCT.\"",
+      "URL": "https://www.cpsc.gov/Recalls/2026/KC-Imports-and-Exports-Recalls-Mini-Laser-Pointer-Keychains-Due-to-Risk-of-Serious-Injury-or-Death-from-Battery-Ingestion-Violate-Mandatory-Standard-for-Consumer-Products-with-Button-Cell-Batteries",
+      "Title": "KC Imports and Exports Recalls Mini Laser Pointer Keychains Due to Risk of Serious Injury or Death from Battery Ingestion; Violate Mandatory Standard for Consumer Products with Button Cell Batteries",
+      "ConsumerContact": "KC Import and Export at 323-268-2803 from 10 a.m. to 4 p.m. PT, Monday through Friday or email at kcimport90058@hotmail.com for more information.",
+      "LastPublishDate": "2026-08-07T00:00:00",
+      "Products": [
+        {
+          "Name": "Laser & LED Light Mini Laser Pointer Keychains",
+          "Description": "",
+          "Model": "",
+          "Type": "",
+          "CategoryID": "",
+          "NumberOfUnits": "9,600"
+        }
+      ],
+      "Inconjunctions": [],
+      "Images": [
+        {
+          "URL": "https://www.cpsc.gov/s3fs-public/laserkey-1.png",
+          "Caption": "Recalled Mini Laser Pointer Keychains – Top of Box"
+        },
+        {
+          "URL": "https://www.cpsc.gov/s3fs-public/laserkey-2.png",
+          "Caption": "Recalled Mini Laser Pointer Keychains – Inside of Box"
+        },
+        {
+          "URL": "https://www.cpsc.gov/s3fs-public/laserkey-3.png",
+          "Caption": "Recalled Mini Laser Pointer Keychains – (Green and Purple)"
+        },
+        {
+          "URL": "https://www.cpsc.gov/s3fs-public/laserkey-4.png",
+          "Caption": "Recalled Mini Laser Pointer Keychains – Silver Sticker Labeling"
+        }
+      ],
+      "Injuries": [
+        {
+          "Name": "None reported"
+        }
+      ],
+      "Manufacturers": [],
+      "Retailers": [
+        {
+          "Name": "Gas stations and discount stores nationwide and online at https://www.divaatheartsj.com/from June 2025 through June 2026 for about 42 cents per unit.",
+          "CompanyID": ""
+        }
+      ],
+      "Importers": [
+        {
+          "Name": "KC IMPORTS AND EXPORTS, Inc., of Vernon, California",
+          "CompanyID": ""
+        }
+      ],
+      "Distributors": [],
+      "SoldAtLabel": null,
+      "ManufacturerCountries": [
+        {
+          "Country": "China"
+        }
+      ],
+      "ProductUPCs": [],
+      "Hazards": [
+        {
+          "Name": "The Mini Laser Pointer Keychains violate the mandatory safety standard for consumer products with button cell and coin batteries because the button batteries can be accessed easily by children, posing an ingestion hazard.?Additionally, the packaging and product do not have the warnings required under?Reese's Law. When button cell or coin batteries are swallowed, the ingested batteries can cause serious injuries, internal chemical burns and death.",
+          "HazardType": "",
+          "HazardTypeID": ""
+        }
+      ],
+      "Remedies": [
+        {
+          "Name": "Consumers should stop using the recalled laser keychains immediately and contact KC Import and Export for refund. To receive a refund, email a photo of the products disposed of in the trash to kcimport90058@hotmail.com. Note: Button cell batteries are hazardous. Batteries should be disposed of or recycled by following local hazardous waste procedures."
+        }
+      ],
+      "RemedyOptions": [
+        {
+          "Option": "Refund"
+        }
+      ]
+    },
+    {
+      "RecallID": 10906,
+      "RecallNumber": "26671",
+      "RecallDate": "2026-08-06T00:00:00",
+      "Description": "This recall involves Little Rawr Silicone Pull String Teething Toys. The teething toys consist of a blue disc shape with a blue ball in the center and five multi-colored, silicone tentacle-looking pull strings that run through the ball. The disc has eight soft push buttons. The pull string teething toy measures 5.7 inches wide by 5.7 inches tall by 7.8 inches long. The units were sold in their own white box. The \"little rawr\" logo is printed on the front of the box. The back of the box has the manufacturer's address and email as well as model number C-MBE-024. The identification number X004Q55E07 is printed below the barcode label. There is no identifying information on the product.",
+      "URL": "https://www.cpsc.gov/Recalls/2026/Little-Rawr-Pull-String-Teething-Toys-Recalled-Due-to-Risk-of-Serious-Injury-or-Death-from-Choking-Violate-Mandatory-Standard-for-Toys-Sold-on-Amazon-by-Okabesini-us",
+      "Title": "Little Rawr Pull String Teething Toys Recalled Due to Risk of Serious Injury or Death from Choking; Violate Mandatory Standard for Toys; Sold on Amazon by Okabesini-us",
+      "ConsumerContact": "Okabesini-us toll-free at 800-608-7811 or email at lilrawrrecall@163.com for more information.",
+      "LastPublishDate": "2026-08-07T00:00:00",
+      "Products": [
+        {
+          "Name": "Little Rawr Silicone Pull String Teething Toys",
+          "Description": "",
+          "Model": "",
+          "Type": "",
+          "CategoryID": "",
+          "NumberOfUnits": "About 2,180"
+        }
+      ],
+      "Inconjunctions": [],
+      "Images": [
+        {
+          "URL": "https://www.cpsc.gov/s3fs-public/lilrawr-1.gif",
+          "Caption": "Recalled Little Rawr Silicone Pull String Teething Toys"
+        },
+        {
+          "URL": "https://www.cpsc.gov/s3fs-public/lilrawr-2.gif",
+          "Caption": "Recalled Little Rawr Silicone Pull String Teething Toys- Front of packaging"
+        },
+        {
+          "URL": "https://www.cpsc.gov/s3fs-public/Screenshot_6-8-2026_6358_cpscgovdc.sharepoint.com_.jpeg",
+          "Caption": "Recalled Little Rawr Silicone Pull String Teething Toys- Back of packaging"
+        }
+      ],
+      "Injuries": [
+        {
+          "Name": "The firm is aware of one report of the toy's strings reaching the back of a child's throat, resulting in respiratory distress or choking."
+        }
+      ],
+      "Manufacturers": [],
+      "Retailers": [
+        {
+          "Name": "Online at Amazon.com from September 2025 through April 2026 for between $11 to $15.",
+          "CompanyID": ""
+        }
+      ],
+      "Importers": [],
+      "Distributors": [
+        {
+          "Name": "Shenzhen Okabesini Technology Co., Ltd., dba Okabesini-us, of China",
+          "CompanyID": ""
+        }
+      ],
+      "SoldAtLabel": null,
+      "ManufacturerCountries": [
+        {
+          "Country": "China"
+        }
+      ],
+      "ProductUPCs": [],
+      "Hazards": [
+        {
+          "Name": "The recalled teething toys violate the mandatory standard for toys because the silicone strings are smaller and longer than permitted. The strings can reach the back of children's throat and become lodged, posing a serious risk of respiratory distress and a deadly choking hazard.",
+          "HazardType": "",
+          "HazardTypeID": ""
+        }
+      ],
+      "Remedies": [
+        {
+          "Name": "Consumers should stop using the teething toy immediately, take it away from children and contact Okabesini-us to receive a full refund. Consumers will be asked to destroy the toy by cutting all silicone strings and writing in permanent marker \"RECALLED\" on the main body of the toy and send a photo of the destroyed toy and order number if available to lilrawrrecall@163.com. Consumers should then dispose of the destroyed product."
+        }
+      ],
+      "RemedyOptions": [
+        {
+          "Option": "Refund"
+        }
+      ]
+    },
+    {
+      "RecallID": 10903,
+      "RecallNumber": "26668",
+      "RecallDate": "2026-08-06T00:00:00",
+      "Description": "This recall involves Liuqibax-branded adult portable bed rails, Model BR-11. The black or white bed rails measure about 30.5 inches wide by 40.5 inches tall and weigh 6 pounds. \"LIUQIBAX\" is printed on the product packaging.",
+      "URL": "https://www.cpsc.gov/Recalls/2026/Liuqibax-Adult-Bed-Rails-Recalled-Due-to-Risk-of-Serious-Injury-or-Death-from-Entrapment-and-Asphyxiation-Violate-Mandatory-Standard-for-Adult-Portable-Bed-Rails-Sold-on-Amazon-by-Luqiba",
+      "Title": "Liuqibax Adult Bed Rails Recalled Due to Risk of Serious Injury or Death from Entrapment and Asphyxiation; Violate Mandatory Standard for Adult Portable Bed Rails; Sold on Amazon by Luqiba",
+      "ConsumerContact": "Luqiba by email at Liuqibax@outlook.com.",
+      "LastPublishDate": "2026-08-07T00:00:00",
+      "Products": [
+        {
+          "Name": "Liuqibax Adult Bed Rails",
+          "Description": "",
+          "Model": "",
+          "Type": "",
+          "CategoryID": "",
+          "NumberOfUnits": "About 12,000"
+        }
+      ],
+      "Inconjunctions": [],
+      "Images": [
+        {
+          "URL": "https://www.cpsc.gov/s3fs-public/liuqibax-1.gif",
+          "Caption": "Recalled Liuqibax Bed Rail"
+        },
+        {
+          "URL": "https://www.cpsc.gov/s3fs-public/liuqibax-2.jpg",
+          "Caption": "\"LIUQIBAX\" is printed on the recalled bed rail's packaging. Recalled Liuqibax Bed Rail - packaging"
+        }
+      ],
+      "Injuries": [
+        {
+          "Name": "None reported"
+        }
+      ],
+      "Manufacturers": [],
+      "Retailers": [
+        {
+          "Name": "Online at Amazon.com from July 2024 through May 2026 for about $60.",
+          "CompanyID": ""
+        }
+      ],
+      "Importers": [
+        {
+          "Name": "Changsha 678 Trading Co., Ltd., dba Luqiba, of China",
+          "CompanyID": ""
+        }
+      ],
+      "Distributors": [],
+      "SoldAtLabel": null,
+      "ManufacturerCountries": [
+        {
+          "Country": "China"
+        }
+      ],
+      "ProductUPCs": [],
+      "Hazards": [
+        {
+          "Name": "The recalled bed rails violate the mandatory standard for adult portable bed rails because users can become entrapped within the bed rail or between the bed rail and the side of the mattress, posing a serious entrapment hazard and risk of death by asphyxiation. In addition, the bed rails do not bear the required hazard warning labels.",
+          "HazardType": "",
+          "HazardTypeID": ""
+        }
+      ],
+      "Remedies": [
+        {
+          "Name": "Consumers should stop using the recalled bed rails immediately and contact Luqiba for a full refund. Consumers will be asked to destroy the bed rails by dismantling them, cutting off the safety strap and storage bag and writing in permanent marker \"RECALLED\" on the upper and lower rails, and email a photo of the destroyed rails to Liuqibax@outlook.com. Consumers should then dispose of the destroyed product."
+        }
+      ],
+      "RemedyOptions": [
+        {
+          "Option": "Refund"
+        }
+      ]
+    },
+    {
+      "RecallID": 10897,
+      "RecallNumber": "26661",
+      "RecallDate": "2026-08-06T00:00:00",
+      "Description": "This recall involves Louisville, Featherlite, Lite & Century Attic Stairway Ladders with gas struts only. The aluminum or wood frame ladders come with handrails and fold into the attic. The ladders were sold in various frame sizes to accommodate different size attic openings in the ceiling, including 22.5, 25.5 and 30.0 inches wide and 54 and 60 inches long and ceiling heights ranging from 7 feet 8 inches up to 12 feet. The brand name and model number are located on the inside of the attic door.",
+      "URL": "https://www.cpsc.gov/Recalls/2026/Louisville-Ladder-Recalls-Over-One-Million-Attic-Stairway-Ladders-Due-to-Risk-of-Serious-Injury-or-Death-from-Fall-Hazard",
+      "Title": "Louisville Ladder Recalls Over One Million Attic Stairway Ladders Due to Risk of Serious Injury or Death from Fall Hazard",
+      "ConsumerContact": "Louisville Ladder, Inc. toll-free at 888-679-5132 from 8 a.m. to 5 p.m. ET Monday through Friday or online at Atticstairwayrecall.expertinquiry.com or go to www.louisvilleladder.com and click on \"Urgent Recall Notice\" at the top of the page for more information.",
+      "LastPublishDate": "2026-08-07T00:00:00",
+      "Products": [
+        {
+          "Name": "Louisville, Featherlite, Lite & Century Attic Stairway Ladders with gas struts",
+          "Description": "",
+          "Model": "",
+          "Type": "",
+          "CategoryID": "",
+          "NumberOfUnits": "1,770,000 (In addition, about 13,054 were sold in Canada)"
+        }
+      ],
+      "Inconjunctions": [
+        {
+          "URL": "https://recalls-rappels.canada.ca/en/alert-recall/louisville-and-featherlite-brand-attic-stairways-recalled-due-injury-hazard"
+        }
+      ],
+      "Images": [
+        {
+          "URL": "https://www.cpsc.gov/s3fs-public/louieladder-1.png",
+          "Caption": "Recalled Attic Stairway Ladder with gas struts (Location of Brand Marking)"
+        },
+        {
+          "URL": "https://www.cpsc.gov/s3fs-public/louieladder-2.png",
+          "Caption": "Recalled Attic Stairway Ladder with gas struts (Close-up of Label Plate w/ Model Number)"
+        },
+        {
+          "URL": "https://www.cpsc.gov/s3fs-public/louieladder-3.png",
+          "Caption": "Recalled Attic Stairway Ladder with gas struts (Location of Spreader Bolt)"
+        }
+      ],
+      "Injuries": [
+        {
+          "Name": "The firm has received 11 reports of a bolt breaking, including one report of an injury to the neck, head and back."
+        }
+      ],
+      "Manufacturers": [],
+      "Retailers": [
+        {
+          "Name": "The Home Depot, Lowe's, Do It Best, Orgill, and other retailers nationwide and on-line at Amazon.com from November 2012 through July 2026 for between $170 and $600.",
+          "CompanyID": ""
+        }
+      ],
+      "Importers": [
+        {
+          "Name": "Louisville Ladder, Inc., of Louisville, Kentucky",
+          "CompanyID": ""
+        }
+      ],
+      "Distributors": [],
+      "SoldAtLabel": null,
+      "ManufacturerCountries": [
+        {
+          "Country": "Mexico"
+        }
+      ],
+      "ProductUPCs": [],
+      "Hazards": [
+        {
+          "Name": "The bolts on the attic stairway ladders can break while in use, posing a risk of serious injury or death from fall hazard.",
+          "HazardType": "",
+          "HazardTypeID": ""
+        }
+      ],
+      "Remedies": [
+        {
+          "Name": "Consumers should stop using the recalled ladders immediately and register at Atticstairwayrecall.expertinquiry.com to receive a free repair kit. Consumers should have the ladder's model number, which can be found on the inside of the attic door, available when they register. If your unit is included in the recall, the firm will send a free repair kit containing two replacement ¼\" spreader bolts, washers, and lock nuts with installation instructions."
+        }
+      ],
+      "RemedyOptions": [
+        {
+          "Option": "Repair"
+        }
+      ]
+    },
+    {
+      "RecallID": 10900,
+      "RecallNumber": "26664",
+      "RecallDate": "2026-08-06T00:00:00",
+      "Description": "This recall involves BUSOHA 6-pack Magnetic Fidget Slider Toys. Each slider comes in a two-toned silicone casing, with one side in blue and the opposite side in gray, black, purple, dark blue, white, or green. Each color has a different texture. The silicone casing can be easily removed to expose the magnets. The front of the packaging has \"MAGNETIC Fidget Slider Toys,\" and all six sliders are visible through the front of the box.",
+      "URL": "https://www.cpsc.gov/Recalls/2026/Magnetic-Fidget-Sliders-Recalled-Due-to-Risk-of-Serious-Injury-or-Death-from-Magnet-Ingestion-Violate-Mandatory-Standard-for-Toys-Sold-on-Amazon-by-BUSOHA",
+      "Title": "Magnetic Fidget Sliders Recalled Due to Risk of Serious Injury or Death from Magnet Ingestion; Violate Mandatory Standard for Toys: Sold on Amazon by BUSOHA",
+      "ConsumerContact": "BUSOHA at BUSHOHArecall@outlook.com.",
+      "LastPublishDate": "2026-08-07T00:00:00",
+      "Products": [
+        {
+          "Name": "BUSOHA Magnetic Fidget Slider Toys",
+          "Description": "",
+          "Model": "",
+          "Type": "",
+          "CategoryID": "",
+          "NumberOfUnits": "About 2,186"
+        }
+      ],
+      "Inconjunctions": [],
+      "Images": [
+        {
+          "URL": "https://www.cpsc.gov/s3fs-public/busoha-1.png",
+          "Caption": "Recalled BUSOHA Magnetic Fidget Slider Toys (front of box)"
+        },
+        {
+          "URL": "https://www.cpsc.gov/s3fs-public/busoha-2.png",
+          "Caption": "Recalled BUSOHA Magnetic Fidget Slider Toys - one side is blue and the opposite side is in different colors and textures"
+        },
+        {
+          "URL": "https://www.cpsc.gov/s3fs-public/busoha-3.png",
+          "Caption": "Recalled BUSOHA Magnetic Fidget Slider Toy with silicone casing removed, exposing magnets"
+        }
+      ],
+      "Injuries": [
+        {
+          "Name": "None reported"
+        }
+      ],
+      "Manufacturers": [],
+      "Retailers": [
+        {
+          "Name": "Online at Amazon.com from December 2025 through May 2026 for about $7.",
+          "CompanyID": ""
+        }
+      ],
+      "Importers": [
+        {
+          "Name": "Shenzhen Yuejia Mei Maoyi Youxian Gongsi (Shenzhen Yuejia Mei Trading Co., Ltd.), doing business as BUSOHA, of China",
+          "CompanyID": ""
+        }
+      ],
+      "Distributors": [],
+      "SoldAtLabel": null,
+      "ManufacturerCountries": [
+        {
+          "Country": "China"
+        }
+      ],
+      "ProductUPCs": [],
+      "Hazards": [
+        {
+          "Name": "The magnetic fidget sliders violate the mandatory standard for toys because they can liberate loose magnets posing an ingestion hazard to children. When high-powered magnets are swallowed, the ingested magnets can attract each other or other metal objects and become lodged in the digestive system. This can result in perforations, twisting, and/or blockage of the intestines, blood poisoning and death.",
+          "HazardType": "",
+          "HazardTypeID": ""
+        }
+      ],
+      "Remedies": [
+        {
+          "Name": "Consumers should take the fidget sliders away from children, stop using them immediately and contact BUSOHA for a full refund. Consumers will be asked to throw away the fidget sliders and submit a photo of the disposed toys to BUSHOHArecall@outlook.com to receive a refund."
+        }
+      ],
+      "RemedyOptions": [
+        {
+          "Option": "Refund"
+        }
+      ]
+    },
+    {
+      "RecallID": 10902,
+      "RecallNumber": "26667",
+      "RecallDate": "2026-08-06T00:00:00",
+      "Description": "This recall involves PIXLABBY's 6-PCS silicone magnetic fidget sliders. The fidget sliders come in various two-tone colors, yellow/red, pink/yellow, orange/purple, blue/orange, green/blue, and red/green. Each slider has a different silicone texture on the top and bottom surfaces. The fidget sliders make a clicking sound as you slide them. The \"PIXABBY\" logo is on the front of the box.",
+      "URL": "https://www.cpsc.gov/Recalls/2026/Magnetic-Fidget-Sliders-Recalled-Due-to-Risk-of-Serious-Injury-or-Death-from-Magnet-Ingestion-Violate-Mandatory-Standard-for-Toys-Sold-on-Amazon-by-PIXLABBY",
+      "Title": "Magnetic Fidget Sliders Recalled Due to Risk of Serious Injury or Death from Magnet Ingestion; Violate Mandatory Standard for Toys; Sold on Amazon by PIXLABBY",
+      "ConsumerContact": "PIXLABBY by email at ah1998zxc@gmail.com.",
+      "LastPublishDate": "2026-08-07T00:00:00",
+      "Products": [
+        {
+          "Name": "PIXLABBY Silicone Sensory Magnetic Fidget Sliders",
+          "Description": "",
+          "Model": "",
+          "Type": "",
+          "CategoryID": "",
+          "NumberOfUnits": "860"
+        }
+      ],
+      "Inconjunctions": [],
+      "Images": [
+        {
+          "URL": "https://www.cpsc.gov/s3fs-public/fidgetsliders-1.png",
+          "Caption": "Recalled PIXLABBY Silicone Sensory Magnetic Fidget Sliders"
+        },
+        {
+          "URL": "https://www.cpsc.gov/s3fs-public/fidgetsliders-2.png",
+          "Caption": "Recalled PIXLABBY Silicone Sensory Magnetic Fidget Sliders, Front of Box"
+        },
+        {
+          "URL": "https://www.cpsc.gov/s3fs-public/fidgetsliders-3.png",
+          "Caption": "Recalled PIXLABBY Silicone Sensory Magnetic Fidget Sliders, Back of Box"
+        },
+        {
+          "URL": "https://www.cpsc.gov/s3fs-public/fidgetsliders-4.png",
+          "Caption": "Recalled PIXLABBY Silicone Sensory Magnetic Fidget Sliders, Side of Box"
+        }
+      ],
+      "Injuries": [
+        {
+          "Name": "CPSC and the firm are aware of a report involving a child who removed the silicone casing, accessed the two small magnets inside the slider and ingested them. The child was hospitalized."
+        }
+      ],
+      "Manufacturers": [],
+      "Retailers": [
+        {
+          "Name": "Online at Amazon.com from October 2025 through May 2026 for about $10.",
+          "CompanyID": ""
+        }
+      ],
+      "Importers": [
+        {
+          "Name": "Huoshan County Haozhou E-commerce Co, doing business as PIXLABBY, of China",
+          "CompanyID": ""
+        }
+      ],
+      "Distributors": [],
+      "SoldAtLabel": null,
+      "ManufacturerCountries": [
+        {
+          "Country": "China"
+        }
+      ],
+      "ProductUPCs": [],
+      "Hazards": [
+        {
+          "Name": "The magnetic fidget sliders violate the mandatory standard for toys because they can liberate loose high-powered magnets posing an ingestion hazard to children. When high-powered magnets are swallowed, the ingested magnets can attract each other or other metal objects and become lodged in the digestive system. This can result in perforations, twisting, and/or blockage of the intestines, blood poisoning and death.",
+          "HazardType": "",
+          "HazardTypeID": ""
+        }
+      ],
+      "Remedies": [
+        {
+          "Name": "Consumers should take the fidget sliders away from children, stop using them immediately and contact PIXLABBY for a full refund. Consumers will be asked to throw away the fidget sliders and submit a photo of the disposed toys to ah1998zxc@gmail.com to receive a refund."
+        }
+      ],
+      "RemedyOptions": [
+        {
+          "Option": "Refund"
+        }
+      ]
+    },
+    {
+      "RecallID": 10898,
+      "RecallNumber": "26662",
+      "RecallDate": "2026-08-06T00:00:00",
+      "Description": "The recall includes three Easter LED Headband models: Model 46310 is available in white, light pink, dark pink, turquoise, purple and red and features felt multicolor polka dots on the ears. Each headband is packaged in a clear plastic bag labeled \"Item#46310\" and \"OKK Trading, Inc.\" Model 46309 is available in white, light pink, turquoise and purple and features fluffy ears and light fur along the band. Each headband is packaged in a clear plastic bag labeled \"Item#46309\" and \"OKK Trading, Inc.\" Model 44694 is available in white with dark pink, light blue, red or light pink satin ear lining with a fluffy white backing and band. Each headband is packaged in a clear plastic bag labeled \"Item#44694\" and \"OKK Trading, Inc.\"",
+      "URL": "https://www.cpsc.gov/Recalls/2026/OKK-Trading-Recalls-Easter-LED-Headbands-Due-to-Risk-of-Serious-Injury-or-Death-from-Battery-Ingestion-Violate-Mandatory-Standard-for-Toys",
+      "Title": "OKK Trading Recalls Easter LED Headbands Due to Risk of Serious Injury or Death from Battery Ingestion; Violate Mandatory Standard for Toys",
+      "ConsumerContact": "OKK Trading at 323-725-8800 from 9 a.m. to 4 p.m. PT Monday through Friday, by email at recall@okktoys.com or online at http://www.okktoys.com/recall or http://www.okktoys.com and click \"Recall\" at the top of the page for more information.",
+      "LastPublishDate": "2026-08-07T00:00:00",
+      "Products": [
+        {
+          "Name": "Easter LED Headbands",
+          "Description": "",
+          "Model": "",
+          "Type": "",
+          "CategoryID": "",
+          "NumberOfUnits": "About 25,200"
+        }
+      ],
+      "Inconjunctions": [],
+      "Images": [
+        {
+          "URL": "https://www.cpsc.gov/s3fs-public/easterled-1.png",
+          "Caption": "Recalled Easter LED Headbands - Item# 46310"
+        },
+        {
+          "URL": "https://www.cpsc.gov/s3fs-public/easterled-2.png",
+          "Caption": "Recalled Easter LED Headbands - Item# 46309"
+        },
+        {
+          "URL": "https://www.cpsc.gov/s3fs-public/easterled-3.png",
+          "Caption": "Recalled Easter LED Headbands - Item# 44694"
+        }
+      ],
+      "Injuries": [
+        {
+          "Name": "None reported"
+        }
+      ],
+      "Manufacturers": [],
+      "Retailers": [
+        {
+          "Name": "Retail dollar stores and gift stores mostly in California, Texas and Arizona from November 2023 through April 2026 for between $1 and $2.",
+          "CompanyID": ""
+        }
+      ],
+      "Importers": [
+        {
+          "Name": "OKK Trading, Inc., of Vernon, California",
+          "CompanyID": ""
+        }
+      ],
+      "Distributors": [],
+      "SoldAtLabel": null,
+      "ManufacturerCountries": [
+        {
+          "Country": "China"
+        }
+      ],
+      "ProductUPCs": [],
+      "Hazards": [
+        {
+          "Name": "The recalled headbands violate the mandatory safety standard for toys with button cell and coin batteries because the lithium coin batteries can be accessed easily by children, posing an ingestion hazard. When button cell or coin batteries are swallowed, the ingested batteries can cause serious injuries, internal chemical burns, and death.",
+          "HazardType": "",
+          "HazardTypeID": ""
+        }
+      ],
+      "Remedies": [
+        {
+          "Name": "Consumers should stop using the Easter LED Headbands immediately and contact OKK Trading for a refund. Consumers will be asked to email recall@okktoys.com a photograph showing the product being properly disposed of in the trash. Note: Button cell batteries are hazardous. Batteries should be disposed of or recycled by following local hazardous waste procedures."
+        }
+      ],
+      "RemedyOptions": [
+        {
+          "Option": "Refund"
+        }
+      ]
+    },
+    {
+      "RecallID": 10904,
+      "RecallNumber": "26669",
+      "RecallDate": "2026-08-06T00:00:00",
+      "Description": "This recall involves Voomf-branded play yard mattresses and crib mattresses. The tri-fold aftermarket play yard mattresses are white with a neutral-colored letter or balloon print and measure about 38 inches by 26 inches by 3 inches. \"Product Model: BYL001\" is printed on a label inside the mattress cover. The full-sized crib mattresses are white with an aquamarine band and a zipper along the sides, and measure about 25 inches by 27 inches by 5.5 inches. \"voomf\" is printed on a label on the side of the mattress.",
+      "URL": "https://www.cpsc.gov/Recalls/2026/Play-Yard-and-Crib-Mattresses-Recalled-Due-to-Risk-of-Serious-Injury-or-Death-from-Entrapment-and-Fire-Hazards-Violate-Mandatory-Standards-for-Mattresses-Sold-on-Amazon-by-Voomf",
+      "Title": "Play Yard and Crib Mattresses Recalled Due to Risk of Serious Injury or Death from Entrapment and Fire Hazards; Violate Mandatory Standards for Mattresses; Sold on Amazon by Voomf",
+      "ConsumerContact": "Voomf by email at voomfrecall@outlook.com.",
+      "LastPublishDate": "2026-08-07T00:00:00",
+      "Products": [
+        {
+          "Name": "Voomf Play Yard and Crib Mattresses",
+          "Description": "",
+          "Model": "",
+          "Type": "",
+          "CategoryID": "",
+          "NumberOfUnits": "About 2,401"
+        }
+      ],
+      "Inconjunctions": [],
+      "Images": [
+        {
+          "URL": "https://www.cpsc.gov/s3fs-public/voomf-1.jpg",
+          "Caption": "Recalled Voomf Tri-Fold Play Yard Mattress – letters print"
+        },
+        {
+          "URL": "https://www.cpsc.gov/s3fs-public/voomf-2.jpg",
+          "Caption": "Recalled Voomf Tri-Fold Play Yard Mattress – balloons print"
+        },
+        {
+          "URL": "https://www.cpsc.gov/s3fs-public/voomf-3.gif",
+          "Caption": "\"Product Model: BYL001\" is printed on a label inside the cover of the recalled Voomf play yard mattresses"
+        },
+        {
+          "URL": "https://www.cpsc.gov/s3fs-public/voomf-4.jpg",
+          "Caption": "Recalled Voomf Full-sized Crib Mattress"
+        }
+      ],
+      "Injuries": [
+        {
+          "Name": "CPSC has received one report of inadequate mattress fit. No injuries have been reported."
+        }
+      ],
+      "Manufacturers": [],
+      "Retailers": [
+        {
+          "Name": "Online at Amazon.com from January 2026 through May 2026 for between $40 and $87.",
+          "CompanyID": ""
+        }
+      ],
+      "Importers": [
+        {
+          "Name": "Shanghaiyuejiuyaoguojimaoyiyouxiangongsi (Shanghai Yuejiuyao International Trade Co., Ltd.), dba Voomf, of China",
+          "CompanyID": ""
+        }
+      ],
+      "Distributors": [],
+      "SoldAtLabel": null,
+      "ManufacturerCountries": [
+        {
+          "Country": "China"
+        }
+      ],
+      "ProductUPCs": [],
+      "Hazards": [
+        {
+          "Name": "The recalled mattresses violate the mandatory safety standard for crib mattresses because the mattresses may not adequately fit certain play yards, posing a deadly entrapment hazard. Babies can suffocate in gaps between an undersized mattress, or extra padding, and side walls of a product, especially when the infant's face becomes trapped against the side and the mattress, preventing the infant from breathing. Furthermore, the full-sized crib mattresses violate the mandatory flammability standard for mattress sets, posing a risk of serious injury or death from fire.",
+          "HazardType": "",
+          "HazardTypeID": ""
+        }
+      ],
+      "Remedies": [
+        {
+          "Name": "Consumers should stop using the mattresses immediately and contact Voomf for a full refund. Consumers will be asked to destroy the mattresses by writing in permanent marker \"Recalled,\" cutting the play yard mattress in half and cutting the full-sized mattress cover diagonally across the entire mattress using scissors, and to send a photo of the destroyed mattress to voomfrecall@outlook.com. Consumers should then dispose of the recalled product in accordance with local and/or state disposal procedures."
+        }
+      ],
+      "RemedyOptions": [
+        {
+          "Option": "Refund"
+        }
+      ]
+    },
+    {
+      "RecallID": 10907,
+      "RecallNumber": "26672",
+      "RecallDate": "2026-08-06T00:00:00",
+      "Description": "This recall involves Syera-branded LED Finger Lights. They were sold in sets of 28 or 30 multi-colored lights and with 30 astronaut cards. Each finger light has three internal button cell batteries that power astronaut projections when activated. The brand name is printed on the product packaging.",
+      "URL": "https://www.cpsc.gov/Recalls/2026/Syera-Projecting-Finger-Light-Toys-Recalled-Due-to-Risk-of-Serious-Injury-from-Battery-Ingestion-Violate-Mandatory-Standard-for-Toys-Sold-on-TEMU-by-Senyu",
+      "Title": "Syera Projecting Finger Light Toys Recalled Due to Risk of Serious Injury from Battery Ingestion; Violate Mandatory Standard for Toys; Sold on TEMU by Senyu",
+      "ConsumerContact": "Syera by email syerarecallusa@outlook.com.",
+      "LastPublishDate": "2026-08-07T00:00:00",
+      "Products": [
+        {
+          "Name": "Space Astronaut LED Finger Lights",
+          "Description": "",
+          "Model": "",
+          "Type": "",
+          "CategoryID": "",
+          "NumberOfUnits": "About 184"
+        }
+      ],
+      "Inconjunctions": [],
+      "Images": [
+        {
+          "URL": "https://www.cpsc.gov/s3fs-public/syera-1.jpg",
+          "Caption": "Recalled Syera Space Astronaut LED Finger Lights"
+        },
+        {
+          "URL": "https://www.cpsc.gov/s3fs-public/syera-2.jpg",
+          "Caption": "The recalled Syera Space Astronaut finger lights have three internal button cell batteries that power astronaut projections"
+        }
+      ],
+      "Injuries": [
+        {
+          "Name": "None reported"
+        }
+      ],
+      "Manufacturers": [],
+      "Retailers": [
+        {
+          "Name": "Online at Temu.com from December 2025 through April 2026 for between $8 and $16.",
+          "CompanyID": ""
+        }
+      ],
+      "Importers": [],
+      "Distributors": [
+        {
+          "Name": "Senyu Era International Co. Limited, dba Syera, of China",
+          "CompanyID": ""
+        }
+      ],
+      "SoldAtLabel": null,
+      "ManufacturerCountries": [
+        {
+          "Country": "China"
+        }
+      ],
+      "ProductUPCs": [],
+      "Hazards": [
+        {
+          "Name": "The recalled LED finger lights violate the mandatory safety standard for toys because they contain button cell batteries that can be easily accessed by children. If button cell or coin batteries are swallowed, the ingested batteries can cause serious injuries, including internal chemical burns, and death.",
+          "HazardType": "",
+          "HazardTypeID": ""
+        }
+      ],
+      "Remedies": [
+        {
+          "Name": "Consumers should stop using the recalled toys immediately, take them away from children and contact Syera for a full refund. Consumers will be asked to remove and properly dispose of the finger lights into the trash and send a photo of the disposed product to syerarecallusa@outlook.com. Note: Button cell batteries are hazardous. Batteries should be disposed of or recycled by following local hazardous waste procedures."
+        }
+      ],
+      "RemedyOptions": [
+        {
+          "Option": "Refund"
+        }
+      ]
+    },
+    {
+      "RecallID": 10909,
+      "RecallNumber": "26674",
+      "RecallDate": "2026-08-06T00:00:00",
+      "Description": "This recall involves all Vanderhall model years 2024, 2025, and 2026 Brawley GTS electric recreational off highway vehicles. The vehicles come in Emerald Green, Ida Rose, Ivory White, Jean Grey, Obsidian Black, and Royal Blue. The VIN Numbers for the affected vehicles range from XXXXXXXXXXXXX4933 - XXXXXXXXXXXXX6153 and can be found under the dashboard on the driver's side of the vehicle.",
+      "URL": "https://www.cpsc.gov/Recalls/2026/Vanderhall-North-America-Recalls-Brawley-GTS-Electric-Recreational-Off-Highway-Vehicles-ROVs-Due-to-Risk-of-Serious-Injury-or-Death-from-Crash-Hazard",
+      "Title": "Vanderhall North America Recalls Brawley GTS Electric Recreational Off Highway Vehicles (ROVs) Due to Risk of Serious Injury or Death from Crash Hazard",
+      "ConsumerContact": "Vanderhall North America, LLC by email at inquiry@vanderhallusa.com or online at https://dealer.vanderhallusa.com/contact, https://portal.vanderhallusa.com/safety_notices, under the name of \"Vanderhall North America, LLC Recalls Motor Software Update\" for more information.",
+      "LastPublishDate": "2026-08-07T00:00:00",
+      "Products": [
+        {
+          "Name": "Vanderhall Brawley GTS electric recreational off highway vehicles",
+          "Description": "",
+          "Model": "",
+          "Type": "",
+          "CategoryID": "",
+          "NumberOfUnits": "About 210"
+        }
+      ],
+      "Inconjunctions": [],
+      "Images": [
+        {
+          "URL": "https://www.cpsc.gov/s3fs-public/brawley-1.png",
+          "Caption": "Recalled Brawley GTS Electric Recreational Off Highway Vehicle"
+        },
+        {
+          "URL": "https://www.cpsc.gov/s3fs-public/brawley-2.png",
+          "Caption": "The VIN is visible underneath the driver-side dashboard, left of the foot pedals"
+        },
+        {
+          "URL": "https://www.cpsc.gov/s3fs-public/brawley-3.png",
+          "Caption": "Vanderhall Logo"
+        }
+      ],
+      "Injuries": [
+        {
+          "Name": "The firm has received one report of a vehicle unexpectedly accelerating. No injuries have been reported."
+        }
+      ],
+      "Manufacturers": [
+        {
+          "Name": "Vanderhall North America, LLC, of Provo, Utah",
+          "CompanyID": ""
+        }
+      ],
+      "Retailers": [
+        {
+          "Name": "Vanderhall North America dealers in Utah, Ohio, Michigan, Texas, Montana, North Carolina, Oklahoma, and Arizona, from April 2024 through June 2026 for about $50,000.",
+          "CompanyID": ""
+        }
+      ],
+      "Importers": [],
+      "Distributors": [],
+      "SoldAtLabel": null,
+      "ManufacturerCountries": [
+        {
+          "Country": "United States"
+        }
+      ],
+      "ProductUPCs": [],
+      "Hazards": [
+        {
+          "Name": "The recalled recreational off highway vehicle can maintain speed or accelerate when the accelerator pedal is released, posing a risk of serious injury or death from a crash hazard.",
+          "HazardType": "",
+          "HazardTypeID": ""
+        }
+      ],
+      "Remedies": [
+        {
+          "Name": "Consumers should stop using their vehicles immediately and contact Vanderhall North America for instructions on how to update their vehicles to firmware version 7.1.0 through the Vanderhall customer mobile app. The updated software was released on April 15, 2026, and can be identified by Vanderhall logo. Owners requiring assistance updating their firmware should contact their dealer or Vanderhall directly for assistance."
+        }
+      ],
+      "RemedyOptions": [
+        {
+          "Option": "Repair"
+        }
+      ]
+    },
+    {
+      "RecallID": 10910,
+      "RecallNumber": "26675",
+      "RecallDate": "2026-08-06T00:00:00",
+      "Description": "This recall involves Courant Spliced Kalimba climbing ropes with part numbers MH730JZC045 (45m length) lollipop color, MH730JZC050 (50m length), lollipop color MH730JZC060 (60m length) lollipop color, MH730MCC045 (45m length) bubblegum color, MH730MCC050 (50m length) bubblegum color, and MH730MCC060 (60m length) bubblegum color, as well as any additional spliced Kalimba ropes spliced under Courant splicing protocols prior to June 15, 2026. The ropes are designed for tree climbing and pruning and are commonly used by arborists. Each rope can be identified by the brand name, part number, type (diameter) and length listed on the tag attached to the rope ends.",
+      "URL": "https://www.cpsc.gov/Recalls/2026/Wichard-Groupe-North-America-Recalls-Courant-Spliced-Kalimba-Climbing-Ropes-Due-to-Risk-of-Serious-Injury-or-Death-from-Fall-Hazard",
+      "Title": "Wichard Groupe North America Recalls Courant Spliced Kalimba Climbing Ropes Due to Risk of Serious Injury or Death from Fall Hazard",
+      "ConsumerContact": "Wichard Groupe North America at 401-683-5055 from 8 a.m. to 4:30 p.m. ET Monday through Friday, by email at safety@wichardgroupe.us or online at https://www.wichardgroupe.us and click on \"PRODUCT RECALL: Spliced Kalimba\" at the top of the page or https://www.wichardgroupe.us/news/post/recall-spliced-kalimba and click on \"Product Recall Form\" to submit your claim information.",
+      "LastPublishDate": "2026-08-07T00:00:00",
+      "Products": [
+        {
+          "Name": "Courant Spliced Kalimba Climbing Ropes",
+          "Description": "",
+          "Model": "",
+          "Type": "",
+          "CategoryID": "",
+          "NumberOfUnits": "About 1,050"
+        }
+      ],
+      "Inconjunctions": [],
+      "Images": [
+        {
+          "URL": "https://www.cpsc.gov/s3fs-public/kalimba-1.png",
+          "Caption": "Recalled Courant Spliced Kalimba Climbing Rope (bubblegum color)"
+        },
+        {
+          "URL": "https://www.cpsc.gov/s3fs-public/kalimba-2.png",
+          "Caption": "Tag on end of climbing rope (lollipop color) showing brand, part number, type and length"
+        }
+      ],
+      "Injuries": [
+        {
+          "Name": "The firm has received three reports of splices failing. No injuries have been reported."
+        }
+      ],
+      "Manufacturers": [
+        {
+          "Name": "Courant, of Angers, France",
+          "CompanyID": ""
+        }
+      ],
+      "Retailers": [
+        {
+          "Name": "Vertical Supply Group, Arbsession, RBI Corporation and nationwide retailers from January 2023 through June 2026 for between $250 and $350.",
+          "CompanyID": ""
+        }
+      ],
+      "Importers": [
+        {
+          "Name": "Wichard Groupe North America, of North Kingstown, Rhode Island",
+          "CompanyID": ""
+        }
+      ],
+      "Distributors": [],
+      "SoldAtLabel": null,
+      "ManufacturerCountries": [
+        {
+          "Country": "France"
+        }
+      ],
+      "ProductUPCs": [],
+      "Hazards": [
+        {
+          "Name": "The spliced termination ends on the recalled ropes can fail unexpectedly, posing a risk of serious injury or death from fall hazard.",
+          "HazardType": "",
+          "HazardTypeID": ""
+        }
+      ],
+      "Remedies": [
+        {
+          "Name": "Consumers should stop using the recalled ropes immediately and contact Wichard Groupe North America for a free replacement rope, including shipping. Consumers will be asked to complete the registration form at https://www.wichardgroupe.us/news/post/recall-spliced-kalimba to receive a pre-paid shipping label and instructions for returning the recalled product. Consumers will be offered one of two free replacement options; one with immediate availability and the other with availability beginning mid-September."
+        }
+      ],
+      "RemedyOptions": [
+        {
+          "Option": "Replace"
+        }
+      ]
+    },
+    {
+      "RecallID": 10899,
+      "RecallNumber": "26663",
+      "RecallDate": "2026-08-06T00:00:00",
+      "Description": "This recall involves Winston Porter and Seeday 5-Drawer Dressers, and Seeday 3-Drawer Dressers and 4-Drawer Dressers. The dressers are made of wood with a white or black finish. Each drawer has two black metal knobs. The 3-Drawer Dresser measures 16.3 inches long, 30 inches wide, and 33.5 inches tall. The 4-Drawer Dresser measures 16.3 inches long, 29.5 inches wide and 34.6 inches tall. The 5-Drawer Dresser measures 16.3 inches long, 30 inches wide and 42 inches tall. The 3-Drawer dresser has model numbers DG-PB-0007 (white) or DG-PB-0013 (black) printed on the product packaging. The 4-Drawer dresser has model numbers DG-PB-0015 (white) or DG-PB-0016 (black) printed on the product packaging. The 5-Drawer dresser has model numbers DG-PB-0008 (white) or DG-PB-0014 (black) printed on the product packaging.",
+      "URL": "https://www.cpsc.gov/Recalls/2026/Winston-Porter-and-Seeday-3-Drawer-4-Drawer-and-5-Drawer-Dressers-Recalled-Due-to-Risk-of-Serious-Injury-or-Death-from-Tip-Over-and-Entrapment-Hazards-Violate-Mandatory-Standard-for-Clothing-Storage-Units",
+      "Title": "Winston Porter and Seeday 3-Drawer, 4-Drawer, and 5-Drawer Dressers Recalled Due to Risk of Serious Injury or Death from Tip-Over and Entrapment Hazards; Violate Mandatory Standard for Clothing Storage Units",
+      "ConsumerContact": "Linyi Lingmoxuan and Seeday by email at Winstonporterseedayrecall@outlook.com.",
+      "LastPublishDate": "2026-08-07T00:00:00",
+      "Products": [
+        {
+          "Name": "Winston Porter and Seeday 3-Drawer, 4-Drawer and 5-Drawer Dressers",
+          "Description": "",
+          "Model": "",
+          "Type": "",
+          "CategoryID": "",
+          "NumberOfUnits": "About 2,000 5-Drawer Dressers, 28 3-Drawer Dressers and 22 4-Drawer Dressers"
+        }
+      ],
+      "Inconjunctions": [],
+      "Images": [
+        {
+          "URL": "https://www.cpsc.gov/s3fs-public/seeday-1.jpg",
+          "Caption": "Recalled Seeday 3-Drawer Dresser (front)"
+        },
+        {
+          "URL": "https://www.cpsc.gov/s3fs-public/seeday-2.jpg",
+          "Caption": "Recalled Seeday 3-Drawer Dresser (back)"
+        },
+        {
+          "URL": "https://www.cpsc.gov/s3fs-public/seeday-3.jpg",
+          "Caption": "Recalled Seeday 3-Drawer Dresser (side)"
+        },
+        {
+          "URL": "https://www.cpsc.gov/s3fs-public/seeday-4.jpg",
+          "Caption": "Model number on recalled Seeday 3-Drawer Dresser packaging"
+        },
+        {
+          "URL": "https://www.cpsc.gov/s3fs-public/seeday-5.jpg",
+          "Caption": "Recalled Seeday 4-Drawer Dresser (front)"
+        },
+        {
+          "URL": "https://www.cpsc.gov/s3fs-public/seeday-6.jpg",
+          "Caption": "Recalled Seeday 4-Drawer Dresser (back)"
+        },
+        {
+          "URL": "https://www.cpsc.gov/s3fs-public/seeday-7.jpg",
+          "Caption": "Recalled Seeday 4-Drawer Dresser (side)"
+        },
+        {
+          "URL": "https://www.cpsc.gov/s3fs-public/seeday-8.jpg",
+          "Caption": "Model Number on recalled Seeday 4-Drawer Dresser packaging"
+        },
+        {
+          "URL": "https://www.cpsc.gov/s3fs-public/seeday-9.gif",
+          "Caption": "Recalled Winston Porter/Seeday 5-Drawer Dresser (front)"
+        },
+        {
+          "URL": "https://www.cpsc.gov/s3fs-public/seeday10.gif",
+          "Caption": "Recalled Winston Porter/Seeday 5-Drawer Dresser (side)"
+        },
+        {
+          "URL": "https://www.cpsc.gov/s3fs-public/seeday-11.gif",
+          "Caption": "Recalled Winston Porter/Seeday 5-Drawer Dresser (back)"
+        },
+        {
+          "URL": "https://www.cpsc.gov/s3fs-public/seeday-12.jpg",
+          "Caption": "Model number on recalled Winston Porter/Seeday 5-Drawer Dresser packaging"
+        }
+      ],
+      "Injuries": [
+        {
+          "Name": "One report of a tip-over incident with a dresser that resulted in the injury of a 3-year-old child."
+        }
+      ],
+      "Manufacturers": [],
+      "Retailers": [
+        {
+          "Name": "The 3-Drawer Dresser was sold on Amazon.com from February 2026 through June 2026 for about $110. The 4-Drawer Dresser was sold on Amazon.com from February 2026 through June 2026 for about $130. The 5-Drawer Dresser was sold on Wayfair.com and Amazon.com from May 2025 through January 2026 for between $70 and $160.",
+          "CompanyID": ""
+        }
+      ],
+      "Importers": [],
+      "Distributors": [
+        {
+          "Name": "Linyi Lingmoxuan Technology Co., Ltd., of China and Shenzhen Xinmu Home Furnishing Trading Co., Ltd., dba Seeday, of China",
+          "CompanyID": ""
+        }
+      ],
+      "SoldAtLabel": null,
+      "ManufacturerCountries": [
+        {
+          "Country": "China"
+        }
+      ],
+      "ProductUPCs": [],
+      "Hazards": [
+        {
+          "Name": "The recalled dressers are unstable if they are not anchored to the wall, posing tip-over and entrapment hazards that can result in risks of serious injuries or death to children. The dressers violate the mandatory safety standard as required by the STURDY Act.",
+          "HazardType": "",
+          "HazardTypeID": ""
+        }
+      ],
+      "Remedies": [
+        {
+          "Name": "Consumers should stop using the recalled dressers immediately if they are not anchored to the wall and place them in an area that children cannot access. Consumers should contact Linyi Lingmoxuan and Seeday for instructions on how to identify affected units and dispose of the dressers to receive a full refund. Consumers will be asked to write the word \"recalled\" on the top and all sides of the dresser with a permanent marker and email a photo demonstrating disposal of the product to Winstonporterseedayrecall@outlook.com."
+        }
+      ],
+      "RemedyOptions": [
+        {
+          "Option": "Refund"
+        }
+      ]
+    },
+    {
+      "RecallID": 10901,
+      "RecallNumber": "26665",
+      "RecallDate": "2026-08-06T00:00:00",
+      "Description": "This recall involves Wnttmt-branded infant walkers. The walkers are sold in gray with a white tray and round base. The walkers have eight-wheel assemblies and three adjustable levels. \"Production Batch: 202509\" is printed on a tracking label located under the seat.",
+      "URL": "https://www.cpsc.gov/Recalls/2026/Wnttmt-Baby-Walkers-Recalled-Due-to-Risk-of-Serious-Injury-or-Death-from-Fall-and-Entrapment-Hazards-Violate-Mandatory-Standard-for-Infant-Walkers-Sold-on-Amazon-by-WURUI-BABY",
+      "Title": "Wnttmt Baby Walkers Recalled Due to Risk of Serious Injury or Death from Fall and Entrapment Hazards; Violate Mandatory Standard for Infant Walkers; Sold on Amazon by WURUI.BABY",
+      "ConsumerContact": "WURUI.BABY by email at wbabywalker-recall@outlook.com.",
+      "LastPublishDate": "2026-08-07T00:00:00",
+      "Products": [
+        {
+          "Name": "Wnttmt Baby Walkers",
+          "Description": "",
+          "Model": "",
+          "Type": "",
+          "CategoryID": "",
+          "NumberOfUnits": "About 1,310"
+        }
+      ],
+      "Inconjunctions": [],
+      "Images": [
+        {
+          "URL": "https://www.cpsc.gov/s3fs-public/bwalk-1.jpg",
+          "Caption": "Recalled Wnttmt Baby Walker – gray"
+        },
+        {
+          "URL": "https://www.cpsc.gov/s3fs-public/bwalk-2.jpg",
+          "Caption": "\"Production Batch: 202509\" is printed on a tracking label located under the seat"
+        }
+      ],
+      "Injuries": [
+        {
+          "Name": "None reported"
+        }
+      ],
+      "Manufacturers": [],
+      "Retailers": [
+        {
+          "Name": "Online at Amazon.com from February 2026 through March 2026 for between $65 and $75.",
+          "CompanyID": ""
+        }
+      ],
+      "Importers": [],
+      "Distributors": [
+        {
+          "Name": "Changsha Yuelu District Ruiwu E-Commerce Co., Ltd., dba WURUI.BABY, of China",
+          "CompanyID": ""
+        }
+      ],
+      "SoldAtLabel": null,
+      "ManufacturerCountries": [
+        {
+          "Country": "China"
+        }
+      ],
+      "ProductUPCs": [],
+      "Hazards": [
+        {
+          "Name": "The recalled infant walkers violate the mandatory standard for infant walkers because they can fit through a standard doorway and fail to stop at the edge of a step, posing a deadly fall hazard. In addition, the infant walkers have leg openings that allow the child to slip down until the child's head can become entrapped, posing a risk of serious injury or death.",
+          "HazardType": "",
+          "HazardTypeID": ""
+        }
+      ],
+      "Remedies": [
+        {
+          "Name": "Consumers should stop using the recalled infant walkers immediately and contact WURUI.BABY for a full refund. Consumers will be asked to disassemble the walker, cut the fabric seat, write \"Recalled\" on the top of the tray in permanent marker and send a photo of the recalled infant walker to wbabywalker-recall@outlook.com."
+        }
+      ],
+      "RemedyOptions": [
+        {
+          "Option": "Refund"
+        }
+      ]
+    }
+  ]
+}
