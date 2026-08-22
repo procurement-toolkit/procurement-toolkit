@@ -1,0 +1,583 @@
+{
+  "date": "2026-08-22",
+  "recalls": [
+    {
+      "RecallID": 10937,
+      "RecallNumber": "26716",
+      "RecallDate": "2026-08-20T00:00:00",
+      "Description": "This recall involves the CCM Hybrid Hockey Visors, style FMHVR and replacement visor accessories, style ACCHVR. The recalled FMHVR Hybrid Visors are marked \"HVR\" at the top of the metal plate (above \"CCM\" in red). Recalled FMHVR visors have serial numbers beginning with \"M/L\" or \"S/M.\" The recalled ACCHVR Replacement Visor accessory has serial numbers beginning with \"SR\". The serial number is printed at the top corner on the right- hand-side metal plate where HVR - CCM are written, inside of the visors, engraved into the polycarbonate. The following visor and visor accessories are included in the recall. Recalled Visors and Visor Accessories: S/M FMHVR SR CCM CAG Visor Black Chrome S/M M/L FMHVR SR CCM CAG Visor Black Chrome M/L M/L ACCHVR CONTAINS REPLACEMENT VISOR(1) + SIDE CLIPS(2) + SPACERS(2) + SCRFEWS(2) S/M ACCHVR CONTAINS REPLACEMENT VISOR(1) + SIDE CLIPS(2) + SPACERS(2) + SCRFEWS(2)",
+      "URL": "https://www.cpsc.gov/Recalls/2026/CCM-Hockey-US-Recalls-FMHVR-Hybrid-Visors-and-ACCHVR-Replacement-Visor-Accessories-Due-to-Risk-of-Injury-from-Laceration-or-Impact-Hazards",
+      "Title": "CCM Hockey U.S. Recalls FMHVR Hybrid Visors and ACCHVR Replacement Visor Accessories Due to Risk of Injury from Laceration or Impact Hazards",
+      "ConsumerContact": "CCM Hockey toll-free at 800-451-4600 from 8 a.m. to 6 p.m. ET Monday through Friday, email at customerservice@ccmhockey.com or online at https://us.ccmhockey.com/recallform or https://us.ccmhockey.com/ and click on \"Product Recall\" at the bottom of the page for more information.",
+      "LastPublishDate": "2026-08-20T00:00:00",
+      "Products": [
+        {
+          "Name": "FMHVR Hybrid Visors and ACCHVR Replacement Visor Accessories",
+          "Description": "",
+          "Model": "",
+          "Type": "",
+          "CategoryID": "",
+          "NumberOfUnits": "About 12,957"
+        }
+      ],
+      "Inconjunctions": [],
+      "Images": [
+        {
+          "URL": "https://www.cpsc.gov/s3fs-public/CCM-1.gif",
+          "Caption": "Recalled CCM Hybrid Visor (Style FMHVR)"
+        },
+        {
+          "URL": "https://www.cpsc.gov/s3fs-public/CCM-2.gif",
+          "Caption": "Recalled CCM Hybrid Visor (Style FMHVR)"
+        },
+        {
+          "URL": "https://www.cpsc.gov/s3fs-public/CCM-3.gif",
+          "Caption": "Recalled Replacement Visor Accessory (Style ACCHVR)"
+        },
+        {
+          "URL": "https://www.cpsc.gov/s3fs-public/CCM-4.gif",
+          "Caption": "Recalled Replacement Visor Accessory (Style ACCHVR)"
+        }
+      ],
+      "Injuries": [
+        {
+          "Name": "None reported"
+        }
+      ],
+      "Manufacturers": [],
+      "Retailers": [
+        {
+          "Name": "Monkey Sports, Play It Again Sports, Pure Hockey and independent sporting goods and online at https://us.ccmhockey.com/ from May 2024 through April 2026 for about $120 for the Hybrid Visor and about $55 for the Replacement Visor accessories.",
+          "CompanyID": ""
+        }
+      ],
+      "Importers": [
+        {
+          "Name": "CCM Hockey U.S., Inc., of Maple Grove, Illinois",
+          "CompanyID": ""
+        }
+      ],
+      "Distributors": [],
+      "SoldAtLabel": null,
+      "ManufacturerCountries": [
+        {
+          "Country": "China"
+        }
+      ],
+      "ProductUPCs": [],
+      "Hazards": [
+        {
+          "Name": "The recalled hockey visors and replacement visor accessories can crack upon impact, posing a risk of injury due to laceration or impact hazards.",
+          "HazardType": "",
+          "HazardTypeID": ""
+        }
+      ],
+      "Remedies": [
+        {
+          "Name": "Consumers should stop using the recalled visors and visor accessories immediately and return the products to the nearest participating retailer for a free replacement. Consumers can choose from the FV1 full visor, FM780 combo cage, or FM580 combo cage. To find your nearest participating retailer, go to https://us.ccmhockey.com/product/storelocator. Consumers without access to a participating retailer should contact CCM directly and CCM will send a return prepaid envelope for the return of the recalled product. CCM will ship a replacement upon receipt of the returned recalled product."
+        }
+      ],
+      "RemedyOptions": [
+        {
+          "Option": "Replace"
+        }
+      ]
+    },
+    {
+      "RecallID": 10933,
+      "RecallNumber": "26712",
+      "RecallDate": "2026-08-20T00:00:00",
+      "Description": "This recall involves Goal Zero's YETI 3000X power stations. The silver and black portable power stations measure about 24.4 inches high, 18.5 inches wide and 22.3 inches deep, and weigh about 92 pounds. The power stations have yellow handles and a digital display at the front with electrical ports. They sit on a rolling cart with two built-in wheels and a telescoping handle. The Goal Zero logo is printed on the front bar of the cart and on a nameplate located on the underside of the station's lid along with \"YETI 3000X\".",
+      "URL": "https://www.cpsc.gov/Recalls/2026/Goal-Zero-Recalls-YETI-3000X-Power-Stations-Due-to-Serious-Risk-of-Injury-from-Fire-and-Burn-Hazards",
+      "Title": "Goal Zero Recalls YETI 3000X Power Stations Due to Serious Risk of Injury from Fire and Burn Hazards",
+      "ConsumerContact": "Goal Zero toll-free at 888-794-6250 from 9 a.m. to 2 p.m. MT Monday through Friday, email at support@goalzero.com or online at https://recallsupport.goalzero.com/hc/en-us/requests/new or Goalzero.com and click on \"IMPORTANT RECALL INFORMATION and Firmware Update\" at the top of the page for more information.",
+      "LastPublishDate": "2026-08-20T00:00:00",
+      "Products": [
+        {
+          "Name": "Goal Zero YETI 3000X Portable Power Stations",
+          "Description": "",
+          "Model": "",
+          "Type": "",
+          "CategoryID": "",
+          "NumberOfUnits": "About 46,200"
+        }
+      ],
+      "Inconjunctions": [],
+      "Images": [
+        {
+          "URL": "https://www.cpsc.gov/s3fs-public/gzero-1.png",
+          "Caption": "Recalled Goal Zero YETI 3000X Portable Power Station"
+        },
+        {
+          "URL": "https://www.cpsc.gov/s3fs-public/gzero-2.png",
+          "Caption": "Goal Zero and YETI 3000X are printed on the underside of the recalled power stations"
+        }
+      ],
+      "Injuries": [
+        {
+          "Name": "Goal Zero has received four reports of the power stations catching fire, overheating and smoking. No injuries have been reported."
+        }
+      ],
+      "Manufacturers": [],
+      "Retailers": [
+        {
+          "Name": "REI stores nationwide and online at Costco.com, Backcountry.com, Goalzero.com and other online retailers from May 2020 through August 2025 for about $3,00.",
+          "CompanyID": ""
+        }
+      ],
+      "Importers": [
+        {
+          "Name": "Goal Zero, of Draper, Utah",
+          "CompanyID": ""
+        }
+      ],
+      "Distributors": [],
+      "SoldAtLabel": null,
+      "ManufacturerCountries": [
+        {
+          "Country": "China"
+        }
+      ],
+      "ProductUPCs": [],
+      "Hazards": [
+        {
+          "Name": "The recalled power station's circuit board can overheat, posing a risk of serious injury from fire and burn hazards.",
+          "HazardType": "",
+          "HazardTypeID": ""
+        }
+      ],
+      "Remedies": [
+        {
+          "Name": "Consumers should stop using the power stations immediately and install the free repair in the form of a firmware update available through the Goal Zero application or contact Goal Zero for firmware installation at no cost."
+        }
+      ],
+      "RemedyOptions": [
+        {
+          "Option": "Repair"
+        }
+      ]
+    },
+    {
+      "RecallID": 10934,
+      "RecallNumber": "26713",
+      "RecallDate": "2026-08-20T00:00:00",
+      "Description": "This recall involves JINHEZO Mini Waterproof LED Tea Lights. The circular tea lights are clear with a white base and are about 1\" in diameter and 1.14\" tall. They come in a pack of 24 lights with 48 coin-cell batteries (two per light).",
+      "URL": "https://www.cpsc.gov/Recalls/2026/JINHEZO-Mini-Waterproof-LED-Tea-Lights-Recalled-Due-to-Risk-of-Serious-Injury-or-Death-from-Battery-Ingestion-Violate-Mandatory-Standard-for-Consumer-Products-with-Button-Cell-Batteries-Imported-by-Mystic-ZO",
+      "Title": "JINHEZO Mini Waterproof LED Tea Lights Recalled Due to Risk of Serious Injury or Death from Battery Ingestion; Violate Mandatory Standard for Consumer Products with Button Cell Batteries; Imported by Mystic ZO",
+      "ConsumerContact": "Mystic Zo by email at jinhemaoyi2016@sina.com for more information.",
+      "LastPublishDate": "2026-08-20T00:00:00",
+      "Products": [
+        {
+          "Name": "JINHEZO Mini Waterproof LED Tea Lights",
+          "Description": "",
+          "Model": "",
+          "Type": "",
+          "CategoryID": "",
+          "NumberOfUnits": "About 2,798"
+        }
+      ],
+      "Inconjunctions": [],
+      "Images": [
+        {
+          "URL": "https://www.cpsc.gov/s3fs-public/jinhezo-1.png",
+          "Caption": "Recalled JINHEZO Mini Waterproof LED Tea Lights"
+        },
+        {
+          "URL": "https://www.cpsc.gov/s3fs-public/jinhezo-2.png",
+          "Caption": "Recalled JINHEZO Mini Waterproof LED Tea Lights"
+        },
+        {
+          "URL": "https://www.cpsc.gov/s3fs-public/jinhezo-3.png",
+          "Caption": "Recalled JINHEZO Mini Waterproof LED Tea Light opened to show accessible button cell batteries"
+        },
+        {
+          "URL": "https://www.cpsc.gov/s3fs-public/jinhezo-4.png",
+          "Caption": "Recalled JINHEZO Mini Waterproof LED Tea Light opened to show accessible button cell batteries"
+        },
+        {
+          "URL": "https://www.cpsc.gov/s3fs-public/jinhezo-5.jpg",
+          "Caption": "Recalled JINHEZO Mini Waterproof LED Tea Light"
+        },
+        {
+          "URL": "https://www.cpsc.gov/s3fs-public/jinhezo-6.png",
+          "Caption": "Recalled JINHEZO Mini Waterproof LED Tea Light"
+        }
+      ],
+      "Injuries": [
+        {
+          "Name": "None reported"
+        }
+      ],
+      "Manufacturers": [],
+      "Retailers": [
+        {
+          "Name": "Online at Amazon.com from March 2024 through July 2026 for between $16 to $20 per pack.",
+          "CompanyID": ""
+        }
+      ],
+      "Importers": [
+        {
+          "Name": "Shenzhen Jinhe Trade Co., Ltd., dba Mystic ZO, of China",
+          "CompanyID": ""
+        }
+      ],
+      "Distributors": [],
+      "SoldAtLabel": null,
+      "ManufacturerCountries": [
+        {
+          "Country": "China"
+        }
+      ],
+      "ProductUPCs": [],
+      "Hazards": [
+        {
+          "Name": "The LED Tea Lights violate the mandatory safety standard for consumer products with button cell and coin batteries because the button batteries can be accessed easily by children, posing an ingestion hazard. Additionally, the packaging and product do not have the warnings required under Reese's Law. When button cell or coin batteries are swallowed, the ingested batteries can cause serious injuries, internal chemical burns and death.",
+          "HazardType": "",
+          "HazardTypeID": ""
+        }
+      ],
+      "Remedies": [
+        {
+          "Name": "Consumers should stop using the recalled LED Tea Lights immediately and contact Mystic Zo for a full refund. To receive a refund, consumers will be asked to email their order number or bar code number, if available, along with a photo of the tea lights disposed of in the trash to jinhemaoyi2016@sina.com. Note: Button cell batteries are hazardous. Batteries should be disposed of or recycled by following local hazardous waste procedures."
+        }
+      ],
+      "RemedyOptions": [
+        {
+          "Option": "Refund"
+        }
+      ]
+    },
+    {
+      "RecallID": 10935,
+      "RecallNumber": "26714",
+      "RecallDate": "2026-08-20T00:00:00",
+      "Description": "This recall involves Koorlian branded mattresses. The mattresses are 10 inches thick and were sold in a Twin XL size. They have a white top and blue sides and were sold compressed in a box. \"Dreams Bedding Technology PTE LTD\" the manufacture date and prototype ID \"KY15Q290\" are printed on a sewn-in white label located on one side of the mattress.",
+      "URL": "https://www.cpsc.gov/Recalls/2026/Koorlian-Mattresses-Recalled-Due-to-Risk-of-Serious-Injury-or-Death-from-Fire-Hazard-Violate-Mandatory-Standard-for-Mattress-Flammability-Sold-on-Amazon-by-Dream-Bedding-Technology",
+      "Title": "Koorlian Mattresses Recalled Due to Risk of Serious Injury or Death from Fire Hazard; Violate Mandatory Standard for Mattress Flammability; Sold on Amazon by Dream Bedding Technology",
+      "ConsumerContact": "Dreams Bedding Technology toll-free at 833-224-9277 from 9 a.m. to 5 p.m. PT Monday through Friday, email at Koorlian@outlook.com or online at https://koorlian.com/pages/customer-recall or https://koorlian.com/ and click \"Recall\" at the top of the page for more information.",
+      "LastPublishDate": "2026-08-20T00:00:00",
+      "Products": [
+        {
+          "Name": "Koorlian Mattresses",
+          "Description": "",
+          "Model": "",
+          "Type": "",
+          "CategoryID": "",
+          "NumberOfUnits": "About 251"
+        }
+      ],
+      "Inconjunctions": [],
+      "Images": [
+        {
+          "URL": "https://www.cpsc.gov/s3fs-public/koorlian-1.png",
+          "Caption": "Recalled Koorlian Mattress"
+        },
+        {
+          "URL": "https://www.cpsc.gov/s3fs-public/koorlian-2.png",
+          "Caption": "Recalled Koorlian Mattress Label with identifying information"
+        }
+      ],
+      "Injuries": [
+        {
+          "Name": "None reported"
+        }
+      ],
+      "Manufacturers": [
+        {
+          "Name": "Dreams Bedding Technology PTE. Ltd., of Singapore",
+          "CompanyID": ""
+        }
+      ],
+      "Retailers": [
+        {
+          "Name": "Online at Amazon.com from November 2025 through March 2026 for between $110 and $170.",
+          "CompanyID": ""
+        }
+      ],
+      "Importers": [],
+      "Distributors": [],
+      "SoldAtLabel": null,
+      "ManufacturerCountries": [
+        {
+          "Country": "Singapore"
+        }
+      ],
+      "ProductUPCs": [],
+      "Hazards": [
+        {
+          "Name": "The recalled mattresses violate the mandatory flammability standard for mattresses, posing a risk of serious injury or death from fire.",
+          "HazardType": "",
+          "HazardTypeID": ""
+        }
+      ],
+      "Remedies": [
+        {
+          "Name": "Consumers should stop using the recalled mattress immediately and contact Dreams Bedding Technology to receive a free cover to put over their mattress to bring it into compliance with the mandatory flammability standards."
+        }
+      ],
+      "RemedyOptions": [
+        {
+          "Option": "Repair"
+        }
+      ]
+    },
+    {
+      "RecallID": 10931,
+      "RecallNumber": "26710",
+      "RecallDate": "2026-08-20T00:00:00",
+      "Description": "This recall involves 2021, 2022, 2023 and 2024 off-road motorcycles. The GASGAS off-road motorcycles are red with the white GASGAS logo on both sides of the shrouds. The Husqvarna motorcycles are white, blue and yellow with the Husqvarna logo on both sides of the shrouds. The VIN and number are located on the right side of the steering head. Recalled 2021, 2022, 2023 and 2024 Off Road Motorcycles Model Year Husqvarna Models 2022 FE 350 2022 FE 501 2022 TE 150i 2022 TE 250i 2022 TE 300i 2023 TE 150 2023 TE 250 2023 TE 300 2023 TE 300 Heritage 2023 FX 350 Heritage 2023 FX 350 2023 FE 450 2023 FE 450 Heritage 2023 FX 450 2023 TX 300 2023 TX 300 Heritage 2024 TE 150 2024 TE 250 2024 TE 300 2024 FE 350w 2024 FE 450 2024 FE 501w Model Year GASGAS Model 2021 EC 300 2022 EC 250 2022 EC 300 2023 EC 250 2023 EC 300 2023 EX 250 2023 EX 250F 2023 EX 300 2023 EX 350F 2023 EX 450F 2023 MC 125 2023 MC 250 2023 MC 250F 2023 MC 350F 2023 MC 450F 2024 MC 125 2024 MC 250 2024 MC 250F 2024 MC 350F 2024 MC 450F 2024 EC 250 2024 EC 300 2024 EC 450F 2024 EX 250 2024 EX 250F 2024 EX 300 2024 EX 350F 2024 EX 450F 2024 EW 500F",
+      "URL": "https://www.cpsc.gov/Recalls/2026/KTM-North-America-Recalls-Off-Road-Motorcycles-Due-to-Risk-of-Serious-Injury-or-Death-from-Crash-Hazard",
+      "Title": "KTM North America Recalls Off-Road Motorcycles Due to Risk of Serious Injury or Death from Crash Hazard",
+      "ConsumerContact": "GASGAS and Husqvarna toll-free at 888-985-6090 from 8 a.m. to 5 p.m. ET Monday through Friday, online at https://www.gasgas.com/en-us.html or https://www.husqvarna-motorcycles.com/en-us.html and click on \"Safety Recall Information\" located at the bottom of the page. Consumers can check the vehicle identification number (VIN) number at https://www.husqvarna-motorcycles.com/en-us/service/recalls-check.html or https://www.gasgas.com/en-us/service/recalls-check.html to determine if their unit is affected.",
+      "LastPublishDate": "2026-08-20T00:00:00",
+      "Products": [
+        {
+          "Name": "GASGAS and Husqvarna Off-Road Motorcycles",
+          "Description": "",
+          "Model": "",
+          "Type": "",
+          "CategoryID": "",
+          "NumberOfUnits": "About 21,040 (In addition, about 4,140 were sold in Canada)"
+        }
+      ],
+      "Inconjunctions": [
+        {
+          "URL": "https://recalls-rappels.canada.ca/en/alert-recall/transport-canada-recall-2026313-ktm"
+        }
+      ],
+      "Images": [
+        {
+          "URL": "https://www.cpsc.gov/s3fs-public/ggoffroad-1.png",
+          "Caption": "Recalled GASGAS Off-Road Motorcycle"
+        },
+        {
+          "URL": "https://www.cpsc.gov/s3fs-public/ggoffroad-2.png",
+          "Caption": "Recalled Husqvarna Off-Road Motorcycle"
+        },
+        {
+          "URL": "https://www.cpsc.gov/s3fs-public/ggoffroad-3.png",
+          "Caption": "The VIN number is located on the right side of the steering head. (which is in the same location for all makes and models)"
+        }
+      ],
+      "Injuries": [
+        {
+          "Name": "None reported"
+        }
+      ],
+      "Manufacturers": [],
+      "Retailers": [
+        {
+          "Name": "GASGAS and Husqvarna authorized dealers nationwide from September 2020 through June 2023 for between $7,300 and $13,000.",
+          "CompanyID": ""
+        }
+      ],
+      "Importers": [
+        {
+          "Name": "KTM North America Inc., of Amherst, Ohio",
+          "CompanyID": ""
+        }
+      ],
+      "Distributors": [],
+      "SoldAtLabel": null,
+      "ManufacturerCountries": [
+        {
+          "Country": "Austria"
+        }
+      ],
+      "ProductUPCs": [],
+      "Hazards": [
+        {
+          "Name": "The rear brake caliper can crack or break, reducing the brake system's effectiveness, posing a risk of serious injury or death due to crash hazard.",
+          "HazardType": "",
+          "HazardTypeID": ""
+        }
+      ],
+      "Remedies": [
+        {
+          "Name": "Consumers should stop riding the recalled motorcycles immediately and contact an authorized GASGAS or Husqvarna Motorcycle dealer to schedule a free repair at the dealership."
+        }
+      ],
+      "RemedyOptions": [
+        {
+          "Option": "Repair"
+        }
+      ]
+    },
+    {
+      "RecallID": 10932,
+      "RecallNumber": "26711",
+      "RecallDate": "2026-08-20T00:00:00",
+      "Description": "This recall involves ventilation fans in ClassMate cooling and air source heat pumps and SchoolMate water/ground source heat pumps that supply heating, cooling and high indoor air quality in classrooms and schools in the following models: Model Ventilation Configuration (Digit 9) CMD C, D, or E CMP C, D, or E SMG H, J, K, N, or P SMW H, J, K, N, or P CMS H, J, K, N, or P The brand name Airedale is located on a sticker on the front of the unit. The model name and serial number are found on the serial plate on the underside of the control unit.",
+      "URL": "https://www.cpsc.gov/Recalls/2026/Modine-Manufacturing-Company-Recalls-Airedale-Heating-and-Cooling-Ventilation-Fans-Due-to-Fire-Hazard",
+      "Title": "Modine Manufacturing Company Recalls Airedale Heating and Cooling Ventilation Fans Due to Fire Hazard",
+      "ConsumerContact": "Modine Manufacturing Company toll-free at 888-636-8627 from 8 a.m. to 5 p.m. CT Monday through Friday, email at ProductSafety@modine.com or online at https://www.modine.com/recall and click on \"Recalls\" at the bottom of the page for more information.",
+      "LastPublishDate": "2026-08-20T00:00:00",
+      "Products": [
+        {
+          "Name": "Ventilation Fans in ClassMate® DX Cooling and Air Source Heat Pumps and SchoolMate® Water/Ground Source Heat Pumps",
+          "Description": "",
+          "Model": "",
+          "Type": "",
+          "CategoryID": "",
+          "NumberOfUnits": "About 6,061 (In addition, about 735 were sold in Canada)"
+        }
+      ],
+      "Inconjunctions": [],
+      "Images": [
+        {
+          "URL": "https://www.cpsc.gov/s3fs-public/heapum-1.jpg",
+          "Caption": "Recalled Heat Pump"
+        },
+        {
+          "URL": "https://www.cpsc.gov/s3fs-public/heapum-2.png",
+          "Caption": "Recalled Ventilation Fan"
+        },
+        {
+          "URL": "https://www.cpsc.gov/s3fs-public/heapum-3.jpg",
+          "Caption": "Serial Number Location on Recalled Heat Pump Unit"
+        },
+        {
+          "URL": "https://www.cpsc.gov/s3fs-public/heapum-4.jpg",
+          "Caption": "Serial Number Location on Recalled Heat Pump Unit"
+        }
+      ],
+      "Injuries": [
+        {
+          "Name": "Modine has received 11 reports of incidents that resulted in fires, totaling at least $2.7 million in property damage. No injuries have been reported."
+        }
+      ],
+      "Manufacturers": [
+        {
+          "Name": "Modine Manufacturing Company, of Racine, Wisconsin",
+          "CompanyID": ""
+        }
+      ],
+      "Retailers": [
+        {
+          "Name": "Independent dealers nationwide from August 2013 through January 2026 for between $15,000 and $25,000. The ventilation fans are also sold separately through independent dealers for between $250 and $450.",
+          "CompanyID": ""
+        }
+      ],
+      "Importers": [],
+      "Distributors": [],
+      "SoldAtLabel": null,
+      "ManufacturerCountries": [
+        {
+          "Country": "United States"
+        }
+      ],
+      "ProductUPCs": [],
+      "Hazards": [
+        {
+          "Name": "The ventilation fan motor in the heat pumps can short circuit if water gets on the circuit board, causing the units to overheat and posing a fire hazard.",
+          "HazardType": "",
+          "HazardTypeID": ""
+        }
+      ],
+      "Remedies": [
+        {
+          "Name": "Consumers should stop using the recalled heat pumps immediately and contact Modine Manufacturing Company for written instructions to unplug the recalled ventilation fan or to switch the internal disconnect in the fan to the \"off\" position. Consumers should contact their Modine distributor to arrange for their free inspection and service. Service technicians will inspect and repair or replace the recalled heating and cooling OA/EA ventilation fans in all units."
+        }
+      ],
+      "RemedyOptions": [
+        {
+          "Option": "Repair"
+        }
+      ]
+    },
+    {
+      "RecallID": 10936,
+      "RecallNumber": "26715",
+      "RecallDate": "2026-08-20T00:00:00",
+      "Description": "This recall involves Workbless-branded pressure washers, models WB0301 and WB0302. Model WB0301 is green and black and measures about 27.24 inches high, 10.83 inches wide and 8.39 inches deep. \"WORKBLESS\",\" WB0301\" and \"ELECTRIC PRESSURE WASHER\" are printed on a label on the back of the pressure washer. Model WB0302 is also green and black and measures about 29.57 inches high, 14.69 inches wide and 10.94 inches deep. \"WORKBLESS\", \"WB0302\" and \"HEAVY DUTY ELECTRIC PRESSURE WASHER\" are printed on a label on the back of the pressure washer. Both models came with four quick connect nozzles and a foam cannon.",
+      "URL": "https://www.cpsc.gov/Recalls/2026/Workbless-Pressure-Washers-Recalled-Due-to-Risk-of-Serious-Injury-or-Death-from-Shock-and-Electrocution-Hazards",
+      "Title": "Workbless Pressure Washers Recalled Due to Risk of Serious Injury or Death from Shock and Electrocution Hazards",
+      "ConsumerContact": "Workbless by email at service@workbless.net, toll-free at 833-725-3151 from 9 a.m. to 5 p.m. PT, Monday through Friday, or online at https://www.workbless.net/recall/.",
+      "LastPublishDate": "2026-08-20T00:00:00",
+      "Products": [
+        {
+          "Name": "Workbless Electric Pressure Washers",
+          "Description": "",
+          "Model": "",
+          "Type": "",
+          "CategoryID": "",
+          "NumberOfUnits": "About 2,200 (In addition, about 657 in Canada)"
+        }
+      ],
+      "Inconjunctions": [
+        {
+          "URL": "https://recalls-rappels.canada.ca/en/alert-recall/workbless-electric-pressure-washers-recalled-due-electric-shock-hazard"
+        }
+      ],
+      "Images": [
+        {
+          "URL": "https://www.cpsc.gov/s3fs-public/workbless.jpg",
+          "Caption": "Recalled Workbless Electric Pressure Washer Model WB0301 - front view"
+        },
+        {
+          "URL": "https://www.cpsc.gov/s3fs-public/workbless-1.jpg",
+          "Caption": "Recalled Workbless Electric Pressure Washer Model WB0301 with attachments - back view"
+        },
+        {
+          "URL": "https://www.cpsc.gov/s3fs-public/workbless-2.jpg",
+          "Caption": "Label on back of Model WB0301"
+        },
+        {
+          "URL": "https://www.cpsc.gov/s3fs-public/workbless-3.png",
+          "Caption": "Recalled Workbless Electric Pressure Washer Model WB0302 - front view"
+        },
+        {
+          "URL": "https://www.cpsc.gov/s3fs-public/workbless-4.jpg",
+          "Caption": "Recalled Workbless Electric Pressure Washer Model WB0302 with attachments - back view"
+        },
+        {
+          "URL": "https://www.cpsc.gov/s3fs-public/workbless-5.jpg",
+          "Caption": "Label on back of Model WB0302"
+        }
+      ],
+      "Injuries": [
+        {
+          "Name": "None reported"
+        }
+      ],
+      "Manufacturers": [],
+      "Retailers": [
+        {
+          "Name": "Amazon.com, BestBuy, Kohls, Lowe's, Overstock, Target and Walmart from April 2025 through July 2026 for between $97 and $140.",
+          "CompanyID": ""
+        }
+      ],
+      "Importers": [],
+      "Distributors": [
+        {
+          "Name": "Guangzhou Ao Lian Ya Wang Luo Ke Ji You Xian Gong Si, dba Workbless, of China",
+          "CompanyID": ""
+        }
+      ],
+      "SoldAtLabel": null,
+      "ManufacturerCountries": [
+        {
+          "Country": "China"
+        }
+      ],
+      "ProductUPCs": [],
+      "Hazards": [
+        {
+          "Name": "The recalled pressure washers lack an integral ground-fault circuit-interrupter (GFCI) and an adequate-length power cord, posing serious risks of injury or death from shock and electrocution hazards.",
+          "HazardType": "",
+          "HazardTypeID": ""
+        }
+      ],
+      "Remedies": [
+        {
+          "Name": "Consumers should stop using the recalled pressure washers immediately and contact Workbless for a full refund. Consumers will be asked to destroy the pressure washer by cutting the unplugged power cord in half and send a photo of the destroyed pressure washer to service@workbless.net. Consumers should then dispose of the destroyed recalled product."
+        }
+      ],
+      "RemedyOptions": [
+        {
+          "Option": "Refund"
+        }
+      ]
+    }
+  ]
+}
