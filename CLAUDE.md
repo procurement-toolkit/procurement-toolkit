@@ -2476,3 +2476,95 @@ convenience.
   DB가 코드보다 먼저 바뀐 상태이므로, 이 zip을 업로드해 배포하기 전까지는
   `ADJ` 타입 거래를 만들 수 있는 UI가 아직 없어 실제 데이터에는 영향
   없음(안전).
+
+## 2026-09-22: 현장 작업자별 PIS 접근권한 (per-user PIS access)
+
+- **배경(Kevin 요청):** "김희재님이 새 비밀번호로 실제 로그인되는지는
+  직접 확인완료. - 현장 작업자라도 pis로 넘어 갈 수 있는 접근권한을
+  관리자가 주거나 막을 수 있도록 권한을 줘. 즉, 어떤 현장 작업자는
+  imms만 어떤 현장 작업자는 imms와 pis 동시에 이런식으로." 기존
+  `profiles.role`은 단순 이분법(`'admin' | 'field'`)이라, PIS(`/admin/*`)
+  전체가 role='admin'에게만 열려있었다 — 이 요청은 role은 그대로
+  `'field'`인 계정 중 일부에게만 PIS 열람을 개별로 허용/해제하는 세 번째
+  축이 필요하다는 것.
+- **DB:** `profiles.pis_access boolean not null default false`
+  (migration `0016_profiles_add_pis_access.sql`, 어제 다른 기능과 같은
+  turn에 이미 프로덕션에 적용됨 — 위 항목 참고). role='admin'은 이 값과
+  무관하게 항상 전체 접근, 이 플래그는 role='field' 계정에만 의미가 있다.
+- **어디까지 열어주고 어디는 막았나 (AdminSidebar.tsx 기준):**
+  - "업무" 그룹(HOME + 01~10, 총 11개 화면 — `pis-dashboard.ts`,
+    `reports.ts`, `purchase-orders.ts`가 지원) + 그 하위
+    `/admin/purchase-orders/approval-review`(`approval-review.ts`가
+    지원) → `pis_access=true`인 현장 계정도 접근 허용.
+  - "관리" 그룹(사용자 관리/품목 재고기준/E-Count 동기화/구매현황
+    업로드/재고 Reconciliation — `users.ts`, `item-management.ts`,
+    `ecount-sync.ts`, `purchase-import.ts`, `stock-reconciliation.ts`가
+    지원) → **role='admin'만** 그대로 유지. 데이터 동기화/계정 생성삭제/
+    비밀번호 초기화 같은 진짜 운영 도구라 열어줄 이유가 없다고 판단.
+  - 결재검토(`approval-review.ts`)는 "관리"가 아니라 "업무"(발주관리
+    하위 화면)로 분류 — 사용처(`/admin/purchase-orders/approval-review`)
+    확인 후 판단.
+- **막는 지점 3중 방어(기존 defense-in-depth 패턴 그대로 확장):**
+  1. `src/proxy.ts` — 새 `ADMIN_ONLY_PATHS` 배열(AdminSidebar.tsx의
+     `ADMIN_ITEMS`와 정확히 동일한 5개 경로)로 세분화. 그 경로가 아닌
+     `/admin/*`는 `role==='admin' || pis_access===true`면 통과, 그
+     경로면 `role==='admin'`만 통과. 막힐 때 PIS 접근권한이 있는
+     계정은 `/admin`(PIS 홈)으로, 아예 없는 계정은 `/m`(IMMS 홈)으로
+     각자 실제 쓸 수 있는 화면으로 돌려보낸다.
+  2. `src/app/admin/layout.tsx` — 느슨한 게이트(`role==='admin' ||
+     pis_access===true`)로 유지, 실제 세밀한 구분은 위 미들웨어가 요청이
+     여기 오기 전에 이미 처리했다는 전제. `<AdminSidebar isAdmin={...}>`
+     로 `isAdmin` 전달.
+  3. 각 액션 파일의 `requireAdmin()`(관리 그룹, 안 바꿈) 또는
+     `requirePisAccess()`(업무 그룹, 아래에서 개명) — 최종 방어선. 위
+     두 단계에 구멍이 생겨도 여기서 진짜 데이터 접근이 막힌다.
+- **한 것:**
+  - `pis-dashboard.ts`/`reports.ts`/`purchase-orders.ts`/
+    `approval-review.ts` — 로컬 `requireAdmin()`을 `requirePisAccess()`로
+    개명(모든 호출부 포함), `select`에 `pis_access` 추가, 조건을
+    `profile.role !== "admin" && !profile.pis_access`(즉 관리자도
+    아니고 PIS 접근권한도 없을 때만 차단)로 변경. 에러 메시지도
+    "관리자만 사용할 수 있습니다" → "PIS 접근 권한이 없습니다"로 수정
+    (더 이상 관리자 전용이 아니므로).
+  - `src/app/api/export/purchase-records/route.ts`,
+    `.../export/transactions/route.ts` — "10 통합조회"의 엑셀 다운로드
+    라우트가 자체적으로 `role==='admin'`만 확인하는 별도 게이트를
+    갖고 있었음(위 서버 액션과 별개 코드 경로) — 못 보고 지나쳤으면
+    "화면은 보이는데 엑셀 다운로드만 403" 버그가 났을 것. 동일 기준으로
+    수정.
+  - `src/proxy.ts` — 위 3중 방어 ① 설명대로 `ADMIN_ONLY_PATHS` 도입.
+  - `src/app/admin/layout.tsx` — 게이트 조건 완화 + `AdminSidebar`에
+    `isAdmin` prop 전달.
+  - `src/components/AdminSidebar.tsx` — `isAdmin` prop 추가, `false`면
+    "관리" `NavGroup`을 아예 렌더링하지 않음(못 쓰는 메뉴를 보여주지
+    않음 — 어차피 눌러도 proxy.ts가 막음).
+  - `src/lib/queries.ts` (`getMyProfile`) — select에 `pis_access` 추가.
+  - `src/app/m/page.tsx`, `src/app/m/layout.tsx` — 어제 추가한
+    "PIS 관리자 화면으로 이동" 카드/링크의 노출 조건을
+    `role==='admin'` 단독에서 `role==='admin' || pis_access`로 확장 —
+    안 하면 접근권한은 받았는데 어떻게 들어가는지 몰라 헤매게 됨.
+  - `src/lib/actions/users.ts` — `listUsers()`/`getUserDetail()` select에
+    `pis_access` 추가, `togglePisAccess(userId, nextValue)` 신규 액션
+    (`toggleUserActive()`와 완전히 같은 패턴).
+  - `src/app/admin/users/PisAccessToggle.tsx` (신규) — `ActiveToggle.tsx`
+    와 동일 패턴의 Switch 토글. `role==='admin'`인 행은 토글 대신 "전체
+    (관리자)" 텍스트만 표시(그 값과 무관하게 항상 전체 접근이므로, 끌
+    수 있는 것처럼 보이면 오해를 부름).
+  - `src/app/admin/users/page.tsx` (목록), `.../users/[id]/page.tsx`
+    (상세) — 위 토글을 "PIS 접근" 컬럼/카드로 노출.
+- **검증:** `npx tsc --noEmit` 0 에러, `npx eslint src/` 0 에러/경고,
+  `next build`는 기존과 동일하게 Google Fonts 네트워크 에러 지점까지 새
+  컴파일 에러 없이 도달. `requirePisAccess()`를 반환값 없이 호출만 하는
+  기존 호출부들(`const { userId } = await requireAdmin()` 같은 구조가
+  이 4개 파일 안엔 없었음을 grep으로 먼저 확인)이라 개명이 안전함을
+  확인. 새/수정 클라이언트 컴포넌트(`AdminSidebar`/`PisAccessToggle`)는
+  전부 문자열/불리언 등 원시값 prop만 서버 컴포넌트로부터 받음(2026-09-18
+  Drilldown 500 사고와 무관 확인). `관리자만 사용할 수 있습니다` 문자열로
+  전체 재검색해 관리 그룹 5개 파일(`users`/`item-management`/
+  `ecount-sync`/`purchase-import`/`stock-reconciliation`)만 남아있음을
+  확인 — 업무 그룹 액션 파일 중 놓친 곳이 없음.
+- **미배포 상태:** DB migration은 이미 적용됨. 애플리케이션 코드는
+  로컬에만 있음 — 다음 zip으로 전달 예정. **실사용 전 필요한 절차:**
+  이 기능은 코드 배포만으로는 아무 계정에도 효과가 없다 — 관리자가
+  `/admin/users`에서 원하는 현장 계정의 "PIS 접근" 스위치를 켜야 그
+  계정이 실제로 PIS에 들어갈 수 있다.
