@@ -1,0 +1,442 @@
+@import "tailwindcss";
+
+:root {
+  --bg: #edf0ec;
+  --bg-raised: #ffffff;
+  --bg-sunken: #e2e7e2;
+  --ink: #16211e;
+  --ink-soft: #4a564f;
+  --ink-faint: #7c887f;
+  --line: #c7d0c8;
+  --line-strong: #9fab9f;
+  --accent: #852530; /* Pantone 202C */
+  --accent-ink: #56181f;
+  --accent-soft: #f0e5e6;
+  --trace: #2e6e69;
+  --trace-soft: #dceae7;
+  --warn: #a8402f;
+  --warn-soft: #f3dcd3;
+  /* 2026-09-18: 이전엔 tag-in/tag-mov가 같은 색(trace), tag-prd/tag-shp가
+     같은 색(accent)을 공유해서 모바일에서 "생산불출(PRD)"과
+     "택배발송(SHP)" 타일이 사실상 같은 색으로 보였다 — Kevin이 지적한
+     "생산을 누른건지 택배를 누른건지 헷갈린다"의 실제 원인. 7개 기능
+     전부 서로 다른 색을 갖도록 분리했다. */
+  --mov: #2f5b86;
+  --mov-soft: #dbe6f3;
+  --shp: #8a5a12;
+  --shp-soft: #f5e8d0;
+  --ret: #6b3fa0;
+  --ret-soft: #ece3f5;
+  /* 2026-09-21, Kevin 요청: 재고 실사/보정("ADJ") 거래 전용 색 — 진짜
+     입출고가 아니라 "계산된 재고를 실제 수량에 맞춘 보정"임을 한눈에
+     구분할 수 있도록 위 6개와도 다른, 차분한 중성색을 골랐다. */
+  --adj: #6d6250;
+  --adj-soft: #ece6da;
+
+  /* 2026-09-18, Kevin 요청: "홈 화면 타일 색 구분 + 헤더 배지" 기능을
+     PIS(관리자) 쪽 6개 메뉴(대시보드/사용자관리/품목재고기준/E-Count
+     동기화/구매현황업로드/재고Reconciliation)에도 똑같이 적용 — 위
+     IMMS용 mov/shp/ret과 같은 패턴으로 각 메뉴 전용 색을 추가한다. */
+  --dash: #1f7a4d;
+  --dash-soft: #d9f0e1;
+  --usr: #12708a;
+  --usr-soft: #d7eef3;
+  --itm: #7a6a12;
+  --itm-soft: #f2ecd3;
+  --sync: #4a3f9e;
+  --sync-soft: #e3e0f5;
+  --pur: #9e2f6f;
+  --pur-soft: #f5dbe9;
+  --rec: #45566b;
+  --rec-soft: #dde3ea;
+
+  /* 2026-09-18, Kevin 피드백 반영: 대시보드 재구성으로 메뉴 2개 추가 —
+     "구매 분석"(연도별 업체/품목/카테고리 누적 랭킹)과 "발주서 현황"
+     (진행중/종결 발주서 리스트, E-Count 발주서조회 P_FLAG 기반). 기존
+     6색과 겹치지 않는 새 색(호박색/적갈색)으로 분리. */
+  --rank: #8a6d1a;
+  --rank-soft: #f3ecd1;
+  --ord: #8a4a2f;
+  --ord-soft: #f4ddd3;
+
+  /* 2026-09-21, Kevin 요청("글로벌 ERP 관례처럼 업무/의사결정 목적 기준으로
+     메뉴 분리") — /admin 홈 한 화면에 몰려있던 재고/업체/가격 섹션과,
+     아직 없던 품목분석/공급Risk/구매계획/자재이동/통합조회까지 합쳐
+     10개 업무 메뉴로 재구성하면서 8개 색을 새로 추가한다. 기존 14개
+     색(위 8개 + IMMS의 mov/shp/ret + accent/trace/warn)과 겹치지 않는
+     색으로 골랐다. */
+  --sku: #5c7a1f;
+  --sku-soft: #e9f0d3;
+  --inv: #1f6e5c;
+  --inv-soft: #d7f0ea;
+  --sup: #6e4a1f;
+  --sup-soft: #f2e3d0;
+  --prc: #2f4a8a;
+  --prc-soft: #dde5f5;
+  --risk: #9e1f3f;
+  --risk-soft: #f5dde3;
+  --plan: #3f6e3f;
+  --plan-soft: #e0f0e0;
+  --mtl: #4a5a7a;
+  --mtl-soft: #e3e7f0;
+  --rpt: #6e6e2f;
+  --rpt-soft: #f0f0d0;
+
+  /* solid 버튼 배경용 — 위 6개와 달리 다크모드에서 뒤집지 않는다(다크모드
+     값은 "어두운 배경 위의 글자색"용으로 일부러 밝게 만든 값이라, 그걸
+     흰 글씨 버튼의 배경으로 쓰면 오히려 대비가 나빠진다). */
+  --dash-solid: #1f7a4d;
+  --usr-solid: #12708a;
+  --itm-solid: #7a6a12;
+  --sync-solid: #4a3f9e;
+  --pur-solid: #9e2f6f;
+  --rec-solid: #45566b;
+  --rank-solid: #8a6d1a;
+  --ord-solid: #8a4a2f;
+  --sku-solid: #5c7a1f;
+  --inv-solid: #1f6e5c;
+  --sup-solid: #6e4a1f;
+  --prc-solid: #2f4a8a;
+  --risk-solid: #9e1f3f;
+  --plan-solid: #3f6e3f;
+  --mtl-solid: #4a5a7a;
+  --rpt-solid: #6e6e2f;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #121815;
+    --bg-raised: #1a211d;
+    --bg-sunken: #0e1310;
+    --ink: #e6ebe6;
+    --ink-soft: #a7b3aa;
+    --ink-faint: #6e7a72;
+    --line: #2e3a34;
+    --line-strong: #455249;
+    --accent: #a7626a; /* Pantone 202C, lightened for dark backgrounds */
+    --accent-ink: #e0c8cb;
+    --accent-soft: #250a0d;
+    --trace: #63a69f;
+    --trace-soft: #1b2e2c;
+    --warn: #e08776;
+    --warn-soft: #3a231e;
+    --mov: #9dc0e6;
+    --mov-soft: #16283b;
+    --shp: #e0b768;
+    --shp-soft: #3a2a0e;
+    --ret: #c9a8e6;
+    --ret-soft: #2a1f3a;
+    --adj: #cbbfa0;
+    --adj-soft: #2b2518;
+
+    --dash: #7fdba8;
+    --dash-soft: #10281c;
+    --usr: #7fd6ea;
+    --usr-soft: #0e2830;
+    --itm: #d9c06a;
+    --itm-soft: #2c2410;
+    --sync: #b3a8e8;
+    --sync-soft: #201c40;
+    --pur: #e08fc0;
+    --pur-soft: #3a1728;
+    --rec: #a8b8cc;
+    --rec-soft: #1c232e;
+    --rank: #e0c878;
+    --rank-soft: #332a10;
+    --ord: #e0a586;
+    --ord-soft: #35201a;
+
+    --sku: #c3dd8a;
+    --sku-soft: #26300f;
+    --inv: #7fe0c7;
+    --inv-soft: #0f2b24;
+    --sup: #e0b37f;
+    --sup-soft: #2f2010;
+    --prc: #9db8e8;
+    --prc-soft: #1a2440;
+    --risk: #e88fa3;
+    --risk-soft: #35141c;
+    --plan: #a3d9a3;
+    --plan-soft: #1c301c;
+    --mtl: #adbde0;
+    --mtl-soft: #202840;
+    --rpt: #d9d97f;
+    --rpt-soft: #2c2c10;
+    /* --dash-solid 등은 여기서 재정의하지 않는다 — 다크모드에서도 항상
+       동일한(진한) 값으로 고정해 흰 글씨 버튼 대비를 유지한다. */
+  }
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-bg-raised: var(--bg-raised);
+  --color-bg-sunken: var(--bg-sunken);
+  --color-ink: var(--ink);
+  --color-ink-soft: var(--ink-soft);
+  --color-ink-faint: var(--ink-faint);
+  --color-line: var(--line);
+  --color-line-strong: var(--line-strong);
+  --color-accent: var(--accent);
+  --color-accent-ink: var(--accent-ink);
+  --color-accent-soft: var(--accent-soft);
+  --color-trace: var(--trace);
+  --color-trace-soft: var(--trace-soft);
+  --color-warn: var(--warn);
+  --color-warn-soft: var(--warn-soft);
+  --font-sans: var(--font-pretendard), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-plex-mono), ui-monospace, SFMono-Regular, monospace;
+}
+
+body {
+  background: var(--bg);
+  color: var(--ink);
+}
+
+.tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35em;
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  padding: 0.22em 0.55em;
+  border-radius: 5px;
+}
+/* 2026-09-18: 7개 기능(입고/생산불출/창고이동/택배발송/반납/재고조회/
+   이력조회) 전부 서로 다른 색 — 이전엔 3개 색을 7개가 나눠 쓰고 있었다. */
+.tag-in {
+  background: var(--trace-soft);
+  color: var(--trace);
+}
+.tag-mov {
+  background: var(--mov-soft);
+  color: var(--mov);
+}
+.tag-prd {
+  background: var(--accent-soft);
+  color: var(--accent-ink);
+}
+.tag-shp {
+  background: var(--shp-soft);
+  color: var(--shp);
+}
+.tag-ret {
+  background: var(--ret-soft);
+  color: var(--ret);
+}
+.tag-adj {
+  background: var(--adj-soft);
+  color: var(--adj);
+}
+.tag-qty {
+  background: var(--bg-sunken);
+  color: var(--ink-soft);
+  border: 1px solid var(--line-strong);
+}
+.tag-log {
+  background: var(--bg-raised);
+  color: var(--ink-faint);
+  border: 1px dashed var(--line-strong);
+}
+
+/* 2026-09-18: PIS(관리자) 6개 메뉴 전용 태그 — IMMS의 tag-in/mov/prd/...
+   와 같은 용도(상단 내비 점 표시 + 페이지 헤더 배지)로 쓴다. */
+.tag-dash {
+  background: var(--dash-soft);
+  color: var(--dash);
+}
+.tag-usr {
+  background: var(--usr-soft);
+  color: var(--usr);
+}
+.tag-itm {
+  background: var(--itm-soft);
+  color: var(--itm);
+}
+.tag-sync {
+  background: var(--sync-soft);
+  color: var(--sync);
+}
+.tag-pur {
+  background: var(--pur-soft);
+  color: var(--pur);
+}
+.tag-rec {
+  background: var(--rec-soft);
+  color: var(--rec);
+}
+.tag-rank {
+  background: var(--rank-soft);
+  color: var(--rank);
+}
+.tag-ord {
+  background: var(--ord-soft);
+  color: var(--ord);
+}
+
+/* 2026-09-21: 메뉴 구조 재설계로 추가된 8개 업무 메뉴(품목분석/재고관리/
+   업체분석/가격분석/공급Risk/구매계획/자재이동/통합조회) 전용 태그. */
+.tag-sku {
+  background: var(--sku-soft);
+  color: var(--sku);
+}
+.tag-inv {
+  background: var(--inv-soft);
+  color: var(--inv);
+}
+.tag-sup {
+  background: var(--sup-soft);
+  color: var(--sup);
+}
+.tag-prc {
+  background: var(--prc-soft);
+  color: var(--prc);
+}
+.tag-risk {
+  background: var(--risk-soft);
+  color: var(--risk);
+}
+.tag-plan {
+  background: var(--plan-soft);
+  color: var(--plan);
+}
+.tag-mtl {
+  background: var(--mtl-soft);
+  color: var(--mtl);
+}
+.tag-rpt {
+  background: var(--rpt-soft);
+  color: var(--rpt);
+}
+
+/* 같은 6개 메뉴의 "주요 액션 버튼"(추가/동기화/업로드/비교/저장)이 자기
+   메뉴 고유 색을 배경으로 쓰도록 — 항상 흰 글씨라 -solid(다크모드에도
+   안 뒤집는) 변수를 쓴다. */
+.btn-dash {
+  background: var(--dash-solid);
+  color: #fff;
+}
+.btn-usr {
+  background: var(--usr-solid);
+  color: #fff;
+}
+.btn-itm {
+  background: var(--itm-solid);
+  color: #fff;
+}
+.btn-sync {
+  background: var(--sync-solid);
+  color: #fff;
+}
+.btn-pur {
+  background: var(--pur-solid);
+  color: #fff;
+}
+.btn-rec {
+  background: var(--rec-solid);
+  color: #fff;
+}
+.btn-rank {
+  background: var(--rank-solid);
+  color: #fff;
+}
+.btn-ord {
+  background: var(--ord-solid);
+  color: #fff;
+}
+.btn-sku {
+  background: var(--sku-solid);
+  color: #fff;
+}
+.btn-inv {
+  background: var(--inv-solid);
+  color: #fff;
+}
+.btn-sup {
+  background: var(--sup-solid);
+  color: #fff;
+}
+.btn-prc {
+  background: var(--prc-solid);
+  color: #fff;
+}
+.btn-risk {
+  background: var(--risk-solid);
+  color: #fff;
+}
+.btn-plan {
+  background: var(--plan-solid);
+  color: #fff;
+}
+.btn-mtl {
+  background: var(--mtl-solid);
+  color: #fff;
+}
+.btn-rpt {
+  background: var(--rpt-solid);
+  color: #fff;
+}
+
+/* 2026-09-18, Kevin 요청: 화면상에서 뭘 누르는 중인지(커서 이동/선택
+   영역)와 실제로 눌렸는지(탭/클릭)를 명확히 보여달라 — PIS(마우스
+   호버+클릭)와 IMMS(터치) 양쪽에 적용되는 공용 "눌리는 느낌" 유틸리티.
+   버튼/링크/탭 가능한 행 등 상호작용 가능한 요소에 전부 이 클래스를
+   붙인다. hover는 실제 마우스가 있는 기기에서만 적용해 터치기기에서
+   버튼이 "눌린 채로 고정된" 것처럼 보이는 걸 방지한다. */
+.pressable {
+  cursor: pointer;
+  transition: transform 100ms ease-out, filter 100ms ease-out, background-color 100ms ease-out, box-shadow 100ms ease-out;
+  -webkit-tap-highlight-color: transparent;
+}
+.pressable:active {
+  transform: scale(0.95);
+  filter: brightness(0.93);
+}
+@media (hover: hover) {
+  .pressable:hover {
+    filter: brightness(1.05);
+  }
+}
+.pressable:focus-visible {
+  outline: 2px solid var(--accent-ink);
+  outline-offset: 2px;
+}
+
+/* 2026-09-18, Kevin 요청: "PIS 모든 단추와 스위치에 적용해줘" — 지금까지
+   PIS의 온/오프 토글(사용자 활성/비활성, 핵심품목 여부)이 그냥 색만
+   다른 버튼이었던 걸, 눈으로 바로 "켜짐/꺼짐"이 보이는 진짜 스위치
+   모양(트랙+원)으로 바꾼다. 켜짐 색은 --switch-on 커스텀 프로퍼티로
+   호출부에서 지정(기본값 trace) — 예: 사용자 활성=trace/warn,
+   핵심품목=itm 색. */
+.switch {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  width: 34px;
+  height: 20px;
+  flex-shrink: 0;
+  border-radius: 999px;
+  border: 1px solid var(--switch-off-border, var(--line-strong));
+  background: var(--switch-off-bg, var(--bg-sunken));
+  transition: background-color 150ms ease-out, border-color 150ms ease-out;
+}
+.switch[data-checked="true"] {
+  background: var(--switch-on, var(--trace));
+  border-color: transparent;
+}
+.switch-thumb {
+  position: absolute;
+  top: 1px;
+  left: 1px;
+  width: 16px;
+  height: 16px;
+  border-radius: 999px;
+  background: var(--bg-raised);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
+  transition: transform 150ms ease-out;
+}
+.switch[data-checked="true"] .switch-thumb {
+  transform: translateX(14px);
+}
