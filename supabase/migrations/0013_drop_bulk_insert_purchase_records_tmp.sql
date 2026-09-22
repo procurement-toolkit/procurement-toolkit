@@ -1,0 +1,21 @@
+-- ---------------------------------------------------------------------------
+-- Removes bulk_insert_purchase_records_tmp(jsonb, text), the temporary,
+-- secret-gated but anon-role-callable RPC function created by migration
+-- `temp_bulk_insert_purchase_records_rpc` (schema_migrations version
+-- 20260914004733) for a bulk-insert approach to the 구매현황 backfill that
+-- was ultimately abandoned in favor of ~112 chunked, individually-verified
+-- `execute_sql` inserts (see CLAUDE.md and migration 0011's header).
+--
+-- It served no purpose once the backfill finished (18,309 rows, verified —
+-- see CLAUDE.md 2026-09-17 entry) and left a security-definer function
+-- grantable to `anon` sitting in production, gated only by a secret string
+-- that had been visible in a sandbox scratch file
+-- (/tmp/fixed/load_purchase_records.py) for the life of that approach. It
+-- was actually dropped from production via a direct `execute_sql` call on
+-- 2026-09-17, before this migration file was written — this file restates
+-- that drop as a tracked migration (safe no-op `drop ... if exists` against
+-- the already-clean production database) purely so the repo's migration
+-- history and a fresh environment both reflect its permanent removal.
+-- ---------------------------------------------------------------------------
+
+drop function if exists public.bulk_insert_purchase_records_tmp(jsonb, text);
