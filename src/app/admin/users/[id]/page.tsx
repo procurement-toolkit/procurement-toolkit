@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 import { getUserDetail } from "@/lib/actions/users";
 import { AdminPageHeader } from "@/components/AdminPageHeader";
 import { ResetPasswordForm } from "./ResetPasswordForm";
+import { PisAccessToggle } from "../PisAccessToggle";
 
 const TXN_LABEL: Record<string, string> = {
   IN: "입고",
@@ -9,6 +10,7 @@ const TXN_LABEL: Record<string, string> = {
   MOV: "창고이동",
   SHP: "택배발송",
   RET: "반납",
+  ADJ: "재고실사",
 };
 
 function formatDateTime(iso: string | null) {
@@ -45,7 +47,13 @@ export default async function UserDetailPage({ params }: PageProps<"/admin/users
         }
       />
 
-      <ResetPasswordForm userId={profile.id} userName={profile.name} />
+      <div className="flex flex-wrap items-center gap-4">
+        <div className="flex items-center gap-2 rounded-xl border border-line bg-bg-raised px-3 py-2.5">
+          <span className="text-[12.5px] text-ink-faint">PIS 접근 권한</span>
+          <PisAccessToggle userId={profile.id} isAdmin={profile.role === "admin"} pisAccess={profile.pis_access} />
+        </div>
+        <ResetPasswordForm userId={profile.id} userName={profile.name} />
+      </div>
 
       <div>
         <h2 className="mb-1 text-[13px] font-bold">로그인 기록 (최근 30건)</h2>

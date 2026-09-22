@@ -4,6 +4,7 @@ import { getDepartments } from "@/lib/queries";
 import { AdminPageHeader } from "@/components/AdminPageHeader";
 import { UserForm } from "./UserForm";
 import { ActiveToggle } from "./ActiveToggle";
+import { PisAccessToggle } from "./PisAccessToggle";
 
 function formatDate(iso: string) {
   return new Date(iso).toLocaleDateString("ko-KR", {
@@ -34,6 +35,7 @@ export default async function UsersPage() {
               <th className="px-3 py-2 font-semibold">이메일</th>
               <th className="px-3 py-2 font-semibold">부서</th>
               <th className="px-3 py-2 font-semibold">권한</th>
+              <th className="px-3 py-2 font-semibold">PIS 접근</th>
               <th className="px-3 py-2 font-semibold">등록일</th>
               <th className="px-3 py-2 font-semibold">상태</th>
             </tr>
@@ -53,6 +55,9 @@ export default async function UsersPage() {
                 <td className="px-3 py-2 text-ink-soft">{u.departments?.name ?? "-"}</td>
                 <td className="px-3 py-2 text-ink-soft">
                   {u.role === "admin" ? "관리자" : "현장"}
+                </td>
+                <td className="px-3 py-2">
+                  <PisAccessToggle userId={u.id} isAdmin={u.role === "admin"} pisAccess={u.pis_access} />
                 </td>
                 <td className="px-3 py-2 text-ink-faint">{formatDate(u.created_at)}</td>
                 <td className="px-3 py-2">

@@ -38,7 +38,14 @@ import { M2000_DEPARTMENT } from "@/lib/pis-scope";
 
 type AdminClient = ReturnType<typeof createAdminClient>;
 
-async function requireAdmin() {
+// 2026-09-22, Kevin 요청("현장 작업자별 PIS 접근권한"): 원래 이름은
+// requireAdmin — role='admin' 전용이었다. 이제 이 파일이 담당하는 화면들은
+// 전부 AdminSidebar.tsx의 "업무" 그룹(사용자 관리 등 "관리" 그룹이 아님)
+// 이라 role='admin'이 아니어도 profiles.pis_access=true인 현장 계정이면
+// 접근을 허용한다(migration 0016). 진짜 관리자 전용 화면(사용자 관리 등)의
+// requireAdmin()은 각 파일에 그대로 남아있다 — 이 파일만 이름과 로직을
+// 바꿨다.
+async function requirePisAccess() {
   const supabase = await createClient();
   const {
     data: { user },
@@ -47,12 +54,12 @@ async function requireAdmin() {
 
   const { data: profile } = await supabase
     .from("profiles")
-    .select("id, role")
+    .select("id, role, pis_access")
     .eq("id", user.id)
     .maybeSingle();
 
-  if (!profile || profile.role !== "admin") {
-    throw new Error("관리자만 사용할 수 있습니다");
+  if (!profile || (profile.role !== "admin" && !profile.pis_access)) {
+    throw new Error("PIS 접근 권한이 없습니다");
   }
 }
 
@@ -152,7 +159,7 @@ export type DashboardKpis = {
 };
 
 export async function getDashboardKpis(): Promise<DashboardKpis> {
-  await requireAdmin();
+  await requirePisAccess();
   const admin = createAdminClient();
 
   const [items, itemsWithCategory, itemsWithPrice, suppliers, transactions] = await Promise.all([
@@ -188,7 +195,7 @@ export type CategoryBreakdownRow = {
 // (상품 6,653/₩31,444, 부재료 5,720/₩23,727 등 7개 카테고리)과 정확히
 // 일치함을 확인함(CLAUDE.md 참고).
 export async function getCategoryBreakdown(): Promise<CategoryBreakdownRow[]> {
-  await requireAdmin();
+  await requirePisAccess();
   const admin = createAdminClient();
 
   const { data, error } = await admin.rpc("pis_category_breakdown");
@@ -271,7 +278,7 @@ export type PurchaseRecordDetailFilter = {
 const DRILLDOWN_ROW_LIMIT = 300;
 
 export async function getPurchaseRecordDetail(filter: PurchaseRecordDetailFilter): Promise<PurchaseRecordDetailRow[]> {
-  await requireAdmin();
+  await requirePisAccess();
   const admin = createAdminClient();
 
   let q = admin
@@ -332,7 +339,7 @@ export type PurchaseInsights = {
 // 버그(위 getYearlyPurchaseBreakdown 주석 참고)도 함께 해소된다(byCategory
 // 는 현재 화면에 노출되진 않지만 반환 타입에 포함돼 있어 정확도를 맞춰둔다).
 export async function getPurchaseInsights(days = 30, topN = 10): Promise<PurchaseInsights> {
-  await requireAdmin();
+  await requirePisAccess();
   const admin = createAdminClient();
 
   const since = new Date(Date.now() - days * 24 * 60 * 60 * 1000).toISOString().slice(0, 10);
@@ -412,7 +419,7 @@ export type PurchaseTrend = {
 // (작년 동월)보다 이전일 때만 계산해, 데이터가 없는데 0으로 채워 "작년보다
 // 100% 늘었다"는 식의 허위 신호를 만들지 않는다.
 export async function getPurchaseTrend(): Promise<PurchaseTrend> {
-  await requireAdmin();
+  await requirePisAccess();
   const admin = createAdminClient();
 
   const now = new Date();
@@ -517,7 +524,7 @@ export type YearlyPurchaseBreakdown = {
 // LEFT JOIN이라 이 결함이 구조적으로 발생하지 않는다 — 속도 개선이면서
 // 동시에 카테고리별 구매액 정확도 버그 수정.
 export async function getYearlyPurchaseBreakdown(topN = 15): Promise<YearlyPurchaseBreakdown> {
-  await requireAdmin();
+  await requirePisAccess();
   const admin = createAdminClient();
 
   const [totalsRes, supplierRes, itemRes, categoryRes] = await Promise.all([
@@ -603,7 +610,7 @@ export type YearToDateComparison = {
 // 기준)" 합산을 JS에서 했다 — 단순 GROUP BY라 `pis_year_to_date_comparison`
 // SQL 함수(마이그레이션 참고)로 옮긴다.
 export async function getYearToDateComparison(yearsBack = 3): Promise<YearToDateComparison> {
-  await requireAdmin();
+  await requirePisAccess();
   const admin = createAdminClient();
 
   const now = new Date();
@@ -656,7 +663,7 @@ export type PriceMovementSummary = {
 // (itemsWithHistory 6,503, risen/fallen/unchanged 0/0/6503)과 정확히
 // 일치함을 확인함(CLAUDE.md 참고).
 export async function getPriceMovementSummary(limit = 8): Promise<PriceMovementSummary> {
-  await requireAdmin();
+  await requirePisAccess();
   const admin = createAdminClient();
 
   // 2026-09-21: 단일 admin.rpc() 호출은 PostgREST max-rows에 걸려 6,506건 중
@@ -812,7 +819,7 @@ const SANITY_CHANGE_PCT_CAP = 500;
 // 왜곡됨)와 "업체별 가격차이"(최근 12개월 동안 같은 품목을 2곳 이상 업체에서
 // 산 경우 최저가 업체 대비 잠재 절감액)를 함께 계산한다.
 export async function getPriceVarianceInsights(topN = 10): Promise<PriceVarianceInsights> {
-  await requireAdmin();
+  await requirePisAccess();
   const admin = createAdminClient();
 
   const now = new Date();
@@ -902,7 +909,7 @@ export type StandardCostVarianceInsights = {
 // 이카운트 동기화 이후 채워짐)이라 라이브 페이지도 "아직 없음"으로
 // 표시됨 — SQL도 동일하게 0건 반환함을 확인.
 export async function getStandardCostVariance(topN = 10): Promise<StandardCostVarianceInsights> {
-  await requireAdmin();
+  await requirePisAccess();
   const admin = createAdminClient();
 
   // 2026-09-21: 지금은 material_cost가 채워진 품목이 0건이라 truncation을
@@ -968,7 +975,7 @@ const AGING_DAYS = 90;
 const USAGE_WINDOW_DAYS = 90;
 
 export async function getInventoryHealth(limit = 15): Promise<InventoryHealth> {
-  await requireAdmin();
+  await requirePisAccess();
   const admin = createAdminClient();
 
   const [stock, { count: itemsTracked }, safetyItems, reorderItems] = await Promise.all([
@@ -1141,7 +1148,7 @@ export type ReorderRecommendationsResult = {
 // (현재 IMMS 출고 기록이 0건이라 usage/추천 쪽은 항상 0건 — 이 부분은
 // 현장 데이터가 쌓여야 실측 대조가 가능함).
 export async function getReorderRecommendations(limit = 30): Promise<ReorderRecommendationsResult> {
-  await requireAdmin();
+  await requirePisAccess();
   const admin = createAdminClient();
 
   const usageWindowStart = new Date(Date.now() - USAGE_WINDOW_DAYS * 24 * 60 * 60 * 1000).toISOString().slice(0, 10);
@@ -1224,7 +1231,7 @@ export type SupplierRisk = {
 // limit만큼만 보내준다. 배포 전 SQL로 기존 JS 로직과 총계가 정확히
 // 일치함을 직접 대조 확인함(2347/2068, CLAUDE.md 참고).
 export async function getSupplierRiskSummary(limit = 10): Promise<SupplierRisk> {
-  await requireAdmin();
+  await requirePisAccess();
   const admin = createAdminClient();
 
   const { data, error } = await admin.rpc("pis_supplier_risk_summary", { p_limit: limit });
@@ -1373,7 +1380,7 @@ export type ItemSearchRow = {
 // (getPurchaseInsights와 동일한 소스라 "01 구매현황"과 숫자가 어긋나지
 // 않음). 검색어가 있으면 item_code/item_name 부분일치.
 export async function searchItems(query: string, limit = 30): Promise<ItemSearchRow[]> {
-  await requireAdmin();
+  await requirePisAccess();
   const admin = createAdminClient();
 
   const trimmed = query.trim();
@@ -1458,7 +1465,7 @@ export type ItemDetailSummary = {
 export type ItemDetailResult = { found: true; summary: ItemDetailSummary } | { found: false };
 
 export async function getItemDetail(itemCode: string): Promise<ItemDetailResult> {
-  await requireAdmin();
+  await requirePisAccess();
   const admin = createAdminClient();
 
   const { data: item } = await admin
@@ -1568,7 +1575,7 @@ export type StockLedgerEntry = { txn_date: string | null; location_code: string 
 // truncation 방어가 필요할 만큼 커지진 않지만(품목 하나 기준), 다른
 // 함수들과 동일하게 order+limit을 명시한다.
 export async function getItemStockLedger(itemCode: string, limit = 200): Promise<StockLedgerEntry[]> {
-  await requireAdmin();
+  await requirePisAccess();
   const admin = createAdminClient();
   const { data } = await admin
     .from("stock_ledger")
@@ -1582,7 +1589,7 @@ export async function getItemStockLedger(itemCode: string, limit = 200): Promise
 export type PriceHistoryEntry = { effective_date: string; unit_price: number; source: string };
 
 export async function getItemPriceHistory(itemCode: string, limit = 100): Promise<PriceHistoryEntry[]> {
-  await requireAdmin();
+  await requirePisAccess();
   const admin = createAdminClient();
   const { data } = await admin
     .from("price_history")
@@ -1600,7 +1607,7 @@ export type ItemSupplierRow = { supplier_name: string; qty: number; amount: numb
 // 가져와도 안전(구매 건수가 아무리 많아도 1000행 truncation 위험이 낮은
 // 스코프) — 그래도 안전하게 캡을 둔다.
 export async function getItemSuppliers(itemCode: string): Promise<ItemSupplierRow[]> {
-  await requireAdmin();
+  await requirePisAccess();
   const admin = createAdminClient();
 
   const rows = await fetchAllPages<{ supplier_name: string; qty: number; supply_amount: number; purchase_date: string }>(

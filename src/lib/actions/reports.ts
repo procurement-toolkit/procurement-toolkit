@@ -13,15 +13,19 @@ import { createClient } from "@/lib/supabase/server";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { M2000_DEPARTMENT } from "@/lib/pis-scope";
 
-async function requireAdmin() {
+// 2026-09-22, Kevin 요청("현장 작업자별 PIS 접근권한"): 원래 이름은
+// requireAdmin — role='admin' 전용이었다. 이 파일(10 통합조회, "업무"
+// 그룹)은 role='admin'이 아니어도 profiles.pis_access=true인 현장 계정이면
+// 접근을 허용한다(migration 0016).
+async function requirePisAccess() {
   const supabase = await createClient();
   const {
     data: { user },
   } = await supabase.auth.getUser();
   if (!user) throw new Error("로그인이 필요합니다");
 
-  const { data: profile } = await supabase.from("profiles").select("id, role").eq("id", user.id).maybeSingle();
-  if (!profile || profile.role !== "admin") throw new Error("관리자만 사용할 수 있습니다");
+  const { data: profile } = await supabase.from("profiles").select("id, role, pis_access").eq("id", user.id).maybeSingle();
+  if (!profile || (profile.role !== "admin" && !profile.pis_access)) throw new Error("PIS 접근 권한이 없습니다");
 }
 
 // Supabase Data API 1000행 truncation 방어(2026-09-21 발견/수정 패턴 재사용).
@@ -94,7 +98,7 @@ async function buildPurchaseQuery(admin: ReturnType<typeof createAdminClient>, f
 }
 
 export async function searchPurchaseRecords(filter: PurchaseSearchFilter, cap = 200): Promise<{ rows: PurchaseSearchRow[]; truncated: boolean }> {
-  await requireAdmin();
+  await requirePisAccess();
   const admin = createAdminClient();
 
   const pageFn = await buildPurchaseQuery(admin, filter);
@@ -107,7 +111,7 @@ export async function searchPurchaseRecords(filter: PurchaseSearchFilter, cap = 
 // Excel 출력용 — 미리보기(cap=200)보다 훨씬 큰 상한(SEARCH_ROW_CAP)까지
 // 전부 가져온다. 그래도 넘으면(20,000건 초과) 정직하게 잘렸다고 표시한다.
 export async function exportPurchaseRecords(filter: PurchaseSearchFilter): Promise<{ rows: PurchaseSearchRow[]; truncated: boolean }> {
-  await requireAdmin();
+  await requirePisAccess();
   const admin = createAdminClient();
 
   const pageFn = await buildPurchaseQuery(admin, filter);
@@ -199,21 +203,21 @@ async function fetchTransactionRows(admin: ReturnType<typeof createAdminClient>,
 }
 
 export async function searchTransactions(filter: TransactionSearchFilter, cap = 200): Promise<{ rows: TransactionSearchRow[]; truncated: boolean }> {
-  await requireAdmin();
+  await requirePisAccess();
   const admin = createAdminClient();
   const rows = await fetchTransactionRows(admin, filter, Math.min(cap, SEARCH_ROW_CAP));
   return { rows: rows.slice(0, cap), truncated: rows.length >= cap };
 }
 
 export async function exportTransactions(filter: TransactionSearchFilter): Promise<{ rows: TransactionSearchRow[]; truncated: boolean }> {
-  await requireAdmin();
+  await requirePisAccess();
   const admin = createAdminClient();
   const rows = await fetchTransactionRows(admin, filter, SEARCH_ROW_CAP);
   return { rows, truncated: rows.length >= SEARCH_ROW_CAP };
 }
 
 export async function listDepartmentsForFilter(): Promise<{ id: string; name: string }[]> {
-  await requireAdmin();
+  await requirePisAccess();
   const admin = createAdminClient();
   const { data } = await admin.from("departments").select("id, name").order("name", { ascending: true });
   return data ?? [];

@@ -50,11 +50,16 @@ function NavGroup({ label, items }: { label: string; items: NavItem[] }) {
   );
 }
 
-export function AdminSidebar() {
+export function AdminSidebar({ isAdmin }: { isAdmin: boolean }) {
   return (
     <nav className="flex flex-col gap-3 border-b border-line bg-bg-raised px-3 py-2.5 md:w-56 md:shrink-0 md:border-b-0 md:border-r md:px-2 md:py-4">
       <NavGroup label="업무" items={WORK_ITEMS} />
-      <NavGroup label="관리" items={ADMIN_ITEMS} />
+      {/* 2026-09-22, Kevin 요청("현장 작업자별 PIS 접근권한"): pis_access만
+          있고 role='admin'은 아닌 계정에게는 "관리" 그룹(사용자 관리 등
+          진짜 운영/설정 도구)을 아예 숨긴다 — 어차피 그 경로들은
+          proxy.ts가 admin 전용으로 막아서 눌러도 못 들어가므로, 못 쓰는
+          메뉴를 보여주지 않는 게 맞다. */}
+      {isAdmin && <NavGroup label="관리" items={ADMIN_ITEMS} />}
     </nav>
   );
 }

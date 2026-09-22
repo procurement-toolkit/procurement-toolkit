@@ -9,7 +9,7 @@ export async function getMyProfile() {
 
   const { data: profile } = await supabase
     .from("profiles")
-    .select("id, name, role, department_id, departments(name, default_location_code)")
+    .select("id, name, role, pis_access, department_id, departments(name, default_location_code)")
     .eq("id", user.id)
     .maybeSingle();
 

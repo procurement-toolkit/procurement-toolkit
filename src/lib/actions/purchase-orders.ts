@@ -22,7 +22,11 @@
 import { createClient } from "@/lib/supabase/server";
 import { createAdminClient } from "@/lib/supabase/admin";
 
-async function requireAdmin() {
+// 2026-09-22, Kevin 요청("현장 작업자별 PIS 접근권한"): 원래 이름은
+// requireAdmin — role='admin' 전용이었다. 이 파일(발주관리, "업무" 그룹)은
+// role='admin'이 아니어도 profiles.pis_access=true인 현장 계정이면 접근을
+// 허용한다(migration 0016).
+async function requirePisAccess() {
   const supabase = await createClient();
   const {
     data: { user },
@@ -31,12 +35,12 @@ async function requireAdmin() {
 
   const { data: profile } = await supabase
     .from("profiles")
-    .select("id, role")
+    .select("id, role, pis_access")
     .eq("id", user.id)
     .maybeSingle();
 
-  if (!profile || profile.role !== "admin") {
-    throw new Error("관리자만 사용할 수 있습니다");
+  if (!profile || (profile.role !== "admin" && !profile.pis_access)) {
+    throw new Error("PIS 접근 권한이 없습니다");
   }
 }
 
@@ -100,7 +104,7 @@ async function sumAmountByStatus(admin: ReturnType<typeof createAdminClient>, st
 }
 
 export async function getPurchaseOrderSummary(): Promise<PurchaseOrderSummary> {
-  await requireAdmin();
+  await requirePisAccess();
   const admin = createAdminClient();
 
   const [total, inProgressCount, closedCount, unknownStatus, latest, inProgressAmount, closedAmount] = await Promise.all([
@@ -134,7 +138,7 @@ const LIST_LIMIT_DEFAULT = 100;
 const LIST_LIMIT_MAX = 300;
 
 export async function getPurchaseOrderList(filter: PurchaseOrderListFilter = {}): Promise<PurchaseOrderRow[]> {
-  await requireAdmin();
+  await requirePisAccess();
   const admin = createAdminClient();
 
   const limit = Math.min(filter.limit ?? LIST_LIMIT_DEFAULT, LIST_LIMIT_MAX);

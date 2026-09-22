@@ -15,7 +15,7 @@ export default async function MobileLayout({ children }: LayoutProps<"/m">) {
         </Link>
         <div className="flex items-center gap-3 text-[12px] text-ink-faint">
           <span>{profile?.name ?? ""}</span>
-          {profile?.role === "admin" && (
+          {(profile?.role === "admin" || profile?.pis_access) && (
             <Link href="/admin" className="pressable rounded px-1 py-0.5 text-trace underline underline-offset-2 active:bg-trace-soft">
               PIS 화면
             </Link>

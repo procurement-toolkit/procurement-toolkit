@@ -7,10 +7,16 @@ import { AdminSidebar } from "@/components/AdminSidebar";
 
 export default async function AdminLayout({ children }: LayoutProps<"/admin">) {
   const profile = await getMyProfile();
+  const isAdmin = profile?.role === "admin";
+  const hasPisAccess = isAdmin || profile?.pis_access === true;
 
-  // Middleware already blocks non-admins from /admin, but this keeps the
-  // page itself honest if it's ever rendered a different way.
-  if (!profile || profile.role !== "admin") {
+  // Middleware already gates /admin (admin-only sub-paths vs. PIS-access-
+  // sufficient ones, see proxy.ts's ADMIN_ONLY_PATHS), but this keeps the
+  // layout itself honest if it's ever rendered a different way. This check
+  // is deliberately loose (any PIS access, not just full admin) — the actual
+  // admin-only sub-paths are still enforced by proxy.ts before the request
+  // gets here, and by each of those pages' own server actions' requireAdmin().
+  if (!profile || !hasPisAccess) {
     redirect("/m");
   }
 
@@ -50,7 +56,7 @@ export default async function AdminLayout({ children }: LayoutProps<"/admin">) {
             <span className="font-mono text-[11px] font-bold tracking-wide text-accent-ink">HK PIS</span>
           </Link>
         </div>
-        <AdminSidebar />
+        <AdminSidebar isAdmin={isAdmin} />
         <div className="mt-auto hidden flex-col gap-1.5 border-t border-line px-3 py-3 text-[12px] text-ink-faint md:flex">
           <span className="whitespace-nowrap font-medium text-ink-soft">{profile.name}</span>
           <Link href="/account/password" className="pressable whitespace-nowrap rounded px-1 py-0.5 text-trace underline underline-offset-2 active:bg-trace-soft">

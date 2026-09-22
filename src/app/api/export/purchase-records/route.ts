@@ -14,8 +14,14 @@ export async function GET(request: NextRequest) {
     data: { user },
   } = await supabase.auth.getUser();
   if (!user) return NextResponse.json({ error: "로그인이 필요합니다" }, { status: 401 });
-  const { data: profile } = await supabase.from("profiles").select("role").eq("id", user.id).maybeSingle();
-  if (!profile || profile.role !== "admin") return NextResponse.json({ error: "관리자만 사용할 수 있습니다" }, { status: 403 });
+  // 2026-09-22, Kevin 요청("현장 작업자별 PIS 접근권한"): 이 화면(10
+  // 통합조회)은 "업무" 그룹이라 role='admin'이 아니어도 pis_access=true인
+  // 현장 계정이면 접근을 허용한다 — exportPurchaseRecords() 자체(reports.ts
+  // requirePisAccess())와 동일한 기준으로 맞춤.
+  const { data: profile } = await supabase.from("profiles").select("role, pis_access").eq("id", user.id).maybeSingle();
+  if (!profile || (profile.role !== "admin" && !profile.pis_access)) {
+    return NextResponse.json({ error: "PIS 접근 권한이 없습니다" }, { status: 403 });
+  }
 
   const sp = request.nextUrl.searchParams;
   const filter: PurchaseSearchFilter = {

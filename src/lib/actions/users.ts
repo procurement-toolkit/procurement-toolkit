@@ -38,7 +38,7 @@ export async function listUsers() {
   const supabase = await createClient();
   const { data } = await supabase
     .from("profiles")
-    .select("id, name, email, role, is_active, created_at, departments(name)")
+    .select("id, name, email, role, is_active, pis_access, created_at, departments(name)")
     .order("created_at", { ascending: true });
   return data ?? [];
 }
@@ -53,7 +53,7 @@ export async function getUserDetail(userId: string) {
   const [{ data: profile }, { data: logins }, { data: activity }] = await Promise.all([
     admin
       .from("profiles")
-      .select("id, name, email, role, is_active, created_at, departments(name)")
+      .select("id, name, email, role, is_active, pis_access, created_at, departments(name)")
       .eq("id", userId)
       .maybeSingle(),
     admin
@@ -164,6 +164,34 @@ export async function toggleUserActive(
     return { ok: true };
   } catch (e) {
     console.error("toggleUserActive failed:", e);
+    return { ok: false, error: e instanceof Error ? e.message : "알 수 없는 오류가 발생했습니다" };
+  }
+}
+
+// 2026-09-21, Kevin 요청: "현장 작업자라도 pis로 넘어 갈 수 있는 접근권한을
+// 관리자가 주거나 막을 수 있도록 권한을 줘. 즉, 어떤 현장 작업자는 imms만
+// 어떤 현장 작업자는 imms와 pis 동시에" — 기존 role('admin'|'field') 위에,
+// role='field' 계정 개별로 켜고 끌 수 있는 PIS 업무화면 접근 플래그
+// (migration 0016). role='admin' 계정에도 값 자체는 저장할 수 있지만 그
+// 계정은 이 값과 무관하게 항상 전체 접근이라 의미가 없다(proxy.ts/
+// admin/layout.tsx의 실제 게이트 로직 참고).
+export async function togglePisAccess(userId: string, nextValue: boolean): Promise<ActionResult> {
+  try {
+    await requireAdmin();
+
+    const admin = createAdminClient();
+    const { error } = await admin.from("profiles").update({ pis_access: nextValue }).eq("id", userId);
+
+    if (error) {
+      console.error("togglePisAccess failed:", error);
+      return { ok: false, error: `변경 중 오류가 발생했습니다: ${error.message}` };
+    }
+
+    revalidatePath("/admin/users");
+    revalidatePath(`/admin/users/${userId}`);
+    return { ok: true };
+  } catch (e) {
+    console.error("togglePisAccess failed:", e);
     return { ok: false, error: e instanceof Error ? e.message : "알 수 없는 오류가 발생했습니다" };
   }
 }

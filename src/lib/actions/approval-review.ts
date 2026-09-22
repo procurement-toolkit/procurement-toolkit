@@ -27,15 +27,19 @@ import { M2000_DEPARTMENT } from "@/lib/pis-scope";
 
 type AdminClient = ReturnType<typeof createAdminClient>;
 
-async function requireAdmin() {
+// 2026-09-22, Kevin 요청("현장 작업자별 PIS 접근권한"): 원래 이름은
+// requireAdmin — role='admin' 전용이었다. 이 파일(발주관리 하위 "승인
+// 검토", "업무" 그룹)은 role='admin'이 아니어도 profiles.pis_access=true인
+// 현장 계정이면 접근을 허용한다(migration 0016).
+async function requirePisAccess() {
   const supabase = await createClient();
   const {
     data: { user },
   } = await supabase.auth.getUser();
   if (!user) throw new Error("로그인이 필요합니다");
 
-  const { data: profile } = await supabase.from("profiles").select("id, role").eq("id", user.id).maybeSingle();
-  if (!profile || profile.role !== "admin") throw new Error("관리자만 사용할 수 있습니다");
+  const { data: profile } = await supabase.from("profiles").select("id, role, pis_access").eq("id", user.id).maybeSingle();
+  if (!profile || (profile.role !== "admin" && !profile.pis_access)) throw new Error("PIS 접근 권한이 없습니다");
 }
 
 // Supabase Data API의 조용한 1000행 truncation 문제(pis-dashboard.ts
@@ -106,7 +110,7 @@ const LIMITATION_NOTE =
   "이카운트 발주서조회(GetPurchasesOrderList) API는 품목코드·라인별 단가/수량을 제공하지 않습니다(발주서 헤더 단위 정보만 있음) — 그래서 이 화면은 품목 단위 확정 검증이 아니라, 거래처 구매이력/금액/중복 여부 등 신뢰 가능한 헤더 단위 신호만 보여줍니다. 신호가 없다고 해서 \"이 발주서가 맞다\"는 뜻이 아니라 \"눈에 띄는 이상 신호가 없다\"는 뜻입니다.";
 
 export async function getApprovalReviewList(): Promise<ApprovalReviewResult> {
-  await requireAdmin();
+  await requirePisAccess();
   const admin: AdminClient = createAdminClient();
 
   const { data: poData } = await admin

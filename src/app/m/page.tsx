@@ -7,10 +7,13 @@ import { getMyProfile } from "@/lib/queries";
 // admin/layout.tsx의 "IMMS 화면" 링크). 반대 방향(IMMS → PIS)도
 // `/m/layout.tsx` 상단 헤더에 "PIS 화면" 링크로 이미 존재하긴 했지만
 // 작은 텍스트 링크 하나뿐이라 눈에 잘 안 띄었을 수 있다 — 홈 화면에도
-// 눈에 띄는 카드를 추가해 더 확실히 넘어갈 수 있게 한다. 관리자(role=
-// 'admin')에게만 보이도록 함 — PIS(/admin/*)는 전부 관리자 권한을
-// 요구하므로, 현장 역할 계정에 보여줘도 눌러보면 "관리자만 사용할 수
-// 있습니다" 에러만 만나게 되어 오히려 혼란만 준다.
+// 눈에 띄는 카드를 추가해 더 확실히 넘어갈 수 있게 한다.
+//
+// 2026-09-22 업데이트, Kevin 요청("현장 작업자별 PIS 접근권한"): 처음엔
+// 관리자(role='admin')에게만 보였지만, 이제 개별 현장 계정에 PIS 업무
+// 화면 접근을 허용하는 profiles.pis_access 플래그가 추가되어(migration
+// 0016) 그 값이 true인 현장 계정도 이 카드를 볼 수 있다 — 안 보여주면
+// 접근 권한은 받았는데 어떻게 들어가는지 몰라 헤매게 되므로.
 export default async function MobileHome() {
   const profile = await getMyProfile();
 
@@ -30,7 +33,7 @@ export default async function MobileHome() {
         <Tile href="/m/history" code="LOG" label="이력조회" wide />
       </div>
 
-      {profile?.role === "admin" && (
+      {(profile?.role === "admin" || profile?.pis_access) && (
         <Link
           href="/admin"
           className="pressable mt-4 flex items-center justify-between rounded-xl border border-line bg-bg-sunken p-4 active:scale-[0.98] active:bg-[var(--dash-soft)] active:border-line-strong"
