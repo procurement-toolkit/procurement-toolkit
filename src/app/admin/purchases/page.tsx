@@ -1,5 +1,7 @@
 import { getYearlyPurchaseBreakdown, type YearlyBreakdownRow } from "@/lib/actions/pis-dashboard";
 import { AdminPageHeader } from "@/components/AdminPageHeader";
+import { InsightSection } from "@/components/charts/InsightSection";
+import { BarChart, type BarDatum } from "@/components/charts/BarChart";
 
 function formatWon(n: number) {
   return `₩${n.toLocaleString("ko-KR")}`;
@@ -100,6 +102,10 @@ function YearlyTable({
 
 export default async function PurchaseAnalysisPage() {
   const breakdown = await getYearlyPurchaseBreakdown(15);
+  const yearlyChartData: BarDatum[] = breakdown.years.map((y) => ({
+    label: y,
+    value: breakdown.yearTotals[y] ?? 0,
+  }));
 
   return (
     <div className="flex flex-col gap-8">
@@ -146,6 +152,9 @@ export default async function PurchaseAnalysisPage() {
             yearTotals={breakdown.yearTotals}
             labelHeader="카테고리"
           />
+          <InsightSection title="연도별 총 구매액 추이" description="전체 업체·품목 합계 (공급가액, 부가세 제외) 기준">
+            <BarChart data={yearlyChartData} color="var(--rank)" unit="won" />
+          </InsightSection>
         </>
       )}
     </div>

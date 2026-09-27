@@ -7,6 +7,9 @@
 import { AdminPageHeader } from "@/components/AdminPageHeader";
 import { formatNumber, formatWon, formatDate, EmptyNote } from "@/components/admin/dashboard-ui";
 import { searchPurchaseRecords, searchTransactions, listDepartmentsForFilter } from "@/lib/actions/reports";
+import { InsightSection } from "@/components/charts/InsightSection";
+import { BarChart, type BarDatum } from "@/components/charts/BarChart";
+import { HBarChart, type HBarDatum } from "@/components/charts/HBarChart";
 
 const TXN_TYPE_LABEL: Record<string, string> = { IN: "입고", PRD: "생산불출", MOV: "창고이동", SHP: "택배발송", RET: "반납", ADJ: "재고실사" };
 
@@ -55,6 +58,27 @@ export default async function ReportsPage({ searchParams }: PageProps<"/admin/re
     supplier: purchaseFilter.supplierQuery,
     category: purchaseFilter.category,
   })}`;
+  // 10 통합조회 — 검색 결과가 있을 때만 하단에 간단한 인사이트 차트를
+  // 보여준다(2026-09-23, Kevin 요청). 순수 서버 컴포넌트라 데이터만
+  // props로 넘긴다 — 함수 prop 없음(2026-09-18 Drilldown 500 사고 재발
+  // 방지 원칙 그대로 적용).
+  const purchaseByDate = new Map<string, number>();
+  for (const r of purchaseResult.rows) {
+    purchaseByDate.set(r.purchase_date, (purchaseByDate.get(r.purchase_date) ?? 0) + r.supply_amount);
+  }
+  const purchaseByDateChartData: BarDatum[] = Array.from(purchaseByDate, ([date, amount]) => ({ label: date, value: amount }))
+    .sort((a, b) => a.label.localeCompare(b.label))
+    .slice(-30);
+
+  const txnByType = new Map<string, number>();
+  for (const r of txnResult.rows) {
+    txnByType.set(r.txn_type, (txnByType.get(r.txn_type) ?? 0) + 1);
+  }
+  const txnByTypeChartData: HBarDatum[] = Array.from(txnByType, ([type, count]) => ({
+    label: TXN_TYPE_LABEL[type] ?? type,
+    value: count,
+  })).sort((a, b) => b.value - a.value);
+
   const txnExportUrl = `/api/export/transactions${qs({
     since: txnFilter.sinceIso,
     until: txnFilter.untilIso,
@@ -126,6 +150,12 @@ export default async function ReportsPage({ searchParams }: PageProps<"/admin/re
             </div>
           )}
         </div>
+
+        {purchaseByDateChartData.length > 0 && (
+          <InsightSection title="일자별 구매액" description="검색 결과 기준, 공급가액 합계 (최근 30일자까지)">
+            <BarChart data={purchaseByDateChartData} color="var(--rpt)" unit="won" />
+          </InsightSection>
+        )}
       </section>
 
       <section className="flex flex-col gap-3">
@@ -197,6 +227,12 @@ export default async function ReportsPage({ searchParams }: PageProps<"/admin/re
             </div>
           )}
         </div>
+
+        {txnByTypeChartData.length > 0 && (
+          <InsightSection title="거래유형별 건수" description="검색 결과 기준">
+            <HBarChart data={txnByTypeChartData} color="var(--rpt)" unit="count-건" barHeight={24} />
+          </InsightSection>
+        )}
       </section>
     </div>
   );

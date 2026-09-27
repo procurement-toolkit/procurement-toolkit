@@ -5,9 +5,14 @@ import { getInventoryHealth } from "@/lib/actions/pis-dashboard";
 import { PurchaseDetailDrilldown } from "@/components/Drilldown";
 import { AdminPageHeader } from "@/components/AdminPageHeader";
 import { formatNumber, formatDate, SectionHeader, EmptyNote } from "@/components/admin/dashboard-ui";
+import { InsightSection } from "@/components/charts/InsightSection";
+import { HBarChart, type HBarDatum } from "@/components/charts/HBarChart";
 
 export default async function InventoryPage() {
   const inventory = await getInventoryHealth();
+  const coverageChartData: HBarDatum[] = inventory.lowCoverageItems
+    .slice(0, 10)
+    .map((i) => ({ label: i.item_name, value: Math.round(i.coverageMonths * 10) / 10 }));
 
   return (
     <div className="flex flex-col gap-8">
@@ -176,6 +181,15 @@ export default async function InventoryPage() {
             </div>
           </div>
         </div>
+
+        {coverageChartData.length > 0 && (
+          <InsightSection
+            title="재고 커버리지 낮은 순 (하위 10개)"
+            description={`재고 소진까지 남은 개월 수 — 낮을수록 시급함 (최근 ${inventory.usageWindowDays}일 사용량 기준)`}
+          >
+            <HBarChart data={coverageChartData} color="var(--inv)" unit="month" barHeight={20} />
+          </InsightSection>
+        )}
       </div>
     </div>
   );

@@ -9,9 +9,14 @@ import { getPurchaseInsights } from "@/lib/actions/pis-dashboard";
 import { PurchaseDetailDrilldown } from "@/components/Drilldown";
 import { AdminPageHeader } from "@/components/AdminPageHeader";
 import { formatNumber, formatWon, SectionHeader, EmptyNote } from "@/components/admin/dashboard-ui";
+import { InsightSection } from "@/components/charts/InsightSection";
+import { HBarChart, type HBarDatum } from "@/components/charts/HBarChart";
 
 export default async function SuppliersPage() {
   const insights = await getPurchaseInsights(365, 25);
+  const supplierChartData: HBarDatum[] = insights.bySupplier
+    .slice(0, 10)
+    .map((s) => ({ label: s.supplier_name, value: s.amount }));
 
   return (
     <div className="flex flex-col gap-8">
@@ -68,6 +73,12 @@ export default async function SuppliersPage() {
             </table>
           )}
         </div>
+
+        {supplierChartData.length > 0 && (
+          <InsightSection title="업체별 구매액 (상위 10)" description="최근 365일 · 공급가액 기준">
+            <HBarChart data={supplierChartData} color="var(--sup)" unit="won" barHeight={20} />
+          </InsightSection>
+        )}
       </div>
     </div>
   );

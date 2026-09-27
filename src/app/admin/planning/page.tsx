@@ -8,9 +8,14 @@ import Link from "next/link";
 import { getReorderRecommendations } from "@/lib/actions/pis-dashboard";
 import { AdminPageHeader } from "@/components/AdminPageHeader";
 import { formatNumber, KpiTile, EmptyNote } from "@/components/admin/dashboard-ui";
+import { InsightSection } from "@/components/charts/InsightSection";
+import { HBarChart, type HBarDatum } from "@/components/charts/HBarChart";
 
 export default async function PlanningPage() {
   const result = await getReorderRecommendations();
+  const coverageChartData: HBarDatum[] = result.recommendations
+    .slice(0, 10)
+    .map((r) => ({ label: r.item_name, value: r.coverageMonths }));
 
   return (
     <div className="flex flex-col gap-6">
@@ -75,6 +80,12 @@ export default async function PlanningPage() {
           </div>
         )}
       </div>
+
+      {coverageChartData.length > 0 && (
+        <InsightSection title="재고 커버리지 낮은 순 (발주 필요 후보, 상위 10)" description="리드타임 안에 소진 예상되는 순">
+          <HBarChart data={coverageChartData} color="var(--plan)" unit="month" barHeight={20} />
+        </InsightSection>
+      )}
 
       <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
         <Link href="/admin/inventory" className="pressable rounded-xl border border-line bg-bg-raised px-4 py-3 hover:border-[var(--inv)]">

@@ -13,6 +13,8 @@ import {
 } from "@/lib/actions/pis-dashboard";
 import { AdminPageHeader } from "@/components/AdminPageHeader";
 import { formatNumber, formatWon, formatDate, KpiTile, EmptyNote } from "@/components/admin/dashboard-ui";
+import { InsightSection } from "@/components/charts/InsightSection";
+import { LineChart, type LinePoint } from "@/components/charts/LineChart";
 
 const TABS = [
   { key: "purchases", label: "구매이력" },
@@ -130,29 +132,42 @@ async function PurchaseHistoryTab({ itemCode }: { itemCode: string }) {
 
 async function PriceHistoryTab({ itemCode }: { itemCode: string }) {
   const rows = await getItemPriceHistory(itemCode);
+  // getItemPriceHistory는 최신순(내림차순)으로 오므로, 시계열 차트는
+  // 시간 순방향(오래된 → 최신)으로 뒤집어서 그린다.
+  const chartData: LinePoint[] = [...rows]
+    .reverse()
+    .map((r) => ({ x: formatDate(r.effective_date), y: r.unit_price }));
+
   return (
-    <div className="overflow-hidden rounded-xl border border-line bg-bg-raised">
-      {rows.length === 0 ? (
-        <EmptyNote>이 품목의 단가 스냅샷 기록이 없습니다(price_history) — 이카운트 동기화 이후 쌓입니다.</EmptyNote>
-      ) : (
-        <table className="w-full text-left text-[13px] tabular-nums">
-          <thead>
-            <tr className="border-b border-line bg-bg-sunken text-[11px] uppercase tracking-wide text-ink-faint">
-              <th className="px-3 py-2 font-semibold">기준일</th>
-              <th className="px-3 py-2 font-semibold">출처</th>
-              <th className="px-3 py-2 font-semibold text-right">단가</th>
-            </tr>
-          </thead>
-          <tbody>
-            {rows.map((r, i) => (
-              <tr key={i} className="border-b border-line last:border-0">
-                <td className="px-3 py-2 text-ink-faint">{formatDate(r.effective_date)}</td>
-                <td className="px-3 py-2 text-ink-faint">{r.source === "item_master" ? "이카운트 등록단가" : r.source}</td>
-                <td className="px-3 py-2 text-right font-semibold">{formatWon(r.unit_price)}</td>
+    <div className="flex flex-col gap-4">
+      <div className="overflow-hidden rounded-xl border border-line bg-bg-raised">
+        {rows.length === 0 ? (
+          <EmptyNote>이 품목의 단가 스냅샷 기록이 없습니다(price_history) — 이카운트 동기화 이후 쌓입니다.</EmptyNote>
+        ) : (
+          <table className="w-full text-left text-[13px] tabular-nums">
+            <thead>
+              <tr className="border-b border-line bg-bg-sunken text-[11px] uppercase tracking-wide text-ink-faint">
+                <th className="px-3 py-2 font-semibold">기준일</th>
+                <th className="px-3 py-2 font-semibold">출처</th>
+                <th className="px-3 py-2 font-semibold text-right">단가</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {rows.map((r, i) => (
+                <tr key={i} className="border-b border-line last:border-0">
+                  <td className="px-3 py-2 text-ink-faint">{formatDate(r.effective_date)}</td>
+                  <td className="px-3 py-2 text-ink-faint">{r.source === "item_master" ? "이카운트 등록단가" : r.source}</td>
+                  <td className="px-3 py-2 text-right font-semibold">{formatWon(r.unit_price)}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        )}
+      </div>
+      {rows.length >= 2 && (
+        <InsightSection title="단가 추이" description="price_history 스냅샷 기준, 오래된 순 → 최신순">
+          <LineChart data={chartData} color="var(--sku)" unit="won" />
+        </InsightSection>
       )}
     </div>
   );

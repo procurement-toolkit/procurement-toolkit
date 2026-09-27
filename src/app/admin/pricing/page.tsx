@@ -12,6 +12,8 @@ import {
 import { Drilldown, PurchaseDetailDrilldown } from "@/components/Drilldown";
 import { AdminPageHeader } from "@/components/AdminPageHeader";
 import { formatNumber, formatWon, formatPct, formatDate, KpiTile, SectionHeader, EmptyNote } from "@/components/admin/dashboard-ui";
+import { InsightSection } from "@/components/charts/InsightSection";
+import { HBarChart, type HBarDatum } from "@/components/charts/HBarChart";
 
 export default async function PricingPage() {
   const [categories, priceMovement, priceVariance, costVariance] = await Promise.all([
@@ -20,6 +22,14 @@ export default async function PricingPage() {
     getPriceVarianceInsights(),
     getStandardCostVariance(),
   ]);
+
+  // dataviz 스킬 팔레트 검증 결과 --warn/--trace 조합이 chroma floor
+  // 기준에 미달(trace 초록이 거의 무채색으로 읽힘)해, 색만으로 상승/하락을
+  // 구분하지 않도록 HBarChart의 diverging 모드가 항상 막대 끝에 값을
+  // 직접 라벨로 붙인다(보조 인코딩) — 2026-09-23 CLAUDE.md 참고.
+  const yoyChartData: HBarDatum[] = [...priceVariance.yoyTopRisers.slice(0, 5), ...priceVariance.yoyTopFallers.slice(0, 5)]
+    .sort((a, b) => b.changePct - a.changePct)
+    .map((m) => ({ label: m.item_name, value: m.changePct }));
 
   return (
     <div className="flex flex-col gap-8">
@@ -282,6 +292,15 @@ export default async function PricingPage() {
             </div>
           </div>
         </div>
+
+        {yoyChartData.length > 0 && (
+          <InsightSection
+            title="전년 대비 단가 변동 상하위 품목"
+            description="이전 12개월 → 최근 12개월 변동률(%). 색은 참고용이며 정확한 값은 막대 끝 라벨을 확인하세요."
+          >
+            <HBarChart data={yoyChartData} color="var(--warn)" negativeColor="var(--trace)" diverging unit="pct" barHeight={20} />
+          </InsightSection>
+        )}
       </div>
 
       <div className="flex flex-col gap-4">

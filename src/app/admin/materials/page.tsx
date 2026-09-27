@@ -6,12 +6,20 @@
 // 10 통합조회에서 만들 예정이라, 지금은 누적 건수 요약 + IMMS 모바일
 // 바로가기만 둔다.
 import Link from "next/link";
-import { getDashboardKpis } from "@/lib/actions/pis-dashboard";
+import { getDashboardKpis, getTransactionTypeCounts } from "@/lib/actions/pis-dashboard";
 import { AdminPageHeader } from "@/components/AdminPageHeader";
 import { formatNumber, KpiTile, ComingSoon } from "@/components/admin/dashboard-ui";
+import { InsightSection } from "@/components/charts/InsightSection";
+import { HBarChart, type HBarDatum } from "@/components/charts/HBarChart";
+
+const TXN_TYPE_LABEL: Record<string, string> = { IN: "입고", PRD: "생산불출", MOV: "창고이동", SHP: "택배발송", RET: "반납", ADJ: "재고실사" };
 
 export default async function MaterialsPage() {
-  const kpis = await getDashboardKpis();
+  const [kpis, typeCounts] = await Promise.all([getDashboardKpis(), getTransactionTypeCounts()]);
+  const typeChartData: HBarDatum[] = typeCounts.map((t) => ({
+    label: TXN_TYPE_LABEL[t.txn_type] ?? t.txn_type,
+    value: t.count,
+  }));
 
   return (
     <div className="flex flex-col gap-6">
@@ -34,6 +42,12 @@ export default async function MaterialsPage() {
           <span className="tag tag-mtl shrink-0">mtl</span>
         </Link>
       </div>
+
+      {typeChartData.length > 0 && (
+        <InsightSection title="거래유형별 건수" description="IMMS 누적 거래(transactions) 전체 기간 기준">
+          <HBarChart data={typeChartData} color="var(--mtl)" unit="count-건" barHeight={24} />
+        </InsightSection>
+      )}
 
       <ComingSoon
         what="자재이동 통합 로그 조회 (사용자별 / 팀별 / 일자별 / 품목별 / 창고별)"

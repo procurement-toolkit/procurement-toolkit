@@ -11,9 +11,12 @@ import { PurchaseDetailDrilldown } from "@/components/Drilldown";
 import { AdminPageHeader } from "@/components/AdminPageHeader";
 import { formatNumber, KpiTile, SectionHeader, EmptyNote, ComingSoon } from "@/components/admin/dashboard-ui";
 import Link from "next/link";
+import { InsightSection } from "@/components/charts/InsightSection";
+import { HBarChart } from "@/components/charts/HBarChart";
 
 export default async function SupplyRiskPage() {
   const [supplierRisk, purchase] = await Promise.all([getSupplierRiskSummary(), getPurchaseInsights(365)]);
+  const multiSourceCount = Math.max(0, supplierRisk.itemsWithAnySupplierRecorded - supplierRisk.singleSourceItemCount);
 
   return (
     <div className="flex flex-col gap-8">
@@ -77,6 +80,23 @@ export default async function SupplyRiskPage() {
           />
         </div>
       </div>
+
+      {supplierRisk.itemsWithAnySupplierRecorded > 0 && (
+        <InsightSection
+          title="단일 공급업체 품목 비중"
+          description={`거래처가 기록된 품목 ${formatNumber(supplierRisk.itemsWithAnySupplierRecorded)}개 중 몇 개가 대체 업체 없이 한 곳에만 의존하는지`}
+        >
+          <HBarChart
+            data={[
+              { label: "단일 공급업체", value: supplierRisk.singleSourceItemCount },
+              { label: "복수 공급업체", value: multiSourceCount },
+            ]}
+            color="var(--risk)"
+            unit="count-개"
+            barHeight={28}
+          />
+        </InsightSection>
+      )}
 
       <div className="flex flex-col gap-4">
         <SectionHeader title="앞으로 추가될 지표" />

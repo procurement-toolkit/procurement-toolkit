@@ -2,6 +2,8 @@ import Link from "next/link";
 import { getPurchaseOrderSummary, getPurchaseOrderList, type PurchaseOrderRow } from "@/lib/actions/purchase-orders";
 import { AdminPageHeader } from "@/components/AdminPageHeader";
 import { Drilldown } from "@/components/Drilldown";
+import { InsightSection } from "@/components/charts/InsightSection";
+import { HBarChart } from "@/components/charts/HBarChart";
 
 function formatNumber(n: number) {
   return n.toLocaleString("ko-KR");
@@ -193,6 +195,20 @@ export default async function PurchaseOrdersPage({ searchParams }: PageProps<"/a
           </div>
         )}
       </div>
+
+      {summary.totalCount > 0 && (
+        <InsightSection title="진행중 · 종결 금액 비교" description="공급가액(부가세 별도) 기준">
+          <HBarChart
+            data={[
+              { label: "진행중", value: summary.inProgressAmount },
+              { label: "종결", value: summary.closedAmount },
+            ]}
+            color="var(--ord)"
+            unit="won"
+            barHeight={28}
+          />
+        </InsightSection>
+      )}
     </div>
   );
 }
