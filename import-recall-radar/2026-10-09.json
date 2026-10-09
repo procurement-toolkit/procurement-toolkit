@@ -1,0 +1,636 @@
+{
+  "date": "2026-10-09",
+  "recalls": [
+    {
+      "RecallID": 11020,
+      "RecallNumber": "27017",
+      "RecallDate": "2026-10-08T00:00:00",
+      "Description": "This recall involves adult multi-terrain gravel bicycles Van Rysel GRVL AF Sword Brown CN FR (model number 8911304), Van Rysel GRVL AF Apex Beige CN FR (model number 8911305), Van Rysel GRVL AF Sword Pink CN FR (model number 8911308), and Van Rysel GRVL AF GRX Black (model number 8929130). The recalled models were sold in sizes x-small, small, medium, large and x-large. The bicycles are designed for off-road gravel riding, road cycling, commuting and bikepacking. Each bicycle can be identified by the model name and Van Rysel Product ID located on the barcode sticker on the frame near the bottom bracket. Only Van Rysel bicycles with the following Product IDs/ SKUs are included in this recall. ",
+      "URL": "https://www.cpsc.gov/Recalls/2027/Decathlon-America-Recalls-Van-Rysel-GRVL-AF-Bicycles-Due-to-Risk-of-Serious-Injury-or-Death-from-Crash-Hazard",
+      "Title": "Decathlon America Recalls Van Rysel GRVL AF Bicycles Due to Risk of Serious Injury or Death from Crash Hazard",
+      "ConsumerContact": "Decathlon America at 415-408-5494 from 9 a.m. to 5 p.m. PT Monday through Friday, email at support.america@decathlon.com or online at https://www.decathlon.com/pages/product-safety-recalls or https://www.decathlon.com/ and click “Recalls” in the footer at the bottom of the page.   ",
+      "LastPublishDate": "2026-10-08T00:00:00",
+      "Products": [
+        {
+          "Name": "Van Rysel GRVL AF Bicycles",
+          "Description": "",
+          "Model": "",
+          "Type": "Bicycles or Accessories",
+          "CategoryID": "1332",
+          "NumberOfUnits": "About 1,150"
+        }
+      ],
+      "Inconjunctions": [],
+      "Images": [
+        {
+          "URL": "https://www.cpsc.gov/s3fs-public/Decathlon1.png?VersionId=SybjGiY4QTNlfjVKyrTmqk6gxka0WXEX",
+          "Caption": "Recalled USA Van Rysel GRVL AF Sword Brown CN FR (model number 8911304)"
+        },
+        {
+          "URL": "https://www.cpsc.gov/s3fs-public/Decathlon2.png?VersionId=9O_lyhtJsOy2SOoJZbAuMTvA4NFIPwNJ",
+          "Caption": "Recalled USA Van Rysel GRVL AF Apex Beige CN FR (model number 8911305)"
+        },
+        {
+          "URL": "https://www.cpsc.gov/s3fs-public/Decathlon3.png?VersionId=ctC1k6lsy3hiB513PdmrBSQb344he3WW",
+          "Caption": "Recalled USA Van Rysel GRVL AF Sword Pink CN FR (model number 8911308)"
+        },
+        {
+          "URL": "https://www.cpsc.gov/s3fs-public/Decathlon4.png?VersionId=A7NZ8FlSe.vwZiweR5ZI6niwXbVCeu2w",
+          "Caption": "Recalled USA Van Rysel GRVL AF GRX Black (model number 8929130)"
+        },
+        {
+          "URL": "https://www.cpsc.gov/s3fs-public/Decathlon5.png?VersionId=25LiBsSSIve8AmDVZzWYcDixG4XYxRSf",
+          "Caption": "Barcode Sticker with model name and Van Rysel Product ID located on the frame near the bottom bracket."
+        }
+      ],
+      "Injuries": [
+        {
+          "Name": "None reported"
+        }
+      ],
+      "Manufacturers": [],
+      "Retailers": [
+        {
+          "Name": "Sold At:\nREI Co-op stores nationwide and online at REI.com from March 2025 through August 2026 for between $1,400 and $2,300.",
+          "CompanyID": ""
+        }
+      ],
+      "Importers": [
+        {
+          "Name": "Decathlon America LLC, of San Francisco, California",
+          "CompanyID": ""
+        }
+      ],
+      "Distributors": [
+        {
+          "Name": "Recreational Equipment, Inc. (REI), of Sumner, Washington",
+          "CompanyID": ""
+        }
+      ],
+      "SoldAtLabel": null,
+      "ManufacturerCountries": [
+        {
+          "Country": "China"
+        }
+      ],
+      "ProductUPCs": [],
+      "Hazards": [
+        {
+          "Name": "The recalled bicycles’ front lock nut can loosen during use, causing the front wheel to dislodge or loosen over time, posing a crash hazard.",
+          "HazardType": "",
+          "HazardTypeID": ""
+        }
+      ],
+      "Remedies": [
+        {
+          "Name": "Consumers should stop using the recalled bicycles immediately and take them to the nearest Recreational Equipment (REI Co-op) location for a free inspection and repair service of the front fork assembly. Anyone unable to visit an REI Co-op location can contact Decathlon Customer Service directly for assistance. Recalled models can be identified by the Van Rysel Product ID on the top right of the product label under the frame, beginning with the number 5."
+        }
+      ],
+      "RemedyOptions": [
+        {
+          "Option": "Repair"
+        }
+      ]
+    },
+    {
+      "RecallID": 11018,
+      "RecallNumber": "27016",
+      "RecallDate": "2026-10-08T00:00:00",
+      "Description": "This recall involves DR Power Equipment Pilot and Premier walk-behind trimmer mowers. The trimmer mowers are orange and black and have the DR Power logo on the top of the motor and on the top of the frame above the cutter head. The trimmer mowers are labeled “Premier” or “Pro” on the side of the frame. The model numbers are printed on a label located on the side of the product’s frame.  ",
+      "URL": "https://www.cpsc.gov/Recalls/2027/DR-Power-Equipment-Recalls-Pilot-and-Premier-Trimmer-Mowers-Due-to-Risk-of-Serious-Injury-or-Death-from-Fire-and-Burn-Hazards",
+      "Title": "DR Power Equipment Recalls Pilot and Premier Trimmer Mowers Due to Risk of Serious Injury or Death from Fire and Burn Hazards",
+      "ConsumerContact": "DR Power Equipment toll-free at 800-854-3194 from 8:30 a.m. to 5 p.m. ET Monday through Friday, email at recall@drpower.com or online at http://drpower.com/recalls or www.drpower.com and click “Product Recalls” at the bottom of the page for more information.",
+      "LastPublishDate": "2026-10-08T00:00:00",
+      "Products": [
+        {
+          "Name": "DR Power Equipment Pilot and Premier Trimmer Mowers",
+          "Description": "",
+          "Model": "",
+          "Type": "Lawn Mowers, Not Specified",
+          "CategoryID": "907",
+          "NumberOfUnits": "About 42,860 (In addition, about 340 were sold in Canada)"
+        }
+      ],
+      "Inconjunctions": [
+        {
+          "URL": "https://recalls-rappels.canada.ca/en/alert-recall/dr-power-pilot-and-premier-trimmers-recalled-due-fire-and-burn-hazards"
+        }
+      ],
+      "Images": [
+        {
+          "URL": "https://www.cpsc.gov/s3fs-public/DR1.png?VersionId=ajfESu0SMRVXuVQ6FwXyW4EljclYdB_8",
+          "Caption": "Recalled DR Power Pilot Trimmer Mower - model T4X1076DMN"
+        },
+        {
+          "URL": "https://www.cpsc.gov/s3fs-public/DR2.png?VersionId=qJ_ILCP7BhKY7hkAb.OWuL9gjL5QOLJ0",
+          "Caption": "Recalled DR Power Premier Trimmer Mower - model TR43076DMN"
+        }
+      ],
+      "Injuries": [
+        {
+          "Name": "The firm has received 19 reports of incidents involving the trimmer mowers catching fire, including two reports of minor injuries such as blisters on hands and feet."
+        }
+      ],
+      "Manufacturers": [],
+      "Retailers": [
+        {
+          "Name": "Sold At:\nAce, TSC, Bomgaars, other home improvement, hardware and independent power equipment stores nationwide and online at drpower.com from November 2022 through July 2026 for between $380 to $550.",
+          "CompanyID": ""
+        }
+      ],
+      "Importers": [
+        {
+          "Name": "Generac Power Systems Inc., of Waukesha, Wisconsin",
+          "CompanyID": ""
+        }
+      ],
+      "Distributors": [],
+      "SoldAtLabel": null,
+      "ManufacturerCountries": [
+        {
+          "Country": "United State"
+        },
+        {
+          "Country": "Vietnam"
+        }
+      ],
+      "ProductUPCs": [],
+      "Hazards": [
+        {
+          "Name": "Grass and debris can accumulate in the trimmer mowers and ignite, posing a risk of serious injury or death from fire and burn hazards.",
+          "HazardType": "",
+          "HazardTypeID": ""
+        }
+      ],
+      "Remedies": [
+        {
+          "Name": "Consumers should stop using the recalled trimmer mowers immediately and contact DR Power Equipment for a free repair kit. If consumers have concerns about installing the repair kit, contact DR Power Equipment to schedule a free repair installation from an authorized dealer."
+        }
+      ],
+      "RemedyOptions": [
+        {
+          "Option": "Repair"
+        }
+      ]
+    },
+    {
+      "RecallID": 11021,
+      "RecallNumber": "27015",
+      "RecallDate": "2026-10-08T00:00:00",
+      "Description": "This recall involves Giant Bicycle-branded black-and-white LED-light bike lock keys that were included as part of a pre-keyed SureLock bicycle lock set that includes a bike lock and two-or-four keys without an LED-light (depending on the model). Only LED-light bike lock keys manufactured after March 2023 are included in this recall. The list of affected serial numbers is included in the table below. Serial numbers are located on the underside of the bike lock, as shown in the below picture.  ",
+      "URL": "https://www.cpsc.gov/Recalls/2027/Giant-Bicycle-Recalls-LED-Light-Keys-Included-with-SureLock-Bike-Lock-Sets-Due-to-Risk-of-Serious-Injury-or-Death-from-Battery-Ingestion-Violates-Mandatory-Standard-for-Consumer-Products-with-Button-Cell-Batteries",
+      "Title": "Giant Bicycle Recalls LED-Light Keys Included with SureLock Bike Lock Sets Due to Risk of Serious Injury or Death from Battery Ingestion; Violates Mandatory Standard for Consumer Products with Button Cell Batteries",
+      "ConsumerContact": "Giant Bicycle at 866 458-2555 from 8 a.m. to 5 p.m. PT Monday through Friday, email at Recall@GiantBicycle.com, or online at https://www.giant-bicycles.com/us/recall-information or https://www.giant-bicycles.com/ and click “Recall Information” at the bottom of the page for more information.\n\n",
+      "LastPublishDate": "2026-10-08T00:00:00",
+      "Products": [
+        {
+          "Name": "LED-light bike lock keys",
+          "Description": "",
+          "Model": "",
+          "Type": "Locks (Combination/Key)",
+          "CategoryID": "2032",
+          "NumberOfUnits": "About 3,630 (In addition, 1,395 in Canada)"
+        }
+      ],
+      "Inconjunctions": [
+        {
+          "URL": "https://recalls-rappels.canada.ca/en/alert-recall/giant-surelock-bicycle-locks-led-key-recalled-due-ingestion-hazard"
+        }
+      ],
+      "Images": [
+        {
+          "URL": "https://www.cpsc.gov/s3fs-public/giant2.jpg?VersionId=2.9hQavTnFlHQtTqaZt1b6eYjbvfmJpE",
+          "Caption": "Recalled LED-Light Key"
+        },
+        {
+          "URL": "https://www.cpsc.gov/s3fs-public/giant3.png?VersionId=mApTC1N0MxnrhjckFzlKd4w.LXbd0DTE",
+          "Caption": "Recalled LED‑Light Key with Accessible Button‑Cell Battery"
+        },
+        {
+          "URL": "https://www.cpsc.gov/s3fs-public/giant4.png?VersionId=Gpmd5fvQNMHZM9WTnC0aecsHEakiJzGe",
+          "Caption": "Recalled LED‑Light Key with Accessible Button‑Cell Battery"
+        }
+      ],
+      "Injuries": [
+        {
+          "Name": "None reported"
+        }
+      ],
+      "Manufacturers": [],
+      "Retailers": [
+        {
+          "Name": "Sold At:\nGiant Bicycle authorized stores nationwide and online at https://www.giant-bicycles.com/us from March 2023 through August 2026 for between $25 and $65.",
+          "CompanyID": ""
+        }
+      ],
+      "Importers": [
+        {
+          "Name": "Giant Bicycle, Inc., of Newbury Park, California",
+          "CompanyID": ""
+        }
+      ],
+      "Distributors": [],
+      "SoldAtLabel": null,
+      "ManufacturerCountries": [
+        {
+          "Country": "China"
+        }
+      ],
+      "ProductUPCs": [],
+      "Hazards": [
+        {
+          "Name": "The LED-light key that was included with certain SureLock Bicycle Lock sets violates the mandatory safety standard for consumer products with button cell and coin batteries because the button batteries can be accessed easily by children, posing an ingestion hazard. Additionally, the packaging and product do not have the warnings required under Reese’s Law. When button cell or coin batteries are swallowed, the ingested batteries can cause serious injuries, internal chemical burns, and death.",
+          "HazardType": "",
+          "HazardTypeID": ""
+        }
+      ],
+      "Remedies": [
+        {
+          "Name": "Consumers should stop using the recalled LED-light key that was included with certain SureLock Bicycle Lock sets immediately and contact Giant Bicycle for a $5 refund. Consumers will be asked to bring the LED key to an authorized Giant retailer to participate in the recall and receive the refund. When returning the LED-light key to a retailer, consumers will be required to bring either the complete bicycle lock purchase or a picture of the serial number on the bicycle lock in order to verify the serial number is in the scope of the recall. Consumers may continue to use the bicycle lock and non-LED-light keys included with the SureLock Bicycle Lock sets.  \n\n\nNote: Button and Coin cell batteries are hazardous. Batteries should be disposed of or recycled by following local hazardous waste procedures."
+        }
+      ],
+      "RemedyOptions": [
+        {
+          "Option": "Refund"
+        }
+      ]
+    },
+    {
+      "RecallID": 11014,
+      "RecallNumber": "27018",
+      "RecallDate": "2026-10-08T00:00:00",
+      "Description": "This recall involves ONTHEWEI-branded baby bath seats. They are sold in gray, pink, blue and mist green and have detachable restraint arms and suction cups on the underside. “Model No: MY002” and “Date of manufacturer: 2026/1/10” are printed on a label on the back of the bath seat.",
+      "URL": "https://cpsc.gov/Recalls/2027/ONTHEWEI-Recalls-Baby-Bath-Seats-Due-to-Risk-of-Serious-Injury-or-Death-to-Children-from-Drowning-Violate-Mandatory-Standard-for-Infant-Bath-Seats",
+      "Title": "ONTHEWEI Recalls Baby Bath Seats Due to Risk of Serious Injury or Death to Children from Drowning; Violate Mandatory Standard for Infant Bath Seats",
+      "ConsumerContact": "ONTHEWEI by email at onthewei@outlook.com",
+      "LastPublishDate": "2026-10-08T00:00:00",
+      "Products": [
+        {
+          "Name": "ONTHEWEI Baby Bath Seats",
+          "Description": "",
+          "Model": "",
+          "Type": "Baby Bathtub Seats or Rings (Not Toys)",
+          "CategoryID": "807",
+          "NumberOfUnits": "About 2,140"
+        }
+      ],
+      "Inconjunctions": [],
+      "Images": [
+        {
+          "URL": "https://www.cpsc.gov/s3fs-public/ONTHEWEI1.png?VersionId=r5NFULByKFKAi5FH2LxeXfBhF3YBa1V1",
+          "Caption": "Recalled ONTHEWEI Baby Bath Seats"
+        },
+        {
+          "URL": "https://www.cpsc.gov/s3fs-public/styles/recall_product/public/ONTHEWEI2.jpg?VersionId=5YhPRYx1xNq3LYwWNYsvOKSs66cB2o6o&itok=kvkwCA85",
+          "Caption": "“Model No: MY002” and “Date of manufacturer: 2026/1/10” are printed on a label on the back of the recalled ONTHEWEI bath seat."
+        }
+      ],
+      "Injuries": [
+        {
+          "Name": "None reported"
+        }
+      ],
+      "Manufacturers": [],
+      "Retailers": [
+        {
+          "Name": "Sold Online At:\nAmazon.com in April 2026 for between $40 and $50.",
+          "CompanyID": ""
+        },
+        {
+          "Name": "Hubei Youhong Trading Co., Ltd., dba ONTHEWEI, of China",
+          "CompanyID": ""
+        }
+      ],
+      "Importers": [],
+      "Distributors": [],
+      "SoldAtLabel": null,
+      "ManufacturerCountries": [
+        {
+          "Country": "China"
+        }
+      ],
+      "ProductUPCs": [],
+      "Hazards": [
+        {
+          "Name": "The recalled bath seats violate the mandatory standard for infant bath seats because they are unstable and can tip over while in use, posing a risk of serious injury or death due to drowning.",
+          "HazardType": "",
+          "HazardTypeID": ""
+        }
+      ],
+      "Remedies": [
+        {
+          "Name": "Consumers should stop using the recalled bath seats immediately and contact ONTHEWEI for a full refund. Consumers will be asked to destroy the bath seat by writing in permanent marker “RECALLED” on the front of the bath seat, disassembling it by removing the back rest and arm restraints and cutting the three suction cups on the seat’s underside and send a photo of the destroyed bath seat showing the marked product to onthewei@outlook.com. Consumers should then dispose of the recalled product."
+        }
+      ],
+      "RemedyOptions": [
+        {
+          "Option": "Refund"
+        }
+      ]
+    },
+    {
+      "RecallID": 11015,
+      "RecallNumber": "27019",
+      "RecallDate": "2026-10-08T00:00:00",
+      "Description": "This recall involves PACEARTH U-type swing seats. The swing seats were sold in various colors including green, blue, pink, red and turquoise. The chain is coated in yellow plastic. Metal carabiners or quick links and yellow webbing straps were included with the swing seats to attach the swing to outdoor swing sets or tree branches. The swing seats were sold as a single unit or a pack of two.",
+      "URL": "https://www.cpsc.gov/Recalls/2027/Pacearth-Direct-Recalls-PACEARTH-Swing-Seats-Due-to-Risk-of-Serious-Injury-from-Fall-Hazard",
+      "Title": "Pacearth Direct Recalls PACEARTH Swing Seats Due to Risk of Serious Injury from Fall Hazard",
+      "ConsumerContact": "Pacearth Direct by email at recall@pacearth.com ",
+      "LastPublishDate": "2026-10-08T00:00:00",
+      "Products": [
+        {
+          "Name": "PACEARTH Swing Seats",
+          "Description": "",
+          "Model": "",
+          "Type": "Swing Sets",
+          "CategoryID": "2160",
+          "NumberOfUnits": "About 110,550"
+        }
+      ],
+      "Inconjunctions": [],
+      "Images": [
+        {
+          "URL": "https://www.cpsc.gov/s3fs-public/Pacearth1.png?VersionId=6goMOYTQD8FLkdV6m_fJapaB6rDrySAF",
+          "Caption": "PACEARTH Swing Seat"
+        }
+      ],
+      "Injuries": [
+        {
+          "Name": "Pacearth Direct has received at least 30 reports of falls, resulting in at least nine injuries, including fractures, head injuries and bruising."
+        }
+      ],
+      "Manufacturers": [],
+      "Retailers": [
+        {
+          "Name": "Sold Online At:\nAmazon.com from May 2017 through June 2026 for between $27 and $57.",
+          "CompanyID": ""
+        },
+        {
+          "Name": "Pacearth Direct, of City of Industry, California",
+          "CompanyID": ""
+        }
+      ],
+      "Importers": [],
+      "Distributors": [],
+      "SoldAtLabel": null,
+      "ManufacturerCountries": [
+        {
+          "Country": "China"
+        }
+      ],
+      "ProductUPCs": [],
+      "Hazards": [
+        {
+          "Name": "The seats, metal carabiners or quick links, or webbing straps of the recalled swing seats can break during use, posing a risk of serious injury due to fall hazard.",
+          "HazardType": "",
+          "HazardTypeID": ""
+        }
+      ],
+      "Remedies": [
+        {
+          "Name": "Consumers should stop using the recalled swing seats immediately and contact Pacearth Direct for a full refund. Consumers will be asked to write “RECALLED” on the swing seat with permanent marker, take a photo of it, including the PACEARTH logo and email to recall@pacearth.com."
+        }
+      ],
+      "RemedyOptions": [
+        {
+          "Option": "Refund"
+        }
+      ]
+    },
+    {
+      "RecallID": 11016,
+      "RecallNumber": "27020",
+      "RecallDate": "2026-10-08T00:00:00",
+      "Description": "This recall involves Romorgniz six-drawer dressers. The wooden dressers were sold in white and black, measure about 27.6 inches wide, 15.6 inches long, 43.2 inches tall and weigh 73.3 pounds.  \n\n",
+      "URL": "https://www.cpsc.gov/Recalls/2027/Romorgniz-Recalls-Six-Drawer-Dressers-Due-to-Risk-of-Serious-Injury-or-Death-from-Tip-Over-and-Entrapment-Hazards-Violate-Mandatory-Standard-for-Clothing-Storage-Units",
+      "Title": "Romorgniz Recalls Six-Drawer Dressers Due to Risk of Serious Injury or Death from Tip-Over and Entrapment Hazards; Violate Mandatory Standard for Clothing Storage Units",
+      "ConsumerContact": "Romorgniz via email at Romorgnizrecall@outlook.com, online at https://www.romorgniz.store/recall.html or https://www.romorgniz.store/  and click “Recall” at the top of the page for more information. ",
+      "LastPublishDate": "2026-10-08T00:00:00",
+      "Products": [
+        {
+          "Name": "Romorgniz Six-Drawer Dressers",
+          "Description": "",
+          "Model": "",
+          "Type": "Desks, Dressers, Chests, Bureaus, or Buffets",
+          "CategoryID": "237",
+          "NumberOfUnits": "About 12,078"
+        }
+      ],
+      "Inconjunctions": [],
+      "Images": [
+        {
+          "URL": "https://www.cpsc.gov/s3fs-public/Romorgniz1.png?VersionId=EFxP0e7y9ygqy.paDOwtyQBSbNDVDrXD",
+          "Caption": "Recalled Romorgniz Six-drawer Dresser"
+        }
+      ],
+      "Injuries": [
+        {
+          "Name": "None reported"
+        }
+      ],
+      "Manufacturers": [
+        {
+          "Name": "Zhangzhou Jinhao Sen Smart Home Co., Ltd., of China",
+          "CompanyID": ""
+        }
+      ],
+      "Retailers": [
+        {
+          "Name": "Sold Online At:\nAmazon.com from May 2025 through August 2026 for between $100 and $170.",
+          "CompanyID": ""
+        }
+      ],
+      "Importers": [
+        {
+          "Name": "Baituo Innovation Technology Co. Ltd., dba Romorgniz, of China",
+          "CompanyID": ""
+        }
+      ],
+      "Distributors": [],
+      "SoldAtLabel": null,
+      "ManufacturerCountries": [
+        {
+          "Country": "China"
+        }
+      ],
+      "ProductUPCs": [],
+      "Hazards": [
+        {
+          "Name": "The recalled dressers are unstable if they are not anchored to the wall, posing tip-over and entrapment hazards that can result in risks of serious injuries or death to children. The dressers violate the mandatory safety standards as required by the STURDY Act.",
+          "HazardType": "",
+          "HazardTypeID": ""
+        }
+      ],
+      "Remedies": [
+        {
+          "Name": "Consumers should stop using the recalled dressers immediately if they are not anchored to the wall, place them in an area that children cannot access and contact Romorgniz for a full refund. Consumers will be asked to write in permanent marker “RECALLED” on the top, front and sides of the dresser, remove all drawers and send photos of the marked and disassembled dresser to Romorgnizrecall@outlook.com. Consumers should then dispose of the product."
+        }
+      ],
+      "RemedyOptions": [
+        {
+          "Option": "Refund"
+        }
+      ]
+    },
+    {
+      "RecallID": 11017,
+      "RecallNumber": "27021",
+      "RecallDate": "2026-10-08T00:00:00",
+      "Description": "This recall involves the Takibi propane inserts and lava rocks, fireplace accessories that allows Snow Peak’s Pack & Carry Fireplace L (ST-032) and XL (ST-034) to operate on propane fuel instead of wood or charcoal. The propane insert includes a detachable hose with a gas flow regulator that controls the intensity of the flame with the twist of a knob. The product also includes lava rocks. Model number ST-332-US can be found on the product packaging and in the user manual.",
+      "URL": "https://www.cpsc.gov/Recalls/2027/Snow-Peak-Recalls-Propane-Fireplace-Inserts-and-Lava-Rocks-Due-to-Risk-of-Serious-Injury-or-Death-from-Burn-and-Fire-Hazards",
+      "Title": "Snow Peak Recalls Propane Fireplace Inserts and Lava Rocks Due to Risk of Serious Injury or Death from Burn and Fire Hazards",
+      "ConsumerContact": "Snow Peak USAtoll-free at 888-424-4916 from 8:30 a.m. to 5 p.m. PT Monday through Friday, email at info@snowpeak.com or online at https://www.snowpeak.com/pages/takibi-propane-insert-recall and https://www.snowpeak.com/ and click “Recalls” in the footer at the bottom of the page for more information.  ",
+      "LastPublishDate": "2026-10-08T00:00:00",
+      "Products": [
+        {
+          "Name": "Snow Peak Takibi Fireplace Propane Inserts and Lava Rocks",
+          "Description": "",
+          "Model": "",
+          "Type": "Gas-burning Fireplaces, Factory Built",
+          "CategoryID": "358",
+          "NumberOfUnits": "About 100"
+        }
+      ],
+      "Inconjunctions": [],
+      "Images": [
+        {
+          "URL": "https://www.cpsc.gov/s3fs-public/SnowPeak1.png?VersionId=QT_F1IwOmvTYkIhHQPAT.J8ws.q6P4eS",
+          "Caption": "Recalled Takibi Propane Insert (model ST-332-US) with reddish brown lava rocks inside the Snow Peak’s Pack & Carry Fireplace"
+        },
+        {
+          "URL": "https://www.cpsc.gov/s3fs-public/SnowPeak2.png?VersionId=nhlj6xIvimOWoAgO.c1BspADNcqKVUSK",
+          "Caption": "Snow Peak’s Pack & Carry Fireplace and the Recalled Propane Insert (without the lava rocks)"
+        },
+        {
+          "URL": "https://www.cpsc.gov/s3fs-public/SnowPeak3.png?VersionId=Y_yBgQJDP9WBAWTVGlBH7bwTT.KrRYF3",
+          "Caption": "Snow Peak’s Pack & Carry Fireplace (not recalled)"
+        }
+      ],
+      "Injuries": [
+        {
+          "Name": "The firm has received one report of lava rocks exploding with one report of minor property damage. No injuries have been reported."
+        }
+      ],
+      "Manufacturers": [],
+      "Retailers": [
+        {
+          "Name": "Sold Online At:\nSnowpeak.com from July 2026 through July 2026 for about $350.",
+          "CompanyID": ""
+        }
+      ],
+      "Importers": [
+        {
+          "Name": "Snow Peak USA, Inc., of Portland, Oregon",
+          "CompanyID": ""
+        }
+      ],
+      "Distributors": [],
+      "SoldAtLabel": null,
+      "ManufacturerCountries": [
+        {
+          "Country": "China"
+        },
+        {
+          "Country": "Taiwan"
+        }
+      ],
+      "ProductUPCs": [],
+      "Hazards": [
+        {
+          "Name": "The fireplace’s lava rocks can ignite and explode when heated in the propane insert, posing a risk of serious injury or death from burn and fire hazards.",
+          "HazardType": "",
+          "HazardTypeID": ""
+        }
+      ],
+      "Remedies": [
+        {
+          "Name": "Consumers should stop using the propane insert and lava rocks fireplace accessories immediately and contact Snow Peak for a full refund. Consumers will be provided with a prepaid shipping label to return the propane insert and lava rocks. For replacement lava rocks only, the consumer can keep the propane inserts, and the firm will ship replacement lava rocks to the consumer. Do not use inserts until replacement lava rocks are received. Consumers should dispose of the recalled lava rocks in accordance with any local and state ordinances."
+        }
+      ],
+      "RemedyOptions": [
+        {
+          "Option": "Refund"
+        },
+        {
+          "Option": "Replace"
+        }
+      ]
+    },
+    {
+      "RecallID": 11019,
+      "RecallNumber": "27022",
+      "RecallDate": "2026-10-08T00:00:00",
+      "Description": "This recall involves the Avengers Infinity Gauntlet medal. The medal is gold, with colorful gems on the front and comes in a black package marked “Marvel Avengers” with Marvel Avengers artwork. The medals are part of the Avengers virtual challenge series. To receive the medal, customers must have completed the Infinity Gauntlet virtual challenge on the Conqueror App.",
+      "URL": "https://www.cpsc.gov/Recalls/2027/The-Conqueror-Recalls-Avengers-Medals-Due-to-Risk-of-Serious-Injury-or-Death-from-Magnet-Ingestion-Violate-Mandatory-Standard-for-Magnets",
+      "Title": "The Conqueror Recalls Avengers Medals Due to Risk of Serious Injury or Death from Magnet Ingestion; Violate Mandatory Standard for Magnets",
+      "ConsumerContact": "The Conqueror toll-free at 833-799-0368 from 9 a.m. to 5 p.m. ET Monday through Friday, by email at support@theconqueror.events, or online at www.theconqueror.events/recall-inf or www.theconqueror.events and click “Recall” at the bottom of the page for more information.",
+      "LastPublishDate": "2026-10-08T00:00:00",
+      "Products": [
+        {
+          "Name": "Avengers Infinity Gauntlet Medals",
+          "Description": "",
+          "Model": "",
+          "Type": "Other Toys",
+          "CategoryID": "1441",
+          "NumberOfUnits": "About 476"
+        }
+      ],
+      "Inconjunctions": [],
+      "Images": [
+        {
+          "URL": "https://www.cpsc.gov/s3fs-public/Conqueror1.png?VersionId=U8ymO2VvQaJkiAF7mA41BL6lAbnsAJjG",
+          "Caption": "Recalled Avengers Infinity Gauntlet Medal showing faulty magnet"
+        },
+        {
+          "URL": "https://www.cpsc.gov/s3fs-public/Conqueror2.png?VersionId=CmgGx2rQDQfElErxe96H6sQuuapEf8ru",
+          "Caption": "Recalled Avengers Infinity Gauntlet Medal packaging"
+        }
+      ],
+      "Injuries": [
+        {
+          "Name": "The firm has received three reports of the magnets detaching."
+        }
+      ],
+      "Manufacturers": [],
+      "Retailers": [
+        {
+          "Name": "Sold Online At:\nwww.theconqueror.events and through The Conqueror App from March 2026 through May 2026 for about $50.",
+          "CompanyID": ""
+        },
+        {
+          "Name": "Actionary Limited, dba The Conqueror, of New Zealand",
+          "CompanyID": ""
+        }
+      ],
+      "Importers": [],
+      "Distributors": [],
+      "SoldAtLabel": null,
+      "ManufacturerCountries": [
+        {
+          "Country": "China"
+        }
+      ],
+      "ProductUPCs": [],
+      "Hazards": [
+        {
+          "Name": "The recalled medals violate the mandatory safety standard for magnets because the high-powered magnets may detach, posing a deadly ingestion hazard to children. When high-powered magnets are swallowed, the ingested magnets can attract each other or other metal objects and become lodged in the digestive system. This can result in perforations, twisting, and/or blockage of the intestines, blood poisoning and death.",
+          "HazardType": "",
+          "HazardTypeID": ""
+        }
+      ],
+      "Remedies": [
+        {
+          "Name": "Consumers should stop using the Avengers Infinity Gauntlet Medal immediately and contact The Conqueror for instructions on receiving a full refund or a replacement medal. Consumers will be asked to cut the ribbon from the medal and write “RECALLED” in permanent marker on the medal and ribbon, throw the product away and email a photo of the disposed medal and ribbon to support@theconqueror.events."
+        }
+      ],
+      "RemedyOptions": [
+        {
+          "Option": "Refund"
+        },
+        {
+          "Option": "Replace"
+        }
+      ]
+    }
+  ]
+}
