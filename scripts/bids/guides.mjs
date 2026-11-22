@@ -1,4 +1,5 @@
 import fs from 'fs';
+import { FAMS, FAM_OF } from './palette.mjs';
 import { G1 } from './guides1.mjs';
 import { G2 } from './guides2.mjs';
 import { G3 } from './guides3.mjs';
@@ -39,7 +40,7 @@ export function renderGuides(c) {
   const { T, SECT, SECT_OTHER, SECT_BY, SECT_LABEL, SEC_ICON, data, BASE, today, CSS, svg, esc, SRC, sectAll } = c;
   const keys = SECT.map(s => s.k).filter(k => GD[k]);
   const out = [];
-  const css = CSS + `.guide{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:6px 20px 20px;margin-bottom:14px}.guide h2{font-size:1.15rem;margin:26px 0 8px}.guide h3{font-size:1rem;margin:16px 0 4px}.guide p,.guide li{line-height:1.8;font-size:15px}.guide ul,.guide ol{padding-left:20px;margin:6px 0}.guide table{width:100%;border-collapse:collapse;font-size:14px;margin:8px 0}.guide td,.guide th{border-bottom:1px solid var(--line);padding:7px 6px;text-align:left;vertical-align:top}.guide th{color:var(--mute);font-weight:600;white-space:nowrap}.guide a{color:var(--rust)}.guide .kw span{display:inline-block;margin:3px 6px 0 0;padding:2px 9px;border:1px solid var(--line);border-radius:999px;font-size:13px}.gl{list-style:none;padding:0!important}.gl li{padding:9px 0;border-bottom:1px solid var(--line)}.gl small{display:block;color:var(--mute)}.gcta{display:inline-block;margin:6px 0;padding:10px 16px;border:1px solid var(--ink);border-radius:10px;text-decoration:none;font-weight:600;color:var(--ink)!important}.ghub{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:10px}.ghub a{display:flex;gap:10px;padding:12px 14px;background:var(--card);border:1px solid var(--line);border-radius:12px;text-decoration:none;color:var(--ink)}.ghub svg{width:22px;height:22px;fill:var(--rust);flex:none;margin-top:2px}.ghub b{display:block;font-size:14.5px}.ghub small{color:var(--mute);font-size:12.5px;line-height:1.5}`;
+  const css = CSS + `.guide h2{border-left:4px solid var(--gc,var(--rust));padding-left:10px}.hero{border-bottom:4px solid var(--gc,transparent)}.ghub a{border-left:4px solid var(--c)}.ghub svg{background:color-mix(in srgb,var(--c) 13%,#fff);fill:var(--c)}.ghub a:hover{border-color:var(--c)}.guide{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:6px 20px 20px;margin-bottom:14px}.guide h2{font-size:1.15rem;margin:26px 0 8px}.guide h3{font-size:1rem;margin:16px 0 4px}.guide p,.guide li{line-height:1.8;font-size:15px}.guide ul,.guide ol{padding-left:20px;margin:6px 0}.guide table{width:100%;border-collapse:collapse;font-size:14px;margin:8px 0}.guide td,.guide th{border-bottom:1px solid var(--line);padding:7px 6px;text-align:left;vertical-align:top}.guide th{color:var(--mute);font-weight:600;white-space:nowrap}.guide a{color:var(--rust)}.guide .kw span{display:inline-block;margin:3px 6px 0 0;padding:2px 9px;border:1px solid var(--line);border-radius:999px;font-size:13px}.gl{list-style:none;padding:0!important}.gl li{padding:9px 0;border-bottom:1px solid var(--line)}.gl small{display:block;color:var(--mute)}.gcta{display:inline-block;margin:6px 0;padding:10px 16px;border:1px solid var(--ink);border-radius:10px;text-decoration:none;font-weight:600;color:var(--ink)!important}.ghub{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:10px}.ghub a{display:flex;gap:10px;padding:12px 14px;background:var(--card);border:1px solid var(--line);border-radius:12px;text-decoration:none;color:var(--ink)}.ghub svg{width:22px;height:22px;fill:var(--rust);flex:none;margin-top:2px}.ghub b{display:block;font-size:14.5px}.ghub small{color:var(--mute);font-size:12.5px;line-height:1.5}`;
   const shell = (t, slug, title, desc, h1, sub, body, ld) => {
     const L = t.lang, url = `${BASE}/${t.dir}/guide/${slug}.html`, altUrl = `${BASE}/${L === 'ko' ? 'en/bids' : 'bids'}/guide/${slug}.html`;
     return `<!DOCTYPE html>
@@ -49,8 +50,8 @@ export function renderGuides(c) {
 <meta property="og:title" content="${esc(title)}"><meta property="og:description" content="${esc(desc)}"><meta property="og:url" content="${url}"><meta property="og:type" content="article">
 <script type="application/ld+json">${JSON.stringify(ld)}</script><style>${css}</style></head><body>
 <header class="top"><a href="../${t.hubHref}">CBM LAB · ${t.hub}</a><a href="../${L === 'ko' ? '../en/bids/' : '../../bids/'}guide/${slug}.html" hreflang="${L === 'ko' ? 'en' : 'ko'}">${t.other.label}</a></header>
-<div class="hero"><div class="in"><a class="crumb" href="${slug === 'index' ? '../index.html' : 'index.html'}">← ${slug === 'index' ? t.home : TXT[L].hubH1}</a><h1>${esc(h1)}</h1><p>${esc(sub)}</p></div></div>
-<div class="wrap">${body}</div></body></html>`;
+<div class="hero" style="--gc:${FAM_OF[slug] ? FAM_OF[slug].c : 'transparent'}"><div class="in"><a class="crumb" href="${slug === 'index' ? '../index.html' : 'index.html'}">← ${slug === 'index' ? t.home : TXT[L].hubH1}</a><h1>${esc(h1)}</h1><p>${esc(sub)}</p></div></div>
+<div class="wrap" style="--gc:${FAM_OF[slug] ? FAM_OF[slug].c : '#a63d22'}">${body}</div></body></html>`;
   };
   for (const t of Object.values(T)) {
     const L = t.lang, X = TXT[L];
@@ -89,7 +90,7 @@ export function renderGuides(c) {
       fs.writeFileSync(`${t.dir}/guide/${k}.html`, shell(t, k, title, desc, X.h1(label), S.intro[0], body, ld));
       out.push(`${t.dir}/guide/${k}.html`);
     }
-    const hubBody = `<div class="ghub">${keys.map(k => `<a href="${k}.html">${svg(SEC_ICON[k])}<span><b>${esc(SECT_LABEL[k][L])}</b><small>${esc(SECT_BY[k][L].intro[0].slice(0, 70))}…</small></span></a>`).join('')}</div>`;
+    const hubBody = FAMS.map(f => { const ks = keys.filter(k => f.s.includes(k)); return ks.length ? `<h3 class="fam" style="--c:${f.c}">${esc(f[L])}</h3><div class="ghub">${ks.map(k => `<a href="${k}.html" style="--c:${f.c}">${svg(SEC_ICON[k])}<span><b>${esc(SECT_LABEL[k][L])}</b><small>${esc(SECT_BY[k][L].intro[0].slice(0, 70))}…</small></span></a>`).join('')}</div>` : '' }).join('');
     const hubLd = { '@context': 'https://schema.org', '@type': 'CollectionPage', name: X.hubTitle, inLanguage: L, url: `${BASE}/${t.dir}/guide/index.html`, mainEntity: { '@type': 'ItemList', itemListElement: keys.map((k, i) => ({ '@type': 'ListItem', position: i + 1, url: `${BASE}/${t.dir}/guide/${k}.html`, name: SECT_LABEL[k][L] })) } };
     fs.writeFileSync(`${t.dir}/guide/index.html`, shell(t, 'index', X.hubTitle, X.hubDesc(keys.length), X.hubH1, X.hubSub, hubBody, hubLd));
     out.push(`${t.dir}/guide/index.html`);
