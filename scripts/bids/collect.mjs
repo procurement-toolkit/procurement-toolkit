@@ -125,12 +125,19 @@ await src('korea-g2b', async () => {
   if (/%[0-9A-Fa-f]{2}/.test(key)) key = decodeURIComponent(key);   // secret may hold the URL-encoded key; decode so it is not double-encoded
   const p = n => String(n).padStart(2, '0'), f = d => `${d.getFullYear()}${p(d.getMonth() + 1)}${p(d.getDate())}${p(d.getHours())}${p(d.getMinutes())}`;
   const now = new Date(), b = new Date(now - 3 * 864e5);
-  const u = `https://apis.data.go.kr/1230000/ao/PubDataOpnStdService/getDataSetOpnStdBidPblancInfo?ServiceKey=${encodeURIComponent(key)}&numOfRows=999&pageNo=1&type=json&bidNtceBgnDt=${f(b)}&bidNtceEndDt=${f(now)}`;
-  const j = await getJSON(u);
-  if (j.OpenAPI_ServiceResponse) throw new Error(JSON.stringify(j.OpenAPI_ServiceResponse.cmmMsgHeader));
-  let arr = j.response?.body?.items?.item || j.response?.body?.items || []; arr = Array.isArray(arr) ? arr : [arr].filter(Boolean);
-  console.log('G2B sample', JSON.stringify(arr[0] || j).slice(0, 700));
-  return arr.map(x => ({ id: 'kr-' + first(x.bidNtceNo, x.bidNtceNm) + '-' + first(x.bidNtceOrd, ''), source: 'korea-g2b', title: txt(x.bidNtceNm), org: txt(first(x.ntceInsttNm, x.dminsttNm)), country: '대한민국', category: txt(first(x.bsnsDivNm, x.ntceKindNm)), published: iso(first(x.bidNtceDt, x.rgstDt)), deadline: iso(x.bidClseDt), value: x.presmptPrce ? `${Number(x.presmptPrce).toLocaleString('ko-KR')}원` : '', url: first(x.bidNtceUrl, x.bidNtceDtlUrl, 'https://www.g2b.go.kr') })).filter(x => x.title);
+  let arr = [];
+  for (const op of ['Thng', 'Servc', 'Cnstwk', 'Frgcpt']) {
+    try {
+      const u = `https://apis.data.go.kr/1230000/ad/BidPublicInfoService02/getBidPblancListInfo${op}?ServiceKey=${encodeURIComponent(key)}&numOfRows=300&pageNo=1&inqryDiv=1&type=json&inqryBgnDt=${f(b)}&inqryEndDt=${f(now)}`;
+      const j = await getJSON(u);
+      if (j.OpenAPI_ServiceResponse) throw new Error(JSON.stringify(j.OpenAPI_ServiceResponse.cmmMsgHeader));
+      let it = j.response?.body?.items?.item || j.response?.body?.items || []; it = Array.isArray(it) ? it : [it].filter(Boolean);
+      console.log('G2B', op, it.length, JSON.stringify(it[0] || j).slice(0, 300));
+      arr.push(...it.map(x => ({ ...x, bsnsDivNm: x.bsnsDivNm || ({ Thng: '물품', Servc: '용역', Cnstwk: '공사', Frgcpt: '외자' })[op] })));
+    } catch (e) { console.log('G2B', op, 'fail', String(e.message).slice(0, 200)); }
+  }
+  if (!arr.length) throw new Error('G2B: no items');
+  return arr.map(x => ({ id: 'kr-' + first(x.bidNtceNo, x.bidNtceNm) + '-' + first(x.bidNtceOrd, ''), source: 'korea-g2b', title: txt(x.bidNtceNm), org: txt(first(x.ntceInsttNm, x.dminsttNm)), country: '대한민국', category: txt(first(x.bsnsDivNm, x.ntceKindNm)), published: iso(first(x.bidNtceDt, x.rgstDt)), deadline: iso(x.bidClseDt), value: (x.presmptPrce||x.asignBdgtAmt) ? `${Number(x.presmptPrce||x.asignBdgtAmt).toLocaleString('ko-KR')}원` : '', url: first(x.bidNtceUrl, x.bidNtceDtlUrl, 'https://www.g2b.go.kr') })).filter(x => x.title);
 });
 // merge with previous (keep still-open items), dedupe by id, drop expired
 fs.mkdirSync('data/bids', { recursive: true });
