@@ -42,14 +42,14 @@ await src('ungm', async () => {
   const pg = await fetch('https://www.ungm.org/Public/Notice', { headers: UA });
   const html = await pg.text(); const cookie = (pg.headers.getSetCookie?.() || []).map(c => c.split(';')[0]).join('; ');
   const tok = (html.match(/__RequestVerificationToken[^>]*value="([^"]+)"/) || [])[1] || '';
-  const body = { PageIndex: 0, PageSize: 200, Title: '', Description: '', Reference: '', PublishedFrom: '', PublishedTo: '', DeadlineFrom: '', DeadlineTo: '', Countries: [], Agencies: [], UNSPSCs: [], NoticeTypes: [], SortField: 'DatePublished', SortAscending: false, isPicker: false, IsSustainable: false, IsActive: true, NoticeDisplayType: null, NoticeSearchTotalLabelId: 'noticeSearchTotal', TypeOfCompetitions: [] };
-  const r = await fetch('https://www.ungm.org/Public/Notice/Search', { method: 'POST', headers: { ...UA, 'content-type': 'application/json; charset=UTF-8', 'x-requested-with': 'XMLHttpRequest', referer: 'https://www.ungm.org/Public/Notice', origin: 'https://www.ungm.org', cookie, __RequestVerificationToken: tok, RequestVerificationToken: tok }, body: JSON.stringify(body) });
-  const t = await r.text();
-  if (!r.ok) {
-    for (const b of [...html.matchAll(/src="(\/bundles\/[^"]+)"/g)].map(m => m[1])) { const x = await (await fetch('https://www.ungm.org' + b, { headers: UA })).text(); const i = x.indexOf('NoticeSearch.prototype.BuildOptions'); if (i > -1) { console.log('UNGM opts', x.slice(i, i + 1800).replace(/\s+/g, ' ')); break; } }
-    throw new Error('HTTP ' + r.status + ' ' + t.slice(0, 120) + ' tok=' + !!tok + ' cookie=' + !!cookie);
-  }
-  console.log('UNGM sample', t.slice(0, 1800).replace(/\s+/g, ' '));
+  const post = async (PageIndex, SortField) => fetch('https://www.ungm.org/Public/Notice/Search', { method: 'POST', headers: { ...UA, 'content-type': 'application/json', 'x-requested-with': 'XMLHttpRequest', referer: 'https://www.ungm.org/Public/Notice', origin: 'https://www.ungm.org', cookie, RequestVerificationToken: tok }, body: JSON.stringify({ PageIndex, PageSize: 15, Title: '', Description: '', Reference: '', PublishedFrom: '', PublishedTo: '', DeadlineFrom: '', DeadlineTo: '', Countries: [], Agencies: [], UNSPSCs: [], NoticeTypes: [], SortField, SortAscending: false, isPicker: false, IsSustainable: false, IsActive: true, NoticeDisplayType: null, NoticeSearchTotalLabelId: 'noticeSearchTotal', TypeOfCompetitions: [] }) });
+  let sortF = 'DatePublished', r = await post(0, sortF);
+  if (!r.ok) { sortF = 'Deadline'; r = await post(0, sortF); }
+  const pages = [await r.text()]; const status0 = r.status;
+  if (status0 !== 200) throw new Error('HTTP ' + status0 + ' tok=' + !!tok + ' cookie=' + !!cookie + ' ' + pages[0].slice(0, 100));
+  console.log('UNGM sample', sortF, pages[0].slice(0, 1500).replace(/\s+/g, ' '));
+  for (let p = 1; p < 40; p++) { const rr = await post(p, sortF); if (!rr.ok) break; const tx = await rr.text(); if (!/data-noticeid/.test(tx)) break; pages.push(tx); }
+  const t = pages.join('\n');
   const MON = { Jan: 0, Feb: 1, Mar: 2, Apr: 3, May: 4, Jun: 5, Jul: 6, Aug: 7, Sep: 8, Oct: 9, Nov: 10, Dec: 11 };
   const d8 = v => { const m = String(v || '').match(/(\d{2})-(\w{3})-(\d{4})/); return m ? new Date(Date.UTC(+m[3], MON[m[2]], +m[1])).toISOString().slice(0, 10) : ''; };
   const out = [];
