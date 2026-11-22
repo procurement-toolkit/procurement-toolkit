@@ -139,6 +139,15 @@ await src('korea-g2b', async () => {
   if (!arr.length) throw new Error('G2B: no items');
   return arr.map(x => ({ id: 'kr-' + first(x.bidNtceNo, x.bidNtceNm) + '-' + first(x.bidNtceOrd, ''), source: 'korea-g2b', title: txt(x.bidNtceNm), org: txt(first(x.ntceInsttNm, x.dminsttNm)), country: '대한민국', category: txt(first(x.bsnsDivNm, x.ntceKindNm)), published: iso(first(x.bidNtceDt, x.rgstDt)), deadline: iso(x.bidClseDt), value: (x.presmptPrce||x.asignBdgtAmt) ? `${Number(x.presmptPrce||x.asignBdgtAmt).toLocaleString('ko-KR')}원` : '', url: first(x.bidNtceUrl, x.bidNtceDtlUrl, 'https://www.g2b.go.kr') })).filter(x => x.title);
 });
+await src('sam-gov', async () => {
+  const key = process.env.SAM_GOV_API_KEY; if (!key) throw new Error('SAM_GOV_API_KEY not set');
+  const p = n => String(n).padStart(2, '0'), f = d => `${p(d.getMonth() + 1)}/${p(d.getDate())}/${d.getFullYear()}`;
+  const now = new Date(), b = new Date(now - 7 * 864e5);
+  const j = await getJSON(`https://api.sam.gov/opportunities/v2/search?api_key=${encodeURIComponent(key)}&limit=1000&offset=0&postedFrom=${f(b)}&postedTo=${f(now)}&ptype=o,k,p`);
+  const arr = j.opportunitiesData || [];
+  console.log('SAM', arr.length, JSON.stringify(arr[0] || j).slice(0, 300));
+  return arr.map(x => ({ id: 'us-' + x.noticeId, source: 'sam-gov', title: txt(x.title), org: txt(first(x.fullParentPathName, x.department)).split('.').slice(0, 2).join(' · '), country: 'United States', category: txt(first(x.type, x.baseType)), published: iso(String(x.postedDate || '').slice(0, 10)), deadline: iso(String(x.responseDeadLine || '').slice(0, 10)), value: x.award?.amount ? `$${Number(x.award.amount).toLocaleString('en-US')}` : '', url: txt(x.uiLink) || 'https://sam.gov' })).filter(x => x.title);
+});
 // merge with previous (keep still-open items), dedupe by id, drop expired
 fs.mkdirSync('data/bids', { recursive: true });
 const path = 'data/bids/open.json';

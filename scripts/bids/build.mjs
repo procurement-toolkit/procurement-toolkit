@@ -13,6 +13,7 @@ const dec = v => String(v ?? '').replace(/&amp;/g, '&').replace(/&lt;/g, '<').re
 for (const x of data) { x.title = dec(x.title); x.org = dec(x.org); x.category = dec(x.category); }
 const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 const SRC = {
+  'sam-gov': { ko: 'SAM.gov(미국 연방)', en: 'SAM.gov (US Federal)', credit: { ko: '출처: SAM.gov 연방 계약기회 API', en: 'Source: SAM.gov Get Opportunities API' } },
   'korea-g2b': { ko: '나라장터(한국)', en: 'Korea (G2B / KONEPS)', credit: { ko: '출처: 조달청 나라장터 공공데이터포털 입찰공고 API', en: 'Source: Public Procurement Service (PPS) bid notice open API, data.go.kr' } },
   'world-bank': { ko: '세계은행', en: 'World Bank', credit: { ko: '출처: World Bank Procurement Notices API', en: 'Source: World Bank Procurement Notices API' } },
   uk: { ko: '영국 Contracts Finder', en: 'UK Contracts Finder', credit: { ko: '출처: UK Contracts Finder (Open Government Licence v3.0)', en: 'Source: UK Contracts Finder, contains public sector information licensed under the Open Government Licence v3.0' } },
