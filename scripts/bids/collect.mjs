@@ -128,7 +128,7 @@ await src('korea-g2b', async () => {
   let arr = [];
   for (const op of ['Thng', 'Servc', 'Cnstwk', 'Frgcpt']) {
     try {
-      const u = `https://apis.data.go.kr/1230000/ad/BidPublicInfoService02/getBidPblancListInfo${op}?ServiceKey=${encodeURIComponent(key)}&numOfRows=300&pageNo=1&inqryDiv=1&type=json&inqryBgnDt=${f(b)}&inqryEndDt=${f(now)}`;
+      const u = `https://apis.data.go.kr/1230000/ad/BidPublicInfoService02/getBidPblancListInfo${op}02?ServiceKey=${encodeURIComponent(key)}&numOfRows=300&pageNo=1&inqryDiv=1&type=json&inqryBgnDt=${f(b)}&inqryEndDt=${f(now)}`;
       const j = await getJSON(u);
       if (j.OpenAPI_ServiceResponse) throw new Error(JSON.stringify(j.OpenAPI_ServiceResponse.cmmMsgHeader));
       let it = j.response?.body?.items?.item || j.response?.body?.items || []; it = Array.isArray(it) ? it : [it].filter(Boolean);
