@@ -1,9 +1,10 @@
 {
  "at": "2026-11-22",
- "total": 4489,
+ "total": 5482,
  "bySource": {
-  "boamp-fr": 600,
-  "ungm": 435,
+  "boamp-fr": 614,
+  "ungm": 441,
+  "sam-gov": 973,
   "undp": 550,
   "world-bank": 49,
   "canada-buys": 881,
@@ -13,6 +14,6 @@
   "secop-co": 897
  },
  "failedSources": [
-  "korea-g2b: HTTP 403 {\n  \"OpenAPI_ServiceResponse\": {\n    \"cmmMsgHeader\": {\n      \"errMsg\": \"SERVICE_KEY_IS_NOT_REGISTERED_ERROR\",\n      \"returnAuthMsg\": \"등록되지 않은 서비스키\",\n "
+  "korea-g2b: G2B: no items"
  ]
 }
