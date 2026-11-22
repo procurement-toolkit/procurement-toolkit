@@ -18,6 +18,6 @@ jobs:
       - name: Commit if changed
         run: |
           git config user.name cbm-lab-bot; git config user.email bot@users.noreply.github.com
-          git add data/bids bids sitemap.xml 2>/dev/null || true
+          git add -A data/bids bids en/bids sitemap.xml 2>/dev/null || for p in data/bids bids en/bids sitemap.xml; do [ -e "$p" ] && git add -A "$p"; done
           if git diff --staged --quiet; then echo clean; exit 0; fi
           git commit -m "Auto: bids $(date -u +%F)"; git pull --rebase origin main && git push origin HEAD:main
