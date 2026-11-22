@@ -35,8 +35,8 @@
   "at": "2026-11-22"
  },
  "korea-g2b": {
-  "ok": false,
-  "error": "G2B: no items",
+  "ok": true,
+  "n": 909,
   "at": "2026-11-22"
  },
  "undp": {
