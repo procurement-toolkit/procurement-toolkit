@@ -536,6 +536,9 @@
   .faq-item p{margin-top:8px;font-size:12.5px;color:var(--slate-600);line-height:1.7;padding-left:2px}
   @media (max-width:640px){.faq-wrap{padding:0 16px}}
 .related-tools{max-width:960px;margin:32px auto;padding:0 16px}.related-tools h2{font-size:15px;font-weight:700;margin:0 0 10px}.related-tools ul{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:8px}.related-tools a{display:block;padding:10px 12px;border:1px solid #E2E8F0;border-radius:8px;font-size:13px;color:#1E293B;text-decoration:none}.related-tools a:hover{border-color:#94A3B8}
+.page-ic{display:inline-flex;align-items:center;justify-content:center;width:1.4em;height:1.4em;margin-right:.45em;vertical-align:-.2em;border-radius:.38em;background:rgba(128,128,128,.14)}.page-ic svg{width:.9em;height:.9em}
+
+/*MFIX*/@media(max-width:900px){.main,main,.layout,.wrap-grid{grid-template-columns:minmax(0,1fr)}section,.card,.panel,.card-body,.card-header,.field-grid>*{min-width:0}input,select,textarea{min-width:0;max-width:100%;box-sizing:border-box}.card-body,.panel{overflow-x:auto}.card-header,.panel-head{flex-wrap:wrap;gap:8px}.toggle-btn-group,.unit-toggle-group,.incoterm-group,.type-tabs{flex-wrap:wrap;max-width:100%}.item-table-wrap,.table-wrap{overflow-x:auto;max-width:100%}}/*/MFIX*/
 </style>
 <script src="https://cdn.amplitude.com/script/d4aa9301e01f4600b5eeb018e160aa7c.js"></script>
 <script>
@@ -582,7 +585,7 @@
 <main>
   <section class="hero" aria-label="서비스 소개">
     <div class="hero-inner">
-      <h1>수입 원가 계산기 (FOB · CIF · 랜디드코스트)</h1>
+      <h1><!--IC--><span class="page-ic"><svg width="20" height="20" viewBox="0 -960 960 960" fill="currentColor" aria-hidden="true" focusable="false"><path d="M540-420q-50 0-85-35t-35-85q0-50 35-85t85-35q50 0 85 35t35 85q0 50-35 85t-85 35ZM220-280q-24.75 0-42.37-17.63Q160-315.25 160-340v-400q0-24.75 17.63-42.38Q195.25-800 220-800h640q24.75 0 42.38 17.62Q920-764.75 920-740v400q0 24.75-17.62 42.37Q884.75-280 860-280H220Zm100-60h440q0-42 29-71t71-29v-200q-42 0-71-29t-29-71H320q0 42-29 71t-71 29v200q42 0 71 29t29 71Zm480 180H100q-24.75 0-42.37-17.63Q40-195.25 40-220v-460h60v460h700v60ZM220-340v-400 400Z"/></svg></span><!--/IC-->수입 원가 계산기 (FOB · CIF · 랜디드코스트)</h1>
       <p>인코텀즈(EXW·FOB·CFR·CIF·DDP) 조건에 따라 필요한 비용 항목이 자동으로 바뀝니다. 상품가액에 운임·보험·관세·부가세를 더해 실제 수입 원가와 개당 단가까지 한 번에 계산하세요.</p>
       <div class="hero-tags">
         <span class="tag">FOB/CIF</span>
