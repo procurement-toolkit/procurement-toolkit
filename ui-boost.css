@@ -1,0 +1,29 @@
+/* CBM Lab shared affordance layer: makes clickable things look clickable (shadow, hover lift, press, focus ring). Additive only. */
+:root{--ub-sh1:0 1px 2px rgba(15,23,42,.10),0 3px 8px -3px rgba(15,23,42,.18);--ub-sh2:0 2px 4px rgba(15,23,42,.10),0 12px 24px -10px rgba(15,23,42,.35)}
+button:not(:disabled),[role="button"],a[class*="cta"],a[class*="btn"],.guide-card,.tool-card,.related-item,.courier-btn,.official-link,.idx-link,.pill,summary{cursor:pointer}
+button,a[class*="cta"],a[class*="btn"],.guide-card,.tool-card,.related-item,.courier-btn,.official-link,.pill{transition:transform .15s ease,box-shadow .15s ease,filter .15s ease,background-color .15s ease,border-color .15s ease,color .15s ease}
+/* action buttons */
+.btn-excel,.btn-print,.btn-add,.btn-add-row,.cta-btn,.tier-cta,.submit-cta,.contact-btn,.aff-btn,.ad-gate-btn,button.primary,.card-cta,.locked-cta{box-shadow:var(--ub-sh1)}
+.btn-excel:hover,.btn-print:hover,.btn-add:hover,.btn-add-row:hover,.cta-btn:hover,.tier-cta:hover,.submit-cta:hover,.contact-btn:hover,.aff-btn:hover,.ad-gate-btn:hover,button.primary:hover,.card-cta:hover,.locked-cta:hover{transform:translateY(-1px);box-shadow:var(--ub-sh2);filter:brightness(1.07)}
+.btn-excel:active,.btn-print:active,.btn-add:active,.btn-add-row:active,.cta-btn:active,.tier-cta:active,.submit-cta:active,.contact-btn:active,.aff-btn:active,.ad-gate-btn:active,button.primary:active,.card-cta:active,.locked-cta:active{transform:translateY(1px);box-shadow:0 1px 1px rgba(15,23,42,.15);filter:brightness(.97)}
+/* cards that are links */
+.guide-card,.related-item,.courier-btn,.tool-card,.official-link{box-shadow:var(--ub-sh1)}
+.guide-card:hover,.related-item:hover,.courier-btn:hover,.tool-card:hover,.official-link:hover{transform:translateY(-2px);box-shadow:var(--ub-sh2)}
+.guide-card:active,.related-item:active,.courier-btn:active,.tool-card:active,.official-link:active{transform:translateY(0);box-shadow:var(--ub-sh1)}
+/* tabs, toggles, chips */
+.toggle-btn,.view-tab-btn,.type-tab,.cat-btn,.pill,.template-btn,.incoterm-btn,.toolbar-btn,.view-btn,.type-btn,.scene-tool-btn,.anim-btn,.btn-icon{box-shadow:0 1px 2px rgba(15,23,42,.10)}
+.toggle-btn:hover:not(.active),.view-tab-btn:hover:not(.active),.type-tab:hover:not(.active),.cat-btn:hover:not(.active),.pill:hover:not(.active),.template-btn:hover,.incoterm-btn:hover:not(.active),.toolbar-btn:hover,.view-btn:hover:not(.active),.type-btn:hover:not(.active),.scene-tool-btn:hover,.anim-btn:hover,.btn-icon:hover{filter:brightness(1.08);box-shadow:var(--ub-sh1);transform:translateY(-1px)}
+.toggle-btn:active,.view-tab-btn:active,.type-tab:active,.cat-btn:active,.pill:active,.template-btn:active,.incoterm-btn:active,.toolbar-btn:active,.view-btn:active,.type-btn:active,.scene-tool-btn:active,.anim-btn:active,.btn-icon:active{transform:translateY(1px);filter:brightness(.96)}
+.btn-del-row,.btn-del,.del-btn,.item-del{cursor:pointer}
+.btn-del-row:hover,.btn-del:hover,.del-btn:hover,.item-del:hover{filter:brightness(1.15)}
+/* text links in body copy: clearer affordance */
+.nav-link:hover,.footer-link:hover{text-decoration:underline;text-underline-offset:3px}
+/* keyboard focus */
+:focus-visible{outline:3px solid rgba(37,99,235,.55);outline-offset:2px}
+button:disabled{cursor:not-allowed}
+@media (hover:none){.guide-card:hover,.related-item:hover,.courier-btn:hover,.tool-card:hover,.official-link:hover,.btn-excel:hover,.cta-btn:hover{transform:none}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+/* hub cards that contain a call-to-action */
+.card:has(.card-cta){box-shadow:var(--ub-sh1);transition:transform .15s ease,box-shadow .15s ease}
+.card:has(.card-cta):hover{transform:translateY(-2px);box-shadow:var(--ub-sh2)}
+.card-cta{border-radius:6px;letter-spacing:.04em}
