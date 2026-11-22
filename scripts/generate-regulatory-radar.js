@@ -101,6 +101,7 @@ function renderPage(dateStr, matches) {
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
+<meta name="robots" content="noindex,follow">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>신규 제도·발표 레이더 — ${dateStr} | CBM LAB</title>
 <meta name="description" content="여러 정부 부처 보도자료 중 신규 제도/인증/지원사업 관련 발표만 자동으로 걸러낸 기록 — ${dateStr}">
@@ -142,6 +143,7 @@ function renderIndex(dates) {
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
+<meta name="robots" content="noindex,follow">
 <title>Regulatory Radar Archive | CBM LAB</title>
 <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>

@@ -6,7 +6,7 @@ import { execSync } from 'child_process';
 const today = new Date().toISOString().slice(0, 10);
 const run = c => execSync(c, { encoding: 'utf8' });
 // 1. safe, idempotent fixers
-const fixLog = [run('node scripts/seo/apply_meta.mjs'), run('node scripts/seo/fix_structure.mjs'), run('node scripts/seo/related_links.mjs')].map(s => s.trim());
+const fixLog = [run('node scripts/seo/apply_meta.mjs'), run('node scripts/seo/fix_structure.mjs'), run('node scripts/seo/related_links.mjs'), run('node scripts/seo/radar_seo.mjs'), run('node scripts/seo/build_recall_topics.mjs'), run('node scripts/seo/sitemap.mjs')].map(s => s.trim());
 // 2. audit
 run('node scripts/seo/audit.mjs --json /tmp/_seo.json --md /tmp/_seo.md');
 const audit = JSON.parse(fs.readFileSync('/tmp/_seo.json', 'utf8'));
@@ -35,10 +35,13 @@ const idx=fs.existsSync(idxPath)?JSON.parse(fs.readFileSync(idxPath,'utf8')):{};
 const notIndexed=Object.entries(idx).filter(([,v])=>v.verdict!=='PASS').map(([u,v])=>`- ${u}: ${v.coverage}`);
 log[log.length-1].indexed=Object.values(idx).filter(v=>v.verdict==='PASS').length; log[log.length-1].tracked=Object.keys(idx).length;
 fs.writeFileSync(logPath, JSON.stringify(log.slice(-104), null, 1));
+// 4c. CTR experiments, link check, backlink candidates (read-only analysis feeding the report)
+const sh = c => { try { return run(c).trim(); } catch (e) { return '- skipped: ' + String(e.message).split('\n')[0]; } };
+const ctrMd = sh('node scripts/seo/ctr.mjs'), linkMd = sh('node scripts/seo/linkcheck.mjs'), blMd = sh('node scripts/seo/backlinks.mjs');
 // 5. report
 const med = audit.flatMap(p => p.issues.filter(i => i[0] !== 'low').map(i => `- ${p.page}: ${i[1]}`));
 const md = [`# SEO growth report ${today}`, `Pages ${audit.length}, avg score ${avg}`, '', '## Auto-applied (idempotent)', ...fixLog.map(s => '- ' + s), '',
   '## Content proposals (review, then add to meta-map.json / page copy)', ...(gaps.length ? gaps.slice(0, 60).map(g => `- ${g.page} <- "${g.phrase}" (missing term: ${g.missing})${g.isNew ? ' NEW' : ''}`) : ['- none (or keywords.json empty)']), '',
-  '## Google index status (' + log[log.length-1].indexed + '/' + log[log.length-1].tracked + ' indexed)', ...(notIndexed.length ? notIndexed.slice(0,80) : ['- no data yet (needs GSC credentials)']), '', '## Open audit issues (med/high)', ...(med.length ? med : ['- none'])].join('\n');
+  '## CTR experiments', ctrMd, '', '## Link check', linkMd, '', '## Backlink candidates (new this run)', blMd, '', '## Google index status (' + log[log.length-1].indexed + '/' + log[log.length-1].tracked + ' indexed)', ...(notIndexed.length ? notIndexed.slice(0,80) : ['- no data yet (needs GSC credentials)']), '', '## Open audit issues (med/high)', ...(med.length ? med : ['- none'])].join('\n');
 fs.writeFileSync(`reports/seo/${today}.md`, md + '\n');
 console.log(md.split('\n').slice(0, 12).join('\n'));

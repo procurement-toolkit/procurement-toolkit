@@ -26,5 +26,20 @@
   "keywordGaps": 0,
   "indexed": 0,
   "tracked": 0
+ },
+ {
+  "date": "2026-11-22",
+  "avgScore": 96,
+  "pages": 112,
+  "lowest": [
+   "en/consulting.html:74",
+   "recalls/hazard-shock.html:81",
+   "en/index.html:86",
+   "guide-hub.html:86",
+   "recalls/hazard-battery.html:86"
+  ],
+  "keywordGaps": 0,
+  "indexed": 6,
+  "tracked": 101
  }
 ]

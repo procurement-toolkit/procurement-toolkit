@@ -1,0 +1,198 @@
+{
+ "public-apis/public-apis": {
+  "url": "https://github.com/public-apis/public-apis",
+  "stars": 500736,
+  "desc": "A collective list of free APIs",
+  "pushed": "2026-11-20",
+  "found": "2026-11-22"
+ },
+ "punkpeye/awesome-mcp-servers": {
+  "url": "https://github.com/punkpeye/awesome-mcp-servers",
+  "stars": 98381,
+  "desc": "A collection of MCP servers.",
+  "pushed": "2026-11-17",
+  "found": "2026-11-22"
+ },
+ "awesomedata/awesome-public-datasets": {
+  "url": "https://github.com/awesomedata/awesome-public-datasets",
+  "stars": 80243,
+  "desc": "A topic-centric list of HQ open datasets.",
+  "pushed": "2026-11-22",
+  "found": "2026-11-22"
+ },
+ "VoltAgent/awesome-openclaw-skills": {
+  "url": "https://github.com/VoltAgent/awesome-openclaw-skills",
+  "stars": 53923,
+  "desc": "The awesome collection of OpenClaw skills. 5,400+ skills filtered and categorized from the official OpenClaw Skills Registry.🦞",
+  "pushed": "2026-11-18",
+  "found": "2026-11-22"
+ },
+ "kuchin/awesome-cto": {
+  "url": "https://github.com/kuchin/awesome-cto",
+  "stars": 35782,
+  "desc": "A curated and opinionated list of resources for Chief Technology Officers, with the emphasis on startups",
+  "pushed": "2026-03-02",
+  "found": "2026-11-22"
+ },
+ "mahmoud/awesome-python-applications": {
+  "url": "https://github.com/mahmoud/awesome-python-applications",
+  "stars": 18188,
+  "desc": "💿 Free software that works great, and also happens to be open-source Python. ",
+  "pushed": "2026-10-18",
+  "found": "2026-11-22"
+ },
+ "unixorn/awesome-zsh-plugins": {
+  "url": "https://github.com/unixorn/awesome-zsh-plugins",
+  "stars": 18146,
+  "desc": "A collection of ZSH frameworks, plugins, themes and tutorials.",
+  "pushed": "2026-11-21",
+  "found": "2026-11-22"
+ },
+ "marcelscruz/public-apis": {
+  "url": "https://github.com/marcelscruz/public-apis",
+  "stars": 9761,
+  "desc": "A collaborative list of public APIs for developers",
+  "pushed": "2026-11-22",
+  "found": "2026-11-22"
+ },
+ "awesome-selfhosted/awesome-selfhosted": {
+  "url": "https://github.com/awesome-selfhosted/awesome-selfhosted",
+  "stars": 339403,
+  "desc": "A list of Free Software network services and web applications which can be hosted on your own servers",
+  "pushed": "2026-11-17",
+  "found": "2026-11-22"
+ },
+ "vinta/awesome-python": {
+  "url": "https://github.com/vinta/awesome-python",
+  "stars": 336373,
+  "desc": "The definitive list that answers \"I want to do X in Python, which tool should I use?\"",
+  "pushed": "2026-11-17",
+  "found": "2026-11-22"
+ },
+ "avelino/awesome-go": {
+  "url": "https://github.com/avelino/awesome-go",
+  "stars": 195326,
+  "desc": "A curated list of awesome Go frameworks, libraries and software",
+  "pushed": "2026-11-21",
+  "found": "2026-11-22"
+ },
+ "vsouza/awesome-ios": {
+  "url": "https://github.com/vsouza/awesome-ios",
+  "stars": 54073,
+  "desc": "A curated list of awesome iOS ecosystem, including Objective-C and Swift Projects ",
+  "pushed": "2026-08-27",
+  "found": "2026-11-22"
+ },
+ "dkhamsing/open-source-ios-apps": {
+  "url": "https://github.com/dkhamsing/open-source-ios-apps",
+  "stars": 53419,
+  "desc": ":iphone: Collaborative List of Open-Source iOS Apps",
+  "pushed": "2026-11-21",
+  "found": "2026-11-22"
+ },
+ "akullpp/awesome-java": {
+  "url": "https://github.com/akullpp/awesome-java",
+  "stars": 49606,
+  "desc": "A curated list of awesome frameworks, libraries and software for the Java programming language.",
+  "pushed": "2026-09-23",
+  "found": "2026-11-22"
+ },
+ "jivoi/awesome-osint": {
+  "url": "https://github.com/jivoi/awesome-osint",
+  "stars": 31321,
+  "desc": ":scream: A curated list of amazingly awesome OSINT",
+  "pushed": "2026-11-21",
+  "found": "2026-11-22"
+ },
+ "e2b-dev/awesome-ai-agents": {
+  "url": "https://github.com/e2b-dev/awesome-ai-agents",
+  "stars": 31022,
+  "desc": "A list of AI autonomous agents",
+  "pushed": "2026-08-21",
+  "found": "2026-11-22"
+ },
+ "kdeldycke/awesome-falsehood": {
+  "url": "https://github.com/kdeldycke/awesome-falsehood",
+  "stars": 27883,
+  "desc": "😱 Falsehoods Programmers Believe in",
+  "pushed": "2026-11-16",
+  "found": "2026-11-22"
+ },
+ "enescingoz/awesome-n8n-templates": {
+  "url": "https://github.com/enescingoz/awesome-n8n-templates",
+  "stars": 26515,
+  "desc": "280+ free n8n automation templates — ready-to-use workflows for Gmail, Telegram, Slack, Discord, WhatsApp, Google Drive, Notion, OpenAI, and more. AI agents, RAG   chatbots, email automation, social media, DevOps, and document processing. The largest open-source n8n template collection.",
+  "pushed": "2026-09-12",
+  "found": "2026-11-22"
+ },
+ "n0shake/Public-APIs": {
+  "url": "https://github.com/n0shake/Public-APIs",
+  "stars": 24146,
+  "desc": "📚 A public list of APIs from round the web.",
+  "pushed": "2026-05-03",
+  "found": "2026-11-22"
+ },
+ "ScaleLeap/awesome-amazon-seller": {
+  "url": "https://github.com/ScaleLeap/awesome-amazon-seller",
+  "stars": 459,
+  "desc": "A curated list of tools and resources for Amazon sellers.",
+  "pushed": "2026-11-18",
+  "found": "2026-11-22"
+ },
+ "midnightntwrk/midnight-awesome-dapps": {
+  "url": "https://github.com/midnightntwrk/midnight-awesome-dapps",
+  "stars": 113,
+  "desc": "Midnight Awesome Dapps",
+  "pushed": "2026-11-18",
+  "found": "2026-11-22"
+ },
+ "khanhduyvt0101/workflows": {
+  "url": "https://github.com/khanhduyvt0101/workflows",
+  "stars": 112,
+  "desc": "Awesome PDF Automation Workflows - A curated collection of ready-to-use automation workflows for PDF processing and document extraction",
+  "pushed": "2026-05-13",
+  "found": "2026-11-22"
+ },
+ "sindresorhus/awesome": {
+  "url": "https://github.com/sindresorhus/awesome",
+  "stars": 540784,
+  "desc": "😎 Awesome lists about all kinds of interesting topics [NOTE: Pull requests are temporarily disabled until I have a chance to catch up with the existing ones]",
+  "pushed": "2026-09-02",
+  "found": "2026-11-22"
+ },
+ "VoltAgent/awesome-design-md": {
+  "url": "https://github.com/VoltAgent/awesome-design-md",
+  "stars": 128576,
+  "desc": "A collection of DESIGN.md files analysis by popular brand design systems. Drop one into your project and let coding agents generate a matching UI.",
+  "pushed": "2026-10-28",
+  "found": "2026-11-22"
+ },
+ "Developer-Y/cs-video-courses": {
+  "url": "https://github.com/Developer-Y/cs-video-courses",
+  "stars": 84904,
+  "desc": "List of Computer Science courses with video lectures.",
+  "pushed": "2026-11-20",
+  "found": "2026-11-22"
+ },
+ "yybmion/public-apis-4Kr": {
+  "url": "https://github.com/yybmion/public-apis-4Kr",
+  "stars": 3578,
+  "desc": "한국 서비스에 이용 가능한 Public API 모음 | Public APIs Available for Korean Services",
+  "pushed": "2026-11-17",
+  "found": "2026-11-22"
+ },
+ "ChristosChristofidis/awesome-deep-learning": {
+  "url": "https://github.com/ChristosChristofidis/awesome-deep-learning",
+  "stars": 29218,
+  "desc": "A curated list of awesome Deep Learning tutorials, projects and communities.",
+  "pushed": "2025-05-26",
+  "found": "2026-11-22"
+ },
+ "cporter202/API-mega-list": {
+  "url": "https://github.com/cporter202/API-mega-list",
+  "stars": 8414,
+  "desc": "This GitHub repo is a powerhouse collection of APIs you can start using immediately to build everything from simple automations to full-scale applications. One of the most valuable API lists on GitHub—period. 💪",
+  "pushed": "2026-11-19",
+  "found": "2026-11-22"
+ }
+}

@@ -111,6 +111,7 @@ function renderPage(dateStr, matches) {
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
+<meta name="robots" content="noindex,follow">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>주방·조리기기 공공입찰 레이더 — ${dateStr} | CBM LAB</title>
 <meta name="description" content="한국 정부 공공조달 입찰 중 주방·조리·급식기기 관련 공고만 자동으로 걸러낸 일일 기록 — ${dateStr}">
@@ -151,6 +152,7 @@ function renderIndex(dates) {
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
+<meta name="robots" content="noindex,follow">
 <title>Tender Radar Archive | CBM LAB</title>
 <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>

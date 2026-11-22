@@ -63,6 +63,7 @@ function renderPage(dateStr, cards) {
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<meta name="robots" content="noindex,follow">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Korea Sourcing Currency Snapshot — ${dateStr} | CBM Lab</title>
 <meta name="description" content="KRW exchange rates and landed-cost impact for major sourcing currencies on ${dateStr}. Auto-generated, never edited by hand.">
@@ -113,6 +114,7 @@ function renderIndex(dates) {
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<meta name="robots" content="noindex,follow">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Currency Snapshot Archive | CBM Lab</title>
 <meta name="description" content="Daily archive of Korea sourcing currency and landed-cost snapshots, auto-generated every day.">

@@ -18,13 +18,16 @@ jobs:
           node-version: '20'
 
       - name: Generate today's import recall radar page
-        run: node scripts/generate-import-recall-radar.js
+        run: |
+          node scripts/generate-import-recall-radar.js
+          node scripts/seo/build_recall_topics.mjs
+          node scripts/seo/sitemap.mjs
 
       - name: Commit and push if there are changes
         run: |
           git config user.name "cbm-lab-bot"
           git config user.email "actions@users.noreply.github.com"
-          git add import-recall-radar/
+          git add import-recall-radar/ recalls/ sitemap.xml
           if git diff --staged --quiet; then
             echo "No changes to commit."
           else

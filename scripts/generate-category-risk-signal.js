@@ -127,6 +127,7 @@ function renderPage(dateStr, signals) {
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
+<meta name="robots" content="noindex,follow">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>카테고리 리스크 신호등 — ${dateStr} | CBM LAB</title>
 <meta name="description" content="한국 규제 발표와 미국 CPSC 리콜을 교차 대조해, 최근 7일간 양쪽에서 동시에 움직인 카테고리를 자동으로 찾아냅니다 — ${dateStr}">
@@ -175,6 +176,7 @@ function renderIndex(dates) {
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
+<meta name="robots" content="noindex,follow">
 <title>Category Risk Signal Archive | CBM LAB</title>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
