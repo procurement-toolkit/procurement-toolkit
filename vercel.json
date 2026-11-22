@@ -1,4 +1,9 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
-  "regions": ["icn1"]
+  "regions": ["icn1"],
+  "functions": { "api/bid.js": { "includeFiles": "data/bids/pub.json" } },
+  "rewrites": [
+    { "source": "/bids/n/:h", "destination": "/api/bid?h=:h&lang=ko" },
+    { "source": "/en/bids/n/:h", "destination": "/api/bid?h=:h&lang=en" }
+  ]
 }

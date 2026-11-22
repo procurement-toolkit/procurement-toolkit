@@ -2,3 +2,4 @@ User-agent: *
 Allow: /
 
 Sitemap: https://procurement-toolkit-eight.vercel.app/sitemap.xml
+Sitemap: https://procurement-toolkit-eight.vercel.app/sitemap-bids.xml
