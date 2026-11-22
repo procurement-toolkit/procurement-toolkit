@@ -60,7 +60,7 @@ await src('ungm', async () => {
     if (out.length === 0) console.log('UNGM cells', JSON.stringify(cells).slice(0, 900));
     const dates = cells.map(d8).filter(Boolean);
     const texts = cells.filter(c => c && !d8(c) && c.length > 3);
-    out.push({ id: 'ungm-' + id, source: 'ungm', title: texts[0] || '', org: texts[1] || 'UN', country: texts[texts.length - 1] || '', category: 'UN notice', published: dates[1] || dates[0] || '', deadline: dates[0] || '', value: '', url: 'https://www.ungm.org/Public/Notice/' + id });
+    out.push({ id: 'ungm-' + id, source: 'ungm', title: cells[1] || '', org: cells[4] || 'UN', country: cells[7] || '', category: cells[5] || 'UN notice', published: d8(cells[3]), deadline: d8(cells[2]), value: '', url: 'https://www.ungm.org/Public/Notice/' + id });
   }
   return out.filter(x => x.title && (!x.deadline || x.deadline >= today));
 });
