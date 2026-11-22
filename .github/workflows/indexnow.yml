@@ -1,0 +1,18 @@
+name: IndexNow ping
+on:
+  push:
+    branches: [main]
+    paths: ['**.html', 'sitemap.xml']
+  workflow_dispatch:
+    inputs: { all: { description: 'ping every page', type: boolean, default: false } }
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 2 }
+      - uses: actions/setup-node@v4
+        with: { node-version: 22 }
+      - run: sleep 150   # let Vercel finish deploying first
+      - run: node scripts/seo/indexnow.mjs ${{ inputs.all && '--all' || '' }}
+        continue-on-error: true

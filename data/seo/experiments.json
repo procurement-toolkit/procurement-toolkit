@@ -11,5 +11,20 @@
    "en/courier-guide.html:89"
   ],
   "keywordGaps": 0
+ },
+ {
+  "date": "2026-11-22",
+  "avgScore": 98,
+  "pages": 99,
+  "lowest": [
+   "en/consulting.html:74",
+   "en/index.html:86",
+   "guide-hub.html:86",
+   "consulting.html:88",
+   "data-radar-hub.html:91"
+  ],
+  "keywordGaps": 0,
+  "indexed": 0,
+  "tracked": 0
  }
 ]

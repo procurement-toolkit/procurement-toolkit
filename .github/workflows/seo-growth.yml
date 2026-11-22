@@ -12,6 +12,9 @@ jobs:
         with: { node-version: 22 }
       - run: node scripts/seo/keywords.mjs
         continue-on-error: true
+      - run: node scripts/seo/inspect.mjs
+        continue-on-error: true
+        env: { GSC_SA_JSON: "${{ secrets.GSC_SA_JSON }}", GSC_SITE: "${{ secrets.GSC_SITE }}" }
       - run: node scripts/seo/gsc.mjs
         continue-on-error: true
         env: { GSC_SA_JSON: '${{ secrets.GSC_SA_JSON }}', GSC_SITE: '${{ secrets.GSC_SITE }}' }
