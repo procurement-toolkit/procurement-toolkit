@@ -44,7 +44,11 @@ await src('ungm', async () => {
   const tok = (html.match(/__RequestVerificationToken[^>]*value="([^"]+)"/) || [])[1] || '';
   const body = { PageIndex: 0, PageSize: 200, Title: '', Description: '', Reference: '', PublishedFrom: '', PublishedTo: '', DeadlineFrom: '', DeadlineTo: '', Countries: [], Agencies: [], UNSPSCs: [], NoticeTypes: [], SortField: 'DatePublished', SortAscending: false, isPicker: false, IsSustainable: false, IsActive: true, NoticeDisplayType: null, NoticeSearchTotalLabelId: 'noticeSearchTotal', TypeOfCompetitions: [] };
   const r = await fetch('https://www.ungm.org/Public/Notice/Search', { method: 'POST', headers: { ...UA, 'content-type': 'application/json; charset=UTF-8', 'x-requested-with': 'XMLHttpRequest', referer: 'https://www.ungm.org/Public/Notice', origin: 'https://www.ungm.org', cookie, __RequestVerificationToken: tok, RequestVerificationToken: tok }, body: JSON.stringify(body) });
-  const t = await r.text(); if (!r.ok) throw new Error('HTTP ' + r.status + ' ' + t.slice(0, 120) + ' tok=' + !!tok + ' cookie=' + !!cookie);
+  const t = await r.text();
+  if (!r.ok) {
+    for (const b of [...html.matchAll(/src="(\/bundles\/[^"]+)"/g)].map(m => m[1])) { const x = await (await fetch('https://www.ungm.org' + b, { headers: UA })).text(); const i = x.indexOf('antiForgeryHeaders'); if (i > -1) { console.log('UNGM antiforgery', x.slice(i, i + 500).replace(/\s+/g, ' ')); break; } }
+    throw new Error('HTTP ' + r.status + ' ' + t.slice(0, 120) + ' tok=' + !!tok + ' cookie=' + !!cookie);
+  }
   console.log('UNGM sample', t.slice(0, 1800).replace(/\s+/g, ' '));
   const MON = { Jan: 0, Feb: 1, Mar: 2, Apr: 3, May: 4, Jun: 5, Jul: 6, Aug: 7, Sep: 8, Oct: 9, Nov: 10, Dec: 11 };
   const d8 = v => { const m = String(v || '').match(/(\d{2})-(\w{3})-(\d{4})/); return m ? new Date(Date.UTC(+m[3], MON[m[2]], +m[1])).toISOString().slice(0, 10) : ''; };
@@ -94,7 +98,7 @@ await src('boamp-fr', async () => {
   for (let p = 0; p < 6; p++) {
     const j = await getJSON(`https://boamp-datadila.opendatasoft.com/api/explore/v2.1/catalog/datasets/boamp/records?limit=100&offset=${p * 100}&order_by=dateparution%20desc&where=${encodeURIComponent(`nature="APPEL_OFFRE" AND datelimitereponse>=date'${today}'`)}`);
     const r = j.results || []; if (p === 0) console.log('BOAMP keys', Object.keys(r[0] || {}).join(','));
-    out.push(...r.map(x => ({ id: 'fr-' + x.idweb, source: 'boamp-fr', title: txt(x.objet), org: txt(x.nomacheteur), country: 'France', category: txt(x.famille_libelle), published: iso(x.dateparution), deadline: iso(String(x.datelimitereponse || '').slice(0, 10)), value: '', url: `https://www.boamp.fr/pages/avis/?q=idweb:${x.idweb}` })));
+    out.push(...r.map(x => ({ id: 'fr-' + x.idweb, source: 'boamp-fr', title: txt(x.objet), org: txt(x.nomacheteur), country: 'France', category: txt(x.famille_libelle), published: iso(x.dateparution), deadline: iso(String(x.datelimitereponse || '').slice(0, 10)), value: '', url: x.url_avis || `https://www.boamp.fr/pages/avis/?q=idweb:${x.idweb}` })));
     if (r.length < 100) break;
   }
   return out.filter(x => x.title);
