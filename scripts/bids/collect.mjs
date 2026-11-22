@@ -44,6 +44,7 @@ await src('korea-g2b', async () => {
   return arr.map(x => ({ id: 'kr-' + first(x.bidNtceNo, x.bidNtceNm) + '-' + first(x.bidNtceOrd, ''), source: 'korea-g2b', title: txt(x.bidNtceNm), org: txt(first(x.ntceInsttNm, x.dminsttNm)), country: '대한민국', category: txt(first(x.bsnsDivNm, x.ntceKindNm)), published: iso(first(x.bidNtceDt, x.rgstDt)), deadline: iso(x.bidClseDt), value: x.presmptPrce ? `${Number(x.presmptPrce).toLocaleString('ko-KR')}원` : '', url: first(x.bidNtceUrl, x.bidNtceDtlUrl, 'https://www.g2b.go.kr') })).filter(x => x.title);
 });
 // merge with previous (keep still-open items), dedupe by id, drop expired
+fs.mkdirSync('data/bids', { recursive: true });
 const path = 'data/bids/open.json';
 const prev = fs.existsSync(path) ? JSON.parse(fs.readFileSync(path, 'utf8')) : [];
 const m = new Map(); for (const x of [...prev, ...all]) m.set(x.id, x);
