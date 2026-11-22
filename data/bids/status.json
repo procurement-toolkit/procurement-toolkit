@@ -15,8 +15,8 @@
   "at": "2026-11-22"
  },
  "ungm": {
-  "ok": false,
-  "error": "Invalid time value",
+  "ok": true,
+  "n": 435,
   "at": "2026-11-22"
  },
  "au-tenders": {

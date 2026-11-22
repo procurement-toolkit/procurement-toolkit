@@ -152,4 +152,6 @@
   <url><loc>https://procurement-toolkit-eight.vercel.app/en/bids/c-transport.html</loc><lastmod>2026-11-22</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>
   <url><loc>https://procurement-toolkit-eight.vercel.app/en/bids/find-tender-uk.html</loc><lastmod>2026-11-22</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>
   <url><loc>https://procurement-toolkit-eight.vercel.app/en/bids/secop-co.html</loc><lastmod>2026-11-22</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/bids/ungm.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/en/bids/ungm.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
 </urlset>
