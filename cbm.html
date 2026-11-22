@@ -280,8 +280,10 @@
   /* TABLE */
   .carton-table-wrap {
     overflow-x: auto;
-    margin: 0 -20px;
-    padding: 0 20px;
+    max-width: calc(100vw - 40px);
+    min-width: 0;
+    position: relative;
+    -webkit-overflow-scrolling: touch;
   }
 
   .carton-table {
