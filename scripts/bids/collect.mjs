@@ -167,15 +167,16 @@ async function gt(text, tl) {
 }
 const CAP = 500; let done = 0, fails = 0;
 const todo = out.filter(x => !(TR[x.id]) && x.title).slice(0, CAP);
-for (let i = 0; i < todo.length && fails < 8; i += 5) {
-  await Promise.all(todo.slice(i, i + 5).map(async x => {
+for (let i = 0; i < todo.length && fails < 25; i += 2) {
+  await new Promise(r => setTimeout(r, 400));
+  await Promise.all(todo.slice(i, i + 2).map(async x => {
     const e = {};
     try {
       if (hasKo(x.title)) { e.k = x.title; e.e = (await gt(x.title, 'en')).t; }
       else if (isEn(x.title)) { e.e = x.title; e.k = (await gt(x.title, 'ko')).t; }
       else { const en = await gt(x.title, 'en'); e.e = en.l === 'en' ? x.title : en.t; e.k = (await gt(e.e, 'ko')).t; }
       TR[x.id] = e; done++;
-    } catch (err) { fails++; }
+    } catch (err) { fails++; if (fails <= 3) console.log('translate error', String(err.message || err).slice(0, 160)); }
   }));
 }
 console.log('translated', done, 'failed', fails, 'cache', Object.keys(TR).length);
