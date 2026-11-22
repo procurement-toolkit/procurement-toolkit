@@ -6,6 +6,7 @@ const today = new Date().toISOString().slice(0, 10);
 const iso = v => { if (!v) return ''; const d = new Date(String(v).replace(/^(\d{4})(\d{2})(\d{2})(\d{2})?(\d{2})?$/, (m, a, b, c, h = '00', mi = '00') => `${a}-${b}-${c}T${h}:${mi}:00+09:00`)); return isNaN(d) ? '' : d.toISOString().slice(0, 10); };
 const first = (...v) => v.find(x => x !== undefined && x !== null && x !== '') ?? '';
 const txt = v => { if (v == null) return ''; if (typeof v === 'string') return v.trim(); if (Array.isArray(v)) return txt(v[0]); if (typeof v === 'object') return txt(v.ENG ?? v.eng ?? v.en ?? Object.values(v)[0]); return String(v); };
+const UA = { 'user-agent': 'Mozilla/5.0 (compatible; CBMLabBot/1.0; +https://procurement-toolkit-eight.vercel.app)' };
 const status = {}, all = [];
 async function src(name, fn) {
   try { const r = await fn(); status[name] = { ok: true, n: r.length, at: today }; all.push(...r); console.log(name, 'ok', r.length); }
@@ -14,11 +15,11 @@ async function src(name, fn) {
 const getJSON = async (u, opt) => { const r = await fetch(u, opt); const t = await r.text(); if (!r.ok) throw new Error(`HTTP ${r.status} ${t.slice(0, 150)}`); try { return JSON.parse(t); } catch { throw new Error('not JSON: ' + t.slice(0, 200)); } };
 
 await src('world-bank', async () => {
-  const j = await getJSON('https://search.worldbank.org/api/v2/procnotices?format=json&rows=200&os=0&srt=submission_date&order=desc&apilang=en');
+  const j = await getJSON('https://search.worldbank.org/api/v2/procnotices?format=json&rows=200&os=0&srt=noticedate&order=desc&apilang=en');
   const arr = Array.isArray(j.procnotices) ? j.procnotices : Object.values(j.procnotices || {});
   console.log('WB sample', JSON.stringify(arr[0] || j).slice(0, 700));
   const OPEN_WB = /invitation|request for|expression of interest|specific procurement|general procurement|bid|proposal/i;
-  return arr.filter(x => !/award/i.test(x.notice_type || '') && OPEN_WB.test(x.notice_type || '') && x.submission_date && x.submission_date.slice(0,10) >= today).map(x => ({ id: 'wb-' + first(x.id, x.bid_reference_no), source: 'world-bank', title: txt(first(x.bid_description, x.project_name)), org: txt(first(x.contact_organization, x.project_name)), country: txt(x.project_ctry_name), category: txt(first(x.notice_type, x.procurement_method_name)), published: iso(x.noticedate), deadline: iso(first(x.submission_deadline_date, x.submission_date)), value: '', url: first(x.url, `https://projects.worldbank.org/en/projects-operations/procurement-detail/${x.id}`) })).filter(x => x.title);
+  return arr.filter(x => !/award/i.test(x.notice_type || '') && OPEN_WB.test(x.notice_type || '') && (!x.submission_deadline_date || x.submission_deadline_date.slice(0,10) >= today)).map(x => ({ id: 'wb-' + first(x.id, x.bid_reference_no), source: 'world-bank', title: txt(first(x.bid_description, x.project_name)), org: txt(first(x.contact_organization, x.project_name)), country: txt(x.project_ctry_name), category: txt(first(x.notice_type, x.procurement_method_name)), published: iso(x.noticedate), deadline: iso(x.submission_deadline_date), value: '', url: first(x.url, `https://projects.worldbank.org/en/projects-operations/procurement-detail/${x.id}`) })).filter(x => x.title);
 });
 await src('uk', async () => {
   const from = new Date(Date.now() - 7 * 864e5).toISOString().slice(0, 19);
@@ -27,36 +28,38 @@ await src('uk', async () => {
   return arr.filter(r => (r.tag || []).includes('tender') && r.tender?.status === 'active').map(r => ({ id: 'uk-' + r.id, source: 'uk', title: txt(r.tender?.title), org: txt(r.buyer?.name), country: 'United Kingdom', category: txt(first(r.tender?.mainProcurementCategory, r.tender?.classification?.description)), published: iso(first(r.publishedDate, r.date)), deadline: iso(r.tender?.tenderPeriod?.endDate), value: r.tender?.value?.amount ? `${Math.round(r.tender.value.amount).toLocaleString('en-GB')} ${r.tender.value.currency || 'GBP'}` : '', url: `https://www.contractsfinder.service.gov.uk/Notice/${String(r.id).split('-').slice(0, 5).join('-')}` })).filter(x => x.title);
 });
 await src('eu-ted', async () => {
-  const d0 = new Date(Date.now() - 5 * 864e5).toISOString().slice(0, 10).replace(/-/g, '');
-  const j = await getJSON('https://api.ted.europa.eu/v3/notices/search', { method: 'POST', headers: { 'content-type': 'application/json', accept: 'application/json' }, body: JSON.stringify({ query: `publication-date>=${d0} AND notice-type=cn-standard`, fields: ['publication-number', 'notice-title', 'buyer-name', 'deadline-receipt-tender-date-lot', 'publication-date', 'place-of-performance-country-lot', 'links'], limit: 100, page: 1, scope: 'ACTIVE' }) });
+  const d0 = new Date(Date.now() - 14 * 864e5).toISOString().slice(0, 10).replace(/-/g, '');
+  const tedPage = page => getJSON('https://api.ted.europa.eu/v3/notices/search', { method: 'POST', headers: { 'content-type': 'application/json', accept: 'application/json' }, body: JSON.stringify({ query: `publication-date>=${d0} AND notice-type=cn-standard`, fields: ['publication-number', 'notice-title', 'buyer-name', 'deadline-receipt-tender-date-lot', 'publication-date', 'place-of-performance-country-lot', 'links'], limit: 250, page, scope: 'ACTIVE' }) });
   const ISO3 = {AUT:'AT',BEL:'BE',BGR:'BG',HRV:'HR',CYP:'CY',CZE:'CZ',DNK:'DK',EST:'EE',FIN:'FI',FRA:'FR',DEU:'DE',GRC:'GR',HUN:'HU',IRL:'IE',ITA:'IT',LVA:'LV',LTU:'LT',LUX:'LU',MLT:'MT',NLD:'NL',POL:'PL',PRT:'PT',ROU:'RO',SVK:'SK',SVN:'SI',ESP:'ES',SWE:'SE',ISL:'IS',LIE:'LI',NOR:'NO',CHE:'CH',GBR:'GB',UKR:'UA',TUR:'TR',SRB:'RS',MNE:'ME',MKD:'MK',ALB:'AL',BIH:'BA',MDA:'MD',XXK:'XK'};
   const dn = new Intl.DisplayNames(['en'], { type: 'region' });
   const cname = c => { c = txt(c); try { return ISO3[c] ? dn.of(ISO3[c]) : c; } catch { return c; } };
-  const arr = j.notices || []; console.log('TED sample', JSON.stringify(arr[0] || j).slice(0, 900));
-  return arr.map(n => ({ id: 'ted-' + n['publication-number'], source: 'eu-ted', title: txt(n['notice-title']), org: txt(n['buyer-name']), country: cname(n['place-of-performance-country-lot']), category: 'Contract notice', published: iso(txt(n['publication-date']).replace(/[^\d-]/g, '').slice(0, 10)), deadline: iso(txt(n['deadline-receipt-tender-date-lot']).slice(0, 10)), value: '', url: (n.links?.html?.ENG) || (n.links?.htmlDirect?.ENG) || `https://ted.europa.eu/en/notice/-/detail/${n['publication-number']}` })).filter(x => x.title);
+  let arr = []; for (let p = 1; p <= 4; p++) { const j = await tedPage(p); const n = j.notices || []; if (p === 1) console.log('TED sample', JSON.stringify(n[0] || j).slice(0, 300)); arr.push(...n); if (n.length < 250) break; }
+  arr = arr.filter(n => { const d = txt(n['deadline-receipt-tender-date-lot']).slice(0, 10); return !d || d >= today; });
+  return arr.map(n => ({ id: 'ted-' + n['publication-number'], source: 'eu-ted', title: txt(n['notice-title']?.eng ?? n['notice-title']), org: txt(n['buyer-name']), country: cname(n['place-of-performance-country-lot']), category: 'Contract notice', published: iso(txt(n['publication-date']).replace(/[^\d-]/g, '').slice(0, 10)), deadline: iso(txt(n['deadline-receipt-tender-date-lot']).slice(0, 10)), value: '', url: (n.links?.html?.ENG) || (n.links?.htmlDirect?.ENG) || `https://ted.europa.eu/en/notice/-/detail/${n['publication-number']}` })).filter(x => x.title);
 });
 
 await src('ungm', async () => {
-  const r = await fetch('https://www.ungm.org/Public/Notice/Search', { method: 'POST', headers: { 'content-type': 'application/json', accept: 'application/json, text/html', 'x-requested-with': 'XMLHttpRequest' }, body: JSON.stringify({ PageIndex: 0, PageSize: 100, Title: '', Description: '', Reference: '', PublishedFrom: '', PublishedTo: '', DeadlineFrom: today, DeadlineTo: '', Countries: [], Agencies: [], UNSPSCs: [], NoticeTypes: [], SortField: 'DatePublished', SortAscending: false, isPicker: false, IsSustainable: false, IsActive: true, NoticeDisplayType: null, NoticeSearchTotalLabelId: 'noticeSearchTotal', TypeOfCompetitions: [] }) });
-  const t = await r.text(); if (!r.ok) throw new Error('HTTP ' + r.status + ' ' + t.slice(0, 120));
-  console.log('UNGM sample', t.slice(0, 1500).replace(/\s+/g, ' '));
+  const pg = await fetch('https://www.ungm.org/Public/Notice', { headers: UA });
+  const html = await pg.text(); const cookie = (pg.headers.getSetCookie?.() || []).map(c => c.split(';')[0]).join('; ');
+  const tok = (html.match(/__RequestVerificationToken[^>]*value="([^"]+)"/) || [])[1] || '';
+  const body = { PageIndex: 0, PageSize: 200, Title: '', Description: '', Reference: '', PublishedFrom: '', PublishedTo: '', DeadlineFrom: '', DeadlineTo: '', Countries: [], Agencies: [], UNSPSCs: [], NoticeTypes: [], SortField: 'DatePublished', SortAscending: false, isPicker: false, IsSustainable: false, IsActive: true, NoticeDisplayType: null, NoticeSearchTotalLabelId: 'noticeSearchTotal', TypeOfCompetitions: [] };
+  const r = await fetch('https://www.ungm.org/Public/Notice/Search', { method: 'POST', headers: { ...UA, 'content-type': 'application/json; charset=UTF-8', 'x-requested-with': 'XMLHttpRequest', referer: 'https://www.ungm.org/Public/Notice', origin: 'https://www.ungm.org', cookie, __RequestVerificationToken: tok, RequestVerificationToken: tok }, body: JSON.stringify(body) });
+  const t = await r.text(); if (!r.ok) throw new Error('HTTP ' + r.status + ' ' + t.slice(0, 120) + ' tok=' + !!tok + ' cookie=' + !!cookie);
+  console.log('UNGM sample', t.slice(0, 1800).replace(/\s+/g, ' '));
+  const MON = { Jan: 0, Feb: 1, Mar: 2, Apr: 3, May: 4, Jun: 5, Jul: 6, Aug: 7, Sep: 8, Oct: 9, Nov: 10, Dec: 11 };
+  const d8 = v => { const m = String(v || '').match(/(\d{2})-(\w{3})-(\d{4})/); return m ? new Date(Date.UTC(+m[3], MON[m[2]], +m[1])).toISOString().slice(0, 10) : ''; };
   const out = [];
-  for (const m of t.matchAll(/<div[^>]*class="[^"]*tableRow[^"]*"[^>]*data-noticeid="(\d+)"[\s\S]*?(?=<div[^>]*class="[^"]*tableRow|$)/g)) {
-    const b = m[0]; const cells = [...b.matchAll(/<span[^>]*>([\s\S]*?)<\/span>/g)].map(x => x[1].replace(/<[^>]+>/g, '').replace(/\s+/g, ' ').trim()).filter(Boolean);
-    const title = (b.match(/<span[^>]*class="[^"]*ungm-title[^"]*"[^>]*>([\s\S]*?)<\/span>/) || [])[1]?.replace(/<[^>]+>/g, '').trim() || cells[0];
-    const dates = [...b.matchAll(/(\d{2})-(\w{3})-(\d{4})/g)].map(x => iso(new Date(`${x[2]} ${x[1]} ${x[3]} UTC`).toISOString()));
-    out.push({ id: 'ungm-' + m[1], source: 'ungm', title, org: cells[3] || '', country: cells[cells.length - 1] || '', category: 'UN notice', published: dates[1] || '', deadline: dates[0] || '', value: '', url: 'https://www.ungm.org/Public/Notice/' + m[1] });
+  for (const blk of t.split(/(?=data-noticeid=)/).slice(1)) {
+    const id = (blk.match(/data-noticeid="(\d+)"/) || [])[1]; if (!id) continue;
+    const cells = [...blk.matchAll(/<span[^>]*>([\s\S]*?)<\/span>/g)].map(x => x[1].replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim()).filter(Boolean);
+    const dates = [...blk.matchAll(/\d{2}-\w{3}-\d{4}/g)].map(x => d8(x[0]));
+    const title = (blk.match(/ungm-title[^>]*>([\s\S]*?)<\/(?:span|div|a)>/) || [])[1]?.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim() || cells[0];
+    out.push({ id: 'ungm-' + id, source: 'ungm', title, org: cells.find((c, i) => i > 0 && !/\d{2}-\w{3}-\d{4}/.test(c) && c !== title) || 'UN', country: cells[cells.length - 1] || '', category: 'UN notice', published: dates.length > 1 ? dates[1] : '', deadline: dates[0] || '', value: '', url: 'https://www.ungm.org/Public/Notice/' + id });
   }
-  return out.filter(x => x.title);
-});
-await src('au-tenders', async () => {
-  const d1 = new Date().toISOString().slice(0, 19) + 'Z', d0 = new Date(Date.now() - 5 * 864e5).toISOString().slice(0, 19) + 'Z';
-  const j = await getJSON(`https://api.tenders.gov.au/ocds/findByDates/contractPublished/${d0}/${d1}`);
-  console.log('AU sample', JSON.stringify((j.releases || [])[0] || j).slice(0, 700));
-  return (j.releases || []).map(r => ({ id: 'au-' + r.id, source: 'au-tenders', title: txt(r.tender?.title || r.contracts?.[0]?.title), org: txt(r.buyer?.name), country: 'Australia', category: txt(r.tender?.mainProcurementCategory) || 'Contract notice', published: iso(r.date), deadline: iso(r.tender?.tenderPeriod?.endDate), value: '', url: 'https://www.tenders.gov.au/Atm' })).filter(x => x.title && x.deadline);
+  return out.filter(x => x.title && (!x.deadline || x.deadline >= today));
 });
 await src('canada-buys', async () => {
-  const r = await fetch('https://canadabuys.canada.ca/opendata/pub/openTenderNotice-ouvertAvisAppelOffres.csv'); if (!r.ok) throw new Error('HTTP ' + r.status);
+  const r = await fetch('https://canadabuys.canada.ca/opendata/pub/openTenderNotice-ouvertAvisAppelOffres.csv', { headers: UA }); if (!r.ok) throw new Error('HTTP ' + r.status);
   const t = await r.text(); const rows = []; let row = [], cur = '', q = false;
   for (let i = 0; i < t.length; i++) { const ch = t[i]; if (q) { if (ch === '"') { if (t[i + 1] === '"') { cur += '"'; i++; } else q = false; } else cur += ch; } else if (ch === '"') q = true; else if (ch === ',') { row.push(cur); cur = ''; } else if (ch === '\n') { row.push(cur); rows.push(row); row = []; cur = ''; } else if (ch !== '\r') cur += ch; }
   const h = rows[0].map(x => x.replace(/^﻿/, '')); console.log('CA headers', h.join('|').slice(0, 900));
@@ -65,9 +68,26 @@ await src('canada-buys', async () => {
   return rows.slice(1).filter(r => r[iT] && /open/i.test(r[iS] || 'open')).map(r => ({ id: 'ca-' + r[iN], source: 'canada-buys', title: r[iT], org: r[iO] || '', country: 'Canada', category: 'Tender notice', published: iso((r[iP] || '').slice(0, 10)), deadline: iso((r[iD] || '').slice(0, 10)), value: '', url: r[iU] || 'https://canadabuys.canada.ca' }));
 });
 await src('prozorro', async () => {
-  const j = await getJSON('https://public-api.prozorro.gov.ua/api/2.5/tenders?descending=1&limit=100&opt_fields=title,procuringEntity,tenderPeriod,value,status,dateModified,datePublished');
-  console.log('PZ sample', JSON.stringify((j.data || [])[0] || j).slice(0, 600));
-  return (j.data || []).filter(x => x.status === 'active.tendering').map(x => ({ id: 'pz-' + x.id, source: 'prozorro', title: txt(x.title), org: txt(x.procuringEntity?.name), country: 'Ukraine', category: 'Tender', published: iso((x.datePublished || x.dateModified || '').slice(0, 10)), deadline: iso((x.tenderPeriod?.endDate || '').slice(0, 10)), value: x.value?.amount ? `${Math.round(x.value.amount).toLocaleString('en-GB')} ${x.value.currency}` : '', url: 'https://prozorro.gov.ua/en/tender/' + x.id })).filter(x => x.title);
+  let u = 'https://public-api.prozorro.gov.ua/api/2.5/tenders?descending=1&limit=1000&opt_fields=title,procuringEntity,tenderPeriod,value,status,datePublished', out = [];
+  for (let p = 0; p < 6 && u; p++) {
+    const j = await getJSON(u); const d = j.data || []; if (p === 0) console.log('PZ sample', JSON.stringify(d[0] || j).slice(0, 400));
+    for (const x of d) if (/^active(\.tendering)?$/.test(x.status) && x.tenderPeriod?.endDate && x.tenderPeriod.endDate.slice(0, 10) >= today && x.title) out.push({ id: 'pz-' + x.id, source: 'prozorro', title: txt(x.title), org: txt(x.procuringEntity?.name), country: 'Ukraine', category: 'Tender', published: iso((x.datePublished || x.tenderPeriod.startDate || '').slice(0, 10)), deadline: iso(x.tenderPeriod.endDate.slice(0, 10)), value: x.value?.amount ? `${Math.round(x.value.amount).toLocaleString('en-GB')} ${x.value.currency}` : '', url: 'https://prozorro.gov.ua/en/tender/' + x.id });
+    u = j.next_page?.uri && d.length ? j.next_page.uri : null;
+  }
+  return out;
+});
+await src('undp', async () => {
+  const h = await (await fetch('https://procurement-notices.undp.org/', { headers: UA })).text();
+  const MON = { Jan: 0, Feb: 1, Mar: 2, Apr: 3, May: 4, Jun: 5, Jul: 6, Aug: 7, Sep: 8, Oct: 9, Nov: 10, Dec: 11 };
+  const d8 = v => { const m = String(v || '').match(/(\d{2})-(\w{3})-(\d{2})/); return m ? new Date(Date.UTC(2000 + +m[3], MON[m[2]], +m[1])).toISOString().slice(0, 10) : ''; };
+  const out = [];
+  for (const m of h.matchAll(/<a href="(view_(?:notice|negotiation)\.cfm\?[^"]+)"[^>]*vacanciesTableLink[^>]*>([\s\S]*?)<\/a>/g)) {
+    const f = {}; for (const c of m[2].matchAll(/cell__label">\s*([^<]+?)\s*<\/div>\s*<span>([\s\S]*?)<\/span>/g)) f[c[1].trim()] = c[2].replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
+    if (!f.Title) continue;
+    out.push({ id: 'undp-' + m[1].replace(/\D/g, ''), source: 'undp', title: f.Title, org: f['UNDP Office/Country'] || 'UNDP', country: ((f['UNDP Office/Country'] || '').split(' - ')[1] || '').split('/')[0].trim(), category: f.Process || 'UNDP notice', published: d8(f.Posted), deadline: d8(f.Deadline), value: '', url: 'https://procurement-notices.undp.org/' + m[1] });
+  }
+  console.log('UNDP parsed', out.length, JSON.stringify(out[0] || {}).slice(0, 300));
+  return out;
 });
 await src('korea-g2b', async () => {
   let key = process.env.DATA_GO_KR_KEY; if (!key) throw new Error('DATA_GO_KR_KEY not set');

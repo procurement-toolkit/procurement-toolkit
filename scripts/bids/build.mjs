@@ -10,7 +10,7 @@ const SRC = {
   'world-bank': { ko: '세계은행', en: 'World Bank', credit: { ko: '출처: World Bank Procurement Notices API', en: 'Source: World Bank Procurement Notices API' } },
   uk: { ko: '영국 Contracts Finder', en: 'UK Contracts Finder', credit: { ko: '출처: UK Contracts Finder (Open Government Licence v3.0)', en: 'Source: UK Contracts Finder, contains public sector information licensed under the Open Government Licence v3.0' } },
   ungm: { ko: 'UN 조달(UNGM)', en: 'UN Global Marketplace (UNGM)', credit: { ko: '출처: UN Global Marketplace 공개 입찰공고', en: 'Source: UN Global Marketplace public notices' } },
-  'au-tenders': { ko: '호주 AusTender', en: 'Australia AusTender', credit: { ko: '출처: AusTender OCDS API (호주 정부)', en: 'Source: AusTender OCDS API, Australian Government' } },
+  undp: { ko: 'UNDP 조달', en: 'UNDP Procurement Notices', credit: { ko: '출처: UNDP Procurement Notices', en: 'Source: UNDP Procurement Notices' } },
   'canada-buys': { ko: '캐나다 CanadaBuys', en: 'Canada CanadaBuys', credit: { ko: '출처: CanadaBuys 공개 데이터 (Open Government Licence – Canada)', en: 'Source: CanadaBuys open data, Open Government Licence – Canada' } },
   prozorro: { ko: '우크라이나 Prozorro', en: 'Ukraine Prozorro', credit: { ko: '출처: Prozorro 공개 API', en: 'Source: Prozorro public API' } },
   'eu-ted': { ko: 'EU TED', en: 'EU TED (Tenders Electronic Daily)', credit: { ko: '출처: EU Publications Office TED', en: 'Source: Publications Office of the EU, TED' } },
