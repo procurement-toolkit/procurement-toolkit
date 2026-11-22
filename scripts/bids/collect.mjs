@@ -165,19 +165,20 @@ async function gt(text, tl) {
   if (!r.ok) throw new Error('HTTP ' + r.status);
   const j = await r.json(); return { t: (j[0] || []).map(a => a[0]).join('').trim(), l: j[2] };
 }
-const CAP = 500; let done = 0, fails = 0;
+const CAP = 1200; let done = 0, fails = 0, streak = 0;
+const sleep = ms => new Promise(r => setTimeout(r, ms));
+async function gtRetry(text, tl) { try { return await gt(text, tl); } catch (e) { if (/429/.test(String(e.message))) { await sleep(45000); return await gt(text, tl); } throw e; } }
 const todo = out.filter(x => !(TR[x.id]) && x.title).slice(0, CAP);
-for (let i = 0; i < todo.length && fails < 25; i += 2) {
-  await new Promise(r => setTimeout(r, 400));
-  await Promise.all(todo.slice(i, i + 2).map(async x => {
-    const e = {};
-    try {
-      if (hasKo(x.title)) { e.k = x.title; e.e = (await gt(x.title, 'en')).t; }
-      else if (isEn(x.title)) { e.e = x.title; e.k = (await gt(x.title, 'ko')).t; }
-      else { const en = await gt(x.title, 'en'); e.e = en.l === 'en' ? x.title : en.t; e.k = (await gt(e.e, 'ko')).t; }
-      TR[x.id] = e; done++;
-    } catch (err) { fails++; if (fails <= 3) console.log('translate error', String(err.message || err).slice(0, 160)); }
-  }));
+for (const x of todo) {
+  if (streak >= 5) break;
+  await sleep(1500);
+  const e = {};
+  try {
+    if (hasKo(x.title)) { e.k = x.title; e.e = (await gtRetry(x.title, 'en')).t; }
+    else if (isEn(x.title)) { e.e = x.title; await sleep(1200); e.k = (await gtRetry(x.title, 'ko')).t; }
+    else { const en = await gtRetry(x.title, 'en'); e.e = en.l === 'en' ? x.title : en.t; await sleep(1200); e.k = (await gtRetry(e.e, 'ko')).t; }
+    TR[x.id] = e; done++; streak = 0;
+  } catch (err) { fails++; streak++; if (fails <= 3) console.log('translate error', String(err.message || err).slice(0, 160)); }
 }
 console.log('translated', done, 'failed', fails, 'cache', Object.keys(TR).length);
 const live = new Set(out.map(x => x.id)); for (const k of Object.keys(TR)) if (!live.has(k)) delete TR[k];
