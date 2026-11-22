@@ -1,0 +1,55 @@
+// Collects open public tenders/opportunities from official open APIs into data/bids/open.json (normalized).
+// Sources: KR 나라장터 (data.go.kr, needs DATA_GO_KR_KEY), World Bank procurement notices, UK Contracts Finder (OCDS), EU TED v3.
+// Each source is isolated: a failure never breaks the others. Raw samples are logged so field names can be adjusted from the Action log.
+import fs from 'fs';
+const today = new Date().toISOString().slice(0, 10);
+const iso = v => { if (!v) return ''; const d = new Date(String(v).replace(/^(\d{4})(\d{2})(\d{2})(\d{2})?(\d{2})?$/, (m, a, b, c, h = '00', mi = '00') => `${a}-${b}-${c}T${h}:${mi}:00+09:00`)); return isNaN(d) ? '' : d.toISOString().slice(0, 10); };
+const first = (...v) => v.find(x => x !== undefined && x !== null && x !== '') ?? '';
+const txt = v => { if (v == null) return ''; if (typeof v === 'string') return v.trim(); if (Array.isArray(v)) return txt(v[0]); if (typeof v === 'object') return txt(v.ENG ?? v.eng ?? v.en ?? Object.values(v)[0]); return String(v); };
+const status = {}, all = [];
+async function src(name, fn) {
+  try { const r = await fn(); status[name] = { ok: true, n: r.length, at: today }; all.push(...r); console.log(name, 'ok', r.length); }
+  catch (e) { status[name] = { ok: false, error: String(e.message).slice(0, 200), at: today }; console.log(name, 'FAILED:', e.message); }
+}
+const getJSON = async (u, opt) => { const r = await fetch(u, opt); const t = await r.text(); if (!r.ok) throw new Error(`HTTP ${r.status} ${t.slice(0, 150)}`); try { return JSON.parse(t); } catch { throw new Error('not JSON: ' + t.slice(0, 200)); } };
+
+await src('world-bank', async () => {
+  const j = await getJSON('https://search.worldbank.org/api/v2/procnotices?format=json&rows=200&os=0&srt=submission_date&order=desc&apilang=en');
+  const arr = Array.isArray(j.procnotices) ? j.procnotices : Object.values(j.procnotices || {});
+  console.log('WB sample', JSON.stringify(arr[0] || j).slice(0, 700));
+  return arr.map(x => ({ id: 'wb-' + first(x.id, x.bid_reference_no), source: 'world-bank', title: txt(first(x.bid_description, x.project_name)), org: txt(first(x.contact_organization, x.project_name)), country: txt(x.project_ctry_name), category: txt(first(x.procurement_group_desc, x.procurement_group, x.notice_type)), published: iso(x.noticedate), deadline: iso(first(x.submission_deadline_date, x.submission_date)), value: '', url: first(x.url, `https://projects.worldbank.org/en/projects-operations/procurement-detail/${x.id}`) })).filter(x => x.title);
+});
+await src('uk', async () => {
+  const from = new Date(Date.now() - 7 * 864e5).toISOString().slice(0, 19);
+  const j = await getJSON(`https://www.contractsfinder.service.gov.uk/Published/Notices/OCDS/Search?publishedFrom=${from}&stage=tender&size=100`);
+  const arr = j.releases || []; console.log('UK sample', JSON.stringify(arr[0] || j).slice(0, 700));
+  return arr.map(r => ({ id: 'uk-' + r.id, source: 'uk', title: txt(r.tender?.title), org: txt(r.buyer?.name), country: 'United Kingdom', category: txt(first(r.tender?.mainProcurementCategory, r.tender?.classification?.description)), published: iso(first(r.publishedDate, r.date)), deadline: iso(r.tender?.tenderPeriod?.endDate), value: r.tender?.value?.amount ? `${Math.round(r.tender.value.amount).toLocaleString('en-GB')} ${r.tender.value.currency || 'GBP'}` : '', url: `https://www.contractsfinder.service.gov.uk/Notice/${String(r.id).split('-').slice(0, 5).join('-')}` })).filter(x => x.title);
+});
+await src('eu-ted', async () => {
+  const d0 = new Date(Date.now() - 5 * 864e5).toISOString().slice(0, 10).replace(/-/g, '');
+  const j = await getJSON('https://api.ted.europa.eu/v3/notices/search', { method: 'POST', headers: { 'content-type': 'application/json', accept: 'application/json' }, body: JSON.stringify({ query: `publication-date>=${d0} AND notice-type=cn-standard`, fields: ['publication-number', 'notice-title', 'buyer-name', 'deadline-receipt-tender-date-lot', 'publication-date', 'place-of-performance-country-lot', 'links'], limit: 100, page: 1, scope: 'ACTIVE' }) });
+  const arr = j.notices || []; console.log('TED sample', JSON.stringify(arr[0] || j).slice(0, 900));
+  return arr.map(n => ({ id: 'ted-' + n['publication-number'], source: 'eu-ted', title: txt(n['notice-title']), org: txt(n['buyer-name']), country: txt(n['place-of-performance-country-lot']), category: 'Contract notice', published: iso(txt(n['publication-date']).replace(/[^\d-]/g, '').slice(0, 10)), deadline: iso(txt(n['deadline-receipt-tender-date-lot']).slice(0, 10)), value: '', url: txt(n.links?.html) || `https://ted.europa.eu/en/notice/-/detail/${n['publication-number']}` })).filter(x => x.title);
+});
+await src('korea-g2b', async () => {
+  let key = process.env.DATA_GO_KR_KEY; if (!key) throw new Error('DATA_GO_KR_KEY not set');
+  if (/%[0-9A-Fa-f]{2}/.test(key)) key = decodeURIComponent(key);   // secret may hold the URL-encoded key; decode so it is not double-encoded
+  const p = n => String(n).padStart(2, '0'), f = d => `${d.getFullYear()}${p(d.getMonth() + 1)}${p(d.getDate())}${p(d.getHours())}${p(d.getMinutes())}`;
+  const now = new Date(), b = new Date(now - 3 * 864e5);
+  const u = `https://apis.data.go.kr/1230000/ao/PubDataOpnStdService/getDataSetOpnStdBidPblancInfo?ServiceKey=${encodeURIComponent(key)}&numOfRows=999&pageNo=1&type=json&bidNtceBgnDt=${f(b)}&bidNtceEndDt=${f(now)}`;
+  const j = await getJSON(u);
+  if (j.OpenAPI_ServiceResponse) throw new Error(JSON.stringify(j.OpenAPI_ServiceResponse.cmmMsgHeader));
+  let arr = j.response?.body?.items?.item || j.response?.body?.items || []; arr = Array.isArray(arr) ? arr : [arr].filter(Boolean);
+  console.log('G2B sample', JSON.stringify(arr[0] || j).slice(0, 700));
+  return arr.map(x => ({ id: 'kr-' + first(x.bidNtceNo, x.bidNtceNm) + '-' + first(x.bidNtceOrd, ''), source: 'korea-g2b', title: txt(x.bidNtceNm), org: txt(first(x.ntceInsttNm, x.dminsttNm)), country: '대한민국', category: txt(first(x.bsnsDivNm, x.ntceKindNm)), published: iso(first(x.bidNtceDt, x.rgstDt)), deadline: iso(x.bidClseDt), value: x.presmptPrce ? `${Number(x.presmptPrce).toLocaleString('ko-KR')}원` : '', url: first(x.bidNtceUrl, x.bidNtceDtlUrl, 'https://www.g2b.go.kr') })).filter(x => x.title);
+});
+// merge with previous (keep still-open items), dedupe by id, drop expired
+const path = 'data/bids/open.json';
+const prev = fs.existsSync(path) ? JSON.parse(fs.readFileSync(path, 'utf8')) : [];
+const m = new Map(); for (const x of [...prev, ...all]) m.set(x.id, x);
+let out = [...m.values()].filter(x => !x.deadline || x.deadline >= today);
+const cap = {}; out = out.sort((a, b) => (b.published || '').localeCompare(a.published || '')).filter(x => (cap[x.source] = (cap[x.source] || 0) + 1) <= 400);
+fs.writeFileSync(path, JSON.stringify(out));
+const sp = 'data/bids/status.json'; const old = fs.existsSync(sp) ? JSON.parse(fs.readFileSync(sp, 'utf8')) : {};
+fs.writeFileSync(sp, JSON.stringify({ ...old, ...Object.fromEntries(Object.entries(status).map(([k, v]) => [k, v.ok ? v : { ...old[k], ...v }])) }, null, 1));
+console.log('open total', out.length, JSON.stringify(Object.fromEntries(Object.keys(status).map(k => [k, out.filter(x => x.source === k).length]))));
