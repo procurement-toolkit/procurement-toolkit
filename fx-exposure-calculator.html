@@ -56,6 +56,7 @@
   .card{background:#fff;border:1px solid var(--slate-200);border-radius:var(--radius-lg);box-shadow:var(--shadow-sm);margin-bottom:20px}
   .card-header{padding:16px 20px;border-bottom:1px solid var(--slate-100);display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
   .card-title{font-size:14px;font-weight:600;color:var(--slate-800)}
+  h2.card-title{margin:0;line-height:1.4}
   .card-body{padding:20px}
 
   .item-table{width:100%;border-collapse:collapse}
@@ -135,6 +136,7 @@
   @media print{.ad-area-main,.ad-main-box,header,footer{display:none !important}.main{grid-template-columns:1fr}}
   @media (max-width:900px){.main{grid-template-columns:1fr}}
   @media (max-width:640px){.ad-area-main{padding:0 16px 20px}.faq-wrap{padding:0 16px}}
+.related-tools{max-width:960px;margin:32px auto;padding:0 16px}.related-tools h2{font-size:15px;font-weight:700;margin:0 0 10px}.related-tools ul{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:8px}.related-tools a{display:block;padding:10px 12px;border:1px solid #E2E8F0;border-radius:8px;font-size:13px;color:#1E293B;text-decoration:none}.related-tools a:hover{border-color:#94A3B8}
 </style>
 
 <script src="https://cdn.amplitude.com/script/d4aa9301e01f4600b5eeb018e160aa7c.js"></script>
@@ -176,7 +178,7 @@
   <section>
     <div class="card">
       <div class="card-header">
-        <div class="card-title">통화별 구매 내역</div>
+        <h2 class="card-title">통화별 구매 내역</h2>
         <div style="font-size:11.5px;color:var(--slate-400);">기준통화: 원화(KRW)</div>
       </div>
       <div class="card-body">
@@ -191,7 +193,7 @@
     </div>
 
     <div class="card">
-      <div class="card-header"><div class="card-title">환율 변동 시나리오</div></div>
+      <div class="card-header"><h2 class="card-title">환율 변동 시나리오</h2></div>
       <div class="card-body">
         <label class="field-label">전체 통화가 동시에 이만큼 움직인다면? (원화 기준 평가절하 %)</label>
         <div class="sim-row">
@@ -205,7 +207,7 @@
 
   <aside>
     <div class="card">
-      <div class="card-header"><div class="card-title">총 환노출 금액</div></div>
+      <div class="card-header"><h2 class="card-title">총 환노출 금액</h2></div>
       <div class="card-body">
         <div class="result-total">
           <div class="label">원화 환산 총 구매액</div>
@@ -221,7 +223,7 @@
 
 <div style="max-width:1200px;margin:0 auto;padding:0 24px 30px;">
   <div class="card">
-    <div class="card-header"><div class="card-title">환노출 관리, 왜 필요한가</div></div>
+    <div class="card-header"><h2 class="card-title">환노출 관리, 왜 필요한가</h2></div>
     <div class="card-body" style="font-size:12.5px;color:var(--slate-600);line-height:1.7;">
       <p>구매액의 상당 부분이 한 통화(예: 미국 달러)에 몰려 있으면, 그 통화가 원화 대비 급등할 때 원가가 예고 없이 뛸 수 있습니다. 여러 통화로 소싱을 분산하거나, 환헤지(선물환 등)를 검토하거나, 계약 시점에 환율 조항을 넣는 식으로 대응할 수 있습니다.</p>
       <p style="margin-top:8px;"><b>실무 활용법:</b> 분기마다 이 계산기로 통화별 노출 비중을 점검하고, 특정 통화가 전체의 50%를 넘으면(집중 리스크 경고가 뜹니다) 재무팀과 헤지 여부를 논의하는 프로세스를 만들어두면 좋습니다.</p>
@@ -244,7 +246,7 @@
 
 <div class="faq-wrap">
   <div class="card">
-    <div class="card-header"><div class="card-title">자주 묻는 질문</div></div>
+    <div class="card-header"><h2 class="card-title">자주 묻는 질문</h2></div>
     <div class="card-body">
       <details class="faq-item"><summary>환노출과 환리스크는 같은 말인가요?</summary><p>환노출(Exposure)은 "환율 변동에 영향받는 금액이 얼마인지"를 뜻하고, 환리스크는 그 노출로 인해 실제로 손실이 발생할 가능성을 뜻합니다. 노출이 커야 리스크도 커지므로, 노출 파악이 리스크 관리의 첫 단계입니다.</p></details>
       <details class="faq-item"><summary>통화 집중도는 어느 정도가 위험한가요?</summary><p>정해진 기준은 없지만, 실무적으로 단일 통화가 전체 구매액의 50%를 넘으면 그 통화 하나의 변동에 원가 전체가 크게 흔들릴 수 있어 분산을 고려해볼 시점으로 봅니다.</p></details>
@@ -271,6 +273,7 @@
   </div>
 </div>
 
+<!--RELATED--><nav class="related-tools" aria-label="함께 쓰는 관련 도구"><h2>함께 쓰는 관련 도구</h2><ul><li><a href="currency-hedging-calculator.html">환헤지 비용 계산기</a></li><li><a href="cost-of-quality-calculator.html">품질비용(Cost of Quality) 계산기</a></li><li><a href="personal-duty-calculator.html">해외직구 관부가세 계산기</a></li><li><a href="leadtime-calculator.html">선적 리드타임 계산기</a></li><li><a href="demurrage-detention-calculator.html">디머리지·디텐션 비용 계산기</a></li><li><a href="cost-structure-calculator.html">원가구조 이해 가이드 &amp; 계산기</a></li></ul></nav><!--/RELATED-->
 <footer><div class="footer-inner">
   <div class="footer-logo"><svg width="24" height="24" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align:middle;margin-right:9px;flex-shrink:0;"><path d="M20 2.5L36.5 11.5V28.5L20 37.5L3.5 28.5V11.5L20 2.5Z" stroke="url(#cbmGradF)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M20 2.5V20M20 20L36.5 11.5M20 20L3.5 11.5" stroke="url(#cbmGradF)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/></svg>CBM<span style="color:#2563EB;">Lab</span></div>
   <nav><a href="index.html" class="footer-link">전체 도구</a><a href="privacy.html" class="footer-link">개인정보 처리방침</a></nav>

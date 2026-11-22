@@ -3,9 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="ABC 재고 분석 도구 - 파레토 원칙(80/20 법칙)에 따라 SKU를 소비가치 기준으로 A/B/C 등급으로 자동 분류합니다. 어떤 품목에 관리 자원을 집중해야 하는지 한눈에 확인하세요.">
-<meta name="keywords" content="ABC 재고분석, ABC analysis inventory, 파레토 분석, SKU 등급 분류, 재고 우선순위, supply chain inventory management">
-<title>ABC 재고 분석 도구 — CBM Lab</title>
+<meta name="description" content="ABC 분석을 엑셀 없이 해보세요. 품목별 금액을 붙여넣으면 A·B·C 등급과 누적 비율을 계산하고, 재고 관리 기법과 예시를 설명합니다.">
+<meta name="keywords" content="ABC 분석, ABC 분석 엑셀, ABC 분석 예시, 재고 ABC, ABC XYZ 분석, 파레토 재고">
+<title>ABC 분석 엑셀 대신 – 재고 ABC 분석·XYZ 기법 도구 | CBM Lab</title>
 <link rel="icon" href="favicon.ico" sizes="any">
 <link rel="icon" href="favicon.ico" type="image/x-icon">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
@@ -13,15 +13,15 @@
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="CBM Lab">
 <meta property="og:locale" content="ko_KR">
-<meta property="og:title" content="ABC 재고 분석 도구 — CBM Lab">
-<meta property="og:description" content="ABC 재고 분석 도구 - 파레토 원칙에 따라 SKU를 소비가치 기준으로 A/B/C 등급으로 자동 분류합니다.">
+<meta property="og:title" content="ABC 분석 엑셀 대신 – 재고 ABC 분석·XYZ 기법 도구 | CBM Lab">
+<meta property="og:description" content="ABC 분석을 엑셀 없이 해보세요. 품목별 금액을 붙여넣으면 A·B·C 등급과 누적 비율을 계산하고, 재고 관리 기법과 예시를 설명합니다.">
 <meta property="og:url" content="https://procurement-toolkit-eight.vercel.app/abc-inventory-analysis.html">
 <meta property="og:image" content="https://procurement-toolkit-eight.vercel.app/assets/hero-team.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="ABC 재고 분석 도구 — CBM Lab">
-<meta name="twitter:description" content="ABC 재고 분석 도구 - 파레토 원칙에 따라 SKU를 소비가치 기준으로 A/B/C 등급으로 자동 분류합니다.">
+<meta name="twitter:title" content="ABC 분석 엑셀 대신 – 재고 ABC 분석·XYZ 기법 도구 | CBM Lab">
+<meta name="twitter:description" content="ABC 분석을 엑셀 없이 해보세요. 품목별 금액을 붙여넣으면 A·B·C 등급과 누적 비율을 계산하고, 재고 관리 기법과 예시를 설명합니다.">
 <meta name="twitter:image" content="https://procurement-toolkit-eight.vercel.app/assets/hero-team.jpg">
 
 <link rel="alternate" hreflang="ko" href="https://procurement-toolkit-eight.vercel.app/abc-inventory-analysis.html">
@@ -54,6 +54,7 @@
   .card{background:#fff;border:1px solid var(--slate-200);border-radius:var(--radius-lg);box-shadow:var(--shadow-sm);margin-bottom:20px}
   .card-header{padding:16px 20px;border-bottom:1px solid var(--slate-100);display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
   .card-title{font-size:14px;font-weight:700;color:var(--slate-800)}
+  h2.card-title{margin:0;line-height:1.4}
   .card-body{padding:20px;overflow-x:auto}
 
   .threshold-row{display:flex;gap:20px;align-items:center;margin-bottom:16px;flex-wrap:wrap}
@@ -119,6 +120,7 @@
 
   @media print{.ad-area-main,.ad-main-box,header,footer{display:none !important}}
   @media (max-width:640px){.ad-area-main{padding:0 16px 20px}.faq-wrap{padding:0 16px}.summary-grid{grid-template-columns:1fr}}
+.related-tools{max-width:960px;margin:32px auto;padding:0 16px}.related-tools h2{font-size:15px;font-weight:700;margin:0 0 10px}.related-tools ul{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:8px}.related-tools a{display:block;padding:10px 12px;border:1px solid #E2E8F0;border-radius:8px;font-size:13px;color:#1E293B;text-decoration:none}.related-tools a:hover{border-color:#94A3B8}
 </style>
 
 <script src="https://cdn.amplitude.com/script/d4aa9301e01f4600b5eeb018e160aa7c.js"></script>
@@ -158,7 +160,7 @@
 
 <div class="main">
   <div class="card">
-    <div class="card-header"><div class="card-title">SKU 목록 (소비가치 = 연간 수요 × 단가)</div></div>
+    <div class="card-header"><h2 class="card-title">SKU 목록 (소비가치 = 연간 수요 × 단가)</h2></div>
     <div class="card-body">
       <div class="threshold-row">
         <div class="threshold-item">A등급 누적 기준 <input type="number" id="thresholdA" value="80" min="1" max="99" oninput="calc()">%</div>
@@ -185,7 +187,7 @@
 
 <div class="faq-wrap">
   <div class="card">
-    <div class="card-header"><div class="card-title">자주 묻는 질문</div></div>
+    <div class="card-header"><h2 class="card-title">자주 묻는 질문</h2></div>
     <div class="card-body">
       <details class="faq-item"><summary>왜 80%/95% 기준을 쓰나요?</summary><p>파레토 원칙(80/20 법칙)에서 나온 업계 표준 기준입니다. 다만 절대적인 규칙은 아니라서, 회사 상황에 맞게 70%/90%처럼 조정해서 쓰는 경우도 많습니다.</p></details>
       <details class="faq-item"><summary>A등급 품목이 왜 이렇게 적게 나오나요?</summary><p>정상입니다. 보통 전체 SKU의 10~20% 정도가 A등급으로 분류되고, 이 소수의 품목이 전체 소비가치의 70~80%를 차지하는 게 파레토 분포의 특징입니다.</p></details>
@@ -212,6 +214,7 @@
   </div>
 </div>
 
+<!--RELATED--><nav class="related-tools" aria-label="함께 쓰는 관련 도구"><h2>함께 쓰는 관련 도구</h2><ul><li><a href="payment-terms-cost-calculator.html">결제조건 비용 계산기</a></li><li><a href="landed-cost-calculator.html">해외 착지원가 계산기</a></li><li><a href="cbm.html">CBM(용적중량) 계산기</a></li><li><a href="fob-cif.html">수입 원가 계산기</a></li><li><a href="fx-exposure-calculator.html">환노출(FX Exposure) 계산기</a></li><li><a href="currency-hedging-calculator.html">환헤지 비용 계산기</a></li></ul></nav><!--/RELATED-->
 <footer><div class="footer-inner">
   <div class="footer-logo"><svg width="24" height="24" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align:middle;margin-right:9px;flex-shrink:0;"><path d="M20 2.5L36.5 11.5V28.5L20 37.5L3.5 28.5V11.5L20 2.5Z" stroke="url(#cbmGradF)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M20 2.5V20M20 20L36.5 11.5M20 20L3.5 11.5" stroke="url(#cbmGradF)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/></svg>CBM<span style="color:#2563EB;">Lab</span></div>
   <nav><a href="index.html" class="footer-link">전체 도구</a><a href="privacy.html" class="footer-link">개인정보 처리방침</a></nav>

@@ -5,9 +5,9 @@
      crossorigin="anonymous"></script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="해상·항공 화물의 CBM(용적중량)을 무료로 계산하세요. 컨테이너 적재 추천, 볼륨 무게, 청구 적용 무게까지 한 번에.">
-<meta name="keywords" content="CBM 계산기, 용적중량, 해상화물, 컨테이너 적재량, 화물 계산, 무역 계산기, logistics calculator">
-<title>CBM Lab — 해상/항공 화물 부피 계산기</title>
+<meta name="description" content="CBM 계산기: 가로×세로×높이로 CBM(㎥)과 항공 용적중량을 바로 계산하세요. CBM 계산 공식, 컨테이너 적재량, 청구 중량 기준까지 한 페이지에.">
+<meta name="keywords" content="CBM 계산기, CBM 계산법, CBM 계산식, CBM 공식, 용적중량 계산, 부피중량, 컨테이너 적재량">
+<title>CBM 계산기 – CBM 계산법·공식, 용적중량 무료 계산 | CBM Lab</title>
 <link rel="icon" href="favicon.ico" sizes="any">
 <link rel="icon" href="favicon.ico" type="image/x-icon">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
@@ -15,15 +15,15 @@
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="CBM Lab">
 <meta property="og:locale" content="ko_KR">
-<meta property="og:title" content="CBM Lab — 해상/항공 화물 부피 계산기">
-<meta property="og:description" content="해상·항공 화물의 CBM(용적중량)을 무료로 계산하세요. 컨테이너 적재 추천, 볼륨 무게, 청구 적용 무게까지 한 번에.">
+<meta property="og:title" content="CBM 계산기 – CBM 계산법·공식, 용적중량 무료 계산 | CBM Lab">
+<meta property="og:description" content="CBM 계산기: 가로×세로×높이로 CBM(㎥)과 항공 용적중량을 바로 계산하세요. CBM 계산 공식, 컨테이너 적재량, 청구 중량 기준까지 한 페이지에.">
 <meta property="og:url" content="https://procurement-toolkit-eight.vercel.app/cbm.html">
 <meta property="og:image" content="https://procurement-toolkit-eight.vercel.app/assets/hero-team.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="CBM Lab — 해상/항공 화물 부피 계산기">
-<meta name="twitter:description" content="해상·항공 화물의 CBM(용적중량)을 무료로 계산하세요. 컨테이너 적재 추천, 볼륨 무게, 청구 적용 무게까지 한 번에.">
+<meta name="twitter:title" content="CBM 계산기 – CBM 계산법·공식, 용적중량 무료 계산 | CBM Lab">
+<meta name="twitter:description" content="CBM 계산기: 가로×세로×높이로 CBM(㎥)과 항공 용적중량을 바로 계산하세요. CBM 계산 공식, 컨테이너 적재량, 청구 중량 기준까지 한 페이지에.">
 <meta name="twitter:image" content="https://procurement-toolkit-eight.vercel.app/assets/hero-team.jpg">
 
 <link rel="alternate" hreflang="ko" href="https://procurement-toolkit-eight.vercel.app/cbm.html">
@@ -817,6 +817,7 @@
   .faq-item summary::before{content:'Q. ';color:var(--accent)}
   .faq-item p{margin-top:8px;font-size:12.5px;color:var(--slate-600);line-height:1.7;padding-left:2px}
   @media (max-width:640px){.faq-wrap{padding:0 16px}}
+.related-tools{max-width:960px;margin:32px auto;padding:0 16px}.related-tools h2{font-size:15px;font-weight:700;margin:0 0 10px}.related-tools ul{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:8px}.related-tools a{display:block;padding:10px 12px;border:1px solid #E2E8F0;border-radius:8px;font-size:13px;color:#1E293B;text-decoration:none}.related-tools a:hover{border-color:#94A3B8}
 </style>
 <script src="https://cdn.amplitude.com/script/d4aa9301e01f4600b5eeb018e160aa7c.js"></script>
 <script>
@@ -880,12 +881,12 @@
     <section aria-label="카톤 정보 입력">
       <div class="card">
         <div class="card-header">
-          <div class="card-title">
+          <h2 class="card-title">
             <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
               <path stroke-linecap="round" stroke-linejoin="round" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 10V11"/>
             </svg>
             카톤 정보 입력
-          </div>
+          </h2>
           <div class="unit-toggle-group">
             <span class="unit-toggle-label">운송</span>
             <div class="toggle-btn-group" role="group" aria-label="해상/항공 선택">
@@ -958,12 +959,12 @@
         <!-- RESULT NUMBERS -->
         <div class="card">
           <div class="card-header">
-            <div class="card-title">
+            <h2 class="card-title">
               <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
               </svg>
               계산 결과
-            </div>
+            </h2>
           </div>
           <div class="card-body">
             <div id="result-content">
@@ -980,13 +981,13 @@
         <!-- CONTAINER RECOMMENDATION -->
         <div class="card" id="container-card" style="display:none">
           <div class="card-header">
-            <div class="card-title">
+            <h2 class="card-title">
               <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
                 <rect x="2" y="7" width="20" height="13" rx="2" stroke-linecap="round" stroke-linecap="round" stroke-linejoin="round"/>
                 <path stroke-linecap="round" stroke-linejoin="round" d="M16 7V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2"/>
               </svg>
               컨테이너 적재 추천
-            </div>
+            </h2>
           </div>
           <div class="card-body" id="container-body"></div>
         </div>
@@ -1017,7 +1018,7 @@
   
 <div class="faq-wrap">
   <div class="card">
-    <div class="card-header"><div class="card-title">자주 묻는 질문</div></div>
+    <div class="card-header"><h2 class="card-title">자주 묻는 질문</h2></div>
     <div class="card-body">
       <details class="faq-item"><summary>CBM이 정확히 무엇이고 어떻게 계산하나요?</summary><p>CBM(Cubic Meter)은 화물의 부피를 세제곱미터(㎥) 단위로 나타낸 값입니다. 카톤의 가로×세로×높이(m)를 곱한 값에 수량을 곱해서 구합니다. 예를 들어 50×40×30cm 박스 100개라면 0.5×0.4×0.3×100 = 6 CBM이 됩니다.</p></details>
       <details class="faq-item"><summary>해상 볼륨 무게와 항공 볼륨 무게는 왜 계산식이 다른가요?</summary><p>선사·항공사가 화물칸의 무게 대비 부피 밀도를 다르게 보기 때문입니다. 해상 화물은 관행적으로 CBM × 1,000kg/㎥(1CBM=1톤)을 쓰고, 항공 화물은 IATA 기준으로 부피(cm³)를 6,000으로 나눠서 계산합니다. 같은 화물이라도 운송 수단에 따라 청구 무게가 크게 달라질 수 있습니다.</p></details>
@@ -1046,7 +1047,7 @@
 
 <div class="main" style="max-width:1100px;margin:0 auto;padding:0 24px 40px;">
   <div class="card">
-    <div class="card-header"><div class="card-title">왜 CBM 계산이 중요한가</div></div>
+    <div class="card-header"><h2 class="card-title">왜 CBM 계산이 중요한가</h2></div>
     <div class="card-body" style="font-size:12.5px;color:var(--slate-600);line-height:1.7;">
 <p>해상·항공 화물의 부피(CBM)와 볼륨 무게를 정확히 계산하지 못하면, 포워더가 제시한 운임 견적이 맞는지 확인할 수 없고 컨테이너 적재량을 잘못 예측해 추가 선적이 발생할 수 있습니다.</p>
 <p><b>실무 활용법:</b> 발주 전 카톤 규격이 확정되면 미리 CBM을 계산해 몇 대의 컨테이너가 필요한지, LCL로 보낼 때 예상 운임이 얼마나 나올지 가늠할 수 있습니다. 특히 규격이 다른 여러 카톤이 섞인 혼적 화물은 다중 카톤 입력 기능으로 한 번에 합산해서 확인하는 것이 실수를 줄이는 방법입니다.</p>
@@ -1054,6 +1055,7 @@
   </div>
 </div>
 
+<!--RELATED--><nav class="related-tools" aria-label="함께 쓰는 관련 도구"><h2>함께 쓰는 관련 도구</h2><ul><li><a href="fob-cif.html">수입 원가 계산기</a></li><li><a href="fx-exposure-calculator.html">환노출(FX Exposure) 계산기</a></li><li><a href="currency-hedging-calculator.html">환헤지 비용 계산기</a></li><li><a href="cost-of-quality-calculator.html">품질비용(Cost of Quality) 계산기</a></li><li><a href="personal-duty-calculator.html">해외직구 관부가세 계산기</a></li><li><a href="leadtime-calculator.html">선적 리드타임 계산기</a></li></ul></nav><!--/RELATED-->
 <footer>
   <div class="footer-inner">
     <div>

@@ -3,9 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="Free OEE (Overall Equipment Effectiveness) calculator for manufacturing &amp; operations. Calculate availability, performance, and quality separately to find your biggest loss, and see how you compare to the 85% world-class benchmark.">
-<meta name="keywords" content="OEE calculator, overall equipment effectiveness, availability performance quality, TPM metric, manufacturing productivity, supply chain operations">
-<title>OEE (Overall Equipment Effectiveness) Calculator — CBM Lab</title>
+<meta name="description" content="Free OEE calculator: enter availability, performance and quality to get Overall Equipment Effectiveness, see the OEE formula and what a good score is.">
+<meta name="keywords" content="oee calculator, oee formula, oee meaning, overall equipment effectiveness, world class oee">
+<title>OEE Calculator: Formula, Meaning &amp; World-Class Benchmarks</title>
 <link rel="icon" href="../favicon.ico" sizes="any">
 <link rel="icon" href="../favicon.ico" type="image/x-icon">
 <link rel="apple-touch-icon" href="../apple-touch-icon.png">
@@ -13,15 +13,15 @@
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="CBM Lab">
 <meta property="og:locale" content="en_US">
-<meta property="og:title" content="OEE (Overall Equipment Effectiveness) Calculator — CBM Lab">
-<meta property="og:description" content="Free OEE calculator for manufacturing &amp; operations. Calculate availability, performance, and quality separately to find your biggest loss.">
+<meta property="og:title" content="OEE Calculator: Formula, Meaning &amp; World-Class Benchmarks">
+<meta property="og:description" content="Free OEE calculator: enter availability, performance and quality to get Overall Equipment Effectiveness, see the OEE formula and what a good score is.">
 <meta property="og:url" content="https://procurement-toolkit-eight.vercel.app/en/oee-calculator.html">
 <meta property="og:image" content="https://procurement-toolkit-eight.vercel.app/assets/hero-team.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="OEE (Overall Equipment Effectiveness) Calculator — CBM Lab">
-<meta name="twitter:description" content="Free OEE calculator for manufacturing &amp; operations. Calculate availability, performance, and quality separately to find your biggest loss.">
+<meta name="twitter:title" content="OEE Calculator: Formula, Meaning &amp; World-Class Benchmarks">
+<meta name="twitter:description" content="Free OEE calculator: enter availability, performance and quality to get Overall Equipment Effectiveness, see the OEE formula and what a good score is.">
 <meta name="twitter:image" content="https://procurement-toolkit-eight.vercel.app/assets/hero-team.jpg">
 
 <link rel="alternate" hreflang="ko" href="https://procurement-toolkit-eight.vercel.app/oee-calculator.html">
@@ -54,6 +54,7 @@
   .card{background:#fff;border:1px solid var(--slate-200);border-radius:var(--radius-lg);box-shadow:var(--shadow-sm);margin-bottom:20px}
   .card-header{padding:16px 20px;border-bottom:1px solid var(--slate-100)}
   .card-title{font-size:14px;font-weight:700;color:var(--slate-800)}
+  h2.card-title{margin:0;line-height:1.4}
   .card-body{padding:20px}
 
   .field-label{font-size:12.5px;font-weight:600;color:var(--slate-600);margin-bottom:5px;display:block}
@@ -121,6 +122,7 @@
   @media print{.ad-area-main,.ad-main-box,header,footer{display:none !important}.main{grid-template-columns:1fr}}
   @media (max-width:900px){.main{grid-template-columns:1fr}}
   @media (max-width:640px){.ad-area-main{padding:0 16px 20px}.faq-wrap{padding:0 16px}.field-row2{grid-template-columns:1fr}}
+.related-tools{max-width:960px;margin:32px auto;padding:0 16px}.related-tools h2{font-size:15px;font-weight:700;margin:0 0 10px}.related-tools ul{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:8px}.related-tools a{display:block;padding:10px 12px;border:1px solid #E2E8F0;border-radius:8px;font-size:13px;color:#1E293B;text-decoration:none}.related-tools a:hover{border-color:#94A3B8}
 </style>
 
 <script src="https://cdn.amplitude.com/script/d4aa9301e01f4600b5eeb018e160aa7c.js"></script>
@@ -161,7 +163,7 @@
 <div class="main">
   <section>
     <div class="card">
-      <div class="card-header"><div class="card-title">Production Run Details</div></div>
+      <div class="card-header"><h2 class="card-title">Production Run Details</h2></div>
       <div class="card-body">
         <div class="field-row2">
           <div class="field-group">
@@ -195,14 +197,14 @@
     </div>
 
     <div class="card">
-      <div class="card-header"><div class="card-title">Factor Breakdown</div></div>
+      <div class="card-header"><h2 class="card-title">Factor Breakdown</h2></div>
       <div class="card-body" id="factorWrap"></div>
     </div>
   </section>
 
   <aside>
     <div class="card">
-      <div class="card-header"><div class="card-title">Overall OEE</div></div>
+      <div class="card-header"><h2 class="card-title">Overall OEE</h2></div>
       <div class="card-body">
         <div id="resultWrap"></div>
         <div class="notice-box">💡 Industry benchmarks: automotive assembly 85-92%, food processing 75-85%, and pharma 70-80% are generally considered world-class. Below 40% signals urgent need for improvement.</div>
@@ -223,7 +225,7 @@
 
 <div class="faq-wrap">
   <div class="card">
-    <div class="card-header"><div class="card-title">Frequently Asked Questions</div></div>
+    <div class="card-header"><h2 class="card-title">Frequently Asked Questions</h2></div>
     <div class="card-body">
       <details class="faq-item"><summary>Is a 100% OEE score actually achievable?</summary><p>Theoretically yes (no downtime, max speed, zero defects), but in practice it's nearly impossible. Even world-class factories sit around 85%, so tracking improvement over time is more practical than chasing 100%.</p></details>
       <details class="faq-item"><summary>Which is easiest to improve: availability, performance, or quality?</summary><p>There's no fixed answer, but quality improvements often require changing the process itself and take longer, while availability gains from reducing unplanned downtime through preventive maintenance are often achievable more quickly.</p></details>
@@ -250,6 +252,7 @@
   </div>
 </div>
 
+<!--RELATED--><nav class="related-tools" aria-label="Related tools"><h2>Related tools</h2><ul><li><a href="fx-exposure-calculator.html">FX Exposure Calculator</a></li><li><a href="currency-hedging-calculator.html">FX Hedging Cost Calculator</a></li><li><a href="cost-of-quality-calculator.html">Cost of Quality (CoQ) Calculator</a></li><li><a href="cbm-calculator.html">CBM &amp; Volumetric Weight Calculator</a></li><li><a href="lead-time-calculator.html">Lead Time &amp; Delivery Date Calculator</a></li><li><a href="demurrage-detention-calculator.html">Demurrage &amp; Detention Cost Calculator</a></li></ul></nav><!--/RELATED-->
 <footer><div class="footer-inner">
   <div class="footer-logo"><svg width="24" height="24" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align:middle;margin-right:9px;flex-shrink:0;"><path d="M20 2.5L36.5 11.5V28.5L20 37.5L3.5 28.5V11.5L20 2.5Z" stroke="url(#cbmGradF)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M20 2.5V20M20 20L36.5 11.5M20 20L3.5 11.5" stroke="url(#cbmGradF)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/></svg>CBM<span style="color:#2563EB;">Lab</span></div>
   <nav><a href="index.html" class="footer-link">All Tools</a><a href="privacy.html" class="footer-link">Privacy Policy</a></nav>

@@ -51,6 +51,7 @@
   .card{background:#fff;border:1px solid var(--slate-200);border-radius:var(--radius-lg);box-shadow:var(--shadow-sm);margin-bottom:20px}
   .card-header{padding:16px 20px;border-bottom:1px solid var(--slate-100);display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
   .card-title{font-size:14px;font-weight:600;color:var(--slate-800)}
+  h2.card-title{margin:0;line-height:1.4}
   .card-body{padding:18px}
   .field-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px}
   .field-label{font-size:11.5px;font-weight:600;color:var(--slate-600);margin-bottom:5px;display:block}
@@ -147,6 +148,7 @@
   .faq-item summary::before{content:'Q. ';color:var(--accent)}
   .faq-item p{margin-top:8px;font-size:12.5px;color:var(--slate-600);line-height:1.7;padding-left:2px}
   @media (max-width:640px){.faq-wrap{padding:0 16px}}
+.related-tools{max-width:960px;margin:32px auto;padding:0 16px}.related-tools h2{font-size:15px;font-weight:700;margin:0 0 10px}.related-tools ul{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:8px}.related-tools a{display:block;padding:10px 12px;border:1px solid #E2E8F0;border-radius:8px;font-size:13px;color:#1E293B;text-decoration:none}.related-tools a:hover{border-color:#94A3B8}
 </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/exceljs/4.4.0/exceljs.min.js"></script>
 </head>
@@ -172,7 +174,7 @@
   <section>
     <div class="card">
       <div class="card-header">
-        <div class="card-title">1. BOM (원재료 내역)</div>
+        <h2 class="card-title">1. BOM (원재료 내역)</h2>
         <select class="inp" id="currencySelect" onchange="setCurrency(this.value)" style="width:auto;padding:5px 8px;font-size:11px;">
           <option value="USD">통화: 달러(USD)</option>
           <option value="KRW">통화: 원화(KRW)</option>
@@ -194,7 +196,7 @@
     </div>
 
     <div class="card">
-      <div class="card-header"><div class="card-title">2. 가공 공정 (공정별 시간·인건비)</div></div>
+      <div class="card-header"><h2 class="card-title">2. 가공 공정 (공정별 시간·인건비)</h2></div>
       <div class="card-body">
         <div class="region-presets" id="regionPresets"></div>
         <div class="item-table-wrap">
@@ -209,7 +211,7 @@
     </div>
 
     <div class="card">
-      <div class="card-header"><div class="card-title">3. 설비 가동률 &amp; 간접비</div></div>
+      <div class="card-header"><h2 class="card-title">3. 설비 가동률 &amp; 간접비</h2></div>
       <div class="card-body">
         <div class="field-grid">
           <div>
@@ -236,7 +238,7 @@
     </div>
 
     <div class="card">
-      <div class="card-header"><div class="card-title">4. 적정 이윤</div></div>
+      <div class="card-header"><h2 class="card-title">4. 적정 이윤</h2></div>
       <div class="card-body">
         <div class="field-grid">
           <div>
@@ -255,7 +257,7 @@
     </div>
 
     <div class="card">
-      <div class="card-header"><div class="card-title">5. 공급업체 견적과 비교 (선택)</div></div>
+      <div class="card-header"><h2 class="card-title">5. 공급업체 견적과 비교 (선택)</h2></div>
       <div class="card-body">
         <label class="field-label">공급업체 제시 견적 단가 (<span id="curLabelQuote">USD</span>)</label>
         <input class="inp" type="number" id="supplierQuote" placeholder="예: 4.80" oninput="calc()">
@@ -265,7 +267,7 @@
 
   <aside>
     <div class="card">
-      <div class="card-header"><div class="card-title">Should Cost 산출 결과</div></div>
+      <div class="card-header"><h2 class="card-title">Should Cost 산출 결과</h2></div>
       <div class="card-body">
         <div id="resultLines"></div>
         <div class="result-total">
@@ -301,7 +303,7 @@
 
 <div style="max-width:1300px;margin:0 auto;padding:0 24px 30px;">
   <div class="card">
-    <div class="card-header"><div class="card-title">왜 Should Cost 분석이 필요한가</div></div>
+    <div class="card-header"><h2 class="card-title">왜 Should Cost 분석이 필요한가</h2></div>
     <div class="card-body" style="font-size:12.5px;color:var(--slate-600);line-height:1.7;">
 <p>공급업체가 제시한 견적을 그대로 받아들이면, 실제 원가보다 얼마나 더 얹어져 있는지 알 수 없어 협상에서 불리한 위치에 서게 됩니다. Should Cost Analysis는 "이 제품이 실제로 이 정도 원가가 나와야 한다"는 기준을 직접 계산해서 협상의 근거로 삼는 기법입니다.</p>
 <p><b>실무 활용법:</b> 신규 품목 소싱 시 여러 공급업체 견적을 비교하는 기준으로 삼거나, 기존 거래처와 원가 절감 협상을 할 때 구체적인 근거 자료로 활용하세요. 공정별 인건비 비중이 높게 나오면 저비용 지역 생산 여부를, 설비 가동률이 낮게 가정되어 있으면 물량 확대를 통한 단가 인하를 협상 포인트로 제시할 수 있습니다.</p>
@@ -313,7 +315,7 @@
 
 <div class="faq-wrap">
   <div class="card">
-    <div class="card-header"><div class="card-title">자주 묻는 질문</div></div>
+    <div class="card-header"><h2 class="card-title">자주 묻는 질문</h2></div>
     <div class="card-body">
       <details class="faq-item"><summary>Should Cost 분석이란 무엇이고 견적 검토와 뭐가 다른가요?</summary><p>Should Cost는 공급업체 견적을 그대로 받아들이는 대신, 재료비·가공비·간접비·마진을 각각 추정해서 '이 정도면 합리적인 가격'을 직접 계산해보는 방법입니다. 견적서만 보고 판단하는 것보다 협상에서 구체적인 근거를 가질 수 있습니다.</p></details>
       <details class="faq-item"><summary>공급업체 견적이 Should Cost보다 훨씬 높으면 어떻게 협상하나요?</summary><p>차이가 큰 항목(재료비인지 가공비인지 마진인지)을 구체적으로 짚어서 근거를 요청하는 것이 효과적입니다. 막연히 '가격을 낮춰달라'는 요청보다, 항목별 데이터를 제시하며 논의하면 공급업체도 구체적으로 대응하기 쉬워집니다.</p></details>
@@ -323,7 +325,7 @@
 
 <div class="about-wrap">
   <div class="card">
-    <div class="card-header"><div class="card-title">Should Cost 분석이란?</div></div>
+    <div class="card-header"><h2 class="card-title">Should Cost 분석이란?</h2></div>
     <div class="card-body about-section">
       <h3>왜 견적서만 보고 판단하면 안 되나요?</h3>
       <p>공급업체 견적은 "받아들일지 말지"를 판단하는 자료지, "적정한지"를 알려주는 자료는 아닙니다. Should Cost는 재료비·가공 인건비·설비 가동률·간접비·이윤을 항목별로 쌓아 올려서, 견적서 없이도 독립적으로 "이 정도가 합리적인 원가"를 추정하는 방법입니다. 협상 테이블에 앉기 전에 내가 먼저 숫자를 갖고 있어야, 공급업체가 제시하는 근거를 검증할 수 있습니다.</p>
@@ -361,6 +363,7 @@
   </div>
 </div>
 
+<!--RELATED--><nav class="related-tools" aria-label="함께 쓰는 관련 도구"><h2>함께 쓰는 관련 도구</h2><ul><li><a href="spend-analysis-dashboard.html">지출 분석 대시보드</a></li><li><a href="tco-calculator.html">TCO 계산기 (총소유비용)</a></li><li><a href="rvc-calculator.html">원산지 규정(RVC) 계산기</a></li><li><a href="payment-terms-cost-calculator.html">결제조건 비용 계산기</a></li><li><a href="landed-cost-calculator.html">해외 착지원가 계산기</a></li><li><a href="cbm.html">CBM(용적중량) 계산기</a></li></ul></nav><!--/RELATED-->
 <footer style="background:#0F172A;color:#94A3B8;padding:24px;font-size:12px;">
   <div style="max-width:1300px;margin:0 auto;display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;">
     <div style="font-size:15px;font-weight:800;color:#fff;"><svg width="24" height="24" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align:middle;margin-right:9px;flex-shrink:0;"><path d="M20 2.5L36.5 11.5V28.5L20 37.5L3.5 28.5V11.5L20 2.5Z" stroke="url(#cbmGradF)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M20 2.5V20M20 20L36.5 11.5M20 20L3.5 11.5" stroke="url(#cbmGradF)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/></svg>CBM<span style="color:#2563EB;">Lab</span></div>

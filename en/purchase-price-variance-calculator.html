@@ -54,6 +54,7 @@
   .card{background:#fff;border:1px solid var(--slate-200);border-radius:var(--radius-lg);box-shadow:var(--shadow-sm);margin-bottom:20px}
   .card-header{padding:16px 20px;border-bottom:1px solid var(--slate-100)}
   .card-title{font-size:14px;font-weight:700;color:var(--slate-800)}
+  h2.card-title{margin:0;line-height:1.4}
   .card-body{padding:20px;overflow-x:auto}
 
   .ppv-table{width:100%;border-collapse:collapse;min-width:760px}
@@ -115,6 +116,7 @@
 
   @media print{.ad-area-main,.ad-main-box,header,footer{display:none !important}}
   @media (max-width:640px){.ad-area-main{padding:0 16px 20px}.faq-wrap{padding:0 16px}.summary-box{grid-template-columns:1fr}}
+.related-tools{max-width:960px;margin:32px auto;padding:0 16px}.related-tools h2{font-size:15px;font-weight:700;margin:0 0 10px}.related-tools ul{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:8px}.related-tools a{display:block;padding:10px 12px;border:1px solid #E2E8F0;border-radius:8px;font-size:13px;color:#1E293B;text-decoration:none}.related-tools a:hover{border-color:#94A3B8}
 </style>
 
 <script src="https://cdn.amplitude.com/script/d4aa9301e01f4600b5eeb018e160aa7c.js"></script>
@@ -154,7 +156,7 @@
 
 <div class="main">
   <div class="card">
-    <div class="card-header"><div class="card-title">Purchase Price Variance by Line Item (PPV = (Actual Price − Standard Price) × Actual Quantity)</div></div>
+    <div class="card-header"><h2 class="card-title">Purchase Price Variance by Line Item (PPV = (Actual Price − Standard Price) × Actual Quantity)</h2></div>
     <div class="card-body">
       <table class="ppv-table" id="ppvTable"></table>
       <button class="btn-add-row" onclick="addRow()">+ Add Line Item</button>
@@ -177,7 +179,7 @@
 
 <div class="faq-wrap">
   <div class="card">
-    <div class="card-header"><div class="card-title">Frequently Asked Questions</div></div>
+    <div class="card-header"><h2 class="card-title">Frequently Asked Questions</h2></div>
     <div class="card-body">
       <details class="faq-item"><summary>How is the Standard Price set?</summary><p>It's usually based on last year's average purchase price, market pricing at the time the budget was set, or a negotiated contract price with the supplier. Most companies already have this figure recorded in their ERP or budgeting system.</p></details>
       <details class="faq-item"><summary>Does a positive PPV mean poor buyer performance?</summary><p>Not necessarily. External factors buyers can't control — raw material price spikes, exchange rate shifts, supplier changes — can also drive PPV up. That said, a large, recurring variance is still worth investigating.</p></details>
@@ -204,6 +206,7 @@
   </div>
 </div>
 
+<!--RELATED--><nav class="related-tools" aria-label="Related tools"><h2>Related tools</h2><ul><li><a href="landed-cost-calculator.html">Landed Cost Calculator</a></li><li><a href="fx-exposure-calculator.html">FX Exposure Calculator</a></li><li><a href="currency-hedging-calculator.html">FX Hedging Cost Calculator</a></li><li><a href="cost-of-quality-calculator.html">Cost of Quality (CoQ) Calculator</a></li><li><a href="cbm-calculator.html">CBM &amp; Volumetric Weight Calculator</a></li><li><a href="lead-time-calculator.html">Lead Time &amp; Delivery Date Calculator</a></li></ul></nav><!--/RELATED-->
 <footer><div class="footer-inner">
   <div class="footer-logo"><svg width="24" height="24" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align:middle;margin-right:9px;flex-shrink:0;"><path d="M20 2.5L36.5 11.5V28.5L20 37.5L3.5 28.5V11.5L20 2.5Z" stroke="url(#cbmGradF)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M20 2.5V20M20 20L36.5 11.5M20 20L3.5 11.5" stroke="url(#cbmGradF)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/></svg>CBM<span style="color:#2563EB;">Lab</span></div>
   <nav><a href="index.html" class="footer-link">All Tools</a><a href="privacy.html" class="footer-link">Privacy Policy</a></nav>

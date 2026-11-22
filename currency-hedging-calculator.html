@@ -56,6 +56,7 @@
   .card{background:#fff;border:1px solid var(--slate-200);border-radius:var(--radius-lg);box-shadow:var(--shadow-sm);margin-bottom:20px}
   .card-header{padding:16px 20px;border-bottom:1px solid var(--slate-100);display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
   .card-title{font-size:14px;font-weight:600;color:var(--slate-800)}
+  h2.card-title{margin:0;line-height:1.4}
   .card-body{padding:20px}
 
   .item-table{width:100%;border-collapse:collapse}
@@ -193,6 +194,7 @@
   .chart-legend i{display:inline-block;width:14px;height:3px;border-radius:2px;margin-right:6px;vertical-align:3px}
   @media (max-width:900px){.detail-grid{grid-template-columns:1fr}}
   @media (max-width:640px){.about-wrap{padding:0 16px 16px}.wide{padding:20px 16px 6px}.grid2{grid-template-columns:1fr}}
+.related-tools{max-width:960px;margin:32px auto;padding:0 16px}.related-tools h2{font-size:15px;font-weight:700;margin:0 0 10px}.related-tools ul{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:8px}.related-tools a{display:block;padding:10px 12px;border:1px solid #E2E8F0;border-radius:8px;font-size:13px;color:#1E293B;text-decoration:none}.related-tools a:hover{border-color:#94A3B8}
 </style>
 
 <script src="https://cdn.amplitude.com/script/d4aa9301e01f4600b5eeb018e160aa7c.js"></script>
@@ -233,7 +235,7 @@
 <div class="main">
   <section>
     <div class="card">
-      <div class="card-header"><div class="card-title">헤지 조건</div><div style="font-size:11.5px;color:var(--slate-400);">기준통화: 원화(KRW)</div></div>
+      <div class="card-header"><h2 class="card-title">헤지 조건</h2><div style="font-size:11.5px;color:var(--slate-400);">기준통화: 원화(KRW)</div></div>
       <div class="card-body">
         <div class="field"><div class="seg"><button data-d="import" onclick="setDir('import')">수입·외화 지급</button><button data-d="export" onclick="setDir('export')">수출·외화 수취</button></div></div>
         <div class="grid2">
@@ -263,7 +265,7 @@
   </section>
   <aside>
     <div class="card">
-      <div class="card-header"><div class="card-title">헤지 비용 요약</div></div>
+      <div class="card-header"><h2 class="card-title">헤지 비용 요약</h2></div>
       <div class="card-body"><div id="kpis"></div>
         <button class="btn-excel" onclick="requestExcelDownload()">📊 환헤지 비용 분석 엑셀 다운로드</button></div>
     </div>
@@ -272,7 +274,7 @@
 
 <div class="wide" style="padding-top:0;">
   <div class="card">
-    <div class="card-header"><div class="card-title">만기 환율 시나리오별 원화 금액</div></div>
+    <div class="card-header"><h2 class="card-title">만기 환율 시나리오별 원화 금액</h2></div>
     <div class="card-body">
       <div class="chart-wrap" id="chart"></div>
       <div class="chart-legend"><span><i style="background:#94A3B8"></i>헤지 안 함</span><span><i style="background:#2563EB"></i>헤지 적용</span></div>
@@ -283,7 +285,7 @@
 
 <div class="about-wrap">
   <div class="card">
-    <div class="card-header"><div class="card-title">환헤지 비용, 이렇게 계산합니다</div></div>
+    <div class="card-header"><h2 class="card-title">환헤지 비용, 이렇게 계산합니다</h2></div>
     <div class="card-body about-section"><h3>선물환 포인트와 연환산 비용</h3>
 <p>선물환율(F)과 현물환율(S)의 차이가 선물환 포인트입니다. 기간 프리미엄은 (F − S) ÷ S, 연환산 값은 여기에 기준일수 ÷ 헤지 기간을 곱합니다. 수입 대금을 달러로 내는 경우 선물환율이 현물보다 높으면(프리미엄) 헤지가 비용이 되고, 낮으면(디스카운트) 이익이 됩니다. 수출 대금을 받는 경우에는 방향이 반대입니다.</p>
 <h3>금리차로 보는 이론가</h3>
@@ -306,7 +308,7 @@
 </div>
 <div class="faq-wrap">
   <div class="card">
-    <div class="card-header"><div class="card-title">자주 묻는 질문</div></div>
+    <div class="card-header"><h2 class="card-title">자주 묻는 질문</h2></div>
     <div class="card-body">
       <details class="faq-item"><summary>선물환 프리미엄과 디스카운트는 무슨 뜻인가요?</summary><p>선물환율이 현물환율보다 높으면 프리미엄, 낮으면 디스카운트입니다. 두 통화의 금리 차이가 주된 원인입니다.</p></details>
       <details class="faq-item"><summary>연환산 비용은 왜 계산하나요?</summary><p>헤지 기간이 서로 다른 거래의 비용을 같은 기준으로 비교하기 위해서입니다. 기간 비용에 기준일수 ÷ 헤지 기간을 곱해 1년 기준으로 환산합니다.</p></details>
@@ -334,6 +336,7 @@
   </div>
 </div>
 
+<!--RELATED--><nav class="related-tools" aria-label="함께 쓰는 관련 도구"><h2>함께 쓰는 관련 도구</h2><ul><li><a href="cost-of-quality-calculator.html">품질비용(Cost of Quality) 계산기</a></li><li><a href="personal-duty-calculator.html">해외직구 관부가세 계산기</a></li><li><a href="leadtime-calculator.html">선적 리드타임 계산기</a></li><li><a href="demurrage-detention-calculator.html">디머리지·디텐션 비용 계산기</a></li><li><a href="cost-structure-calculator.html">원가구조 이해 가이드 &amp; 계산기</a></li><li><a href="inventory-planning-calculator.html">재고 발주 계획 도구</a></li></ul></nav><!--/RELATED-->
 <footer><div class="footer-inner">
   <div class="footer-logo"><svg width="24" height="24" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align:middle;margin-right:9px;flex-shrink:0;"><path d="M20 2.5L36.5 11.5V28.5L20 37.5L3.5 28.5V11.5L20 2.5Z" stroke="url(#cbmGradF)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M20 2.5V20M20 20L36.5 11.5M20 20L3.5 11.5" stroke="url(#cbmGradF)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/></svg>CBM<span style="color:#2563EB;">Lab</span></div>
   <nav><a href="index.html" class="footer-link">전체 도구</a><a href="privacy.html" class="footer-link">개인정보 처리방침</a></nav>

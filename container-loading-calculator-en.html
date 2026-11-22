@@ -56,6 +56,7 @@
   .card{background:var(--card-bg);border:1px solid var(--slate-200);border-radius:var(--radius-lg);box-shadow:var(--shadow-sm);margin-bottom:20px}
   .card-header{padding:16px 20px;border-bottom:1px solid var(--slate-100);display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
   .card-title{font-size:14px;font-weight:600;color:var(--slate-800)}
+  h2.card-title{margin:0;line-height:1.4}
   .card-body{padding:20px}
   .field-group{margin-bottom:12px}
   .field-label{font-size:12px;font-weight:600;color:var(--slate-600);margin-bottom:6px;display:block}
@@ -382,7 +383,7 @@
 <div class="main">
   <section>
     <div class="card">
-      <div class="card-header"><div class="card-title">Container &amp; Box Specs</div></div>
+      <div class="card-header"><h2 class="card-title">Container &amp; Box Specs</h2></div>
       <div class="card-body">
         <div class="field-group">
           <label class="field-label">Container Type</label>
@@ -454,7 +455,7 @@
     </div>
 
     <div class="card">
-      <div class="card-header"><div class="card-title">Compare by Container Type</div></div>
+      <div class="card-header"><h2 class="card-title">Compare by Container Type</h2></div>
       <div class="card-body" style="padding-top:14px;">
         <table class="compare-table" id="compareTable"></table>
       </div>
@@ -464,7 +465,7 @@
   <aside>
     <div class="card">
       <div class="card-header">
-        <div class="card-title">Loading Visualization</div>
+        <h2 class="card-title">Loading Visualization</h2>
         <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
           <div class="view-toggle">
             <button class="view-btn active" id="btn2d" onclick="setView('2d')">Preview (fixed angle)</button>
@@ -591,7 +592,7 @@
 
 <div class="main" style="max-width:1100px;margin:0 auto;padding:0 24px 40px;">
   <div class="card">
-    <div class="card-header"><div class="card-title">Why simulate your loading plan in advance</div></div>
+    <div class="card-header"><h2 class="card-title">Why simulate your loading plan in advance</h2></div>
     <div class="card-body" style="font-size:12.5px;color:var(--slate-600);line-height:1.7;">
 <p>Estimating how many boxes fit just by eyeballing the specs often leaves you with leftover space or, worse, not enough room — meaning you need another container. It gets even trickier when you're loading several different item types together.</p>
 <p><b>How teams use this:</b> Check expected capacity across 20ft/40ft containers before finalizing an order quantity, or visually work out the best loading sequence when mixing multiple SKUs to make the most of the available space.</p>
@@ -603,7 +604,7 @@
 
 <div class="faq-wrap">
   <div class="card">
-    <div class="card-header"><div class="card-title">Frequently Asked Questions</div></div>
+    <div class="card-header"><h2 class="card-title">Frequently Asked Questions</h2></div>
     <div class="card-body">
       <details class="faq-item"><summary>Why is actual container utilization lower than the theoretical maximum?</summary><p>Theoretical capacity is just the container's internal dimensions multiplied out, but real-world loading loses space to pallet gaps and irregular cargo shapes. Practical utilization is typically 85-92% of theoretical capacity.</p></details>
       <details class="faq-item"><summary>Should I choose a 20ft or 40ft container?</summary><p>Heavy but compact cargo often fits better in a 20ft container (which hits its weight limit before running out of space), while bulky but lightweight cargo makes better use of a 40ft container's extra volume. Compare both volume and weight limits, not just one.</p></details>

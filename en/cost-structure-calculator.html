@@ -54,6 +54,7 @@
   .card{background:#fff;border:1px solid var(--slate-200);border-radius:var(--radius-lg);box-shadow:var(--shadow-sm);margin-bottom:20px}
   .card-header{padding:16px 20px;border-bottom:1px solid var(--slate-100);display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
   .card-title{font-size:14px;font-weight:600;color:var(--slate-800)}
+  h2.card-title{margin:0;line-height:1.4}
   .card-body{padding:20px}
   .type-toggle{display:flex;background:var(--slate-100);border-radius:8px;padding:3px;gap:2px;max-width:420px}
   .type-btn{flex:1;padding:8px 10px;border:none;background:transparent;border-radius:6px;font-size:12px;font-weight:700;color:var(--slate-500);cursor:pointer}
@@ -99,6 +100,7 @@
   .faq-item summary::before{content:'Q. ';color:var(--accent)}
   .faq-item p{margin-top:8px;font-size:12.5px;color:var(--slate-600);line-height:1.7;padding-left:2px}
   @media (max-width:640px){.faq-wrap{padding:0 16px}}
+.related-tools{max-width:960px;margin:32px auto;padding:0 16px}.related-tools h2{font-size:15px;font-weight:700;margin:0 0 10px}.related-tools ul{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:8px}.related-tools a{display:block;padding:10px 12px;border:1px solid #E2E8F0;border-radius:8px;font-size:13px;color:#1E293B;text-decoration:none}.related-tools a:hover{border-color:#94A3B8}
 </style>
 </head>
 <body>
@@ -142,7 +144,7 @@
 
 <div style="max-width:1100px;margin:0 auto;padding:0 24px 30px;">
   <div class="card">
-    <div class="card-header"><div class="card-title">Why These Terms Matter</div></div>
+    <div class="card-header"><h2 class="card-title">Why These Terms Matter</h2></div>
     <div class="card-body" style="font-size:12.5px;color:var(--slate-600);line-height:1.7;">
       <p>Prime Cost, Manufacturing Cost, and Total Cost cover progressively wider scopes — mixing them up during a cost or margin negotiation can lead to a real pricing error. The same confusion applies to Markup vs Margin: a "30%" markup and a "30%" margin produce different sell prices for the same cost base.</p>
       <p style="margin-top:8px;"><b>How to use it in practice:</b> If you manufacture, build up from Direct Material and Direct Labor to Manufacturing Overhead and SG&amp;A to see your full Total Cost. If you import/trade, start from Purchase Price and add incidental costs (duty, freight, insurance) to get your Landed/Acquisition Cost before adding SG&amp;A.</p>
@@ -154,7 +156,7 @@
 
 <div class="faq-wrap">
   <div class="card">
-    <div class="card-header"><div class="card-title">Frequently Asked Questions</div></div>
+    <div class="card-header"><h2 class="card-title">Frequently Asked Questions</h2></div>
     <div class="card-body">
       <details class="faq-item"><summary>What's the difference between Prime Cost, Manufacturing Cost (COGM), and Total Cost?</summary><p>Prime Cost includes only direct materials and direct labor. Manufacturing Cost (COGM) adds manufacturing overhead (factory operating costs). Total Cost adds selling and administrative expenses on top of that — it's the full cost of getting a product ready and sold.</p></details>
       <details class="faq-item"><summary>Why do Markup and Margin get confused so often?</summary><p>Markup is profit divided by cost; Margin is profit divided by selling price. The same dollar amount of profit produces two different percentages depending on which base you use, which is a frequent source of miscommunication in quotes and negotiations.</p></details>
@@ -173,6 +175,7 @@
 <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
 </div>
 
+<!--RELATED--><nav class="related-tools" aria-label="Related tools"><h2>Related tools</h2><ul><li><a href="lead-time-calculator.html">Lead Time &amp; Delivery Date Calculator</a></li><li><a href="demurrage-detention-calculator.html">Demurrage &amp; Detention Cost Calculator</a></li><li><a href="eoq-safety-stock-calculator.html">EOQ, Safety Stock &amp; Reorder Point Calculator</a></li><li><a href="should-cost-calculator.html">Should Cost Calculator</a></li><li><a href="purchase-price-variance-calculator.html">Purchase Price Variance (PPV) Calculator</a></li><li><a href="oee-calculator.html">OEE (Overall Equipment Effectiveness) Calculator</a></li></ul></nav><!--/RELATED-->
 <footer style="background:#0F172A;color:#94A3B8;padding:24px;font-size:12px;">
   <div style="max-width:1100px;margin:0 auto;display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;">
     <div style="font-size:15px;font-weight:800;color:#fff;"><svg width="24" height="24" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align:middle;margin-right:9px;flex-shrink:0;"><path d="M20 2.5L36.5 11.5V28.5L20 37.5L3.5 28.5V11.5L20 2.5Z" stroke="url(#cbmGradF)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M20 2.5V20M20 20L36.5 11.5M20 20L3.5 11.5" stroke="url(#cbmGradF)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/></svg>CBM<span style="color:#2563EB;">Lab</span></div>

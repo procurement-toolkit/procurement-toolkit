@@ -1,0 +1,13 @@
+{
+"cbm.html":["cbm 계산"],"en/cbm-calculator.html":["cbm calculator"],
+"fob-cif.html":["수입원가 계산","fob cif"],"en/landed-cost-calculator.html":["landed cost"],
+"incoterms-guide.html":["인코텀즈"],"en/incoterms-guide.html":["incoterms 2020"],
+"currency-hedging-calculator.html":["환헤지","선물환"],"en/currency-hedging-calculator.html":["fx hedging"],
+"inventory-planning-calculator.html":["안전재고"],"en/eoq-safety-stock-calculator.html":["safety stock","economic order quantity"],
+"oee-calculator.html":["oee"],"en/oee-calculator.html":["oee"],
+"abc-inventory-analysis.html":["abc 분석"],"en/abc-inventory-analysis.html":["abc analysis"],
+"hs-code-guide.html":["hs code"],"container-loading-visualizer.html":["컨테이너 적재"],
+"demurrage-detention-calculator.html":["디머리지"],"en/demurrage-detention-calculator.html":["demurrage and detention"],
+"en/tco-calculator.html":["total cost of ownership"],"en/supplier-scorecard.html":["supplier scorecard"],
+"en/kraljic-matrix.html":["kraljic matrix"],"en/payment-terms-cost-calculator.html":["payment terms"]
+}

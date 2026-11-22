@@ -54,6 +54,7 @@
   .card{background:#fff;border:1px solid var(--slate-200);border-radius:var(--radius-lg);box-shadow:var(--shadow-sm);margin-bottom:20px}
   .card-header{padding:16px 20px;border-bottom:1px solid var(--slate-100)}
   .card-title{font-size:14px;font-weight:700;color:var(--slate-800)}
+  h2.card-title{margin:0;line-height:1.4}
   .card-body{padding:20px}
 
   .field-label{font-size:12.5px;font-weight:600;color:var(--slate-600);margin-bottom:5px;display:block}
@@ -115,6 +116,7 @@
   @media print{.ad-area-main,.ad-main-box,header,footer{display:none !important}.main{grid-template-columns:1fr}}
   @media (max-width:900px){.main{grid-template-columns:1fr}}
   @media (max-width:640px){.ad-area-main{padding:0 16px 20px}.faq-wrap{padding:0 16px}.field-row2{grid-template-columns:1fr}}
+.related-tools{max-width:960px;margin:32px auto;padding:0 16px}.related-tools h2{font-size:15px;font-weight:700;margin:0 0 10px}.related-tools ul{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:8px}.related-tools a{display:block;padding:10px 12px;border:1px solid #E2E8F0;border-radius:8px;font-size:13px;color:#1E293B;text-decoration:none}.related-tools a:hover{border-color:#94A3B8}
 </style>
 
 <script src="https://cdn.amplitude.com/script/d4aa9301e01f4600b5eeb018e160aa7c.js"></script>
@@ -154,7 +156,7 @@
 <div class="main">
   <section>
     <div class="card">
-      <div class="card-header"><div class="card-title">1. 비용 비교</div></div>
+      <div class="card-header"><h2 class="card-title">1. 비용 비교</h2></div>
       <div class="card-body">
         <div class="field-group">
           <label class="field-label">예상 연간 물량 (개)</label>
@@ -189,14 +191,14 @@
     </div>
 
     <div class="card">
-      <div class="card-header"><div class="card-title">2. 전략적 요인 평가 (가중치 조정 가능)</div></div>
+      <div class="card-header"><h2 class="card-title">2. 전략적 요인 평가 (가중치 조정 가능)</h2></div>
       <div class="card-body" id="criteriaWrap"></div>
     </div>
   </section>
 
   <aside>
     <div class="card">
-      <div class="card-header"><div class="card-title">종합 결과</div></div>
+      <div class="card-header"><h2 class="card-title">종합 결과</h2></div>
       <div class="card-body">
         <div id="finalResultWrap"></div>
         <div class="warn-box">⚠ 이 결과는 참고용 의사결정 보조 도구입니다. 실제 결정 전에는 재무팀·생산팀·품질팀과 함께 가정치(고정비·변동비 등)를 재검증하세요.</div>
@@ -204,7 +206,7 @@
     </div>
 
     <div class="card">
-      <div class="card-header"><div class="card-title">평가 기준 설명</div></div>
+      <div class="card-header"><h2 class="card-title">평가 기준 설명</h2></div>
       <div class="card-body" style="font-size:11.5px;color:var(--slate-600);line-height:1.7;">
         <p style="margin-bottom:8px;"><b>전략적 중요도:</b> 이 부품·역량이 우리 제품의 핵심 경쟁력과 얼마나 직결되는가.</p>
         <p style="margin-bottom:8px;"><b>사내 역량·여유:</b> 지금 설비·인력으로 추가 생산이 실제로 가능한가.</p>
@@ -227,7 +229,7 @@
 
 <div class="faq-wrap">
   <div class="card">
-    <div class="card-header"><div class="card-title">자주 묻는 질문</div></div>
+    <div class="card-header"><h2 class="card-title">자주 묻는 질문</h2></div>
     <div class="card-body">
       <details class="faq-item"><summary>비용 비교와 전략적 평가 결과가 다르게 나오면 어떻게 하나요?</summary><p>실제로 자주 있는 일입니다. 예를 들어 비용은 외주가 유리한데 전략적 중요도가 매우 높다면, 단기 비용보다 장기적 경쟁력을 우선해서 자체생산을 선택하는 경우가 많습니다. 두 결과가 다르다면 오히려 신중히 논의해야 할 신호로 받아들이세요.</p></details>
       <details class="faq-item"><summary>손익분기 물량은 어떻게 계산되나요?</summary><p>두 옵션의 총비용(고정비+변동비×물량)이 같아지는 물량을 계산합니다. 예상 물량이 이 지점보다 많으면 고정비가 큰 옵션(보통 자체생산)이 유리해지고, 적으면 반대가 유리합니다.</p></details>
@@ -236,6 +238,7 @@
   </div>
 </div>
 
+<!--RELATED--><nav class="related-tools" aria-label="함께 쓰는 관련 도구"><h2>함께 쓰는 관련 도구</h2><ul><li><a href="batna-negotiation-matrix.html">BATNA 협상준비 매트릭스</a></li><li><a href="rfq-comparison-tool.html">RFQ 견적 비교 도구</a></li><li><a href="sourcing-location-comparator.html">니어쇼어·리쇼어·오프쇼어 소싱 비교</a></li><li><a href="incoterms-responsibility-grid.html">Incoterms 2020 책임범위 비교표</a></li><li><a href="rfx-generator.html">RFI·RFP·RFQ 영문 템플릿 생성기</a></li><li><a href="incoterms-guide.html">인코텀즈 2020 가이드</a></li></ul></nav><!--/RELATED-->
 <footer><div class="footer-inner">
   <div class="footer-logo"><svg width="24" height="24" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align:middle;margin-right:9px;flex-shrink:0;"><path d="M20 2.5L36.5 11.5V28.5L20 37.5L3.5 28.5V11.5L20 2.5Z" stroke="url(#cbmGradF)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M20 2.5V20M20 20L36.5 11.5M20 20L3.5 11.5" stroke="url(#cbmGradF)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/></svg>CBM<span style="color:#2563EB;">Lab</span></div>
   <nav><a href="index.html" class="footer-link">전체 도구</a><a href="privacy.html" class="footer-link">개인정보 처리방침</a></nav>

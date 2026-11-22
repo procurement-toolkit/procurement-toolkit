@@ -56,6 +56,7 @@
   .card{background:#fff;border:1px solid var(--slate-200);border-radius:var(--radius-lg);box-shadow:var(--shadow-sm);margin-bottom:20px}
   .card-header{padding:16px 20px;border-bottom:1px solid var(--slate-100);display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
   .card-title{font-size:14px;font-weight:600;color:var(--slate-800)}
+  h2.card-title{margin:0;line-height:1.4}
   .card-body{padding:20px}
 
   .item-table{width:100%;border-collapse:collapse}
@@ -135,6 +136,7 @@
   @media print{.ad-area-main,.ad-main-box,header,footer{display:none !important}.main{grid-template-columns:1fr}}
   @media (max-width:900px){.main{grid-template-columns:1fr}}
   @media (max-width:640px){.ad-area-main{padding:0 16px 20px}.faq-wrap{padding:0 16px}}
+.related-tools{max-width:960px;margin:32px auto;padding:0 16px}.related-tools h2{font-size:15px;font-weight:700;margin:0 0 10px}.related-tools ul{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:8px}.related-tools a{display:block;padding:10px 12px;border:1px solid #E2E8F0;border-radius:8px;font-size:13px;color:#1E293B;text-decoration:none}.related-tools a:hover{border-color:#94A3B8}
 </style>
 
 <script src="https://cdn.amplitude.com/script/d4aa9301e01f4600b5eeb018e160aa7c.js"></script>
@@ -176,7 +178,7 @@
   <section>
     <div class="card">
       <div class="card-header">
-        <div class="card-title">Purchases by Currency</div>
+        <h2 class="card-title">Purchases by Currency</h2>
         <div style="font-size:11.5px;color:var(--slate-400);">Reporting currency: US Dollar (USD)</div>
       </div>
       <div class="card-body">
@@ -191,7 +193,7 @@
     </div>
 
     <div class="card">
-      <div class="card-header"><div class="card-title">Exchange Rate Scenario</div></div>
+      <div class="card-header"><h2 class="card-title">Exchange Rate Scenario</h2></div>
       <div class="card-body">
         <label class="field-label">If all currencies moved by this much against USD at once (%)</label>
         <div class="sim-row">
@@ -205,7 +207,7 @@
 
   <aside>
     <div class="card">
-      <div class="card-header"><div class="card-title">Total FX Exposure</div></div>
+      <div class="card-header"><h2 class="card-title">Total FX Exposure</h2></div>
       <div class="card-body">
         <div class="result-total">
           <div class="label">Total purchase value (USD-equivalent)</div>
@@ -221,7 +223,7 @@
 
 <div style="max-width:1200px;margin:0 auto;padding:0 24px 30px;">
   <div class="card">
-    <div class="card-header"><div class="card-title">Why Manage FX Exposure</div></div>
+    <div class="card-header"><h2 class="card-title">Why Manage FX Exposure</h2></div>
     <div class="card-body" style="font-size:12.5px;color:var(--slate-600);line-height:1.7;">
       <p>If a large share of your spend sits in one currency, a sharp move in that currency against your reporting currency can push up your costs with little warning. Common responses include diversifying sourcing across currencies, using forward contracts or other hedges, or building exchange-rate clauses into contracts.</p>
       <p style="margin-top:8px;"><b>How to use this in practice:</b> Review your currency exposure with this tool every quarter. If any single currency crosses 50% of total exposure (you’ll see a concentration warning), that’s a good trigger to discuss hedging options with finance.</p>
@@ -244,7 +246,7 @@
 
 <div class="faq-wrap">
   <div class="card">
-    <div class="card-header"><div class="card-title">Frequently Asked Questions</div></div>
+    <div class="card-header"><h2 class="card-title">Frequently Asked Questions</h2></div>
     <div class="card-body">
       <details class="faq-item"><summary>Is FX exposure the same thing as FX risk?</summary><p>Exposure is the amount that's affected by exchange rate movements; risk is the likelihood of an actual loss resulting from that exposure. Larger exposure generally means larger risk, so measuring exposure is the first step in managing the risk.</p></details>
       <details class="faq-item"><summary>What level of currency concentration is risky?</summary><p>There's no universal threshold, but as a practical rule of thumb, once a single currency crosses 50% of total purchase exposure, your overall cost becomes heavily dependent on that one currency's movement — a reasonable point to consider diversifying.</p></details>
@@ -271,6 +273,7 @@
   </div>
 </div>
 
+<!--RELATED--><nav class="related-tools" aria-label="Related tools"><h2>Related tools</h2><ul><li><a href="demurrage-detention-calculator.html">Demurrage &amp; Detention Cost Calculator</a></li><li><a href="eoq-safety-stock-calculator.html">EOQ, Safety Stock &amp; Reorder Point Calculator</a></li><li><a href="should-cost-calculator.html">Should Cost Calculator</a></li><li><a href="purchase-price-variance-calculator.html">Purchase Price Variance (PPV) Calculator</a></li><li><a href="oee-calculator.html">OEE (Overall Equipment Effectiveness) Calculator</a></li><li><a href="abc-inventory-analysis.html">ABC Inventory Analysis Tool</a></li></ul></nav><!--/RELATED-->
 <footer><div class="footer-inner">
   <div class="footer-logo"><svg width="24" height="24" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align:middle;margin-right:9px;flex-shrink:0;"><path d="M20 2.5L36.5 11.5V28.5L20 37.5L3.5 28.5V11.5L20 2.5Z" stroke="url(#cbmGradF)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M20 2.5V20M20 20L36.5 11.5M20 20L3.5 11.5" stroke="url(#cbmGradF)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/></svg>CBM<span style="color:#2563EB;">Lab</span></div>
   <nav><a href="index.html" class="footer-link">All Tools</a><a href="privacy.html" class="footer-link">Privacy Policy</a></nav>

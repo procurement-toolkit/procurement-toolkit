@@ -55,6 +55,7 @@
   .card{background:#fff;border:1px solid var(--slate-200);border-radius:var(--radius-lg);box-shadow:var(--shadow-sm);margin-bottom:20px}
   .card-header{padding:16px 20px;border-bottom:1px solid var(--slate-100);display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
   .card-title{font-size:14px;font-weight:600;color:var(--slate-800)}
+  h2.card-title{margin:0;line-height:1.4}
   .card-body{padding:20px}
   .header-btns{display:flex;gap:6px}
   .btn-icon{font-size:11px;font-weight:700;color:var(--slate-500);background:#fff;border:1px solid var(--slate-200);padding:6px 11px;border-radius:6px;cursor:pointer}
@@ -153,6 +154,7 @@
   .faq-item summary::before{content:'Q. ';color:var(--accent)}
   .faq-item p{margin-top:8px;font-size:12.5px;color:var(--slate-600);line-height:1.7;padding-left:2px}
   @media (max-width:640px){.faq-wrap{padding:0 16px}}
+.related-tools{max-width:960px;margin:32px auto;padding:0 16px}.related-tools h2{font-size:15px;font-weight:700;margin:0 0 10px}.related-tools ul{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:8px}.related-tools a{display:block;padding:10px 12px;border:1px solid #E2E8F0;border-radius:8px;font-size:13px;color:#1E293B;text-decoration:none}.related-tools a:hover{border-color:#94A3B8}
 </style>
 </head>
 <body>
@@ -177,7 +179,7 @@
   <section>
     <div class="card">
       <div class="card-header">
-        <div class="card-title">Matrix View <span class="save-indicator" id="saveIndicator">✓ saved</span></div>
+        <h2 class="card-title">Matrix View <span class="save-indicator" id="saveIndicator">✓ saved</span></h2>
         <div class="header-btns">
           <button class="btn-icon" onclick="window.print()">🖨️ Print</button>
           <button class="btn-icon" onclick="clearAll()">🗑️ Clear all</button>
@@ -214,7 +216,7 @@
     </div>
 
     <div class="card">
-      <div class="card-header"><div class="card-title">Supplier Risks (<span id="itemCount">0</span>)</div></div>
+      <div class="card-header"><h2 class="card-title">Supplier Risks (<span id="itemCount">0</span>)</h2></div>
       <div class="card-body">
         <div id="itemList"></div>
       </div>
@@ -223,7 +225,7 @@
 
   <aside>
     <div class="card">
-      <div class="card-header"><div class="card-title" id="formTitle">Add a Supplier Risk</div></div>
+      <div class="card-header"><h2 class="card-title" id="formTitle">Add a Supplier Risk</h2></div>
       <div class="card-body">
         <div class="field-group" style="margin-bottom:10px;">
           <label class="field-label">Supplier / Risk Name</label>
@@ -251,12 +253,12 @@
     </div>
 
     <div class="card" id="strategyCard" style="display:none;">
-      <div class="card-header"><div class="card-title">Recommended Response</div></div>
+      <div class="card-header"><h2 class="card-title">Recommended Response</h2></div>
       <div class="card-body" id="strategyBody"></div>
     </div>
 
     <div class="card">
-      <div class="card-header"><div class="card-title">The 4 Quadrants, Explained</div></div>
+      <div class="card-header"><h2 class="card-title">The 4 Quadrants, Explained</h2></div>
       <div class="card-body" style="font-size:11.5px;color:var(--slate-600);line-height:1.7;">
         <p style="margin-bottom:8px;"><b style="color:var(--purple);">Critical:</b> High probability and high impact. Needs urgent, active mitigation — this is where a disruption would hurt the most and is most likely to happen.</p>
         <p style="margin-bottom:8px;"><b style="color:var(--success);">Contingency:</b> Low probability but high impact. Unlikely to happen, but severe if it does — build a contingency plan or insurance rather than active daily monitoring.</p>
@@ -272,7 +274,7 @@
     🔄 <strong>Use this alongside your other supplier tools.</strong> Prioritize sourcing strategy with the <a href="kraljic-matrix.html" style="color:#1E40AF;font-weight:700;">Kraljic Matrix</a>, check how suppliers view you back with the <a href="supplier-preferencing-matrix.html" style="color:#1E40AF;font-weight:700;">Supplier Preferencing Matrix</a>, or track ongoing performance with the <a href="supplier-scorecard.html" style="color:#1E40AF;font-weight:700;">Supplier Scorecard</a>.
   </div>
   <div class="card">
-    <div class="card-header"><div class="card-title">Why Use a Supplier Risk Matrix?</div></div>
+    <div class="card-header"><h2 class="card-title">Why Use a Supplier Risk Matrix?</h2></div>
     <div class="card-body" style="font-size:12.5px;color:var(--slate-600);line-height:1.7;">
       <p>Not every supplier risk deserves the same level of attention. A probability-impact risk matrix is a well-established risk management technique (used broadly across project management, insurance, and supply chain risk practice) that gives procurement and supply chain teams a simple, defensible way to decide where mitigation effort actually belongs.</p>
       <p style="margin-top:8px;"><b>How to use it in practice:</b> Score each key supplier or risk on the two axes, drag it into position, and let the quadrant guide your response — urgent mitigation for Critical risks, a contingency plan or insurance for Contingency risks, routine process controls for Manage risks, and periodic review for Monitor risks. Revisit the matrix regularly, since probability and impact can shift as suppliers, markets, and geopolitical conditions change. Your data is saved automatically in this browser only — nothing is sent to a server.</p>
@@ -284,7 +286,7 @@
 
 <div class="faq-wrap">
   <div class="card">
-    <div class="card-header"><div class="card-title">Frequently Asked Questions</div></div>
+    <div class="card-header"><h2 class="card-title">Frequently Asked Questions</h2></div>
     <div class="card-body">
       <details class="faq-item"><summary>What's the difference between this and the Kraljic Matrix?</summary><p>The Kraljic Matrix classifies purchases by supply risk and profit impact to set sourcing strategy. This Supplier Risk Matrix is a more general risk-management tool: it plots the probability that a disruption happens against how severe it would be, and applies to any supplier risk — financial, geopolitical, quality, or single-source dependency — not just sourcing strategy.</p></details>
       <details class="faq-item"><summary>How often should a supplier risk assessment be updated?</summary><p>At least twice a year, and immediately after any major event — a supplier's financial trouble, a new geopolitical development in their region, or a quality incident. Probability and impact scores are not static and should shift as new information comes in.</p></details>
@@ -303,6 +305,7 @@
 <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
 </div>
 
+<!--RELATED--><nav class="related-tools" aria-label="Related tools"><h2>Related tools</h2><ul><li><a href="sourcing-location-comparator.html">Nearshore vs Reshore vs Offshore Comparator</a></li><li><a href="rfq-comparison-tool.html">RFQ Comparison Tool</a></li><li><a href="make-vs-buy-matrix.html">Make-vs-Buy Decision Matrix</a></li><li><a href="incoterms-responsibility-grid.html">Incoterms 2020 Responsibility Chart</a></li><li><a href="batna-negotiation-matrix.html">BATNA Negotiation Preparation Tool</a></li><li><a href="kraljic-matrix.html">Kraljic Matrix Tool</a></li></ul></nav><!--/RELATED-->
 <footer style="background:#0F172A;color:#94A3B8;padding:24px;font-size:12px;">
   <div style="max-width:1300px;margin:0 auto;display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;">
     <div style="font-size:15px;font-weight:800;color:#fff;"><svg width="24" height="24" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align:middle;margin-right:9px;flex-shrink:0;"><path d="M20 2.5L36.5 11.5V28.5L20 37.5L3.5 28.5V11.5L20 2.5Z" stroke="url(#cbmGradF)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M20 2.5V20M20 20L36.5 11.5M20 20L3.5 11.5" stroke="url(#cbmGradF)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/></svg>CBM<span style="color:#2563EB;">Lab</span></div>

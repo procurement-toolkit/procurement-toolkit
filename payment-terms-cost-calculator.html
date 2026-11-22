@@ -3,9 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="결제조건 비용 계산기 - 조기결제 할인(예: 2/10 net 30)을 받는 게 나은지, 안 받고 자금을 다른 곳에 쓰는 게 나은지 연환산 비용으로 계산해서 판단하세요.">
-<meta name="keywords" content="조기결제 할인 계산, 결제조건 비용, 2/10 net 30 계산, 매입채무 비용, trade credit cost, procurement finance tool">
-<title>결제조건 비용 계산기 — CBM Lab</title>
+<meta name="description" content="T/T 선급, L/C, Net 30·60 결제조건의 실제 금융비용을 연이율로 환산해 비교합니다. 조기결제 할인(2/10 net 30) 판단에도.">
+<meta name="keywords" content="결제조건, T/T, L/C, Net 30, 조기결제 할인, 결제조건 금융비용">
+<title>결제조건 비용 계산기 – T/T·L/C·Net 30 금융비용 비교 | CBM Lab</title>
 <link rel="icon" href="favicon.ico" sizes="any">
 <link rel="icon" href="favicon.ico" type="image/x-icon">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
@@ -13,15 +13,15 @@
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="CBM Lab">
 <meta property="og:locale" content="ko_KR">
-<meta property="og:title" content="결제조건 비용 계산기 — CBM Lab">
-<meta property="og:description" content="결제조건 비용 계산기 - 조기결제 할인을 받는 게 나은지, 자금을 다른 곳에 쓰는 게 나은지 연환산 비용으로 계산해서 판단하세요.">
+<meta property="og:title" content="결제조건 비용 계산기 – T/T·L/C·Net 30 금융비용 비교 | CBM Lab">
+<meta property="og:description" content="T/T 선급, L/C, Net 30·60 결제조건의 실제 금융비용을 연이율로 환산해 비교합니다. 조기결제 할인(2/10 net 30) 판단에도.">
 <meta property="og:url" content="https://procurement-toolkit-eight.vercel.app/payment-terms-cost-calculator.html">
 <meta property="og:image" content="https://procurement-toolkit-eight.vercel.app/assets/hero-team.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="결제조건 비용 계산기 — CBM Lab">
-<meta name="twitter:description" content="결제조건 비용 계산기 - 조기결제 할인을 받는 게 나은지, 자금을 다른 곳에 쓰는 게 나은지 연환산 비용으로 계산해서 판단하세요.">
+<meta name="twitter:title" content="결제조건 비용 계산기 – T/T·L/C·Net 30 금융비용 비교 | CBM Lab">
+<meta name="twitter:description" content="T/T 선급, L/C, Net 30·60 결제조건의 실제 금융비용을 연이율로 환산해 비교합니다. 조기결제 할인(2/10 net 30) 판단에도.">
 <meta name="twitter:image" content="https://procurement-toolkit-eight.vercel.app/assets/hero-team.jpg">
 
 <link rel="alternate" hreflang="ko" href="https://procurement-toolkit-eight.vercel.app/payment-terms-cost-calculator.html">
@@ -54,6 +54,7 @@
   .card{background:#fff;border:1px solid var(--slate-200);border-radius:var(--radius-lg);box-shadow:var(--shadow-sm);margin-bottom:20px}
   .card-header{padding:16px 20px;border-bottom:1px solid var(--slate-100)}
   .card-title{font-size:14px;font-weight:700;color:var(--slate-800)}
+  h2.card-title{margin:0;line-height:1.4}
   .card-body{padding:20px}
 
   .field-label{font-size:12.5px;font-weight:600;color:var(--slate-600);margin-bottom:5px;display:block}
@@ -123,6 +124,7 @@
   @media print{.ad-area-main,.ad-main-box,header,footer{display:none !important}.main{grid-template-columns:1fr}}
   @media (max-width:900px){.main{grid-template-columns:1fr}}
   @media (max-width:640px){.ad-area-main{padding:0 16px 20px}.faq-wrap{padding:0 16px}.field-row2{grid-template-columns:1fr}.rate-compare{flex-direction:column}}
+.related-tools{max-width:960px;margin:32px auto;padding:0 16px}.related-tools h2{font-size:15px;font-weight:700;margin:0 0 10px}.related-tools ul{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:8px}.related-tools a{display:block;padding:10px 12px;border:1px solid #E2E8F0;border-radius:8px;font-size:13px;color:#1E293B;text-decoration:none}.related-tools a:hover{border-color:#94A3B8}
 </style>
 
 <script src="https://cdn.amplitude.com/script/d4aa9301e01f4600b5eeb018e160aa7c.js"></script>
@@ -163,7 +165,7 @@
 <div class="main">
   <section>
     <div class="card">
-      <div class="card-header"><div class="card-title">결제조건 입력</div></div>
+      <div class="card-header"><h2 class="card-title">결제조건 입력</h2></div>
       <div class="card-body">
         <div class="field-group">
           <label class="field-label">인보이스 금액</label>
@@ -197,7 +199,7 @@
     </div>
 
     <div class="card">
-      <div class="card-header"><div class="card-title">참고: 흔한 결제조건별 연환산 비용</div></div>
+      <div class="card-header"><h2 class="card-title">참고: 흔한 결제조건별 연환산 비용</h2></div>
       <div class="card-body">
         <table class="ref-table" id="refTable"></table>
         <div class="notice-box">이 표는 실제 사례를 조사한 게 아니라, 왼쪽 공식(NACM 방식)을 흔히 쓰이는 조건들에 그대로 적용한 참고용 계산 결과입니다.</div>
@@ -207,7 +209,7 @@
 
   <aside>
     <div class="card">
-      <div class="card-header"><div class="card-title">판단 결과</div></div>
+      <div class="card-header"><h2 class="card-title">판단 결과</h2></div>
       <div class="card-body">
         <div id="verdictWrap"></div>
         <div class="rate-compare">
@@ -240,7 +242,7 @@
 
 <div class="faq-wrap">
   <div class="card">
-    <div class="card-header"><div class="card-title">자주 묻는 질문</div></div>
+    <div class="card-header"><h2 class="card-title">자주 묻는 질문</h2></div>
     <div class="card-body">
       <details class="faq-item"><summary>연환산 비용은 어떻게 계산되나요?</summary><p>업계 표준 NACM 공식을 씁니다: [할인율 ÷ (100 − 할인율)] × [360 ÷ (전체결제기한 − 할인기한)]. 예를 들어 2/10 net 30이면 [2/98] × [360/20] ≈ 36.7%가 나옵니다.</p></details>
       <details class="faq-item"><summary>왜 36.7%처럼 높은 숫자가 나오나요?</summary><p>2%라는 할인율 자체는 작아 보여도, 그게 단 20일(할인기한과 전체기한의 차이) 동안의 이득이라 1년으로 환산하면 배수가 커집니다. 짧은 기간에 몰린 할인일수록 연환산하면 숫자가 커지는 게 정상입니다.</p></details>
@@ -267,6 +269,7 @@
   </div>
 </div>
 
+<!--RELATED--><nav class="related-tools" aria-label="함께 쓰는 관련 도구"><h2>함께 쓰는 관련 도구</h2><ul><li><a href="cbm.html">CBM(용적중량) 계산기</a></li><li><a href="fob-cif.html">수입 원가 계산기</a></li><li><a href="fx-exposure-calculator.html">환노출(FX Exposure) 계산기</a></li><li><a href="currency-hedging-calculator.html">환헤지 비용 계산기</a></li><li><a href="cost-of-quality-calculator.html">품질비용(Cost of Quality) 계산기</a></li><li><a href="personal-duty-calculator.html">해외직구 관부가세 계산기</a></li></ul></nav><!--/RELATED-->
 <footer><div class="footer-inner">
   <div class="footer-logo"><svg width="24" height="24" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align:middle;margin-right:9px;flex-shrink:0;"><path d="M20 2.5L36.5 11.5V28.5L20 37.5L3.5 28.5V11.5L20 2.5Z" stroke="url(#cbmGradF)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M20 2.5V20M20 20L36.5 11.5M20 20L3.5 11.5" stroke="url(#cbmGradF)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/></svg>CBM<span style="color:#2563EB;">Lab</span></div>
   <nav><a href="index.html" class="footer-link">전체 도구</a><a href="privacy.html" class="footer-link">개인정보 처리방침</a></nav>

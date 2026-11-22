@@ -5,9 +5,9 @@
      crossorigin="anonymous"></script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="발주일, 생산기간, 운송방식(해상/항공), 통관기간을 입력하면 예상 출고일과 예상 도착일을 자동으로 계산합니다.">
-<meta name="keywords" content="리드타임 계산기, 선적 예상 도착일, 해상운송 기간, 무역 일정 계산, supply chain lead time">
-<title>선적 리드타임 계산기 — CBM Lab</title>
+<meta name="description" content="생산·통관·운송 단계별 소요일을 넣으면 도착 예정일과 발주 마감일을 계산합니다. 선적 리드타임 산정 방법도 안내합니다.">
+<meta name="keywords" content="리드타임 계산, 선적 리드타임, 납기일 계산, 발주 시점">
+<title>선적 리드타임 계산기 – 납기일·발주 시점 역산 | CBM Lab</title>
 <link rel="icon" href="favicon.ico" sizes="any">
 <link rel="icon" href="favicon.ico" type="image/x-icon">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
@@ -15,15 +15,15 @@
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="CBM Lab">
 <meta property="og:locale" content="ko_KR">
-<meta property="og:title" content="선적 리드타임 계산기 — CBM Lab">
-<meta property="og:description" content="발주일, 생산기간, 운송방식(해상/항공), 통관기간을 입력하면 예상 출고일과 예상 도착일을 자동으로 계산합니다.">
+<meta property="og:title" content="선적 리드타임 계산기 – 납기일·발주 시점 역산 | CBM Lab">
+<meta property="og:description" content="생산·통관·운송 단계별 소요일을 넣으면 도착 예정일과 발주 마감일을 계산합니다. 선적 리드타임 산정 방법도 안내합니다.">
 <meta property="og:url" content="https://procurement-toolkit-eight.vercel.app/leadtime-calculator.html">
 <meta property="og:image" content="https://procurement-toolkit-eight.vercel.app/assets/hero-team.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="선적 리드타임 계산기 — CBM Lab">
-<meta name="twitter:description" content="발주일, 생산기간, 운송방식(해상/항공), 통관기간을 입력하면 예상 출고일과 예상 도착일을 자동으로 계산합니다.">
+<meta name="twitter:title" content="선적 리드타임 계산기 – 납기일·발주 시점 역산 | CBM Lab">
+<meta name="twitter:description" content="생산·통관·운송 단계별 소요일을 넣으면 도착 예정일과 발주 마감일을 계산합니다. 선적 리드타임 산정 방법도 안내합니다.">
 <meta name="twitter:image" content="https://procurement-toolkit-eight.vercel.app/assets/hero-team.jpg">
 
 <link rel="alternate" hreflang="ko" href="https://procurement-toolkit-eight.vercel.app/leadtime-calculator.html">
@@ -50,6 +50,7 @@
   .card{background:#fff;border:1px solid var(--slate-200);border-radius:var(--radius-lg);box-shadow:var(--shadow-sm);margin-bottom:20px}
   .card-header{padding:16px 20px;border-bottom:1px solid var(--slate-100)}
   .card-title{font-size:14px;font-weight:600;color:var(--slate-800)}
+  h2.card-title{margin:0;line-height:1.4}
   .card-body{padding:20px}
   .field-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
   .field-label{font-size:12px;font-weight:600;color:var(--slate-600);margin-bottom:6px;display:block}
@@ -86,6 +87,7 @@
   .faq-item summary::before{content:'Q. ';color:var(--accent)}
   .faq-item p{margin-top:8px;font-size:12.5px;color:var(--slate-600);line-height:1.7;padding-left:2px}
   @media (max-width:640px){.faq-wrap{padding:0 16px}}
+.related-tools{max-width:960px;margin:32px auto;padding:0 16px}.related-tools h2{font-size:15px;font-weight:700;margin:0 0 10px}.related-tools ul{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:8px}.related-tools a{display:block;padding:10px 12px;border:1px solid #E2E8F0;border-radius:8px;font-size:13px;color:#1E293B;text-decoration:none}.related-tools a:hover{border-color:#94A3B8}
 </style>
 <script src="https://cdn.amplitude.com/script/d4aa9301e01f4600b5eeb018e160aa7c.js"></script>
 <script>
@@ -130,7 +132,7 @@
 <div class="main">
   <section>
     <div class="card">
-      <div class="card-header"><div class="card-title">일정 입력</div></div>
+      <div class="card-header"><h2 class="card-title">일정 입력</h2></div>
       <div class="card-body">
         <div class="field-grid">
           <div>
@@ -174,7 +176,7 @@
 
   <aside>
     <div class="card">
-      <div class="card-header"><div class="card-title">예상 일정</div></div>
+      <div class="card-header"><h2 class="card-title">예상 일정</h2></div>
       <div class="card-body">
         <div class="result-total"><div class="label">예상 도착일 (버퍼 포함)</div><div class="value" id="finalDate">-</div></div>
         <div class="timeline" id="timeline"></div>
@@ -193,7 +195,7 @@
 
 <div class="main" style="max-width:1100px;margin:0 auto;padding:0 24px 40px;">
   <div class="card">
-    <div class="card-header"><div class="card-title">왜 리드타임 계산이 필요한가</div></div>
+    <div class="card-header"><h2 class="card-title">왜 리드타임 계산이 필요한가</h2></div>
     <div class="card-body" style="font-size:12.5px;color:var(--slate-600);line-height:1.7;">
 <p>발주부터 도착까지 걸리는 기간을 정확히 예측하지 못하면 바이어에게 잘못된 납기를 안내하거나 재고 부족 사태로 이어질 수 있습니다. 생산·운송·통관 기간을 따로 계산하다 보면 하나를 빠뜨리기 쉽습니다.</p>
 <p><b>실무 활용법:</b> 신규 발주 전 예상 도착일을 계산해 바이어와 납기를 협의하거나, 성수기처럼 운송기간이 늘어나는 시기에는 여유 버퍼를 늘려 재계산하는 방식으로 활용하면 좋습니다.</p>
@@ -204,7 +206,7 @@
 
 <div class="faq-wrap">
   <div class="card">
-    <div class="card-header"><div class="card-title">자주 묻는 질문</div></div>
+    <div class="card-header"><h2 class="card-title">자주 묻는 질문</h2></div>
     <div class="card-body">
       <details class="faq-item"><summary>리드타임에는 정확히 어떤 구간들이 포함되나요?</summary><p>생산 리드타임(발주부터 생산 완료까지), 해상/항공 운송 기간, 통관 소요 기간, 국내 배송 기간까지 모두 더한 것이 전체 리드타임입니다. 생산 기간만 보고 도착일을 예상하면 실제보다 늦어지는 경우가 많습니다.</p></details>
       <details class="faq-item"><summary>통관은 보통 며칠 정도 걸리나요?</summary><p>서류가 완비되고 특별한 검사 대상이 아니라면 보통 1~3일 내외로 끝나는 경우가 많지만, 품목에 따라 검역·안전인증 등이 필요하면 훨씬 길어질 수 있습니다. 여유 있게 리드타임을 잡는 것이 안전합니다.</p></details>
@@ -212,6 +214,7 @@
   </div>
 </div>
 
+<!--RELATED--><nav class="related-tools" aria-label="함께 쓰는 관련 도구"><h2>함께 쓰는 관련 도구</h2><ul><li><a href="demurrage-detention-calculator.html">디머리지·디텐션 비용 계산기</a></li><li><a href="cost-structure-calculator.html">원가구조 이해 가이드 &amp; 계산기</a></li><li><a href="inventory-planning-calculator.html">재고 발주 계획 도구</a></li><li><a href="should-cost-calculator.html">Should Cost 계산기</a></li><li><a href="purchase-price-variance-calculator.html">구매가격차이(PPV) 계산기</a></li><li><a href="oee-calculator.html">OEE(설비종합효율) 계산기</a></li></ul></nav><!--/RELATED-->
 <footer><div class="footer-inner">
   <div class="footer-logo"><svg width="24" height="24" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align:middle;margin-right:9px;flex-shrink:0;"><path d="M20 2.5L36.5 11.5V28.5L20 37.5L3.5 28.5V11.5L20 2.5Z" stroke="url(#cbmGradF)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M20 2.5V20M20 20L36.5 11.5M20 20L3.5 11.5" stroke="url(#cbmGradF)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/></svg>CBM<span>Lab</span></div>
   <nav><a href="index.html" class="footer-link">전체 도구</a><a href="privacy.html" class="footer-link">개인정보 처리방침</a></nav>

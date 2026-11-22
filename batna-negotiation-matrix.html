@@ -54,6 +54,7 @@
   .card{background:#fff;border:1px solid var(--slate-200);border-radius:var(--radius-lg);box-shadow:var(--shadow-sm);margin-bottom:20px}
   .card-header{padding:16px 20px;border-bottom:1px solid var(--slate-100)}
   .card-title{font-size:14px;font-weight:700;color:var(--slate-800)}
+  h2.card-title{margin:0;line-height:1.4}
   .card-body{padding:20px}
 
   .field-label{font-size:12.5px;font-weight:600;color:var(--slate-600);margin-bottom:5px;display:block}
@@ -114,6 +115,7 @@
   @media print{.ad-area-main,.ad-main-box,header,footer{display:none !important}.main{grid-template-columns:1fr}}
   @media (max-width:900px){.main{grid-template-columns:1fr}}
   @media (max-width:640px){.ad-area-main{padding:0 16px 20px}.faq-wrap{padding:0 16px}.field-row2{grid-template-columns:1fr}}
+.related-tools{max-width:960px;margin:32px auto;padding:0 16px}.related-tools h2{font-size:15px;font-weight:700;margin:0 0 10px}.related-tools ul{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:8px}.related-tools a{display:block;padding:10px 12px;border:1px solid #E2E8F0;border-radius:8px;font-size:13px;color:#1E293B;text-decoration:none}.related-tools a:hover{border-color:#94A3B8}
 </style>
 
 <script src="https://cdn.amplitude.com/script/d4aa9301e01f4600b5eeb018e160aa7c.js"></script>
@@ -153,7 +155,7 @@
 <div class="main">
   <section>
     <div class="card">
-      <div class="card-header"><div class="card-title">1. 나의 대안(BATNA) 정리</div></div>
+      <div class="card-header"><h2 class="card-title">1. 나의 대안(BATNA) 정리</h2></div>
       <div class="card-body">
         <p style="font-size:12.5px;color:var(--slate-600);margin-bottom:12px;">이 협상이 결렬되면 대신 선택할 수 있는 대안들을 적어보세요. 가장 유리한(비용이 낮은) 대안이 자동으로 나의 BATNA가 됩니다.</p>
         <table class="alt-table">
@@ -166,7 +168,7 @@
     </div>
 
     <div class="card">
-      <div class="card-header"><div class="card-title">2. 가격 범위 설정</div></div>
+      <div class="card-header"><h2 class="card-title">2. 가격 범위 설정</h2></div>
       <div class="card-body">
         <div class="field-row2">
           <div class="field-group">
@@ -198,14 +200,14 @@
 
   <aside>
     <div class="card">
-      <div class="card-header"><div class="card-title">ZOPA 분석 결과</div></div>
+      <div class="card-header"><h2 class="card-title">ZOPA 분석 결과</h2></div>
       <div class="card-body">
         <div id="zopaWrap"></div>
       </div>
     </div>
 
     <div class="card">
-      <div class="card-header"><div class="card-title">용어 설명</div></div>
+      <div class="card-header"><h2 class="card-title">용어 설명</h2></div>
       <div class="card-body" style="font-size:11.5px;color:var(--slate-600);line-height:1.7;">
         <p style="margin-bottom:8px;"><b>BATNA:</b> 협상이 결렬됐을 때 선택할 수 있는 최선의 대안. BATNA가 강할수록 협상력이 세집니다.</p>
         <p style="margin-bottom:8px;"><b>최대허용가(Reservation Price):</b> 이 지점을 넘으면 차라리 협상을 접고 BATNA를 택하는 게 나은 지점.</p>
@@ -226,7 +228,7 @@
 
 <div class="faq-wrap">
   <div class="card">
-    <div class="card-header"><div class="card-title">자주 묻는 질문</div></div>
+    <div class="card-header"><h2 class="card-title">자주 묻는 질문</h2></div>
     <div class="card-body">
       <details class="faq-item"><summary>상대방의 예상 범위는 어떻게 추정하나요?</summary><p>상대방의 원가 구조, 시장 시세, 과거 거래 이력, 경쟁사 견적 등을 참고해서 추정합니다. 정확할 필요는 없고, 대략의 범위만 잡아도 협상 전략을 세우는 데 큰 도움이 됩니다.</p></details>
       <details class="faq-item"><summary>ZOPA가 없다고 나오면 협상을 포기해야 하나요?</summary><p>바로 포기하기보다는, 가격 외의 조건(납기, 결제조건, 물량, 품질보증 등)을 함께 조정해서 ZOPA를 넓힐 수 있는지 먼저 검토하세요. 여러 이슈를 함께 다루면 없던 합의 구간이 생기기도 합니다.</p></details>
@@ -235,6 +237,7 @@
   </div>
 </div>
 
+<!--RELATED--><nav class="related-tools" aria-label="함께 쓰는 관련 도구"><h2>함께 쓰는 관련 도구</h2><ul><li><a href="sourcing-location-comparator.html">니어쇼어·리쇼어·오프쇼어 소싱 비교</a></li><li><a href="make-vs-buy-matrix.html">Make-vs-Buy 의사결정 매트릭스</a></li><li><a href="incoterms-responsibility-grid.html">Incoterms 2020 책임범위 비교표</a></li><li><a href="rfq-comparison-tool.html">RFQ 견적 비교 도구</a></li><li><a href="fta-guide.html">원산지증명서(FTA) 가이드</a></li><li><a href="rvc-calculator.html">원산지 규정(RVC) 계산기</a></li></ul></nav><!--/RELATED-->
 <footer><div class="footer-inner">
   <div class="footer-logo"><svg width="24" height="24" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align:middle;margin-right:9px;flex-shrink:0;"><path d="M20 2.5L36.5 11.5V28.5L20 37.5L3.5 28.5V11.5L20 2.5Z" stroke="url(#cbmGradF)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M20 2.5V20M20 20L36.5 11.5M20 20L3.5 11.5" stroke="url(#cbmGradF)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/></svg>CBM<span style="color:#2563EB;">Lab</span></div>
   <nav><a href="index.html" class="footer-link">전체 도구</a><a href="privacy.html" class="footer-link">개인정보 처리방침</a></nav>

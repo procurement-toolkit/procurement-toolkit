@@ -1,0 +1,26 @@
+name: SEO growth loop
+on:
+  schedule: [{ cron: '17 3 * * 1' }]   # weekly, Monday
+  workflow_dispatch:
+permissions: { contents: write, pull-requests: write }
+jobs:
+  grow:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 22 }
+      - run: node scripts/seo/keywords.mjs
+        continue-on-error: true
+      - run: node scripts/seo/gsc.mjs
+        continue-on-error: true
+        env: { GSC_SA_JSON: '${{ secrets.GSC_SA_JSON }}', GSC_SITE: '${{ secrets.GSC_SITE }}' }
+      - run: node scripts/seo/grow.mjs
+      - name: Open PR (no direct push to main, so no extra deploys until merged)
+        env: { GH_TOKEN: '${{ github.token }}' }
+        run: |
+          git config user.name cbm-lab-bot; git config user.email bot@users.noreply.github.com
+          if [ -z "$(git status --porcelain)" ]; then echo clean; exit 0; fi
+          b=seo-growth/$(date +%F); git checkout -b $b; git add -A
+          git commit -m "chore(seo): weekly growth loop $(date +%F)"; git push -u origin $b
+          gh pr create --title "SEO growth $(date +%F)" --body "Auto-generated. See reports/seo/$(date +%F).md. Merge to deploy." --base main

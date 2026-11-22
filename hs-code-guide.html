@@ -5,9 +5,9 @@
      crossorigin="anonymous"></script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="HS Code 조회와 관세율 확인 방법 총정리. 국가별 관세청 공식 조회 도구로 바로 연결하고, HS Code 구조와 정확하게 검색하는 요령, 자주 하는 실수까지 정리했습니다.">
-<meta name="keywords" content="HS Code 조회, 품목분류, 관세율 조회, 관세법령정보포털, 유니패스 품목분류포털, global trade compliance">
-<title>HS Code 조회 & 관세율 확인 가이드 — CBM Lab</title>
+<meta name="description" content="HS Code 찾는 법과 관세율 조회 방법을 단계별로. 관세청 UNI-PASS 조회 사이트 활용, 품목분류 원칙, 사전심사 제도까지 정리했습니다.">
+<meta name="keywords" content="HS code 조회, HS code 찾는 법, 관세율 조회, 품목분류, 관세청 HS, 속견표">
+<title>HS Code 조회 방법 – 관세율 확인·품목분류 가이드 | CBM Lab</title>
 <link rel="icon" href="favicon.ico" sizes="any">
 <link rel="icon" href="favicon.ico" type="image/x-icon">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
@@ -15,15 +15,15 @@
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="CBM Lab">
 <meta property="og:locale" content="ko_KR">
-<meta property="og:title" content="HS Code 조회 & 관세율 확인 가이드 — CBM Lab">
-<meta property="og:description" content="HS Code 조회와 관세율 확인 방법 총정리. 국가별 관세청 공식 조회 도구로 바로 연결하고, HS Code 구조와 정확하게 검색하는 요령, 자주 하는 실수까지 정리했습니다.">
+<meta property="og:title" content="HS Code 조회 방법 – 관세율 확인·품목분류 가이드 | CBM Lab">
+<meta property="og:description" content="HS Code 찾는 법과 관세율 조회 방법을 단계별로. 관세청 UNI-PASS 조회 사이트 활용, 품목분류 원칙, 사전심사 제도까지 정리했습니다.">
 <meta property="og:url" content="https://procurement-toolkit-eight.vercel.app/hs-code-guide.html">
 <meta property="og:image" content="https://procurement-toolkit-eight.vercel.app/assets/hero-team.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="HS Code 조회 & 관세율 확인 가이드 — CBM Lab">
-<meta name="twitter:description" content="HS Code 조회와 관세율 확인 방법 총정리. 국가별 관세청 공식 조회 도구로 바로 연결하고, HS Code 구조와 정확하게 검색하는 요령, 자주 하는 실수까지 정리했습니다.">
+<meta name="twitter:title" content="HS Code 조회 방법 – 관세율 확인·품목분류 가이드 | CBM Lab">
+<meta name="twitter:description" content="HS Code 찾는 법과 관세율 조회 방법을 단계별로. 관세청 UNI-PASS 조회 사이트 활용, 품목분류 원칙, 사전심사 제도까지 정리했습니다.">
 <meta name="twitter:image" content="https://procurement-toolkit-eight.vercel.app/assets/hero-team.jpg">
 
 <link rel="alternate" hreflang="ko" href="https://procurement-toolkit-eight.vercel.app/hs-code-guide.html">
@@ -56,6 +56,7 @@
   .card{background:#fff;border:1px solid var(--slate-200);border-radius:var(--radius-lg);box-shadow:var(--shadow-sm);margin-bottom:20px}
   .card-header{padding:16px 20px;border-bottom:1px solid var(--slate-100)}
   .card-title{font-size:14.5px;font-weight:700;color:var(--slate-800)}
+  h2.card-title{margin:0;line-height:1.4}
   .card-body{padding:20px}
   .card-body p{font-size:13.5px;color:var(--slate-600);line-height:1.75;margin-bottom:12px}
   .card-body p:last-child{margin-bottom:0}
@@ -105,6 +106,7 @@
 
   @media print{.ad-area-main,.ad-main-box,header,footer{display:none !important}}
   @media (max-width:640px){.official-grid{grid-template-columns:1fr}.ad-area-main{padding:0 16px 20px}.faq-wrap{padding:0 16px}.cta-box{flex-direction:column;align-items:flex-start}}
+.related-tools{max-width:960px;margin:32px auto;padding:0 16px}.related-tools h2{font-size:15px;font-weight:700;margin:0 0 10px}.related-tools ul{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:8px}.related-tools a{display:block;padding:10px 12px;border:1px solid #E2E8F0;border-radius:8px;font-size:13px;color:#1E293B;text-decoration:none}.related-tools a:hover{border-color:#94A3B8}
 </style>
 
 <script src="https://cdn.amplitude.com/script/d4aa9301e01f4600b5eeb018e160aa7c.js"></script>
@@ -146,7 +148,7 @@
   <div class="warn-box">⚠ HS Code 분류는 전문 분류업체의 AI 도구조차 정확도가 70~80%대에 머무를 만큼 까다로운 영역입니다. 이 페이지는 직접 코드를 판정해드리지 않고, <strong>공식 관세당국 데이터로 바로 연결</strong>해드립니다. 고액 거래나 중요한 판정은 반드시 관세사와 상담하세요.</div>
 
   <div class="card">
-    <div class="card-header"><div class="card-title">국가별 공식 조회 도구</div></div>
+    <div class="card-header"><h2 class="card-title">국가별 공식 조회 도구</h2></div>
     <div class="card-body">
       <div class="official-grid">
         <div class="official-card">
@@ -165,7 +167,7 @@
   </div>
 
   <div class="card">
-    <div class="card-header"><div class="card-title">HS Code, 이렇게 구성됩니다</div></div>
+    <div class="card-header"><h2 class="card-title">HS Code, 이렇게 구성됩니다</h2></div>
     <div class="card-body">
       <p>HS Code는 세계관세기구(WCO)가 정한 <strong>앞 6자리 국제 공통 코드</strong>에, 각 나라가 자국 통계·관세 목적으로 자릿수를 추가하는 구조입니다.</p>
       <p><strong>예: 8471.30</strong> (노트북 컴퓨터, 앞 6자리는 전 세계 공통)<br>
@@ -177,7 +179,7 @@
   </div>
 
   <div class="card">
-    <div class="card-header"><div class="card-title">정확하게 검색하는 3단계</div></div>
+    <div class="card-header"><h2 class="card-title">정확하게 검색하는 3단계</h2></div>
     <div class="card-body">
       <div class="step-list">
         <div class="step-item">
@@ -197,7 +199,7 @@
   </div>
 
   <div class="card">
-    <div class="card-header"><div class="card-title">자주 하는 실수</div></div>
+    <div class="card-header"><h2 class="card-title">자주 하는 실수</h2></div>
     <div class="card-body">
       <div class="mistake-item">
         <div class="mistake-title">용도에 따른 분류 오류</div>
@@ -234,7 +236,7 @@
 
 <div class="faq-wrap">
   <div class="card">
-    <div class="card-header"><div class="card-title">자주 묻는 질문</div></div>
+    <div class="card-header"><h2 class="card-title">자주 묻는 질문</h2></div>
     <div class="card-body">
       <details class="faq-item"><summary>HS Code를 잘못 신고하면 어떻게 되나요?</summary><p>관세 과오납(더 내거나 덜 내거나), 통관 지연, 심한 경우 세관 사후 심사에서 적발되어 가산세와 함께 추징될 수 있습니다. 애매한 품목은 사전심사를 받는 것이 안전합니다.</p></details>
       <details class="faq-item"><summary>수출용 코드와 수입용 코드가 다른가요?</summary><p>네, 나라에 따라 다를 수 있습니다. 예를 들어 미국은 수입 시 10자리 HTS 코드, 수출 시에는 별도의 Schedule B 코드(역시 10자리)를 사용하며, 앞 6자리는 서로 같습니다.</p></details>
@@ -243,6 +245,7 @@
   </div>
 </div>
 
+<!--RELATED--><nav class="related-tools" aria-label="함께 쓰는 관련 도구"><h2>함께 쓰는 관련 도구</h2><ul><li><a href="combined-taxation-guide.html">해외직구 합산과세 완벽정리</a></li><li><a href="forwarding-guide.html">배송대행지(배대지) 이용법과 주의사항</a></li><li><a href="scam-prevention-guide.html">해외직구 사기 예방·환불 대처법</a></li><li><a href="guide-hub.html">해외직구 완벽 가이드 (총정리)</a></li><li><a href="global-de-minimis-guide.html">2026년 글로벌 면세한도 총정리</a></li><li><a href="korea-supplier-intelligence.html">한국 공급사 인텔리전스</a></li></ul></nav><!--/RELATED-->
 <footer><div class="footer-inner">
   <div class="footer-logo"><svg width="24" height="24" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align:middle;margin-right:9px;flex-shrink:0;"><path d="M20 2.5L36.5 11.5V28.5L20 37.5L3.5 28.5V11.5L20 2.5Z" stroke="url(#cbmGradF)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M20 2.5V20M20 20L36.5 11.5M20 20L3.5 11.5" stroke="url(#cbmGradF)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/></svg>CBM<span style="color:#2563EB;">Lab</span></div>
   <nav><a href="index.html" class="footer-link">전체 도구</a><a href="privacy.html" class="footer-link">개인정보 처리방침</a></nav>

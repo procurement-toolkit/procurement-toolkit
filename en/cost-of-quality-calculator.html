@@ -54,6 +54,7 @@
   .card{background:#fff;border:1px solid var(--slate-200);border-radius:var(--radius-lg);box-shadow:var(--shadow-sm);margin-bottom:20px}
   .card-header{padding:16px 20px;border-bottom:1px solid var(--slate-100)}
   .card-title{font-size:14px;font-weight:700;color:var(--slate-800)}
+  h2.card-title{margin:0;line-height:1.4}
   .card-body{padding:20px}
 
   .field-label{font-size:12.5px;font-weight:600;color:var(--slate-600);margin-bottom:5px;display:block}
@@ -112,6 +113,7 @@
   @media print{.ad-area-main,.ad-main-box,header,footer{display:none !important}.main{grid-template-columns:1fr}}
   @media (max-width:900px){.main{grid-template-columns:1fr}}
   @media (max-width:640px){.ad-area-main{padding:0 16px 20px}.faq-wrap,.about-wrap{padding:0 16px}}
+.related-tools{max-width:960px;margin:32px auto;padding:0 16px}.related-tools h2{font-size:15px;font-weight:700;margin:0 0 10px}.related-tools ul{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:8px}.related-tools a{display:block;padding:10px 12px;border:1px solid #E2E8F0;border-radius:8px;font-size:13px;color:#1E293B;text-decoration:none}.related-tools a:hover{border-color:#94A3B8}
 </style>
 
 <script src="https://cdn.amplitude.com/script/d4aa9301e01f4600b5eeb018e160aa7c.js"></script>
@@ -151,7 +153,7 @@
 <div class="main">
   <section>
     <div class="card">
-      <div class="card-header"><div class="card-title">Enter Annual Quality Costs</div></div>
+      <div class="card-header"><h2 class="card-title">Enter Annual Quality Costs</h2></div>
       <div class="card-body">
         <div class="cat-section prevention">
           <h4>1. Prevention Cost</h4>
@@ -200,7 +202,7 @@
 
   <aside>
     <div class="card">
-      <div class="card-header"><div class="card-title">Results</div></div>
+      <div class="card-header"><h2 class="card-title">Results</h2></div>
       <div class="card-body">
         <div id="resultWrap"></div>
         <div class="notice-box">💡 Industry-average CoQ typically runs 15-25% of revenue, while world-class manufacturers push it below 5%. A core insight of quality management is that one more dollar spent on prevention and appraisal often reduces failure costs by several times that amount.</div>
@@ -211,7 +213,7 @@
 
 <div class="about-wrap">
   <div class="card">
-    <div class="card-header"><div class="card-title">What Is Cost of Quality (CoQ)?</div></div>
+    <div class="card-header"><h2 class="card-title">What Is Cost of Quality (CoQ)?</h2></div>
     <div class="card-body about-section">
       <h3>Why break quality cost into four categories?</h3>
       <p>Quality cost splits into "prevention and appraisal" (proactive investment) and "internal and external failure" (reactive cleanup). Money spent on prevention and appraisal keeps defects from happening or catches them early; failure costs are what you pay for defects that already occurred. The ratio between the two groups reveals whether your company manages quality proactively or is mostly firefighting after the fact.</p>
@@ -228,7 +230,7 @@
 
 <div class="faq-wrap">
   <div class="card">
-    <div class="card-header"><div class="card-title">Frequently Asked Questions</div></div>
+    <div class="card-header"><h2 class="card-title">Frequently Asked Questions</h2></div>
     <div class="card-body">
       <details class="faq-item"><summary>What's the difference between prevention and appraisal cost?</summary><p>Prevention cost is investment (training, process design, preventive maintenance) that keeps defects from occurring at all. Appraisal cost is the inspection and measurement spent finding defects in products that already exist. Both happen "before" the customer sees the product, but prevention removes the cause while appraisal filters the output.</p></details>
       <details class="faq-item"><summary>Why is external failure cost considered the riskiest category?</summary><p>Internal failures are contained inside the company, but external failures can damage customer trust, harm brand reputation, and in serious cases create legal liability — so the real impact can be far larger than the visible dollar figure.</p></details>
@@ -237,6 +239,7 @@
   </div>
 </div>
 
+<!--RELATED--><nav class="related-tools" aria-label="Related tools"><h2>Related tools</h2><ul><li><a href="should-cost-calculator.html">Should Cost Calculator</a></li><li><a href="purchase-price-variance-calculator.html">Purchase Price Variance (PPV) Calculator</a></li><li><a href="oee-calculator.html">OEE (Overall Equipment Effectiveness) Calculator</a></li><li><a href="abc-inventory-analysis.html">ABC Inventory Analysis Tool</a></li><li><a href="spend-analysis-dashboard.html">Spend Analysis Dashboard</a></li><li><a href="tco-calculator.html">TCO Calculator (Total Cost of Ownership)</a></li></ul></nav><!--/RELATED-->
 <footer><div class="footer-inner">
   <div class="footer-logo"><svg width="24" height="24" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align:middle;margin-right:9px;flex-shrink:0;"><path d="M20 2.5L36.5 11.5V28.5L20 37.5L3.5 28.5V11.5L20 2.5Z" stroke="url(#cbmGradF)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M20 2.5V20M20 20L36.5 11.5M20 20L3.5 11.5" stroke="url(#cbmGradF)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/></svg>CBM<span style="color:#2563EB;">Lab</span></div>
   <nav><a href="index.html" class="footer-link">All Tools</a><a href="privacy.html" class="footer-link">Privacy Policy</a></nav>

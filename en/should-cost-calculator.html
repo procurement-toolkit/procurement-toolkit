@@ -54,6 +54,7 @@
   .card{background:#fff;border:1px solid var(--slate-200);border-radius:var(--radius-lg);box-shadow:var(--shadow-sm);margin-bottom:20px}
   .card-header{padding:16px 20px;border-bottom:1px solid var(--slate-100);display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
   .card-title{font-size:14px;font-weight:600;color:var(--slate-800)}
+  h2.card-title{margin:0;line-height:1.4}
   .card-body{padding:18px}
   .field-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px}
   .field-label{font-size:11.5px;font-weight:600;color:var(--slate-600);margin-bottom:5px;display:block}
@@ -139,6 +140,7 @@
   .faq-item summary::before{content:'Q. ';color:var(--accent)}
   .faq-item p{margin-top:8px;font-size:12.5px;color:var(--slate-600);line-height:1.7;padding-left:2px}
   @media (max-width:640px){.faq-wrap{padding:0 16px}}
+.related-tools{max-width:960px;margin:32px auto;padding:0 16px}.related-tools h2{font-size:15px;font-weight:700;margin:0 0 10px}.related-tools ul{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:8px}.related-tools a{display:block;padding:10px 12px;border:1px solid #E2E8F0;border-radius:8px;font-size:13px;color:#1E293B;text-decoration:none}.related-tools a:hover{border-color:#94A3B8}
 </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/exceljs/4.4.0/exceljs.min.js"></script>
 </head>
@@ -166,7 +168,7 @@
 <div class="main">
   <section>
     <div class="card">
-      <div class="card-header"><div class="card-title">1. Bill of Materials (BOM)</div></div>
+      <div class="card-header"><h2 class="card-title">1. Bill of Materials (BOM)</h2></div>
       <div class="card-body">
         <div class="item-table-wrap">
           <table class="item-table">
@@ -180,7 +182,7 @@
     </div>
 
     <div class="card">
-      <div class="card-header"><div class="card-title">2. Manufacturing Process (cycle time &amp; labor)</div></div>
+      <div class="card-header"><h2 class="card-title">2. Manufacturing Process (cycle time &amp; labor)</h2></div>
       <div class="card-body">
         <div class="region-presets" id="regionPresets"></div>
         <div class="item-table-wrap">
@@ -195,7 +197,7 @@
     </div>
 
     <div class="card">
-      <div class="card-header"><div class="card-title">3. Machine Utilization &amp; Overhead</div></div>
+      <div class="card-header"><h2 class="card-title">3. Machine Utilization &amp; Overhead</h2></div>
       <div class="card-body">
         <div class="field-grid">
           <div><label class="field-label">Machine hourly cost (depreciation + utilities)</label><input class="inp" type="number" id="machineRate" value="15" oninput="calc()"></div>
@@ -208,7 +210,7 @@
     </div>
 
     <div class="card">
-      <div class="card-header"><div class="card-title">4. Target Margin</div></div>
+      <div class="card-header"><h2 class="card-title">4. Target Margin</h2></div>
       <div class="card-body">
         <div class="field-grid">
           <div><label class="field-label">Margin method</label>
@@ -220,7 +222,7 @@
     </div>
 
     <div class="card">
-      <div class="card-header"><div class="card-title">5. Compare Against Supplier Quote (optional)</div></div>
+      <div class="card-header"><h2 class="card-title">5. Compare Against Supplier Quote (optional)</h2></div>
       <div class="card-body">
         <label class="field-label">Supplier's quoted unit price (USD)</label>
         <input class="inp" type="number" id="supplierQuote" placeholder="e.g. 4.80" oninput="calc()">
@@ -230,7 +232,7 @@
 
   <aside>
     <div class="card">
-      <div class="card-header"><div class="card-title">Should Cost Result</div></div>
+      <div class="card-header"><h2 class="card-title">Should Cost Result</h2></div>
       <div class="card-body">
         <div id="resultLines"></div>
         <div class="result-total"><div class="label">Should Cost (per unit)</div><div class="value" id="shouldCostValue">$0.00</div></div>
@@ -260,7 +262,7 @@
 
 <div style="max-width:1300px;margin:0 auto;padding:0 24px 30px;">
   <div class="card">
-    <div class="card-header"><div class="card-title">Why Run a Should Cost Analysis?</div></div>
+    <div class="card-header"><h2 class="card-title">Why Run a Should Cost Analysis?</h2></div>
     <div class="card-body" style="font-size:12.5px;color:var(--slate-600);line-height:1.7;">
       <p>Accepting a supplier's quoted price at face value means you have no way of knowing how much margin is built in. A Should Cost Analysis builds up an independent estimate of what a product ought to cost, giving you real leverage in negotiations rather than just asking for "a better price."</p>
       <p style="margin-top:8px;"><b>How to use it in practice:</b> Use it to benchmark competing supplier quotes on new parts, or to build a fact-based case for cost reduction with an existing supplier. If labor cost is a large share of the total, ask whether production could shift to a lower-cost region. If machine utilization is assumed low, ask whether committing to higher volume could justify a lower unit price.</p>
@@ -272,7 +274,7 @@
 
 <div class="faq-wrap">
   <div class="card">
-    <div class="card-header"><div class="card-title">Frequently Asked Questions</div></div>
+    <div class="card-header"><h2 class="card-title">Frequently Asked Questions</h2></div>
     <div class="card-body">
       <details class="faq-item"><summary>What is Should Cost analysis, and how is it different from just reviewing a quote?</summary><p>Should Cost analysis builds an independent cost estimate — materials, processing, overhead, margin — instead of taking a supplier's quote at face value. It gives you a concrete, defensible reference point for negotiation rather than a gut-feel judgment.</p></details>
       <details class="faq-item"><summary>How do I negotiate when a supplier's quote is significantly above my Should Cost estimate?</summary><p>Point to the specific cost category driving the gap (materials, labor, overhead, or margin) and ask the supplier to walk through their assumptions for that line. This tends to get a more concrete response than a general request to 'lower the price.'</p></details>
@@ -282,7 +284,7 @@
 
 <div class="about-wrap">
   <div class="card">
-    <div class="card-header"><div class="card-title">What Is Should Cost Analysis?</div></div>
+    <div class="card-header"><h2 class="card-title">What Is Should Cost Analysis?</h2></div>
     <div class="card-body about-section">
       <h3>Why isn't a supplier quote enough on its own?</h3>
       <p>A supplier quote tells you whether to accept it or not — it doesn't tell you whether it's fair. Should Cost builds an independent estimate by stacking up material cost, labor, machine utilization, overhead, and margin, so you have a defensible target price before you ever see a quote. Walking into negotiation with your own number lets you actually test the supplier's reasoning instead of just reacting to theirs.</p>
@@ -320,6 +322,7 @@
   </div>
 </div>
 
+<!--RELATED--><nav class="related-tools" aria-label="Related tools"><h2>Related tools</h2><ul><li><a href="rvc-calculator.html">Regional Value Content (RVC) Calculator</a></li><li><a href="landed-cost-calculator.html">Landed Cost Calculator</a></li><li><a href="fx-exposure-calculator.html">FX Exposure Calculator</a></li><li><a href="currency-hedging-calculator.html">FX Hedging Cost Calculator</a></li><li><a href="cost-of-quality-calculator.html">Cost of Quality (CoQ) Calculator</a></li><li><a href="cbm-calculator.html">CBM &amp; Volumetric Weight Calculator</a></li></ul></nav><!--/RELATED-->
 <footer style="background:#0F172A;color:#94A3B8;padding:24px;font-size:12px;">
   <div style="max-width:1300px;margin:0 auto;display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;">
     <div style="font-size:15px;font-weight:800;color:#fff;"><svg width="24" height="24" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align:middle;margin-right:9px;flex-shrink:0;"><path d="M20 2.5L36.5 11.5V28.5L20 37.5L3.5 28.5V11.5L20 2.5Z" stroke="url(#cbmGradF)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M20 2.5V20M20 20L36.5 11.5M20 20L3.5 11.5" stroke="url(#cbmGradF)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/></svg>CBM<span style="color:#2563EB;">Lab</span></div>

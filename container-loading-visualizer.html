@@ -5,9 +5,9 @@
      crossorigin="anonymous"></script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="여러 박스 규격을 동시에 입력하면 컨테이너 안에 구간별로 어떻게 나란히 쌓이는지 2D/3D로 시각화하고, 컨테이너 종류별 적재량 비교와 규격 초과 여부까지 확인합니다.">
-<meta name="keywords" content="컨테이너 적재 계산기, 컨테이너 적재 시뮬레이션, 20ft 40ft 컨테이너 적재량, logistics planning tool">
-<title>컨테이너 적재 시각화 (2D/3D) — CBM Lab</title>
+<meta name="description" content="박스 치수와 중량을 넣으면 컨테이너 적재 시뮬레이션(2D/3D)과 적재 수량·중량 한도를 계산합니다. 20ft·40ft·40HC 지원.">
+<meta name="keywords" content="컨테이너 적재 시뮬레이션, 컨테이너 적재 계산기, 컨테이너 적재 수량, 40HC, 20ft 적재">
+<title>컨테이너 적재 시뮬레이션 – 20ft·40ft 수량 계산기 | CBM Lab</title>
 <link rel="icon" href="favicon.ico" sizes="any">
 <link rel="icon" href="favicon.ico" type="image/x-icon">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
@@ -15,15 +15,15 @@
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="CBM Lab">
 <meta property="og:locale" content="ko_KR">
-<meta property="og:title" content="컨테이너 적재 시각화 (2D/3D) — CBM Lab">
-<meta property="og:description" content="여러 박스 규격을 동시에 입력하면 컨테이너 안에 구간별로 어떻게 나란히 쌓이는지 2D/3D로 시각화하고, 컨테이너 종류별 적재량 비교와 규격 초과 여부까지 확인합니다.">
+<meta property="og:title" content="컨테이너 적재 시뮬레이션 – 20ft·40ft 수량 계산기 | CBM Lab">
+<meta property="og:description" content="박스 치수와 중량을 넣으면 컨테이너 적재 시뮬레이션(2D/3D)과 적재 수량·중량 한도를 계산합니다. 20ft·40ft·40HC 지원.">
 <meta property="og:url" content="https://procurement-toolkit-eight.vercel.app/container-loading-visualizer.html">
 <meta property="og:image" content="https://procurement-toolkit-eight.vercel.app/assets/hero-team.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="컨테이너 적재 시각화 (2D/3D) — CBM Lab">
-<meta name="twitter:description" content="여러 박스 규격을 동시에 입력하면 컨테이너 안에 구간별로 어떻게 나란히 쌓이는지 2D/3D로 시각화하고, 컨테이너 종류별 적재량 비교와 규격 초과 여부까지 확인합니다.">
+<meta name="twitter:title" content="컨테이너 적재 시뮬레이션 – 20ft·40ft 수량 계산기 | CBM Lab">
+<meta name="twitter:description" content="박스 치수와 중량을 넣으면 컨테이너 적재 시뮬레이션(2D/3D)과 적재 수량·중량 한도를 계산합니다. 20ft·40ft·40HC 지원.">
 <meta name="twitter:image" content="https://procurement-toolkit-eight.vercel.app/assets/hero-team.jpg">
 
 <link rel="alternate" hreflang="ko" href="https://procurement-toolkit-eight.vercel.app/container-loading-visualizer.html">
@@ -56,6 +56,7 @@
   .card{background:var(--card-bg);border:1px solid var(--slate-200);border-radius:var(--radius-lg);box-shadow:var(--shadow-sm);margin-bottom:20px}
   .card-header{padding:16px 20px;border-bottom:1px solid var(--slate-100);display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
   .card-title{font-size:14px;font-weight:600;color:var(--slate-800)}
+  h2.card-title{margin:0;line-height:1.4}
   .card-body{padding:20px}
   .field-group{margin-bottom:12px}
   .field-label{font-size:12px;font-weight:600;color:var(--slate-600);margin-bottom:6px;display:block}
@@ -386,6 +387,7 @@
   .faq-item summary::before{content:'Q. ';color:var(--accent)}
   .faq-item p{margin-top:8px;font-size:12.5px;color:var(--slate-600);line-height:1.7;padding-left:2px}
   @media (max-width:640px){.faq-wrap{padding:0 16px}}
+.related-tools{max-width:960px;margin:32px auto;padding:0 16px}.related-tools h2{font-size:15px;font-weight:700;margin:0 0 10px}.related-tools ul{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:8px}.related-tools a{display:block;padding:10px 12px;border:1px solid #E2E8F0;border-radius:8px;font-size:13px;color:#1E293B;text-decoration:none}.related-tools a:hover{border-color:#94A3B8}
 </style>
 <script src="https://cdn.amplitude.com/script/d4aa9301e01f4600b5eeb018e160aa7c.js"></script>
 <script>
@@ -430,7 +432,7 @@
 <div class="main">
   <section>
     <div class="card">
-      <div class="card-header"><div class="card-title">컨테이너 &amp; 박스 규격</div></div>
+      <div class="card-header"><h2 class="card-title">컨테이너 &amp; 박스 규격</h2></div>
       <div class="card-body">
         <div class="field-group">
           <label class="field-label">컨테이너 종류</label>
@@ -502,7 +504,7 @@
     </div>
 
     <div class="card">
-      <div class="card-header"><div class="card-title">컨테이너 종류별 비교</div></div>
+      <div class="card-header"><h2 class="card-title">컨테이너 종류별 비교</h2></div>
       <div class="card-body" style="padding-top:14px;">
         <table class="compare-table" id="compareTable"></table>
       </div>
@@ -512,7 +514,7 @@
   <aside>
     <div class="card">
       <div class="card-header">
-        <div class="card-title">적재 시각화</div>
+        <h2 class="card-title">적재 시각화</h2>
         <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
           <div class="view-toggle">
             <button class="view-btn active" id="btn2d" onclick="setView('2d')">미리보기 (고정 각도)</button>
@@ -642,7 +644,7 @@
 
 <div class="main" style="max-width:1100px;margin:0 auto;padding:0 24px 40px;">
   <div class="card">
-    <div class="card-header"><div class="card-title">왜 미리 시각화해봐야 하는가</div></div>
+    <div class="card-header"><h2 class="card-title">왜 미리 시각화해봐야 하는가</h2></div>
     <div class="card-body" style="font-size:12.5px;color:var(--slate-600);line-height:1.7;">
 <p>박스 규격만 보고 컨테이너에 몇 개나 들어갈지 어림짐작하면, 실제 적재 시 공간이 남거나 부족해 추가 컨테이너가 필요해지는 경우가 많습니다. 규격이 다른 여러 품목을 함께 실을 때는 계산이 더 복잡해집니다.</p>
 <p><b>실무 활용법:</b> 발주 수량을 정하기 전 20ft·40ft 컨테이너별 적재 가능량을 미리 확인하거나, 여러 품목을 섞어 실을 때 어떤 순서로 배치하면 공간을 효율적으로 쓸 수 있는지 시각적으로 확인하는 데 활용할 수 있습니다.</p>
@@ -654,7 +656,7 @@
 
 <div class="faq-wrap">
   <div class="card">
-    <div class="card-header"><div class="card-title">자주 묻는 질문</div></div>
+    <div class="card-header"><h2 class="card-title">자주 묻는 질문</h2></div>
     <div class="card-body">
       <details class="faq-item"><summary>컨테이너 실제 적재율은 이론상 최대치와 왜 차이가 나나요?</summary><p>이론적 용적은 컨테이너 내부 치수를 그대로 곱한 값이지만, 실제로는 파렛트 사이 공간, 화물 형태의 불규칙성, 적입 작업 여유공간 때문에 보통 85~92% 정도만 실질적으로 활용됩니다.</p></details>
       <details class="faq-item"><summary>20피트와 40피트 중 어떤 컨테이너를 선택해야 하나요?</summary><p>부피가 크지 않은데 무거운 화물(중량화물)은 20피트가 유리하고, 부피는 큰데 가벼운 화물은 40피트가 공간 효율이 좋습니다. 컨테이너당 최대 적재 중량 한도도 있으므로 부피와 중량을 함께 계산해서 비교해야 합니다.</p></details>
@@ -673,6 +675,7 @@
 <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
 </div>
 
+<!--RELATED--><nav class="related-tools" aria-label="함께 쓰는 관련 도구"><h2>함께 쓰는 관련 도구</h2><ul><li><a href="global-holiday-calendar.html">글로벌 물류 휴일 캘린더</a></li><li><a href="contract-renewal-calendar.html">계약 갱신 캘린더</a></li><li><a href="worldclock.html">세계시간 &amp; 시차 계산기</a></li><li><a href="purchase-price-variance-calculator.html">구매가격차이(PPV) 계산기</a></li><li><a href="oee-calculator.html">OEE(설비종합효율) 계산기</a></li><li><a href="abc-inventory-analysis.html">ABC 재고 분석 도구</a></li></ul></nav><!--/RELATED-->
 <footer><div class="footer-inner">
   <div class="footer-logo"><svg width="24" height="24" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align:middle;margin-right:9px;flex-shrink:0;"><path d="M20 2.5L36.5 11.5V28.5L20 37.5L3.5 28.5V11.5L20 2.5Z" stroke="url(#cbmGradF)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M20 2.5V20M20 20L36.5 11.5M20 20L3.5 11.5" stroke="url(#cbmGradF)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/></svg>CBM<span>Lab</span></div>
   <nav><a href="index.html" class="footer-link">전체 도구</a><a href="privacy.html" class="footer-link">개인정보 처리방침</a></nav>

@@ -54,6 +54,7 @@
   .card{background:#fff;border:1px solid var(--slate-200);border-radius:var(--radius-lg);box-shadow:var(--shadow-sm);margin-bottom:20px}
   .card-header{padding:16px 20px;border-bottom:1px solid var(--slate-100)}
   .card-title{font-size:14px;font-weight:700;color:var(--slate-800)}
+  h2.card-title{margin:0;line-height:1.4}
   .card-body{padding:20px}
 
   .field-label{font-size:12.5px;font-weight:600;color:var(--slate-600);margin-bottom:5px;display:block}
@@ -112,6 +113,7 @@
   @media print{.ad-area-main,.ad-main-box,header,footer{display:none !important}.main{grid-template-columns:1fr}}
   @media (max-width:900px){.main{grid-template-columns:1fr}}
   @media (max-width:640px){.ad-area-main{padding:0 16px 20px}.faq-wrap,.about-wrap{padding:0 16px}}
+.related-tools{max-width:960px;margin:32px auto;padding:0 16px}.related-tools h2{font-size:15px;font-weight:700;margin:0 0 10px}.related-tools ul{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:8px}.related-tools a{display:block;padding:10px 12px;border:1px solid #E2E8F0;border-radius:8px;font-size:13px;color:#1E293B;text-decoration:none}.related-tools a:hover{border-color:#94A3B8}
 </style>
 
 <script src="https://cdn.amplitude.com/script/d4aa9301e01f4600b5eeb018e160aa7c.js"></script>
@@ -151,7 +153,7 @@
 <div class="main">
   <section>
     <div class="card">
-      <div class="card-header"><div class="card-title">연간 품질비용 입력</div></div>
+      <div class="card-header"><h2 class="card-title">연간 품질비용 입력</h2></div>
       <div class="card-body">
         <div class="cat-section prevention">
           <h4>1. 예방비용 (Prevention Cost)</h4>
@@ -200,7 +202,7 @@
 
   <aside>
     <div class="card">
-      <div class="card-header"><div class="card-title">계산 결과</div></div>
+      <div class="card-header"><h2 class="card-title">계산 결과</h2></div>
       <div class="card-body">
         <div id="resultWrap"></div>
         <div class="notice-box">💡 업계 평균 품질비용은 매출의 15~25% 수준이며, 세계 최고 수준의 제조기업은 5% 미만까지 낮춥니다. 예방·평가에 1원을 더 쓰면 실패비용을 그 몇 배로 줄이는 경우가 많다는 게 품질경영의 핵심 통찰입니다.</div>
@@ -211,7 +213,7 @@
 
 <div class="about-wrap">
   <div class="card">
-    <div class="card-header"><div class="card-title">품질비용(CoQ)이란?</div></div>
+    <div class="card-header"><h2 class="card-title">품질비용(CoQ)이란?</h2></div>
     <div class="card-body about-section">
       <h3>왜 품질비용을 4가지로 나눠서 봐야 하나요?</h3>
       <p>품질비용은 "예방·평가"(사전 투자)와 "내부·외부실패"(사후 처리)로 나뉩니다. 예방·평가에 쓰는 돈은 불량을 막거나 조기에 걸러내는 투자이고, 실패비용은 이미 발생한 불량을 처리하는 데 드는 돈입니다. 두 그룹의 비율을 보면, 우리 회사가 품질을 선제적으로 관리하는지 아니면 사고가 터진 뒤에 수습만 하고 있는지 알 수 있습니다.</p>
@@ -228,7 +230,7 @@
 
 <div class="faq-wrap">
   <div class="card">
-    <div class="card-header"><div class="card-title">자주 묻는 질문</div></div>
+    <div class="card-header"><h2 class="card-title">자주 묻는 질문</h2></div>
     <div class="card-body">
       <details class="faq-item"><summary>예방비용과 평가비용의 차이가 뭔가요?</summary><p>예방비용은 불량이 애초에 생기지 않도록 하는 투자(교육, 공정 설계, 예방정비)이고, 평가비용은 이미 만들어진 제품에서 불량을 찾아내는 검사·측정 비용입니다. 둘 다 "사전" 활동이지만, 예방은 원인 자체를 없애고 평가는 결과물을 걸러낸다는 차이가 있습니다.</p></details>
       <details class="faq-item"><summary>외부실패비용은 왜 가장 위험한 항목으로 꼽히나요?</summary><p>내부실패는 사내에서 끝나지만, 외부실패는 고객 신뢰 손실, 브랜드 평판 훼손, 심한 경우 법적 책임까지 이어질 수 있어 눈에 보이는 금액보다 실제 영향이 훨씬 클 수 있습니다.</p></details>
@@ -237,6 +239,7 @@
   </div>
 </div>
 
+<!--RELATED--><nav class="related-tools" aria-label="함께 쓰는 관련 도구"><h2>함께 쓰는 관련 도구</h2><ul><li><a href="personal-duty-calculator.html">해외직구 관부가세 계산기</a></li><li><a href="leadtime-calculator.html">선적 리드타임 계산기</a></li><li><a href="demurrage-detention-calculator.html">디머리지·디텐션 비용 계산기</a></li><li><a href="cost-structure-calculator.html">원가구조 이해 가이드 &amp; 계산기</a></li><li><a href="inventory-planning-calculator.html">재고 발주 계획 도구</a></li><li><a href="should-cost-calculator.html">Should Cost 계산기</a></li></ul></nav><!--/RELATED-->
 <footer><div class="footer-inner">
   <div class="footer-logo"><svg width="24" height="24" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align:middle;margin-right:9px;flex-shrink:0;"><path d="M20 2.5L36.5 11.5V28.5L20 37.5L3.5 28.5V11.5L20 2.5Z" stroke="url(#cbmGradF)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M20 2.5V20M20 20L36.5 11.5M20 20L3.5 11.5" stroke="url(#cbmGradF)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/></svg>CBM<span style="color:#2563EB;">Lab</span></div>
   <nav><a href="index.html" class="footer-link">전체 도구</a><a href="privacy.html" class="footer-link">개인정보 처리방침</a></nav>

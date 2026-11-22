@@ -56,6 +56,7 @@
   .card{background:#fff;border:1px solid var(--slate-200);border-radius:var(--radius-lg);box-shadow:var(--shadow-sm);margin-bottom:20px}
   .card-header{padding:16px 20px;border-bottom:1px solid var(--slate-100);display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
   .card-title{font-size:14px;font-weight:600;color:var(--slate-800)}
+  h2.card-title{margin:0;line-height:1.4}
   .card-body{padding:20px}
 
   .item-table{width:100%;border-collapse:collapse}
@@ -193,6 +194,7 @@
   .chart-legend i{display:inline-block;width:14px;height:3px;border-radius:2px;margin-right:6px;vertical-align:3px}
   @media (max-width:900px){.detail-grid{grid-template-columns:1fr}}
   @media (max-width:640px){.about-wrap{padding:0 16px 16px}.wide{padding:20px 16px 6px}.grid2{grid-template-columns:1fr}}
+.related-tools{max-width:960px;margin:32px auto;padding:0 16px}.related-tools h2{font-size:15px;font-weight:700;margin:0 0 10px}.related-tools ul{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:8px}.related-tools a{display:block;padding:10px 12px;border:1px solid #E2E8F0;border-radius:8px;font-size:13px;color:#1E293B;text-decoration:none}.related-tools a:hover{border-color:#94A3B8}
 </style>
 
 <script src="https://cdn.amplitude.com/script/d4aa9301e01f4600b5eeb018e160aa7c.js"></script>
@@ -233,7 +235,7 @@
 <div class="main">
   <section>
     <div class="card">
-      <div class="card-header"><div class="card-title">Hedge inputs</div><div style="font-size:11.5px;color:var(--slate-400);">Base currency: KRW</div></div>
+      <div class="card-header"><h2 class="card-title">Hedge inputs</h2><div style="font-size:11.5px;color:var(--slate-400);">Base currency: KRW</div></div>
       <div class="card-body">
         <div class="field"><div class="seg"><button data-d="import" onclick="setDir('import')">Import · foreign currency payable</button><button data-d="export" onclick="setDir('export')">Export · foreign currency receivable</button></div></div>
         <div class="grid2">
@@ -263,7 +265,7 @@
   </section>
   <aside>
     <div class="card">
-      <div class="card-header"><div class="card-title">Hedge cost summary</div></div>
+      <div class="card-header"><h2 class="card-title">Hedge cost summary</h2></div>
       <div class="card-body"><div id="kpis"></div>
         <button class="btn-excel" onclick="requestExcelDownload()">📊 Download hedging analysis as Excel</button></div>
     </div>
@@ -272,7 +274,7 @@
 
 <div class="wide" style="padding-top:0;">
   <div class="card">
-    <div class="card-header"><div class="card-title">KRW amount by maturity-rate scenario</div></div>
+    <div class="card-header"><h2 class="card-title">KRW amount by maturity-rate scenario</h2></div>
     <div class="card-body">
       <div class="chart-wrap" id="chart"></div>
       <div class="chart-legend"><span><i style="background:#94A3B8"></i>Unhedged</span><span><i style="background:#2563EB"></i>Hedged</span></div>
@@ -283,7 +285,7 @@
 
 <div class="about-wrap">
   <div class="card">
-    <div class="card-header"><div class="card-title">How the hedging cost is calculated</div></div>
+    <div class="card-header"><h2 class="card-title">How the hedging cost is calculated</h2></div>
     <div class="card-body about-section"><h3>Forward points and annualized cost</h3>
 <p>The difference between the forward rate (F) and the spot rate (S) is the forward points. The period premium is (F − S) ÷ S, and the annualized figure multiplies it by the day-count basis ÷ tenor. For an importer paying in foreign currency, a forward above spot (premium) is a cost and a forward below spot (discount) is a gain. For an exporter receiving foreign currency, the direction is reversed.</p>
 <h3>Theoretical forward from interest rates</h3>
@@ -306,7 +308,7 @@
 </div>
 <div class="faq-wrap">
   <div class="card">
-    <div class="card-header"><div class="card-title">Frequently asked questions</div></div>
+    <div class="card-header"><h2 class="card-title">Frequently asked questions</h2></div>
     <div class="card-body">
       <details class="faq-item"><summary>What do forward premium and discount mean?</summary><p>A forward rate above the spot rate is a premium, and below it is a discount. The main driver is the interest rate difference between the two currencies.</p></details>
       <details class="faq-item"><summary>Why annualize the hedge cost?</summary><p>To compare hedges with different tenors on the same basis. The period cost is multiplied by the day-count basis ÷ tenor to express it per year.</p></details>
@@ -334,6 +336,7 @@
   </div>
 </div>
 
+<!--RELATED--><nav class="related-tools" aria-label="Related tools"><h2>Related tools</h2><ul><li><a href="eoq-safety-stock-calculator.html">EOQ, Safety Stock &amp; Reorder Point Calculator</a></li><li><a href="should-cost-calculator.html">Should Cost Calculator</a></li><li><a href="purchase-price-variance-calculator.html">Purchase Price Variance (PPV) Calculator</a></li><li><a href="oee-calculator.html">OEE (Overall Equipment Effectiveness) Calculator</a></li><li><a href="abc-inventory-analysis.html">ABC Inventory Analysis Tool</a></li><li><a href="spend-analysis-dashboard.html">Spend Analysis Dashboard</a></li></ul></nav><!--/RELATED-->
 <footer><div class="footer-inner">
   <div class="footer-logo"><svg width="24" height="24" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align:middle;margin-right:9px;flex-shrink:0;"><path d="M20 2.5L36.5 11.5V28.5L20 37.5L3.5 28.5V11.5L20 2.5Z" stroke="url(#cbmGradF)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M20 2.5V20M20 20L36.5 11.5M20 20L3.5 11.5" stroke="url(#cbmGradF)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/></svg>CBM<span style="color:#2563EB;">Lab</span></div>
   <nav><a href="index.html" class="footer-link">All Tools</a><a href="privacy.html" class="footer-link">Privacy Policy</a></nav>

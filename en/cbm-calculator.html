@@ -5,9 +5,9 @@
      crossorigin="anonymous"></script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="Free CBM calculator and volumetric (dimensional) weight calculator for sea and air freight. Enter multiple carton sizes, get total CBM, chargeable weight, and container capacity estimate instantly.">
-<meta name="keywords" content="CBM calculator, volumetric weight calculator, dimensional weight calculator, freight calculator, chargeable weight, cubic meter calculator, logistics shipping calculator">
-<title>CBM &amp; Volumetric Weight Calculator (Sea &amp; Air Freight) — CBM Lab</title>
+<meta name="description" content="Free CBM calculator for sea and air freight. Enter L×W×H to get cubic meters, volumetric weight and chargeable weight, with the CBM formula in cm and inches.">
+<meta name="keywords" content="cbm calculator, cbm formula, cbm calculator in cm, cbm in inches, volumetric weight, sea freight cbm">
+<title>CBM Calculator: Formula, Volumetric Weight &amp; Chargeable Weight</title>
 <link rel="icon" href="../favicon.ico" sizes="any">
 <link rel="icon" href="../favicon.ico" type="image/x-icon">
 <link rel="apple-touch-icon" href="../apple-touch-icon.png">
@@ -15,15 +15,15 @@
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="CBM Lab">
 <meta property="og:locale" content="en_US">
-<meta property="og:title" content="CBM &amp; Volumetric Weight Calculator (Sea &amp; Air Freight) — CBM Lab">
-<meta property="og:description" content="Free CBM calculator and volumetric (dimensional) weight calculator for sea and air freight. Enter multiple carton sizes, get total CBM, chargeable weight, and container capacity estimate instantly.">
+<meta property="og:title" content="CBM Calculator: Formula, Volumetric Weight &amp; Chargeable Weight">
+<meta property="og:description" content="Free CBM calculator for sea and air freight. Enter L×W×H to get cubic meters, volumetric weight and chargeable weight, with the CBM formula in cm and inches.">
 <meta property="og:url" content="https://procurement-toolkit-eight.vercel.app/en/cbm-calculator.html">
 <meta property="og:image" content="https://procurement-toolkit-eight.vercel.app/assets/hero-team.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="CBM &amp; Volumetric Weight Calculator (Sea &amp; Air Freight) — CBM Lab">
-<meta name="twitter:description" content="Free CBM calculator and volumetric (dimensional) weight calculator for sea and air freight. Enter multiple carton sizes, get total CBM, chargeable weight, and container capacity estimate instantly.">
+<meta name="twitter:title" content="CBM Calculator: Formula, Volumetric Weight &amp; Chargeable Weight">
+<meta name="twitter:description" content="Free CBM calculator for sea and air freight. Enter L×W×H to get cubic meters, volumetric weight and chargeable weight, with the CBM formula in cm and inches.">
 <meta name="twitter:image" content="https://procurement-toolkit-eight.vercel.app/assets/hero-team.jpg">
 
 <link rel="alternate" hreflang="ko" href="https://procurement-toolkit-eight.vercel.app/cbm.html">
@@ -54,6 +54,7 @@
   .card{background:#fff;border:1px solid var(--slate-200);border-radius:var(--radius-lg);box-shadow:var(--shadow-sm);margin-bottom:20px}
   .card-header{padding:16px 20px;border-bottom:1px solid var(--slate-100);display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
   .card-title{font-size:14px;font-weight:600;color:var(--slate-800);display:flex;align-items:center;gap:8px}
+  h2.card-title{margin:0;line-height:1.4}
   .card-body{padding:20px}
   .toggle-group{display:flex;gap:6px;align-items:center}
   .toggle-label{font-size:11px;color:var(--slate-400);font-weight:600;margin-right:2px}
@@ -109,6 +110,7 @@
   .faq-item summary::before{content:'Q. ';color:var(--accent)}
   .faq-item p{margin-top:8px;font-size:12.5px;color:var(--slate-600);line-height:1.7;padding-left:2px}
   @media (max-width:640px){.faq-wrap{padding:0 16px}}
+.related-tools{max-width:960px;margin:32px auto;padding:0 16px}.related-tools h2{font-size:15px;font-weight:700;margin:0 0 10px}.related-tools ul{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:8px}.related-tools a{display:block;padding:10px 12px;border:1px solid #E2E8F0;border-radius:8px;font-size:13px;color:#1E293B;text-decoration:none}.related-tools a:hover{border-color:#94A3B8}
 </style>
 </head>
 <body>
@@ -136,7 +138,7 @@
   <section aria-label="Carton input">
     <div class="card">
       <div class="card-header">
-        <div class="card-title">Carton Details</div>
+        <h2 class="card-title">Carton Details</h2>
         <div class="toggle-group">
           <span class="toggle-label">Dimensions</span>
           <div class="toggle-btns"><button class="toggle-btn active" id="btn-cm" onclick="setDimUnit('cm')">cm</button><button class="toggle-btn" id="btn-inch" onclick="setDimUnit('inch')">inch</button></div>
@@ -170,7 +172,7 @@
 
   <aside aria-label="Results">
     <div class="card">
-      <div class="card-header"><div class="card-title">Result</div></div>
+      <div class="card-header"><h2 class="card-title">Result</h2></div>
       <div class="card-body"><div id="result-content">
         <div class="empty-result">
           <svg width="36" height="36" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.2"><path stroke-linecap="round" stroke-linejoin="round" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 10V11"/></svg>
@@ -180,7 +182,7 @@
     </div>
 
     <div class="card" id="container-card" style="display:none;">
-      <div class="card-header"><div class="card-title">Container Capacity Estimate</div></div>
+      <div class="card-header"><h2 class="card-title">Container Capacity Estimate</h2></div>
       <div class="card-body" id="container-body"></div>
     </div>
   </aside>
@@ -188,7 +190,7 @@
 
 <div style="max-width:1200px;margin:0 auto;padding:0 24px 30px;">
   <div class="card">
-    <div class="card-header"><div class="card-title">Why CBM &amp; Volumetric Weight Matter</div></div>
+    <div class="card-header"><h2 class="card-title">Why CBM &amp; Volumetric Weight Matter</h2></div>
     <div class="card-body" style="font-size:12.5px;color:var(--slate-600);line-height:1.7;">
       <p>Carriers bill whichever is higher: your shipment's actual weight, or its volumetric (dimensional) weight. Light but bulky cargo — think foam displays, inflatables, or bulky packaging — can cost far more than its actual weight suggests once volumetric weight is applied. Estimating CBM before you book helps you avoid surprise freight bills and pick the right container size.</p>
       <p style="margin-top:8px;"><b>How to use it in practice:</b> Before confirming a booking, enter every carton size in your shipment (mixed cartons are supported) to see total CBM, both sea and air chargeable weight, and how many 20ft/40ft containers you'd need. If air freight chargeable weight is much higher than actual weight, ask your forwarder whether sea freight is more economical for this shipment.</p>
@@ -200,7 +202,7 @@
 
 <div class="faq-wrap">
   <div class="card">
-    <div class="card-header"><div class="card-title">Frequently Asked Questions</div></div>
+    <div class="card-header"><h2 class="card-title">Frequently Asked Questions</h2></div>
     <div class="card-body">
       <details class="faq-item"><summary>What exactly is CBM and how is it calculated?</summary><p>CBM (Cubic Meter) measures the volume of a shipment in cubic meters. Multiply length x width x height (in meters) for one carton, then multiply by quantity. For example, 100 cartons at 50x40x30cm each equals 0.5 x 0.4 x 0.3 x 100 = 6 CBM.</p></details>
       <details class="faq-item"><summary>Why do sea freight and air freight use different volumetric weight formulas?</summary><p>Carriers price cargo based on how dense it is relative to their vehicle's capacity. Sea freight conventionally uses CBM x 1,000 kg/m3 (roughly 1 CBM = 1 ton), while air freight uses the IATA standard of volume (cm3) divided by 6,000. The same shipment can have a very different chargeable weight depending on the mode of transport.</p></details>
@@ -220,6 +222,7 @@
 <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
 </div>
 
+<!--RELATED--><nav class="related-tools" aria-label="Related tools"><h2>Related tools</h2><ul><li><a href="purchase-price-variance-calculator.html">Purchase Price Variance (PPV) Calculator</a></li><li><a href="oee-calculator.html">OEE (Overall Equipment Effectiveness) Calculator</a></li><li><a href="abc-inventory-analysis.html">ABC Inventory Analysis Tool</a></li><li><a href="spend-analysis-dashboard.html">Spend Analysis Dashboard</a></li><li><a href="tco-calculator.html">TCO Calculator (Total Cost of Ownership)</a></li><li><a href="cost-structure-calculator.html">Cost Structure Calculator</a></li></ul></nav><!--/RELATED-->
 <footer style="background:#0F172A;color:#94A3B8;padding:24px;font-size:12px;">
   <div style="max-width:1200px;margin:0 auto;display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;">
     <div style="font-size:15px;font-weight:800;color:#fff;"><svg width="24" height="24" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align:middle;margin-right:9px;flex-shrink:0;"><path d="M20 2.5L36.5 11.5V28.5L20 37.5L3.5 28.5V11.5L20 2.5Z" stroke="url(#cbmGradF)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M20 2.5V20M20 20L36.5 11.5M20 20L3.5 11.5" stroke="url(#cbmGradF)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/></svg>CBM<span style="color:#2563EB;">Lab</span></div>

@@ -5,9 +5,9 @@
      crossorigin="anonymous"></script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="Free Total Cost of Ownership (TCO) calculator for equipment and capital purchases. Include purchase price, installation, maintenance, energy, downtime, and disposal costs, then compare two options side by side.">
-<meta name="keywords" content="TCO calculator, total cost of ownership calculator, equipment TCO, CAPEX comparison, capital expenditure calculator">
-<title>TCO Calculator for Procurement &amp; Supply Chain Teams — CBM Lab</title>
+<meta name="description" content="Free total cost of ownership (TCO) calculator for procurement: add price, freight, quality, inventory and maintenance cost to compare suppliers.">
+<meta name="keywords" content="total cost of ownership, tco calculator, tco formula, tco in procurement, supplier comparison">
+<title>TCO Calculator: Total Cost of Ownership in Procurement</title>
 <link rel="icon" href="../favicon.ico" sizes="any">
 <link rel="icon" href="../favicon.ico" type="image/x-icon">
 <link rel="apple-touch-icon" href="../apple-touch-icon.png">
@@ -15,15 +15,15 @@
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="CBM Lab">
 <meta property="og:locale" content="en_US">
-<meta property="og:title" content="TCO Calculator for Procurement &amp; Supply Chain Teams — CBM Lab">
-<meta property="og:description" content="Free Total Cost of Ownership (TCO) calculator for equipment and capital purchases. Include purchase price, installation, maintenance, energy, downtime, and disposal costs, then compare two options side by side.">
+<meta property="og:title" content="TCO Calculator: Total Cost of Ownership in Procurement">
+<meta property="og:description" content="Free total cost of ownership (TCO) calculator for procurement: add price, freight, quality, inventory and maintenance cost to compare suppliers.">
 <meta property="og:url" content="https://procurement-toolkit-eight.vercel.app/en/tco-calculator.html">
 <meta property="og:image" content="https://procurement-toolkit-eight.vercel.app/assets/hero-team.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="TCO Calculator for Procurement &amp; Supply Chain Teams — CBM Lab">
-<meta name="twitter:description" content="Free Total Cost of Ownership (TCO) calculator for equipment and capital purchases. Include purchase price, installation, maintenance, energy, downtime, and disposal costs, then compare two options side by side.">
+<meta name="twitter:title" content="TCO Calculator: Total Cost of Ownership in Procurement">
+<meta name="twitter:description" content="Free total cost of ownership (TCO) calculator for procurement: add price, freight, quality, inventory and maintenance cost to compare suppliers.">
 <meta name="twitter:image" content="https://procurement-toolkit-eight.vercel.app/assets/hero-team.jpg">
 
 <link rel="alternate" hreflang="ko" href="https://procurement-toolkit-eight.vercel.app/tco-calculator.html">
@@ -59,6 +59,7 @@
   .card{background:#fff;border:1px solid var(--slate-200);border-radius:var(--radius-lg);box-shadow:var(--shadow-sm);margin-bottom:20px}
   .card-header{padding:16px 20px;border-bottom:1px solid var(--slate-100)}
   .card-title{font-size:14px;font-weight:600;color:var(--slate-800)}
+  h2.card-title{margin:0;line-height:1.4}
   .card-body{padding:18px}
   .field-group{margin-bottom:12px}
   .field-label{font-size:11.5px;font-weight:600;color:var(--slate-600);margin-bottom:5px;display:block}
@@ -117,6 +118,7 @@
   .faq-item summary::before{content:'Q. ';color:var(--accent)}
   .faq-item p{margin-top:8px;font-size:12.5px;color:var(--slate-600);line-height:1.7;padding-left:2px}
   @media (max-width:640px){.faq-wrap{padding:0 16px}}
+.related-tools{max-width:960px;margin:32px auto;padding:0 16px}.related-tools h2{font-size:15px;font-weight:700;margin:0 0 10px}.related-tools ul{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:8px}.related-tools a{display:block;padding:10px 12px;border:1px solid #E2E8F0;border-radius:8px;font-size:13px;color:#1E293B;text-decoration:none}.related-tools a:hover{border-color:#94A3B8}
 </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/exceljs/4.4.0/exceljs.min.js"></script>
 </head>
@@ -151,7 +153,7 @@
 
 <div style="max-width:1300px;margin:0 auto;padding:0 24px 30px;">
   <div class="card">
-    <div class="card-header"><div class="card-title">Why Purchase Price Isn't the Whole Story</div></div>
+    <div class="card-header"><h2 class="card-title">Why Purchase Price Isn't the Whole Story</h2></div>
     <div class="card-body" style="font-size:12.5px;color:var(--slate-600);line-height:1.7;">
       <p>Comparing equipment purely on sticker price can lead you to buy something with cheap upfront cost but expensive maintenance or poor energy efficiency. Total Cost of Ownership adds up every cost from acquisition to disposal so you see the true, full-lifecycle cost of each option.</p>
       <p style="margin-top:8px;"><b>How to use it in practice:</b> Use it when writing a capital expenditure justification, comparing two vendor quotes, or deciding between a cheaper machine with higher running costs and a pricier one that is more efficient long-term.</p>
@@ -163,7 +165,7 @@
 
 <div class="faq-wrap">
   <div class="card">
-    <div class="card-header"><div class="card-title">Frequently Asked Questions</div></div>
+    <div class="card-header"><h2 class="card-title">Frequently Asked Questions</h2></div>
     <div class="card-body">
       <details class="faq-item"><summary>Why shouldn't I just compare purchase price when choosing equipment?</summary><p>Purchase price is only one part of the total cost. Installation, maintenance, energy consumption, downtime, and disposal costs can add up to make a cheaper-to-buy machine more expensive over its lifetime than a pricier, more efficient one.</p></details>
       <details class="faq-item"><summary>What TCO factors get overlooked most often when comparing two quotes?</summary><p>Energy efficiency (power consumption) and downtime cost (lost production from breakdowns) are the most commonly skipped factors — often because downtime is harder to quantify. In practice, downtime is frequently the single biggest driver of TCO difference between options.</p></details>
@@ -173,7 +175,7 @@
 
 <div class="about-wrap">
   <div class="card">
-    <div class="card-header"><div class="card-title">What Is Total Cost of Ownership (TCO)?</div></div>
+    <div class="card-header"><h2 class="card-title">What Is Total Cost of Ownership (TCO)?</h2></div>
     <div class="card-body about-section">
       <h3>Why can the cheaper machine to buy end up costing more?</h3>
       <p>Purchase price is only one piece of the full lifecycle cost. Installation, training, maintenance, energy consumption, downtime losses, and disposal costs all add up — over a 5-10 year operating life, a machine that looked cheaper upfront can end up costing significantly more. The TCO Calculator compares the full lifecycle cost of two options side by side.</p>
@@ -211,6 +213,7 @@
   </div>
 </div>
 
+<!--RELATED--><nav class="related-tools" aria-label="Related tools"><h2>Related tools</h2><ul><li><a href="cbm-calculator.html">CBM &amp; Volumetric Weight Calculator</a></li><li><a href="lead-time-calculator.html">Lead Time &amp; Delivery Date Calculator</a></li><li><a href="demurrage-detention-calculator.html">Demurrage &amp; Detention Cost Calculator</a></li><li><a href="eoq-safety-stock-calculator.html">EOQ, Safety Stock &amp; Reorder Point Calculator</a></li><li><a href="should-cost-calculator.html">Should Cost Calculator</a></li><li><a href="purchase-price-variance-calculator.html">Purchase Price Variance (PPV) Calculator</a></li></ul></nav><!--/RELATED-->
 <footer style="background:#0F172A;color:#94A3B8;padding:24px;font-size:12px;">
   <div style="max-width:1300px;margin:0 auto;display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;">
     <div style="font-size:15px;font-weight:800;color:#fff;"><svg width="24" height="24" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align:middle;margin-right:9px;flex-shrink:0;"><path d="M20 2.5L36.5 11.5V28.5L20 37.5L3.5 28.5V11.5L20 2.5Z" stroke="url(#cbmGradF)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M20 2.5V20M20 20L36.5 11.5M20 20L3.5 11.5" stroke="url(#cbmGradF)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/></svg>CBM<span style="color:#2563EB;">Lab</span></div>
@@ -251,7 +254,7 @@ const FIELDS = [
 function fmt(n){ return '$' + Math.round(n||0).toLocaleString('en-US'); }
 
 function buildOptionHTML(id, title){
-  let html = `<div class="card" data-option="${id}"><div class="card-header"><div class="card-title">${title}</div></div><div class="card-body">`;
+  let html = `<div class="card" data-option="${id}"><div class="card-header"><h2 class="card-title">${title}</h2></div><div class="card-body">`;
   FIELDS.forEach(f=>{
     if(f.section){ html += `<div class="section-divider">${f.section}</div>`; }
     else { html += `<div class="field-group"><label class="field-label">${f.label}</label><input class="inp" type="number" id="${f.id}-${id}" value="${f.def}" oninput="calc()"></div>`; }

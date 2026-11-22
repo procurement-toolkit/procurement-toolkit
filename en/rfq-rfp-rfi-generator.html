@@ -54,6 +54,7 @@
   .card{background:#fff;border:1px solid var(--slate-200);border-radius:var(--radius-lg);box-shadow:var(--shadow-sm);margin-bottom:20px}
   .card-header{padding:16px 20px;border-bottom:1px solid var(--slate-100)}
   .card-title{font-size:14px;font-weight:600;color:var(--slate-800)}
+  h2.card-title{margin:0;line-height:1.4}
   .card-body{padding:18px}
   .type-tabs{display:flex;gap:6px;flex-wrap:wrap}
   .type-tab{padding:9px 16px;border:1px solid var(--slate-200);background:#fff;border-radius:999px;font-size:12.5px;font-weight:700;color:var(--slate-500);cursor:pointer}
@@ -113,6 +114,7 @@
   .faq-item summary::before{content:'Q. ';color:var(--accent)}
   .faq-item p{margin-top:8px;font-size:12.5px;color:var(--slate-600);line-height:1.7;padding-left:2px}
   @media (max-width:640px){.faq-wrap{padding:0 16px}}
+.related-tools{max-width:960px;margin:32px auto;padding:0 16px}.related-tools h2{font-size:15px;font-weight:700;margin:0 0 10px}.related-tools ul{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:8px}.related-tools a{display:block;padding:10px 12px;border:1px solid #E2E8F0;border-radius:8px;font-size:13px;color:#1E293B;text-decoration:none}.related-tools a:hover{border-color:#94A3B8}
 </style>
 </head>
 <body>
@@ -139,7 +141,7 @@
 <div class="main">
   <section class="left-col">
     <div class="card">
-      <div class="card-header"><div class="card-title">Document Type</div></div>
+      <div class="card-header"><h2 class="card-title">Document Type</h2></div>
       <div class="card-body">
         <div class="type-tabs">
           <button class="type-tab active" data-type="RFI" onclick="setDocType('RFI')">RFI (Request for Information)</button>
@@ -162,7 +164,7 @@
     </div>
 
     <div class="card">
-      <div class="card-header"><div class="card-title">Basic Information (When · Where · Who · Why)</div></div>
+      <div class="card-header"><h2 class="card-title">Basic Information (When · Where · Who · Why)</h2></div>
       <div class="card-body">
         <div class="field-grid">
           <div><label class="field-label">Document No.</label><input class="inp" id="docNo" value="RFI-2026-001" oninput="render()"></div>
@@ -180,7 +182,7 @@
     </div>
 
     <div class="card" id="card-rfi">
-      <div class="card-header"><div class="card-title">Information Requested (RFI — What we want to know)</div></div>
+      <div class="card-header"><h2 class="card-title">Information Requested (RFI — What we want to know)</h2></div>
       <div class="card-body">
         <div class="check-list" id="rfiChecklist"></div>
         <label class="field-label" style="margin-top:10px;">Additional questions (optional)</label>
@@ -189,7 +191,7 @@
     </div>
 
     <div class="card" id="card-rfp">
-      <div class="card-header"><div class="card-title">Scope &amp; Evaluation Criteria (RFP — What we need)</div></div>
+      <div class="card-header"><h2 class="card-title">Scope &amp; Evaluation Criteria (RFP — What we need)</h2></div>
       <div class="card-body">
         <label class="field-label">Scope of Work</label>
         <textarea class="inp" id="scopeOfWork" rows="3" oninput="render()"></textarea>
@@ -202,7 +204,7 @@
     </div>
 
     <div class="card" id="card-rfq">
-      <div class="card-header"><div class="card-title">Items Requested (RFQ — What to quote)</div></div>
+      <div class="card-header"><h2 class="card-title">Items Requested (RFQ — What to quote)</h2></div>
       <div class="card-body">
         <div class="item-table-wrap">
           <table class="item-table">
@@ -225,7 +227,7 @@
     </div>
 
     <div class="card">
-      <div class="card-header"><div class="card-title">Submission Instructions</div></div>
+      <div class="card-header"><h2 class="card-title">Submission Instructions</h2></div>
       <div class="card-body">
         <label class="field-label">How to submit</label>
         <textarea class="inp" id="submission" rows="2" oninput="render()"></textarea>
@@ -237,7 +239,7 @@
 
   <aside>
     <div class="card">
-      <div class="card-header"><div class="card-title">Preview</div></div>
+      <div class="card-header"><h2 class="card-title">Preview</h2></div>
       <div class="card-body">
         <div class="doc-preview" id="preview"></div>
         <button class="btn-print" onclick="window.print()">🖨️ Print / Save as PDF</button>
@@ -252,7 +254,7 @@
 
 <div class="faq-wrap">
   <div class="card">
-    <div class="card-header"><div class="card-title">Frequently Asked Questions</div></div>
+    <div class="card-header"><h2 class="card-title">Frequently Asked Questions</h2></div>
     <div class="card-body">
       <details class="faq-item"><summary>When should I use an RFI vs an RFP vs an RFQ?</summary><p>Use an RFI (Request for Information) early on, to gather market intelligence before you've narrowed down suppliers. Use an RFP (Request for Proposal) when you want suppliers to propose a solution approach. Use an RFQ (Request for Quotation) once specifications are fixed and you just need to compare price.</p></details>
       <details class="faq-item"><summary>How do I get accurate, comparable quotes back from an RFQ?</summary><p>Specify quantity, exact specifications, delivery timeline, payment terms, and Incoterm as precisely as possible. Vague requirements lead suppliers to quote against different assumptions, making the quotes impossible to compare apples-to-apples.</p></details>
@@ -270,6 +272,7 @@
 <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
 </div>
 
+<!--RELATED--><nav class="related-tools" aria-label="Related tools"><h2>Related tools</h2><ul><li><a href="invoice-packing-generator.html">Commercial Invoice &amp; Packing List Generator</a></li><li><a href="email-generator.html">Procurement Email Generator</a></li><li><a href="supplier-scorecard.html">Supplier &amp; Vendor Scorecard Generator</a></li><li><a href="rfq-comparison-tool.html">RFQ Comparison Tool</a></li><li><a href="make-vs-buy-matrix.html">Make-vs-Buy Decision Matrix</a></li><li><a href="incoterms-responsibility-grid.html">Incoterms 2020 Responsibility Chart</a></li></ul></nav><!--/RELATED-->
 <footer style="background:#0F172A;color:#94A3B8;padding:24px;font-size:12px;">
   <div style="max-width:1300px;margin:0 auto;display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;">
     <div style="font-size:15px;font-weight:800;color:#fff;"><svg width="24" height="24" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align:middle;margin-right:9px;flex-shrink:0;"><path d="M20 2.5L36.5 11.5V28.5L20 37.5L3.5 28.5V11.5L20 2.5Z" stroke="url(#cbmGradF)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M20 2.5V20M20 20L36.5 11.5M20 20L3.5 11.5" stroke="url(#cbmGradF)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/></svg>CBM<span style="color:#2563EB;">Lab</span></div>

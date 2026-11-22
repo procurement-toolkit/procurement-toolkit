@@ -5,9 +5,9 @@
      crossorigin="anonymous"></script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="공급업체 평가 스코어카드 생성기. 가격, 품질, 납기, 재무, 인증 등 30여 개 객관적 평가 항목 중 선택해서 가중치 기반 종합 점수를 계산하고, 전문적인 보고서 형식으로 인쇄합니다.">
-<meta name="keywords" content="공급업체 평가, 벤더 스코어카드, supplier scorecard, 협력업체 평가표, 공급업체 평가 기준, procurement supplier management">
-<title>공급업체 평가 스코어카드 생성기 — CBM Lab</title>
+<meta name="description" content="공급업체 평가 스코어카드를 직접 만드세요. 품질·납기·가격 항목과 가중치를 정하면 점수와 등급이 계산됩니다. 평가표 예시 포함.">
+<meta name="keywords" content="공급업체 평가, 공급업체 평가표, 협력업체 평가, 스코어카드, 벤더 평가">
+<title>공급업체 평가표(스코어카드) 만들기 – 항목·가중치 템플릿 | CBM Lab</title>
 <link rel="icon" href="favicon.ico" sizes="any">
 <link rel="icon" href="favicon.ico" type="image/x-icon">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
@@ -15,15 +15,15 @@
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="CBM Lab">
 <meta property="og:locale" content="ko_KR">
-<meta property="og:title" content="공급업체 평가 스코어카드 생성기 — CBM Lab">
-<meta property="og:description" content="공급업체 평가 스코어카드 생성기. 가격, 품질, 납기, 재무, 인증 등 30여 개 객관적 평가 항목 중 선택해서 가중치 기반 종합 점수를 계산하고, 전문적인 보고서 형식으로 인쇄합니다.">
+<meta property="og:title" content="공급업체 평가표(스코어카드) 만들기 – 항목·가중치 템플릿 | CBM Lab">
+<meta property="og:description" content="공급업체 평가 스코어카드를 직접 만드세요. 품질·납기·가격 항목과 가중치를 정하면 점수와 등급이 계산됩니다. 평가표 예시 포함.">
 <meta property="og:url" content="https://procurement-toolkit-eight.vercel.app/supplier-scorecard.html">
 <meta property="og:image" content="https://procurement-toolkit-eight.vercel.app/assets/hero-team.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="공급업체 평가 스코어카드 생성기 — CBM Lab">
-<meta name="twitter:description" content="공급업체 평가 스코어카드 생성기. 가격, 품질, 납기, 재무, 인증 등 30여 개 객관적 평가 항목 중 선택해서 가중치 기반 종합 점수를 계산하고, 전문적인 보고서 형식으로 인쇄합니다.">
+<meta name="twitter:title" content="공급업체 평가표(스코어카드) 만들기 – 항목·가중치 템플릿 | CBM Lab">
+<meta name="twitter:description" content="공급업체 평가 스코어카드를 직접 만드세요. 품질·납기·가격 항목과 가중치를 정하면 점수와 등급이 계산됩니다. 평가표 예시 포함.">
 <meta name="twitter:image" content="https://procurement-toolkit-eight.vercel.app/assets/hero-team.jpg">
 
 <link rel="alternate" hreflang="ko" href="https://procurement-toolkit-eight.vercel.app/supplier-scorecard.html">
@@ -50,6 +50,7 @@
   .card{background:#fff;border:1px solid var(--slate-200);border-radius:var(--radius-lg);box-shadow:var(--shadow-sm);margin-bottom:20px}
   .card-header{padding:16px 20px;border-bottom:1px solid var(--slate-100);display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
   .card-title{font-size:14px;font-weight:600;color:var(--slate-800)}
+  h2.card-title{margin:0;line-height:1.4}
   .card-body{padding:20px}
 
   /* META INFO */
@@ -125,7 +126,7 @@
   }
   .report-header{border:2px solid #1E293B;border-radius:8px;padding:24px 28px;margin-bottom:20px;position:relative}
   .report-header .rh-badge{position:absolute;top:20px;right:24px;border:2px solid var(--accent);color:var(--accent);font-family:Georgia,serif;font-size:11px;font-weight:700;letter-spacing:1px;padding:6px 14px;border-radius:4px;transform:rotate(3deg)}
-  .report-header h1{font-family:Georgia,'Noto Serif KR',serif;font-size:22px;color:#1E293B;letter-spacing:.5px;margin-bottom:4px}
+  .report-header h1,.report-header h2{font-family:Georgia,'Noto Serif KR',serif;font-size:22px;color:#1E293B;letter-spacing:.5px;margin-bottom:4px}
   .report-header .rh-sub{font-size:11.5px;color:#64748B;letter-spacing:2px;text-transform:uppercase}
   .report-meta-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:6px 30px;margin-top:18px;font-size:12.5px}
   .report-meta-grid div{display:flex;justify-content:space-between;border-bottom:1px dotted var(--slate-300);padding:3px 0}
@@ -154,6 +155,7 @@
   .faq-item summary::before{content:'Q. ';color:var(--accent)}
   .faq-item p{margin-top:8px;font-size:12.5px;color:var(--slate-600);line-height:1.7;padding-left:2px}
   @media (max-width:640px){.faq-wrap{padding:0 16px}}
+.related-tools{max-width:960px;margin:32px auto;padding:0 16px}.related-tools h2{font-size:15px;font-weight:700;margin:0 0 10px}.related-tools ul{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:8px}.related-tools a{display:block;padding:10px 12px;border:1px solid #E2E8F0;border-radius:8px;font-size:13px;color:#1E293B;text-decoration:none}.related-tools a:hover{border-color:#94A3B8}
 </style>
 <script src="https://cdn.amplitude.com/script/d4aa9301e01f4600b5eeb018e160aa7c.js"></script>
 <script>
@@ -199,7 +201,7 @@
 
   <!-- 평가 메타정보 -->
   <div class="card">
-    <div class="card-header"><div class="card-title">평가 정보</div></div>
+    <div class="card-header"><h2 class="card-title">평가 정보</h2></div>
     <div class="card-body">
       <div class="meta-grid">
         <div class="meta-field"><label>평가일자</label><input type="date" id="metaDate"></div>
@@ -217,7 +219,7 @@
 
   <!-- 평가 항목 라이브러리 -->
   <div class="card">
-    <div class="card-header"><div class="card-title">평가 항목 선택 (카테고리 클릭 시 펼침)</div></div>
+    <div class="card-header"><h2 class="card-title">평가 항목 선택 (카테고리 클릭 시 펼침)</h2></div>
     <div class="card-body">
       <div id="libraryContainer"></div>
       <button class="btn-add-custom" onclick="addCustomCriterion()">+ 직접 항목 추가 (라이브러리에 없는 항목)</button>
@@ -227,7 +229,7 @@
   <!-- 평가표 -->
   <div class="card">
     <div class="card-header">
-      <div class="card-title">평가표</div>
+      <h2 class="card-title">평가표</h2>
       <div style="display:flex;gap:8px;">
         <button class="btn-add-vendor" onclick="addVendor()">+ 공급업체 추가</button>
         <button class="btn-print" onclick="window.print()">🖨️ 보고서 인쇄</button>
@@ -248,7 +250,7 @@
     <div class="report-header">
       <div class="rh-badge">EVALUATION</div>
       <div class="rh-sub">Supplier Qualification Assessment Report</div>
-      <h1>공급업체 정성·정량 평가 보고서</h1>
+      <h2>공급업체 정성·정량 평가 보고서</h2>
       <div class="report-meta-grid" id="reportMetaGrid"></div>
     </div>
   </div>
@@ -258,7 +260,7 @@
 
 <div class="main" style="max-width:1100px;margin:0 auto;padding:0 24px 40px;">
   <div class="card">
-    <div class="card-header"><div class="card-title">왜 객관적 평가가 필요한가</div></div>
+    <div class="card-header"><h2 class="card-title">왜 객관적 평가가 필요한가</h2></div>
     <div class="card-body" style="font-size:12.5px;color:var(--slate-600);line-height:1.7;">
 <p>공급업체를 가격만 보고 선정하면 품질 문제나 납기 지연 같은 리스크를 놓치기 쉽습니다. 그렇다고 감으로 평가하면 담당자가 바뀔 때마다 기준이 달라지는 문제가 생깁니다.</p>
 <p><b>실무 활용법:</b> 신규 공급업체를 심사하거나 기존 업체를 정기적으로 재평가할 때, 항목별 채점 기준을 참고해 여러 사람이 평가해도 비슷한 결과가 나오도록 활용하고, 결과를 인쇄해 구매 품의 자료로 첨부할 수 있습니다.</p>
@@ -274,7 +276,7 @@
 
 <div class="faq-wrap">
   <div class="card">
-    <div class="card-header"><div class="card-title">자주 묻는 질문</div></div>
+    <div class="card-header"><h2 class="card-title">자주 묻는 질문</h2></div>
     <div class="card-body">
       <details class="faq-item"><summary>공급업체 평가는 어떤 기준으로 나눠서 봐야 하나요?</summary><p>일반적으로 품질(불량률), 납기 준수율, 가격 경쟁력, 커뮤니케이션 대응력, 재무 안정성 등을 카테고리로 나눠서 평가합니다. 한 가지 기준(가격 등)만 보면 전체적인 리스크를 놓치기 쉽습니다.</p></details>
       <details class="faq-item"><summary>신규 공급업체와 기존 공급업체는 평가 주기가 달라야 하나요?</summary><p>신규 거래 초기에는 분기 단위로 자주 점검하고, 안정화된 이후에는 반기~연 단위로 조정하는 것이 일반적입니다. 특히 첫 2~3건의 거래에서는 품질·납기 이슈가 있는지 집중적으로 확인하는 것이 좋습니다.</p></details>
@@ -292,6 +294,7 @@
 <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
 </div>
 
+<!--RELATED--><nav class="related-tools" aria-label="함께 쓰는 관련 도구"><h2>함께 쓰는 관련 도구</h2><ul><li><a href="email-generator.html">영문 구매 이메일 생성기</a></li><li><a href="invoice-packing-generator.html">인보이스 &amp; 패킹리스트 생성기</a></li><li><a href="rfx-generator.html">RFI·RFP·RFQ 영문 템플릿 생성기</a></li><li><a href="batna-negotiation-matrix.html">BATNA 협상준비 매트릭스</a></li><li><a href="contract-renewal-calendar.html">계약 갱신 캘린더</a></li><li><a href="rfq-comparison-tool.html">RFQ 견적 비교 도구</a></li></ul></nav><!--/RELATED-->
 <footer style="background:#0F172A;color:#94A3B8;padding:24px;font-size:12px;">
   <div style="max-width:1300px;margin:0 auto;display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;">
     <div style="font-size:15px;font-weight:800;color:#fff;"><svg width="24" height="24" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align:middle;margin-right:9px;flex-shrink:0;"><path d="M20 2.5L36.5 11.5V28.5L20 37.5L3.5 28.5V11.5L20 2.5Z" stroke="url(#cbmGradF)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M20 2.5V20M20 20L36.5 11.5M20 20L3.5 11.5" stroke="url(#cbmGradF)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/></svg>CBM<span style="color:#2563EB;">Lab</span></div>

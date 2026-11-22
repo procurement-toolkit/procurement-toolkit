@@ -1,0 +1,15 @@
+[
+ {
+  "date": "2026-11-22",
+  "avgScore": 97,
+  "pages": 99,
+  "lowest": [
+   "en/consulting.html:72",
+   "en/index.html:86",
+   "guide-hub.html:86",
+   "consulting.html:88",
+   "en/courier-guide.html:89"
+  ],
+  "keywordGaps": 0
+ }
+]

@@ -5,9 +5,9 @@
      crossorigin="anonymous"></script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="Free interactive Kraljic Matrix tool. Drag and drop suppliers or purchasing categories onto the matrix by supply risk and profit impact, get instant quadrant classification (Strategic, Leverage, Bottleneck, Non-Critical) and a recommended sourcing strategy for each.">
-<meta name="keywords" content="Kraljic Matrix, Kraljic Matrix tool, supplier segmentation, procurement portfolio matrix, category management, strategic sourcing matrix, vendor segmentation tool">
-<title>Kraljic Matrix Tool — Supplier &amp; Category Segmentation | CBM Lab</title>
+<meta name="description" content="Segment categories with the Kraljic matrix: score supply risk and profit impact to find leverage, strategic, bottleneck and non-critical items.">
+<meta name="keywords" content="kraljic matrix, kraljic matrix in procurement, kraljic examples, procurement segmentation">
+<title>Kraljic Matrix in Procurement: Tool, Examples &amp; Strategies</title>
 <link rel="icon" href="../favicon.ico" sizes="any">
 <link rel="icon" href="../favicon.ico" type="image/x-icon">
 <link rel="apple-touch-icon" href="../apple-touch-icon.png">
@@ -15,15 +15,15 @@
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="CBM Lab">
 <meta property="og:locale" content="en_US">
-<meta property="og:title" content="Kraljic Matrix Tool — Supplier &amp; Category Segmentation | CBM Lab">
-<meta property="og:description" content="Free interactive Kraljic Matrix tool. Drag and drop suppliers or purchasing categories onto the matrix by supply risk and profit impact, get instant quadrant classification (Strategic, Leverage, Bottleneck, Non-Critical) and a recommended sourcing strategy for each.">
+<meta property="og:title" content="Kraljic Matrix in Procurement: Tool, Examples &amp; Strategies">
+<meta property="og:description" content="Segment categories with the Kraljic matrix: score supply risk and profit impact to find leverage, strategic, bottleneck and non-critical items.">
 <meta property="og:url" content="https://procurement-toolkit-eight.vercel.app/en/kraljic-matrix.html">
 <meta property="og:image" content="https://procurement-toolkit-eight.vercel.app/assets/hero-team.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Kraljic Matrix Tool — Supplier &amp; Category Segmentation | CBM Lab">
-<meta name="twitter:description" content="Free interactive Kraljic Matrix tool. Drag and drop suppliers or purchasing categories onto the matrix by supply risk and profit impact, get instant quadrant classification (Strategic, Leverage, Bottleneck, Non-Critical) and a recommended sourcing strategy for each.">
+<meta name="twitter:title" content="Kraljic Matrix in Procurement: Tool, Examples &amp; Strategies">
+<meta name="twitter:description" content="Segment categories with the Kraljic matrix: score supply risk and profit impact to find leverage, strategic, bottleneck and non-critical items.">
 <meta name="twitter:image" content="https://procurement-toolkit-eight.vercel.app/assets/hero-team.jpg">
 
 <link rel="alternate" hreflang="en" href="https://procurement-toolkit-eight.vercel.app/en/kraljic-matrix.html">
@@ -55,6 +55,7 @@
   .card{background:#fff;border:1px solid var(--slate-200);border-radius:var(--radius-lg);box-shadow:var(--shadow-sm);margin-bottom:20px}
   .card-header{padding:16px 20px;border-bottom:1px solid var(--slate-100);display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
   .card-title{font-size:14px;font-weight:600;color:var(--slate-800)}
+  h2.card-title{margin:0;line-height:1.4}
   .card-body{padding:20px}
   .header-btns{display:flex;gap:6px}
   .btn-icon{font-size:11px;font-weight:700;color:var(--slate-500);background:#fff;border:1px solid var(--slate-200);padding:6px 11px;border-radius:6px;cursor:pointer}
@@ -157,6 +158,7 @@
   .faq-item summary::before{content:'Q. ';color:var(--accent)}
   .faq-item p{margin-top:8px;font-size:12.5px;color:var(--slate-600);line-height:1.7;padding-left:2px}
   @media (max-width:640px){.faq-wrap{padding:0 16px}}
+.related-tools{max-width:960px;margin:32px auto;padding:0 16px}.related-tools h2{font-size:15px;font-weight:700;margin:0 0 10px}.related-tools ul{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:8px}.related-tools a{display:block;padding:10px 12px;border:1px solid #E2E8F0;border-radius:8px;font-size:13px;color:#1E293B;text-decoration:none}.related-tools a:hover{border-color:#94A3B8}
 </style>
 </head>
 <body>
@@ -181,7 +183,7 @@
   <section>
     <div class="card">
       <div class="card-header">
-        <div class="card-title">Matrix View <span class="save-indicator" id="saveIndicator">✓ saved</span></div>
+        <h2 class="card-title">Matrix View <span class="save-indicator" id="saveIndicator">✓ saved</span></h2>
         <div class="header-btns">
           <button class="btn-icon" onclick="window.print()">🖨️ Print</button>
           <button class="btn-icon" onclick="clearAll()">🗑️ Clear all</button>
@@ -218,7 +220,7 @@
     </div>
 
     <div class="card">
-      <div class="card-header"><div class="card-title">Items / Suppliers (<span id="itemCount">0</span>)</div></div>
+      <div class="card-header"><h2 class="card-title">Items / Suppliers (<span id="itemCount">0</span>)</h2></div>
       <div class="card-body">
         <div id="itemList"></div>
       </div>
@@ -227,7 +229,7 @@
 
   <aside>
     <div class="card">
-      <div class="card-header"><div class="card-title" id="formTitle">Add Item or Category</div></div>
+      <div class="card-header"><h2 class="card-title" id="formTitle">Add Item or Category</h2></div>
       <div class="card-body">
         <div class="field-group" style="margin-bottom:10px;">
           <label class="field-label">Item / Supplier / Category Name</label>
@@ -255,12 +257,12 @@
     </div>
 
     <div class="card" id="strategyCard" style="display:none;">
-      <div class="card-header"><div class="card-title">Recommended Strategy</div></div>
+      <div class="card-header"><h2 class="card-title">Recommended Strategy</h2></div>
       <div class="card-body" id="strategyBody"></div>
     </div>
 
     <div class="card">
-      <div class="card-header"><div class="card-title">The 4 Quadrants, Explained</div></div>
+      <div class="card-header"><h2 class="card-title">The 4 Quadrants, Explained</h2></div>
       <div class="card-body" style="font-size:11.5px;color:var(--slate-600);line-height:1.7;">
         <p style="margin-bottom:8px;"><b style="color:var(--purple);">Strategic:</b> High spend impact and high supply risk. Requires deep, long-term partnerships and joint planning.</p>
         <p style="margin-bottom:8px;"><b style="color:var(--success);">Leverage:</b> High spend impact but low supply risk — many suppliers available. Use competitive bidding to drive price down.</p>
@@ -276,7 +278,7 @@
     🔄 <strong>Use this alongside your other supplier tools.</strong> This matrix shows how you should treat a supplier; the <a href="supplier-preferencing-matrix.html" style="color:#1E40AF;font-weight:700;">Supplier Preferencing Matrix</a> shows how they likely treat you, and the <a href="supplier-risk-matrix.html" style="color:#1E40AF;font-weight:700;">Supplier Risk Matrix</a> assesses continuity risk rather than sourcing strategy. For a more granular 3x3 view of the same idea, see the <a href="directional-policy-matrix.html" style="color:#1E40AF;font-weight:700;">Directional Policy Matrix</a>. Track ongoing performance with the <a href="supplier-scorecard.html" style="color:#1E40AF;font-weight:700;">Supplier Scorecard</a>.
   </div>
   <div class="card">
-    <div class="card-header"><div class="card-title">Why Use a Kraljic Matrix?</div></div>
+    <div class="card-header"><h2 class="card-title">Why Use a Kraljic Matrix?</h2></div>
     <div class="card-body" style="font-size:12.5px;color:var(--slate-600);line-height:1.7;">
       <p>Treating every supplier or category the same way wastes negotiation effort on low-value purchases and under-manages the few relationships that actually carry risk. The Kraljic Matrix (developed by Peter Kraljic, published in Harvard Business Review, 1983) gives procurement teams a simple, defensible way to prioritize where to spend their time.</p>
       <p style="margin-top:8px;"><b>How to use it in practice:</b> Score each major category or supplier on the two axes, drag it into position, and use the quadrant to decide your approach — aggressive price negotiation for Leverage items, supply continuity planning for Bottleneck items, and executive-level relationship management for Strategic items. Revisit the matrix periodically, since a category's position can shift as markets and your own volume change. Your data is saved automatically in this browser only — nothing is sent to a server.</p>
@@ -288,7 +290,7 @@
 
 <div class="faq-wrap">
   <div class="card">
-    <div class="card-header"><div class="card-title">Frequently Asked Questions</div></div>
+    <div class="card-header"><h2 class="card-title">Frequently Asked Questions</h2></div>
     <div class="card-body">
       <details class="faq-item"><summary>What are the four quadrants of the Kraljic Matrix, and what does each mean?</summary><p>The matrix plots supply risk against profit impact. Non-critical items (low risk, low impact) call for efficient process automation. Leverage items (low risk, high impact) call for competitive bidding and negotiation leverage. Bottleneck items (high risk, low impact) call for securing supply continuity. Strategic items (high risk, high impact) call for close partnership and joint planning with the supplier.</p></details>
       <details class="faq-item"><summary>How often should a Kraljic classification be re-evaluated?</summary><p>Annually at minimum, and sooner if there's a major shift — a new supplier entering the market, a shortage affecting supply risk, or a significant change in a category's spend. A category's classification isn't permanent and can move between quadrants over time.</p></details>
@@ -298,7 +300,7 @@
 
 <div class="about-wrap">
   <div class="card">
-    <div class="card-header"><div class="card-title">What Is the Kraljic Matrix?</div></div>
+    <div class="card-header"><h2 class="card-title">What Is the Kraljic Matrix?</h2></div>
     <div class="card-body about-section">
       <h3>Why shouldn't every category get the same sourcing strategy?</h3>
       <p>Peter Kraljic's 1983 framework plots every purchased category on two axes — supply risk and profit impact — to sort them into four quadrants that each call for a different approach. Treating a strategic, high-risk category the same way you'd treat a low-risk commodity wastes negotiating effort where it matters least and under-invests where it matters most. The matrix exists to make that allocation deliberate instead of accidental.</p>
@@ -318,6 +320,7 @@
 <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
 </div>
 
+<!--RELATED--><nav class="related-tools" aria-label="Related tools"><h2>Related tools</h2><ul><li><a href="directional-policy-matrix.html">Directional Policy Matrix (DPM) Tool</a></li><li><a href="supplier-preferencing-matrix.html">Supplier Preferencing Matrix Tool</a></li><li><a href="supplier-risk-matrix.html">Supplier Risk Matrix Tool</a></li><li><a href="sourcing-location-comparator.html">Nearshore vs Reshore vs Offshore Comparator</a></li><li><a href="rfq-comparison-tool.html">RFQ Comparison Tool</a></li><li><a href="make-vs-buy-matrix.html">Make-vs-Buy Decision Matrix</a></li></ul></nav><!--/RELATED-->
 <footer style="background:#0F172A;color:#94A3B8;padding:24px;font-size:12px;">
   <div style="max-width:1300px;margin:0 auto;display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;">
     <div style="font-size:15px;font-weight:800;color:#fff;"><svg width="24" height="24" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align:middle;margin-right:9px;flex-shrink:0;"><path d="M20 2.5L36.5 11.5V28.5L20 37.5L3.5 28.5V11.5L20 2.5Z" stroke="url(#cbmGradF)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M20 2.5V20M20 20L36.5 11.5M20 20L3.5 11.5" stroke="url(#cbmGradF)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/></svg>CBM<span style="color:#2563EB;">Lab</span></div>

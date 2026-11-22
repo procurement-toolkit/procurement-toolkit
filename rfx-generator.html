@@ -51,6 +51,7 @@
   .card{background:#fff;border:1px solid var(--slate-200);border-radius:var(--radius-lg);box-shadow:var(--shadow-sm);margin-bottom:20px}
   .card-header{padding:16px 20px;border-bottom:1px solid var(--slate-100)}
   .card-title{font-size:14px;font-weight:600;color:var(--slate-800)}
+  h2.card-title{margin:0;line-height:1.4}
   .card-body{padding:18px}
 
   .type-tabs{display:flex;gap:6px;flex-wrap:wrap}
@@ -119,6 +120,7 @@
   .faq-item summary::before{content:'Q. ';color:var(--accent)}
   .faq-item p{margin-top:8px;font-size:12.5px;color:var(--slate-600);line-height:1.7;padding-left:2px}
   @media (max-width:640px){.faq-wrap{padding:0 16px}}
+.related-tools{max-width:960px;margin:32px auto;padding:0 16px}.related-tools h2{font-size:15px;font-weight:700;margin:0 0 10px}.related-tools ul{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:8px}.related-tools a{display:block;padding:10px 12px;border:1px solid #E2E8F0;border-radius:8px;font-size:13px;color:#1E293B;text-decoration:none}.related-tools a:hover{border-color:#94A3B8}
 </style>
 </head>
 <body>
@@ -149,7 +151,7 @@
   <section class="left-col">
 
     <div class="card">
-      <div class="card-header"><div class="card-title">문서 종류 선택</div></div>
+      <div class="card-header"><h2 class="card-title">문서 종류 선택</h2></div>
       <div class="card-body">
         <div class="type-tabs">
           <button class="type-tab active" data-type="RFI" onclick="setDocType('RFI')">RFI (정보요청서)</button>
@@ -173,7 +175,7 @@
     </div>
 
     <div class="card">
-      <div class="card-header"><div class="card-title">기본 정보 (When · Where · Who · Why)</div></div>
+      <div class="card-header"><h2 class="card-title">기본 정보 (When · Where · Who · Why)</h2></div>
       <div class="card-body">
         <div class="field-grid">
           <div><label class="field-label">Document No. (문서번호)</label><input class="inp" id="docNo" value="RFQ-2026-001" oninput="render()"></div>
@@ -192,7 +194,7 @@
 
     <!-- RFI 전용 -->
     <div class="card" id="card-rfi">
-      <div class="card-header"><div class="card-title">요청 정보 항목 (RFI — What we want to know)</div></div>
+      <div class="card-header"><h2 class="card-title">요청 정보 항목 (RFI — What we want to know)</h2></div>
       <div class="card-body">
         <div class="check-list" id="rfiChecklist"></div>
         <label class="field-label" style="margin-top:10px;">추가 질문 (선택)</label>
@@ -202,7 +204,7 @@
 
     <!-- RFP 전용 -->
     <div class="card" id="card-rfp">
-      <div class="card-header"><div class="card-title">과업 범위 및 평가 기준 (RFP — What we need)</div></div>
+      <div class="card-header"><h2 class="card-title">과업 범위 및 평가 기준 (RFP — What we need)</h2></div>
       <div class="card-body">
         <label class="field-label">Scope of Work (과업 범위)</label>
         <textarea class="inp" id="scopeOfWork" rows="3" oninput="render()"></textarea>
@@ -216,7 +218,7 @@
 
     <!-- RFQ 전용 -->
     <div class="card" id="card-rfq">
-      <div class="card-header"><div class="card-title">견적 요청 품목 (RFQ — What to quote)</div></div>
+      <div class="card-header"><h2 class="card-title">견적 요청 품목 (RFQ — What to quote)</h2></div>
       <div class="card-body">
         <div class="item-table-wrap">
           <table class="item-table">
@@ -243,7 +245,7 @@
     </div>
 
     <div class="card">
-      <div class="card-header"><div class="card-title">제출 안내</div></div>
+      <div class="card-header"><h2 class="card-title">제출 안내</h2></div>
       <div class="card-body">
         <label class="field-label">Submission Instructions (제출 방법)</label>
         <textarea class="inp" id="submission" rows="2" oninput="render()"></textarea>
@@ -256,7 +258,7 @@
 
   <aside>
     <div class="card">
-      <div class="card-header"><div class="card-title">미리보기</div></div>
+      <div class="card-header"><h2 class="card-title">미리보기</h2></div>
       <div class="card-body">
         <div class="doc-preview" id="preview"></div>
         <button class="btn-print" onclick="window.print()">🖨️ 인쇄 / PDF로 저장</button>
@@ -270,7 +272,7 @@
 
 <div class="main" style="max-width:1100px;margin:0 auto;padding:0 24px 40px;">
   <div class="card">
-    <div class="card-header"><div class="card-title">왜 문서 종류를 구분해야 하는가</div></div>
+    <div class="card-header"><h2 class="card-title">왜 문서 종류를 구분해야 하는가</h2></div>
     <div class="card-body" style="font-size:12.5px;color:var(--slate-600);line-height:1.7;">
 <p>RFI, RFP, RFQ의 차이를 정확히 모른 채 문서를 작성하면, 정보만 필요한 단계에서 가격을 요청하거나 스펙이 안 정해진 상태에서 견적만 받는 등 절차가 꼬일 수 있습니다.</p>
 <p><b>실무 활용법:</b> 신규 공급업체를 탐색하는 초기 단계에는 RFI로 역량을 확인하고, 설비 도입처럼 복잡한 과업은 RFP로 제안을 받고, 스펙이 확정된 원자재는 RFQ로 견적을 받는 식으로 상황에 맞는 문서를 빠르게 만드는 데 활용할 수 있습니다.</p>
@@ -282,7 +284,7 @@
 
 <div class="faq-wrap">
   <div class="card">
-    <div class="card-header"><div class="card-title">자주 묻는 질문</div></div>
+    <div class="card-header"><h2 class="card-title">자주 묻는 질문</h2></div>
     <div class="card-body">
       <details class="faq-item"><summary>RFQ, RFP, RFI는 각각 언제 사용해야 하나요?</summary><p>RFI(Request for Information)는 아직 후보군을 좁히기 전, 시장 정보를 수집하는 단계에서 사용합니다. RFP(Request for Proposal)는 구체적인 솔루션 제안을 요청할 때, RFQ(Request for Quotation)는 사양이 명확히 정해진 상태에서 가격만 비교할 때 사용합니다.</p></details>
       <details class="faq-item"><summary>RFQ를 보낼 때 공급업체가 정확한 견적을 주게 하려면 무엇이 필요한가요?</summary><p>수량, 사양, 납기, 결제조건, 인코텀즈까지 최대한 구체적으로 명시해야 합니다. 조건이 모호하면 공급업체마다 서로 다른 전제로 견적을 내서, 나중에 비교 자체가 어려워집니다.</p></details>
@@ -300,6 +302,7 @@
 <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
 </div>
 
+<!--RELATED--><nav class="related-tools" aria-label="함께 쓰는 관련 도구"><h2>함께 쓰는 관련 도구</h2><ul><li><a href="supplier-scorecard.html">공급업체 평가 스코어카드 생성기</a></li><li><a href="email-generator.html">영문 구매 이메일 생성기</a></li><li><a href="invoice-packing-generator.html">인보이스 &amp; 패킹리스트 생성기</a></li><li><a href="rvc-calculator.html">원산지 규정(RVC) 계산기</a></li><li><a href="hs-code-guide.html">HS Code 조회 &amp; 관세율 확인 가이드</a></li><li><a href="courier-guide.html">국제특송사 비교 허브</a></li></ul></nav><!--/RELATED-->
 <footer style="background:#0F172A;color:#94A3B8;padding:24px;font-size:12px;">
   <div style="max-width:1300px;margin:0 auto;display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;">
     <div style="font-size:15px;font-weight:800;color:#fff;font-family:'Space Grotesk','Pretendard',sans-serif;"><svg width="24" height="24" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align:middle;margin-right:9px;flex-shrink:0;"><path d="M20 2.5L36.5 11.5V28.5L20 37.5L3.5 28.5V11.5L20 2.5Z" stroke="url(#cbmGradF)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M20 2.5V20M20 20L36.5 11.5M20 20L3.5 11.5" stroke="url(#cbmGradF)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/></svg>CBM<span style="color:#2563EB;">Lab</span></div>

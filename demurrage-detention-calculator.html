@@ -3,9 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="디머리지·디텐션 비용 계산기 - 무료기간(Free Time)이 지나면 계층별로 올라가는 하루 단위 요금을 정확히 계산합니다. 컨테이너 몇 개를 며칠 늦게 반납하면 총 얼마인지 미리 확인하세요.">
-<meta name="keywords" content="디머리지 계산, 디텐션 계산, demurrage detention calculator, 컨테이너 반납 지연 비용, free time 초과 비용, logistics cost calculator">
-<title>디머리지·디텐션 비용 계산기 — CBM Lab</title>
+<meta name="description" content="디머리지와 디텐션의 차이를 알고 비용까지 계산하세요. 무료 기간·일별 요율을 넣으면 컨테이너 지연 차지를 바로 산출합니다.">
+<meta name="keywords" content="디머리지, 디텐션, 디머리지 디텐션 차이, 컨테이너 차지, 스토리지 비용, D&amp;D">
+<title>디머리지·디텐션 차이와 비용 계산기 (D&amp;D 차지) | CBM Lab</title>
 <link rel="icon" href="favicon.ico" sizes="any">
 <link rel="icon" href="favicon.ico" type="image/x-icon">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
@@ -13,15 +13,15 @@
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="CBM Lab">
 <meta property="og:locale" content="ko_KR">
-<meta property="og:title" content="디머리지·디텐션 비용 계산기 — CBM Lab">
-<meta property="og:description" content="디머리지·디텐션 비용 계산기 - 무료기간이 지나면 계층별로 올라가는 하루 단위 요금을 정확히 계산합니다.">
+<meta property="og:title" content="디머리지·디텐션 차이와 비용 계산기 (D&amp;D 차지) | CBM Lab">
+<meta property="og:description" content="디머리지와 디텐션의 차이를 알고 비용까지 계산하세요. 무료 기간·일별 요율을 넣으면 컨테이너 지연 차지를 바로 산출합니다.">
 <meta property="og:url" content="https://procurement-toolkit-eight.vercel.app/demurrage-detention-calculator.html">
 <meta property="og:image" content="https://procurement-toolkit-eight.vercel.app/assets/hero-team.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="디머리지·디텐션 비용 계산기 — CBM Lab">
-<meta name="twitter:description" content="디머리지·디텐션 비용 계산기 - 무료기간이 지나면 계층별로 올라가는 하루 단위 요금을 정확히 계산합니다.">
+<meta name="twitter:title" content="디머리지·디텐션 차이와 비용 계산기 (D&amp;D 차지) | CBM Lab">
+<meta name="twitter:description" content="디머리지와 디텐션의 차이를 알고 비용까지 계산하세요. 무료 기간·일별 요율을 넣으면 컨테이너 지연 차지를 바로 산출합니다.">
 <meta name="twitter:image" content="https://procurement-toolkit-eight.vercel.app/assets/hero-team.jpg">
 
 <link rel="alternate" hreflang="ko" href="https://procurement-toolkit-eight.vercel.app/demurrage-detention-calculator.html">
@@ -54,6 +54,7 @@
   .card{background:#fff;border:1px solid var(--slate-200);border-radius:var(--radius-lg);box-shadow:var(--shadow-sm);margin-bottom:20px}
   .card-header{padding:16px 20px;border-bottom:1px solid var(--slate-100);display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
   .card-title{font-size:14px;font-weight:700;color:var(--slate-800)}
+  h2.card-title{margin:0;line-height:1.4}
   .card-body{padding:20px}
 
   .field-label{font-size:12.5px;font-weight:600;color:var(--slate-600);margin-bottom:5px;display:block}
@@ -123,6 +124,7 @@
   @media print{.ad-area-main,.ad-main-box,header,footer{display:none !important}.main{grid-template-columns:1fr}}
   @media (max-width:900px){.main{grid-template-columns:1fr}}
   @media (max-width:640px){.ad-area-main{padding:0 16px 20px}.faq-wrap{padding:0 16px}.field-row3{grid-template-columns:1fr}}
+.related-tools{max-width:960px;margin:32px auto;padding:0 16px}.related-tools h2{font-size:15px;font-weight:700;margin:0 0 10px}.related-tools ul{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:8px}.related-tools a{display:block;padding:10px 12px;border:1px solid #E2E8F0;border-radius:8px;font-size:13px;color:#1E293B;text-decoration:none}.related-tools a:hover{border-color:#94A3B8}
 </style>
 
 <script src="https://cdn.amplitude.com/script/d4aa9301e01f4600b5eeb018e160aa7c.js"></script>
@@ -163,7 +165,7 @@
 <div class="main">
   <section>
     <div class="card">
-      <div class="card-header"><div class="card-title">억류 정보</div></div>
+      <div class="card-header"><h2 class="card-title">억류 정보</h2></div>
       <div class="card-body">
         <div class="field-row2">
           <div class="field-group">
@@ -180,7 +182,7 @@
     </div>
 
     <div class="card">
-      <div class="card-header"><div class="card-title">디머리지 (Demurrage) — 터미널 내 보관</div></div>
+      <div class="card-header"><h2 class="card-title">디머리지 (Demurrage) — 터미널 내 보관</h2></div>
       <div class="card-body">
         <div class="charge-section">
           <div class="field-group">
@@ -200,7 +202,7 @@
     </div>
 
     <div class="card">
-      <div class="card-header"><div class="card-title">디텐션 (Detention) — 터미널 밖 컨테이너 사용</div></div>
+      <div class="card-header"><h2 class="card-title">디텐션 (Detention) — 터미널 밖 컨테이너 사용</h2></div>
       <div class="card-body">
         <div class="charge-section">
           <div class="field-group">
@@ -222,7 +224,7 @@
 
   <aside>
     <div class="card">
-      <div class="card-header"><div class="card-title">총 예상 비용</div></div>
+      <div class="card-header"><h2 class="card-title">총 예상 비용</h2></div>
       <div class="card-body">
         <div id="resultWrap"></div>
         <button class="btn-excel" onclick="requestExcelDownload()">📊 비용분석 엑셀 다운로드</button>
@@ -242,7 +244,7 @@
 
 <div class="faq-wrap">
   <div class="card">
-    <div class="card-header"><div class="card-title">자주 묻는 질문</div></div>
+    <div class="card-header"><h2 class="card-title">자주 묻는 질문</h2></div>
     <div class="card-body">
       <details class="faq-item"><summary>디머리지와 디텐션의 차이가 뭔가요?</summary><p>디머리지는 컨테이너가 항만·터미널 안에 머무는 동안 발생하는 보관료이고, 디텐션은 터미널 밖으로 반출한 뒤 공컨테이너를 선사에 반납하기 전까지 사용하는 데 대한 요금입니다. 둘 다 무료기간이 지나면 하루 단위로 청구됩니다.</p></details>
       <details class="faq-item"><summary>왜 날이 갈수록 요금이 더 비싸지나요?</summary><p>선사·터미널이 컨테이너를 빨리 회전시키고 싶어하기 때문에, 오래 붙잡아둘수록 불이익을 주는 구조로 설계되어 있습니다. 그래서 초반 며칠은 상대적으로 저렴하지만, 그 이후로는 요금이 계단식으로 뛰는 경우가 많습니다.</p></details>
@@ -269,6 +271,7 @@
   </div>
 </div>
 
+<!--RELATED--><nav class="related-tools" aria-label="함께 쓰는 관련 도구"><h2>함께 쓰는 관련 도구</h2><ul><li><a href="should-cost-calculator.html">Should Cost 계산기</a></li><li><a href="purchase-price-variance-calculator.html">구매가격차이(PPV) 계산기</a></li><li><a href="oee-calculator.html">OEE(설비종합효율) 계산기</a></li><li><a href="abc-inventory-analysis.html">ABC 재고 분석 도구</a></li><li><a href="spend-analysis-dashboard.html">지출 분석 대시보드</a></li><li><a href="tco-calculator.html">TCO 계산기 (총소유비용)</a></li></ul></nav><!--/RELATED-->
 <footer><div class="footer-inner">
   <div class="footer-logo"><svg width="24" height="24" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align:middle;margin-right:9px;flex-shrink:0;"><path d="M20 2.5L36.5 11.5V28.5L20 37.5L3.5 28.5V11.5L20 2.5Z" stroke="url(#cbmGradF)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M20 2.5V20M20 20L36.5 11.5M20 20L3.5 11.5" stroke="url(#cbmGradF)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/></svg>CBM<span style="color:#2563EB;">Lab</span></div>
   <nav><a href="index.html" class="footer-link">전체 도구</a><a href="privacy.html" class="footer-link">개인정보 처리방침</a></nav>

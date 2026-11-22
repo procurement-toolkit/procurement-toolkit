@@ -52,6 +52,7 @@
   .card{background:#fff;border:1px solid var(--slate-200);border-radius:var(--radius-lg);box-shadow:var(--shadow-sm);margin-bottom:20px}
   .card-header{padding:16px 20px;border-bottom:1px solid var(--slate-100);display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
   .card-title{font-size:14px;font-weight:600;color:var(--slate-800)}
+  h2.card-title{margin:0;line-height:1.4}
   .card-body{padding:20px}
 
   .grid-wrap{display:flex;gap:8px;align-items:stretch}
@@ -117,6 +118,7 @@
   @media print{.ad-area-main,.ad-main-box,header,footer{display:none !important}.main{grid-template-columns:1fr}}
   @media (max-width:900px){.main{grid-template-columns:1fr}}
   @media (max-width:640px){.ad-area-main{padding:0 16px 20px}.faq-wrap{padding:0 16px}}
+.related-tools{max-width:960px;margin:32px auto;padding:0 16px}.related-tools h2{font-size:15px;font-weight:700;margin:0 0 10px}.related-tools ul{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:8px}.related-tools a{display:block;padding:10px 12px;border:1px solid #E2E8F0;border-radius:8px;font-size:13px;color:#1E293B;text-decoration:none}.related-tools a:hover{border-color:#94A3B8}
 </style>
 
 <script src="https://cdn.amplitude.com/script/d4aa9301e01f4600b5eeb018e160aa7c.js"></script>
@@ -153,7 +155,7 @@
 <div class="main">
   <section>
     <div class="card">
-      <div class="card-header"><div class="card-title">The Matrix</div></div>
+      <div class="card-header"><h2 class="card-title">The Matrix</h2></div>
       <div class="card-body">
         <div class="grid-wrap">
           <div class="y-axis-label">Supply Market Attractiveness →</div>
@@ -167,14 +169,14 @@
     </div>
 
     <div class="card">
-      <div class="card-header"><div class="card-title">All Items (<span id="itemCount">0</span>)</div></div>
+      <div class="card-header"><h2 class="card-title">All Items (<span id="itemCount">0</span>)</h2></div>
       <div class="card-body" id="itemList"></div>
     </div>
   </section>
 
   <aside>
     <div class="card">
-      <div class="card-header"><div class="card-title" id="formTitle">Add a Supplier or Category</div></div>
+      <div class="card-header"><h2 class="card-title" id="formTitle">Add a Supplier or Category</h2></div>
       <div class="card-body">
         <div style="margin-bottom:12px;">
           <label class="field-label">Name</label>
@@ -198,12 +200,12 @@
     </div>
 
     <div class="card" id="strategyCard" style="display:none;">
-      <div class="card-header"><div class="card-title">Recommended Policy</div></div>
+      <div class="card-header"><h2 class="card-title">Recommended Policy</h2></div>
       <div class="card-body" id="strategyBody"></div>
     </div>
 
     <div class="card">
-      <div class="card-header"><div class="card-title">The 3 Policy Zones</div></div>
+      <div class="card-header"><h2 class="card-title">The 3 Policy Zones</h2></div>
       <div class="card-body" style="font-size:11.5px;color:var(--slate-600);line-height:1.7;">
         <p style="margin-bottom:8px;"><b style="color:var(--success);">Invest / Grow:</b> Attractive market, strong relative position. Commit resources, build the relationship, consider joint development.</p>
         <p style="margin-bottom:8px;"><b style="color:var(--warning);">Selective / Hold:</b> Mixed signals \u2014 either the market is average or your position is average. Invest selectively, maintain the relationship, watch for shifts.</p>
@@ -218,7 +220,7 @@
     🔄 <strong>Use this alongside your other supplier tools.</strong> The <a href="kraljic-matrix.html" style="color:#1E40AF;font-weight:700;">Kraljic Matrix</a> is the simpler 2x2 version of this same idea. Check the <a href="supplier-preferencing-matrix.html" style="color:#1E40AF;font-weight:700;">Supplier Preferencing Matrix</a> for how suppliers view you back, or the <a href="supplier-risk-matrix.html" style="color:#1E40AF;font-weight:700;">Supplier Risk Matrix</a> for continuity risk.
   </div>
   <div class="card">
-    <div class="card-header"><div class="card-title">Why Use a Directional Policy Matrix?</div></div>
+    <div class="card-header"><h2 class="card-title">Why Use a Directional Policy Matrix?</h2></div>
     <div class="card-body" style="font-size:12.5px;color:var(--slate-600);line-height:1.7;">
       <p>The Kraljic Matrix is a solid starting point, but its 2x2 grid forces every category into one of only four boxes, which can feel too coarse for a large or complex portfolio. The Directional Policy Matrix (a nine-box grid popularized by Shell and later refined by GE and McKinsey) uses the same underlying logic with finer granularity, letting you distinguish a category that's borderline-attractive from one that's clearly so, and plan resource allocation with more nuance.</p>
       <p style="margin-top:8px;"><b>How to use it in practice:</b> Score each supplier or category on both axes using multiple weighted factors rather than a single guess, plot it, and use the resulting zone (Invest, Selective, or Harvest) to set your negotiation posture and time investment. Your data is saved automatically in this browser only — nothing is sent to a server.</p>
@@ -239,7 +241,7 @@
 
 <div class="faq-wrap">
   <div class="card">
-    <div class="card-header"><div class="card-title">Frequently Asked Questions</div></div>
+    <div class="card-header"><h2 class="card-title">Frequently Asked Questions</h2></div>
     <div class="card-body">
       <details class="faq-item"><summary>How is this different from the Kraljic Matrix?</summary><p>The Kraljic Matrix uses a simpler 2x2 grid (4 zones) based on supply risk and profit impact. The Directional Policy Matrix uses a finer 3x3 grid (9 cells, collapsed into 3 policy zones) based on supply market attractiveness and your relative strength, giving more nuanced positioning for a large portfolio.</p></details>
       <details class="faq-item"><summary>What factors go into "Supply Market Attractiveness"?</summary><p>Common factors include the number of qualified suppliers, the market's growth rate, the pace of technological change, barriers to entry for new suppliers, and the profitability of suppliers in that market. Score these as a weighted composite rather than a single guess.</p></details>
@@ -248,6 +250,7 @@
   </div>
 </div>
 
+<!--RELATED--><nav class="related-tools" aria-label="Related tools"><h2>Related tools</h2><ul><li><a href="supplier-preferencing-matrix.html">Supplier Preferencing Matrix Tool</a></li><li><a href="supplier-risk-matrix.html">Supplier Risk Matrix Tool</a></li><li><a href="sourcing-location-comparator.html">Nearshore vs Reshore vs Offshore Comparator</a></li><li><a href="rfq-comparison-tool.html">RFQ Comparison Tool</a></li><li><a href="make-vs-buy-matrix.html">Make-vs-Buy Decision Matrix</a></li><li><a href="incoterms-responsibility-grid.html">Incoterms 2020 Responsibility Chart</a></li></ul></nav><!--/RELATED-->
 <footer><div class="footer-inner">
   <div class="footer-logo"><svg width="24" height="24" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align:middle;margin-right:9px;flex-shrink:0;"><path d="M20 2.5L36.5 11.5V28.5L20 37.5L3.5 28.5V11.5L20 2.5Z" stroke="url(#cbmGradF)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M20 2.5V20M20 20L36.5 11.5M20 20L3.5 11.5" stroke="url(#cbmGradF)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/></svg>CBM<span style="color:#2563EB;">Lab</span></div>
   <nav><a href="index.html" class="footer-link">All Tools</a><a href="privacy.html" class="footer-link">Privacy Policy</a></nav>

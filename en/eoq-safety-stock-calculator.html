@@ -5,9 +5,9 @@
      crossorigin="anonymous"></script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="Free EOQ (Economic Order Quantity), safety stock, and reorder point calculator for inventory planning. Get a data-backed ordering rule instead of guessing order quantities.">
-<meta name="keywords" content="EOQ calculator, economic order quantity, safety stock calculator, reorder point calculator, inventory planning">
-<title>EOQ &amp; Safety Stock Calculator for Supply Chain Management — CBM Lab</title>
+<meta name="description" content="Calculate safety stock, economic order quantity (EOQ) and reorder point from demand, lead time and service level. Formulas and worked examples included.">
+<meta name="keywords" content="safety stock formula, safety stock calculator, economic order quantity, EOQ formula, reorder point">
+<title>Safety Stock Formula &amp; EOQ Calculator (Reorder Point)</title>
 <link rel="icon" href="../favicon.ico" sizes="any">
 <link rel="icon" href="../favicon.ico" type="image/x-icon">
 <link rel="apple-touch-icon" href="../apple-touch-icon.png">
@@ -15,15 +15,15 @@
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="CBM Lab">
 <meta property="og:locale" content="en_US">
-<meta property="og:title" content="EOQ &amp; Safety Stock Calculator for Supply Chain Management — CBM Lab">
-<meta property="og:description" content="Free EOQ (Economic Order Quantity), safety stock, and reorder point calculator for inventory planning. Get a data-backed ordering rule instead of guessing order quantities.">
+<meta property="og:title" content="Safety Stock Formula &amp; EOQ Calculator (Reorder Point)">
+<meta property="og:description" content="Calculate safety stock, economic order quantity (EOQ) and reorder point from demand, lead time and service level. Formulas and worked examples included.">
 <meta property="og:url" content="https://procurement-toolkit-eight.vercel.app/en/eoq-safety-stock-calculator.html">
 <meta property="og:image" content="https://procurement-toolkit-eight.vercel.app/assets/hero-team.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="EOQ &amp; Safety Stock Calculator for Supply Chain Management — CBM Lab">
-<meta name="twitter:description" content="Free EOQ (Economic Order Quantity), safety stock, and reorder point calculator for inventory planning. Get a data-backed ordering rule instead of guessing order quantities.">
+<meta name="twitter:title" content="Safety Stock Formula &amp; EOQ Calculator (Reorder Point)">
+<meta name="twitter:description" content="Calculate safety stock, economic order quantity (EOQ) and reorder point from demand, lead time and service level. Formulas and worked examples included.">
 <meta name="twitter:image" content="https://procurement-toolkit-eight.vercel.app/assets/hero-team.jpg">
 
 <link rel="alternate" hreflang="ko" href="https://procurement-toolkit-eight.vercel.app/inventory-planning-calculator.html">
@@ -52,6 +52,7 @@
   .card{background:#fff;border:1px solid var(--slate-200);border-radius:var(--radius-lg);box-shadow:var(--shadow-sm);margin-bottom:20px}
   .card-header{padding:16px 20px;border-bottom:1px solid var(--slate-100);display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
   .card-title{font-size:14px;font-weight:600;color:var(--slate-800)}
+  h2.card-title{margin:0;line-height:1.4}
   .card-body{padding:20px}
   .field-group{margin-bottom:14px}
   .field-label{font-size:12px;font-weight:600;color:var(--slate-600);margin-bottom:6px;display:block}
@@ -104,6 +105,7 @@
   .faq-item summary::before{content:'Q. ';color:var(--accent)}
   .faq-item p{margin-top:8px;font-size:12.5px;color:var(--slate-600);line-height:1.7;padding-left:2px}
   @media (max-width:640px){.faq-wrap{padding:0 16px}}
+.related-tools{max-width:960px;margin:32px auto;padding:0 16px}.related-tools h2{font-size:15px;font-weight:700;margin:0 0 10px}.related-tools ul{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:8px}.related-tools a{display:block;padding:10px 12px;border:1px solid #E2E8F0;border-radius:8px;font-size:13px;color:#1E293B;text-decoration:none}.related-tools a:hover{border-color:#94A3B8}
 </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/exceljs/4.4.0/exceljs.min.js"></script>
 </head>
@@ -130,7 +132,7 @@
 <div class="main">
   <section>
     <div class="card">
-      <div class="card-header"><div class="card-title">Inputs</div></div>
+      <div class="card-header"><h2 class="card-title">Inputs</h2></div>
       <div class="card-body">
         <div class="field-group">
           <label class="field-label">Annual Demand (units/year)</label>
@@ -174,7 +176,7 @@
 
   <aside>
     <div class="card">
-      <div class="card-header"><div class="card-title">Results</div></div>
+      <div class="card-header"><h2 class="card-title">Results</h2></div>
       <div class="card-body">
         <div class="result-grid">
           <div class="result-item"><div class="r-label">EOQ</div><div class="r-value" id="eoqResult">-</div></div>
@@ -198,7 +200,7 @@
 
 <div style="max-width:1100px;margin:0 auto;padding:0 24px 30px;">
   <div class="card">
-    <div class="card-header"><div class="card-title">Why an Ordering Rule Matters</div></div>
+    <div class="card-header"><h2 class="card-title">Why an Ordering Rule Matters</h2></div>
     <div class="card-body" style="font-size:12.5px;color:var(--slate-600);line-height:1.7;">
       <p>Ordering by gut feel usually means tying up cash in excess inventory, or running out and halting production. EOQ, safety stock, and reorder point turn that judgment call into a defensible, repeatable rule.</p>
       <p style="margin-top:8px;"><b>How to use it in practice:</b> Use it when setting up ordering rules for a new SKU, or when re-checking safety stock for a seasonal item with volatile demand. Revisit the numbers whenever lead time or demand variability changes meaningfully.</p>
@@ -210,7 +212,7 @@
 
 <div class="faq-wrap">
   <div class="card">
-    <div class="card-header"><div class="card-title">Frequently Asked Questions</div></div>
+    <div class="card-header"><h2 class="card-title">Frequently Asked Questions</h2></div>
     <div class="card-body">
       <details class="faq-item"><summary>Does EOQ always mean ordering less?</summary><p>No — EOQ finds the order quantity that minimizes the combined cost of ordering and holding inventory. Ordering too frequently increases ordering costs; ordering too rarely increases holding costs and stockout risk. EOQ is about minimizing total cost, not simply minimizing order size.</p></details>
       <details class="faq-item"><summary>What factors should determine safety stock levels?</summary><p>Demand variability, lead time uncertainty, and your target service level (acceptable stockout probability) are the key inputs. Longer, less predictable overseas lead times generally call for higher safety stock to avoid running out.</p></details>
@@ -221,7 +223,7 @@
 
 <div class="about-wrap">
   <div class="card">
-    <div class="card-header"><div class="card-title">What Are EOQ and Safety Stock?</div></div>
+    <div class="card-header"><h2 class="card-title">What Are EOQ and Safety Stock?</h2></div>
     <div class="card-body about-section">
       <h3>Why isn't ordering less always the answer?</h3>
       <p>Ordering too frequently drives up ordering costs (processing, inspection, freight coordination), while ordering too rarely drives up holding costs and inventory risk (obsolescence, tied-up capital). EOQ is the formula that mathematically finds the point where the combined cost of both is lowest. Safety stock then layers demand and lead-time uncertainty on top, as the minimum buffer needed to avoid stockouts.</p>
@@ -259,6 +261,7 @@
   </div>
 </div>
 
+<!--RELATED--><nav class="related-tools" aria-label="Related tools"><h2>Related tools</h2><ul><li><a href="cost-structure-calculator.html">Cost Structure Calculator</a></li><li><a href="payment-terms-cost-calculator.html">Payment Terms Cost Calculator</a></li><li><a href="rvc-calculator.html">Regional Value Content (RVC) Calculator</a></li><li><a href="landed-cost-calculator.html">Landed Cost Calculator</a></li><li><a href="fx-exposure-calculator.html">FX Exposure Calculator</a></li><li><a href="currency-hedging-calculator.html">FX Hedging Cost Calculator</a></li></ul></nav><!--/RELATED-->
 <footer style="background:#0F172A;color:#94A3B8;padding:24px;font-size:12px;">
   <div style="max-width:1100px;margin:0 auto;display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;">
     <div style="font-size:15px;font-weight:800;color:#fff;"><svg width="24" height="24" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align:middle;margin-right:9px;flex-shrink:0;"><path d="M20 2.5L36.5 11.5V28.5L20 37.5L3.5 28.5V11.5L20 2.5Z" stroke="url(#cbmGradF)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M20 2.5V20M20 20L36.5 11.5M20 20L3.5 11.5" stroke="url(#cbmGradF)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/></svg>CBM<span style="color:#2563EB;">Lab</span></div>

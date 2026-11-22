@@ -55,6 +55,7 @@
   .card{background:#fff;border:1px solid var(--slate-200);border-radius:var(--radius-lg);box-shadow:var(--shadow-sm);margin-bottom:20px}
   .card-header{padding:16px 20px;border-bottom:1px solid var(--slate-100);display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
   .card-title{font-size:14px;font-weight:600;color:var(--slate-800)}
+  h2.card-title{margin:0;line-height:1.4}
   .card-body{padding:20px}
   .header-btns{display:flex;gap:6px}
   .btn-icon{font-size:11px;font-weight:700;color:var(--slate-500);background:#fff;border:1px solid var(--slate-200);padding:6px 11px;border-radius:6px;cursor:pointer}
@@ -153,6 +154,7 @@
   .faq-item summary::before{content:'Q. ';color:var(--accent)}
   .faq-item p{margin-top:8px;font-size:12.5px;color:var(--slate-600);line-height:1.7;padding-left:2px}
   @media (max-width:640px){.faq-wrap{padding:0 16px}}
+.related-tools{max-width:960px;margin:32px auto;padding:0 16px}.related-tools h2{font-size:15px;font-weight:700;margin:0 0 10px}.related-tools ul{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:8px}.related-tools a{display:block;padding:10px 12px;border:1px solid #E2E8F0;border-radius:8px;font-size:13px;color:#1E293B;text-decoration:none}.related-tools a:hover{border-color:#94A3B8}
 </style>
 </head>
 <body>
@@ -177,7 +179,7 @@
   <section>
     <div class="card">
       <div class="card-header">
-        <div class="card-title">Matrix View <span class="save-indicator" id="saveIndicator">✓ saved</span></div>
+        <h2 class="card-title">Matrix View <span class="save-indicator" id="saveIndicator">✓ saved</span></h2>
         <div class="header-btns">
           <button class="btn-icon" onclick="window.print()">🖨️ Print</button>
           <button class="btn-icon" onclick="clearAll()">🗑️ Clear all</button>
@@ -214,7 +216,7 @@
     </div>
 
     <div class="card">
-      <div class="card-header"><div class="card-title">Your Suppliers (<span id="itemCount">0</span>)</div></div>
+      <div class="card-header"><h2 class="card-title">Your Suppliers (<span id="itemCount">0</span>)</h2></div>
       <div class="card-body">
         <div id="itemList"></div>
       </div>
@@ -223,7 +225,7 @@
 
   <aside>
     <div class="card">
-      <div class="card-header"><div class="card-title" id="formTitle">Add a Supplier</div></div>
+      <div class="card-header"><h2 class="card-title" id="formTitle">Add a Supplier</h2></div>
       <div class="card-body">
         <div class="field-group" style="margin-bottom:10px;">
           <label class="field-label">Supplier Name</label>
@@ -251,12 +253,12 @@
     </div>
 
     <div class="card" id="strategyCard" style="display:none;">
-      <div class="card-header"><div class="card-title">Recommended Approach</div></div>
+      <div class="card-header"><h2 class="card-title">Recommended Approach</h2></div>
       <div class="card-body" id="strategyBody"></div>
     </div>
 
     <div class="card">
-      <div class="card-header"><div class="card-title">The 4 Quadrants, Explained</div></div>
+      <div class="card-header"><h2 class="card-title">The 4 Quadrants, Explained</h2></div>
       <div class="card-body" style="font-size:11.5px;color:var(--slate-600);line-height:1.7;">
         <p style="margin-bottom:8px;"><b style="color:var(--purple);">Core:</b> You represent significant value and the supplier finds you attractive. You likely get their best service and priority access.</p>
         <p style="margin-bottom:8px;"><b style="color:var(--success);">Development:</b> Your current spend is modest, but the supplier sees strong growth potential in you. They may invest in the relationship hoping to grow it.</p>
@@ -272,7 +274,7 @@
     🔄 <strong>Use this alongside your other supplier tools.</strong> Plot the same supplier on the <a href="kraljic-matrix.html" style="color:#1E40AF;font-weight:700;">Kraljic Matrix</a> to see how you should treat them, and on the <a href="supplier-risk-matrix.html" style="color:#1E40AF;font-weight:700;">Supplier Risk Matrix</a> to assess continuity risk. Track ongoing performance with the <a href="supplier-scorecard.html" style="color:#1E40AF;font-weight:700;">Supplier Scorecard</a>.
   </div>
   <div class="card">
-    <div class="card-header"><div class="card-title">Why Use a Supplier Preferencing Matrix?</div></div>
+    <div class="card-header"><h2 class="card-title">Why Use a Supplier Preferencing Matrix?</h2></div>
     <div class="card-body" style="font-size:12.5px;color:var(--slate-600);line-height:1.7;">
       <p>The Kraljic Matrix tells you how <em>you</em> should view a supplier. It doesn't tell you how that supplier views <em>you</em> — and that gap matters. A supplier who sees your account as a "Nuisance" will deprioritize you on service and innovation no matter how strategic they are to your business. The Supplier Preferencing Matrix (developed by Paul Steele and Brian Court, mid-1990s) fills that gap by mapping the relationship from the supplier's side.</p>
       <p style="margin-top:8px;"><b>How to use it in practice:</b> For each key supplier, estimate the relative value of your account to them and how attractive you are as a customer beyond the money. Plot both this matrix and the Kraljic Matrix for the same supplier — a mismatch (e.g., you see them as Strategic, but they see you as Nuisance) is a warning sign that you may not get the partnership-level treatment you're expecting. Your data is saved automatically in this browser only — nothing is sent to a server.</p>
@@ -284,7 +286,7 @@
 
 <div class="faq-wrap">
   <div class="card">
-    <div class="card-header"><div class="card-title">Frequently Asked Questions</div></div>
+    <div class="card-header"><h2 class="card-title">Frequently Asked Questions</h2></div>
     <div class="card-body">
       <details class="faq-item"><summary>What's the difference between the Kraljic Matrix and the Supplier Preferencing Matrix?</summary><p>The Kraljic Matrix maps how a buyer should view a supplier, based on supply risk and profit impact. The Supplier Preferencing Matrix flips the view: it maps how the supplier likely views the buyer, based on account value and attractiveness. Using both together gives a fuller picture of the relationship's power dynamic.</p></details>
       <details class="faq-item"><summary>How do I estimate "Account Attractiveness" without asking the supplier directly?</summary><p>Look for indirect signals: how quickly they respond to your requests, whether they offer you preferential terms or early access to new products, whether they proactively suggest ways to grow the relationship, and how consistent and easy your payment and ordering process has been from their side.</p></details>
@@ -303,6 +305,7 @@
 <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
 </div>
 
+<!--RELATED--><nav class="related-tools" aria-label="Related tools"><h2>Related tools</h2><ul><li><a href="supplier-risk-matrix.html">Supplier Risk Matrix Tool</a></li><li><a href="sourcing-location-comparator.html">Nearshore vs Reshore vs Offshore Comparator</a></li><li><a href="rfq-comparison-tool.html">RFQ Comparison Tool</a></li><li><a href="make-vs-buy-matrix.html">Make-vs-Buy Decision Matrix</a></li><li><a href="incoterms-responsibility-grid.html">Incoterms 2020 Responsibility Chart</a></li><li><a href="batna-negotiation-matrix.html">BATNA Negotiation Preparation Tool</a></li></ul></nav><!--/RELATED-->
 <footer style="background:#0F172A;color:#94A3B8;padding:24px;font-size:12px;">
   <div style="max-width:1300px;margin:0 auto;display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;">
     <div style="font-size:15px;font-weight:800;color:#fff;"><svg width="24" height="24" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align:middle;margin-right:9px;flex-shrink:0;"><path d="M20 2.5L36.5 11.5V28.5L20 37.5L3.5 28.5V11.5L20 2.5Z" stroke="url(#cbmGradF)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M20 2.5V20M20 20L36.5 11.5M20 20L3.5 11.5" stroke="url(#cbmGradF)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/></svg>CBM<span style="color:#2563EB;">Lab</span></div>

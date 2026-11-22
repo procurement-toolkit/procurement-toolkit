@@ -50,6 +50,7 @@
   .card{background:#fff;border:1px solid var(--slate-200);border-radius:var(--radius-lg);box-shadow:var(--shadow-sm);margin-bottom:20px}
   .card-header{padding:16px 20px;border-bottom:1px solid var(--slate-100)}
   .card-title{font-size:14px;font-weight:600;color:var(--slate-800)}
+  h2.card-title{margin:0;line-height:1.4}
   .card-body{padding:18px}
   .field-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px}
   .field-label{font-size:11px;font-weight:600;color:var(--slate-500);margin-bottom:4px;display:block}
@@ -105,6 +106,7 @@
   .faq-item summary::before{content:'Q. ';color:var(--accent)}
   .faq-item p{margin-top:8px;font-size:12.5px;color:var(--slate-600);line-height:1.7;padding-left:2px}
   @media (max-width:640px){.faq-wrap{padding:0 16px}}
+.related-tools{max-width:960px;margin:32px auto;padding:0 16px}.related-tools h2{font-size:15px;font-weight:700;margin:0 0 10px}.related-tools ul{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:8px}.related-tools a{display:block;padding:10px 12px;border:1px solid #E2E8F0;border-radius:8px;font-size:13px;color:#1E293B;text-decoration:none}.related-tools a:hover{border-color:#94A3B8}
 </style>
 
 <script src="https://cdn.amplitude.com/script/d4aa9301e01f4600b5eeb018e160aa7c.js"></script>
@@ -150,7 +152,7 @@
 <div class="main">
   <section class="left-col">
     <div class="card">
-      <div class="card-header"><div class="card-title">Basic Information</div></div>
+      <div class="card-header"><h2 class="card-title">Basic Information</h2></div>
       <div class="card-body">
         <div class="field-grid">
           <div><label class="field-label">Invoice No.</label><input class="inp" id="invNo" value="INV-2026-001" oninput="render()"></div>
@@ -172,7 +174,7 @@
     </div>
 
     <div class="card">
-      <div class="card-header"><div class="card-title">Shipper (Exporter)</div></div>
+      <div class="card-header"><h2 class="card-title">Shipper (Exporter)</h2></div>
       <div class="card-body">
         <textarea class="inp" id="shipper" rows="3" oninput="render()">Our Company Co., Ltd.
 123 Trade St., Seoul, Korea
@@ -180,14 +182,14 @@ Tel: +82-2-000-0000</textarea>
       </div>
     </div>
     <div class="card">
-      <div class="card-header"><div class="card-title">Consignee (Importer)</div></div>
+      <div class="card-header"><h2 class="card-title">Consignee (Importer)</h2></div>
       <div class="card-body">
         <textarea class="inp" id="consignee" rows="3" placeholder="ABC Trading Co., Ltd.&#10;123 Main St., City, Country&#10;Attn: Mr. John Smith" oninput="render()"></textarea>
       </div>
     </div>
 
     <div class="card">
-      <div class="card-header"><div class="card-title">Special Instructions (optional)</div></div>
+      <div class="card-header"><h2 class="card-title">Special Instructions (optional)</h2></div>
       <div class="card-body">
         <textarea class="inp" id="specialNote" rows="2" placeholder="e.g. This shipment contains samples with no commercial value. / Contains dangerous goods (Class 9). / Goods returned for repair and re-export." oninput="render()"></textarea>
         <div style="font-size:11px;color:#94A3B8;margin-top:6px;">This applies to the whole shipment. For notes on a specific item, use the "Remarks" field under that item in the table below.</div>
@@ -196,7 +198,7 @@ Tel: +82-2-000-0000</textarea>
 
     <div class="card">
       <div class="card-header">
-        <div class="card-title">Item Details</div>
+        <h2 class="card-title">Item Details</h2>
         <select class="inp" id="currencySelect" onchange="setCurrency(this.value)" style="width:auto;padding:5px 8px;font-size:11px;">
           <option value="USD">Currency: USD</option>
           <option value="KRW">Currency: KRW</option>
@@ -227,7 +229,7 @@ Tel: +82-2-000-0000</textarea>
 
 <div class="main" style="max-width:1100px;margin:0 auto;padding:0 24px 40px;">
   <div class="card">
-    <div class="card-header"><div class="card-title">Why a Dedicated Template Matters</div></div>
+    <div class="card-header"><h2 class="card-title">Why a Dedicated Template Matters</h2></div>
     <div class="card-body" style="font-size:12.5px;color:var(--slate-600);line-height:1.7;">
 <p>Generic invoice templates often miss fields that trade actually requires — Incoterm, country of origin, HS Code — forcing you to rebuild the format every time. Errors on shipping documents can delay customs clearance.</p>
 <p><b>How to use it in practice:</b> Generate both the invoice and packing list from a single item entry for every shipment, and record special cases — samples, dangerous goods — in the remarks field for customs reference.</p>
@@ -239,7 +241,7 @@ Tel: +82-2-000-0000</textarea>
 
 <div class="faq-wrap">
   <div class="card">
-    <div class="card-header"><div class="card-title">Frequently Asked Questions</div></div>
+    <div class="card-header"><h2 class="card-title">Frequently Asked Questions</h2></div>
     <div class="card-body">
       <details class="faq-item"><summary>What's the difference between a commercial invoice and a packing list?</summary><p>A commercial invoice is the commercial document that proves the transaction value and terms — customs uses it as the basis for duty assessment. A packing list documents the physical details of the shipment (packaging units, weight, dimensions). Customs typically cross-checks both documents together.</p></details>
       <details class="faq-item"><summary>What fields are essential on a commercial invoice?</summary><p>Exporter and importer details, the Incoterm used, item description and HS code, quantity, unit price, total value, and country of origin are the core fields. Missing any of these is a common cause of customs clearance delays.</p></details>
@@ -257,6 +259,7 @@ Tel: +82-2-000-0000</textarea>
 <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
 </div>
 
+<!--RELATED--><nav class="related-tools" aria-label="Related tools"><h2>Related tools</h2><ul><li><a href="email-generator.html">Procurement Email Generator</a></li><li><a href="rfq-rfp-rfi-generator.html">RFI, RFP &amp; RFQ Template Generator</a></li><li><a href="supplier-scorecard.html">Supplier &amp; Vendor Scorecard Generator</a></li><li><a href="payment-terms-guide.html">Payment Terms Guide (T/T, L/C, D/P, D/A)</a></li><li><a href="payment-terms-cost-calculator.html">Payment Terms Cost Calculator</a></li><li><a href="fta-guide.html">Certificate of Origin &amp; FTA Guide</a></li></ul></nav><!--/RELATED-->
 <footer><div class="footer-inner">
   <div class="footer-logo"><svg width="24" height="24" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align:middle;margin-right:9px;flex-shrink:0;"><path d="M20 2.5L36.5 11.5V28.5L20 37.5L3.5 28.5V11.5L20 2.5Z" stroke="url(#cbmGradF)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M20 2.5V20M20 20L36.5 11.5M20 20L3.5 11.5" stroke="url(#cbmGradF)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/></svg>CBM<span>Lab</span></div>
   <nav><a href="index.html" class="footer-link">All Tools</a><a href="privacy.html" class="footer-link">Privacy Policy</a></nav>

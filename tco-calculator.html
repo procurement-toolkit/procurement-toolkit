@@ -5,9 +5,9 @@
      crossorigin="anonymous"></script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="설비·장비 구매 시 구매가, 설치비, 유지보수, 에너지 비용, 다운타임, 처분비용까지 포함한 총소유비용(TCO)을 계산하고, 두 옵션을 비교해 실제로 더 저렴한 선택을 확인합니다.">
-<meta name="keywords" content="TCO 계산기, Total Cost of Ownership, 설비 구매 비교, CAPEX 분석, procurement supply chain analysis">
-<title>TCO 계산기 (총소유비용) — CBM Lab</title>
+<meta name="description" content="TCO(총소유비용) 계산기로 구매가 외 운송·품질·재고·유지비까지 합산해 공급업체를 비교하세요. 계산 방법과 예시 포함.">
+<meta name="keywords" content="TCO, 총소유비용, TCO 계산, TCO 계산기, 구매 TCO 분석">
+<title>TCO 계산기 – 총소유비용 계산 방법과 예시 | CBM Lab</title>
 <link rel="icon" href="favicon.ico" sizes="any">
 <link rel="icon" href="favicon.ico" type="image/x-icon">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
@@ -15,15 +15,15 @@
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="CBM Lab">
 <meta property="og:locale" content="ko_KR">
-<meta property="og:title" content="TCO 계산기 (총소유비용) — CBM Lab">
-<meta property="og:description" content="설비·장비 구매 시 구매가, 설치비, 유지보수, 에너지 비용, 다운타임, 처분비용까지 포함한 총소유비용(TCO)을 계산하고, 두 옵션을 비교해 실제로 더 저렴한 선택을 확인합니다.">
+<meta property="og:title" content="TCO 계산기 – 총소유비용 계산 방법과 예시 | CBM Lab">
+<meta property="og:description" content="TCO(총소유비용) 계산기로 구매가 외 운송·품질·재고·유지비까지 합산해 공급업체를 비교하세요. 계산 방법과 예시 포함.">
 <meta property="og:url" content="https://procurement-toolkit-eight.vercel.app/tco-calculator.html">
 <meta property="og:image" content="https://procurement-toolkit-eight.vercel.app/assets/hero-team.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="TCO 계산기 (총소유비용) — CBM Lab">
-<meta name="twitter:description" content="설비·장비 구매 시 구매가, 설치비, 유지보수, 에너지 비용, 다운타임, 처분비용까지 포함한 총소유비용(TCO)을 계산하고, 두 옵션을 비교해 실제로 더 저렴한 선택을 확인합니다.">
+<meta name="twitter:title" content="TCO 계산기 – 총소유비용 계산 방법과 예시 | CBM Lab">
+<meta name="twitter:description" content="TCO(총소유비용) 계산기로 구매가 외 운송·품질·재고·유지비까지 합산해 공급업체를 비교하세요. 계산 방법과 예시 포함.">
 <meta name="twitter:image" content="https://procurement-toolkit-eight.vercel.app/assets/hero-team.jpg">
 
 <link rel="alternate" hreflang="ko" href="https://procurement-toolkit-eight.vercel.app/tco-calculator.html">
@@ -56,6 +56,7 @@
   .card{background:#fff;border:1px solid var(--slate-200);border-radius:var(--radius-lg);box-shadow:var(--shadow-sm);margin-bottom:20px}
   .card-header{padding:16px 20px;border-bottom:1px solid var(--slate-100)}
   .card-title{font-size:14px;font-weight:600;color:var(--slate-800)}
+  h2.card-title{margin:0;line-height:1.4}
   .card-body{padding:18px}
   .field-group{margin-bottom:12px}
   .field-label{font-size:11.5px;font-weight:600;color:var(--slate-600);margin-bottom:5px;display:block}
@@ -119,6 +120,7 @@
   .faq-item summary::before{content:'Q. ';color:var(--accent)}
   .faq-item p{margin-top:8px;font-size:12.5px;color:var(--slate-600);line-height:1.7;padding-left:2px}
   @media (max-width:640px){.faq-wrap{padding:0 16px}}
+.related-tools{max-width:960px;margin:32px auto;padding:0 16px}.related-tools h2{font-size:15px;font-weight:700;margin:0 0 10px}.related-tools ul{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:8px}.related-tools a{display:block;padding:10px 12px;border:1px solid #E2E8F0;border-radius:8px;font-size:13px;color:#1E293B;text-decoration:none}.related-tools a:hover{border-color:#94A3B8}
 </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/exceljs/4.4.0/exceljs.min.js"></script>
 </head>
@@ -161,7 +163,7 @@
 
 <div style="max-width:1300px;margin:0 auto;padding:0 24px 30px;">
   <div class="card">
-    <div class="card-header"><div class="card-title">왜 구매가만 보면 안 되는가</div></div>
+    <div class="card-header"><h2 class="card-title">왜 구매가만 보면 안 되는가</h2></div>
     <div class="card-body" style="font-size:12.5px;color:var(--slate-600);line-height:1.7;">
 <p>설비나 장비를 구매할 때 초기 구매가만 비교하면, 실제로는 유지보수비가 비싸거나 에너지 효율이 낮은 장비를 선택하는 실수를 할 수 있습니다. 총소유비용(TCO)은 도입부터 폐기까지 전체 비용을 합산해서 진짜 저렴한 선택이 무엇인지 보여줍니다.</p>
 <p><b>실무 활용법:</b> 설비 투자 품의서를 작성할 때 두 개 이상의 견적을 TCO 기준으로 비교하거나, 초기 구매가는 비싸지만 유지보수·에너지 비용이 낮은 장비와 저렴하지만 운영비가 높은 장비 중 어느 쪽이 장기적으로 유리한지 판단할 때 활용하세요.</p>
@@ -173,7 +175,7 @@
 
 <div class="faq-wrap">
   <div class="card">
-    <div class="card-header"><div class="card-title">자주 묻는 질문</div></div>
+    <div class="card-header"><h2 class="card-title">자주 묻는 질문</h2></div>
     <div class="card-body">
       <details class="faq-item"><summary>TCO(총소유비용)는 왜 구매가만 보면 안 되는 이유가 되나요?</summary><p>구매가는 전체 비용의 일부일 뿐입니다. 설치비, 유지보수비, 에너지 소비, 다운타임 비용, 폐기비용까지 합산하면, 초기 구매가가 저렴한 장비가 장기적으로는 더 비쌀 수 있습니다.</p></details>
       <details class="faq-item"><summary>두 견적을 TCO로 비교할 때 가장 자주 놓치는 항목은 무엇인가요?</summary><p>에너지 효율(전력 소비량)과 다운타임(고장으로 인한 생산 중단 손실)이 자주 간과됩니다. 특히 다운타임 비용은 정량화하기 어렵다는 이유로 아예 빼고 비교하는 경우가 많은데, 실제로는 총비용 차이를 가장 크게 만드는 요인 중 하나입니다.</p></details>
@@ -183,7 +185,7 @@
 
 <div class="about-wrap">
   <div class="card">
-    <div class="card-header"><div class="card-title">TCO(총소유비용) 분석이란?</div></div>
+    <div class="card-header"><h2 class="card-title">TCO(총소유비용) 분석이란?</h2></div>
     <div class="card-body about-section">
       <h3>왜 구매가가 저렴한 설비가 오히려 더 비쌀 수 있나요?</h3>
       <p>구매가는 전체 수명주기 비용의 일부일 뿐입니다. 설치비, 교육비, 유지보수비, 에너지 소비, 다운타임 손실, 폐기·처분비용까지 다 합산하면, 처음엔 저렴해 보이던 설비가 5~10년 운영하는 동안 더 비싸질 수 있습니다. TCO 계산기는 이 전체 수명주기 비용을 한 번에 비교하도록 도와줍니다.</p>
@@ -221,6 +223,7 @@
   </div>
 </div>
 
+<!--RELATED--><nav class="related-tools" aria-label="함께 쓰는 관련 도구"><h2>함께 쓰는 관련 도구</h2><ul><li><a href="cbm.html">CBM(용적중량) 계산기</a></li><li><a href="fob-cif.html">수입 원가 계산기</a></li><li><a href="fx-exposure-calculator.html">환노출(FX Exposure) 계산기</a></li><li><a href="currency-hedging-calculator.html">환헤지 비용 계산기</a></li><li><a href="cost-of-quality-calculator.html">품질비용(Cost of Quality) 계산기</a></li><li><a href="personal-duty-calculator.html">해외직구 관부가세 계산기</a></li></ul></nav><!--/RELATED-->
 <footer style="background:#0F172A;color:#94A3B8;padding:24px;font-size:12px;">
   <div style="max-width:1300px;margin:0 auto;display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;">
     <div style="font-size:15px;font-weight:800;color:#fff;"><svg width="24" height="24" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align:middle;margin-right:9px;flex-shrink:0;"><path d="M20 2.5L36.5 11.5V28.5L20 37.5L3.5 28.5V11.5L20 2.5Z" stroke="url(#cbmGradF)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M20 2.5V20M20 20L36.5 11.5M20 20L3.5 11.5" stroke="url(#cbmGradF)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/></svg>CBM<span style="color:#2563EB;">Lab</span></div>
@@ -268,7 +271,7 @@ function fmt(n){ return CUR_SYMBOLS[currentCurrency] + Math.round(n||0).toLocale
 
 function buildOptionHTML(id, title){
   let html = `<div class="card" data-option="${id}">
-    <div class="card-header"><div class="card-title">${title}</div></div>
+    <div class="card-header"><h2 class="card-title">${title}</h2></div>
     <div class="card-body">`;
   FIELDS.forEach(f=>{
     if(f.section){

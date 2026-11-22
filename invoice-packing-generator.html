@@ -50,6 +50,7 @@
   .card{background:#fff;border:1px solid var(--slate-200);border-radius:var(--radius-lg);box-shadow:var(--shadow-sm);margin-bottom:20px}
   .card-header{padding:16px 20px;border-bottom:1px solid var(--slate-100)}
   .card-title{font-size:14px;font-weight:600;color:var(--slate-800)}
+  h2.card-title{margin:0;line-height:1.4}
   .card-body{padding:18px}
   .field-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px}
   .field-label{font-size:11px;font-weight:600;color:var(--slate-500);margin-bottom:4px;display:block}
@@ -105,6 +106,7 @@
   .faq-item summary::before{content:'Q. ';color:var(--accent)}
   .faq-item p{margin-top:8px;font-size:12.5px;color:var(--slate-600);line-height:1.7;padding-left:2px}
   @media (max-width:640px){.faq-wrap{padding:0 16px}}
+.related-tools{max-width:960px;margin:32px auto;padding:0 16px}.related-tools h2{font-size:15px;font-weight:700;margin:0 0 10px}.related-tools ul{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:8px}.related-tools a{display:block;padding:10px 12px;border:1px solid #E2E8F0;border-radius:8px;font-size:13px;color:#1E293B;text-decoration:none}.related-tools a:hover{border-color:#94A3B8}
 </style>
 
 <script src="https://cdn.amplitude.com/script/d4aa9301e01f4600b5eeb018e160aa7c.js"></script>
@@ -150,7 +152,7 @@
 <div class="main">
   <section class="left-col">
     <div class="card">
-      <div class="card-header"><div class="card-title">기본 정보</div></div>
+      <div class="card-header"><h2 class="card-title">기본 정보</h2></div>
       <div class="card-body">
         <div class="field-grid">
           <div><label class="field-label">Invoice No.</label><input class="inp" id="invNo" value="INV-2026-001" oninput="render()"></div>
@@ -172,7 +174,7 @@
     </div>
 
     <div class="card">
-      <div class="card-header"><div class="card-title">Shipper (수출자)</div></div>
+      <div class="card-header"><h2 class="card-title">Shipper (수출자)</h2></div>
       <div class="card-body">
         <textarea class="inp" id="shipper" rows="3" oninput="render()">Our Company Co., Ltd.
 123 Trade St., Seoul, Korea
@@ -180,14 +182,14 @@ Tel: +82-2-000-0000</textarea>
       </div>
     </div>
     <div class="card">
-      <div class="card-header"><div class="card-title">Consignee (수입자)</div></div>
+      <div class="card-header"><h2 class="card-title">Consignee (수입자)</h2></div>
       <div class="card-body">
         <textarea class="inp" id="consignee" rows="3" placeholder="ABC Trading Co., Ltd.&#10;123 Main St., City, Country&#10;Attn: Mr. John Smith" oninput="render()"></textarea>
       </div>
     </div>
 
     <div class="card">
-      <div class="card-header"><div class="card-title">전체 특이사항 (선택)</div></div>
+      <div class="card-header"><h2 class="card-title">전체 특이사항 (선택)</h2></div>
       <div class="card-body">
         <textarea class="inp" id="specialNote" rows="2" placeholder="예: This shipment contains samples with no commercial value. / Contains dangerous goods (Class 9). / Goods returned for repair and re-export." oninput="render()"></textarea>
         <div style="font-size:11px;color:#94A3B8;margin-top:6px;">전체 선적 건에 대한 코멘트입니다. 개별 품목에 대한 메모는 아래 품목 내역의 각 항목 밑 "비고" 칸에 따로 입력하세요.</div>
@@ -196,7 +198,7 @@ Tel: +82-2-000-0000</textarea>
 
     <div class="card">
       <div class="card-header">
-        <div class="card-title">품목 내역</div>
+        <h2 class="card-title">품목 내역</h2>
         <select class="inp" id="currencySelect" onchange="setCurrency(this.value)" style="width:auto;padding:5px 8px;font-size:11px;">
           <option value="USD">통화: 달러(USD)</option>
           <option value="KRW">통화: 원화(KRW)</option>
@@ -227,7 +229,7 @@ Tel: +82-2-000-0000</textarea>
 
 <div class="main" style="max-width:1100px;margin:0 auto;padding:0 24px 40px;">
   <div class="card">
-    <div class="card-header"><div class="card-title">왜 전용 서식이 필요한가</div></div>
+    <div class="card-header"><h2 class="card-title">왜 전용 서식이 필요한가</h2></div>
     <div class="card-body" style="font-size:12.5px;color:var(--slate-600);line-height:1.7;">
 <p>일반 인보이스 양식에는 인코텀즈, 원산지, HS Code 같은 무역 실무 필수 항목이 빠져있는 경우가 많아 매번 서식을 손보게 됩니다. 선적 서류에 오류가 있으면 통관 지연으로 이어질 수 있습니다.</p>
 <p><b>실무 활용법:</b> 선적할 때마다 반복되는 인보이스와 패킹리스트를 품목 입력 한 번으로 동시에 생성하고, 샘플·위험물처럼 특이사항이 있는 화물은 비고란에 기록해 통관 시 참고 자료로 활용할 수 있습니다.</p>
@@ -239,7 +241,7 @@ Tel: +82-2-000-0000</textarea>
 
 <div class="faq-wrap">
   <div class="card">
-    <div class="card-header"><div class="card-title">자주 묻는 질문</div></div>
+    <div class="card-header"><h2 class="card-title">자주 묻는 질문</h2></div>
     <div class="card-body">
       <details class="faq-item"><summary>커머셜 인보이스와 패킹리스트는 어떤 차이가 있나요?</summary><p>커머셜 인보이스는 거래 금액·조건을 증명하는 상업 서류로 관세 산정의 기준이 되고, 패킹리스트는 화물의 포장 단위·중량·부피 등 물리적 정보를 담은 서류입니다. 통관 시 세관은 이 두 서류를 함께 대조해서 확인합니다.</p></details>
       <details class="faq-item"><summary>커머셜 인보이스에 반드시 들어가야 하는 항목은 무엇인가요?</summary><p>수출자·수입자 정보, 인코텀즈 조건, 품목명과 HS Code, 수량, 단가, 총액, 원산지 정보가 기본적으로 필요합니다. 이 항목이 누락되면 통관이 지연되는 경우가 많습니다.</p></details>
@@ -257,6 +259,7 @@ Tel: +82-2-000-0000</textarea>
 <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
 </div>
 
+<!--RELATED--><nav class="related-tools" aria-label="함께 쓰는 관련 도구"><h2>함께 쓰는 관련 도구</h2><ul><li><a href="rfx-generator.html">RFI·RFP·RFQ 영문 템플릿 생성기</a></li><li><a href="email-generator.html">영문 구매 이메일 생성기</a></li><li><a href="supplier-scorecard.html">공급업체 평가 스코어카드 생성기</a></li><li><a href="incoterms-responsibility-grid.html">Incoterms 2020 책임범위 비교표</a></li><li><a href="batna-negotiation-matrix.html">BATNA 협상준비 매트릭스</a></li><li><a href="contract-renewal-calendar.html">계약 갱신 캘린더</a></li></ul></nav><!--/RELATED-->
 <footer><div class="footer-inner">
   <div class="footer-logo"><svg width="24" height="24" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align:middle;margin-right:9px;flex-shrink:0;"><path d="M20 2.5L36.5 11.5V28.5L20 37.5L3.5 28.5V11.5L20 2.5Z" stroke="url(#cbmGradF)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M20 2.5V20M20 20L36.5 11.5M20 20L3.5 11.5" stroke="url(#cbmGradF)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/></svg>CBM<span>Lab</span></div>
   <nav><a href="index.html" class="footer-link">전체 도구</a><a href="privacy.html" class="footer-link">개인정보 처리방침</a></nav>

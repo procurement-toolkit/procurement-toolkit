@@ -56,6 +56,7 @@
   .card{background:#fff;border:1px solid var(--slate-200);border-radius:var(--radius-lg);box-shadow:var(--shadow-sm);margin-bottom:20px}
   .card-header{padding:16px 20px;border-bottom:1px solid var(--slate-100)}
   .card-title{font-size:14px;font-weight:600;color:var(--slate-800)}
+  h2.card-title{margin:0;line-height:1.4}
   .card-body{padding:20px}
 
   .method-pills{display:flex;gap:8px;margin-bottom:18px}
@@ -129,6 +130,7 @@
   @media print{.ad-area-main,.ad-main-box,header,footer{display:none !important}.main{grid-template-columns:1fr}}
   @media (max-width:900px){.main{grid-template-columns:1fr}}
   @media (max-width:640px){.ad-area-main{padding:0 16px 20px}.faq-wrap{padding:0 16px}}
+.related-tools{max-width:960px;margin:32px auto;padding:0 16px}.related-tools h2{font-size:15px;font-weight:700;margin:0 0 10px}.related-tools ul{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:8px}.related-tools a{display:block;padding:10px 12px;border:1px solid #E2E8F0;border-radius:8px;font-size:13px;color:#1E293B;text-decoration:none}.related-tools a:hover{border-color:#94A3B8}
 </style>
 
 <script src="https://cdn.amplitude.com/script/d4aa9301e01f4600b5eeb018e160aa7c.js"></script>
@@ -169,7 +171,7 @@
 <div class="main">
   <section>
     <div class="card">
-      <div class="card-header"><div class="card-title">Choose Calculation Method</div></div>
+      <div class="card-header"><h2 class="card-title">Choose Calculation Method</h2></div>
       <div class="card-body">
         <div class="method-pills">
           <div class="method-pill active" id="pill-buildup" onclick="setMethod('buildup')">
@@ -211,7 +213,7 @@
     </div>
 
     <div class="card">
-      <div class="card-header"><div class="card-title">Reference: Typical RVC Thresholds by Agreement</div></div>
+      <div class="card-header"><h2 class="card-title">Reference: Typical RVC Thresholds by Agreement</h2></div>
       <div class="card-body">
         <table class="threshold-table">
           <thead><tr><th>Agreement</th><th>Typical RVC Threshold</th></tr></thead>
@@ -229,7 +231,7 @@
 
   <aside>
     <div class="card">
-      <div class="card-header"><div class="card-title">Result</div></div>
+      <div class="card-header"><h2 class="card-title">Result</h2></div>
       <div class="card-body">
         <div id="resultWrap"></div>
         <div id="breakdownWrap"></div>
@@ -256,7 +258,7 @@
 
 <div class="faq-wrap">
   <div class="card">
-    <div class="card-header"><div class="card-title">Frequently Asked Questions</div></div>
+    <div class="card-header"><h2 class="card-title">Frequently Asked Questions</h2></div>
     <div class="card-body">
       <details class="faq-item"><summary>Should I use Build-Up or Build-Down?</summary><p>Most FTAs let you choose either method. If you know your originating material content precisely, Build-Up is more convenient; if you only track non-originating material costs, Build-Down is easier. Some agreements do restrict which method is allowed for certain products, so this is worth confirming.</p></details>
       <details class="faq-item"><summary>Is Adjusted Value the same as the sale price?</summary><p>It's usually based on the exporter's transaction value (e.g., FOB price), but what's included or excluded (freight, commissions, etc.) can vary by agreement. Check the specific "value calculation" rule in the relevant FTA text for the exact definition.</p></details>
@@ -283,6 +285,7 @@
   </div>
 </div>
 
+<!--RELATED--><nav class="related-tools" aria-label="Related tools"><h2>Related tools</h2><ul><li><a href="cost-of-quality-calculator.html">Cost of Quality (CoQ) Calculator</a></li><li><a href="cbm-calculator.html">CBM &amp; Volumetric Weight Calculator</a></li><li><a href="lead-time-calculator.html">Lead Time &amp; Delivery Date Calculator</a></li><li><a href="demurrage-detention-calculator.html">Demurrage &amp; Detention Cost Calculator</a></li><li><a href="eoq-safety-stock-calculator.html">EOQ, Safety Stock &amp; Reorder Point Calculator</a></li><li><a href="should-cost-calculator.html">Should Cost Calculator</a></li></ul></nav><!--/RELATED-->
 <footer><div class="footer-inner">
   <div class="footer-logo"><svg width="24" height="24" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align:middle;margin-right:9px;flex-shrink:0;"><path d="M20 2.5L36.5 11.5V28.5L20 37.5L3.5 28.5V11.5L20 2.5Z" stroke="url(#cbmGradF)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M20 2.5V20M20 20L36.5 11.5M20 20L3.5 11.5" stroke="url(#cbmGradF)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/></svg>CBM<span style="color:#2563EB;">Lab</span></div>
   <nav><a href="index.html" class="footer-link">All Tools</a><a href="privacy.html" class="footer-link">Privacy Policy</a></nav>

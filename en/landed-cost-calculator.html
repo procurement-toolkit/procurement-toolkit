@@ -5,9 +5,9 @@
      crossorigin="anonymous"></script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="Free landed cost calculator for importers and procurement teams. Calculate total import cost from EXW, FOB, CFR, or CIF terms including freight, insurance, customs duty, and VAT/tax — with correct duty-basis handling for US (FOB-based) vs most other countries (CIF-based).">
-<meta name="keywords" content="landed cost calculator, import cost calculator, FOB CIF calculator, total landed cost, duty calculator, customs value calculator, procurement logistics cost">
-<title>Landed Cost Calculator (Import Cost, FOB/CIF/EXW/DDP) — CBM Lab</title>
+<meta name="description" content="Free landed cost calculator: add product price, freight, insurance, duty and fees to get total import cost per unit. Includes the landed cost formula.">
+<meta name="keywords" content="landed cost, landed cost calculator, landed cost formula, import cost calculator, FOB CIF DDP">
+<title>Landed Cost Calculator: Formula &amp; Import Cost Per Unit</title>
 <link rel="icon" href="../favicon.ico" sizes="any">
 <link rel="icon" href="../favicon.ico" type="image/x-icon">
 <link rel="apple-touch-icon" href="../apple-touch-icon.png">
@@ -15,15 +15,15 @@
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="CBM Lab">
 <meta property="og:locale" content="en_US">
-<meta property="og:title" content="Landed Cost Calculator (Import Cost, FOB/CIF/EXW/DDP) — CBM Lab">
-<meta property="og:description" content="Free landed cost calculator for importers and procurement teams. Calculate total import cost from EXW, FOB, CFR, or CIF terms including freight, insurance, customs duty, and VAT/tax — with correct duty-basis handling for US (FOB-based) vs most other countries (CIF-based).">
+<meta property="og:title" content="Landed Cost Calculator: Formula &amp; Import Cost Per Unit">
+<meta property="og:description" content="Free landed cost calculator: add product price, freight, insurance, duty and fees to get total import cost per unit. Includes the landed cost formula.">
 <meta property="og:url" content="https://procurement-toolkit-eight.vercel.app/en/landed-cost-calculator.html">
 <meta property="og:image" content="https://procurement-toolkit-eight.vercel.app/assets/hero-team.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Landed Cost Calculator (Import Cost, FOB/CIF/EXW/DDP) — CBM Lab">
-<meta name="twitter:description" content="Free landed cost calculator for importers and procurement teams. Calculate total import cost from EXW, FOB, CFR, or CIF terms including freight, insurance, customs duty, and VAT/tax — with correct duty-basis handling for US (FOB-based) vs most other countries (CIF-based).">
+<meta name="twitter:title" content="Landed Cost Calculator: Formula &amp; Import Cost Per Unit">
+<meta name="twitter:description" content="Free landed cost calculator: add product price, freight, insurance, duty and fees to get total import cost per unit. Includes the landed cost formula.">
 <meta name="twitter:image" content="https://procurement-toolkit-eight.vercel.app/assets/hero-team.jpg">
 
 <link rel="alternate" hreflang="ko" href="https://procurement-toolkit-eight.vercel.app/fob-cif.html">
@@ -166,6 +166,7 @@
   .faq-item summary::before{content:'Q. ';color:var(--accent)}
   .faq-item p{margin-top:8px;font-size:12.5px;color:var(--slate-600);line-height:1.7;padding-left:2px}
   @media (max-width:640px){.faq-wrap{padding:0 16px}}
+.related-tools{max-width:960px;margin:32px auto;padding:0 16px}.related-tools h2{font-size:15px;font-weight:700;margin:0 0 10px}.related-tools ul{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:8px}.related-tools a{display:block;padding:10px 12px;border:1px solid #E2E8F0;border-radius:8px;font-size:13px;color:#1E293B;text-decoration:none}.related-tools a:hover{border-color:#94A3B8}
 </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/exceljs/4.4.0/exceljs.min.js"></script>
 </head>
@@ -193,7 +194,7 @@
 <div class="main">
   <section aria-label="Cost inputs">
     <div class="card">
-      <div class="card-header"><div class="card-title">Incoterm</div></div>
+      <div class="card-header"><h2 class="card-title">Incoterm</h2></div>
       <div class="card-body">
         <div class="incoterm-group" role="group">
           <button class="incoterm-btn" data-term="EXW" onclick="setIncoterm('EXW')">EXW</button>
@@ -208,7 +209,7 @@
 
     <div class="card">
       <div class="card-header">
-        <div class="card-title">Goods (priced in <span id="term-value-label">FOB</span> terms)</div>
+        <h2 class="card-title">Goods (priced in <span id="term-value-label">FOB</span> terms)</h2>
         <select class="inp" id="currencySelect" onchange="setCurrency(this.value)" style="width:auto;padding:5px 8px;font-size:11px;">
           <option value="USD">Currency: USD</option>
           <option value="KRW">Currency: KRW</option>
@@ -236,7 +237,7 @@
     </div>
 
     <div class="card">
-      <div class="card-header"><div class="card-title">Freight, Insurance &amp; Duty</div></div>
+      <div class="card-header"><h2 class="card-title">Freight, Insurance &amp; Duty</h2></div>
       <div class="card-body">
         <div class="field-grid">
           <div class="field" id="field-inlandOrigin">
@@ -294,7 +295,7 @@
   <aside aria-label="Results">
     <div class="result-section">
       <div class="card">
-        <div class="card-header"><div class="card-title">Landed Cost Result</div></div>
+        <div class="card-header"><h2 class="card-title">Landed Cost Result</h2></div>
         <div class="card-body">
           <div id="result-lines"></div>
           <div class="result-total" style="margin-top:10px;">
@@ -346,7 +347,7 @@
 
 <div class="faq-wrap">
   <div class="card">
-    <div class="card-header"><div class="card-title">Frequently Asked Questions</div></div>
+    <div class="card-header"><h2 class="card-title">Frequently Asked Questions</h2></div>
     <div class="card-body">
       <details class="faq-item"><summary>What's the practical difference between FOB and CIF in cost calculations?</summary><p>Under FOB, the seller's cost ends once goods are loaded onto the vessel at the origin port; freight and insurance to the destination are the buyer's separate cost. Under CIF, the seller's quoted price already includes freight and insurance to the destination port. Comparing FOB and CIF unit prices directly without adjusting for this is a common mistake.</p></details>
       <details class="faq-item"><summary>Is customs duty calculated on FOB value or CIF value?</summary><p>It depends on the importing country. Most countries (EU, most of Asia, etc.) assess duty on the CIF value (goods + freight + insurance), while the United States is a notable exception and assesses duty on the FOB value. Always check the specific rule for your destination country.</p></details>
@@ -358,7 +359,7 @@
 
 <div class="about-wrap">
   <div class="card">
-    <div class="card-header"><div class="card-title">What Is Landed Cost?</div></div>
+    <div class="card-header"><h2 class="card-title">What Is Landed Cost?</h2></div>
     <div class="card-body about-section">
       <h3>Why isn't the goods price alone enough to judge cost?</h3>
       <p>The goods price is only part of the true landed cost. International freight, insurance, customs duty, VAT/sales tax, customs broker fees, and inland transportation all need to be added to know the real per-unit cost hitting your warehouse. Calculating margin off the goods price alone is a common way to end up selling at a much thinner margin than expected. Because Incoterms (FOB vs CIF) change whether freight and insurance are already baked into the quoted price, comparing unit prices across different terms without adjusting is risky.</p>
@@ -386,6 +387,7 @@
   </div>
 </div>
 
+<!--RELATED--><nav class="related-tools" aria-label="Related tools"><h2>Related tools</h2><ul><li><a href="lead-time-calculator.html">Lead Time &amp; Delivery Date Calculator</a></li><li><a href="demurrage-detention-calculator.html">Demurrage &amp; Detention Cost Calculator</a></li><li><a href="eoq-safety-stock-calculator.html">EOQ, Safety Stock &amp; Reorder Point Calculator</a></li><li><a href="should-cost-calculator.html">Should Cost Calculator</a></li><li><a href="purchase-price-variance-calculator.html">Purchase Price Variance (PPV) Calculator</a></li><li><a href="oee-calculator.html">OEE (Overall Equipment Effectiveness) Calculator</a></li></ul></nav><!--/RELATED-->
 <footer style="background:#0F172A;color:#94A3B8;padding:24px;font-size:12px;">
   <div style="max-width:1200px;margin:0 auto;display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;">
     <div style="font-size:15px;font-weight:800;color:#fff;"><svg width="24" height="24" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align:middle;margin-right:9px;flex-shrink:0;"><path d="M20 2.5L36.5 11.5V28.5L20 37.5L3.5 28.5V11.5L20 2.5Z" stroke="url(#cbmGradF)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M20 2.5V20M20 20L36.5 11.5M20 20L3.5 11.5" stroke="url(#cbmGradF)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/></svg>CBM<span style="color:#2563EB;">Lab</span></div>

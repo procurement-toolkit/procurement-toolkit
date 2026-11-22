@@ -5,9 +5,9 @@
      crossorigin="anonymous"></script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="Free lead time calculator for procurement and import planning. Add production time, transit time, and customs clearance time to get an accurate expected arrival date.">
-<meta name="keywords" content="lead time calculator, delivery date calculator, procurement lead time, shipping transit time calculator">
-<title>Lead Time &amp; Delivery Date Calculator for Supply Chain — CBM Lab</title>
+<meta name="description" content="Add production, customs and transit days to get the expected delivery date and the latest order date. Free supply chain lead time calculator.">
+<meta name="keywords" content="lead time calculator, delivery date calculator, supply chain lead time, order deadline">
+<title>Lead Time Calculator: Delivery Date &amp; Order Deadline</title>
 <link rel="icon" href="../favicon.ico" sizes="any">
 <link rel="icon" href="../favicon.ico" type="image/x-icon">
 <link rel="apple-touch-icon" href="../apple-touch-icon.png">
@@ -15,15 +15,15 @@
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="CBM Lab">
 <meta property="og:locale" content="en_US">
-<meta property="og:title" content="Lead Time &amp; Delivery Date Calculator for Supply Chain — CBM Lab">
-<meta property="og:description" content="Free lead time calculator for procurement and import planning. Add production time, transit time, and customs clearance time to get an accurate expected arrival date.">
+<meta property="og:title" content="Lead Time Calculator: Delivery Date &amp; Order Deadline">
+<meta property="og:description" content="Add production, customs and transit days to get the expected delivery date and the latest order date. Free supply chain lead time calculator.">
 <meta property="og:url" content="https://procurement-toolkit-eight.vercel.app/en/lead-time-calculator.html">
 <meta property="og:image" content="https://procurement-toolkit-eight.vercel.app/assets/hero-team.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Lead Time &amp; Delivery Date Calculator for Supply Chain — CBM Lab">
-<meta name="twitter:description" content="Free lead time calculator for procurement and import planning. Add production time, transit time, and customs clearance time to get an accurate expected arrival date.">
+<meta name="twitter:title" content="Lead Time Calculator: Delivery Date &amp; Order Deadline">
+<meta name="twitter:description" content="Add production, customs and transit days to get the expected delivery date and the latest order date. Free supply chain lead time calculator.">
 <meta name="twitter:image" content="https://procurement-toolkit-eight.vercel.app/assets/hero-team.jpg">
 
 <link rel="alternate" hreflang="ko" href="https://procurement-toolkit-eight.vercel.app/leadtime-calculator.html">
@@ -52,6 +52,7 @@
   .card{background:#fff;border:1px solid var(--slate-200);border-radius:var(--radius-lg);box-shadow:var(--shadow-sm);margin-bottom:20px}
   .card-header{padding:16px 20px;border-bottom:1px solid var(--slate-100)}
   .card-title{font-size:14px;font-weight:600;color:var(--slate-800)}
+  h2.card-title{margin:0;line-height:1.4}
   .card-body{padding:20px}
   .field-group{margin-bottom:14px}
   .field-label{font-size:12px;font-weight:600;color:var(--slate-600);margin-bottom:6px;display:block}
@@ -85,6 +86,7 @@
   .faq-item summary::before{content:'Q. ';color:var(--accent)}
   .faq-item p{margin-top:8px;font-size:12.5px;color:var(--slate-600);line-height:1.7;padding-left:2px}
   @media (max-width:640px){.faq-wrap{padding:0 16px}}
+.related-tools{max-width:960px;margin:32px auto;padding:0 16px}.related-tools h2{font-size:15px;font-weight:700;margin:0 0 10px}.related-tools ul{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:8px}.related-tools a{display:block;padding:10px 12px;border:1px solid #E2E8F0;border-radius:8px;font-size:13px;color:#1E293B;text-decoration:none}.related-tools a:hover{border-color:#94A3B8}
 </style>
 </head>
 <body>
@@ -110,7 +112,7 @@
 <div class="main">
   <section>
     <div class="card">
-      <div class="card-header"><div class="card-title">Inputs</div></div>
+      <div class="card-header"><h2 class="card-title">Inputs</h2></div>
       <div class="card-body">
         <div class="field-group">
           <label class="field-label">Order Date</label>
@@ -147,7 +149,7 @@
 
   <aside>
     <div class="card">
-      <div class="card-header"><div class="card-title">Timeline</div></div>
+      <div class="card-header"><h2 class="card-title">Timeline</h2></div>
       <div class="card-body">
         <div class="timeline" id="timeline"></div>
         <div class="result-total">
@@ -163,7 +165,7 @@
 
 <div style="max-width:1100px;margin:0 auto;padding:0 24px 30px;">
   <div class="card">
-    <div class="card-header"><div class="card-title">Why Calculate Lead Time in Advance</div></div>
+    <div class="card-header"><h2 class="card-title">Why Calculate Lead Time in Advance</h2></div>
     <div class="card-body" style="font-size:12.5px;color:var(--slate-600);line-height:1.7;">
       <p>Quoting a delivery date without adding up every stage — production, inland transport, ocean/air transit, and customs — often leads to missed promises or unplanned stockouts.</p>
       <p style="margin-top:8px;"><b>How to use it in practice:</b> Calculate the expected arrival date before confirming a new order, and recalculate with a larger buffer during peak shipping season when transit times typically increase.</p>
@@ -175,7 +177,7 @@
 
 <div class="faq-wrap">
   <div class="card">
-    <div class="card-header"><div class="card-title">Frequently Asked Questions</div></div>
+    <div class="card-header"><h2 class="card-title">Frequently Asked Questions</h2></div>
     <div class="card-body">
       <details class="faq-item"><summary>What stages actually make up total lead time?</summary><p>Total lead time typically includes production lead time (order to production completion), sea or air transit time, customs clearance time, and domestic delivery time. Estimating arrival based on production time alone usually results in a date that's too optimistic.</p></details>
       <details class="faq-item"><summary>How long does customs clearance typically take?</summary><p>With complete documentation and no special inspection required, clearance often takes just 1-3 days. But items requiring quarantine, safety certification, or other special review can take significantly longer, so it's safer to build in extra buffer time.</p></details>
@@ -193,6 +195,7 @@
 <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
 </div>
 
+<!--RELATED--><nav class="related-tools" aria-label="Related tools"><h2>Related tools</h2><ul><li><a href="oee-calculator.html">OEE (Overall Equipment Effectiveness) Calculator</a></li><li><a href="abc-inventory-analysis.html">ABC Inventory Analysis Tool</a></li><li><a href="spend-analysis-dashboard.html">Spend Analysis Dashboard</a></li><li><a href="tco-calculator.html">TCO Calculator (Total Cost of Ownership)</a></li><li><a href="cost-structure-calculator.html">Cost Structure Calculator</a></li><li><a href="payment-terms-cost-calculator.html">Payment Terms Cost Calculator</a></li></ul></nav><!--/RELATED-->
 <footer style="background:#0F172A;color:#94A3B8;padding:24px;font-size:12px;">
   <div style="max-width:1100px;margin:0 auto;display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;">
     <div style="font-size:15px;font-weight:800;color:#fff;"><svg width="24" height="24" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align:middle;margin-right:9px;flex-shrink:0;"><path d="M20 2.5L36.5 11.5V28.5L20 37.5L3.5 28.5V11.5L20 2.5Z" stroke="url(#cbmGradF)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M20 2.5V20M20 20L36.5 11.5M20 20L3.5 11.5" stroke="url(#cbmGradF)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/></svg>CBM<span style="color:#2563EB;">Lab</span></div>

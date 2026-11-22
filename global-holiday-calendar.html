@@ -54,6 +54,7 @@
   .card{background:#fff;border:1px solid var(--slate-200);border-radius:var(--radius-lg);box-shadow:var(--shadow-sm);margin-bottom:20px}
   .card-header{padding:16px 20px;border-bottom:1px solid var(--slate-100);display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
   .card-title{font-size:15px;font-weight:700;color:var(--slate-800)}
+  h2.card-title{margin:0;line-height:1.4}
   .card-body{padding:8px 20px 20px}
 
   .next-banner{background:var(--slate-900);color:#fff;border-radius:var(--radius-lg);padding:20px 24px;margin-bottom:20px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
@@ -98,6 +99,7 @@
 
   @media print{.ad-area-main,.ad-main-box,header,footer{display:none !important}}
   @media (max-width:640px){.ad-area-main{padding:0 16px 20px}.faq-wrap{padding:0 16px}}
+.related-tools{max-width:960px;margin:32px auto;padding:0 16px}.related-tools h2{font-size:15px;font-weight:700;margin:0 0 10px}.related-tools ul{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:8px}.related-tools a{display:block;padding:10px 12px;border:1px solid #E2E8F0;border-radius:8px;font-size:13px;color:#1E293B;text-decoration:none}.related-tools a:hover{border-color:#94A3B8}
 </style>
 
 <script src="https://cdn.amplitude.com/script/d4aa9301e01f4600b5eeb018e160aa7c.js"></script>
@@ -145,7 +147,7 @@
   </div>
 
   <div class="card">
-    <div class="card-header"><div class="card-title">주요 공급망 이벤트</div></div>
+    <div class="card-header"><h2 class="card-title">주요 공급망 이벤트</h2></div>
     <div class="card-body" id="eventList"></div>
   </div>
 
@@ -154,7 +156,7 @@
   <div class="warn-box">⚠ 날짜는 각 정부·기관 공식 발표를 기준으로 정리했지만, 이슬람력 기반 이벤트(라마단·이드 등)는 매년 초승달 관측에 따라 1~2일 변동될 수 있습니다. 중요한 발주 일정은 반드시 최신 공지로 재확인하세요.</div>
 
   <div class="card">
-    <div class="card-header"><div class="card-title">이 캘린더를 활용하는 법</div></div>
+    <div class="card-header"><h2 class="card-title">이 캘린더를 활용하는 법</h2></div>
     <div class="card-body" style="padding-top:12px;">
       <p style="font-size:13px;color:var(--slate-600);line-height:1.75;margin-bottom:10px;">"공식 휴일 며칠"이 아니라 "실질 영향 기간"이 훨씬 깁니다. 예를 들어 중국 춘절은 공식 연휴가 8일이지만, 공장 가동이 정상화되기까지는 실제로 4~6주가 걸립니다. 이 캘린더는 그 실질 기간을 기준으로 "주문 마감 권장일"을 계산해서 보여줍니다.</p>
       <p style="font-size:13px;color:var(--slate-600);line-height:1.75;">권장일 이후에 주문하면 물건을 못 받는다는 뜻이 아니라, <strong>공급업체 리드타임이 평소보다 훨씬 길어질 가능성이 높다</strong>는 신호로 받아들이시면 됩니다.</p>
@@ -177,7 +179,7 @@
 
 <div class="faq-wrap">
   <div class="card">
-    <div class="card-header"><div class="card-title">자주 묻는 질문</div></div>
+    <div class="card-header"><h2 class="card-title">자주 묻는 질문</h2></div>
     <div class="card-body" style="padding-top:12px;">
       <details class="faq-item"><summary>"주문 마감 권장일"은 어떻게 계산되나요?</summary><p>각 이벤트의 실질적인 공급망 영향이 시작되는 시점(공식 휴일보다 1~3주 이르게 시작되는 경우가 많음)을 기준으로 표시합니다. 정확한 리드타임은 거래 중인 공급업체·운송사에 직접 확인하는 것이 가장 안전합니다.</p></details>
       <details class="faq-item"><summary>왜 모든 나라의 공휴일이 다 있지 않나요?</summary><p>이 캘린더는 "공급망에 실제로 큰 영향을 주는" 이벤트만 선별했습니다. 하루짜리 공휴일보다는 중국 춘절·국경절처럼 며칠~몇 주씩 물류가 멈추는 이벤트 위주로 구성했습니다.</p></details>
@@ -186,6 +188,7 @@
   </div>
 </div>
 
+<!--RELATED--><nav class="related-tools" aria-label="함께 쓰는 관련 도구"><h2>함께 쓰는 관련 도구</h2><ul><li><a href="contract-renewal-calendar.html">계약 갱신 캘린더</a></li><li><a href="worldclock.html">세계시간 &amp; 시차 계산기</a></li><li><a href="container-loading-visualizer.html">컨테이너 적재 시각화 (2D/3D)</a></li><li><a href="sourcing-location-comparator.html">니어쇼어·리쇼어·오프쇼어 소싱 비교</a></li><li><a href="demurrage-detention-calculator.html">디머리지·디텐션 비용 계산기</a></li><li><a href="cost-structure-calculator.html">원가구조 이해 가이드 &amp; 계산기</a></li></ul></nav><!--/RELATED-->
 <footer><div class="footer-inner">
   <div class="footer-logo"><svg width="24" height="24" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align:middle;margin-right:9px;flex-shrink:0;"><path d="M20 2.5L36.5 11.5V28.5L20 37.5L3.5 28.5V11.5L20 2.5Z" stroke="url(#cbmGradF)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M20 2.5V20M20 20L36.5 11.5M20 20L3.5 11.5" stroke="url(#cbmGradF)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/></svg>CBM<span style="color:#2563EB;">Lab</span></div>
   <nav><a href="index.html" class="footer-link">전체 도구</a><a href="privacy.html" class="footer-link">개인정보 처리방침</a></nav>

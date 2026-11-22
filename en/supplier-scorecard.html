@@ -5,9 +5,9 @@
      crossorigin="anonymous"></script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="Free supplier and vendor scorecard generator. Choose from 30+ objective evaluation criteria across price, quality, delivery, financial stability, capacity, compliance, service, and sustainability. Weighted scoring with 1/3/5-point rubrics for each criterion, printable report format.">
-<meta name="keywords" content="supplier scorecard, vendor scorecard template, supplier evaluation, vendor evaluation criteria, supplier scoring model, procurement supplier management">
-<title>Supplier &amp; Vendor Scorecard Generator — CBM Lab</title>
+<meta name="description" content="Build a supplier scorecard online: pick KPIs, set weights and score vendors on quality, delivery and cost. Includes template examples.">
+<meta name="keywords" content="supplier scorecard, supplier scorecard template, vendor scorecard, supplier kpis, supplier evaluation">
+<title>Supplier Scorecard Template: Metrics, Weights &amp; Generator</title>
 <link rel="icon" href="../favicon.ico" sizes="any">
 <link rel="icon" href="../favicon.ico" type="image/x-icon">
 <link rel="apple-touch-icon" href="../apple-touch-icon.png">
@@ -15,15 +15,15 @@
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="CBM Lab">
 <meta property="og:locale" content="en_US">
-<meta property="og:title" content="Supplier &amp; Vendor Scorecard Generator — CBM Lab">
-<meta property="og:description" content="Free supplier and vendor scorecard generator. Choose from 30+ objective evaluation criteria across price, quality, delivery, financial stability, capacity, compliance, service, and sustainability. Weighted scoring with 1/3/5-point rubrics for each criterion, printable report format.">
+<meta property="og:title" content="Supplier Scorecard Template: Metrics, Weights &amp; Generator">
+<meta property="og:description" content="Build a supplier scorecard online: pick KPIs, set weights and score vendors on quality, delivery and cost. Includes template examples.">
 <meta property="og:url" content="https://procurement-toolkit-eight.vercel.app/en/supplier-scorecard.html">
 <meta property="og:image" content="https://procurement-toolkit-eight.vercel.app/assets/hero-team.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Supplier &amp; Vendor Scorecard Generator — CBM Lab">
-<meta name="twitter:description" content="Free supplier and vendor scorecard generator. Choose from 30+ objective evaluation criteria across price, quality, delivery, financial stability, capacity, compliance, service, and sustainability. Weighted scoring with 1/3/5-point rubrics for each criterion, printable report format.">
+<meta name="twitter:title" content="Supplier Scorecard Template: Metrics, Weights &amp; Generator">
+<meta name="twitter:description" content="Build a supplier scorecard online: pick KPIs, set weights and score vendors on quality, delivery and cost. Includes template examples.">
 <meta name="twitter:image" content="https://procurement-toolkit-eight.vercel.app/assets/hero-team.jpg">
 
 <link rel="alternate" hreflang="ko" href="https://procurement-toolkit-eight.vercel.app/supplier-scorecard.html">
@@ -52,6 +52,7 @@
   .card{background:#fff;border:1px solid var(--slate-200);border-radius:var(--radius-lg);box-shadow:var(--shadow-sm);margin-bottom:20px}
   .card-header{padding:16px 20px;border-bottom:1px solid var(--slate-100);display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
   .card-title{font-size:14px;font-weight:600;color:var(--slate-800)}
+  h2.card-title{margin:0;line-height:1.4}
   .card-body{padding:20px}
   .cat-group{border:1px solid var(--slate-200);border-radius:var(--radius);margin-bottom:10px;overflow:hidden}
   .cat-header{background:var(--slate-50);padding:10px 14px;display:flex;justify-content:space-between;align-items:center;cursor:pointer;user-select:none}
@@ -99,7 +100,7 @@
   @media print{ header,.hero,.left-controls,.btn-print,.btn-add-vendor,.btn-add-custom,.btn-del-crit,footer,.selected-bar,.weight-warning{display:none !important} body{background:#fff} .main{padding:0;max-width:100%} .report-only{display:block} .card{border:none;box-shadow:none;margin-bottom:0} .card-body{padding:0} }
   .report-header{border:2px solid #1E293B;border-radius:8px;padding:24px 28px;margin-bottom:20px;position:relative}
   .report-header .rh-badge{position:absolute;top:20px;right:24px;border:2px solid var(--accent);color:var(--accent);font-family:Georgia,serif;font-size:11px;font-weight:700;letter-spacing:1px;padding:6px 14px;border-radius:4px;transform:rotate(3deg)}
-  .report-header h1{font-family:Georgia,serif;font-size:22px;color:#1E293B;letter-spacing:.5px;margin-bottom:4px}
+  .report-header h1,.report-header h2{font-family:Georgia,serif;font-size:22px;color:#1E293B;letter-spacing:.5px;margin-bottom:4px}
   .report-header .rh-sub{font-size:11.5px;color:#64748B;letter-spacing:2px;text-transform:uppercase}
   .report-meta-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:6px 30px;margin-top:18px;font-size:12.5px}
   .report-meta-grid div{display:flex;justify-content:space-between;border-bottom:1px dotted var(--slate-300);padding:3px 0}
@@ -128,6 +129,7 @@
   .faq-item summary::before{content:'Q. ';color:var(--accent)}
   .faq-item p{margin-top:8px;font-size:12.5px;color:var(--slate-600);line-height:1.7;padding-left:2px}
   @media (max-width:640px){.faq-wrap{padding:0 16px}}
+.related-tools{max-width:960px;margin:32px auto;padding:0 16px}.related-tools h2{font-size:15px;font-weight:700;margin:0 0 10px}.related-tools ul{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:8px}.related-tools a{display:block;padding:10px 12px;border:1px solid #E2E8F0;border-radius:8px;font-size:13px;color:#1E293B;text-decoration:none}.related-tools a:hover{border-color:#94A3B8}
 </style>
 </head>
 <body>
@@ -152,7 +154,7 @@
 
 <div class="main">
   <div class="card">
-    <div class="card-header"><div class="card-title">Evaluation Info</div></div>
+    <div class="card-header"><h2 class="card-title">Evaluation Info</h2></div>
     <div class="card-body">
       <div class="field-grid">
         <div class="field-field"><label>Evaluation Date</label><input type="date" id="metaDate"></div>
@@ -169,7 +171,7 @@
   </div>
 
   <div class="card">
-    <div class="card-header"><div class="card-title">Select Evaluation Criteria (click a category to expand)</div></div>
+    <div class="card-header"><h2 class="card-title">Select Evaluation Criteria (click a category to expand)</h2></div>
     <div class="card-body">
       <div id="libraryContainer"></div>
       <button class="btn-add-custom" onclick="addCustomCriterion()">+ Add a custom criterion (not in the library)</button>
@@ -178,7 +180,7 @@
 
   <div class="card">
     <div class="card-header">
-      <div class="card-title">Scorecard</div>
+      <h2 class="card-title">Scorecard</h2>
       <div style="display:flex;gap:8px;">
         <button class="btn-add-vendor" onclick="addVendor()">+ Add supplier</button>
         <button class="btn-print" onclick="window.print()">🖨️ Print Report</button>
@@ -196,7 +198,7 @@
     <div class="report-header">
       <div class="rh-badge">EVALUATION</div>
       <div class="rh-sub">Supplier Qualification Assessment Report</div>
-      <h1>Supplier Evaluation Report</h1>
+      <h2>Supplier Evaluation Report</h2>
       <div class="report-meta-grid" id="reportMetaGrid"></div>
     </div>
   </div>
@@ -212,7 +214,7 @@
 
 <div class="faq-wrap">
   <div class="card">
-    <div class="card-header"><div class="card-title">Frequently Asked Questions</div></div>
+    <div class="card-header"><h2 class="card-title">Frequently Asked Questions</h2></div>
     <div class="card-body">
       <details class="faq-item"><summary>What categories should a supplier evaluation cover?</summary><p>Common categories are quality (defect rate), on-time delivery performance, price competitiveness, responsiveness/communication, and financial stability. Evaluating on price alone tends to miss significant operational risk.</p></details>
       <details class="faq-item"><summary>How often should new vs. established suppliers be reviewed?</summary><p>New suppliers are often reviewed quarterly during the first year, then shifted to a semi-annual or annual cadence once performance stabilizes. Paying close attention to the first two or three orders is especially valuable for catching quality or delivery issues early.</p></details>
@@ -230,6 +232,7 @@
 <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
 </div>
 
+<!--RELATED--><nav class="related-tools" aria-label="Related tools"><h2>Related tools</h2><ul><li><a href="rfq-rfp-rfi-generator.html">RFI, RFP &amp; RFQ Template Generator</a></li><li><a href="invoice-packing-generator.html">Commercial Invoice &amp; Packing List Generator</a></li><li><a href="email-generator.html">Procurement Email Generator</a></li><li><a href="incoterms-responsibility-grid.html">Incoterms 2020 Responsibility Chart</a></li><li><a href="batna-negotiation-matrix.html">BATNA Negotiation Preparation Tool</a></li><li><a href="contract-renewal-calendar.html">Contract Renewal Calendar</a></li></ul></nav><!--/RELATED-->
 <footer style="background:#0F172A;color:#94A3B8;padding:24px;font-size:12px;">
   <div style="max-width:1300px;margin:0 auto;display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;">
     <div style="font-size:15px;font-weight:800;color:#fff;"><svg width="24" height="24" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align:middle;margin-right:9px;flex-shrink:0;"><path d="M20 2.5L36.5 11.5V28.5L20 37.5L3.5 28.5V11.5L20 2.5Z" stroke="url(#cbmGradF)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M20 2.5V20M20 20L36.5 11.5M20 20L3.5 11.5" stroke="url(#cbmGradF)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/></svg>CBM<span style="color:#2563EB;">Lab</span></div>

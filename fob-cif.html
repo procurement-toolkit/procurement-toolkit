@@ -5,9 +5,9 @@
      crossorigin="anonymous"></script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="FOB, CIF, EXW, CFR, DDP 등 인코텀즈 조건별 수입 원가(랜디드 코스트)를 무료로 계산하세요. 관세, 부가세, 환율까지 한 번에 반영한 단가별 원가 계산기.">
-<meta name="keywords" content="FOB 계산기, CIF 계산기, 수입원가 계산기, 랜디드코스트, 인코텀즈, 관세 계산기, 무역 계산기, logistics cost calculator">
-<title>수입 원가 계산기 (FOB·CIF·랜디드코스트) — CBM Lab</title>
+<meta name="description" content="수입원가 계산을 엑셀 없이 무료로. FOB·CIF 차이, 관세·부가세·운임·보험료를 넣으면 랜디드코스트와 개당 원가가 자동 계산됩니다.">
+<meta name="keywords" content="수입원가 계산, 수입원가 계산기, 수입원가 엑셀, FOB CIF 차이, 랜디드코스트, 관세 부가세 계산">
+<title>수입원가 계산기 – FOB·CIF 차이, 랜디드코스트 계산 | CBM Lab</title>
 <link rel="icon" href="favicon.ico" sizes="any">
 <link rel="icon" href="favicon.ico" type="image/x-icon">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
@@ -15,15 +15,15 @@
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="CBM Lab">
 <meta property="og:locale" content="ko_KR">
-<meta property="og:title" content="수입 원가 계산기 (FOB·CIF·랜디드코스트) — CBM Lab">
-<meta property="og:description" content="FOB, CIF, EXW, CFR, DDP 등 인코텀즈 조건별 수입 원가(랜디드 코스트)를 무료로 계산하세요. 관세, 부가세, 환율까지 한 번에 반영한 단가별 원가 계산기.">
+<meta property="og:title" content="수입원가 계산기 – FOB·CIF 차이, 랜디드코스트 계산 | CBM Lab">
+<meta property="og:description" content="수입원가 계산을 엑셀 없이 무료로. FOB·CIF 차이, 관세·부가세·운임·보험료를 넣으면 랜디드코스트와 개당 원가가 자동 계산됩니다.">
 <meta property="og:url" content="https://procurement-toolkit-eight.vercel.app/fob-cif.html">
 <meta property="og:image" content="https://procurement-toolkit-eight.vercel.app/assets/hero-team.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="수입 원가 계산기 (FOB·CIF·랜디드코스트) — CBM Lab">
-<meta name="twitter:description" content="FOB, CIF, EXW, CFR, DDP 등 인코텀즈 조건별 수입 원가(랜디드 코스트)를 무료로 계산하세요. 관세, 부가세, 환율까지 한 번에 반영한 단가별 원가 계산기.">
+<meta name="twitter:title" content="수입원가 계산기 – FOB·CIF 차이, 랜디드코스트 계산 | CBM Lab">
+<meta name="twitter:description" content="수입원가 계산을 엑셀 없이 무료로. FOB·CIF 차이, 관세·부가세·운임·보험료를 넣으면 랜디드코스트와 개당 원가가 자동 계산됩니다.">
 <meta name="twitter:image" content="https://procurement-toolkit-eight.vercel.app/assets/hero-team.jpg">
 
 <link rel="alternate" hreflang="ko" href="https://procurement-toolkit-eight.vercel.app/fob-cif.html">
@@ -535,6 +535,7 @@
   .faq-item summary::before{content:'Q. ';color:var(--accent)}
   .faq-item p{margin-top:8px;font-size:12.5px;color:var(--slate-600);line-height:1.7;padding-left:2px}
   @media (max-width:640px){.faq-wrap{padding:0 16px}}
+.related-tools{max-width:960px;margin:32px auto;padding:0 16px}.related-tools h2{font-size:15px;font-weight:700;margin:0 0 10px}.related-tools ul{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:8px}.related-tools a{display:block;padding:10px 12px;border:1px solid #E2E8F0;border-radius:8px;font-size:13px;color:#1E293B;text-decoration:none}.related-tools a:hover{border-color:#94A3B8}
 </style>
 <script src="https://cdn.amplitude.com/script/d4aa9301e01f4600b5eeb018e160aa7c.js"></script>
 <script>
@@ -600,10 +601,10 @@
       <!-- INCOTERM SELECT -->
       <div class="card">
         <div class="card-header">
-          <div class="card-title">
+          <h2 class="card-title">
             <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M3 7l9-4 9 4-9 4-9-4zm0 0v10l9 4m0-10v10m0-10l9-4v10l-9 4"/></svg>
             무역 조건 (Incoterms)
-          </div>
+          </h2>
         </div>
         <div class="card-body">
           <div class="incoterm-group" role="group" aria-label="인코텀즈 선택">
@@ -620,10 +621,10 @@
       <!-- PRODUCT TABLE -->
       <div class="card">
         <div class="card-header">
-          <div class="card-title">
+          <h2 class="card-title">
             <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 10V11"/></svg>
             상품 내역 (<span id="term-value-label">FOB</span> 단가 기준)
-          </div>
+          </h2>
           <select class="inp" id="currencySelect" onchange="setCurrency(this.value)" style="width:auto;padding:4px 8px;font-size:11px;">
             <option value="USD">통화: 달러(USD)</option>
             <option value="KRW">통화: 원화(KRW)</option>
@@ -664,10 +665,10 @@
       <!-- ADDITIONAL COSTS -->
       <div class="card">
         <div class="card-header">
-          <div class="card-title">
+          <h2 class="card-title">
             <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V6m0 10v2"/><circle cx="12" cy="12" r="9"/></svg>
             추가 비용 &amp; 세금
-          </div>
+          </h2>
         </div>
         <div class="card-body">
           <div class="field-grid">
@@ -722,10 +723,10 @@
       <!-- MARGIN CALCULATOR -->
       <div class="card">
         <div class="card-header">
-          <div class="card-title">
+          <h2 class="card-title">
             <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 7h6m-6 4h6m-7 8h8a2 2 0 002-2V7a2 2 0 00-2-2H8a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
             판매 마진 계산 (선택)
-          </div>
+          </h2>
         </div>
         <div class="card-body">
           <div class="field-label">개당 판매 예정가 <span class="field-suffix">(KRW)</span></div>
@@ -751,10 +752,10 @@
       <div class="result-section">
         <div class="card">
           <div class="card-header">
-            <div class="card-title">
+            <h2 class="card-title">
               <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
               원가 계산 결과
-            </div>
+            </h2>
           </div>
           <div class="card-body">
             <div id="result-lines"></div>
@@ -797,7 +798,7 @@
 
 <div class="faq-wrap">
   <div class="card">
-    <div class="card-header"><div class="card-title">자주 묻는 질문</div></div>
+    <div class="card-header"><h2 class="card-title">자주 묻는 질문</h2></div>
     <div class="card-body">
       <details class="faq-item"><summary>FOB와 CIF는 원가 계산에서 어떻게 다른가요?</summary><p>FOB(Free On Board)는 수출항 선적 시점까지 판매자가 비용을 부담하고, 그 이후 해상운임·보험료는 구매자가 별도로 부담합니다. CIF(Cost, Insurance and Freight)는 판매자가 목적항까지의 운임과 보험료까지 포함해서 가격을 제시합니다. 즉 CIF 단가에는 이미 운임·보험료가 녹아 있어 두 조건의 단가를 그대로 비교하면 안 됩니다.</p></details>
       <details class="faq-item"><summary>관세는 정확히 어떤 금액을 기준으로 부과되나요?</summary><p>한국을 포함한 대부분 국가는 CIF 과세가격(상품가+운임+보험료의 합)을 기준으로 관세를 부과합니다. FOB 조건으로 수입하더라도 관세 계산 시에는 운임·보험료를 더해 CIF 상당액으로 환산해서 과세하는 것이 일반적입니다.</p></details>
@@ -809,7 +810,7 @@
 
 <div class="about-wrap">
   <div class="card">
-    <div class="card-header"><div class="card-title">랜디드 코스트(수입원가)란?</div></div>
+    <div class="card-header"><h2 class="card-title">랜디드 코스트(수입원가)란?</h2></div>
     <div class="card-body about-section">
       <h3>왜 상품가만 보고 원가를 판단하면 안 되나요?</h3>
       <p>상품가는 전체 수입원가의 일부일 뿐입니다. 국제운임, 보험료, 관세, 부가세, 통관수수료, 국내 운송비까지 다 더해야 "내 창고에 실제로 들어오는 개당 원가"를 알 수 있습니다. 상품가만 보고 마진을 계산하면, 실제로는 예상보다 훨씬 낮은 마진으로 판매하고 있는 경우가 흔합니다. 특히 Incoterms 조건(FOB인지 CIF인지)에 따라 운임·보험료가 이미 포함됐는지가 달라서, 조건이 다른 견적끼리 단가만 비교하는 건 위험합니다.</p>
@@ -837,7 +838,7 @@
 
 <div class="main" style="max-width:1100px;margin:0 auto;padding:0 24px 40px;">
   <div class="card">
-    <div class="card-header"><div class="card-title">왜 인코텀즈별 원가 계산이 필요한가</div></div>
+    <div class="card-header"><h2 class="card-title">왜 인코텀즈별 원가 계산이 필요한가</h2></div>
     <div class="card-body" style="font-size:12.5px;color:var(--slate-600);line-height:1.7;">
 <p>수입 단가만 보고 원가를 판단하면, 관세·부가세·운임을 더한 실제 도착 원가와 큰 차이가 나는 경우가 많습니다. 인코텀즈 조건에 따라 매수인이 부담해야 하는 항목이 달라지기 때문입니다.</p>
 <p><b>실무 활용법:</b> 서로 다른 인코텀즈 조건으로 온 여러 견적을 같은 기준(수입 원가)으로 환산해서 비교하거나, 품목별로 관세율이 다른 다품목 수입 건에서는 품목별 관세 모드를 활용해 정확한 원가를 산출할 때 유용합니다.</p>
@@ -863,6 +864,7 @@
   </div>
 </div>
 
+<!--RELATED--><nav class="related-tools" aria-label="함께 쓰는 관련 도구"><h2>함께 쓰는 관련 도구</h2><ul><li><a href="fx-exposure-calculator.html">환노출(FX Exposure) 계산기</a></li><li><a href="currency-hedging-calculator.html">환헤지 비용 계산기</a></li><li><a href="cost-of-quality-calculator.html">품질비용(Cost of Quality) 계산기</a></li><li><a href="personal-duty-calculator.html">해외직구 관부가세 계산기</a></li><li><a href="leadtime-calculator.html">선적 리드타임 계산기</a></li><li><a href="demurrage-detention-calculator.html">디머리지·디텐션 비용 계산기</a></li></ul></nav><!--/RELATED-->
 <footer>
   <div class="footer-inner">
     <div>

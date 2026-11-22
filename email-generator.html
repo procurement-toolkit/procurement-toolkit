@@ -166,6 +166,7 @@
   .faq-item summary::before{content:'Q. ';color:var(--accent)}
   .faq-item p{margin-top:8px;font-size:12.5px;color:var(--slate-600);line-height:1.7;padding-left:2px}
   @media (max-width:640px){.faq-wrap{padding:0 16px}}
+.related-tools{max-width:960px;margin:32px auto;padding:0 16px}.related-tools h2{font-size:15px;font-weight:700;margin:0 0 10px}.related-tools ul{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:8px}.related-tools a{display:block;padding:10px 12px;border:1px solid #E2E8F0;border-radius:8px;font-size:13px;color:#1E293B;text-decoration:none}.related-tools a:hover{border-color:#94A3B8}
 </style>
 <script src="https://cdn.amplitude.com/script/d4aa9301e01f4600b5eeb018e160aa7c.js"></script>
 <script>
@@ -228,10 +229,10 @@
     <section aria-label="이메일 정보 입력">
       <div class="card">
         <div class="card-header">
-          <div class="card-title">
+          <h2 class="card-title">
             <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
             이메일 종류
-          </div>
+          </h2>
         </div>
         <div class="card-body">
           <div class="template-group" id="template-group">
@@ -246,10 +247,10 @@
 
       <div class="card">
         <div class="card-header">
-          <div class="card-title">
+          <h2 class="card-title">
             <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
             기본 정보
-          </div>
+          </h2>
         </div>
         <div class="card-body">
           <div class="field-row">
@@ -298,10 +299,10 @@
     <aside aria-label="생성된 이메일">
       <div class="card">
         <div class="card-header">
-          <div class="card-title">
+          <h2 class="card-title">
             <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
             생성된 이메일
-          </div>
+          </h2>
         </div>
         <div class="card-body">
           <div class="output-box" id="output"></div>
@@ -325,7 +326,7 @@
   
 <div class="faq-wrap">
   <div class="card">
-    <div class="card-header"><div class="card-title">자주 묻는 질문</div></div>
+    <div class="card-header"><h2 class="card-title">자주 묻는 질문</h2></div>
     <div class="card-body">
       <details class="faq-item"><summary>영문 비즈니스 이메일 인사말은 상대를 모를 때 어떻게 써야 하나요?</summary><p>받는 사람 이름을 모른다면 'Dear Sir/Madam,'이 무난합니다. 이름은 알지만 직함을 모른다면 'Dear Mr./Ms. [성],'으로 쓰는 것이 일반적입니다.</p></details>
       <details class="faq-item"><summary>납기 지연 문의 이메일은 어떻게 써야 관계를 해치지 않나요?</summary><p>상대를 비난하는 어조 대신, 현재 상황을 묻고 향후 일정을 확인하는 방식으로 접근하는 것이 좋습니다. 예: 'Could you please confirm the current status and provide an updated shipping schedule?'처럼 요청형 문장을 쓰면 정중하면서도 명확하게 전달됩니다.</p></details>
@@ -352,7 +353,7 @@
 
 <div class="main" style="max-width:1100px;margin:0 auto;padding:0 24px 40px;">
   <div class="card">
-    <div class="card-header"><div class="card-title">왜 템플릿이 필요한가</div></div>
+    <div class="card-header"><h2 class="card-title">왜 템플릿이 필요한가</h2></div>
     <div class="card-body" style="font-size:12.5px;color:var(--slate-600);line-height:1.7;">
 <p>영어로 업무 메일을 쓸 때마다 문장을 새로 고민하면 시간이 오래 걸리고, 상황에 안 맞는 표현으로 오해가 생기기도 합니다. 견적 요청, 클레임 제기처럼 상황별로 관례적인 표현이 있는 경우가 많습니다.</p>
 <p><b>실무 활용법:</b> 신규 공급업체에 견적을 요청하거나 납기 지연 시 정중하면서도 명확하게 문의하는 메일이 필요할 때 활용하면, 상황에 맞는 기본 틀을 빠르게 만들고 세부 내용만 다듬어 바로 발송할 수 있습니다.</p>
@@ -360,6 +361,7 @@
   </div>
 </div>
 
+<!--RELATED--><nav class="related-tools" aria-label="함께 쓰는 관련 도구"><h2>함께 쓰는 관련 도구</h2><ul><li><a href="supplier-scorecard.html">공급업체 평가 스코어카드 생성기</a></li><li><a href="rfx-generator.html">RFI·RFP·RFQ 영문 템플릿 생성기</a></li><li><a href="invoice-packing-generator.html">인보이스 &amp; 패킹리스트 생성기</a></li><li><a href="make-vs-buy-matrix.html">Make-vs-Buy 의사결정 매트릭스</a></li><li><a href="incoterms-responsibility-grid.html">Incoterms 2020 책임범위 비교표</a></li><li><a href="batna-negotiation-matrix.html">BATNA 협상준비 매트릭스</a></li></ul></nav><!--/RELATED-->
 <footer>
   <div class="footer-inner">
     <div>
