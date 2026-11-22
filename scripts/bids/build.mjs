@@ -25,7 +25,7 @@ const svg = d => `<svg viewBox="0 -960 960 960" aria-hidden="true"><path d="${d}
 function desc(x, t) {
   const s = SRC[x.source]?.[t.lang] || x.source;
   const kw = [...new Set(String(x.title).toLowerCase().replace(/[^\p{L}\p{N} ]/gu, ' ').split(/\s+/).filter(w => w.length > 3))].slice(0, 6).join(', ');
-  if (t.lang === 'ko') return `${x.org ? x.org + '이(가) ' : ''}${x.country ? x.country + '에서 ' : ''}${s}에 공고한 입찰·조달 건입니다.${x.published ? ' 공고일 ' + x.published + '.' : ''}${x.deadline ? ' 제출 마감 ' + x.deadline + '.' : ''}${x.category ? ' 유형: ' + x.category + '.' : ''}${kw ? ' 관련 키워드: ' + kw + '.' : ''}`;
+  if (t.lang === 'ko') return `${s}에 공고된 입찰·조달 건입니다.${x.org ? ' 발주기관: ' + x.org + '.' : ''}${x.country ? ' 국가: ' + x.country + '.' : ''}${x.published ? ' 공고일 ' + x.published + '.' : ''}${x.deadline ? ' 제출 마감 ' + x.deadline + '.' : ''}${x.category ? ' 유형: ' + x.category + '.' : ''}${kw ? ' 관련 키워드: ' + kw + '.' : ''}`;
   return `Tender notice${x.org ? ' from ' + x.org : ''}${x.country ? ' (' + x.country + ')' : ''} listed on ${s}.${x.published ? ' Published ' + x.published + '.' : ''}${x.deadline ? ' Submission deadline ' + x.deadline + '.' : ''}${x.category ? ' Type: ' + x.category + '.' : ''}${kw ? ' Keywords: ' + kw + '.' : ''}`;
 }
 function row(x, t) {
@@ -40,7 +40,9 @@ function page(t, list, srcKey) {
   const desc = t.desc(list.length);
   const url = `${BASE}/${file}`;
   const sorted = [...list].sort((a, b) => (b.published || '').localeCompare(a.published || '') || (a.deadline || '9999').localeCompare(b.deadline || '9999'));
-  const shown = sorted.slice(0, 300);
+  let shown;
+  if (srcKey) shown = sorted.slice(0, 600);
+  else { const by = {}; for (const x of sorted) (by[x.source] ||= []).push(x); const ks = Object.keys(by); shown = []; for (let i = 0; shown.length < 900 && ks.some(k => by[k][i]); i++) for (const k of ks) if (by[k][i]) shown.push(by[k][i]); shown.sort((a, b) => (b.published || '').localeCompare(a.published || '')); }
   const countries = [...new Set(list.map(x => x.country).filter(Boolean))].sort();
   const ld = { '@context': 'https://schema.org', '@type': 'CollectionPage', name: title, description: desc, url, inLanguage: t.lang, dateModified: today, mainEntity: { '@type': 'ItemList', numberOfItems: list.length, itemListElement: shown.slice(0, 50).map((x, i) => ({ '@type': 'ListItem', position: i + 1, name: x.title, url: x.url })) } };
   const sources = Object.keys(SRC).filter(k => data.some(x => x.source === k));
