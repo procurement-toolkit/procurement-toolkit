@@ -50,15 +50,17 @@ await src('ungm', async () => {
   console.log('UNGM sample', sortF, pages[0].slice(0, 1500).replace(/\s+/g, ' '));
   for (let p = 1; p < 40; p++) { const rr = await post(p, sortF); if (!rr.ok) break; const tx = await rr.text(); if (!/data-noticeid/.test(tx)) break; pages.push(tx); }
   const t = pages.join('\n');
-  const MON = { Jan: 0, Feb: 1, Mar: 2, Apr: 3, May: 4, Jun: 5, Jul: 6, Aug: 7, Sep: 8, Oct: 9, Nov: 10, Dec: 11 };
-  const d8 = v => { const m = String(v || '').match(/(\d{2})-(\w{3})-(\d{4})/); return m ? new Date(Date.UTC(+m[3], MON[m[2]], +m[1])).toISOString().slice(0, 10) : ''; };
+  const MON = { jan: 0, feb: 1, mar: 2, apr: 3, may: 4, jun: 5, jul: 6, aug: 7, sep: 8, oct: 9, nov: 10, dec: 11 };
+  const d8 = v => { const m = String(v || '').match(/(\d{1,2})[-\s](\w{3})\w*[-\s](\d{4})/); if (!m || MON[m[2].toLowerCase()] === undefined) return ''; return new Date(Date.UTC(+m[3], MON[m[2].toLowerCase()], +m[1])).toISOString().slice(0, 10); };
+  const strip = h => h.replace(/<svg[\s\S]*?<\/svg>/g, '').replace(/<script[\s\S]*?<\/script>/g, '');
   const out = [];
-  for (const blk of t.split(/(?=data-noticeid=)/).slice(1)) {
+  for (const blk of t.split(/(?=<div[^>]*data-noticeid=)/).slice(1)) {
     const id = (blk.match(/data-noticeid="(\d+)"/) || [])[1]; if (!id) continue;
-    const cells = [...blk.matchAll(/<span[^>]*>([\s\S]*?)<\/span>/g)].map(x => x[1].replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim()).filter(Boolean);
-    const dates = [...blk.matchAll(/\d{2}-\w{3}-\d{4}/g)].map(x => d8(x[0]));
-    const title = (blk.match(/ungm-title[^>]*>([\s\S]*?)<\/(?:span|div|a)>/) || [])[1]?.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim() || cells[0];
-    out.push({ id: 'ungm-' + id, source: 'ungm', title, org: cells.find((c, i) => i > 0 && !/\d{2}-\w{3}-\d{4}/.test(c) && c !== title) || 'UN', country: cells[cells.length - 1] || '', category: 'UN notice', published: dates.length > 1 ? dates[1] : '', deadline: dates[0] || '', value: '', url: 'https://www.ungm.org/Public/Notice/' + id });
+    const cells = [...strip(blk).matchAll(/role="cell"[^>]*>([\s\S]*?)(?=<div[^>]*role="cell"|$)/g)].map(x => x[1].replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim());
+    if (out.length === 0) console.log('UNGM cells', JSON.stringify(cells).slice(0, 900));
+    const dates = cells.map(d8).filter(Boolean);
+    const texts = cells.filter(c => c && !d8(c) && c.length > 3);
+    out.push({ id: 'ungm-' + id, source: 'ungm', title: texts[0] || '', org: texts[1] || 'UN', country: texts[texts.length - 1] || '', category: 'UN notice', published: dates[1] || dates[0] || '', deadline: dates[0] || '', value: '', url: 'https://www.ungm.org/Public/Notice/' + id });
   }
   return out.filter(x => x.title && (!x.deadline || x.deadline >= today));
 });
