@@ -1,0 +1,18 @@
+{
+ "at": "2026-11-22",
+ "total": 4488,
+ "bySource": {
+  "boamp-fr": 600,
+  "ungm": 435,
+  "undp": 549,
+  "world-bank": 49,
+  "canada-buys": 881,
+  "uk": 3,
+  "find-tender-uk": 55,
+  "eu-ted": 1019,
+  "secop-co": 897
+ },
+ "failedSources": [
+  "korea-g2b: HTTP 403 {\n  \"OpenAPI_ServiceResponse\": {\n    \"cmmMsgHeader\": {\n      \"errMsg\": \"SERVICE_KEY_IS_NOT_REGISTERED_ERROR\",\n      \"returnAuthMsg\": \"등록되지 않은 서비스키\",\n "
+ ]
+}
