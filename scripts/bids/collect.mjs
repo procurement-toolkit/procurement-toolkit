@@ -89,6 +89,31 @@ await src('undp', async () => {
   console.log('UNDP parsed', out.length, JSON.stringify(out[0] || {}).slice(0, 300));
   return out;
 });
+await src('boamp-fr', async () => {
+  let out = [];
+  for (let p = 0; p < 6; p++) {
+    const j = await getJSON(`https://boamp-datadila.opendatasoft.com/api/explore/v2.1/catalog/datasets/boamp/records?limit=100&offset=${p * 100}&order_by=dateparution%20desc&where=${encodeURIComponent(`nature="APPEL_OFFRE" AND datelimitereponse>=date'${today}'`)}`);
+    const r = j.results || []; if (p === 0) console.log('BOAMP keys', Object.keys(r[0] || {}).join(','));
+    out.push(...r.map(x => ({ id: 'fr-' + x.idweb, source: 'boamp-fr', title: txt(x.objet), org: txt(x.nomacheteur), country: 'France', category: txt(x.famille_libelle), published: iso(x.dateparution), deadline: iso(String(x.datelimitereponse || '').slice(0, 10)), value: '', url: `https://www.boamp.fr/pages/avis/?q=idweb:${x.idweb}` })));
+    if (r.length < 100) break;
+  }
+  return out.filter(x => x.title);
+});
+await src('find-tender-uk', async () => {
+  const from = new Date(Date.now() - 10 * 864e5).toISOString().slice(0, 19);
+  let u = `https://www.find-tender.service.gov.uk/api/1.0/ocdsReleasePackages?stages=tender&limit=100&updatedFrom=${from}`, out = [];
+  for (let p = 0; p < 4 && u; p++) {
+    const j = await getJSON(u, { headers: UA }); const rel = j.releases || []; if (p === 0) console.log('FTS sample', JSON.stringify({ id: rel[0]?.id, ocid: rel[0]?.ocid, tag: rel[0]?.tag, tender: { status: rel[0]?.tender?.status, period: rel[0]?.tender?.tenderPeriod } }), 'links', JSON.stringify(j.links || {}).slice(0, 200));
+    out.push(...rel.filter(r => (r.tag || []).includes('tender') && r.tender?.status === 'active').map(r => ({ id: 'fts-' + r.id, source: 'find-tender-uk', title: txt(r.tender?.title), org: txt(r.buyer?.name), country: 'United Kingdom', category: txt(r.tender?.mainProcurementCategory) || 'Tender notice', published: iso(first(r.date, r.publishedDate)), deadline: iso(r.tender?.tenderPeriod?.endDate), value: r.tender?.value?.amount ? `${Math.round(r.tender.value.amount).toLocaleString('en-GB')} ${r.tender.value.currency || 'GBP'}` : '', url: `https://www.find-tender.service.gov.uk/Notice/${String(r.id).split('-').slice(0, 2).join('-')}` })));
+    u = j.links?.next || null;
+  }
+  return out.filter(x => x.title);
+});
+await src('secop-co', async () => {
+  const r = await getJSON('https://www.datos.gov.co/resource/p6dx-8zbt.json?$limit=1000&$order=fecha_de_publicacion_del%20DESC');
+  console.log('SECOP keys', Object.keys(r[0] || {}).join(','), 'estados', JSON.stringify([...new Set(r.map(x => x.estado_del_procedimiento))]), 'fases', JSON.stringify([...new Set(r.map(x => x.fase))]).slice(0, 300));
+  return r.filter(x => !/si/i.test(x.adjudicado || 'no') && /abiert|publicad|recib/i.test(`${x.estado_del_procedimiento} ${x.fase} ${x.estado_de_apertura_del_proceso}`)).map(x => ({ id: 'co-' + x.id_del_proceso, source: 'secop-co', title: txt(x.nombre_del_procedimiento), org: txt(x.entidad), country: 'Colombia', category: txt(first(x.tipo_de_contrato, x.modalidad_de_contratacion)), published: iso(String(x.fecha_de_publicacion_del || '').slice(0, 10)), deadline: '', value: x.precio_base ? `${Number(x.precio_base).toLocaleString('en-GB')} COP` : '', url: txt(x.urlproceso?.url || x.urlproceso) || 'https://www.colombiacompra.gov.co' })).filter(x => x.title);
+});
 await src('korea-g2b', async () => {
   let key = process.env.DATA_GO_KR_KEY; if (!key) throw new Error('DATA_GO_KR_KEY not set');
   if (/%[0-9A-Fa-f]{2}/.test(key)) key = decodeURIComponent(key);   // secret may hold the URL-encoded key; decode so it is not double-encoded
