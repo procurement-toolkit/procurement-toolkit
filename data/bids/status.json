@@ -16,7 +16,7 @@
  },
  "ungm": {
   "ok": false,
-  "error": "HTTP 400 Bad Request tok=true cookie=true",
+  "error": "Invalid time value",
   "at": "2026-11-22"
  },
  "au-tenders": {
