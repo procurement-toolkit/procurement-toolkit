@@ -1,0 +1,608 @@
+{
+ "https://procurement-toolkit-eight.vercel.app/": {
+  "verdict": "NEUTRAL",
+  "coverage": "Not found (404)",
+  "lastCrawl": "2026-11-20T18:59:38Z",
+  "checked": "2026-11-22"
+ },
+ "https://procurement-toolkit-eight.vercel.app/en/index.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-22"
+ },
+ "https://procurement-toolkit-eight.vercel.app/en/kraljic-matrix.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-22"
+ },
+ "https://procurement-toolkit-eight.vercel.app/en/supplier-preferencing-matrix.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-22"
+ },
+ "https://procurement-toolkit-eight.vercel.app/fx-exposure-calculator.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-22"
+ },
+ "https://procurement-toolkit-eight.vercel.app/en/fx-exposure-calculator.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-22"
+ },
+ "https://procurement-toolkit-eight.vercel.app/en/supplier-risk-matrix.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-22"
+ },
+ "https://procurement-toolkit-eight.vercel.app/rvc-calculator.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-22"
+ },
+ "https://procurement-toolkit-eight.vercel.app/en/rvc-calculator.html": {
+  "verdict": "PASS",
+  "coverage": "Submitted and indexed",
+  "lastCrawl": "2026-09-16T07:51:38Z",
+  "checked": "2026-11-22"
+ },
+ "https://procurement-toolkit-eight.vercel.app/contract-renewal-calendar.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-22"
+ },
+ "https://procurement-toolkit-eight.vercel.app/en/contract-renewal-calendar.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-22"
+ },
+ "https://procurement-toolkit-eight.vercel.app/hs-code-guide.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-22"
+ },
+ "https://procurement-toolkit-eight.vercel.app/en/hs-code-guide.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-22"
+ },
+ "https://procurement-toolkit-eight.vercel.app/en/directional-policy-matrix.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-22"
+ },
+ "https://procurement-toolkit-eight.vercel.app/aliexpress-temu-guide.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "Not found (404)",
+  "lastCrawl": "2026-11-21T12:30:57Z",
+  "checked": "2026-11-22"
+ },
+ "https://procurement-toolkit-eight.vercel.app/global-holiday-calendar.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-22"
+ },
+ "https://procurement-toolkit-eight.vercel.app/en/global-holiday-calendar.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-22"
+ },
+ "https://procurement-toolkit-eight.vercel.app/make-vs-buy-matrix.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-22"
+ },
+ "https://procurement-toolkit-eight.vercel.app/en/make-vs-buy-matrix.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-22"
+ },
+ "https://procurement-toolkit-eight.vercel.app/batna-negotiation-matrix.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-22"
+ },
+ "https://procurement-toolkit-eight.vercel.app/en/batna-negotiation-matrix.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-22"
+ },
+ "https://procurement-toolkit-eight.vercel.app/payment-terms-cost-calculator.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-22"
+ },
+ "https://procurement-toolkit-eight.vercel.app/en/payment-terms-cost-calculator.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-22"
+ },
+ "https://procurement-toolkit-eight.vercel.app/rfq-comparison-tool.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-22"
+ },
+ "https://procurement-toolkit-eight.vercel.app/en/rfq-comparison-tool.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-22"
+ },
+ "https://procurement-toolkit-eight.vercel.app/demurrage-detention-calculator.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-22"
+ },
+ "https://procurement-toolkit-eight.vercel.app/en/demurrage-detention-calculator.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-22"
+ },
+ "https://procurement-toolkit-eight.vercel.app/purchase-price-variance-calculator.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-22"
+ },
+ "https://procurement-toolkit-eight.vercel.app/en/purchase-price-variance-calculator.html": {
+  "verdict": "PASS",
+  "coverage": "Submitted and indexed",
+  "lastCrawl": "2026-09-16T10:47:56Z",
+  "checked": "2026-11-22"
+ },
+ "https://procurement-toolkit-eight.vercel.app/oee-calculator.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-22"
+ },
+ "https://procurement-toolkit-eight.vercel.app/en/oee-calculator.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-22"
+ },
+ "https://procurement-toolkit-eight.vercel.app/abc-inventory-analysis.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-22"
+ },
+ "https://procurement-toolkit-eight.vercel.app/en/abc-inventory-analysis.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-22"
+ },
+ "https://procurement-toolkit-eight.vercel.app/spend-analysis-dashboard.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-22"
+ },
+ "https://procurement-toolkit-eight.vercel.app/en/spend-analysis-dashboard.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-22"
+ },
+ "https://procurement-toolkit-eight.vercel.app/sourcing-location-comparator.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-22"
+ },
+ "https://procurement-toolkit-eight.vercel.app/en/sourcing-location-comparator.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-22"
+ },
+ "https://procurement-toolkit-eight.vercel.app/en/landed-cost-calculator.html": {
+  "verdict": "PASS",
+  "coverage": "Submitted and indexed",
+  "lastCrawl": "2026-09-16T04:39:35Z",
+  "checked": "2026-11-22"
+ },
+ "https://procurement-toolkit-eight.vercel.app/en/cbm-calculator.html": {
+  "verdict": "PASS",
+  "coverage": "Submitted and indexed",
+  "lastCrawl": "2026-09-16T04:53:21Z",
+  "checked": "2026-11-22"
+ },
+ "https://procurement-toolkit-eight.vercel.app/en/incoterms-guide.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-22"
+ },
+ "https://procurement-toolkit-eight.vercel.app/en/rfq-rfp-rfi-generator.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-22"
+ },
+ "https://procurement-toolkit-eight.vercel.app/en/should-cost-calculator.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-22"
+ },
+ "https://procurement-toolkit-eight.vercel.app/en/tco-calculator.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-22"
+ },
+ "https://procurement-toolkit-eight.vercel.app/en/supplier-scorecard.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-22"
+ },
+ "https://procurement-toolkit-eight.vercel.app/en/eoq-safety-stock-calculator.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-22"
+ },
+ "https://procurement-toolkit-eight.vercel.app/en/container-loading-calculator.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-22"
+ },
+ "https://procurement-toolkit-eight.vercel.app/en/lead-time-calculator.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-22"
+ },
+ "https://procurement-toolkit-eight.vercel.app/en/cost-structure-calculator.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-22"
+ },
+ "https://procurement-toolkit-eight.vercel.app/en/invoice-packing-generator.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-22"
+ },
+ "https://procurement-toolkit-eight.vercel.app/en/courier-guide.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-22"
+ },
+ "https://procurement-toolkit-eight.vercel.app/en/payment-terms-guide.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "Not found (404)",
+  "lastCrawl": "2026-11-10T23:13:23Z",
+  "checked": "2026-11-22"
+ },
+ "https://procurement-toolkit-eight.vercel.app/en/fta-guide.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-22"
+ },
+ "https://procurement-toolkit-eight.vercel.app/en/email-generator.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-22"
+ },
+ "https://procurement-toolkit-eight.vercel.app/en/market-index-hub.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-22"
+ },
+ "https://procurement-toolkit-eight.vercel.app/en/exam-calendar.html": {
+  "verdict": "PASS",
+  "coverage": "Submitted and indexed",
+  "lastCrawl": "2026-09-06T09:21:08Z",
+  "checked": "2026-11-22"
+ },
+ "https://procurement-toolkit-eight.vercel.app/en/worldclock.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-22"
+ },
+ "https://procurement-toolkit-eight.vercel.app/en/consulting.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-22"
+ },
+ "https://procurement-toolkit-eight.vercel.app/en/privacy.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-22"
+ },
+ "https://procurement-toolkit-eight.vercel.app/cbm.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "Not found (404)",
+  "lastCrawl": "2026-10-29T18:50:57Z",
+  "checked": "2026-11-22"
+ },
+ "https://procurement-toolkit-eight.vercel.app/fob-cif.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "Not found (404)",
+  "lastCrawl": "2026-11-16T13:56:45Z",
+  "checked": "2026-11-22"
+ },
+ "https://procurement-toolkit-eight.vercel.app/personal-duty-calculator.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-22"
+ },
+ "https://procurement-toolkit-eight.vercel.app/customs-code-guide.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-22"
+ },
+ "https://procurement-toolkit-eight.vercel.app/iherb-guide.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-22"
+ },
+ "https://procurement-toolkit-eight.vercel.app/amazon-guide.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-22"
+ },
+ "https://procurement-toolkit-eight.vercel.app/list-clearance-exclusion-guide.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-22"
+ },
+ "https://procurement-toolkit-eight.vercel.app/combined-taxation-guide.html": {
+  "verdict": "PASS",
+  "coverage": "Submitted and indexed",
+  "lastCrawl": "2026-09-15T22:58:12Z",
+  "checked": "2026-11-22"
+ },
+ "https://procurement-toolkit-eight.vercel.app/forwarding-guide.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-22"
+ },
+ "https://procurement-toolkit-eight.vercel.app/scam-prevention-guide.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-22"
+ },
+ "https://procurement-toolkit-eight.vercel.app/guide-hub.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "Not found (404)",
+  "lastCrawl": "2026-11-15T12:51:54Z",
+  "checked": "2026-11-22"
+ },
+ "https://procurement-toolkit-eight.vercel.app/global-de-minimis-guide.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-22"
+ },
+ "https://procurement-toolkit-eight.vercel.app/en/global-de-minimis-guide.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-22"
+ },
+ "https://procurement-toolkit-eight.vercel.app/leadtime-calculator.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-22"
+ },
+ "https://procurement-toolkit-eight.vercel.app/cost-structure-calculator.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-22"
+ },
+ "https://procurement-toolkit-eight.vercel.app/inventory-planning-calculator.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-22"
+ },
+ "https://procurement-toolkit-eight.vercel.app/container-loading-visualizer.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-22"
+ },
+ "https://procurement-toolkit-eight.vercel.app/should-cost-calculator.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-22"
+ },
+ "https://procurement-toolkit-eight.vercel.app/tco-calculator.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-22"
+ },
+ "https://procurement-toolkit-eight.vercel.app/supplier-scorecard.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-22"
+ },
+ "https://procurement-toolkit-eight.vercel.app/payment-terms-guide.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "Not found (404)",
+  "lastCrawl": "2026-10-13T09:51:51Z",
+  "checked": "2026-11-22"
+ },
+ "https://procurement-toolkit-eight.vercel.app/email-generator.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-22"
+ },
+ "https://procurement-toolkit-eight.vercel.app/invoice-packing-generator.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-22"
+ },
+ "https://procurement-toolkit-eight.vercel.app/rfx-generator.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-22"
+ },
+ "https://procurement-toolkit-eight.vercel.app/incoterms-guide.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-22"
+ },
+ "https://procurement-toolkit-eight.vercel.app/fta-guide.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-22"
+ },
+ "https://procurement-toolkit-eight.vercel.app/courier-guide.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-22"
+ },
+ "https://procurement-toolkit-eight.vercel.app/market-index-hub.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-22"
+ },
+ "https://procurement-toolkit-eight.vercel.app/exam-calendar.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "Not found (404)",
+  "lastCrawl": "2026-10-12T17:41:16Z",
+  "checked": "2026-11-22"
+ },
+ "https://procurement-toolkit-eight.vercel.app/worldclock.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-22"
+ },
+ "https://procurement-toolkit-eight.vercel.app/consulting.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-22"
+ },
+ "https://procurement-toolkit-eight.vercel.app/privacy.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "Not found (404)",
+  "lastCrawl": "2026-11-18T12:26:22Z",
+  "checked": "2026-11-22"
+ },
+ "https://procurement-toolkit-eight.vercel.app/cost-of-quality-calculator.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-22"
+ },
+ "https://procurement-toolkit-eight.vercel.app/en/cost-of-quality-calculator.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-22"
+ },
+ "https://procurement-toolkit-eight.vercel.app/currency-hedging-calculator.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-22"
+ },
+ "https://procurement-toolkit-eight.vercel.app/en/currency-hedging-calculator.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-22"
+ },
+ "https://procurement-toolkit-eight.vercel.app/incoterms-responsibility-grid.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-22"
+ },
+ "https://procurement-toolkit-eight.vercel.app/en/incoterms-responsibility-grid.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-22"
+ },
+ "https://procurement-toolkit-eight.vercel.app/data-radar-hub.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-22"
+ },
+ "https://procurement-toolkit-eight.vercel.app/korea-sourcing-desk.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-22"
+ },
+ "https://procurement-toolkit-eight.vercel.app/korea-supplier-intelligence.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-22"
+ },
+ "https://procurement-toolkit-eight.vercel.app/k-nsf-certification-guide.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-22"
+ },
+ "https://procurement-toolkit-eight.vercel.app/landed-cost-calculator.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-22"
+ }
+}
