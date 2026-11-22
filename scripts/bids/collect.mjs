@@ -46,7 +46,7 @@ await src('ungm', async () => {
   const r = await fetch('https://www.ungm.org/Public/Notice/Search', { method: 'POST', headers: { ...UA, 'content-type': 'application/json; charset=UTF-8', 'x-requested-with': 'XMLHttpRequest', referer: 'https://www.ungm.org/Public/Notice', origin: 'https://www.ungm.org', cookie, __RequestVerificationToken: tok, RequestVerificationToken: tok }, body: JSON.stringify(body) });
   const t = await r.text();
   if (!r.ok) {
-    for (const b of [...html.matchAll(/src="(\/bundles\/[^"]+)"/g)].map(m => m[1])) { const x = await (await fetch('https://www.ungm.org' + b, { headers: UA })).text(); const i = x.indexOf('antiForgeryHeaders'); if (i > -1) { console.log('UNGM antiforgery', x.slice(i, i + 500).replace(/\s+/g, ' ')); break; } }
+    for (const b of [...html.matchAll(/src="(\/bundles\/[^"]+)"/g)].map(m => m[1])) { const x = await (await fetch('https://www.ungm.org' + b, { headers: UA })).text(); const i = x.indexOf('NoticeSearch.prototype.BuildOptions'); if (i > -1) { console.log('UNGM opts', x.slice(i, i + 1800).replace(/\s+/g, ' ')); break; } }
     throw new Error('HTTP ' + r.status + ' ' + t.slice(0, 120) + ' tok=' + !!tok + ' cookie=' + !!cookie);
   }
   console.log('UNGM sample', t.slice(0, 1800).replace(/\s+/g, ' '));
