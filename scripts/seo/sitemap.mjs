@@ -3,7 +3,7 @@ import fs from 'fs';
 import { execSync } from 'child_process';
 const lm = f => { try { return execSync(`git log -1 --format=%cs -- "${f}"`, { encoding: 'utf8' }).trim(); } catch { return ''; } };
 const BASE = 'https://procurement-toolkit-eight.vercel.app/';
-const GEN_DIRS = ['recalls'];             // evergreen generated sections (every .html inside is indexable)
+const GEN_DIRS = ['recalls', 'bids', 'en/bids'];             // evergreen generated sections (every .html inside is indexable)
 const s = fs.readFileSync('sitemap.xml', 'utf8');
 const meta = new Map([...s.matchAll(/<url><loc>([^<]+)<\/loc>(.*?)<\/url>/g)].map(m => [m[1], m[2]]));
 const out = new Map();

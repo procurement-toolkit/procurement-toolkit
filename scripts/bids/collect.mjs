@@ -84,7 +84,7 @@ await src('undp', async () => {
   for (const m of h.matchAll(/<a href="(view_(?:notice|negotiation)\.cfm\?[^"]+)"[^>]*vacanciesTableLink[^>]*>([\s\S]*?)<\/a>/g)) {
     const f = {}; for (const c of m[2].matchAll(/cell__label">\s*([^<]+?)\s*<\/div>\s*<span>([\s\S]*?)<\/span>/g)) f[c[1].trim()] = c[2].replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
     if (!f.Title) continue;
-    out.push({ id: 'undp-' + m[1].replace(/\D/g, ''), source: 'undp', title: f.Title, org: f['UNDP Office/Country'] || 'UNDP', country: ((f['UNDP Office/Country'] || '').split(' - ')[1] || '').split('/')[0].trim(), category: f.Process || 'UNDP notice', published: d8(f.Posted), deadline: d8(f.Deadline), value: '', url: 'https://procurement-notices.undp.org/' + m[1] });
+    out.push({ id: 'undp-' + m[1].replace(/\D/g, ''), source: 'undp', title: f.Title, org: f['UNDP Office/Country'] || 'UNDP', country: (() => { const o = f['UNDP Office/Country'] || ''; const x = (o.includes('/') ? o.split('/').pop() : (o.split(' - ')[1] || '')).trim().toLowerCase(); return x.replace(/\b\w/g, ch => ch.toUpperCase()); })(), category: f.Process || 'UNDP notice', published: d8(f.Posted), deadline: d8(f.Deadline), value: '', url: 'https://procurement-notices.undp.org/' + m[1] });
   }
   console.log('UNDP parsed', out.length, JSON.stringify(out[0] || {}).slice(0, 300));
   return out;
@@ -107,7 +107,7 @@ const path = 'data/bids/open.json';
 const prev = fs.existsSync(path) ? JSON.parse(fs.readFileSync(path, 'utf8')) : [];
 const m = new Map(); for (const x of [...prev, ...all]) m.set(x.id, x);
 let out = [...m.values()].filter(x => !x.deadline || x.deadline >= today);
-const cap = {}; out = out.sort((a, b) => (b.published || '').localeCompare(a.published || '')).filter(x => (cap[x.source] = (cap[x.source] || 0) + 1) <= 400);
+const cap = {}; out = out.sort((a, b) => (b.published || '').localeCompare(a.published || '')).filter(x => (cap[x.source] = (cap[x.source] || 0) + 1) <= 1500);
 fs.writeFileSync(path, JSON.stringify(out));
 const sp = 'data/bids/status.json'; const old = fs.existsSync(sp) ? JSON.parse(fs.readFileSync(sp, 'utf8')) : {};
 fs.writeFileSync(sp, JSON.stringify({ ...old, ...Object.fromEntries(Object.entries(status).map(([k, v]) => [k, v.ok ? v : { ...old[k], ...v }])) }, null, 1));
