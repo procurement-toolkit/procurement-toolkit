@@ -486,4 +486,6 @@
   <url><loc>https://procurement-toolkit-eight.vercel.app/en/bids/c-water-sanitation.html</loc><lastmod>2026-11-22</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>
   <url><loc>https://procurement-toolkit-eight.vercel.app/bids/country/moldova-republic-of.html</loc><lastmod>2026-11-22</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>
   <url><loc>https://procurement-toolkit-eight.vercel.app/en/bids/country/moldova-republic-of.html</loc><lastmod>2026-11-22</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/bids/country/congo.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/en/bids/country/congo.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
 </urlset>
