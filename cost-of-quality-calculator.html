@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="품질비용(Cost of Quality) 계산기 - 예방·평가·내부실패·외부실패 비용을 표준 PAF 모델로 계산해서, 우리 회사가 품질에 선제적으로 투자하는지 사후처리에 돈을 쓰는지 확인하세요.">
+<meta name="keywords" content="품질비용 계산, cost of quality calculator, COQ 계산, COPQ 계산, 예방비용 평가비용, quality management procurement">
+<title>품질비용(Cost of Quality) 계산기 — CBM Lab</title>
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="icon" href="favicon.ico" type="image/x-icon">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="canonical" href="https://procurement-toolkit-eight.vercel.app/cost-of-quality-calculator.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="CBM Lab">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:title" content="품질비용(Cost of Quality) 계산기 — CBM Lab">
+<meta property="og:description" content="품질비용 계산기 - 예방·평가·내부실패·외부실패 비용을 표준 PAF 모델로 계산해서 품질 투자 구조를 진단하세요.">
+<meta property="og:url" content="https://procurement-toolkit-eight.vercel.app/cost-of-quality-calculator.html">
+<meta property="og:image" content="https://procurement-toolkit-eight.vercel.app/assets/hero-team.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="품질비용(Cost of Quality) 계산기 — CBM Lab">
+<meta name="twitter:description" content="품질비용 계산기 - 예방·평가·내부실패·외부실패 비용을 표준 PAF 모델로 계산해서 품질 투자 구조를 진단하세요.">
+<meta name="twitter:image" content="https://procurement-toolkit-eight.vercel.app/assets/hero-team.jpg">
+
+<link rel="alternate" hreflang="ko" href="https://procurement-toolkit-eight.vercel.app/cost-of-quality-calculator.html">
+<link rel="alternate" hreflang="en" href="https://procurement-toolkit-eight.vercel.app/en/cost-of-quality-calculator.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@800;900&display=swap" rel="stylesheet">
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  :root{--accent:#2563EB;--accent-light:#DBEAFE;--accent-dark:#1D4ED8;--slate-50:#F8FAFC;--slate-100:#F1F5F9;--slate-200:#E2E8F0;--slate-300:#CBD5E1;--slate-400:#94A3B8;--slate-500:#64748B;--slate-600:#475569;--slate-700:#334155;--slate-800:#1E293B;--slate-900:#0F172A;--success:#0F766E;--success-light:#D1FAE5;--warn:#B45309;--warn-light:#FEF3C7;--danger:#B91C1C;--danger-light:#FEE2E2;--radius:8px;--radius-lg:12px;--shadow-sm:0 1px 2px rgba(0,0,0,.05);font-family:'Pretendard','Apple SD Gothic Neo',system-ui,-apple-system,sans-serif}
+  body{background:var(--slate-50);color:var(--slate-800);font-size:14px;line-height:1.6}
+  header{background:#fff;border-bottom:1px solid var(--slate-200)}
+  .header-inner{max-width:1200px;margin:0 auto;padding:16px 24px;display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}
+  .logo-mark{font-size:20px;font-weight:800;color:var(--slate-900);text-decoration:none;font-family:'Space Grotesk','Pretendard',sans-serif;letter-spacing:-0.4px;}
+  .nav-right{display:flex;align-items:center;gap:10px}
+  .nav-link{font-size:13px;font-weight:600;color:var(--slate-500);text-decoration:none;padding:7px 12px;border-radius:6px}
+  .nav-link:hover{background:var(--slate-100)}
+  .lang-switch{font-size:12px;font-weight:700;color:var(--accent);text-decoration:none;padding:6px 12px;border:1px solid var(--accent-light);border-radius:999px;background:var(--accent-light)}
+  .lang-switch:hover{background:#BFDBFE}
+
+  .hero{background:#fff;border-bottom:1px solid var(--slate-200);padding:28px 24px 24px}
+  .hero-inner{max-width:1200px;margin:0 auto}
+  .hero h1{font-size:24px;font-weight:700;color:var(--slate-900);margin-bottom:6px;letter-spacing:-0.3px}
+  .hero p{font-size:14px;color:var(--slate-500);max-width:760px}
+  .hero-tags{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}
+  .tag{background:var(--slate-100);color:var(--slate-600);font-size:11px;font-weight:500;padding:3px 10px;border-radius:4px;border:1px solid var(--slate-200)}
+
+  .main{max-width:1200px;margin:0 auto;padding:28px 24px 60px;display:grid;grid-template-columns:1fr 380px;gap:24px;align-items:start}
+  .card{background:#fff;border:1px solid var(--slate-200);border-radius:var(--radius-lg);box-shadow:var(--shadow-sm);margin-bottom:20px}
+  .card-header{padding:16px 20px;border-bottom:1px solid var(--slate-100)}
+  .card-title{font-size:14px;font-weight:700;color:var(--slate-800)}
+  .card-body{padding:20px}
+
+  .field-label{font-size:12.5px;font-weight:600;color:var(--slate-600);margin-bottom:5px;display:block}
+  .field-sub{font-size:11px;color:var(--slate-400);margin-bottom:5px}
+  .inp{width:100%;border:1px solid var(--slate-200);border-radius:8px;padding:9px 11px;font-size:13.5px;font-family:inherit}
+  .inp:focus{outline:none;border-color:var(--accent)}
+  .field-group{margin-bottom:14px}
+
+  .cat-section{border-left:3px solid var(--accent);padding-left:14px;margin-bottom:20px}
+  .cat-section.prevention{border-color:#0F766E}
+  .cat-section.appraisal{border-color:#2563EB}
+  .cat-section.internal{border-color:#B45309}
+  .cat-section.external{border-color:#B91C1C}
+  .cat-section h4{font-size:13.5px;font-weight:800;color:var(--slate-800);margin-bottom:4px}
+  .cat-section .cat-sub{font-size:11px;color:var(--slate-400);margin-bottom:10px}
+
+  .result-total{background:var(--accent-light);border-radius:10px;padding:18px;text-align:center;margin-bottom:14px}
+  .result-total .label{font-size:11.5px;color:var(--accent-dark);font-weight:700;text-transform:uppercase}
+  .result-total .value{font-size:26px;font-weight:800;color:var(--accent-dark);margin-top:4px}
+  .result-total .sub{font-size:11.5px;color:var(--accent);margin-top:4px}
+
+  .breakdown-bar{display:flex;width:100%;height:26px;border-radius:6px;overflow:hidden;margin:14px 0 8px}
+  .breakdown-seg{height:100%;display:flex;align-items:center;justify-content:center;font-size:9.5px;font-weight:700;color:#fff}
+  .legend{display:flex;flex-wrap:wrap;gap:8px 14px;font-size:11px;color:var(--slate-500);margin-bottom:14px}
+  .legend-item{display:flex;align-items:center;gap:5px}
+  .legend-dot{width:9px;height:9px;border-radius:3px}
+
+  .verdict-box{padding:14px;border-radius:10px;font-size:12.5px;line-height:1.6;margin-top:10px}
+  .verdict-box.good{background:var(--success-light);color:var(--success)}
+  .verdict-box.warn{background:var(--warn-light);color:#78350F}
+
+  .notice-box{background:var(--accent-light);border:1px solid #BFDBFE;border-radius:var(--radius);padding:10px 14px;font-size:12px;color:#1E40AF;margin-top:14px;line-height:1.6}
+
+  .about-wrap{max-width:1200px;margin:0 auto;padding:0 24px 20px}
+  .about-section{font-size:13px;color:var(--slate-600);line-height:1.8}
+  .about-section h3{font-size:14px;font-weight:700;color:var(--slate-800);margin:16px 0 8px}
+  .about-section h3:first-child{margin-top:0}
+
+  .faq-item{border-bottom:1px solid var(--slate-100);padding:12px 0}
+  .faq-item:last-child{border-bottom:none}
+  .faq-item summary{cursor:pointer;font-weight:700;font-size:13px;color:var(--slate-800);list-style:none;outline:none}
+  .faq-item summary::-webkit-details-marker{display:none}
+  .faq-item summary::before{content:'Q. ';color:var(--accent)}
+  .faq-item p{margin-top:8px;font-size:12.5px;color:var(--slate-600);line-height:1.7;padding-left:2px}
+
+  .ad-area-main{max-width:1200px;margin:0 auto;padding:0 24px 28px}
+  .ad-main-box{border:1px dashed #CBD5E1;border-radius:10px;background:#fff;height:90px;display:flex;flex-direction:column;align-items:center;justify-content:center;color:var(--slate-400);font-size:12px;gap:4px}
+  .ad-main-box strong{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:#94A3B8}
+  .faq-wrap{max-width:1100px;margin:20px auto 0;padding:0 24px}
+
+  footer{background:#0F172A;color:#94A3B8;padding:24px;font-size:12px}
+  .footer-inner{max-width:1200px;margin:0 auto;display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
+  .footer-logo{font-size:15px;font-weight:800;color:#fff;font-family:'Space Grotesk','Pretendard',sans-serif;}
+  .footer-link{color:#94A3B8;text-decoration:none;font-size:11px;margin-right:14px}
+
+  @media print{.ad-area-main,.ad-main-box,header,footer{display:none !important}.main{grid-template-columns:1fr}}
+  @media (max-width:900px){.main{grid-template-columns:1fr}}
+  @media (max-width:640px){.ad-area-main{padding:0 16px 20px}.faq-wrap,.about-wrap{padding:0 16px}}
+</style>
+
+<script src="https://cdn.amplitude.com/script/d4aa9301e01f4600b5eeb018e160aa7c.js"></script>
+<script>
+  window.amplitude.init("d4aa9301e01f4600b5eeb018e160aa7c", { fetchRemoteConfig: true, autocapture: true });
+  window.amplitude.track('CBM Page View', {category: 'calc', page: 'cost-of-quality-calculator', lang: 'ko'});
+</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-W1YBL5BGGK"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-W1YBL5BGGK');
+</script>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute;" aria-hidden="true">
+  <defs>
+    <linearGradient id="cbmGradH" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#14B8A6"/><stop offset="100%" stop-color="#0B2A4A"/></linearGradient>
+    <linearGradient id="cbmGradF" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#2DD4BF"/><stop offset="100%" stop-color="#5B9EFF"/></linearGradient>
+  </defs>
+</svg>
+<header><div class="header-inner">
+  <a href="index.html" class="logo-mark"><svg width="26" height="26" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align:middle;margin-right:8px;flex-shrink:0;"><path d="M20 2.5L36.5 11.5V28.5L20 37.5L3.5 28.5V11.5L20 2.5Z" stroke="url(#cbmGradH)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M20 2.5V20M20 20L36.5 11.5M20 20L3.5 11.5" stroke="url(#cbmGradH)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/></svg><span style="font-family:'Montserrat','Space Grotesk',sans-serif;font-weight:800;letter-spacing:-1.1px;background:linear-gradient(90deg,#14B8A6 0%,#1E7A8C 45%,#0B2A4A 100%);-webkit-background-clip:text;background-clip:text;color:transparent;">CBMLab</span></a>
+  <div class="nav-right">
+    <a href="index.html" class="nav-link">← 전체 도구</a>
+    <a href="en/cost-of-quality-calculator.html" class="lang-switch">EN</a>
+  </div>
+</div></header>
+
+<section class="hero"><div class="hero-inner">
+  <h1>품질비용(Cost of Quality) 계산기</h1>
+  <p>불량이 터진 뒤에 처리하는 데 돈을 더 쓰고 있나요, 아니면 애초에 불량을 막는 데 투자하고 있나요? 표준 PAF 모델(예방·평가·내부실패·외부실패)로 우리 회사 품질비용 구조를 진단하세요.</p>
+  <div class="hero-tags"><span class="tag">PAF 모델</span><span class="tag">CoGQ vs CoPQ</span><span class="tag">품질 투자 진단</span></div>
+</div></section>
+
+<div class="main">
+  <section>
+    <div class="card">
+      <div class="card-header"><div class="card-title">연간 품질비용 입력</div></div>
+      <div class="card-body">
+        <div class="cat-section prevention">
+          <h4>1. 예방비용 (Prevention Cost)</h4>
+          <div class="cat-sub">불량 발생 자체를 막기 위한 투자</div>
+          <div class="field-group">
+            <label class="field-label">교육·QMS 구축·예방정비·공급업체 품질감사 등</label>
+            <input type="number" class="inp" id="prevention" value="15000000" min="0" oninput="calc()">
+          </div>
+        </div>
+
+        <div class="cat-section appraisal">
+          <h4>2. 평가비용 (Appraisal Cost)</h4>
+          <div class="cat-sub">불량을 걸러내기 위한 검사·측정</div>
+          <div class="field-group">
+            <label class="field-label">수입검사·공정검사·최종검사·계측장비 교정 등</label>
+            <input type="number" class="inp" id="appraisal" value="22000000" min="0" oninput="calc()">
+          </div>
+        </div>
+
+        <div class="cat-section internal">
+          <h4>3. 내부실패비용 (Internal Failure Cost)</h4>
+          <div class="cat-sub">고객에게 가기 전, 사내에서 발견된 불량</div>
+          <div class="field-group">
+            <label class="field-label">스크랩·재작업·재검사·불량으로 인한 라인정지 등</label>
+            <input type="number" class="inp" id="internalFailure" value="38000000" min="0" oninput="calc()">
+          </div>
+        </div>
+
+        <div class="cat-section external">
+          <h4>4. 외부실패비용 (External Failure Cost)</h4>
+          <div class="cat-sub">고객이 받은 뒤 발견된 불량</div>
+          <div class="field-group">
+            <label class="field-label">클레임·반품·리콜·워런티·고객 신뢰 손실 대응비용 등</label>
+            <input type="number" class="inp" id="externalFailure" value="45000000" min="0" oninput="calc()">
+          </div>
+        </div>
+
+        <div class="field-group">
+          <label class="field-label">연간 매출액 (선택)</label>
+          <div class="field-sub">입력하면 매출 대비 품질비용 비중을 계산합니다</div>
+          <input type="number" class="inp" id="revenue" value="1200000000" min="0" oninput="calc()">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <aside>
+    <div class="card">
+      <div class="card-header"><div class="card-title">계산 결과</div></div>
+      <div class="card-body">
+        <div id="resultWrap"></div>
+        <div class="notice-box">💡 업계 평균 품질비용은 매출의 15~25% 수준이며, 세계 최고 수준의 제조기업은 5% 미만까지 낮춥니다. 예방·평가에 1원을 더 쓰면 실패비용을 그 몇 배로 줄이는 경우가 많다는 게 품질경영의 핵심 통찰입니다.</div>
+      </div>
+    </div>
+  </aside>
+</div>
+
+<div class="about-wrap">
+  <div class="card">
+    <div class="card-header"><div class="card-title">품질비용(CoQ)이란?</div></div>
+    <div class="card-body about-section">
+      <h3>왜 품질비용을 4가지로 나눠서 봐야 하나요?</h3>
+      <p>품질비용은 "예방·평가"(사전 투자)와 "내부·외부실패"(사후 처리)로 나뉩니다. 예방·평가에 쓰는 돈은 불량을 막거나 조기에 걸러내는 투자이고, 실패비용은 이미 발생한 불량을 처리하는 데 드는 돈입니다. 두 그룹의 비율을 보면, 우리 회사가 품질을 선제적으로 관리하는지 아니면 사고가 터진 뒤에 수습만 하고 있는지 알 수 있습니다.</p>
+      <h3>계산 결과를 어떻게 활용하면 좋을까요?</h3>
+      <p>내부실패·외부실패비용이 예방·평가비용보다 훨씬 크다면, 예방 투자를 늘리는 게 장기적으로 총비용을 줄이는 경우가 많습니다(품질경영의 핵심 원칙 중 하나입니다). 공급업체 품질 문제가 원인이라면 <a href="supplier-scorecard.html" style="color:#2563EB;">공급업체 스코어카드</a>로 추적 관리하시고, 이 비용이 전체 지출에서 차지하는 비중은 <a href="spend-analysis-dashboard.html" style="color:#2563EB;">지출 분석 대시보드</a>로 확인해보세요.</p>
+    </div>
+  </div>
+</div>
+
+<!-- AD -->
+<div class="ad-area-main" role="complementary" aria-label="하단 광고 영역">
+  <div class="ad-main-box"><strong>Advertisement</strong>광고 영역 (Google AdSense)</div>
+</div>
+
+<div class="faq-wrap">
+  <div class="card">
+    <div class="card-header"><div class="card-title">자주 묻는 질문</div></div>
+    <div class="card-body">
+      <details class="faq-item"><summary>예방비용과 평가비용의 차이가 뭔가요?</summary><p>예방비용은 불량이 애초에 생기지 않도록 하는 투자(교육, 공정 설계, 예방정비)이고, 평가비용은 이미 만들어진 제품에서 불량을 찾아내는 검사·측정 비용입니다. 둘 다 "사전" 활동이지만, 예방은 원인 자체를 없애고 평가는 결과물을 걸러낸다는 차이가 있습니다.</p></details>
+      <details class="faq-item"><summary>외부실패비용은 왜 가장 위험한 항목으로 꼽히나요?</summary><p>내부실패는 사내에서 끝나지만, 외부실패는 고객 신뢰 손실, 브랜드 평판 훼손, 심한 경우 법적 책임까지 이어질 수 있어 눈에 보이는 금액보다 실제 영향이 훨씬 클 수 있습니다.</p></details>
+      <details class="faq-item"><summary>품질비용을 어떻게 줄일 수 있나요?</summary><p>일반적으로 예방·평가에 대한 투자를 늘리면, 그 몇 배에 달하는 내부·외부실패비용이 줄어드는 경우가 많습니다. 다만 이는 일반적인 경향이며, 실제 효과는 업종·공정에 따라 다르니 자사 데이터로 검증하는 것이 중요합니다.</p></details>
+    </div>
+  </div>
+</div>
+
+<footer><div class="footer-inner">
+  <div class="footer-logo"><svg width="24" height="24" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align:middle;margin-right:9px;flex-shrink:0;"><path d="M20 2.5L36.5 11.5V28.5L20 37.5L3.5 28.5V11.5L20 2.5Z" stroke="url(#cbmGradF)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M20 2.5V20M20 20L36.5 11.5M20 20L3.5 11.5" stroke="url(#cbmGradF)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/></svg>CBM<span style="color:#2563EB;">Lab</span></div>
+  <nav><a href="index.html" class="footer-link">전체 도구</a><a href="privacy.html" class="footer-link">개인정보 처리방침</a></nav>
+</div></footer>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {"@type":"Question","name":"예방비용과 평가비용의 차이가 뭔가요?","acceptedAnswer":{"@type":"Answer","text":"예방비용은 불량이 생기지 않도록 하는 투자이고, 평가비용은 이미 만들어진 제품에서 불량을 찾아내는 검사·측정 비용입니다."}},
+    {"@type":"Question","name":"외부실패비용은 왜 가장 위험한 항목으로 꼽히나요?","acceptedAnswer":{"@type":"Answer","text":"고객 신뢰 손실, 브랜드 평판 훼손, 법적 책임까지 이어질 수 있어 눈에 보이는 금액보다 실제 영향이 훨씬 클 수 있기 때문입니다."}},
+    {"@type":"Question","name":"품질비용을 어떻게 줄일 수 있나요?","acceptedAnswer":{"@type":"Answer","text":"일반적으로 예방·평가 투자를 늘리면 그 몇 배에 달하는 실패비용이 줄어드는 경우가 많으나, 실제 효과는 업종·공정에 따라 검증이 필요합니다."}}
+  ]
+}
+</script>
+
+<script>
+function fmt(v){ return Math.round(v||0).toLocaleString('ko-KR'); }
+
+function calc(){
+  const prevention = parseFloat(document.getElementById('prevention').value)||0;
+  const appraisal = parseFloat(document.getElementById('appraisal').value)||0;
+  const internalFailure = parseFloat(document.getElementById('internalFailure').value)||0;
+  const externalFailure = parseFloat(document.getElementById('externalFailure').value)||0;
+  const revenue = parseFloat(document.getElementById('revenue').value)||0;
+
+  const cogq = prevention + appraisal;
+  const copq = internalFailure + externalFailure;
+  const totalCoQ = cogq + copq;
+
+  const segs = [
+    {label:'예방', v:prevention, color:'#0F766E'},
+    {label:'평가', v:appraisal, color:'#2563EB'},
+    {label:'내부실패', v:internalFailure, color:'#B45309'},
+    {label:'외부실패', v:externalFailure, color:'#B91C1C'},
+  ];
+
+  let barHtml = '<div class="breakdown-bar">';
+  segs.forEach(s=>{
+    const pct = totalCoQ>0 ? (s.v/totalCoQ*100) : 0;
+    if(pct<=0) return;
+    barHtml += `<div class="breakdown-seg" style="width:${pct}%;background:${s.color};">${pct>=8?pct.toFixed(0)+'%':''}</div>`;
+  });
+  barHtml += '</div>';
+
+  const legendHtml = '<div class="legend">' + segs.map(s=>{
+    const pct = totalCoQ>0 ? (s.v/totalCoQ*100) : 0;
+    return `<span class="legend-item"><span class="legend-dot" style="background:${s.color};"></span>${s.label} ${pct.toFixed(1)}%</span>`;
+  }).join('') + '</div>';
+
+  const revenueLine = revenue>0
+    ? `<div class="sub">매출 대비 ${(totalCoQ/revenue*100).toFixed(2)}%</div>`
+    : '';
+
+  let verdictHtml = '';
+  if(cogq>0 || copq>0){
+    if(copq > cogq*1.5){
+      verdictHtml = `<div class="verdict-box warn">⚠ 실패비용(사후처리)이 예방·평가비용(사전투자)보다 훨씬 큽니다. 예방·평가 투자를 늘리면 장기적으로 총비용이 줄어들 가능성이 있습니다.</div>`;
+    } else {
+      verdictHtml = `<div class="verdict-box good">✅ 예방·평가와 실패비용이 비교적 균형 잡혀 있습니다. 선제적 품질관리가 어느 정도 자리잡은 상태로 보입니다.</div>`;
+    }
+  }
+
+  document.getElementById('resultWrap').innerHTML = `
+    <div class="result-total">
+      <div class="label">총 품질비용 (CoQ)</div>
+      <div class="value">₩${fmt(totalCoQ)}</div>
+      ${revenueLine}
+    </div>
+    ${barHtml}
+    ${legendHtml}
+    <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--slate-500);margin-top:6px;padding-top:10px;border-top:1px solid var(--slate-100);">
+      <span>CoGQ (양호품질비용): <b>₩${fmt(cogq)}</b></span>
+    </div>
+    <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--slate-500);margin-top:4px;">
+      <span>CoPQ (불량비용): <b>₩${fmt(copq)}</b></span>
+    </div>
+    ${verdictHtml}
+  `;
+}
+
+calc();
+</script>
+</body>
+</html>

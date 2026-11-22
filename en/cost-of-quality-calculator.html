@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Free Cost of Quality (CoQ) calculator using the standard PAF model (Prevention, Appraisal, Internal Failure, External Failure). See whether your company invests proactively in quality or mostly pays for cleanup after the fact.">
+<meta name="keywords" content="cost of quality calculator, COQ calculator, COPQ calculator, PAF model, prevention appraisal failure costs, quality management procurement">
+<title>Cost of Quality (CoQ) Calculator — CBM Lab</title>
+<link rel="icon" href="../favicon.ico" sizes="any">
+<link rel="icon" href="../favicon.ico" type="image/x-icon">
+<link rel="apple-touch-icon" href="../apple-touch-icon.png">
+<link rel="canonical" href="https://procurement-toolkit-eight.vercel.app/en/cost-of-quality-calculator.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="CBM Lab">
+<meta property="og:locale" content="en_US">
+<meta property="og:title" content="Cost of Quality (CoQ) Calculator — CBM Lab">
+<meta property="og:description" content="Free Cost of Quality calculator using the standard PAF model. Diagnose whether your company invests proactively in quality or mostly pays for failures.">
+<meta property="og:url" content="https://procurement-toolkit-eight.vercel.app/en/cost-of-quality-calculator.html">
+<meta property="og:image" content="https://procurement-toolkit-eight.vercel.app/assets/hero-team.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Cost of Quality (CoQ) Calculator — CBM Lab">
+<meta name="twitter:description" content="Free Cost of Quality calculator using the standard PAF model. Diagnose whether your company invests proactively in quality or mostly pays for failures.">
+<meta name="twitter:image" content="https://procurement-toolkit-eight.vercel.app/assets/hero-team.jpg">
+
+<link rel="alternate" hreflang="ko" href="https://procurement-toolkit-eight.vercel.app/cost-of-quality-calculator.html">
+<link rel="alternate" hreflang="en" href="https://procurement-toolkit-eight.vercel.app/en/cost-of-quality-calculator.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@800;900&display=swap" rel="stylesheet">
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  :root{--accent:#2563EB;--accent-light:#DBEAFE;--accent-dark:#1D4ED8;--slate-50:#F8FAFC;--slate-100:#F1F5F9;--slate-200:#E2E8F0;--slate-300:#CBD5E1;--slate-400:#94A3B8;--slate-500:#64748B;--slate-600:#475569;--slate-700:#334155;--slate-800:#1E293B;--slate-900:#0F172A;--success:#0F766E;--success-light:#D1FAE5;--warn:#B45309;--warn-light:#FEF3C7;--danger:#B91C1C;--danger-light:#FEE2E2;--radius:8px;--radius-lg:12px;--shadow-sm:0 1px 2px rgba(0,0,0,.05);font-family:'Inter','Pretendard',system-ui,-apple-system,sans-serif}
+  body{background:var(--slate-50);color:var(--slate-800);font-size:14px;line-height:1.6}
+  header{background:#fff;border-bottom:1px solid var(--slate-200)}
+  .header-inner{max-width:1200px;margin:0 auto;padding:16px 24px;display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}
+  .logo-mark{font-size:20px;font-weight:800;color:var(--slate-900);text-decoration:none;font-family:'Space Grotesk','Pretendard',sans-serif;letter-spacing:-0.4px;}
+  .nav-right{display:flex;align-items:center;gap:10px}
+  .nav-link{font-size:13px;font-weight:600;color:var(--slate-500);text-decoration:none;padding:7px 12px;border-radius:6px}
+  .nav-link:hover{background:var(--slate-100)}
+  .lang-switch{font-size:12px;font-weight:700;color:var(--accent);text-decoration:none;padding:6px 12px;border:1px solid var(--accent-light);border-radius:999px;background:var(--accent-light)}
+  .lang-switch:hover{background:#BFDBFE}
+
+  .hero{background:#fff;border-bottom:1px solid var(--slate-200);padding:28px 24px 24px}
+  .hero-inner{max-width:1200px;margin:0 auto}
+  .hero h1{font-size:24px;font-weight:700;color:var(--slate-900);margin-bottom:6px;letter-spacing:-0.3px}
+  .hero p{font-size:14px;color:var(--slate-500);max-width:760px}
+  .hero-tags{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}
+  .tag{background:var(--slate-100);color:var(--slate-600);font-size:11px;font-weight:500;padding:3px 10px;border-radius:4px;border:1px solid var(--slate-200)}
+
+  .main{max-width:1200px;margin:0 auto;padding:28px 24px 60px;display:grid;grid-template-columns:1fr 380px;gap:24px;align-items:start}
+  .card{background:#fff;border:1px solid var(--slate-200);border-radius:var(--radius-lg);box-shadow:var(--shadow-sm);margin-bottom:20px}
+  .card-header{padding:16px 20px;border-bottom:1px solid var(--slate-100)}
+  .card-title{font-size:14px;font-weight:700;color:var(--slate-800)}
+  .card-body{padding:20px}
+
+  .field-label{font-size:12.5px;font-weight:600;color:var(--slate-600);margin-bottom:5px;display:block}
+  .field-sub{font-size:11px;color:var(--slate-400);margin-bottom:5px}
+  .inp{width:100%;border:1px solid var(--slate-200);border-radius:8px;padding:9px 11px;font-size:13.5px;font-family:inherit}
+  .inp:focus{outline:none;border-color:var(--accent)}
+  .field-group{margin-bottom:14px}
+
+  .cat-section{border-left:3px solid var(--accent);padding-left:14px;margin-bottom:20px}
+  .cat-section.prevention{border-color:#0F766E}
+  .cat-section.appraisal{border-color:#2563EB}
+  .cat-section.internal{border-color:#B45309}
+  .cat-section.external{border-color:#B91C1C}
+  .cat-section h4{font-size:13.5px;font-weight:800;color:var(--slate-800);margin-bottom:4px}
+  .cat-section .cat-sub{font-size:11px;color:var(--slate-400);margin-bottom:10px}
+
+  .result-total{background:var(--accent-light);border-radius:10px;padding:18px;text-align:center;margin-bottom:14px}
+  .result-total .label{font-size:11.5px;color:var(--accent-dark);font-weight:700;text-transform:uppercase}
+  .result-total .value{font-size:26px;font-weight:800;color:var(--accent-dark);margin-top:4px}
+  .result-total .sub{font-size:11.5px;color:var(--accent);margin-top:4px}
+
+  .breakdown-bar{display:flex;width:100%;height:26px;border-radius:6px;overflow:hidden;margin:14px 0 8px}
+  .breakdown-seg{height:100%;display:flex;align-items:center;justify-content:center;font-size:9.5px;font-weight:700;color:#fff}
+  .legend{display:flex;flex-wrap:wrap;gap:8px 14px;font-size:11px;color:var(--slate-500);margin-bottom:14px}
+  .legend-item{display:flex;align-items:center;gap:5px}
+  .legend-dot{width:9px;height:9px;border-radius:3px}
+
+  .verdict-box{padding:14px;border-radius:10px;font-size:12.5px;line-height:1.6;margin-top:10px}
+  .verdict-box.good{background:var(--success-light);color:var(--success)}
+  .verdict-box.warn{background:var(--warn-light);color:#78350F}
+
+  .notice-box{background:var(--accent-light);border:1px solid #BFDBFE;border-radius:var(--radius);padding:10px 14px;font-size:12px;color:#1E40AF;margin-top:14px;line-height:1.6}
+
+  .about-wrap{max-width:1200px;margin:0 auto;padding:0 24px 20px}
+  .about-section{font-size:13px;color:var(--slate-600);line-height:1.8}
+  .about-section h3{font-size:14px;font-weight:700;color:var(--slate-800);margin:16px 0 8px}
+  .about-section h3:first-child{margin-top:0}
+
+  .faq-item{border-bottom:1px solid var(--slate-100);padding:12px 0}
+  .faq-item:last-child{border-bottom:none}
+  .faq-item summary{cursor:pointer;font-weight:700;font-size:13px;color:var(--slate-800);list-style:none;outline:none}
+  .faq-item summary::-webkit-details-marker{display:none}
+  .faq-item summary::before{content:'Q. ';color:var(--accent)}
+  .faq-item p{margin-top:8px;font-size:12.5px;color:var(--slate-600);line-height:1.7;padding-left:2px}
+
+  .ad-area-main{max-width:1200px;margin:0 auto;padding:0 24px 28px}
+  .ad-main-box{border:1px dashed #CBD5E1;border-radius:10px;background:#fff;height:90px;display:flex;flex-direction:column;align-items:center;justify-content:center;color:var(--slate-400);font-size:12px;gap:4px}
+  .ad-main-box strong{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:#94A3B8}
+  .faq-wrap{max-width:1100px;margin:20px auto 0;padding:0 24px}
+
+  footer{background:#0F172A;color:#94A3B8;padding:24px;font-size:12px}
+  .footer-inner{max-width:1200px;margin:0 auto;display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
+  .footer-logo{font-size:15px;font-weight:800;color:#fff;font-family:'Space Grotesk','Pretendard',sans-serif;}
+  .footer-link{color:#94A3B8;text-decoration:none;font-size:11px;margin-right:14px}
+
+  @media print{.ad-area-main,.ad-main-box,header,footer{display:none !important}.main{grid-template-columns:1fr}}
+  @media (max-width:900px){.main{grid-template-columns:1fr}}
+  @media (max-width:640px){.ad-area-main{padding:0 16px 20px}.faq-wrap,.about-wrap{padding:0 16px}}
+</style>
+
+<script src="https://cdn.amplitude.com/script/d4aa9301e01f4600b5eeb018e160aa7c.js"></script>
+<script>
+  window.amplitude.init("d4aa9301e01f4600b5eeb018e160aa7c", { fetchRemoteConfig: true, autocapture: true });
+  window.amplitude.track('CBM Page View', {category: 'calc', page: 'cost-of-quality-calculator', lang: 'en'});
+</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-W1YBL5BGGK"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-W1YBL5BGGK');
+</script>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute;" aria-hidden="true">
+  <defs>
+    <linearGradient id="cbmGradH" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#14B8A6"/><stop offset="100%" stop-color="#0B2A4A"/></linearGradient>
+    <linearGradient id="cbmGradF" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#2DD4BF"/><stop offset="100%" stop-color="#5B9EFF"/></linearGradient>
+  </defs>
+</svg>
+<header><div class="header-inner">
+  <a href="index.html" class="logo-mark"><svg width="26" height="26" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align:middle;margin-right:8px;flex-shrink:0;"><path d="M20 2.5L36.5 11.5V28.5L20 37.5L3.5 28.5V11.5L20 2.5Z" stroke="url(#cbmGradH)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M20 2.5V20M20 20L36.5 11.5M20 20L3.5 11.5" stroke="url(#cbmGradH)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/></svg><span style="font-family:'Montserrat','Space Grotesk',sans-serif;font-weight:800;letter-spacing:-1.1px;background:linear-gradient(90deg,#14B8A6 0%,#1E7A8C 45%,#0B2A4A 100%);-webkit-background-clip:text;background-clip:text;color:transparent;">CBMLab</span></a>
+  <div class="nav-right">
+    <a href="index.html" class="nav-link">← All Tools</a>
+    <a href="../cost-of-quality-calculator.html" class="lang-switch">KOR</a>
+  </div>
+</div></header>
+
+<section class="hero"><div class="hero-inner">
+  <h1>Cost of Quality (CoQ) Calculator</h1>
+  <p>Are you spending more to clean up after defects, or investing to prevent them in the first place? Diagnose your company's quality cost structure using the standard PAF model (Prevention, Appraisal, Internal Failure, External Failure).</p>
+  <div class="hero-tags"><span class="tag">PAF Model</span><span class="tag">CoGQ vs CoPQ</span><span class="tag">Quality Investment Diagnosis</span></div>
+</div></section>
+
+<div class="main">
+  <section>
+    <div class="card">
+      <div class="card-header"><div class="card-title">Enter Annual Quality Costs</div></div>
+      <div class="card-body">
+        <div class="cat-section prevention">
+          <h4>1. Prevention Cost</h4>
+          <div class="cat-sub">Investment to keep defects from occurring at all</div>
+          <div class="field-group">
+            <label class="field-label">Training, QMS setup, preventive maintenance, supplier quality audits, etc.</label>
+            <input type="number" class="inp" id="prevention" value="15000000" min="0" oninput="calc()">
+          </div>
+        </div>
+
+        <div class="cat-section appraisal">
+          <h4>2. Appraisal Cost</h4>
+          <div class="cat-sub">Inspection and measurement to catch defects</div>
+          <div class="field-group">
+            <label class="field-label">Incoming inspection, in-process inspection, final inspection, gauge calibration, etc.</label>
+            <input type="number" class="inp" id="appraisal" value="22000000" min="0" oninput="calc()">
+          </div>
+        </div>
+
+        <div class="cat-section internal">
+          <h4>3. Internal Failure Cost</h4>
+          <div class="cat-sub">Defects caught internally, before reaching the customer</div>
+          <div class="field-group">
+            <label class="field-label">Scrap, rework, re-inspection, line stoppages from defects, etc.</label>
+            <input type="number" class="inp" id="internalFailure" value="38000000" min="0" oninput="calc()">
+          </div>
+        </div>
+
+        <div class="cat-section external">
+          <h4>4. External Failure Cost</h4>
+          <div class="cat-sub">Defects discovered after the customer receives the product</div>
+          <div class="field-group">
+            <label class="field-label">Claims, returns, recalls, warranty, cost of addressing lost customer trust, etc.</label>
+            <input type="number" class="inp" id="externalFailure" value="45000000" min="0" oninput="calc()">
+          </div>
+        </div>
+
+        <div class="field-group">
+          <label class="field-label">Annual Revenue (optional)</label>
+          <div class="field-sub">If entered, calculates CoQ as a % of revenue</div>
+          <input type="number" class="inp" id="revenue" value="1200000000" min="0" oninput="calc()">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <aside>
+    <div class="card">
+      <div class="card-header"><div class="card-title">Results</div></div>
+      <div class="card-body">
+        <div id="resultWrap"></div>
+        <div class="notice-box">💡 Industry-average CoQ typically runs 15-25% of revenue, while world-class manufacturers push it below 5%. A core insight of quality management is that one more dollar spent on prevention and appraisal often reduces failure costs by several times that amount.</div>
+      </div>
+    </div>
+  </aside>
+</div>
+
+<div class="about-wrap">
+  <div class="card">
+    <div class="card-header"><div class="card-title">What Is Cost of Quality (CoQ)?</div></div>
+    <div class="card-body about-section">
+      <h3>Why break quality cost into four categories?</h3>
+      <p>Quality cost splits into "prevention and appraisal" (proactive investment) and "internal and external failure" (reactive cleanup). Money spent on prevention and appraisal keeps defects from happening or catches them early; failure costs are what you pay for defects that already occurred. The ratio between the two groups reveals whether your company manages quality proactively or is mostly firefighting after the fact.</p>
+      <h3>How should I use the result?</h3>
+      <p>If internal and external failure costs are much larger than prevention and appraisal, increasing prevention investment often reduces total cost over time — one of the core principles of quality management. If supplier quality is the root cause, track it with the <a href="supplier-scorecard.html" style="color:#2563EB;">Supplier Scorecard</a>, and see this cost's share of total spend with the <a href="spend-analysis-dashboard.html" style="color:#2563EB;">Spend Analysis Dashboard</a>.</p>
+    </div>
+  </div>
+</div>
+
+<!-- AD -->
+<div class="ad-area-main" role="complementary" aria-label="Advertisement area">
+  <div class="ad-main-box"><strong>Advertisement</strong>Google AdSense</div>
+</div>
+
+<div class="faq-wrap">
+  <div class="card">
+    <div class="card-header"><div class="card-title">Frequently Asked Questions</div></div>
+    <div class="card-body">
+      <details class="faq-item"><summary>What's the difference between prevention and appraisal cost?</summary><p>Prevention cost is investment (training, process design, preventive maintenance) that keeps defects from occurring at all. Appraisal cost is the inspection and measurement spent finding defects in products that already exist. Both happen "before" the customer sees the product, but prevention removes the cause while appraisal filters the output.</p></details>
+      <details class="faq-item"><summary>Why is external failure cost considered the riskiest category?</summary><p>Internal failures are contained inside the company, but external failures can damage customer trust, harm brand reputation, and in serious cases create legal liability — so the real impact can be far larger than the visible dollar figure.</p></details>
+      <details class="faq-item"><summary>How can I reduce cost of quality?</summary><p>Increasing investment in prevention and appraisal typically reduces internal and external failure costs by a larger multiple. That said, this is a general tendency — the actual effect varies by industry and process, so it's important to validate against your own data.</p></details>
+    </div>
+  </div>
+</div>
+
+<footer><div class="footer-inner">
+  <div class="footer-logo"><svg width="24" height="24" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align:middle;margin-right:9px;flex-shrink:0;"><path d="M20 2.5L36.5 11.5V28.5L20 37.5L3.5 28.5V11.5L20 2.5Z" stroke="url(#cbmGradF)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M20 2.5V20M20 20L36.5 11.5M20 20L3.5 11.5" stroke="url(#cbmGradF)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/></svg>CBM<span style="color:#2563EB;">Lab</span></div>
+  <nav><a href="index.html" class="footer-link">All Tools</a><a href="privacy.html" class="footer-link">Privacy Policy</a></nav>
+</div></footer>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {"@type":"Question","name":"What's the difference between prevention and appraisal cost?","acceptedAnswer":{"@type":"Answer","text":"Prevention cost keeps defects from occurring, while appraisal cost is the inspection and measurement spent finding defects in products already made."}},
+    {"@type":"Question","name":"Why is external failure cost considered the riskiest category?","acceptedAnswer":{"@type":"Answer","text":"It can damage customer trust and brand reputation and create legal liability, so the real impact can be far larger than the visible dollar figure."}},
+    {"@type":"Question","name":"How can I reduce cost of quality?","acceptedAnswer":{"@type":"Answer","text":"Increasing investment in prevention and appraisal typically reduces failure costs by a larger multiple, though the actual effect varies by industry and process."}}
+  ]
+}
+</script>
+
+<script>
+function fmt(v){ return Math.round(v||0).toLocaleString('en-US'); }
+
+function calc(){
+  const prevention = parseFloat(document.getElementById('prevention').value)||0;
+  const appraisal = parseFloat(document.getElementById('appraisal').value)||0;
+  const internalFailure = parseFloat(document.getElementById('internalFailure').value)||0;
+  const externalFailure = parseFloat(document.getElementById('externalFailure').value)||0;
+  const revenue = parseFloat(document.getElementById('revenue').value)||0;
+
+  const cogq = prevention + appraisal;
+  const copq = internalFailure + externalFailure;
+  const totalCoQ = cogq + copq;
+
+  const segs = [
+    {label:'Prevention', v:prevention, color:'#0F766E'},
+    {label:'Appraisal', v:appraisal, color:'#2563EB'},
+    {label:'Internal Failure', v:internalFailure, color:'#B45309'},
+    {label:'External Failure', v:externalFailure, color:'#B91C1C'},
+  ];
+
+  let barHtml = '<div class="breakdown-bar">';
+  segs.forEach(s=>{
+    const pct = totalCoQ>0 ? (s.v/totalCoQ*100) : 0;
+    if(pct<=0) return;
+    barHtml += `<div class="breakdown-seg" style="width:${pct}%;background:${s.color};">${pct>=8?pct.toFixed(0)+'%':''}</div>`;
+  });
+  barHtml += '</div>';
+
+  const legendHtml = '<div class="legend">' + segs.map(s=>{
+    const pct = totalCoQ>0 ? (s.v/totalCoQ*100) : 0;
+    return `<span class="legend-item"><span class="legend-dot" style="background:${s.color};"></span>${s.label} ${pct.toFixed(1)}%</span>`;
+  }).join('') + '</div>';
+
+  const revenueLine = revenue>0
+    ? `<div class="sub">${(totalCoQ/revenue*100).toFixed(2)}% of revenue</div>`
+    : '';
+
+  let verdictHtml = '';
+  if(cogq>0 || copq>0){
+    if(copq > cogq*1.5){
+      verdictHtml = `<div class="verdict-box warn">⚠ Failure cost (reactive) is much higher than prevention/appraisal cost (proactive). Increasing prevention/appraisal investment could lower total cost over time.</div>`;
+    } else {
+      verdictHtml = `<div class="verdict-box good">✅ Prevention/appraisal and failure costs are relatively balanced. This suggests proactive quality management is reasonably established.</div>`;
+    }
+  }
+
+  document.getElementById('resultWrap').innerHTML = `
+    <div class="result-total">
+      <div class="label">Total Cost of Quality (CoQ)</div>
+      <div class="value">$${fmt(totalCoQ)}</div>
+      ${revenueLine}
+    </div>
+    ${barHtml}
+    ${legendHtml}
+    <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--slate-500);margin-top:6px;padding-top:10px;border-top:1px solid var(--slate-100);">
+      <span>CoGQ (Cost of Good Quality): <b>$${fmt(cogq)}</b></span>
+    </div>
+    <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--slate-500);margin-top:4px;">
+      <span>CoPQ (Cost of Poor Quality): <b>$${fmt(copq)}</b></span>
+    </div>
+    ${verdictHtml}
+  `;
+}
+
+calc();
+</script>
+</body>
+</html>

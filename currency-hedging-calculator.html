@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4642197702620430"
+     crossorigin="anonymous"></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="선물환율과 현물환율로 환헤지 비용을 계산합니다. 선물환 포인트, 연환산 프리미엄, 은행 스프레드 반영 고정 환율, 헤지 비율별 손익과 만기 환율 시나리오를 그래프로 비교합니다. 수입·수출 모두 지원.">
+<meta name="keywords" content="환헤지 비용 계산기, 선물환 프리미엄 계산, 선물환 포인트, 환헤지 비율, 환리스크 관리, 수입 환헤지, 수출 환헤지, forward premium, currency hedging, global sourcing, procurement">
+<title>환헤지 비용 계산기 (선물환 프리미엄·연환산 비용 시뮬레이션) — CBM Lab</title>
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="icon" href="favicon.ico" type="image/x-icon">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="canonical" href="https://procurement-toolkit-eight.vercel.app/currency-hedging-calculator.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="CBM Lab">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:title" content="환헤지 비용 계산기 (선물환 프리미엄·연환산 비용 시뮬레이션) — CBM Lab">
+<meta property="og:description" content="선물환율과 현물환율로 환헤지 비용을 계산합니다. 선물환 포인트, 연환산 프리미엄, 은행 스프레드 반영 고정 환율, 헤지 비율별 손익과 만기 환율 시나리오를 그래프로 비교합니다. 수입·수출 모두 지원.">
+<meta property="og:url" content="https://procurement-toolkit-eight.vercel.app/currency-hedging-calculator.html">
+<meta property="og:image" content="https://procurement-toolkit-eight.vercel.app/assets/hero-team.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="환헤지 비용 계산기 (선물환 프리미엄·연환산 비용 시뮬레이션) — CBM Lab">
+<meta name="twitter:description" content="선물환율과 현물환율로 환헤지 비용을 계산합니다. 선물환 포인트, 연환산 프리미엄, 은행 스프레드 반영 고정 환율, 헤지 비율별 손익과 만기 환율 시나리오를 그래프로 비교합니다. 수입·수출 모두 지원.">
+<meta name="twitter:image" content="https://procurement-toolkit-eight.vercel.app/assets/hero-team.jpg">
+
+<link rel="alternate" hreflang="ko" href="https://procurement-toolkit-eight.vercel.app/currency-hedging-calculator.html">
+<link rel="alternate" hreflang="en" href="https://procurement-toolkit-eight.vercel.app/en/currency-hedging-calculator.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@800;900&display=swap" rel="stylesheet">
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  :root{--accent:#2563EB;--accent-light:#DBEAFE;--accent-dark:#1D4ED8;--slate-50:#F8FAFC;--slate-100:#F1F5F9;--slate-200:#E2E8F0;--slate-300:#CBD5E1;--slate-400:#94A3B8;--slate-500:#64748B;--slate-600:#475569;--slate-700:#334155;--slate-800:#1E293B;--slate-900:#0F172A;--success:#0F766E;--success-light:#CCFBF1;--warning:#B45309;--warning-light:#FEF3C7;--danger:#DC2626;--danger-light:#FEE2E2;--radius:8px;--radius-lg:12px;--shadow-sm:0 1px 2px rgba(0,0,0,.05);font-family:'Pretendard','Apple SD Gothic Neo',system-ui,-apple-system,sans-serif}
+  body{background:var(--slate-50);color:var(--slate-800);font-size:14px;line-height:1.6}
+  header{background:#fff;border-bottom:1px solid var(--slate-200)}
+  .header-inner{max-width:1200px;margin:0 auto;padding:16px 24px;display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}
+  .logo-mark{font-size:20px;font-weight:800;color:var(--slate-900);text-decoration:none;font-family:'Space Grotesk','Pretendard',sans-serif;letter-spacing:-0.4px;}
+  .nav-right{display:flex;align-items:center;gap:10px}
+  .nav-link{font-size:13px;font-weight:600;color:var(--slate-500);text-decoration:none;padding:7px 12px;border-radius:6px}
+  .nav-link:hover{background:var(--slate-100)}
+  .lang-switch{font-size:12px;font-weight:700;color:var(--accent);text-decoration:none;padding:6px 12px;border:1px solid var(--accent-light);border-radius:999px;background:var(--accent-light)}
+  .lang-switch:hover{background:#BFDBFE}
+
+  .hero{background:#fff;border-bottom:1px solid var(--slate-200);padding:28px 24px 24px}
+  .hero-inner{max-width:1200px;margin:0 auto}
+  .hero h1{font-size:24px;font-weight:700;color:var(--slate-900);margin-bottom:6px;letter-spacing:-0.3px}
+  .hero p{font-size:14px;color:var(--slate-500);max-width:740px}
+  .hero-tags{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}
+  .tag{background:var(--slate-100);color:var(--slate-600);font-size:11px;font-weight:500;padding:3px 10px;border-radius:4px;border:1px solid var(--slate-200)}
+
+  .main{max-width:1200px;margin:0 auto;padding:28px 24px 60px;display:grid;grid-template-columns:1fr 380px;gap:24px;align-items:start}
+  .card{background:#fff;border:1px solid var(--slate-200);border-radius:var(--radius-lg);box-shadow:var(--shadow-sm);margin-bottom:20px}
+  .card-header{padding:16px 20px;border-bottom:1px solid var(--slate-100);display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+  .card-title{font-size:14px;font-weight:600;color:var(--slate-800)}
+  .card-body{padding:20px}
+
+  .item-table{width:100%;border-collapse:collapse}
+  .item-table col.col-cur{width:26%}
+  .item-table col.col-amt{width:34%}
+  .item-table col.col-rate{width:26%}
+  .item-table col.col-del{width:40px}
+  .item-table th{font-size:10.5px;color:var(--slate-400);text-transform:uppercase;text-align:left;padding:0 6px 8px}
+  .item-table td{padding:6px;vertical-align:middle}
+  .item-table select,.item-table input{width:100%;border:1px solid var(--slate-200);border-radius:6px;padding:8px 8px;font-size:13px;font-family:inherit}
+  .item-table .del-btn{width:28px;height:28px;border:1px solid var(--slate-200);border-radius:6px;background:#fff;color:var(--slate-400);cursor:pointer;font-size:13px}
+  .item-table .del-btn:hover{border-color:var(--danger);color:var(--danger)}
+  .btn-add-row{width:100%;padding:9px;border:1px dashed var(--slate-300);border-radius:8px;background:#fff;color:var(--slate-500);font-size:12.5px;font-weight:600;cursor:pointer;margin-top:6px}
+  .btn-add-row:hover{border-color:var(--accent);color:var(--accent)}
+
+  .field-label{font-size:12.5px;font-weight:600;color:var(--slate-600);margin-bottom:6px;display:block}
+  .inp{width:100%;border:1px solid var(--slate-200);border-radius:8px;padding:9px 11px;font-size:13.5px;font-family:inherit}
+  .inp:focus{outline:none;border-color:var(--accent)}
+
+  .fx-fetch-btn{white-space:nowrap;padding:0 12px;border:1px solid var(--accent-light);border-radius:6px;background:var(--accent-light);color:var(--accent-dark);font-size:11.5px;font-weight:700;cursor:pointer}
+
+  .result-total{text-align:center;padding:18px 0 10px}
+  .result-total .label{font-size:12px;color:var(--slate-500);margin-bottom:4px}
+  .result-total .value{font-size:30px;font-weight:800;color:var(--slate-900);letter-spacing:-.5px}
+
+  .exposure-row{margin-bottom:12px}
+  .exposure-row .top-line{display:flex;justify-content:space-between;font-size:12.5px;margin-bottom:5px}
+  .exposure-row .cur-name{font-weight:700;color:var(--slate-800)}
+  .exposure-row .pct{color:var(--slate-500)}
+  .exposure-bar-bg{width:100%;height:8px;background:var(--slate-100);border-radius:4px;overflow:hidden}
+  .exposure-bar-fill{height:100%;background:var(--accent);border-radius:4px}
+
+  .warning-box{background:var(--warning-light);border:1px solid #FDE68A;border-radius:var(--radius);padding:12px 14px;font-size:12px;color:#78350F;margin-top:14px;line-height:1.6}
+  .notice-box{background:var(--accent-light);border:1px solid #BFDBFE;border-radius:var(--radius);padding:10px 14px;font-size:12px;color:#1E40AF;margin-top:14px;line-height:1.6}
+
+  .btn-excel{width:100%;padding:12px;border:2px solid var(--accent);border-radius:8px;background:#fff;color:var(--accent);font-size:13.5px;font-weight:700;cursor:pointer;margin-top:14px}
+  .btn-excel:hover{background:var(--accent-light)}
+
+  .ad-gate-overlay{position:fixed;inset:0;background:rgba(15,23,42,.7);display:flex;align-items:center;justify-content:center;z-index:9999;padding:20px}
+  .ad-gate-box{background:#fff;border-radius:14px;max-width:420px;width:100%;padding:24px;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,.3)}
+  .ad-gate-box h3{font-size:16px;font-weight:800;color:var(--slate-900);margin-bottom:8px}
+  .ad-gate-box p{font-size:12.5px;color:var(--slate-500);margin-bottom:16px;line-height:1.6}
+  .ad-gate-slot{border:1px dashed var(--slate-300);border-radius:8px;min-height:100px;display:flex;align-items:center;justify-content:center;margin-bottom:16px;overflow:hidden}
+  .ad-gate-timer{font-size:13px;font-weight:700;color:var(--slate-600);margin-bottom:12px}
+  .ad-gate-btn{width:100%;padding:12px;border:none;border-radius:8px;background:var(--accent);color:#fff;font-size:13.5px;font-weight:700;cursor:pointer}
+  .ad-gate-btn:disabled{background:var(--slate-300);cursor:not-allowed}
+  .ad-gate-cancel{margin-top:10px;font-size:12px;color:var(--slate-400);background:none;border:none;cursor:pointer;text-decoration:underline}
+
+  .sim-row{display:flex;align-items:center;gap:10px;margin-top:10px}
+  .sim-row input[type=range]{flex:1}
+  .sim-val{font-size:13px;font-weight:700;color:var(--slate-800);min-width:52px;text-align:right}
+
+  .impact-table{width:100%;border-collapse:collapse;font-size:12.5px;margin-top:10px}
+  .impact-table th,.impact-table td{padding:8px 6px;border-bottom:1px solid var(--slate-100);text-align:left}
+  .impact-table th{font-size:10.5px;color:var(--slate-400);text-transform:uppercase}
+  .impact-table td.num{text-align:right;font-variant-numeric:tabular-nums}
+  .impact-table td.up{color:var(--danger)}
+  .impact-table td.down{color:var(--success)}
+
+  .faq-item{border-bottom:1px solid var(--slate-100);padding:12px 0}
+  .faq-item:last-child{border-bottom:none}
+  .faq-item summary{cursor:pointer;font-weight:700;font-size:13px;color:var(--slate-800);list-style:none;outline:none}
+  .faq-item summary::-webkit-details-marker{display:none}
+  .faq-item summary::before{content:'Q. ';color:var(--accent)}
+  .faq-item p{margin-top:8px;font-size:12.5px;color:var(--slate-600);line-height:1.7;padding-left:2px}
+
+  .ad-area-main{max-width:1200px;margin:24px auto 0;padding:0 24px 28px}
+  .ad-main-box{border:1px dashed #CBD5E1;border-radius:10px;background:#fff;height:90px;display:flex;flex-direction:column;align-items:center;justify-content:center;color:var(--slate-400);font-size:12px;gap:4px}
+  .ad-main-box strong{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:#94A3B8}
+  .faq-wrap{max-width:1100px;margin:20px auto 0;padding:0 24px}
+
+  footer{background:#0F172A;color:#94A3B8;padding:24px;font-size:12px}
+  .footer-inner{max-width:1200px;margin:0 auto;display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
+  .footer-logo{font-size:15px;font-weight:800;color:#fff;font-family:'Space Grotesk','Pretendard',sans-serif;}
+  .footer-link{color:#94A3B8;text-decoration:none;font-size:11px;margin-right:14px}
+
+  @media print{.ad-area-main,.ad-main-box,header,footer{display:none !important}.main{grid-template-columns:1fr}}
+  @media (max-width:900px){.main{grid-template-columns:1fr}}
+  @media (max-width:640px){.ad-area-main{padding:0 16px 20px}.faq-wrap{padding:0 16px}}
+
+  .about-wrap{max-width:1200px;margin:0 auto;padding:0 24px 20px}
+  .about-section{font-size:13px;color:var(--slate-600);line-height:1.8}
+  .about-section h3{font-size:14px;font-weight:700;color:var(--slate-800);margin:16px 0 8px}
+  .about-section h3:first-child{margin-top:0}
+  .about-section a{color:#2563EB}
+  .wide{max-width:1200px;margin:0 auto;padding:28px 24px 10px}
+  .seg{display:inline-flex;border:1px solid var(--slate-200);border-radius:8px;overflow:hidden;background:#fff}
+  .seg button{border:0;background:#fff;padding:8px 14px;font-size:12.5px;font-weight:600;color:var(--slate-500);cursor:pointer;font-family:inherit}
+  .seg button.on{background:var(--accent);color:#fff}
+  .toolbar{display:flex;gap:18px;flex-wrap:wrap;align-items:center}
+  .toolbar .grp{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--slate-500);font-weight:600}
+  .grid-scroll{overflow-x:auto}
+  table.ig{border-collapse:separate;border-spacing:0;width:100%;min-width:860px;font-size:12.5px}
+  table.ig th{font-size:11px;color:var(--slate-500);font-weight:700;padding:10px 6px;border-bottom:1px solid var(--slate-200);text-align:center;background:var(--slate-50);position:sticky;top:0}
+  table.ig th.l,table.ig td.l{text-align:left;padding-left:12px}
+  table.ig td{padding:6px;border-bottom:1px solid var(--slate-100);text-align:center}
+  table.ig tr.row{cursor:pointer}
+  table.ig tr.row:hover td{background:var(--slate-50)}
+  table.ig tr.row.sel td{background:#EFF6FF}
+  table.ig tr.row.dim{opacity:.35}
+  .tcode{font-weight:800;color:var(--slate-900);font-size:13.5px;letter-spacing:.2px}
+  .tname{font-size:11px;color:var(--slate-400);display:block;font-weight:500}
+  .cell{display:inline-block;min-width:52px;padding:5px 8px;border-radius:6px;font-weight:700;font-size:11.5px}
+  .cell.S{background:#CCFBF1;color:#0F766E}
+  .cell.B{background:#DBEAFE;color:#1D4ED8}
+  .cell.N{background:var(--slate-100);color:var(--slate-400);font-weight:600}
+  .modechip{font-size:10.5px;font-weight:700;padding:2px 7px;border-radius:999px;background:var(--slate-100);color:var(--slate-500)}
+  .modechip.sea{background:#E0F2FE;color:#0369A1}
+  .legend{display:flex;gap:14px;flex-wrap:wrap;font-size:11.5px;color:var(--slate-500);margin-top:12px}
+  .legend span.sw{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:5px;vertical-align:-2px}
+  .loadbar{height:8px;background:var(--slate-100);border-radius:4px;overflow:hidden;min-width:90px}
+  .loadbar i{display:block;height:100%;background:var(--accent);border-radius:4px}
+  .detail-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+  .track{display:flex;align-items:flex-start;margin:14px 0 4px}
+  .stage{flex:1;text-align:center;position:relative;font-size:10.5px;color:var(--slate-500);line-height:1.35;padding:0 2px}
+  .stage .dot{display:block;width:14px;height:14px;border-radius:50%;margin:0 auto 6px;background:var(--slate-200);position:relative;z-index:1}
+  .stage::before{content:'';position:absolute;top:6px;left:-50%;width:100%;height:3px;background:var(--slate-200)}
+  .stage:first-child::before{display:none}
+  .stage.s .dot,.stage.s::before{background:#14B8A6}
+  .stage.b .dot,.stage.b::before{background:#3B82F6}
+  .stage.risk .dot{box-shadow:0 0 0 4px rgba(245,158,11,.35);background:#F59E0B}
+  .stage.risk{font-weight:800;color:var(--slate-900)}
+  .notes{margin:10px 0 0 18px;font-size:12.5px;color:var(--slate-600);line-height:1.7}
+  .kpi-row{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:6px}
+  .kpi{border:1px solid var(--slate-200);border-radius:10px;padding:10px 12px;background:#fff}
+  .kpi .k{font-size:11px;color:var(--slate-500);font-weight:600}
+  .kpi .v{font-size:18px;font-weight:800;color:var(--slate-900);margin-top:2px;letter-spacing:-.3px}
+  .kpi .v.pos{color:var(--danger)} .kpi .v.neg{color:var(--success)}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .field{margin-bottom:12px}
+  .hint{font-size:11px;color:var(--slate-400);margin-top:3px}
+  .chart-wrap{width:100%;overflow:hidden}
+  .chart-wrap svg{width:100%;height:auto;display:block}
+  .chart-legend{display:flex;gap:16px;font-size:11.5px;color:var(--slate-500);margin-top:6px;flex-wrap:wrap}
+  .chart-legend i{display:inline-block;width:14px;height:3px;border-radius:2px;margin-right:6px;vertical-align:3px}
+  @media (max-width:900px){.detail-grid{grid-template-columns:1fr}}
+  @media (max-width:640px){.about-wrap{padding:0 16px 16px}.wide{padding:20px 16px 6px}.grid2{grid-template-columns:1fr}}
+</style>
+
+<script src="https://cdn.amplitude.com/script/d4aa9301e01f4600b5eeb018e160aa7c.js"></script>
+<script>
+  window.amplitude.init("d4aa9301e01f4600b5eeb018e160aa7c", { fetchRemoteConfig: true, autocapture: true });
+  window.amplitude.track('CBM Page View', {category: 'calc', page: 'currency-hedging-calculator', lang: 'ko'});
+</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-W1YBL5BGGK"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-W1YBL5BGGK');
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/exceljs/4.4.0/exceljs.min.js"></script>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute;" aria-hidden="true">
+  <defs>
+    <linearGradient id="cbmGradH" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#14B8A6"/><stop offset="100%" stop-color="#0B2A4A"/></linearGradient>
+    <linearGradient id="cbmGradF" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#2DD4BF"/><stop offset="100%" stop-color="#5B9EFF"/></linearGradient>
+  </defs>
+</svg>
+<header><div class="header-inner">
+  <a href="index.html" class="logo-mark"><svg width="26" height="26" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align:middle;margin-right:8px;flex-shrink:0;"><path d="M20 2.5L36.5 11.5V28.5L20 37.5L3.5 28.5V11.5L20 2.5Z" stroke="url(#cbmGradH)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M20 2.5V20M20 20L36.5 11.5M20 20L3.5 11.5" stroke="url(#cbmGradH)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/></svg><span style="font-family:'Montserrat','Space Grotesk',sans-serif;font-weight:800;letter-spacing:-1.1px;background:linear-gradient(90deg,#14B8A6 0%,#1E7A8C 45%,#0B2A4A 100%);-webkit-background-clip:text;background-clip:text;color:transparent;">CBMLab</span></a>
+  <div class="nav-right">
+    <a href="index.html" class="nav-link">← 전체 도구</a>
+    <a href="en/currency-hedging-calculator.html" class="lang-switch">EN</a>
+  </div>
+</div></header>
+
+<section class="hero"><div class="hero-inner">
+  <h1>환헤지 비용 계산기</h1>
+  <p>수입 대금을 달러로 내거나 수출 대금을 외화로 받을 때, 선물환으로 환율을 묶는 데 드는 비용을 계산합니다. 선물환 포인트와 연환산 비용, 은행 스프레드를 반영한 고정 환율, 헤지 비율에 따른 만기 시점의 손익을 그래프로 비교합니다.</p>
+  <div class="hero-tags"><span class="tag">환리스크 관리</span><span class="tag">선물환 프리미엄</span><span class="tag">연환산 헤지 비용</span><span class="tag">수입·수출 시나리오</span></div>
+</div></section>
+
+<div class="main">
+  <section>
+    <div class="card">
+      <div class="card-header"><div class="card-title">헤지 조건</div><div style="font-size:11.5px;color:var(--slate-400);">기준통화: 원화(KRW)</div></div>
+      <div class="card-body">
+        <div class="field"><div class="seg"><button data-d="import" onclick="setDir('import')">수입·외화 지급</button><button data-d="export" onclick="setDir('export')">수출·외화 수취</button></div></div>
+        <div class="grid2">
+          <div class="field"><label class="field-label">통화</label><select class="inp" id="cur" onchange="calc()"><option value="USD">USD</option><option value="EUR">EUR</option><option value="JPY">JPY</option><option value="CNY">CNY</option><option value="GBP">GBP</option><option value="VND">VND</option><option value="INR">INR</option></select></div>
+          <div class="field"><label class="field-label">외화 금액</label><input class="inp" type="number" id="amt" min="0" value="100000" oninput="calc()"></div>
+          <div class="field"><label class="field-label">현물환율 (1통화 = ?원)</label>
+            <div style="display:flex;gap:6px;"><input class="inp" type="number" id="spot" min="0" step="0.01" value="1380" oninput="calc()"><button class="fx-fetch-btn" onclick="fetchSpot()">조회</button></div>
+            <div class="hint">"조회"를 누르면 ECB 참고환율로 채워집니다.</div></div>
+          <div class="field"><label class="field-label">헤지 기간 (일)</label><input class="inp" type="number" id="days" min="1" value="90" oninput="calc()">
+            <div class="hint"><a href="#" onclick="setDays(30);return false;">30</a> · <a href="#" onclick="setDays(60);return false;">60</a> · <a href="#" onclick="setDays(90);return false;">90</a> · <a href="#" onclick="setDays(180);return false;">180</a> · <a href="#" onclick="setDays(365);return false;">365</a></div></div>
+        </div>
+        <div class="field"><div class="seg"><button data-f="direct" onclick="setFwdMode('direct')">선물환율 직접 입력</button><button data-f="parity" onclick="setFwdMode('parity')">금리차로 이론가 산출</button></div></div>
+        <div id="fwdDirect" class="field"><label class="field-label">선물환율 (1통화 = ?원)</label><input class="inp" type="number" id="fwd" min="0" step="0.01" value="1372" oninput="calc()"><div class="hint">은행에서 받은 선물환 견적 값을 입력하세요.</div></div>
+        <div id="fwdParity" class="grid2" style="display:none;">
+          <div class="field"><label class="field-label">원화 금리 (연 %)</label><input class="inp" type="number" id="rd" step="0.01" value="3" oninput="calc()"></div>
+          <div class="field"><label class="field-label">외화 금리 (연 %)</label><input class="inp" type="number" id="rf" step="0.01" value="4" oninput="calc()"></div>
+          <div class="hint" style="grid-column:1/-1;">이자율평가에 따른 이론 선물환율: <b id="parityOut"></b></div>
+        </div>
+        <div class="grid2">
+          <div class="field"><label class="field-label">연환산 기준일수</label><select class="inp" id="basis" onchange="calc()"><option value="360">360</option><option value="365">365</option></select></div>
+          <div class="field"><label class="field-label">은행 스프레드 (원/단위)</label><input class="inp" type="number" id="spread" step="0.01" min="0" value="1.5" oninput="calc()"></div>
+          <div class="field"><label class="field-label">헤지 비율 (%)</label><input class="inp" type="number" id="ratio" min="0" max="100" value="100" oninput="calc()"></div>
+        </div>
+        <div class="notice-box">💡 화면의 숫자는 이해를 돕기 위한 예시값입니다. 실제 시장 환율과 금리, 은행 견적으로 바꿔 입력하세요. 이론가는 금리차만 반영한 값이라 실제 시장 선물환율과 다를 수 있습니다.</div>
+      </div>
+    </div>
+  </section>
+  <aside>
+    <div class="card">
+      <div class="card-header"><div class="card-title">헤지 비용 요약</div></div>
+      <div class="card-body"><div id="kpis"></div>
+        <button class="btn-excel" onclick="requestExcelDownload()">📊 환헤지 비용 분석 엑셀 다운로드</button></div>
+    </div>
+  </aside>
+</div>
+
+<div class="wide" style="padding-top:0;">
+  <div class="card">
+    <div class="card-header"><div class="card-title">만기 환율 시나리오별 원화 금액</div></div>
+    <div class="card-body">
+      <div class="chart-wrap" id="chart"></div>
+      <div class="chart-legend"><span><i style="background:#94A3B8"></i>헤지 안 함</span><span><i style="background:#2563EB"></i>헤지 적용</span></div>
+      <div style="overflow-x:auto;"><table class="impact-table" id="scenTable" style="min-width:520px;"></table></div>
+    </div>
+  </div>
+</div>
+
+<div class="about-wrap">
+  <div class="card">
+    <div class="card-header"><div class="card-title">환헤지 비용, 이렇게 계산합니다</div></div>
+    <div class="card-body about-section"><h3>선물환 포인트와 연환산 비용</h3>
+<p>선물환율(F)과 현물환율(S)의 차이가 선물환 포인트입니다. 기간 프리미엄은 (F − S) ÷ S, 연환산 값은 여기에 기준일수 ÷ 헤지 기간을 곱합니다. 수입 대금을 달러로 내는 경우 선물환율이 현물보다 높으면(프리미엄) 헤지가 비용이 되고, 낮으면(디스카운트) 이익이 됩니다. 수출 대금을 받는 경우에는 방향이 반대입니다.</p>
+<h3>금리차로 보는 이론가</h3>
+<p>이자율평가(Covered Interest Parity)에 따르면 이론 선물환율은 S × (1 + 원화금리 × 일수/기준일수) ÷ (1 + 외화금리 × 일수/기준일수)입니다. 원화 금리가 외화 금리보다 낮으면 선물환율은 현물보다 낮아집니다. 실제 시장의 선물환율은 수급 영향으로 이론가와 차이가 날 수 있어, 이 값은 참고용입니다.</p>
+<h3>헤지 비율은 어떻게 정하나요?</h3>
+<p>노출 금액 전부를 묶으면 환율이 유리하게 움직일 때의 이익도 포기하게 됩니다. 확정된 발주 금액은 높은 비율로, 추정 금액은 낮은 비율로 헤지하는 방식이 실무에서 흔히 쓰입니다. 정책은 재무팀과 정하세요.</p>
+<h3>함께 쓰면 좋은 도구</h3>
+<p>통화별 노출 규모는 <a href="fx-exposure-calculator.html">환노출 계산기</a>로, 결제 조건에 따른 금융 비용은 <a href="payment-terms-cost-calculator.html">결제조건 비용 계산기</a>로, 도착원가는 <a href="fob-cif.html">수입 원가 계산기</a>로 확인하세요. 조건별 책임 범위는 <a href="incoterms-responsibility-grid.html">Incoterms 책임범위 비교표</a>에 정리했습니다.</p>
+<p style="margin-top:10px;font-size:12px;color:var(--slate-400);">이 계산기는 정보 제공용이며 금융 상품 권유가 아닙니다. 실제 거래는 거래 은행의 견적과 약정을 따릅니다.</p></div>
+  </div>
+</div>
+<div class="ad-area-main" role="complementary" aria-label="하단 광고 영역">
+  <ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-4642197702620430"
+     data-ad-slot="2863170310"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+<div class="faq-wrap">
+  <div class="card">
+    <div class="card-header"><div class="card-title">자주 묻는 질문</div></div>
+    <div class="card-body">
+      <details class="faq-item"><summary>선물환 프리미엄과 디스카운트는 무슨 뜻인가요?</summary><p>선물환율이 현물환율보다 높으면 프리미엄, 낮으면 디스카운트입니다. 두 통화의 금리 차이가 주된 원인입니다.</p></details>
+      <details class="faq-item"><summary>연환산 비용은 왜 계산하나요?</summary><p>헤지 기간이 서로 다른 거래의 비용을 같은 기준으로 비교하기 위해서입니다. 기간 비용에 기준일수 ÷ 헤지 기간을 곱해 1년 기준으로 환산합니다.</p></details>
+      <details class="faq-item"><summary>은행 스프레드는 어떻게 반영되나요?</summary><p>수입(외화 지급)은 선물환율에 스프레드를 더하고, 수출(외화 수취)은 선물환율에서 뺍니다. 거래자에게 불리한 방향으로 반영해 실제 고정 환율을 계산합니다.</p></details>
+      <details class="faq-item"><summary>연환산 기준일수는 360일과 365일 중 무엇을 쓰나요?</summary><p>통화마다 관행이 다릅니다. 달러·유로·엔 등은 360일, 파운드는 365일을 쓰는 경우가 일반적입니다. 거래 은행의 견적 기준을 따르세요.</p></details>
+      
+    </div>
+  </div>
+</div>
+<div class="ad-gate-overlay" id="adGateOverlay" style="display:none;">
+  <div class="ad-gate-box">
+    <h3>📊 엑셀 파일 준비 중</h3>
+    <p>아래 광고가 노출되는 동안 잠시만 기다려주세요. 완료되면 자동으로 다운로드가 시작됩니다.</p>
+    <div class="ad-gate-slot">
+      <ins class="adsbygoogle"
+         style="display:block;width:100%;"
+         data-ad-client="ca-pub-4642197702620430"
+         data-ad-slot="2863170310"
+         data-ad-format="auto"
+         data-full-width-responsive="true"></ins>
+    </div>
+    <div class="ad-gate-timer" id="adGateTimer">5초 후 다운로드 가능</div>
+    <button class="ad-gate-btn" id="adGateBtn" disabled onclick="completeAdGateDownload()">다운로드 시작</button>
+    <button class="ad-gate-cancel" onclick="closeAdGate()">취소</button>
+  </div>
+</div>
+
+<footer><div class="footer-inner">
+  <div class="footer-logo"><svg width="24" height="24" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align:middle;margin-right:9px;flex-shrink:0;"><path d="M20 2.5L36.5 11.5V28.5L20 37.5L3.5 28.5V11.5L20 2.5Z" stroke="url(#cbmGradF)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M20 2.5V20M20 20L36.5 11.5M20 20L3.5 11.5" stroke="url(#cbmGradF)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/></svg>CBM<span style="color:#2563EB;">Lab</span></div>
+  <nav><a href="index.html" class="footer-link">전체 도구</a><a href="privacy.html" class="footer-link">개인정보 처리방침</a></nav>
+</div></footer>
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@type": "FAQPage",
+ "mainEntity": [
+  {
+   "@type": "Question",
+   "name": "선물환 프리미엄과 디스카운트는 무슨 뜻인가요?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "선물환율이 현물환율보다 높으면 프리미엄, 낮으면 디스카운트입니다. 두 통화의 금리 차이가 주된 원인입니다."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "연환산 비용은 왜 계산하나요?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "헤지 기간이 서로 다른 거래의 비용을 같은 기준으로 비교하기 위해서입니다. 기간 비용에 기준일수 ÷ 헤지 기간을 곱해 1년 기준으로 환산합니다."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "은행 스프레드는 어떻게 반영되나요?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "수입(외화 지급)은 선물환율에 스프레드를 더하고, 수출(외화 수취)은 선물환율에서 뺍니다. 거래자에게 불리한 방향으로 반영해 실제 고정 환율을 계산합니다."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "연환산 기준일수는 360일과 365일 중 무엇을 쓰나요?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "통화마다 관행이 다릅니다. 달러·유로·엔 등은 360일, 파운드는 365일을 쓰는 경우가 일반적입니다. 거래 은행의 견적 기준을 따르세요."
+   }
+  }
+ ]
+}
+</script>
+<script>
+
+const TOOL_SLUG = 'currency-hedging-calculator';
+const L = {"imp": "수입·외화 지급", "exp": "수출·외화 수취", "direct": "선물환율 직접 입력", "parity": "금리차로 이론가 산출", "ptsLabel": "선물환 포인트", "premLabel": "기간 프리미엄(+)/디스카운트(−)", "annLabel": "연환산 프리미엄(+)/디스카운트(−)", "feffLabel": "실제 고정 환율 (스프레드 반영)", "costLabel": "헤지 비용(+) / 이익(−)", "costAnnLabel": "연환산 헤지 비용(+) / 이익(−)", "beLabel": "손익분기 만기 환율", "lines": ["헤지 안 함", "헤지 적용"], "axisX": "만기 시 환율 변동", "fetchFail": "환율 조회에 실패했습니다. 직접 입력해주세요.", "fetchBtn": "조회", "needInput": "먼저 금액과 환율을 입력해주세요.", "timerWait": "초 후 다운로드 가능", "timerDone": "다운로드 준비 완료!", "cols": ["환율 변동", "만기 환율", "헤지 안 함", "헤지 적용", "헤지 효과"], "payLabel": "원화 지급액", "recvLabel": "원화 수취액", "err": "환율과 기간을 올바르게 입력해주세요.", "krw": "₩", "loc": "ko-KR", "xl": {"sheet": "환헤지 비용 분석", "title": "CBM Lab — 환헤지 비용 분석", "file": "CBMLab-환헤지비용분석.xlsx", "input": "입력 조건", "result": "결과 요약", "scen": "시나리오 비교", "labels": ["거래 방향", "통화", "외화 금액", "현물환율(KRW)", "선물환율(KRW)", "기간(일)", "연환산 기준일수", "은행 스프레드(KRW/단위)", "헤지 비율(%)"], "gen": "생성일"}, "notePrefix": "이 계산은 입력하신 값만으로 단순 계산한 결과이며, 실제 거래 환율과 수수료는 거래 은행의 견적을 따릅니다."};
+L.timerWait = L.timerWait; 
+const TW = s => (L.loc === 'ko-KR' ? s + L.timerWait : L.timerWait + s + 's');
+const Lx = { needInput: L.needInput, timerWait: TW, timerDone: L.timerDone };
+let dir = 'import', fwdMode = 'direct';
+
+//<CORE>
+function hedgeCore(p){
+  const T = p.days / p.basis;
+  const F = p.fwdMode === 'direct' ? p.fwdIn : p.spot * (1 + p.rd/100*T) / (1 + p.rf/100*T);
+  const pts = F - p.spot;
+  const prem = pts / p.spot;
+  const annual = prem * p.basis / p.days;
+  const Feff = p.dir === 'import' ? F + p.spread : F - p.spread;
+  const h = p.ratio / 100;
+  const costPer = p.dir === 'import' ? (Feff - p.spot) : (p.spot - Feff);
+  const costKrw = costPer * p.amt * h;
+  const costAnnual = costPer / p.spot * p.basis / p.days;
+  const scen = [-15,-10,-5,0,5,10,15].map(c => {
+    const ST = p.spot * (1 + c/100);
+    const un = p.amt * ST;
+    const lk = p.amt * Feff;
+    const blended = h * lk + (1 - h) * un;
+    const benefit = p.dir === 'import' ? un - blended : blended - un;
+    return { c, ST, un, lk, blended, benefit };
+  });
+  return { F, pts, prem, annual, Feff, costPer, costKrw, costAnnual, scen, breakeven: Feff };
+}
+//</CORE>
+
+function fmt(v, d){ d = d||0; return (v||0).toLocaleString(L.loc, {minimumFractionDigits:d, maximumFractionDigits:d}); }
+function money(v, d){ return (v<0?'-':(v>0?'+':'')) + L.krw + fmt(Math.abs(v), d); }
+function signed(v, d){ return (v>0?'+':'') + fmt(v, d); }
+function compact(v){
+  const a = Math.abs(v), s = v<0?'-':'';
+  return a>=1e8 ? s+(a/1e8).toFixed(2)+'억' : s+Math.round(a/1e4).toLocaleString('ko-KR')+'만';
+}
+function readP(){
+  const g = id => parseFloat(document.getElementById(id).value);
+  return { dir, fwdMode, amt:g('amt')||0, spot:g('spot')||0, fwdIn:g('fwd')||0, rd:g('rd')||0, rf:g('rf')||0,
+           days:g('days')||0, basis:parseInt(document.getElementById('basis').value), spread:g('spread')||0, ratio:Math.min(100,Math.max(0,g('ratio')||0)) };
+}
+function setDir(d){ dir = d; document.querySelectorAll('[data-d]').forEach(b=>b.classList.toggle('on', b.dataset.d===d)); calc(); }
+function setFwdMode(m){
+  fwdMode = m; document.querySelectorAll('[data-f]').forEach(b=>b.classList.toggle('on', b.dataset.f===m));
+  document.getElementById('fwdDirect').style.display = m==='direct'?'block':'none';
+  document.getElementById('fwdParity').style.display = m==='parity'?'block':'none';
+  calc();
+}
+function setDays(n){ document.getElementById('days').value = n; calc(); }
+async function fetchSpot(){
+  const cur = document.getElementById('cur').value;
+  try{
+    const res = await fetch('https://api.frankfurter.dev/v1/latest?base='+cur+'&symbols=KRW');
+    if(!res.ok) throw new Error();
+    const data = await res.json(); const r = data.rates && data.rates.KRW; if(!r) throw new Error();
+    document.getElementById('spot').value = Math.round(r*100)/100;
+    calc();
+  }catch(e){ alert(L.fetchFail); }
+}
+function chart(res, p){
+  const W=560, H=250, pl=62, pr=16, pt=14, pb=38;
+  const xs = res.scen.map(s=>s.c);
+  const all = res.scen.flatMap(s=>[s.un, s.blended]);
+  let lo = Math.min(...all), hi = Math.max(...all);
+  if(hi===lo){ hi = hi*1.01+1; lo = lo*0.99; }
+  const padY = (hi-lo)*0.08; lo -= padY; hi += padY;
+  const X = c => pl + (c-xs[0])/(xs[xs.length-1]-xs[0])*(W-pl-pr);
+  const Y = v => pt + (1-(v-lo)/(hi-lo))*(H-pt-pb);
+  let g = '';
+  for(let i=0;i<=4;i++){ const v = lo+(hi-lo)*i/4, y = Y(v);
+    g += `<line x1="${pl}" x2="${W-pr}" y1="${y}" y2="${y}" stroke="#E2E8F0" stroke-width="1"/><text x="${pl-8}" y="${y+4}" text-anchor="end" font-size="10.5" fill="#64748B">${compact(v)}</text>`; }
+  xs.forEach(c=>{ g += `<text x="${X(c)}" y="${H-pb+16}" text-anchor="middle" font-size="10.5" fill="#64748B">${c>0?'+':''}${c}%</text>`; });
+  g += `<text x="${(pl+W-pr)/2}" y="${H-6}" text-anchor="middle" font-size="11" fill="#94A3B8">${L.axisX}</text>`;
+  g += `<line x1="${X(0)}" x2="${X(0)}" y1="${pt}" y2="${H-pb}" stroke="#CBD5E1" stroke-dasharray="4 4"/>`;
+  const pu = res.scen.map(s=>X(s.c)+','+Y(s.un)).join(' ');
+  const ph = res.scen.map(s=>X(s.c)+','+Y(s.blended)).join(' ');
+  g += `<polyline points="${pu}" fill="none" stroke="#94A3B8" stroke-width="2.5" stroke-linejoin="round"/>`;
+  g += `<polyline points="${ph}" fill="none" stroke="#2563EB" stroke-width="2.5" stroke-linejoin="round"/>`;
+  res.scen.forEach(s=>{ g += `<circle cx="${X(s.c)}" cy="${Y(s.un)}" r="3.5" fill="#94A3B8"/><circle cx="${X(s.c)}" cy="${Y(s.blended)}" r="3.5" fill="#2563EB"/>`; });
+  document.getElementById('chart').innerHTML = `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="${L.axisX}">${g}</svg>`;
+}
+function calc(){
+  const p = readP();
+  const out = document.getElementById('kpis'), tbl = document.getElementById('scenTable');
+  if(!(p.spot>0) || !(p.days>0) || !(p.amt>0) || (p.fwdMode==='direct' && !(p.fwdIn>0))){
+    out.innerHTML = '<p style="font-size:12px;color:var(--slate-400);">'+L.err+'</p>'; tbl.innerHTML=''; document.getElementById('chart').innerHTML=''; window._xlData=null; return;
+  }
+  const res = hedgeCore(p);
+  if(p.fwdMode==='parity'){ document.getElementById('parityOut').textContent = '→ '+fmt(res.F,2); }
+  const costCls = res.costKrw>0?'pos':(res.costKrw<0?'neg':'');
+  out.innerHTML = `
+    <div class="kpi-row">
+      <div class="kpi"><div class="k">${L.ptsLabel}</div><div class="v">${signed(res.pts,2)}</div></div>
+      <div class="kpi"><div class="k">${L.annLabel}</div><div class="v">${signed(res.annual*100,2)}%</div></div>
+      <div class="kpi"><div class="k">${L.premLabel}</div><div class="v">${signed(res.prem*100,2)}%</div></div>
+      <div class="kpi"><div class="k">${L.feffLabel}</div><div class="v">${L.krw}${fmt(res.Feff,2)}</div></div>
+      <div class="kpi"><div class="k">${L.costLabel}</div><div class="v ${costCls}">${money(res.costKrw)}</div></div>
+      <div class="kpi"><div class="k">${L.costAnnLabel}</div><div class="v ${costCls}">${signed(res.costAnnual*100,2)}%</div></div>
+    </div>
+    <div class="notice-box" style="margin-top:12px;">${L.beLabel}: <b>${L.krw}${fmt(res.breakeven,2)}</b></div>`;
+  chart(res, p);
+  const head = p.dir==='import' ? L.payLabel : L.recvLabel;
+  tbl.innerHTML = `<thead><tr><th>${L.cols[0]}</th><th style="text-align:right;">${L.cols[1]}</th><th style="text-align:right;">${L.cols[2]} (${head})</th><th style="text-align:right;">${L.cols[3]} (${head})</th><th style="text-align:right;">${L.cols[4]}</th></tr></thead><tbody>` +
+    res.scen.map(s=>`<tr${s.c===0?' style="font-weight:700;"':''}><td>${s.c>0?'+':''}${s.c}%</td><td class="num">${fmt(s.ST,2)}</td><td class="num">${L.krw}${fmt(s.un)}</td><td class="num">${L.krw}${fmt(s.blended)}</td><td class="num ${s.benefit>0?'down':(s.benefit<0?'up':'')}">${money(s.benefit)}</td></tr>`).join('') + '</tbody>';
+  window._xlData = { p, res };
+}
+const L2 = Lx; 
+
+// ===== Excel download (ad gate) =====
+let adGateTimerInterval = null;
+function requestExcelDownload(){
+  if(!window._xlData){ alert(Lx.needInput); return; }
+  document.getElementById('adGateOverlay').style.display = 'flex';
+  let seconds = 5;
+  const timerEl = document.getElementById('adGateTimer');
+  const btnEl = document.getElementById('adGateBtn');
+  btnEl.disabled = true;
+  timerEl.textContent = Lx.timerWait(seconds);
+  try{ (adsbygoogle = window.adsbygoogle || []).push({}); }catch(e){}
+  clearInterval(adGateTimerInterval);
+  adGateTimerInterval = setInterval(()=>{
+    seconds--;
+    if(seconds <= 0){ clearInterval(adGateTimerInterval); timerEl.textContent = Lx.timerDone; btnEl.disabled = false; }
+    else { timerEl.textContent = Lx.timerWait(seconds); }
+  }, 1000);
+}
+function closeAdGate(){ clearInterval(adGateTimerInterval); document.getElementById('adGateOverlay').style.display = 'none'; }
+function completeAdGateDownload(){
+  closeAdGate(); downloadExcel();
+  if(window.amplitude) window.amplitude.track('Download', {type:'excel', tool: TOOL_SLUG});
+}
+function saveXlsx(wb, name){
+  return wb.xlsx.writeBuffer().then(buffer=>{
+    const blob = new Blob([buffer], {type:'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'});
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a'); a.href = url; a.download = name;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a); URL.revokeObjectURL(url);
+  });
+}
+
+async function downloadExcel(){
+  const d = window._xlData; if(!d) return;
+  const X = L.xl, NAVY='FF0F172A';
+  const wb = new ExcelJS.Workbook(); wb.creator='CBM Lab'; wb.created=new Date();
+  const ws = wb.addWorksheet(X.sheet);
+  ws.columns = [{width:34},{width:20},{width:22},{width:22},{width:22}];
+  ws.mergeCells('A1:E1');
+  const t = ws.getCell('A1'); t.value = X.title; t.font={bold:true,size:14,color:{argb:'FFFFFFFF'}}; t.fill={type:'pattern',pattern:'solid',fgColor:{argb:NAVY}}; ws.getRow(1).height=26;
+  ws.getCell('A2').value = X.gen+': '+new Date().toISOString().slice(0,10); ws.getCell('A2').font={size:10,color:{argb:'FF64748B'}};
+  const sec = (txt)=>{ const r = ws.addRow([txt]); r.font={bold:true}; r.eachCell(c=>{c.fill={type:'pattern',pattern:'solid',fgColor:{argb:'FFF1F5F9'}};}); };
+  ws.addRow([]); sec(X.input);
+  const p = d.p, r = d.res;
+  const vals = [p.dir==='import'?L.imp:L.exp, document.getElementById('cur').value, p.amt, p.spot, r.F, p.days, p.basis, p.spread, p.ratio];
+  X.labels.forEach((lb,i)=>{ const row = ws.addRow([lb, vals[i]]); if(typeof vals[i]==='number') row.getCell(2).numFmt = i===2?'#,##0':'#,##0.00'; });
+  ws.addRow([]); sec(X.result);
+  const sum = [[L.ptsLabel,r.pts,'#,##0.00'],[L.annLabel,r.annual,'0.00%'],[L.premLabel,r.prem,'0.00%'],[L.feffLabel,r.Feff,'#,##0.00'],[L.costLabel,r.costKrw,'#,##0'],[L.costAnnLabel,r.costAnnual,'0.00%'],[L.beLabel,r.breakeven,'#,##0.00']];
+  sum.forEach(s=>{ const row = ws.addRow([s[0], s[1]]); row.getCell(2).numFmt = s[2]; });
+  ws.addRow([]); sec(X.scen);
+  const hr = ws.addRow(L.cols); hr.font={bold:true};
+  r.scen.forEach(s=>{ const row = ws.addRow([s.c/100, s.ST, s.un, s.blended, s.benefit]); row.getCell(1).numFmt='+0%;-0%;0%'; row.getCell(2).numFmt='#,##0.00'; [3,4,5].forEach(k=>row.getCell(k).numFmt='#,##0');
+    row.getCell(5).fill={type:'pattern',pattern:'solid',fgColor:{argb:s.benefit>0?'FFD1FAE5':(s.benefit<0?'FFFEE2E2':'FFF1F5F9')}}; });
+  ws.addRow([]); const n = ws.addRow([L.notePrefix]); n.font={size:10,color:{argb:'FF64748B'}};
+  await saveXlsx(wb, X.file);
+}
+setDir('import'); setFwdMode('direct');
+
+</script>
+</body>
+</html>
