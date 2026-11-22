@@ -155,6 +155,33 @@ const prev = fs.existsSync(path) ? JSON.parse(fs.readFileSync(path, 'utf8')) : [
 const m = new Map(); for (const x of [...prev, ...all]) m.set(x.id, x);
 let out = [...m.values()].filter(x => !x.deadline || x.deadline >= today);
 const cap = {}; out = out.sort((a, b) => (b.published || '').localeCompare(a.published || '')).filter(x => (cap[x.source] = (cap[x.source] || 0) + 1) <= 1500);
+// bilingual titles: cached machine translation (English + Korean) of notice titles; newest first, capped per run
+const trPath = 'data/bids/tr.json';
+const TR = fs.existsSync(trPath) ? JSON.parse(fs.readFileSync(trPath, 'utf8')) : {};
+const isEn = s => !/[^\x00-\x7f]/.test(s) && /\b(the|and|of|for|to|in|services?|supply|works?|procurement|contract|consult\w*|support|project)\b/i.test(s);
+const hasKo = s => /[가-힣]/.test(s);
+async function gt(text, tl) {
+  const r = await fetch(`https://translate.googleapis.com/translate_a/single?client=gtx&sl=auto&tl=${tl}&dt=t&q=${encodeURIComponent(text.slice(0, 400))}`, { headers: UA, signal: AbortSignal.timeout(15000) });
+  if (!r.ok) throw new Error('HTTP ' + r.status);
+  const j = await r.json(); return { t: (j[0] || []).map(a => a[0]).join('').trim(), l: j[2] };
+}
+const CAP = 500; let done = 0, fails = 0;
+const todo = out.filter(x => !(TR[x.id]) && x.title).slice(0, CAP);
+for (let i = 0; i < todo.length && fails < 8; i += 5) {
+  await Promise.all(todo.slice(i, i + 5).map(async x => {
+    const e = {};
+    try {
+      if (hasKo(x.title)) { e.k = x.title; e.e = (await gt(x.title, 'en')).t; }
+      else if (isEn(x.title)) { e.e = x.title; e.k = (await gt(x.title, 'ko')).t; }
+      else { const en = await gt(x.title, 'en'); e.e = en.l === 'en' ? x.title : en.t; e.k = (await gt(e.e, 'ko')).t; }
+      TR[x.id] = e; done++;
+    } catch (err) { fails++; }
+  }));
+}
+console.log('translated', done, 'failed', fails, 'cache', Object.keys(TR).length);
+const live = new Set(out.map(x => x.id)); for (const k of Object.keys(TR)) if (!live.has(k)) delete TR[k];
+fs.writeFileSync(trPath, JSON.stringify(TR));
+for (const x of out) if (TR[x.id]) { x.te = TR[x.id].e; x.tk = TR[x.id].k; }
 fs.writeFileSync(path, JSON.stringify(out));
 const sp = 'data/bids/status.json'; const old = fs.existsSync(sp) ? JSON.parse(fs.readFileSync(sp, 'utf8')) : {};
 fs.writeFileSync(sp, JSON.stringify({ ...old, ...Object.fromEntries(Object.entries(status).map(([k, v]) => [k, v.ok ? v : { ...old[k], ...v }])) }, null, 1));

@@ -30,20 +30,21 @@ module.exports = function handler(req, res) {
     return;
   }
   const url = `${BASE}${pre}/n/${rec.h}`, otherUrl = `${BASE}${otherPre}/n/${rec.h}`;
-  const title = `${rec.n} — ${rec.o || rec.sl[lang]}${rec.c ? ' (' + rec.c + ')' : ''} | CBM Lab`.slice(0, 300);
+  const nm = lang === 'ko' ? (rec.nk || rec.n) : (rec.ne || rec.n), alt = lang === 'ko' ? (rec.ne && rec.ne !== nm ? rec.ne : (rec.n !== nm ? rec.n : '')) : (rec.n !== nm ? rec.n : '');
+  const title = `${nm} — ${rec.o || rec.sl[lang]}${rec.c ? ' (' + rec.c + ')' : ''} | CBM Lab`.slice(0, 300);
   const metaDesc = rec.d[lang].slice(0, 300);
   const sameSector = load().arr.filter(x => x.h !== rec.h && ((rec.c && x.c === rec.c) || x.t === rec.t));
   sameSector.sort((a, b) => ((b.c === rec.c) - (a.c === rec.c)) || (b.p || '').localeCompare(a.p || ''));
   const rel = sameSector.slice(0, 8);
-  const ld = { '@context': 'https://schema.org', '@type': 'WebPage', name: rec.n, description: metaDesc, url, inLanguage: lang, datePublished: rec.p || undefined, about: { '@type': 'Thing', name: rec.n }, breadcrumb: { '@type': 'BreadcrumbList', itemListElement: [{ '@type': 'ListItem', position: 1, name: t.back, item: `${BASE}${pre}/` }, { '@type': 'ListItem', position: 2, name: rec.n, item: url }] } };
+  const ld = { '@context': 'https://schema.org', '@type': 'WebPage', name: nm, alternateName: alt || undefined, description: metaDesc, url, inLanguage: lang, datePublished: rec.p || undefined, about: { '@type': 'Thing', name: nm }, breadcrumb: { '@type': 'BreadcrumbList', itemListElement: [{ '@type': 'ListItem', position: 1, name: t.back, item: `${BASE}${pre}/` }, { '@type': 'ListItem', position: 2, name: nm, item: url }] } };
   const row = (k, v) => v ? `<dt>${k}</dt><dd>${v}</dd>` : '';
   const soon = rec.e && rec.e <= new Date(Date.now() + 7 * 864e5).toISOString().slice(0, 10);
   res.setHeader('cache-control', 'public, s-maxage=3600, stale-while-revalidate=86400');
-  res.status(200).send(`<!DOCTYPE html><html lang="${lang}"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${esc(title)}</title><meta name="description" content="${esc(metaDesc)}"><link rel="canonical" href="${url}"><link rel="alternate" hreflang="${lang === 'en' ? 'ko' : 'en'}" href="${otherUrl}"><link rel="alternate" hreflang="${lang}" href="${url}"><meta property="og:title" content="${esc(rec.n)}"><meta property="og:description" content="${esc(metaDesc)}"><meta property="og:url" content="${url}"><meta property="og:type" content="article"><script type="application/ld+json">${JSON.stringify(ld)}</script><style>${CSS}</style></head><body>
+  res.status(200).send(`<!DOCTYPE html><html lang="${lang}"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${esc(title)}</title><meta name="description" content="${esc(metaDesc)}"><link rel="canonical" href="${url}"><link rel="alternate" hreflang="${lang === 'en' ? 'ko' : 'en'}" href="${otherUrl}"><link rel="alternate" hreflang="${lang}" href="${url}"><meta property="og:title" content="${esc(nm)}"><meta property="og:description" content="${esc(metaDesc)}"><meta property="og:url" content="${url}"><meta property="og:type" content="article"><script type="application/ld+json">${JSON.stringify(ld)}</script><style>${CSS}</style></head><body>
 <header><a href="/data-radar-hub.html">CBM LAB · ${t.hub}</a><a href="${otherUrl}" hreflang="${lang === 'en' ? 'ko' : 'en'}">${t.other}</a></header>
-<div class="wrap"><a class="crumb" href="${pre}/">← ${t.back}</a><h1>${esc(rec.n)}</h1><p class="d">${esc(rec.d[lang])}</p>
+<div class="wrap"><a class="crumb" href="${pre}/">← ${t.back}</a><h1>${esc(nm)}</h1>${alt ? `<p class="d" style="margin:-4px 0 8px;font-weight:600">${esc(alt)}</p>` : ''}<p class="d">${esc(rec.d[lang])}</p>
 <div class="card"><dl>${row(t.buyer, esc(rec.o))}${row(t.country, rec.c ? (rec.cp ? `<a href="${pre}/country/${rec.cs}.html">${esc(rec.c)}</a>` : esc(rec.c)) : '')}${row(t.sector, `<a href="${pre}/c-${rec.t}.html"><span class="tag" style="background:${esc(rec.fc || '#a63d22')}">${esc(rec.tl[lang])}</span></a>`)}${row(t.deadline, rec.e ? `<span class="${soon ? 'dl' : ''}">${esc(rec.e)}</span>` : '')}${row(t.pub, esc(rec.p))}${row(t.type, esc(rec.ct))}${row(t.value, esc(rec.v))}${row(t.source, `<a href="${pre}/${rec.s}.html">${esc(rec.sl[lang])}</a>`)}</dl>
 <a class="btn" href="${esc(rec.u)}" target="_blank" rel="noopener nofollow">${t.view} →</a></div>
-${rel.length ? `<h2>${t.related}</h2><ul class="rel">${rel.map(x => `<li><a href="${pre}/n/${x.h}">${esc(x.n)}<small>${esc([x.o, x.c, x.e].filter(Boolean).join(' · '))}</small></a></li>`).join('')}</ul>` : ''}
+${rel.length ? `<h2>${t.related}</h2><ul class="rel">${rel.map(x => `<li><a href="${pre}/n/${x.h}">${esc(lang === 'ko' ? (x.nk || x.n) : (x.ne || x.n))}<small>${esc([x.o, x.c, x.e].filter(Boolean).join(' · '))}</small></a></li>`).join('')}</ul>` : ''}
 <p class="note">${esc(rec.cr[lang] || '')}<br>${t.note}</p></div></body></html>`);
 };
