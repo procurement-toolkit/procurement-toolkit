@@ -41,5 +41,20 @@
   "keywordGaps": 0,
   "indexed": 6,
   "tracked": 101
+ },
+ {
+  "date": "2026-11-22",
+  "avgScore": 97,
+  "pages": 112,
+  "lowest": [
+   "en/consulting.html:81",
+   "recalls/hazard-shock.html:81",
+   "guide-hub.html:86",
+   "recalls/hazard-battery.html:86",
+   "recalls/hazard-fall-tipover.html:86"
+  ],
+  "keywordGaps": 151,
+  "indexed": 6,
+  "tracked": 114
  }
 ]

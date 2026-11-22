@@ -604,5 +604,83 @@
   "coverage": "URL is unknown to Google",
   "lastCrawl": null,
   "checked": "2026-11-22"
+ },
+ "https://procurement-toolkit-eight.vercel.app/recalls/china.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-22"
+ },
+ "https://procurement-toolkit-eight.vercel.app/recalls/hazard-battery.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-22"
+ },
+ "https://procurement-toolkit-eight.vercel.app/recalls/hazard-fall-tipover.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-22"
+ },
+ "https://procurement-toolkit-eight.vercel.app/recalls/hazard-fire-burn.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-22"
+ },
+ "https://procurement-toolkit-eight.vercel.app/recalls/hazard-ingestion-choking.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-22"
+ },
+ "https://procurement-toolkit-eight.vercel.app/recalls/hazard-laceration-impact.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-22"
+ },
+ "https://procurement-toolkit-eight.vercel.app/recalls/hazard-shock.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-22"
+ },
+ "https://procurement-toolkit-eight.vercel.app/recalls/index.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-22"
+ },
+ "https://procurement-toolkit-eight.vercel.app/recalls/mexico.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-22"
+ },
+ "https://procurement-toolkit-eight.vercel.app/recalls/taiwan.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-22"
+ },
+ "https://procurement-toolkit-eight.vercel.app/recalls/thailand.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-22"
+ },
+ "https://procurement-toolkit-eight.vercel.app/recalls/united-states.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-22"
+ },
+ "https://procurement-toolkit-eight.vercel.app/recalls/vietnam.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-22"
  }
 }
