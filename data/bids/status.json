@@ -1,7 +1,7 @@
 {
  "world-bank": {
   "ok": true,
-  "n": 48,
+  "n": 49,
   "at": "2026-11-22"
  },
  "uk": {
@@ -36,7 +36,7 @@
  },
  "korea-g2b": {
   "ok": false,
-  "error": "HTTP 403 {\n  \"OpenAPI_ServiceResponse\": {\n    \"cmmMsgHeader\": {\n      \"errMsg\": \"SERVICE_KEY_IS_NOT_REGISTERED_ERROR\",\n      \"returnAuthMsg\": \"등록되지 않은 서비스키\",\n ",
+  "error": "G2B: no items",
   "at": "2026-11-22"
  },
  "undp": {
@@ -57,6 +57,11 @@
  "secop-co": {
   "ok": true,
   "n": 898,
+  "at": "2026-11-22"
+ },
+ "sam-gov": {
+  "ok": true,
+  "n": 1000,
   "at": "2026-11-22"
  }
 }

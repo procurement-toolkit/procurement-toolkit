@@ -558,4 +558,8 @@
   <url><loc>https://procurement-toolkit-eight.vercel.app/en/bids/country/syria.html</loc><lastmod>2026-11-22</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>
   <url><loc>https://procurement-toolkit-eight.vercel.app/en/bids/country/trinidad-and-tobago.html</loc><lastmod>2026-11-22</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>
   <url><loc>https://procurement-toolkit-eight.vercel.app/en/bids/country/vietnam.html</loc><lastmod>2026-11-22</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/bids/sam-gov.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/en/bids/sam-gov.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/bids/country/united-states.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/en/bids/country/united-states.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
 </urlset>
