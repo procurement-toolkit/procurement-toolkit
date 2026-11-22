@@ -1,0 +1,42 @@
+{
+ "world-bank": {
+  "ok": true,
+  "n": 0,
+  "at": "2026-11-22"
+ },
+ "uk": {
+  "ok": true,
+  "n": 5,
+  "at": "2026-11-22"
+ },
+ "eu-ted": {
+  "ok": true,
+  "n": 100,
+  "at": "2026-11-22"
+ },
+ "ungm": {
+  "ok": false,
+  "error": "HTTP 400 Bad Request",
+  "at": "2026-11-22"
+ },
+ "au-tenders": {
+  "ok": true,
+  "n": 0,
+  "at": "2026-11-22"
+ },
+ "canada-buys": {
+  "ok": false,
+  "error": "HTTP 403",
+  "at": "2026-11-22"
+ },
+ "prozorro": {
+  "ok": true,
+  "n": 0,
+  "at": "2026-11-22"
+ },
+ "korea-g2b": {
+  "ok": false,
+  "error": "HTTP 403 {\n  \"OpenAPI_ServiceResponse\": {\n    \"cmmMsgHeader\": {\n      \"errMsg\": \"SERVICE_KEY_IS_NOT_REGISTERED_ERROR\",\n      \"returnAuthMsg\": \"등록되지 않은 서비스키\",\n ",
+  "at": "2026-11-22"
+ }
+}
