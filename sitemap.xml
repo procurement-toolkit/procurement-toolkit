@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url><loc>https://procurement-toolkit-eight.vercel.app/</loc><lastmod>2026-11-23</lastmod><changefreq>weekly</changefreq><priority>1.0</priority></url>
-  <url><loc>https://procurement-toolkit-eight.vercel.app/en/index.html</loc><lastmod>2026-11-23</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
-  <url><loc>https://procurement-toolkit-eight.vercel.app/en/kraljic-matrix.html</loc><lastmod>2026-11-23</lastmod><changefreq>monthly</changefreq><priority>0.9</priority></url>
-  <url><loc>https://procurement-toolkit-eight.vercel.app/en/supplier-preferencing-matrix.html</loc><lastmod>2026-11-23</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/en/index.html</loc><lastmod>2026-11-22</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/en/kraljic-matrix.html</loc><lastmod>2026-11-22</lastmod><changefreq>monthly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/en/supplier-preferencing-matrix.html</loc><lastmod>2026-11-22</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
   <url><loc>https://procurement-toolkit-eight.vercel.app/fx-exposure-calculator.html</loc><lastmod>2026-11-23</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
   <url><loc>https://procurement-toolkit-eight.vercel.app/en/fx-exposure-calculator.html</loc><lastmod>2026-11-23</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://procurement-toolkit-eight.vercel.app/en/supplier-risk-matrix.html</loc><lastmod>2026-11-23</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/en/supplier-risk-matrix.html</loc><lastmod>2026-11-22</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
   <url><loc>https://procurement-toolkit-eight.vercel.app/rvc-calculator.html</loc><lastmod>2026-11-23</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
   <url><loc>https://procurement-toolkit-eight.vercel.app/en/rvc-calculator.html</loc><lastmod>2026-11-23</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
   <url><loc>https://procurement-toolkit-eight.vercel.app/contract-renewal-calendar.html</loc><lastmod>2026-11-23</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
   <url><loc>https://procurement-toolkit-eight.vercel.app/en/contract-renewal-calendar.html</loc><lastmod>2026-11-23</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
   <url><loc>https://procurement-toolkit-eight.vercel.app/hs-code-guide.html</loc><lastmod>2026-11-23</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
   <url><loc>https://procurement-toolkit-eight.vercel.app/en/hs-code-guide.html</loc><lastmod>2026-11-23</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://procurement-toolkit-eight.vercel.app/en/directional-policy-matrix.html</loc><lastmod>2026-11-23</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/en/directional-policy-matrix.html</loc><lastmod>2026-11-22</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
   <url><loc>https://procurement-toolkit-eight.vercel.app/aliexpress-temu-guide.html</loc><lastmod>2026-11-23</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
   <url><loc>https://procurement-toolkit-eight.vercel.app/global-holiday-calendar.html</loc><lastmod>2026-11-23</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
   <url><loc>https://procurement-toolkit-eight.vercel.app/en/global-holiday-calendar.html</loc><lastmod>2026-11-23</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
@@ -28,11 +28,11 @@
   <url><loc>https://procurement-toolkit-eight.vercel.app/demurrage-detention-calculator.html</loc><lastmod>2026-11-23</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
   <url><loc>https://procurement-toolkit-eight.vercel.app/en/demurrage-detention-calculator.html</loc><lastmod>2026-11-23</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
   <url><loc>https://procurement-toolkit-eight.vercel.app/purchase-price-variance-calculator.html</loc><lastmod>2026-11-23</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://procurement-toolkit-eight.vercel.app/en/purchase-price-variance-calculator.html</loc><lastmod>2026-11-23</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/en/purchase-price-variance-calculator.html</loc><lastmod>2026-11-22</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
   <url><loc>https://procurement-toolkit-eight.vercel.app/oee-calculator.html</loc><lastmod>2026-11-23</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
   <url><loc>https://procurement-toolkit-eight.vercel.app/en/oee-calculator.html</loc><lastmod>2026-11-23</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
   <url><loc>https://procurement-toolkit-eight.vercel.app/abc-inventory-analysis.html</loc><lastmod>2026-11-23</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://procurement-toolkit-eight.vercel.app/en/abc-inventory-analysis.html</loc><lastmod>2026-11-23</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/en/abc-inventory-analysis.html</loc><lastmod>2026-11-22</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
   <url><loc>https://procurement-toolkit-eight.vercel.app/spend-analysis-dashboard.html</loc><lastmod>2026-11-23</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
   <url><loc>https://procurement-toolkit-eight.vercel.app/en/spend-analysis-dashboard.html</loc><lastmod>2026-11-23</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
   <url><loc>https://procurement-toolkit-eight.vercel.app/sourcing-location-comparator.html</loc><lastmod>2026-11-23</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
@@ -40,13 +40,13 @@
   <url><loc>https://procurement-toolkit-eight.vercel.app/en/landed-cost-calculator.html</loc><lastmod>2026-11-23</lastmod><changefreq>monthly</changefreq><priority>0.9</priority></url>
   <url><loc>https://procurement-toolkit-eight.vercel.app/en/cbm-calculator.html</loc><lastmod>2026-11-23</lastmod><changefreq>monthly</changefreq><priority>0.9</priority></url>
   <url><loc>https://procurement-toolkit-eight.vercel.app/en/incoterms-guide.html</loc><lastmod>2026-11-23</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://procurement-toolkit-eight.vercel.app/en/rfq-rfp-rfi-generator.html</loc><lastmod>2026-11-23</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/en/rfq-rfp-rfi-generator.html</loc><lastmod>2026-11-22</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
   <url><loc>https://procurement-toolkit-eight.vercel.app/en/should-cost-calculator.html</loc><lastmod>2026-11-23</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
   <url><loc>https://procurement-toolkit-eight.vercel.app/en/tco-calculator.html</loc><lastmod>2026-11-23</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
   <url><loc>https://procurement-toolkit-eight.vercel.app/en/supplier-scorecard.html</loc><lastmod>2026-11-23</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://procurement-toolkit-eight.vercel.app/en/eoq-safety-stock-calculator.html</loc><lastmod>2026-11-23</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://procurement-toolkit-eight.vercel.app/en/container-loading-calculator.html</loc><lastmod>2026-11-23</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://procurement-toolkit-eight.vercel.app/en/lead-time-calculator.html</loc><lastmod>2026-11-23</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/en/eoq-safety-stock-calculator.html</loc><lastmod>2026-11-22</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/en/container-loading-calculator.html</loc><lastmod>2026-11-22</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/en/lead-time-calculator.html</loc><lastmod>2026-11-22</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
   <url><loc>https://procurement-toolkit-eight.vercel.app/en/cost-structure-calculator.html</loc><lastmod>2026-11-23</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
   <url><loc>https://procurement-toolkit-eight.vercel.app/en/invoice-packing-generator.html</loc><lastmod>2026-11-23</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
   <url><loc>https://procurement-toolkit-eight.vercel.app/en/courier-guide.html</loc><lastmod>2026-11-23</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
@@ -54,10 +54,10 @@
   <url><loc>https://procurement-toolkit-eight.vercel.app/en/fta-guide.html</loc><lastmod>2026-11-23</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
   <url><loc>https://procurement-toolkit-eight.vercel.app/en/email-generator.html</loc><lastmod>2026-11-23</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
   <url><loc>https://procurement-toolkit-eight.vercel.app/en/market-index-hub.html</loc><lastmod>2026-11-23</lastmod><changefreq>monthly</changefreq><priority>0.5</priority></url>
-  <url><loc>https://procurement-toolkit-eight.vercel.app/en/exam-calendar.html</loc><lastmod>2026-11-23</lastmod><changefreq>monthly</changefreq><priority>0.4</priority></url>
-  <url><loc>https://procurement-toolkit-eight.vercel.app/en/worldclock.html</loc><lastmod>2026-11-23</lastmod><changefreq>monthly</changefreq><priority>0.5</priority></url>
-  <url><loc>https://procurement-toolkit-eight.vercel.app/en/consulting.html</loc><lastmod>2026-11-23</lastmod><changefreq>monthly</changefreq><priority>0.4</priority></url>
-  <url><loc>https://procurement-toolkit-eight.vercel.app/en/privacy.html</loc><lastmod>2026-11-23</lastmod><changefreq>yearly</changefreq><priority>0.3</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/en/exam-calendar.html</loc><lastmod>2026-11-22</lastmod><changefreq>monthly</changefreq><priority>0.4</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/en/worldclock.html</loc><lastmod>2026-11-22</lastmod><changefreq>monthly</changefreq><priority>0.5</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/en/consulting.html</loc><lastmod>2026-11-22</lastmod><changefreq>monthly</changefreq><priority>0.4</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/en/privacy.html</loc><lastmod>2026-11-22</lastmod><changefreq>yearly</changefreq><priority>0.3</priority></url>
   <url><loc>https://procurement-toolkit-eight.vercel.app/cbm.html</loc><lastmod>2026-11-23</lastmod><changefreq>monthly</changefreq><priority>0.9</priority></url>
   <url><loc>https://procurement-toolkit-eight.vercel.app/fob-cif.html</loc><lastmod>2026-11-23</lastmod><changefreq>monthly</changefreq><priority>0.9</priority></url>
   <url><loc>https://procurement-toolkit-eight.vercel.app/personal-duty-calculator.html</loc><lastmod>2026-11-23</lastmod><changefreq>monthly</changefreq><priority>0.9</priority></url>
@@ -69,8 +69,8 @@
   <url><loc>https://procurement-toolkit-eight.vercel.app/forwarding-guide.html</loc><lastmod>2026-11-23</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
   <url><loc>https://procurement-toolkit-eight.vercel.app/scam-prevention-guide.html</loc><lastmod>2026-11-23</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
   <url><loc>https://procurement-toolkit-eight.vercel.app/guide-hub.html</loc><lastmod>2026-11-23</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://procurement-toolkit-eight.vercel.app/global-de-minimis-guide.html</loc><lastmod>2026-11-23</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://procurement-toolkit-eight.vercel.app/en/global-de-minimis-guide.html</loc><lastmod>2026-11-23</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/global-de-minimis-guide.html</loc><lastmod>2026-11-22</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/en/global-de-minimis-guide.html</loc><lastmod>2026-11-22</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
   <url><loc>https://procurement-toolkit-eight.vercel.app/leadtime-calculator.html</loc><lastmod>2026-11-23</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
   <url><loc>https://procurement-toolkit-eight.vercel.app/cost-structure-calculator.html</loc><lastmod>2026-11-23</lastmod><changefreq>monthly</changefreq><priority>0.9</priority></url>
   <url><loc>https://procurement-toolkit-eight.vercel.app/inventory-planning-calculator.html</loc><lastmod>2026-11-23</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
@@ -89,17 +89,17 @@
   <url><loc>https://procurement-toolkit-eight.vercel.app/exam-calendar.html</loc><lastmod>2026-11-23</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
   <url><loc>https://procurement-toolkit-eight.vercel.app/worldclock.html</loc><lastmod>2026-11-23</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
   <url><loc>https://procurement-toolkit-eight.vercel.app/consulting.html</loc><lastmod>2026-11-23</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://procurement-toolkit-eight.vercel.app/privacy.html</loc><lastmod>2026-11-23</lastmod><changefreq>yearly</changefreq><priority>0.3</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/privacy.html</loc><lastmod>2026-11-22</lastmod><changefreq>yearly</changefreq><priority>0.3</priority></url>
   <url><loc>https://procurement-toolkit-eight.vercel.app/cost-of-quality-calculator.html</loc><lastmod>2026-11-23</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
   <url><loc>https://procurement-toolkit-eight.vercel.app/en/cost-of-quality-calculator.html</loc><lastmod>2026-11-23</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
   <url><loc>https://procurement-toolkit-eight.vercel.app/currency-hedging-calculator.html</loc><lastmod>2026-11-23</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
   <url><loc>https://procurement-toolkit-eight.vercel.app/en/currency-hedging-calculator.html</loc><lastmod>2026-11-23</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
   <url><loc>https://procurement-toolkit-eight.vercel.app/incoterms-responsibility-grid.html</loc><lastmod>2026-11-23</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
   <url><loc>https://procurement-toolkit-eight.vercel.app/en/incoterms-responsibility-grid.html</loc><lastmod>2026-11-23</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://procurement-toolkit-eight.vercel.app/data-radar-hub.html</loc><lastmod>2026-11-23</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://procurement-toolkit-eight.vercel.app/korea-sourcing-desk.html</loc><lastmod>2026-11-23</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://procurement-toolkit-eight.vercel.app/korea-supplier-intelligence.html</loc><lastmod>2026-11-23</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://procurement-toolkit-eight.vercel.app/k-nsf-certification-guide.html</loc><lastmod>2026-11-23</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/data-radar-hub.html</loc><lastmod>2026-11-22</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/korea-sourcing-desk.html</loc><lastmod>2026-11-22</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/korea-supplier-intelligence.html</loc><lastmod>2026-11-22</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/k-nsf-certification-guide.html</loc><lastmod>2026-11-22</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
   <url><loc>https://procurement-toolkit-eight.vercel.app/landed-cost-calculator.html</loc><lastmod>2026-11-23</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
   <url><loc>https://procurement-toolkit-eight.vercel.app/recalls/china.html</loc><lastmod>2026-11-23</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>
   <url><loc>https://procurement-toolkit-eight.vercel.app/recalls/hazard-battery.html</loc><lastmod>2026-11-23</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>
@@ -464,7 +464,7 @@
   <url><loc>https://procurement-toolkit-eight.vercel.app/bids/guide/grants-ngo.html</loc><lastmod>2026-11-23</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>
   <url><loc>https://procurement-toolkit-eight.vercel.app/bids/guide/health-services.html</loc><lastmod>2026-11-23</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>
   <url><loc>https://procurement-toolkit-eight.vercel.app/bids/guide/humanitarian.html</loc><lastmod>2026-11-23</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://procurement-toolkit-eight.vercel.app/bids/guide/index.html</loc><lastmod>2026-11-23</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/bids/guide/index.html</loc><lastmod>2026-11-22</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
   <url><loc>https://procurement-toolkit-eight.vercel.app/bids/guide/individual-contractor.html</loc><lastmod>2026-11-23</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>
   <url><loc>https://procurement-toolkit-eight.vercel.app/bids/guide/it-hardware.html</loc><lastmod>2026-11-23</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>
   <url><loc>https://procurement-toolkit-eight.vercel.app/bids/guide/kitchen-equipment.html</loc><lastmod>2026-11-23</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>
@@ -501,7 +501,7 @@
   <url><loc>https://procurement-toolkit-eight.vercel.app/en/bids/guide/grants-ngo.html</loc><lastmod>2026-11-23</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>
   <url><loc>https://procurement-toolkit-eight.vercel.app/en/bids/guide/health-services.html</loc><lastmod>2026-11-23</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>
   <url><loc>https://procurement-toolkit-eight.vercel.app/en/bids/guide/humanitarian.html</loc><lastmod>2026-11-23</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://procurement-toolkit-eight.vercel.app/en/bids/guide/index.html</loc><lastmod>2026-11-23</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/en/bids/guide/index.html</loc><lastmod>2026-11-22</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
   <url><loc>https://procurement-toolkit-eight.vercel.app/en/bids/guide/individual-contractor.html</loc><lastmod>2026-11-23</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>
   <url><loc>https://procurement-toolkit-eight.vercel.app/en/bids/guide/it-hardware.html</loc><lastmod>2026-11-23</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>
   <url><loc>https://procurement-toolkit-eight.vercel.app/en/bids/guide/kitchen-equipment.html</loc><lastmod>2026-11-23</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>
@@ -562,4 +562,270 @@
   <url><loc>https://procurement-toolkit-eight.vercel.app/en/bids/korea-g2b.html</loc><lastmod>2026-11-23</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>
   <url><loc>https://procurement-toolkit-eight.vercel.app/bids/country/x.html</loc><lastmod>2026-11-23</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>
   <url><loc>https://procurement-toolkit-eight.vercel.app/en/bids/country/x.html</loc><lastmod>2026-11-23</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/fairs/c-agri.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/fairs/c-building.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/fairs/c-chemicals.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/fairs/c-consumer.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/fairs/c-electronics.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/fairs/c-energy.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/fairs/c-food.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/fairs/c-logistics.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/fairs/c-machinery.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/fairs/c-medical.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/fairs/c-mobility.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/fairs/c-other.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/fairs/index.html</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/en/fairs/c-agri.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/en/fairs/c-building.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/en/fairs/c-chemicals.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/en/fairs/c-consumer.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/en/fairs/c-electronics.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/en/fairs/c-energy.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/en/fairs/c-food.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/en/fairs/c-logistics.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/en/fairs/c-machinery.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/en/fairs/c-medical.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/en/fairs/c-mobility.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/en/fairs/c-other.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/en/fairs/index.html</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/fairs/country/de.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/fairs/country/us.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/en/fairs/country/de.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/en/fairs/country/us.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/fairs/f/a-a-2027.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/fairs/f/aero-friedrichshafen-2027.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/fairs/f/agritechnica-2027.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/fairs/f/ambiente-2027.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/fairs/f/anuga-2027.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/fairs/f/anuga-foodtec-2027.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/fairs/f/aquanale-2027.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/fairs/f/art-cologne-2026.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/fairs/f/asia-pacific-sourcing-2027.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/fairs/f/automatica-2027.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/fairs/f/aviation-forum-2026.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/fairs/f/bar-convent-berlin-2027.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/fairs/f/bau-2027.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/fairs/f/biofach-2027.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/fairs/f/blechexpo-2027.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/fairs/f/boot-dusseldorf-2027.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/fairs/f/braubeviale-2026.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/fairs/f/camx-2027.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/fairs/f/caravan-salon-2027.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/fairs/f/ces-2027.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/fairs/f/christmasworld-2027.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/fairs/f/control-2027.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/fairs/f/creativeworld-2027.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/fairs/f/didacta-2027.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/fairs/f/dmea-2027.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/fairs/f/dmexco-2027.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/fairs/f/dsei-2027.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/fairs/f/e-world-energy-water-2027.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/fairs/f/electronica-2026.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/fairs/f/embedded-world-2027.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/fairs/f/emv-cologne-2027.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/fairs/f/enforce-tac-2027.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/fairs/f/equitana-2027.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/fairs/f/eurobike-2027.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/fairs/f/eurocis-2027.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/fairs/f/european-coatings-show-2027.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/fairs/f/eurotier-energydecentral-2026.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/fairs/f/expo-real-2027.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/fairs/f/expopharm-2027.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/fairs/f/fakuma-2027.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/fairs/f/fastener-fair-global-2027.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/fairs/f/fibo-2027.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/fairs/f/formnext-2026.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/fairs/f/frankfurt-book-fair-2027.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/fairs/f/fruit-logistica-2027.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/fairs/f/gamescom-2027.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/fairs/f/geotherm-2027.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/fairs/f/gifa-2027.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/fairs/f/glasstec-2027.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/fairs/f/h-h-cologne-2027.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/fairs/f/hannover-messe-2027.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/fairs/f/heimtextil-2027.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/fairs/f/husum-wind-2027.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/fairs/f/iaa-mobility-2027.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/fairs/f/iba-2027.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/fairs/f/ice-europe-2027.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/fairs/f/ids-2027.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/fairs/f/ifa-berlin-2027.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/fairs/f/ilm-2027.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/fairs/f/imex-2027.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/fairs/f/imm-cologne-2027.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/fairs/f/inhorgenta-munich-2027.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/fairs/f/innotrans-2027.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/fairs/f/intec-2027.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/fairs/f/inter-airport-europe-2027.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/fairs/f/interboot-2027.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/fairs/f/intergeo-2027.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/fairs/f/interlift-2027.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/fairs/f/intermot-cologne-2026.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/fairs/f/international-green-week-2027.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/fairs/f/internationale-handwerksmesse-2027.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/fairs/f/internorga-2027.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/fairs/f/intertabac-2027.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/fairs/f/interzum-2027.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/fairs/f/ipm-essen-2027.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/fairs/f/ise-2027.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/fairs/f/ish-2027.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/fairs/f/ism-cologne-2027.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/fairs/f/ism-manufacturing-cologne-2027.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/fairs/f/it-sa-2027.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/fairs/f/itb-berlin-2027.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/fairs/f/iwa-outdoorclassics-2027.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/fairs/f/jagd-hund-2027.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/fairs/f/kind-jugend-2027.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/fairs/f/laser-world-of-photonics-2027.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/fairs/f/learntec-2027.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/fairs/f/ligna-2027.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/fairs/f/logimat-2027.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/fairs/f/lopec-2027.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/fairs/f/manga-comic-con-2027.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/fairs/f/medica-2026.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/fairs/f/metec-2027.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/fairs/f/motek-2027.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/fairs/f/moulding-expo-2027.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/fairs/f/mutec-2026.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/fairs/f/newcast-2027.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/fairs/f/nortec-2027.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/fairs/f/opti-2027.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/fairs/f/parts2clean-2027.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/fairs/f/pcim-europe-2027.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/fairs/f/pmrexpo-2026.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/fairs/f/productronica-2027.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/fairs/f/prowein-2027.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/fairs/f/psi-2027.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/fairs/f/rehacare-2027.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/fairs/f/sensor-test-2027.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/fairs/f/spielwarenmesse-2027.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/fairs/f/spoga-gafa-2027.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/fairs/f/spoga-horse-2027.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/fairs/f/sps-2026.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/fairs/f/succeet-2027.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/fairs/f/tech-show-frankfurt-2027.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/fairs/f/techtextil-2027.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/fairs/f/the-smarter-e-europe-2027.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/fairs/f/thermprocess-2027.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/fairs/f/transport-logistic-air-cargo-europe-2027.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/fairs/f/valve-world-expo-2026.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/fairs/f/world-of-quantum-2027.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/en/fairs/f/a-a-2027.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/en/fairs/f/aero-friedrichshafen-2027.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/en/fairs/f/agritechnica-2027.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/en/fairs/f/ambiente-2027.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/en/fairs/f/anuga-2027.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/en/fairs/f/anuga-foodtec-2027.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/en/fairs/f/aquanale-2027.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/en/fairs/f/art-cologne-2026.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/en/fairs/f/asia-pacific-sourcing-2027.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/en/fairs/f/automatica-2027.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/en/fairs/f/aviation-forum-2026.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/en/fairs/f/bar-convent-berlin-2027.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/en/fairs/f/bau-2027.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/en/fairs/f/biofach-2027.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/en/fairs/f/blechexpo-2027.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/en/fairs/f/boot-dusseldorf-2027.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/en/fairs/f/braubeviale-2026.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/en/fairs/f/camx-2027.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/en/fairs/f/caravan-salon-2027.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/en/fairs/f/ces-2027.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/en/fairs/f/christmasworld-2027.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/en/fairs/f/control-2027.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/en/fairs/f/creativeworld-2027.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/en/fairs/f/didacta-2027.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/en/fairs/f/dmea-2027.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/en/fairs/f/dmexco-2027.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/en/fairs/f/dsei-2027.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/en/fairs/f/e-world-energy-water-2027.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/en/fairs/f/electronica-2026.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/en/fairs/f/embedded-world-2027.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/en/fairs/f/emv-cologne-2027.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/en/fairs/f/enforce-tac-2027.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/en/fairs/f/equitana-2027.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/en/fairs/f/eurobike-2027.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/en/fairs/f/eurocis-2027.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/en/fairs/f/european-coatings-show-2027.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/en/fairs/f/eurotier-energydecentral-2026.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/en/fairs/f/expo-real-2027.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/en/fairs/f/expopharm-2027.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/en/fairs/f/fakuma-2027.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/en/fairs/f/fastener-fair-global-2027.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/en/fairs/f/fibo-2027.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/en/fairs/f/formnext-2026.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/en/fairs/f/frankfurt-book-fair-2027.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/en/fairs/f/fruit-logistica-2027.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/en/fairs/f/gamescom-2027.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/en/fairs/f/geotherm-2027.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/en/fairs/f/gifa-2027.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/en/fairs/f/glasstec-2027.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/en/fairs/f/h-h-cologne-2027.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/en/fairs/f/hannover-messe-2027.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/en/fairs/f/heimtextil-2027.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/en/fairs/f/husum-wind-2027.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/en/fairs/f/iaa-mobility-2027.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/en/fairs/f/iba-2027.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/en/fairs/f/ice-europe-2027.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/en/fairs/f/ids-2027.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/en/fairs/f/ifa-berlin-2027.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/en/fairs/f/ilm-2027.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/en/fairs/f/imex-2027.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/en/fairs/f/imm-cologne-2027.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/en/fairs/f/inhorgenta-munich-2027.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/en/fairs/f/innotrans-2027.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/en/fairs/f/intec-2027.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/en/fairs/f/inter-airport-europe-2027.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/en/fairs/f/interboot-2027.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/en/fairs/f/intergeo-2027.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/en/fairs/f/interlift-2027.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/en/fairs/f/intermot-cologne-2026.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/en/fairs/f/international-green-week-2027.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/en/fairs/f/internationale-handwerksmesse-2027.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/en/fairs/f/internorga-2027.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/en/fairs/f/intertabac-2027.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/en/fairs/f/interzum-2027.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/en/fairs/f/ipm-essen-2027.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/en/fairs/f/ise-2027.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/en/fairs/f/ish-2027.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/en/fairs/f/ism-cologne-2027.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/en/fairs/f/ism-manufacturing-cologne-2027.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/en/fairs/f/it-sa-2027.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/en/fairs/f/itb-berlin-2027.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/en/fairs/f/iwa-outdoorclassics-2027.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/en/fairs/f/jagd-hund-2027.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/en/fairs/f/kind-jugend-2027.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/en/fairs/f/laser-world-of-photonics-2027.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/en/fairs/f/learntec-2027.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/en/fairs/f/ligna-2027.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/en/fairs/f/logimat-2027.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/en/fairs/f/lopec-2027.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/en/fairs/f/manga-comic-con-2027.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/en/fairs/f/medica-2026.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/en/fairs/f/metec-2027.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/en/fairs/f/motek-2027.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/en/fairs/f/moulding-expo-2027.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/en/fairs/f/mutec-2026.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/en/fairs/f/newcast-2027.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/en/fairs/f/nortec-2027.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/en/fairs/f/opti-2027.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/en/fairs/f/parts2clean-2027.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/en/fairs/f/pcim-europe-2027.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/en/fairs/f/pmrexpo-2026.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/en/fairs/f/productronica-2027.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/en/fairs/f/prowein-2027.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/en/fairs/f/psi-2027.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/en/fairs/f/rehacare-2027.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/en/fairs/f/sensor-test-2027.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/en/fairs/f/spielwarenmesse-2027.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/en/fairs/f/spoga-gafa-2027.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/en/fairs/f/spoga-horse-2027.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/en/fairs/f/sps-2026.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/en/fairs/f/succeet-2027.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/en/fairs/f/tech-show-frankfurt-2027.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/en/fairs/f/techtextil-2027.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/en/fairs/f/the-smarter-e-europe-2027.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/en/fairs/f/thermprocess-2027.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/en/fairs/f/transport-logistic-air-cargo-europe-2027.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/en/fairs/f/valve-world-expo-2026.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/en/fairs/f/world-of-quantum-2027.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
 </urlset>

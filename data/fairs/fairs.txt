@@ -1,0 +1,118 @@
+MUTEC|2026-11-05|2026-11-06|Leipzig|Museum and exhibition technology trade fair
+ART COLOGNE|2026-11-05|2026-11-08|Cologne|International art fair
+BrauBeviale|2026-11-10|2026-11-12|Nuremberg|Capital goods exhibition for the beverage industry
+electronica|2026-11-10|2026-11-13|Munich|Electronics trade fair and conference
+EuroTier / EnergyDecentral|2026-11-10|2026-11-13|Hanover|Animal production and decentralized energy supply platform
+MEDICA|2026-11-16|2026-11-19|Dusseldorf|Medicine exhibition and conference, co-located with COMPAMED
+formnext|2026-11-17|2026-11-20|Frankfurt|Additive manufacturing and tool making exhibition
+SPS|2026-11-24|2026-11-26|Nuremberg|Automation, systems, and components exhibition
+PMRExpo|2026-11-24|2026-11-26|Cologne|Secure communications trade fair
+Valve World Expo|2026-12-01|2026-12-03|Dusseldorf|Industrial valves trade fair
+Intermot Cologne|2026-12-03|2026-12-06|Cologne|International motorcycle fair
+Aviation Forum|2026-12-14|2026-12-15|Munich|Event connecting aerospace suppliers with OEMs and integrators
+CES|2027-01-06|2027-01-09|Las Vegas|Consumer technology trade fair for new products and innovations
+BAU|2027-01-11|2027-01-15|Munich|Architecture, materials, and building systems trade fair
+PSI|2027-01-12|2027-01-14|Dusseldorf|Promotional product industry trade show
+Heimtextil|2027-01-12|2027-01-15|Frankfurt|Home and contract textiles trade fair
+opti|2027-01-29|2027-01-31|Munich|Optics and design trade show
+International Green Week|2027-01-15|2027-01-24|Berlin|Exhibition for food, agriculture, and horticulture
+boot Düsseldorf|2027-01-23|2027-01-31|Dusseldorf|International boat show
+imm cologne|2027-01-19|2027-01-22|Cologne|International furnishing fair
+IPM Essen|2027-01-26|2027-01-29|Essen|Leading horticulture trade fair
+Creativeworld|2027-01-29|2027-02-01|Frankfurt|Hobby, art, and craft supplies trade fair
+Ambiente|2027-01-29|2027-02-02|Frankfurt|Leading international consumer goods fair
+Christmasworld|2027-01-29|2027-02-02|Frankfurt|Seasonal and festive decorations trade fair
+spoga horse|2027-01-30|2027-02-01|Cologne|Equestrian sports trade fair
+ISM Cologne|2027-01-31|2027-02-03|Cologne|Trade fair for sweets and snacks
+ISM Manufacturing Cologne|2027-01-31|2027-02-03|Cologne|Supplier fair for the confectionery and snack industry
+LEARNTEC|2027-02-02|2027-02-04|Karlsruhe|Event for digital education
+ISE|2027-02-02|2027-02-05|Barcelona|Audiovisual systems integration trade fair
+Spielwarenmesse|2027-02-02|2027-02-06|Nuremberg|International toy fair
+JAGD & HUND|2027-02-02|2027-02-07|Dortmund|Hunting exhibition
+FRUIT LOGISTICA|2027-02-03|2027-02-05|Berlin|Fruit and vegetable marketing trade fair
+NORTEC|2027-02-08|2027-02-10|Hamburg|Trade fair for manufacturers and production technology
+ILM|2027-02-13|2027-02-15|Offenbach am Main|International leather goods trade fair
+E-world energy & water|2027-02-16|2027-02-18|Essen|Energy and water trade fair and congress
+BIOFACH|2027-02-16|2027-02-19|Nuremberg|Organic food and organic personal care trade fair
+INHORGENTA MUNICH|2027-02-19|2027-02-22|Munich|Jewelry, watches, design, and gemstones trade fair
+Anuga FoodTec|2027-02-23|2027-02-26|Cologne|International food technology trade show
+Didacta|2027-02-23|2027-02-27|Hannover|Education sector trade fair
+EuroCIS|2027-02-16|2027-02-18|Dusseldorf|International retail technology exhibition
+GeoTHERM|2027-02-25|2027-02-26|Offenburg|Geothermal trade fair
+Enforce Tac|2027-03-01|2027-03-03|Nuremberg|Security and military personnel trade fair
+Intec|2027-03-02|2027-03-05|Leipzig|Machine tools, manufacturing, and automation trade fair
+LOPEC|2027-03-03|2027-03-04|Munich|Printed electronics trade fair and congress
+IWA OutdoorClassics|2027-03-04|2027-03-07|Nuremberg|Hunting and sport shooting industry exhibition
+ProWein|2027-03-07|2027-03-09|Dusseldorf|Industry meeting for wines and spirits
+Asia-Pacific-Sourcing|2027-03-09|2027-03-11|Cologne|Home and garden tools and products sourcing fair
+ICE Europe|2027-03-09|2027-03-11|Munich|Finishing and converting of paper, film, and foil
+Internationale Handwerksmesse|2027-03-10|2027-03-14|Munich|International trade fair for handmade goods
+Internorga|2027-03-12|2027-03-16|Hamburg|Hotel, gastronomy, and bakery industries trade fair
+ISH|2027-03-15|2027-03-19|Frankfurt|Bathroom, building, energy, air-conditioning, and renewables fair
+LogiMat|2027-03-16|2027-03-18|Stuttgart|Intralogistics solutions and process management trade show
+ITB Berlin|2027-03-16|2027-03-18|Berlin|Tourism trade fair
+embedded world|2027-03-16|2027-03-18|Nuremberg|Embedded systems technologies exhibition
+IDS|2027-03-16|2027-03-20|Cologne|Dental medicine and dental technology trade fair
+succeet|2027-03-17|2027-03-18|Wiesbaden|Trade show for insights, data, and analytics
+Manga-Comic-Con|2027-03-18|2027-03-21|Leipzig|Comic convention held at Leipzig Book Fair
+EQUITANA|2027-03-18|2027-03-24|Essen|Equestrian trade fair and exhibition
+h+h cologne|2027-04-02|2027-04-04|Cologne|Trade fair for needlework and hobbies
+Techtextil|2027-04-04|2027-04-07|Frankfurt|Technical textiles trade fair
+Hannover Messe|2027-04-05|2027-04-08|Hanover|Trade fair for industrial transformation
+Fastener Fair Global|2027-04-06|2027-04-08|Stuttgart|Fastener and fixing industry exhibition
+FIBO|2027-04-08|2027-04-11|Cologne|Fitness, wellness, and health trade show
+DMEA|2027-04-13|2027-04-15|Munich|Platform for digital healthcare
+AERO Friedrichshafen|2027-04-14|2027-04-17|Friedrichshafen|Show for general aviation
+European Coatings Show|2027-04-27|2027-04-29|Nuremberg|Gathering of the coating and painting industry
+Transport Logistic & air cargo Europe|2027-04-26|2027-04-29|Munich|Logistics, mobility, IT, and supply chain management trade fair
+EMV Cologne|2027-04-27|2027-04-29|Cologne|Electromagnetic compatibility conference
+LIGNA|2027-05-10|2027-05-14|Hanover|Woodworking and wood processing trade fair
+Moulding Expo|2027-05-11|2027-05-12|Stuttgart|Tool construction, pattern, and mold-making trade fair
+PCIM Europe|2027-05-11|2027-05-13|Nuremberg|Power electronics, motion, renewables, and energy management event
+IMEX|2027-05-11|2027-05-13|Frankfurt|Travel industry trade show
+SENSOR+TEST|2027-05-11|2027-05-13|Nuremberg|Sensorics, measuring, and testing technologies trade fair
+Interzum|2027-05-11|2027-05-14|Cologne|Furniture production and interiors trade show
+Control|2027-05-11|2027-05-14|Stuttgart|Industrial quality assurance technologies trade fair
+Tech Show Frankfurt|2027-05-19|2027-05-20|Frankfurt|Digital technology and services trade fair
+The smarter E Europe|2027-06-07|2027-06-10|Munich|Energy industry exhibition alliance
+spoga+gafa|2027-06-15|2027-06-17|Cologne|Garden lifestyle sector trade fair
+GIFA|2027-06-21|2027-06-25|Dusseldorf|International foundry trade fair with technical forum
+METEC|2027-06-21|2027-06-25|Dusseldorf|Steel industry conference and trade fair
+THERMPROCESS|2027-06-21|2027-06-25|Dusseldorf|Thermal process technology trade fair
+Newcast|2027-06-21|2027-06-25|Dusseldorf|Trade fair for castings
+World of Quantum|2027-06-22|2027-06-25|Munich|Trade fair for quantum technologies
+automatica|2027-06-22|2027-06-25|Munich|Smart automation and robotics exhibition
+LASER World of Photonics|2027-06-22|2027-06-25|Munich|Photonics congress and trade fair
+gamescom|2027-08-23|2027-08-29|Cologne|Trade fair for interactive games
+Caravan Salon|2027-08-27|2027-09-05|Dusseldorf|Trade fair for motor homes and caravans
+EUROBIKE|2027-09-01|2027-09-03|Frankfurt|Bicycle industry fair
+IFA Berlin|2027-09-03|2027-09-07|Berlin|Consumer electronics and home appliances trade show
+Kind & Jugend|2027-09-07|2027-09-09|Cologne|Baby and toddler outfitting products event
+InnoTrans|2027-09-07|2027-09-09|Singapore|Rail and transport technology trade fair
+DSEI|2027-09-07|2027-09-10|London|Defense and security event
+IAA Mobility|2027-09-07|2027-09-12|Munich|Mobility event
+INTERGEO|2027-09-12|2027-09-14|Frankfurt am Main|Geospatial platforms and digitalization conference
+InterTabac|2027-09-14|2027-09-16|Dortmund|Tobacco and smoking accessories trade fair
+HUSUM Wind|2027-09-14|2027-09-17|Husum|Showcase for the wind industry
+REHACARE|2027-09-15|2027-09-18|Dusseldorf|Trade fair for rehabilitation, care, and inclusion
+DMEXCO|2027-09-22|2027-09-23|Cologne|Digital business, marketing, and innovation event
+INTERBOOT|2027-09-22|2027-09-26|Friedrichshafen|Water sports exhibition
+Expopharm|2027-09-28|2027-09-30|Munich|Pharmaceutical trade fair
+Bar Convent Berlin|2027-10-04|2027-10-05|Berlin|International bar and beverage trade show
+EXPO REAL|2027-10-04|2027-10-06|Munich|Property and real estate investment trade fair
+Parts2Clean|2027-10-05|2027-10-07|Stuttgart|Trade show for industrial parts and surface cleaning
+Motek|2027-10-05|2027-10-07|Stuttgart|Assembly, handling, and automation trade fair
+it-sa|2027-10-05|2027-10-07|Nuremberg|IT security exhibition
+Frankfurt Book Fair|2027-10-06|2027-10-10|Frankfurt am Main|Trade show for print and digital content business
+Anuga|2027-10-09|2027-10-13|Cologne|Culinary trade fair for the food and beverage industry
+Fakuma|2027-10-11|2027-10-15|Friedrichshafen|International trade fair for plastics processing
+inter airport Europe|2027-10-12|2027-10-14|Munich|Airport equipment, technology, design, and services trade fair
+Interlift|2027-10-12|2027-10-15|Nuremberg|Exhibition for lifts, components, and accessories
+CAMX|2027-10-21|2027-10-24|Anaheim, California|Composites and advanced materials trade fair in North America
+A+A|2027-10-19|2027-10-22|Dusseldorf|International trade fair for safety and health at work
+glasstec|2027-10-19|2027-10-22|Dusseldorf|Trade fair for the glass industry
+iba|2027-10-24|2027-10-28|Dusseldorf|Baking and confectionery industry trade fair
+Blechexpo|2027-10-26|2027-10-29|Stuttgart|International trade fair for sheet metal working
+Aquanale|2027-10-26|2027-10-29|Cologne|Swimming pool, sauna, and wellness industry marketplace
+AGRITECHNICA|2027-11-14|2027-11-20|Hanover|DLG exhibition for agricultural machinery
+productronica|2027-11-16|2027-11-19|Munich|Electronics production trade fair

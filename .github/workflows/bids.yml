@@ -13,11 +13,11 @@ jobs:
       - run: node scripts/bids/collect.mjs
         env: { DATA_GO_KR_KEY: '${{ secrets.DATA_GO_KR_KEY }}', SAM_GOV_API_KEY: '${{ secrets.SAM_GOV_API_KEY }}' }
       - name: Build pages
-        run: node scripts/bids/build.mjs && node scripts/seo/sitemap.mjs
+        run: node scripts/fairs/build.mjs && node scripts/bids/build.mjs && node scripts/seo/sitemap.mjs
       - name: Commit if changed
         run: |
           git config user.name cbm-lab-bot; git config user.email bot@users.noreply.github.com
-          for p in data/bids bids en/bids sitemap.xml sitemap-bids.xml; do [ -e "$p" ] && git add -A "$p"; done
+          for p in data/bids data/fairs fairs en/fairs bids en/bids sitemap.xml sitemap-bids.xml; do [ -e "$p" ] && git add -A "$p"; done
           if git diff --staged --quiet; then echo clean; exit 0; fi
           git commit -m "Auto: bids $(date -u +%F)"; git pull --rebase origin main && git push origin HEAD:main
       - name: Wait for deploy, ping IndexNow, health check
