@@ -1,4 +1,5 @@
 // Builds crawlable static tender pages from data/bids/open.json: bids/ (KO) and en/bids/ (EN), index + per-source pages.
+import { UI_CSS } from '../shared/ui.mjs';
 import fs from 'fs';
 import crypto from 'crypto';
 import { SECT, SECT_OTHER } from './sectors.mjs';
@@ -100,7 +101,7 @@ function page(t, o) {
 <title>${esc(title)}</title><meta name="description" content="${esc(desc)}">${SB ? `<meta name="keywords" content="${esc(SB.terms.join(', '))}">` : ''}<link rel="canonical" href="${url}">
 <meta property="og:title" content="${esc(title)}"><meta property="og:description" content="${esc(desc)}"><meta property="og:url" content="${url}"><meta property="og:type" content="website">
 <link rel="alternate" hreflang="${L === 'ko' ? 'en' : 'ko'}" href="${BASE}/${L === 'ko' ? 'en/bids' : 'bids'}/${slug}.html">
-<script type="application/ld+json">${JSON.stringify(ld)}</script><style>${CSS}</style></head><body>
+<script type="application/ld+json">${JSON.stringify(ld)}</script><style>${CSS}${UI_CSS}</style></head><body>
 <header class="top"><a href="${root}${t.hubHref}">CBM LAB · ${t.hub}</a><a href="${root}${L === 'ko' ? '../en/bids/' : '../../bids/'}${slug}.html" hreflang="${L === 'ko' ? 'en' : 'ko'}">${t.other.label}</a></header>
 <div class="hero"><div class="in">${o.kind !== 'index' ? `<a class="crumb" href="${rel('index.html')}">← ${t.home}</a>` : ''}<h1>${esc(heroTitle)}</h1><p>${o.kind === 'index' ? t.sub : t.sub2}</p>${stats}</div></div>
 <div class="wrap">${introHtml}${controls}${noKR}<div id="list">${shown.map(x => row(x, t, o.kind === 'country' ? '../' : '')).join('')}</div>${o.kind !== 'countries' ? `<nav class="pager" id="pager" aria-label="${t.pages}"></nav><p class="pinfo" id="pinfo"></p>` : ''}${countriesBody}${o.kind === 'countries' ? '' : sectTiles + contChips + cChips + srcChips}<p class="note">${t.note}<br>${esc(credits)}<br>${t.verify}</p></div>

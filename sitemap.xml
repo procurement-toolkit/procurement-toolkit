@@ -1224,4 +1224,6 @@
   <url><loc>https://procurement-toolkit-eight.vercel.app/en/fairs/city/stuttgart.html</loc><lastmod>2026-11-23</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>
   <url><loc>https://procurement-toolkit-eight.vercel.app/en/fairs/city/tokyo.html</loc><lastmod>2026-11-23</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>
   <url><loc>https://procurement-toolkit-eight.vercel.app/en/fairs/city/villepinte.html</loc><lastmod>2026-11-23</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/fairs/guide.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://procurement-toolkit-eight.vercel.app/en/fairs/guide.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
 </urlset>
