@@ -165,7 +165,7 @@ async function gt(text, tl) {
   if (!r.ok) throw new Error('HTTP ' + r.status);
   const j = await r.json(); return { t: (j[0] || []).map(a => a[0]).join('').trim(), l: j[2] };
 }
-const CAP = 1200; let done = 0, fails = 0, streak = 0;
+const CAP = 2500; let done = 0, fails = 0, streak = 0;
 const sleep = ms => new Promise(r => setTimeout(r, ms));
 async function gtRetry(text, tl) { try { return await gt(text, tl); } catch (e) { if (/429/.test(String(e.message))) { await sleep(45000); return await gt(text, tl); } throw e; } }
 const todo = out.filter(x => !(TR[x.id]) && x.title).slice(0, CAP);
