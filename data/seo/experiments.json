@@ -56,5 +56,20 @@
   "keywordGaps": 151,
   "indexed": 6,
   "tracked": 114
+ },
+ {
+  "date": "2026-11-23",
+  "avgScore": 92,
+  "pages": 826,
+  "lowest": [
+   "en/consulting.html:81",
+   "recalls/hazard-shock.html:81",
+   "en/fairs/country/us.html:83",
+   "fairs/country/us.html:83",
+   "bids/country/bosnia-and-herzegovina.html:86"
+  ],
+  "keywordGaps": 144,
+  "indexed": 6,
+  "tracked": 264
  }
 ]

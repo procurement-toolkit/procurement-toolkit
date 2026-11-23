@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-22",
+ "updated": "2026-11-23",
  "seeds": {
   "cbm 계산": {
    "suggestions": [
@@ -14,19 +14,8 @@
     "컨테이너 cbm 계산",
     "lcl cbm 계산"
    ],
-   "newSinceLast": [
-    "cbm 계산 공식",
-    "cbm 계산 방법",
-    "cbm 계산",
-    "cbm 계산 rl",
-    "cbm 계산 엑셀",
-    "항공 cbm 계산",
-    "박스 cbm 계산",
-    "해상 cbm 계산",
-    "컨테이너 cbm 계산",
-    "lcl cbm 계산"
-   ],
-   "checked": "2026-11-22"
+   "newSinceLast": [],
+   "checked": "2026-11-23"
   },
   "cbm calculator": {
    "suggestions": [
@@ -41,19 +30,8 @@
     "cbm calculator to kg",
     "cbm calculator in feet"
    ],
-   "newSinceLast": [
-    "cbm calculator in inches",
-    "cbm calculator cm",
-    "cbm calculator formula",
-    "cbm calculator for shipping",
-    "cbm calculator gini",
-    "cbm calculator in meter",
-    "cbm calculator in mm",
-    "cbm calculator online",
-    "cbm calculator to kg",
-    "cbm calculator in feet"
-   ],
-   "checked": "2026-11-22"
+   "newSinceLast": [],
+   "checked": "2026-11-23"
   },
   "수입원가 계산": {
    "suggestions": [
@@ -61,12 +39,8 @@
     "수입원가 계산 엑셀",
     "수입원가 계산 프로그램"
    ],
-   "newSinceLast": [
-    "수입원가계산",
-    "수입원가 계산 엑셀",
-    "수입원가 계산 프로그램"
-   ],
-   "checked": "2026-11-22"
+   "newSinceLast": [],
+   "checked": "2026-11-23"
   },
   "fob cif": {
    "suggestions": [
@@ -81,19 +55,8 @@
     "fob cif meaning in shipping",
     "fob cif adalah"
    ],
-   "newSinceLast": [
-    "fob cif meaning",
-    "fob cif or ddp",
-    "fob cif ddp",
-    "fob cif ddp meaning",
-    "fob cif exw",
-    "fob cif cfr",
-    "fob cif full form",
-    "fob cif difference",
-    "fob cif meaning in shipping",
-    "fob cif adalah"
-   ],
-   "checked": "2026-11-22"
+   "newSinceLast": [],
+   "checked": "2026-11-23"
   },
   "landed cost": {
    "suggestions": [
@@ -108,19 +71,8 @@
     "landed cost accounting",
     "landed cost model"
    ],
-   "newSinceLast": [
-    "landed cost meaning",
-    "landed cost vs standard cost",
-    "landed cost calculator",
-    "landed cost formula",
-    "landed cost netsuite",
-    "landed cost vs fob",
-    "landed cost vs cogs",
-    "landed cost management in oracle fusion",
-    "landed cost accounting",
-    "landed cost model"
-   ],
-   "checked": "2026-11-22"
+   "newSinceLast": [],
+   "checked": "2026-11-23"
   },
   "인코텀즈": {
    "suggestions": [
@@ -135,19 +87,8 @@
     "인코텀즈 cip",
     "인코텀즈 fob"
    ],
-   "newSinceLast": [
-    "인코텀즈 뜻",
-    "인코텀즈 dap",
-    "인코텀즈 fca",
-    "인코텀즈 조건",
-    "인코텀즈 exw",
-    "인코텀즈 2020",
-    "인코텀즈 ddp",
-    "인코텀즈 cif",
-    "인코텀즈 cip",
-    "인코텀즈 fob"
-   ],
-   "checked": "2026-11-22"
+   "newSinceLast": [],
+   "checked": "2026-11-23"
   },
   "incoterms 2020": {
    "suggestions": [
@@ -162,19 +103,8 @@
     "incoterms 2020 fob",
     "incoterms 2020 ex works"
    ],
-   "newSinceLast": [
-    "incoterms 2020 chart",
-    "incoterms 2020 fca",
-    "incoterms 2020 dap",
-    "incoterms 2020 pdf",
-    "incoterms 2020 ddp",
-    "incoterms 2020 exw",
-    "incoterms 2020 meaning",
-    "incoterms 2020 fca definition",
-    "incoterms 2020 fob",
-    "incoterms 2020 ex works"
-   ],
-   "checked": "2026-11-22"
+   "newSinceLast": [],
+   "checked": "2026-11-23"
   },
   "환헤지": {
    "suggestions": [
@@ -189,19 +119,8 @@
     "환헤지 상품",
     "환헤지 원리"
    ],
-   "newSinceLast": [
-    "환헤지 뜻",
-    "환헤지 etf",
-    "환헤지 etf 디시",
-    "환헤지 방법",
-    "환헤지 etf 장단점",
-    "환헤지 비용",
-    "환헤지 etf 추천",
-    "환헤지 개념",
-    "환헤지 상품",
-    "환헤지 원리"
-   ],
-   "checked": "2026-11-22"
+   "newSinceLast": [],
+   "checked": "2026-11-23"
   },
   "선물환": {
    "suggestions": [
@@ -216,19 +135,8 @@
     "선물환 포지션 한도",
     "선물환 통화선물 차이"
    ],
-   "newSinceLast": [
-    "선물환 뜻",
-    "선물환 매도",
-    "선물환 거래",
-    "선물환 계약",
-    "선물환 매도 뜻",
-    "선물환 회계처리",
-    "선물환 가격",
-    "선물환 프리미엄",
-    "선물환 포지션 한도",
-    "선물환 통화선물 차이"
-   ],
-   "checked": "2026-11-22"
+   "newSinceLast": [],
+   "checked": "2026-11-23"
   },
   "fx hedging": {
    "suggestions": [
@@ -243,19 +151,8 @@
     "fx hedging forward contracts",
     "fx hedging treasury"
    ],
-   "newSinceLast": [
-    "fx hedging meaning",
-    "fx hedging strategies",
-    "fx hedging explained",
-    "fx hedging jobs",
-    "fx hedging instruments",
-    "fx hedging adalah",
-    "fx hedging costs",
-    "fx hedging example",
-    "fx hedging forward contracts",
-    "fx hedging treasury"
-   ],
-   "checked": "2026-11-22"
+   "newSinceLast": [],
+   "checked": "2026-11-23"
   },
   "안전재고": {
    "suggestions": [
@@ -270,19 +167,8 @@
     "안전재고 기준",
     "안전재고 서비스계수"
    ],
-   "newSinceLast": [
-    "안전재고 공식",
-    "안전재고 뜻",
-    "안전재고 영어로",
-    "안전재고 계산",
-    "안전재고 계산 공식",
-    "안전재고 구하는 공식",
-    "안전재고 엑셀",
-    "안전재고 관리기준",
-    "안전재고 기준",
-    "안전재고 서비스계수"
-   ],
-   "checked": "2026-11-22"
+   "newSinceLast": [],
+   "checked": "2026-11-23"
   },
   "safety stock": {
    "suggestions": [
@@ -297,19 +183,8 @@
     "safety stock in sap",
     "safety stock levels"
    ],
-   "newSinceLast": [
-    "safety stock formula",
-    "safety stock calculation",
-    "safety stock meaning",
-    "safety stock calculation formula",
-    "safety stock vs reorder point",
-    "safety stock images",
-    "safety stock formula with z score",
-    "safety stock inventory",
-    "safety stock in sap",
-    "safety stock levels"
-   ],
-   "checked": "2026-11-22"
+   "newSinceLast": [],
+   "checked": "2026-11-23"
   },
   "economic order quantity": {
    "suggestions": [
@@ -324,19 +199,8 @@
     "economic order quantity in inventory management",
     "economic order quantity adalah"
    ],
-   "newSinceLast": [
-    "economic order quantity formula",
-    "economic order quantity model",
-    "economic order quantity (eoq)",
-    "economic order quantity meaning",
-    "economic order quantity calculator",
-    "economic order quantity (eoq) formula",
-    "economic order quantity (eoq) model",
-    "economic order quantity in cost accounting",
-    "economic order quantity in inventory management",
-    "economic order quantity adalah"
-   ],
-   "checked": "2026-11-22"
+   "newSinceLast": [],
+   "checked": "2026-11-23"
   },
   "oee": {
    "suggestions": [
@@ -351,19 +215,8 @@
     "oee metrics",
     "oee vs oem windshield"
    ],
-   "newSinceLast": [
-    "oee meaning",
-    "oee manufacturing",
-    "oee calculation",
-    "oee manufacturing meaning",
-    "oee formula",
-    "oee definition",
-    "oee stands for",
-    "oee calculation formula",
-    "oee metrics",
-    "oee vs oem windshield"
-   ],
-   "checked": "2026-11-22"
+   "newSinceLast": [],
+   "checked": "2026-11-23"
   },
   "abc 분석": {
    "suggestions": [
@@ -378,19 +231,8 @@
     "물류 abc 분석",
     "메뉴 abc 분석"
    ],
-   "newSinceLast": [
-    "abc 분석",
-    "abc 분석 엑셀",
-    "abc 분석 이란",
-    "abc 분석 예시",
-    "abc 분석 기법",
-    "abc xyz 분석",
-    "재고 abc 분석",
-    "재고 관리 abc 분석",
-    "물류 abc 분석",
-    "메뉴 abc 분석"
-   ],
-   "checked": "2026-11-22"
+   "newSinceLast": [],
+   "checked": "2026-11-23"
   },
   "abc analysis": {
    "suggestions": [
@@ -405,19 +247,8 @@
     "abc analysis psychology",
     "abc analysis formula"
    ],
-   "newSinceLast": [
-    "abc analysis meaning",
-    "abc analysis of inventory",
-    "abc analysis in inventory management",
-    "abc analysis example",
-    "abc analysis behavior",
-    "abc analysis aba",
-    "abc analysis is based upon the principle that",
-    "abc analysis stands for",
-    "abc analysis psychology",
-    "abc analysis formula"
-   ],
-   "checked": "2026-11-22"
+   "newSinceLast": [],
+   "checked": "2026-11-23"
   },
   "hs code": {
    "suggestions": [
@@ -432,19 +263,8 @@
     "hs code for clothing",
     "hs code lookup usa"
    ],
-   "newSinceLast": [
-    "hs code lookup",
-    "hs code meaning",
-    "hs code for shipping",
-    "hs code list",
-    "hs code search",
-    "hs code for books",
-    "hs code vs hts code",
-    "hs code for stickers",
-    "hs code for clothing",
-    "hs code lookup usa"
-   ],
-   "checked": "2026-11-22"
+   "newSinceLast": [],
+   "checked": "2026-11-23"
   },
   "컨테이너 적재": {
    "suggestions": [
@@ -459,19 +279,8 @@
     "컨테이너 적재 수량 계산",
     "컨테이너 적재 위치"
    ],
-   "newSinceLast": [
-    "컨테이너 적재 시뮬레이션",
-    "컨테이너 적재 계산기",
-    "컨테이너 적재 프로그램",
-    "컨테이너 적재",
-    "컨테이너 적재 중량",
-    "컨테이너 적재 계산 엑셀",
-    "컨테이너 적재 방법",
-    "컨테이너 적재 높이",
-    "컨테이너 적재 수량 계산",
-    "컨테이너 적재 위치"
-   ],
-   "checked": "2026-11-22"
+   "newSinceLast": [],
+   "checked": "2026-11-23"
   },
   "디머리지": {
    "suggestions": [
@@ -486,19 +295,8 @@
     "디머리지 스토리지",
     "디머리지 디텐션 뜻"
    ],
-   "newSinceLast": [
-    "디머리지 디텐션",
-    "디머리지 디텐션 차이",
-    "디머리지 뜻",
-    "디머리지 비용",
-    "디머리지 차지",
-    "디머리지 디텐션 스토리지",
-    "디머리지 영어로",
-    "디머리지 디스패치",
-    "디머리지 스토리지",
-    "디머리지 디텐션 뜻"
-   ],
-   "checked": "2026-11-22"
+   "newSinceLast": [],
+   "checked": "2026-11-23"
   },
   "demurrage and detention": {
    "suggestions": [
@@ -513,19 +311,8 @@
     "demurrage and detention hapag",
     "demurrage and detention in shipping"
    ],
-   "newSinceLast": [
-    "demurrage and detention difference",
-    "demurrage and detention meaning",
-    "demurrage and detention charges",
-    "demurrage and detention adalah",
-    "demurrage and detention charges difference",
-    "demurrage and detention charges meaning",
-    "demurrage and detention cma",
-    "demurrage and detention cma cgm",
-    "demurrage and detention hapag",
-    "demurrage and detention in shipping"
-   ],
-   "checked": "2026-11-22"
+   "newSinceLast": [],
+   "checked": "2026-11-23"
   },
   "total cost of ownership": {
    "suggestions": [
@@ -540,19 +327,8 @@
     "total cost of ownership calculator car",
     "total cost of ownership in supply chain"
    ],
-   "newSinceLast": [
-    "total cost of ownership calculator",
-    "total cost of ownership meaning",
-    "total cost of ownership car",
-    "total cost of ownership formula",
-    "total cost of ownership (tco)",
-    "total cost of ownership analysis",
-    "total cost of ownership model",
-    "total cost of ownership calculator house",
-    "total cost of ownership calculator car",
-    "total cost of ownership in supply chain"
-   ],
-   "checked": "2026-11-22"
+   "newSinceLast": [],
+   "checked": "2026-11-23"
   },
   "supplier scorecard": {
    "suggestions": [
@@ -567,19 +343,8 @@
     "supplier scorecard power bi",
     "supplier scorecard criteria"
    ],
-   "newSinceLast": [
-    "supplier scorecard examples",
-    "supplier scorecard template",
-    "supplier scorecard template excel",
-    "supplier scorecard metrics",
-    "supplier scorecard dashboard",
-    "supplier scorecard kpis",
-    "supplier scorecard template free",
-    "supplier scorecard",
-    "supplier scorecard power bi",
-    "supplier scorecard criteria"
-   ],
-   "checked": "2026-11-22"
+   "newSinceLast": [],
+   "checked": "2026-11-23"
   },
   "kraljic matrix": {
    "suggestions": [
@@ -594,19 +359,8 @@
     "kraljic matrix cips",
     "kraljic matrix adalah"
    ],
-   "newSinceLast": [
-    "kraljic matrix explained",
-    "kraljic matrix template",
-    "kraljic matrix examples",
-    "kraljic matrix supply chain",
-    "kraljic matrix for supplier segmentation",
-    "kraljic matrix method",
-    "kraljic matrix in procurement",
-    "kraljic matrix model",
-    "kraljic matrix cips",
-    "kraljic matrix adalah"
-   ],
-   "checked": "2026-11-22"
+   "newSinceLast": [],
+   "checked": "2026-11-23"
   },
   "payment terms": {
    "suggestions": [
@@ -621,19 +375,8 @@
     "payment terms t/t",
     "payment terms table in sap"
    ],
-   "newSinceLast": [
-    "payment terms net 30",
-    "payment terms net 30 meaning",
-    "payment terms on invoice",
-    "payment terms meaning",
-    "payment terms cod",
-    "payment terms examples",
-    "payment terms cia",
-    "payment terms calculator",
-    "payment terms t/t",
-    "payment terms table in sap"
-   ],
-   "checked": "2026-11-22"
+   "newSinceLast": [],
+   "checked": "2026-11-23"
   }
  }
 }

@@ -682,5 +682,905 @@
   "coverage": "URL is unknown to Google",
   "lastCrawl": null,
   "checked": "2026-11-22"
+ },
+ "https://procurement-toolkit-eight.vercel.app/bids/canada-buys.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-23"
+ },
+ "https://procurement-toolkit-eight.vercel.app/bids/eu-ted.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-23"
+ },
+ "https://procurement-toolkit-eight.vercel.app/bids/index.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-23"
+ },
+ "https://procurement-toolkit-eight.vercel.app/bids/uk.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-23"
+ },
+ "https://procurement-toolkit-eight.vercel.app/bids/undp.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-23"
+ },
+ "https://procurement-toolkit-eight.vercel.app/bids/world-bank.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-23"
+ },
+ "https://procurement-toolkit-eight.vercel.app/en/bids/canada-buys.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-23"
+ },
+ "https://procurement-toolkit-eight.vercel.app/en/bids/eu-ted.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-23"
+ },
+ "https://procurement-toolkit-eight.vercel.app/en/bids/index.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-23"
+ },
+ "https://procurement-toolkit-eight.vercel.app/en/bids/uk.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-23"
+ },
+ "https://procurement-toolkit-eight.vercel.app/en/bids/undp.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-23"
+ },
+ "https://procurement-toolkit-eight.vercel.app/en/bids/world-bank.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-23"
+ },
+ "https://procurement-toolkit-eight.vercel.app/bids/boamp-fr.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-23"
+ },
+ "https://procurement-toolkit-eight.vercel.app/bids/c-other.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-23"
+ },
+ "https://procurement-toolkit-eight.vercel.app/bids/find-tender-uk.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-23"
+ },
+ "https://procurement-toolkit-eight.vercel.app/bids/secop-co.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-23"
+ },
+ "https://procurement-toolkit-eight.vercel.app/en/bids/boamp-fr.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-23"
+ },
+ "https://procurement-toolkit-eight.vercel.app/en/bids/c-other.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-23"
+ },
+ "https://procurement-toolkit-eight.vercel.app/en/bids/find-tender-uk.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-23"
+ },
+ "https://procurement-toolkit-eight.vercel.app/en/bids/secop-co.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-23"
+ },
+ "https://procurement-toolkit-eight.vercel.app/bids/ungm.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-23"
+ },
+ "https://procurement-toolkit-eight.vercel.app/en/bids/ungm.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-23"
+ },
+ "https://procurement-toolkit-eight.vercel.app/bids/countries.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-23"
+ },
+ "https://procurement-toolkit-eight.vercel.app/en/bids/countries.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-23"
+ },
+ "https://procurement-toolkit-eight.vercel.app/bids/country/afghanistan.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-23"
+ },
+ "https://procurement-toolkit-eight.vercel.app/bids/country/albania.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-23"
+ },
+ "https://procurement-toolkit-eight.vercel.app/bids/country/algeria.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-23"
+ },
+ "https://procurement-toolkit-eight.vercel.app/bids/country/angola.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-23"
+ },
+ "https://procurement-toolkit-eight.vercel.app/bids/country/argentina.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-23"
+ },
+ "https://procurement-toolkit-eight.vercel.app/bids/country/armenia.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-23"
+ },
+ "https://procurement-toolkit-eight.vercel.app/bids/country/austria.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-23"
+ },
+ "https://procurement-toolkit-eight.vercel.app/bids/country/bangladesh.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-23"
+ },
+ "https://procurement-toolkit-eight.vercel.app/bids/country/belgium.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-23"
+ },
+ "https://procurement-toolkit-eight.vercel.app/bids/country/bolivia.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-23"
+ },
+ "https://procurement-toolkit-eight.vercel.app/bids/country/bosnia-and-herzegovina.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-23"
+ },
+ "https://procurement-toolkit-eight.vercel.app/bids/country/brazil.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-23"
+ },
+ "https://procurement-toolkit-eight.vercel.app/bids/country/bulgaria.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-23"
+ },
+ "https://procurement-toolkit-eight.vercel.app/bids/country/burkina-faso.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-23"
+ },
+ "https://procurement-toolkit-eight.vercel.app/bids/country/burundi.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-23"
+ },
+ "https://procurement-toolkit-eight.vercel.app/bids/country/cambodia.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-23"
+ },
+ "https://procurement-toolkit-eight.vercel.app/bids/country/cameroon.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-23"
+ },
+ "https://procurement-toolkit-eight.vercel.app/bids/country/canada.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-23"
+ },
+ "https://procurement-toolkit-eight.vercel.app/bids/country/central-african-republic.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-23"
+ },
+ "https://procurement-toolkit-eight.vercel.app/bids/country/chad.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-23"
+ },
+ "https://procurement-toolkit-eight.vercel.app/bids/country/chile.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-23"
+ },
+ "https://procurement-toolkit-eight.vercel.app/bids/country/china.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-23"
+ },
+ "https://procurement-toolkit-eight.vercel.app/bids/country/colombia.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-23"
+ },
+ "https://procurement-toolkit-eight.vercel.app/bids/country/cote-d-ivoire.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-23"
+ },
+ "https://procurement-toolkit-eight.vercel.app/bids/country/croatia.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-23"
+ },
+ "https://procurement-toolkit-eight.vercel.app/bids/country/cuba.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-23"
+ },
+ "https://procurement-toolkit-eight.vercel.app/bids/country/cyprus.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-23"
+ },
+ "https://procurement-toolkit-eight.vercel.app/bids/country/czechia.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-23"
+ },
+ "https://procurement-toolkit-eight.vercel.app/bids/country/denmark.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-23"
+ },
+ "https://procurement-toolkit-eight.vercel.app/bids/country/djibouti.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-23"
+ },
+ "https://procurement-toolkit-eight.vercel.app/bids/country/dominica.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-23"
+ },
+ "https://procurement-toolkit-eight.vercel.app/bids/country/ecuador.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-23"
+ },
+ "https://procurement-toolkit-eight.vercel.app/bids/country/egypt.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-23"
+ },
+ "https://procurement-toolkit-eight.vercel.app/bids/country/el-salvador.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-23"
+ },
+ "https://procurement-toolkit-eight.vercel.app/bids/country/estonia.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-23"
+ },
+ "https://procurement-toolkit-eight.vercel.app/bids/country/ethiopia.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-23"
+ },
+ "https://procurement-toolkit-eight.vercel.app/bids/country/finland.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-23"
+ },
+ "https://procurement-toolkit-eight.vercel.app/bids/country/france.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-23"
+ },
+ "https://procurement-toolkit-eight.vercel.app/bids/country/germany.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-23"
+ },
+ "https://procurement-toolkit-eight.vercel.app/bids/country/ghana.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-23"
+ },
+ "https://procurement-toolkit-eight.vercel.app/bids/country/greece.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-23"
+ },
+ "https://procurement-toolkit-eight.vercel.app/bids/country/guatemala.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-23"
+ },
+ "https://procurement-toolkit-eight.vercel.app/bids/country/guinea.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-23"
+ },
+ "https://procurement-toolkit-eight.vercel.app/bids/country/haiti.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-23"
+ },
+ "https://procurement-toolkit-eight.vercel.app/bids/country/honduras.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-23"
+ },
+ "https://procurement-toolkit-eight.vercel.app/bids/country/hungary.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-23"
+ },
+ "https://procurement-toolkit-eight.vercel.app/bids/country/iceland.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-23"
+ },
+ "https://procurement-toolkit-eight.vercel.app/bids/country/india.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-23"
+ },
+ "https://procurement-toolkit-eight.vercel.app/bids/country/indonesia.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-23"
+ },
+ "https://procurement-toolkit-eight.vercel.app/bids/country/iran.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-23"
+ },
+ "https://procurement-toolkit-eight.vercel.app/bids/country/iraq.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-23"
+ },
+ "https://procurement-toolkit-eight.vercel.app/bids/country/ireland.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-23"
+ },
+ "https://procurement-toolkit-eight.vercel.app/bids/country/italy.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-23"
+ },
+ "https://procurement-toolkit-eight.vercel.app/bids/country/jordan.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-23"
+ },
+ "https://procurement-toolkit-eight.vercel.app/bids/country/kazakhstan.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-23"
+ },
+ "https://procurement-toolkit-eight.vercel.app/bids/country/kenya.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-23"
+ },
+ "https://procurement-toolkit-eight.vercel.app/bids/country/latvia.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-23"
+ },
+ "https://procurement-toolkit-eight.vercel.app/bids/country/lebanon.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-23"
+ },
+ "https://procurement-toolkit-eight.vercel.app/bids/country/liberia.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-23"
+ },
+ "https://procurement-toolkit-eight.vercel.app/bids/country/libya.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-23"
+ },
+ "https://procurement-toolkit-eight.vercel.app/bids/country/lithuania.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-23"
+ },
+ "https://procurement-toolkit-eight.vercel.app/bids/country/luxembourg.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-23"
+ },
+ "https://procurement-toolkit-eight.vercel.app/bids/country/madagascar.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-23"
+ },
+ "https://procurement-toolkit-eight.vercel.app/bids/country/malawi.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-23"
+ },
+ "https://procurement-toolkit-eight.vercel.app/bids/country/malaysia.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-23"
+ },
+ "https://procurement-toolkit-eight.vercel.app/bids/country/maldives.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-23"
+ },
+ "https://procurement-toolkit-eight.vercel.app/bids/country/mali.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-23"
+ },
+ "https://procurement-toolkit-eight.vercel.app/bids/country/mauritania.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-23"
+ },
+ "https://procurement-toolkit-eight.vercel.app/bids/country/mexico.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-23"
+ },
+ "https://procurement-toolkit-eight.vercel.app/bids/country/moldova.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-23"
+ },
+ "https://procurement-toolkit-eight.vercel.app/bids/country/mongolia.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-23"
+ },
+ "https://procurement-toolkit-eight.vercel.app/bids/country/montenegro.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-23"
+ },
+ "https://procurement-toolkit-eight.vercel.app/bids/country/morocco.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-23"
+ },
+ "https://procurement-toolkit-eight.vercel.app/bids/country/mozambique.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-23"
+ },
+ "https://procurement-toolkit-eight.vercel.app/bids/country/myanmar.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-23"
+ },
+ "https://procurement-toolkit-eight.vercel.app/bids/country/nepal.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-23"
+ },
+ "https://procurement-toolkit-eight.vercel.app/bids/country/netherlands.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-23"
+ },
+ "https://procurement-toolkit-eight.vercel.app/bids/country/niger.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-23"
+ },
+ "https://procurement-toolkit-eight.vercel.app/bids/country/nigeria.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-23"
+ },
+ "https://procurement-toolkit-eight.vercel.app/bids/country/north-macedonia.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-23"
+ },
+ "https://procurement-toolkit-eight.vercel.app/bids/country/norway.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-23"
+ },
+ "https://procurement-toolkit-eight.vercel.app/bids/country/pakistan.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-23"
+ },
+ "https://procurement-toolkit-eight.vercel.app/bids/country/panama.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-23"
+ },
+ "https://procurement-toolkit-eight.vercel.app/bids/country/paraguay.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-23"
+ },
+ "https://procurement-toolkit-eight.vercel.app/bids/country/peru.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-23"
+ },
+ "https://procurement-toolkit-eight.vercel.app/bids/country/philippines.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-23"
+ },
+ "https://procurement-toolkit-eight.vercel.app/bids/country/poland.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-23"
+ },
+ "https://procurement-toolkit-eight.vercel.app/bids/country/portugal.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-23"
+ },
+ "https://procurement-toolkit-eight.vercel.app/bids/country/romania.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-23"
+ },
+ "https://procurement-toolkit-eight.vercel.app/bids/country/rwanda.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-23"
+ },
+ "https://procurement-toolkit-eight.vercel.app/bids/country/samoa.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-23"
+ },
+ "https://procurement-toolkit-eight.vercel.app/bids/country/senegal.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-23"
+ },
+ "https://procurement-toolkit-eight.vercel.app/bids/country/serbia.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-23"
+ },
+ "https://procurement-toolkit-eight.vercel.app/bids/country/sierra-leone.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-23"
+ },
+ "https://procurement-toolkit-eight.vercel.app/bids/country/slovakia.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-23"
+ },
+ "https://procurement-toolkit-eight.vercel.app/bids/country/slovenia.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-23"
+ },
+ "https://procurement-toolkit-eight.vercel.app/bids/country/solomon-islands.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-23"
+ },
+ "https://procurement-toolkit-eight.vercel.app/bids/country/somalia.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-23"
+ },
+ "https://procurement-toolkit-eight.vercel.app/bids/country/south-africa.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-23"
+ },
+ "https://procurement-toolkit-eight.vercel.app/bids/country/south-sudan.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-23"
+ },
+ "https://procurement-toolkit-eight.vercel.app/bids/country/spain.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-23"
+ },
+ "https://procurement-toolkit-eight.vercel.app/bids/country/sri-lanka.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-23"
+ },
+ "https://procurement-toolkit-eight.vercel.app/bids/country/sudan.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-23"
+ },
+ "https://procurement-toolkit-eight.vercel.app/bids/country/sweden.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-23"
+ },
+ "https://procurement-toolkit-eight.vercel.app/bids/country/switzerland.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-23"
+ },
+ "https://procurement-toolkit-eight.vercel.app/bids/country/tajikistan.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-23"
+ },
+ "https://procurement-toolkit-eight.vercel.app/bids/country/thailand.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-23"
+ },
+ "https://procurement-toolkit-eight.vercel.app/bids/country/togo.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-23"
+ },
+ "https://procurement-toolkit-eight.vercel.app/bids/country/tunisia.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-23"
+ },
+ "https://procurement-toolkit-eight.vercel.app/bids/country/turkey.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-23"
+ },
+ "https://procurement-toolkit-eight.vercel.app/bids/country/turkmenistan.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-23"
+ },
+ "https://procurement-toolkit-eight.vercel.app/bids/country/uganda.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-23"
+ },
+ "https://procurement-toolkit-eight.vercel.app/bids/country/ukraine.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-23"
+ },
+ "https://procurement-toolkit-eight.vercel.app/bids/country/united-kingdom.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-23"
+ },
+ "https://procurement-toolkit-eight.vercel.app/bids/country/uzbekistan.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-23"
+ },
+ "https://procurement-toolkit-eight.vercel.app/bids/country/venezuela.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-23"
+ },
+ "https://procurement-toolkit-eight.vercel.app/bids/country/yemen.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-23"
+ },
+ "https://procurement-toolkit-eight.vercel.app/bids/country/zambia.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-23"
+ },
+ "https://procurement-toolkit-eight.vercel.app/bids/country/zimbabwe.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-23"
+ },
+ "https://procurement-toolkit-eight.vercel.app/en/bids/country/afghanistan.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-23"
+ },
+ "https://procurement-toolkit-eight.vercel.app/en/bids/country/albania.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-23"
+ },
+ "https://procurement-toolkit-eight.vercel.app/en/bids/country/algeria.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-23"
+ },
+ "https://procurement-toolkit-eight.vercel.app/en/bids/country/angola.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-23"
+ },
+ "https://procurement-toolkit-eight.vercel.app/en/bids/country/argentina.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-23"
+ },
+ "https://procurement-toolkit-eight.vercel.app/en/bids/country/armenia.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-23"
+ },
+ "https://procurement-toolkit-eight.vercel.app/en/bids/country/austria.html": {
+  "verdict": "NEUTRAL",
+  "coverage": "URL is unknown to Google",
+  "lastCrawl": null,
+  "checked": "2026-11-23"
  }
 }
