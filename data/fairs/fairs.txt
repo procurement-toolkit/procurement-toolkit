@@ -240,3 +240,13 @@ IZFURNEX 2027|2027-03-17|2027-03-21|Izmir|||TR|official
 PET Izmir 2027|2027-03-25|2027-03-28|Izmir|||TR|official
 OPTICWORLD Izmir 2027|2027-03-26|2027-03-28|Izmir|||TR|official
 MARBLE Izmir 2027|2027-04-13|2027-04-16|Izmir|||TR|official
+THAIFEX – HOREC ASIA 2027|2027-03-02|2027-03-05|Bangkok|||TH|official
+75th Bangkok Gems & Jewelry Fair|2027-02-23|2027-02-27|Bangkok|||TH|official
+Big 5 Construct Saudi 2027 (May)|2027-05-24|2027-05-27|Riyadh||https://www.big5constructsaudi.com/exhibit-may-2027/|SA|official
+Big 5 Construct Saudi 2027 (September)|2027-09-19|2027-09-22|Riyadh||https://www.big5constructsaudi.com/|SA|official
+VIETNAM EXPO 2027|2027-05-13|2027-05-15|Hanoi||https://vietnamexpo.com.vn/en/overview/|VN|official
+Content Americas 2027|2027-01-18|2027-01-21|Miami|||US|official
+Asia TV Forum & Market (ATF) 2026|2026-12-02|2026-12-04|Singapore|||SG|official
+Spring Fair 2027|2027-02-07|2027-02-10|Birmingham||https://bira.co.uk/events/spring-fair-2027/|GB|official
+Expo Revestir 2027|2027-02-22|2027-02-26|São Paulo||https://en.exporevestir.com.br/|BR|official
+FISPAL Tecnologia 2027|2027-06-22|2027-06-25|São Paulo||https://www.fispaltecnologia.com.br/en/|BR|official
