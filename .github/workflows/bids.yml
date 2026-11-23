@@ -12,6 +12,9 @@ jobs:
         with: { node-version: 22 }
       - run: node scripts/bids/collect.mjs
         env: { DATA_GO_KR_KEY: '${{ secrets.DATA_GO_KR_KEY }}', SAM_GOV_API_KEY: '${{ secrets.SAM_GOV_API_KEY }}' }
+      - name: Fair photos (Wikimedia Commons)
+        run: node scripts/fairs/images.mjs
+        continue-on-error: true
       - name: Build pages
         run: node scripts/fairs/build.mjs && node scripts/bids/build.mjs && node scripts/seo/sitemap.mjs
       - name: Commit if changed

@@ -47,7 +47,7 @@ for (const f of keep) {
 const slugs = new Set(); for (const f of keep) { if (slugs.has(f.slug)) f.slug += '-' + f.s.slice(5, 7); slugs.add(f.slug); }
 
 // ---- images (Wikimedia Commons, CC/PD only; fair-specific photo if one exists, else the venue photo, else none) ----
-const IMG = fs.readFileSync('data/fairs/images.txt', 'utf8').split('\n').filter(l => l && !l.startsWith('#')).map(l => { const [k, t, lic, a] = l.split('|'); return { k, t, lic, a }; });
+const IMG = ['data/fairs/images.txt', 'data/fairs/images.auto.txt'].filter(f => fs.existsSync(f)).flatMap(f => fs.readFileSync(f, 'utf8').split('\n')).filter(l => l && !l.startsWith('#')).map(l => { const [k, t, lic, a] = l.split('|'); return { k, t, lic, a }; });
 for (const f of keep) {
   const own = IMG.find(i => !i.k.startsWith('venue:') && f.n.toLowerCase().includes(i.k.toLowerCase()));
   const ven = IMG.find(i => i.k === 'venue:' + f.c);
