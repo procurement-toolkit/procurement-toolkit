@@ -10,7 +10,7 @@ PMRExpo|2026-11-24|2026-11-26|Cologne|Secure communications trade fair
 Valve World Expo|2026-12-01|2026-12-03|Dusseldorf|Industrial valves trade fair
 Intermot Cologne|2026-12-03|2026-12-06|Cologne|International motorcycle fair
 Aviation Forum|2026-12-14|2026-12-15|Munich|Event connecting aerospace suppliers with OEMs and integrators
-CES|2027-01-06|2027-01-09|Las Vegas|Consumer technology trade fair for new products and innovations
+CES|2027-01-06|2027-01-09|Las Vegas|Consumer technology trade fair for new products and innovations|https://www.ces.tech/|US|official
 BAU|2027-01-11|2027-01-15|Munich|Architecture, materials, and building systems trade fair
 PSI|2027-01-12|2027-01-14|Dusseldorf|Promotional product industry trade show
 Heimtextil|2027-01-12|2027-01-15|Frankfurt|Home and contract textiles trade fair
@@ -116,7 +116,6 @@ Blechexpo|2027-10-26|2027-10-29|Stuttgart|International trade fair for sheet met
 Aquanale|2027-10-26|2027-10-29|Cologne|Swimming pool, sauna, and wellness industry marketplace
 AGRITECHNICA|2027-11-14|2027-11-20|Hanover|DLG exhibition for agricultural machinery
 productronica|2027-11-16|2027-11-19|Munich|Electronics production trade fair
-CES 2027|2027-01-06|2027-01-09|Las Vegas||https://www.ces.tech/|US|official
 MWC Barcelona 2027|2027-03-01|2027-03-04|Barcelona||https://www.mwcbarcelona.com/|ES|official
 COMPUTEX TAIPEI 2027|2027-06-01|2027-06-04|Taipei||https://www.computex.biz/|TW|official
 Gulfood 2027|2027-03-15|2027-03-19|Dubai||https://www.gulfood.com/|AE|official

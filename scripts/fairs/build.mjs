@@ -274,7 +274,7 @@ for (const t of Object.values(T)) {
   function auto(o, arr) {
     const act = arr.filter(f => f.status !== 'ended').sort((a, b) => a.s.localeCompare(b.s)), n = act.length, nx = act[0];
     if (!n || o.kind === 'sr') return { html: '', faq: [] };
-    const nm = o.kind === 'index' ? t.h1 : o.name, gT = top(act, f => gLabel(f.g, L), 3), cT = top(act, f => L === 'ko' ? f.ck : f.c, 3), kT = top(act, f => ctryName(f.cc, L), 3);
+    const nm = o.kind === 'index' ? (L === 'ko' ? t.h1 : 'upcoming trade fairs') : o.name, gT = top(act, f => gLabel(f.g, L), 3), cT = top(act, f => L === 'ko' ? f.ck : f.c, 3), kT = top(act, f => ctryName(f.cc, L), 3);
     const nxs = `${nx.n} (${t.fmt(nx.s, nx.e)}, ${place(nx, L)})`;
     const a1 = L === 'ko' ? `${nm}: 현재 예정·진행 중인 일정이 ${n}건입니다. 가장 가까운 일정은 ${nxs}입니다.` : `${nm}: ${n} upcoming or ongoing fairs are listed. The nearest is ${nxs}.`;
     const a2 = L === 'ko' ? `분야는 ${gT.join(', ')} 순으로 많고, 개최지는 ${(o.kind === 'c' ? cT : kT.length > 1 ? kT : cT).join(', ')} 중심입니다.` : `The most common industries are ${gT.join(', ')}, with fairs concentrated in ${(o.kind === 'c' ? cT : kT.length > 1 ? kT : cT).join(', ')}.`;
