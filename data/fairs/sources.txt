@@ -1,0 +1,2 @@
+# Organizer event-calendar pages that publish schema.org Event JSON-LD. One per line: url|default city|country code (optional)
+# Only pages allowed by robots.txt are read. Add a line only after checking the page really has Event JSON-LD.

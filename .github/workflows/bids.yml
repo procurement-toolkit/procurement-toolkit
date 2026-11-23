@@ -12,6 +12,10 @@ jobs:
         with: { node-version: 22 }
       - run: node scripts/bids/collect.mjs
         env: { DATA_GO_KR_KEY: '${{ secrets.DATA_GO_KR_KEY }}', SAM_GOV_API_KEY: '${{ secrets.SAM_GOV_API_KEY }}' }
+      - name: Collect fairs (Wikidata, organizer JSON-LD)
+        run: node scripts/fairs/collect.mjs
+        env: { ITA_API_KEY: '${{ secrets.ITA_API_KEY }}' }
+        continue-on-error: true
       - name: Fair photos (Wikimedia Commons)
         run: node scripts/fairs/images.mjs
         continue-on-error: true

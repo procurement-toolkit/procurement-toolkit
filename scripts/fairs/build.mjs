@@ -38,6 +38,19 @@ for (const line of raw) {
 }
 keep.sort((a, b) => a.s.localeCompare(b.s) || a.n.localeCompare(b.n));
 if (dropped.length) fs.writeFileSync('data/fairs/fairs.txt', keep.map(f => [f.n, f.s, f.e, f.c, f.d, f.u].filter((x, i) => i < 5 || x).join('|')).join('\n') + '\n');
+// ---- auto-collected fairs (data/fairs/auto.json, written by collect.mjs): curated entries always win on name+start -------
+const KO_CITY = { Tokyo: '도쿄', Osaka: '오사카', Seoul: '서울', Goyang: '고양', Paris: '파리', Milan: '밀라노', Shanghai: '상하이', Guangzhou: '광저우', Shenzhen: '선전', Bangkok: '방콕', Dubai: '두바이', Istanbul: '이스탄불', Lagos: '라고스', Brussels: '브뤼셀', Chicago: '시카고', Orlando: '올랜도', 'New York City': '뉴욕', Beijing: '베이징', 'Hong Kong': '홍콩', Jakarta: '자카르타', 'Kuala Lumpur': '쿠알라룸푸르', Mumbai: '뭄바이', 'New Delhi': '뉴델리', Utrecht: '위트레흐트', Amsterdam: '암스테르담', Vienna: '빈', Warsaw: '바르샤바', Madrid: '마드리드', Birmingham: '버밍엄', Toronto: '토론토', 'São Paulo': '상파울루', Taipei: '타이베이', Yokohama: '요코하마', Incheon: '인천', Busan: '부산' };
+const dnKo = new Intl.DisplayNames(['ko'], { type: 'region' }), dnEn = new Intl.DisplayNames(['en'], { type: 'region' });
+let autoN = 0;
+if (fs.existsSync('data/fairs/auto.json')) for (const a of JSON.parse(fs.readFileSync('data/fairs/auto.json', 'utf8'))) {
+  const key = `${a.n.toLowerCase()}|${a.s}`;
+  if (seen.has(key) || a.e < pruneBefore || !/^[A-Z]{2}$/.test(a.cc || '') || !a.c) continue;
+  seen.add(key);
+  if (!CITY[a.c]) CITY[a.c] = [a.cc, KO_CITY[a.c] || a.c];
+  if (!CTRY[a.cc]) { try { CTRY[a.cc] = [dnKo.of(a.cc), dnEn.of(a.cc)]; } catch { continue; } }
+  keep.push({ n: a.n, s: a.s, e: a.e, c: a.c, d: '', u: a.u || '', auto: a.source }); autoN++;
+}
+keep.sort((a, b) => a.s.localeCompare(b.s) || a.n.localeCompare(b.n));
 for (const f of keep) {
   f.g = groupOf(f); f.cc = CITY[f.c]?.[0] || 'XX'; f.ck = CITY[f.c]?.[1] || f.c;
   const sameName = keep.filter(x => x.n === f.n).length > 1;
@@ -66,7 +79,7 @@ const T = {
     gd: n => `${n} 전시회`, gdesc: (n, k) => `${n} 분야 해외 전시회 일정 ${k}건. 기간, 개최 도시, 방문 전 준비사항을 정리했습니다.`,
     cdesc: (n, k) => `${n}에서 열리는 전시회 일정 ${k}건. 품목별로 기간과 도시를 확인하세요.`,
     dates: '일정', place: '개최지', field: '분야', verify: '최종 확인일', src: '출처', ddays: d => d > 0 ? `개막 D-${d}` : d === 0 ? '오늘 개막' : '진행 중',
-    srcline: '일정 출처: 미국 상무부 International Trade Administration(trade.gov)의 독일 주최 무역박람회 목록. 전시회 일정은 주최 측 사정으로 바뀔 수 있으므로 참가·출장 확정 전에는 반드시 주최 측 공식 사이트에서 다시 확인하세요.',
+    srcline: '일정 출처: 미국 상무부 International Trade Administration(trade.gov)의 독일 주최 무역박람회 목록. 전시회 일정은 주최 측 사정으로 바뀔 수 있으므로 참가·출장 확정 전에는 반드시 주최 측 공식 사이트에서 다시 확인하세요. 일부 일정은 공개 데이터(Wikidata CC0, 주최 측이 공개한 구조화 일정)에서 매일 자동으로 수집하며, 자동 수집 항목은 설명 없이 일정·장소만 표시합니다.',
     detailDesc: f => `${f.n}은(는) ${f.ck}에서 ${T.ko.fmt(f.s, f.e)} 열리는 ${GROUPS.find(g => g.k === f.g).ko} 분야 전시회입니다.`,
     prepH: '방문 전 준비 체크리스트', guideH: '전시회를 소싱에 쓰는 방법',
     prep: f => [`개막 약 8주 전: 참가업체 목록을 받아 만나고 싶은 업체 5~10곳을 정하고 미팅을 요청합니다.`, `개막 약 4주 전: 항공편과 숙소를 확정합니다. 전시 기간 도시 숙박은 일찍 마감됩니다.`, `출국 전: 구매하려는 품목의 한국 수입 요건(인증·표시·통관)을 미리 확인합니다.`, `현장: 부스마다 MOQ, 견적 유효기간, 인코텀즈, 샘플 비용, 인증 보유 여부를 같은 양식으로 메모합니다.`, `귀국 후 1주 안: 감사 메일과 함께 견적·샘플 요청을 보내야 기억이 남아 있을 때 협상이 이어집니다.`],
@@ -80,8 +93,8 @@ const T = {
     gd: n => `${n} trade fairs`, gdesc: (n, k) => `${k} upcoming ${n} trade fairs with dates, host city and a pre-visit checklist.`,
     cdesc: (n, k) => `${k} trade fairs held in ${n}, with dates and host cities by industry.`,
     dates: 'Dates', place: 'Venue city', field: 'Industry', verify: 'Last checked', src: 'Source', ddays: d => d > 0 ? `Opens in ${d} days` : d === 0 ? 'Opens today' : 'Ongoing',
-    srcline: 'Schedule source: the U.S. Department of Commerce International Trade Administration (trade.gov) list of trade fairs organized in Germany. Dates can change at the organizer\'s discretion, so always re-check the organizer\'s official site before booking travel or booths.',
-    detailDesc: f => `${f.n} takes place in ${f.c} on ${T.en.fmt(f.s, f.e)}. ${f.d}.`,
+    srcline: 'Schedule source: the U.S. Department of Commerce International Trade Administration (trade.gov) list of trade fairs organized in Germany. Dates can change at the organizer\'s discretion, so always re-check the organizer\'s official site before booking travel or booths. Some entries are collected automatically every day from open data (Wikidata, CC0) and structured schedules published by organizers; those show dates and venue only.',
+    detailDesc: f => `${f.n} takes place in ${f.c} on ${T.en.fmt(f.s, f.e)}.${f.d ? ' ' + f.d + '.' : ''}`,
     prepH: 'Pre-visit checklist', guideH: 'How to use a trade fair for sourcing',
     prep: f => [`About 8 weeks before opening: get the exhibitor list, pick 5–10 suppliers to meet and request appointments.`, `About 4 weeks before: book flights and hotel. Rooms in fair cities sell out early.`, `Before departure: check import requirements (certification, labeling, customs) for the products you plan to buy.`, `On site: note MOQ, quote validity, Incoterms, sample cost and certifications at every booth in the same format.`, `Within a week of returning: send thank-you notes with quote and sample requests while the conversation is still fresh.`],
     gdLong: [['A question list beats a business card', 'Time at a booth is short. Asking MOQ, lead time, Incoterms, payment terms, certification and sample cost in the same order makes suppliers comparable.'], ['Second day over first day', 'The first day is crowded. Revisiting key suppliers mid-fair often gets you the technical contact instead of a sales rep.'], ['Convert quotes to landed cost', 'FOB prices from the floor only compare once freight, duty and VAT are added. Use the [landed cost calculator](../landed-cost-calculator.html) to put every quote on the same basis.'], ['Plan around local holidays', 'Replies slow down around local holidays before and after a fair. Check the [global holiday calendar](../global-holiday-calendar.html) when planning the trip.']] },
@@ -129,7 +142,7 @@ const list = (arr, t, up) => {
   return `<div id="list">${act.map(f => row(f, t, up)).join('') || `<p>${t.none}</p>`}</div>${past.length ? `<h2 class="sh" id="endedH">${t.ended}</h2>${past.map(f => row(f, t, up)).join('')}` : ''}`;
 };
 const itemList = (arr, t, up) => ({ '@type': 'ItemList', numberOfItems: arr.length, itemListElement: arr.slice(0, 50).map((f, i) => ({ '@type': 'ListItem', position: i + 1, url: `${BASE}/${t.dir}/f/${f.slug}.html`, name: f.n })) });
-const eventLd = (f, t) => ({ '@type': 'Event', name: f.n, ...(f.img ? { image: imgUrl(f.img, 960) } : {}), startDate: f.s, endDate: f.e, eventStatus: 'https://schema.org/EventScheduled', eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode', location: { '@type': 'Place', name: f.c, address: { '@type': 'PostalAddress', addressLocality: f.c, ...(CTRY[f.cc] ? { addressCountry: f.cc } : {}) } }, description: f.d, url: `${BASE}/${t.dir}/f/${f.slug}.html` });
+const eventLd = (f, t) => ({ '@type': 'Event', name: f.n, ...(f.img ? { image: imgUrl(f.img, 960) } : {}), startDate: f.s, endDate: f.e, eventStatus: 'https://schema.org/EventScheduled', eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode', location: { '@type': 'Place', name: f.c, address: { '@type': 'PostalAddress', addressLocality: f.c, ...(CTRY[f.cc] ? { addressCountry: f.cc } : {}) } }, ...(f.d ? { description: f.d } : {}), url: `${BASE}/${t.dir}/f/${f.slug}.html` });
 
 for (const t of Object.values(T)) {
   const L = t.lang, active = keep.filter(f => f.status !== 'ended');
@@ -185,4 +198,4 @@ for (const t of Object.values(T)) {
 ${rel.length ? `<h2 class="sh">${L === 'ko' ? `같은 분야의 다른 전시회` : 'More fairs in this industry'}</h2>${rel.map(x => row(x, t, '../')).join('')}` : ''}${note}` }));
   }
 }
-console.log(`fairs: ${keep.length} kept, ${dropped.length} pruned, ${files.length} pages${warn.length ? '\nWARN:\n' + warn.join('\n') : ''}`);
+console.log(`fairs: ${keep.length} kept (${autoN} auto), ${dropped.length} pruned, ${files.length} pages${warn.length ? '\nWARN:\n' + warn.join('\n') : ''}`);
