@@ -37,5 +37,17 @@ export const GROUPS = [
     ki: '교육, 문화, 관광, 보안, 게임·출판 등 위 분야에 속하지 않는 전시회입니다.',
     ei: 'Fairs for education, culture, tourism, security, games, publishing and other sectors not covered above.' },
 ];
-const OVERRIDE = { 'FRUIT LOGISTICA': 'food', 'LEARNTEC': 'other', 'Frankfurt Book Fair': 'other', 'DMEXCO': 'other', 'succeet': 'other', 'LOPEC': 'electronics', 'Aviation Forum': 'mobility' };
-export const groupOf = f => { if (OVERRIDE[f.n]) return OVERRIDE[f.n]; const h = `${f.n} ${f.d}`; return GROUPS.find(g => g.re.test(h)).k; };
+const OVERRIDE = { 'MEBAA Show Dubai 2026': 'mobility', 'MIDO 2027': 'electronics', 'India International Textile Machinery Exhibition (ITME) 2026': 'machinery', 'ITMA + CITME Shanghai 2026': 'machinery', 'Paperworld Middle East 2027': 'consumer', 'Beautyworld Middle East 2027': 'consumer', 'MADRIDJOYA 2027': 'consumer', 'SIMAC TANNING TECH 2027': 'machinery', 'IPLAS India 2027': 'chemicals', 'INCHEM TOKYO 2027': 'chemicals', 'Madrid Expo Camper & Caravan 2026': 'mobility', 'FRUIT LOGISTICA': 'food', 'LEARNTEC': 'other', 'Frankfurt Book Fair': 'other', 'DMEXCO': 'other', 'succeet': 'other', 'LOPEC': 'electronics', 'Aviation Forum': 'mobility' };
+// name-based hints for entries that carry no description (organizer/government-listed fairs)
+const HINT = [
+  ['chemicals', /plast|achema|pollutec/i], ['logistics', /packag|paper|print4all|sign & graphic|logist/i],
+  ['consumer', /textile|itme|jewel|iijs|mipel|micam|lineapelle|milano unica|momad|bisutex|intergift|promogift|gold|branding|milano home|toy|gift/i],
+  ['food', /food|horeca|sirha|host milano|coffee|anuga|vinitech|gulfood|agro pack/i],
+  ['mobility', /mobility|motortec|automechanika|equip'?auto|eicma|bourget|aero|airshow|solutrans|auto world|autoland|camper/i],
+  ['building', /build|baytek|cityscape|acetech|big 5|hvac|c&r|madeexpo|sbe|smart building|vitrum|light|euroluce|mobile|salone internazionale|intermat|interior|home/i],
+  ['electronics', /intersec|sicurezza|milipol|trustech|gee|elevator|light \+|ces|computex|mwc/i],
+  ['energy', /energy|nuclear|power/i],
+  ['machinery', /lamiera|made in steel|emo|metal|machin|manufactur|issa pulire|mebaa|pharma/i],
+  ['medical', /dental|health|medic|mido|hia/i],
+];
+export const groupOf = f => { if (OVERRIDE[f.n]) return OVERRIDE[f.n]; if (!f.d) { const h = HINT.find(([, re]) => re.test(f.n)); if (h) return h[0]; } const h = `${f.n} ${f.d}`; return GROUPS.find(g => g.re.test(h)).k; };
