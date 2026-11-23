@@ -1,0 +1,53 @@
+# key|Wikimedia Commons file title|license|author. key = fair name fragment (matched against the fair name) or venue:<city>. Only CC BY / CC BY-SA / CC0 / public-domain files; no logos.
+ART COLOGNE|Galerie Anselm Dreher Messekoje Art Cologne 1992.jpg|CC BY-SA 4.0|Layin
+EuroTier|2018 -11 EuroTier (62).jpg|CC BY-SA 4.0|Niedersächsische Landjugend
+boot Düsseldorf|Boot Düsseldorf 2007.jpg|CC BY-SA 2.0 de|Sir James
+imm cologne|2009 imm cologne.jpg|CC BY 2.0|Bruno Cordioli
+Christmasworld|Christmasworld 2026, Frankfurt am Main (20260207-P1074896).jpg|CC BY-SA 4.0|Matti Blume
+Spielwarenmesse|Spielwarenmesse 2006 03.jpg|CC BY-SA 3.0|Roland Berger
+FRUIT LOGISTICA|2009 02 07 Bananen auf der Fruit Logistica.JPG|CC BY 3.0|Ursula Horn
+BIOFACH|Biofach 2016.jpg|CC BY-SA 4.0|Lorenru
+Didacta|Didacta messhalle 02.jpg|CC BY-SA 2.5|Ra Boe
+Handwerksmesse|Internationale Handwerksmesse 2014.jpg|CC BY-SA 3.0|Marcus Schlaf
+Internorga|INTERNORGA 1.jpg|CC BY-SA 3.0|Schnellschuss
+LogiMat|LogiMAT 2019 (06).jpg|CC BY-SA 4.0|Vasyatka1
+embedded world|Embedded World 2014 TI Developer Board.jpg|CC0|Ordercrazy
+Hannover Messe|Hannover-Messe 2012 by-RaBoe 049.jpg|CC BY-SA 3.0 de|Ra Boe
+AERO Friedrichshafen|Blackshape Prime, AERO Friedrichshafen 2018, Friedrichshafen (1X7A4815).jpg|CC BY-SA 4.0|Matti Blume
+IMEX|IMEX 2008, Messestände, 3.jpeg|CC BY-SA 4.0|Renardo la vulpo
+spoga+gafa|Spoga+Gafa.jpg|CC BY-SA 4.0|Namukolomusonda
+GIFA|GIFA 2016.jpg|CC BY-SA 4.0|Gifa2016
+LASER World of Photonics|Laser World of Photonics 01.jpg|CC BY 4.0|Derbrauni
+gamescom|Gamescom 2009 - Koelnmesse Südeingang (5473).jpg|CC BY-SA 4.0|Raimond Spekking
+Caravan Salon|Caravan Salon 2021 Eingangsbereich.jpg|CC BY-SA 3.0|Messe Düsseldorf
+InnoTrans|InnoTrans 2024, Berlin (P1200403).jpg|CC BY-SA 4.0|Matti Blume
+DSEI|Tempest DSEI 2019.jpg|CC BY-SA 4.0|Swadim
+IAA Mobility|Evum aCar, IAA Mobility 2023, Munich (P1110617).jpg|CC BY-SA 4.0|Matti Blume
+DMEXCO|Dmexco 2016-1742.jpg|CC BY-SA 4.0|Raimond Spekking
+INTERBOOT|Launch 25 GT, Interboot 2020, Friedrichshafen (IB200122).jpg|CC BY-SA 4.0|Matti Blume
+EXPO REAL|Expo real münchen 20071008.jpg|CC BY 3.0|Emha
+Interlift|EUROFORMAT Interlift 2017.jpg|CC BY 4.0|EUROFORMAT
+AGRITECHNICA|Cargobox, Agritechnica 2023, Hanover (P1160063).jpg|CC BY-SA 4.0|MB-one
+productronica|Rohde & Schwarz Productronica 2023.jpg|CC BY-SA 4.0|Gerti and Markus Haller
+Intermot|Honda V4 Concept Model at Intermot 2008 right front.jpg|CC BY 2.0|Holger Esser
+venue:Munich|Messe Muenchen-1.jpg|CC BY-SA 3.0|Rufus46
+venue:Cologne|Koelnmesse Nordeingang.jpg|CC BY-SA 4.0|Raimond Spekking
+venue:Dusseldorf|Messe Düsseldorf Halle 6.jpg|CC BY-SA 3.0|Messe Düsseldorf GmbH
+venue:Frankfurt|01-01-2014 - Messeturm - trade fair tower - Frankfurt- Germany - 01.jpg|CC BY-SA 3.0|Norbert Nagel
+venue:Frankfurt am Main|01-01-2014 - Messeturm - trade fair tower - Frankfurt- Germany - 01.jpg|CC BY-SA 3.0|Norbert Nagel
+venue:Nuremberg|Germany Nuernberg Messe.jpg|CC BY-SA 2.0 de|Wikimedia Commons contributor
+venue:Stuttgart|Messe Stuttgart 02.jpg|CC BY-SA 2.5|Ra Boe
+venue:Berlin|Messe Berlin 2022.jpg|CC BY-SA 4.0|Kasa Fue
+venue:Essen|Messe Essen, Osteingang.jpg|CC0|Wiki05
+venue:Friedrichshafen|Messe Friedrichshafen-00069.jpg|CC BY-SA 3.0|DKrieger
+venue:Las Vegas|Las Vegas Convention Ctr.jpg|CC BY-SA 2.0|Michael Gray
+venue:Barcelona|Gran Via venue of Fira de Barcelona 01.jpg|CC BY 2.0|Toni Rodrigo
+venue:Karlsruhe|Messe Karlsruhe.jpg|CC BY-SA 4.0|Killarnee
+venue:Hanover|EXPO-Holzdach Messe Hannover.jpg|CC BY 4.0|ThoBel-0043
+venue:Hannover|EXPO-Holzdach Messe Hannover.jpg|CC BY 4.0|ThoBel-0043
+venue:Singapore|Singapore Expo 2023.jpg|CC BY 2.0|Choo Yut Shing
+venue:London|Excel London Summer 2011.jpg|CC BY-SA 3.0|Senseiich
+venue:Anaheim, California|Anaheim Convention Center Front view 2013.jpg|CC BY-SA 3.0|Tuxyso
+venue:Offenburg|Luftaufnahme der Messe Offenburg (Rückansicht).jpg|CC BY-SA 3.0|Pascal-Oliver Horn
+venue:Wiesbaden|Wiesbaden Rhein Main-Hallen.jpg|CC BY-SA 3.0|Magnus Manske
+venue:Husum|Luftaufnahme Messegelände 2012.jpg|CC BY-SA 4.0|MesseHusumCongress
