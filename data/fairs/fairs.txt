@@ -227,3 +227,16 @@ MADRIDJOYA 2027|2027-09-23|2027-09-26|Madrid||https://www.ifema.es/calendario/fe
 C&R Climatización y Refrigeración 2027|2027-11-16|2027-11-19|Madrid||https://www.ifema.es/calendario/ferias|ES|official
 Malaysia International Branding Showcase (MIBS) 2026|2026-12-03|2026-12-05|Kuala Lumpur|||MY|ice-italy
 Bali International Airshow 2027|2027-09-08|2027-09-11|Bali|||ID|jetro
+COATING KOREA 2027|2027-03-24|2027-03-26|Incheon||https://eng.chemexpokorea.com/5-show-detail/coating-korea/|KR|official
+Korea International Pharmaceutical and BioPharma Exhibition (KPB) 2027|2027-04-20|2027-04-23|Goyang||https://www.koreapharm.org/eng/main.asp|KR|official
+Korea Mat 2027|2027-04-20|2027-04-23|Goyang||https://www.koreamat.org/kor/main.asp|KR|official
+Smart Factory + Automation World 2027|2027-03-03|2027-03-05|Seoul||https://www.automationworld.co.kr/|KR|official
+bauma CHINA 2026|2026-11-23|2026-11-27|Shanghai||https://bauma-china.com|CN|official
+automatica Shanghai 2027|2027-03-08|2027-03-10|Shanghai|||CN|official
+Shanghai International Fitness Exhibition (CIWF) 2027|2027-03-12|2027-03-14|Shanghai||https://www.ciwf.com.cn/en/|CN|official
+IF Wedding Fashion Izmir 2027|2027-01-19|2027-01-22|Izmir|||TR|official
+AGROEXPO Izmir 2027|2027-02-02|2027-02-06|Izmir|||TR|official
+IZFURNEX 2027|2027-03-17|2027-03-21|Izmir|||TR|official
+PET Izmir 2027|2027-03-25|2027-03-28|Izmir|||TR|official
+OPTICWORLD Izmir 2027|2027-03-26|2027-03-28|Izmir|||TR|official
+MARBLE Izmir 2027|2027-04-13|2027-04-16|Izmir|||TR|official

@@ -58,10 +58,24 @@ async function robotsOk(u) {
 }
 const walk = (o, f) => { if (Array.isArray(o)) o.forEach(v => walk(v, f)); else if (o && typeof o === 'object') { f(o); Object.values(o).forEach(v => walk(v, f)); } };
 const srcFile = 'data/fairs/sources.txt';
-const SRC_LINES = fs.existsSync(srcFile) ? fs.readFileSync(srcFile, 'utf8').split('\n').map(l => l.trim()).filter(l => l && !l.startsWith('#')) : [];
+const SRC_FILE_LINES = fs.existsSync(srcFile) ? fs.readFileSync(srcFile, 'utf8').split('\n').map(l => l.trim()).filter(l => l && !l.startsWith('#')) : [];
+// Self-discovery: every day, re-read a rotating slice of the curated fairs' own official sites. A different edition of the
+// same fair (name shares a distinctive word with the curated entry) found there as schema.org Event JSON-LD is added as an
+// auto entry. Curated entries always win on name+start, so this only ever adds new editions, never overwrites checked data.
+const DISC = (() => { try {
+  const seen = new Set(), rows = [];
+  for (const l of fs.readFileSync('data/fairs/fairs.txt', 'utf8').split('\n')) {
+    const p = l.split('|').map(x => x.trim()); if (p.length < 6 || !/^https?:\/\//.test(p[5])) continue;
+    let h; try { h = new URL(p[5]).origin; } catch { continue; } if (seen.has(h)) continue; seen.add(h);
+    rows.push(`${p[5]}|${p[3]}|${/^[A-Z]{2}$/.test(p[6] || '') ? p[6] : ''}|${p[0]}`);
+  }
+  const day = Math.floor(Date.now() / 864e5), N = 40, off = (day * N) % Math.max(rows.length, 1);
+  return rows.concat(rows).slice(off, off + N);
+} catch { return []; } })();
+const SRC_LINES = [...SRC_FILE_LINES, ...DISC];
 for (const line of SRC_LINES) {
-  const [url, dc = '', dcc = ''] = line.split('|').map(x => x.trim());
-  await src('ld:' + new URL(url).hostname, async () => {
+  const [url, dc = '', dcc = '', mt = ''] = line.split('|').map(x => x.trim());
+  await src((mt ? 'disc:' : 'ld:') + new URL(url).hostname, async () => {
     if (!(await robotsOk(url))) throw new Error('robots.txt disallows');
     const r = await fetch(url, { headers: UA, signal: AbortSignal.timeout(30000) }); if (!r.ok) throw new Error('HTTP ' + r.status);
     const html = await r.text(), out = [];
@@ -70,10 +84,11 @@ for (const line of SRC_LINES) {
       walk(j, o => {
         const t = [].concat(o['@type'] || []).join(' '); if (!/Event|TradeShow|ExhibitionEvent/.test(t) || !o.startDate) return;
         const loc = [].concat(o.location || [])[0] || {}, ad = loc.address || {};
-        const x = norm({ id: 'ld-' + new URL(url).hostname + '-' + txt(o.name).toLowerCase().replace(/\W+/g, '-').slice(0, 60) + '-' + d10(o.startDate), source: 'ld:' + new URL(url).hostname, n: txt(o.name), s: d10(o.startDate), e: d10(o.endDate) || d10(o.startDate), c: txt(ad.addressLocality) || dc, cc: (txt(ad.addressCountry) || dcc).slice(0, 2).toUpperCase(), u: txt(o.url) ? new URL(txt(o.url), url).href : url });
+        const x = norm({ id: 'ld-' + new URL(url).hostname + '-' + txt(o.name).toLowerCase().replace(/\W+/g, '-').slice(0, 60) + '-' + d10(o.startDate), source: 'ld:' + new URL(url).hostname, n: txt(o.name), s: d10(o.startDate), e: d10(o.endDate) || d10(o.startDate), c: txt(ad.addressLocality) || dc, cc: (/^[A-Za-z]{2}$/.test(txt(ad.addressCountry)) ? txt(ad.addressCountry) : dcc).toUpperCase(), u: txt(o.url) ? new URL(txt(o.url), url).href : url });
         if (valid(x)) out.push(x);
       });
     }
+    if (mt) { const ws = mt.toLowerCase().split(/[^a-z0-9가-힣]+/).filter(w => w.length >= 5 && !/^20\d\d$/.test(w)); const k = out.filter(x => ws.some(w => x.n.toLowerCase().includes(w))); out.length = 0; out.push(...k); }
     console.log('LD', url, out.length, JSON.stringify(out[0] || {}).slice(0, 300));
     return out;
   });
