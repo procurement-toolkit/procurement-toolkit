@@ -4,6 +4,7 @@
 import { UI_CSS } from '../shared/ui.mjs';
 import { COMPLY, GUIDE, FTA_LINK } from './content.mjs';
 import fs from 'fs';
+import crypto from 'crypto';
 import { GROUPS, groupOf } from './taxonomy.mjs';
 const BASE = 'https://procurement-toolkit-eight.vercel.app';
 const PRUNE_DAYS = 60, VERIFIED = '2026-11-23';
@@ -36,7 +37,7 @@ const CONTS = [
 const CC_CONT = {}; for (const c of CONTS) for (const cc of c.codes.split(' ')) CC_CONT[cc] = c.k;
 const keep = [], dropped = [], seen = new Set(), warn = [];
 const pruneBefore = addDays(today, -PRUNE_DAYS);
-const KO_CITY = { Birmingham: '버밍엄', 'São Paulo': '상파울루', Izmir: '이즈미르', Bangkok: '방콕', Hanoi: '하노이', Miami: '마이애미', Bali: '발리', Madrid: '마드리드', 'Kuala Lumpur': '쿠알라룸푸르', Rho: '로(밀라노)', Milano: '밀라노', Bergamo: '베르가모', Lyon: '리옹', Bordeaux: '보르도', Villepinte: '빌팽트', 'Le Bourget': '르부르제', 'Kuwait City': '쿠웨이트시티', Riyadh: '리야드', Baghdad: '바그다드', Erbil: '에르빌', Chennai: '첸나이', 'Greater Noida': '그레이터 노이다', Mumbai: '뭄바이', 'New Delhi': '뉴델리', Gandhinagar: '간디나가르', Tokyo: '도쿄', Osaka: '오사카', Nagoya: '나고야', Fukuoka: '후쿠오카', Sapporo: '삿포로', Yokohama: '요코하마', Seoul: '서울', Goyang: '고양', Incheon: '인천', Busan: '부산', Paris: '파리', Milan: '밀라노', Shanghai: '상하이', Guangzhou: '광저우', Shenzhen: '선전', Beijing: '베이징', 'Hong Kong': '홍콩', Taipei: '타이베이', Bangkok: '방콕', Jakarta: '자카르타', 'Kuala Lumpur': '쿠알라룸푸르', Dubai: '두바이', 'Abu Dhabi': '아부다비', Istanbul: '이스탄불', Lagos: '라고스', Brussels: '브뤼셀', Chicago: '시카고', Orlando: '올랜도', 'New York City': '뉴욕', Mumbai: '뭄바이', 'New Delhi': '뉴델리', Utrecht: '위트레흐트', Amsterdam: '암스테르담', Vienna: '빈', Warsaw: '바르샤바', Madrid: '마드리드', Birmingham: '버밍엄', Toronto: '토론토', 'São Paulo': '상파울루' };
+const KO_CITY = { Seoul: '서울', Goyang: '고양', Busan: '부산', Daegu: '대구', Incheon: '인천', Changwon: '창원', Gwangju: '광주', Daejeon: '대전', Ulsan: '울산', Sejong: '세종', Seongnam: '성남', Suwon: '수원', Yongin: '용인', Hwaseong: '화성', Jeju: '제주', Pyeongtaek: '평택', Gimhae: '김해', Cheongju: '청주', Jeonju: '전주', Gyeongju: '경주', Ansan: '안산', Paju: '파주', Gunsan: '군산', Pohang: '포항', Gumi: '구미', Birmingham: '버밍엄', 'São Paulo': '상파울루', Izmir: '이즈미르', Bangkok: '방콕', Hanoi: '하노이', Miami: '마이애미', Bali: '발리', Madrid: '마드리드', 'Kuala Lumpur': '쿠알라룸푸르', Rho: '로(밀라노)', Milano: '밀라노', Bergamo: '베르가모', Lyon: '리옹', Bordeaux: '보르도', Villepinte: '빌팽트', 'Le Bourget': '르부르제', 'Kuwait City': '쿠웨이트시티', Riyadh: '리야드', Baghdad: '바그다드', Erbil: '에르빌', Chennai: '첸나이', 'Greater Noida': '그레이터 노이다', Mumbai: '뭄바이', 'New Delhi': '뉴델리', Gandhinagar: '간디나가르', Tokyo: '도쿄', Osaka: '오사카', Nagoya: '나고야', Fukuoka: '후쿠오카', Sapporo: '삿포로', Yokohama: '요코하마', Seoul: '서울', Goyang: '고양', Incheon: '인천', Busan: '부산', Paris: '파리', Milan: '밀라노', Shanghai: '상하이', Guangzhou: '광저우', Shenzhen: '선전', Beijing: '베이징', 'Hong Kong': '홍콩', Taipei: '타이베이', Bangkok: '방콕', Jakarta: '자카르타', 'Kuala Lumpur': '쿠알라룸푸르', Dubai: '두바이', 'Abu Dhabi': '아부다비', Istanbul: '이스탄불', Lagos: '라고스', Brussels: '브뤼셀', Chicago: '시카고', Orlando: '올랜도', 'New York City': '뉴욕', Mumbai: '뭄바이', 'New Delhi': '뉴델리', Utrecht: '위트레흐트', Amsterdam: '암스테르담', Vienna: '빈', Warsaw: '바르샤바', Madrid: '마드리드', Birmingham: '버밍엄', Toronto: '토론토', 'São Paulo': '상파울루' };
 for (const line of raw) {
   const [n, s, e, c, d, u, cc, sr] = line.split('|').map(x => x?.trim());
   const ok = n && /^\d{4}-\d{2}-\d{2}$/.test(s) && /^\d{4}-\d{2}-\d{2}$/.test(e) && c && (d || /^[A-Z]{2}$/.test(cc || '')) && !Number.isNaN(Date.parse(s)) && !Number.isNaN(Date.parse(e));
@@ -61,13 +62,13 @@ if (fs.existsSync('data/fairs/auto.json')) for (const a of JSON.parse(fs.readFil
   seen.add(key);
   if (!CITY[a.c]) CITY[a.c] = [a.cc, KO_CITY[a.c] || a.c];
   if (!CTRY[a.cc]) { try { CTRY[a.cc] = [dnKo.of(a.cc), dnEn.of(a.cc)]; } catch { continue; } }
-  keep.push({ n: a.n, s: a.s, e: a.e, c: a.c, d: '', u: a.u || '', auto: a.source, sr: a.source === 'wikidata' ? 'wikidata' : 'organizer-ld' }); autoN++;
+  keep.push({ n: a.n, s: a.s, e: a.e, c: a.c, d: '', u: a.u || '', auto: a.source, sr: a.source === 'wikidata' ? 'wikidata' : /^venue:/.test(a.source) ? 'venue-cal' : a.source === 'tourapi' ? 'tourapi' : 'organizer-ld' }); autoN++;
 }
 keep.sort((a, b) => a.s.localeCompare(b.s) || a.n.localeCompare(b.n));
 for (const f of keep) {
   f.g = groupOf(f); f.cc = CITY[f.c]?.[0] || 'XX'; f.k = CC_CONT[f.cc] || 'other'; f.ck = CITY[f.c]?.[1] || f.c;
   const sameName = keep.filter(x => x.n === f.n).length > 1;
-  f.slug = slugify(f.n).replace(new RegExp('-' + f.s.slice(0, 4) + '$'), '') + '-' + f.s.slice(0, sameName ? 7 : 4);
+  { let b = slugify(f.n).replace(new RegExp('-' + f.s.slice(0, 4) + '$'), ''); if (b.replace(/[\d-]/g, '').length < 3 || b === 'x') b = 'fair-' + crypto.createHash('sha1').update(f.n).digest('hex').slice(0, 6); f.slug = b + '-' + f.s.slice(0, sameName ? 7 : 4); }
   f.status = f.e < today ? 'ended' : f.s <= today ? 'ongoing' : 'upcoming';
 }
 for (const f of keep) if (f.cc && f.cc !== 'XX' && !CTRY[f.cc]) { try { CTRY[f.cc] = [dnKo.of(f.cc), dnEn.of(f.cc)]; } catch {} }
@@ -162,6 +163,8 @@ const SRC = {
   'ice-italy': { ko: '이탈리아 무역공사(ICE) 해외 전시회 목록', en: 'Italian Trade Agency (ICE) fair lists', cr: { ko: '출처: 이탈리아 무역공사(ICE)가 공개한 국가별 전시회 목록', en: 'Source: country fair lists published by the Italian Trade Agency (ICE)' } },
   jetro: { ko: 'JETRO 해외 전시회 데이터베이스(J-messe)', en: 'JETRO trade fair database (J-messe)', cr: { ko: '출처: 일본무역진흥기구(JETRO) J-messe 데이터베이스', en: 'Source: JETRO (Japan External Trade Organization) J-messe database' } },
   wikidata: { ko: 'Wikidata 공개 데이터', en: 'Wikidata open data', cr: { ko: '출처: Wikidata (CC0 공개 데이터)', en: 'Source: Wikidata (CC0 open data)' } },
+  'venue-cal': { ko: '전시장 공식 일정', en: 'Exhibition-centre calendars', cr: { ko: '출처: 코엑스·킨텍스·벡스코·엑스코 등 전시장 공식 사이트의 공개 일정', en: 'Source: public schedules on the official websites of exhibition centres (COEX, KINTEX, BEXCO, EXCO and others)' } },
+  tourapi: { ko: '한국관광공사 행사정보', en: 'Korea Tourism Organization events', cr: { ko: '출처: 한국관광공사 국문 관광정보 서비스 행사정보(공공데이터포털)', en: 'Source: Korea Tourism Organization event information (data.go.kr)' } },
   'organizer-ld': { ko: '주최 측 공개 구조화 일정', en: 'Organizer structured schedules', cr: { ko: '출처: 주최 측 사이트가 구조화 데이터(schema.org)로 공개한 일정', en: 'Source: schedules published by organizers as structured data (schema.org)' } },
 };
 Object.assign(T.ko, { continent: '대륙', continents: '대륙별', allC: '전체 국가', countries: '국가별', allCountries: '전체 국가 보기', srcs: '일정 출처', perPage: '페이지당', prev: '이전', next: '다음', loading: '불러오는 중…', pages: '페이지 이동', home: '세계 전시회 일정',

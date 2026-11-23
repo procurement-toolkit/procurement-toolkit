@@ -94,6 +94,41 @@ for (const line of SRC_LINES) {
   });
 }
 
+// ---- exhibition-centre calendars (self-discovering crawler, see venues.mjs) ---------------------------------------
+import { crawlVenue, looksTrade } from './venues.mjs';
+const VC_PATH = 'data/fairs/venue-cache.json';
+const vcache = fs.existsSync(VC_PATH) ? JSON.parse(fs.readFileSync(VC_PATH, 'utf8')) : {};
+const VLINES = fs.existsSync('data/fairs/venues.txt') ? fs.readFileSync('data/fairs/venues.txt', 'utf8').split('\n').map(l => l.trim()).filter(l => l && !l.startsWith('#')) : [];
+for (const line of VLINES) {
+  const [id, city, cc, lists, det] = line.split('|').map(x => x.trim());
+  const ls = (lists || '').split(',').map(x => x.trim()).filter(Boolean); if (!id || !ls.length) continue;
+  await src('venue:' + id, async () => {
+    if (!(await robotsOk(ls[0]))) throw new Error('robots.txt disallows');
+    return (await crawlVenue({ id, city, cc, lists: ls, detail: det ? new RegExp(det) : null }, vcache, today, { log: m => console.log('  [' + id + ']', m) })).filter(valid);
+  });
+}
+fs.mkdirSync('data/fairs', { recursive: true }); fs.writeFileSync(VC_PATH, JSON.stringify(vcache));
+
+// ---- Korea Tourism Organization event API (data.go.kr, free key: DATA_GO_KR_KEY) --------------------------------
+const KCITY = { 서울: 'Seoul', 부산: 'Busan', 대구: 'Daegu', 인천: 'Incheon', 광주: 'Gwangju', 대전: 'Daejeon', 울산: 'Ulsan', 세종: 'Sejong', 고양: 'Goyang', 성남: 'Seongnam', 수원: 'Suwon', 용인: 'Yongin', 화성: 'Hwaseong', 창원: 'Changwon', 제주: 'Jeju', 평택: 'Pyeongtaek', 김해: 'Gimhae', 청주: 'Cheongju', 전주: 'Jeonju', 경주: 'Gyeongju', 안산: 'Ansan', 파주: 'Paju', 군산: 'Gunsan', 포항: 'Pohang', 구미: 'Gumi' };
+if (process.env.DATA_GO_KR_KEY) await src('tourapi', async () => {
+  const ymd = today.replace(/-/g, ''), out = [];
+  for (let page = 1; page <= 6; page++) {
+    const u = `https://apis.data.go.kr/B551011/KorService2/searchFestival2?serviceKey=${encodeURIComponent(process.env.DATA_GO_KR_KEY)}&MobileOS=ETC&MobileApp=CBMLab&_type=json&eventStartDate=${ymd}&numOfRows=500&pageNo=${page}&arrange=A`;
+    const j = await getJSON(u, { headers: UA }); const items = [].concat(j.response?.body?.items?.item || []);
+    if (page === 1) console.log('TOUR sample', JSON.stringify(items[0] || j).slice(0, 500));
+    for (const it of items) {
+      const n = String(it.title || '').trim(), s = d10(String(it.eventstartdate || '').replace(/^(\d{4})(\d{2})(\d{2}).*/, '$1-$2-$3')), e = d10(String(it.eventenddate || '').replace(/^(\d{4})(\d{2})(\d{2}).*/, '$1-$2-$3')) || s;
+      const toks = String(it.addr1 || '').split(/\s+/), city = KCITY[(toks[0] || '').slice(0, 2)] || KCITY[(toks[1] || '').slice(0, 2)] || '';
+      if (!looksTrade(n) || !city) continue;
+      const x = norm({ id: 'tour-' + (it.contentid || n) + '-' + s, source: 'tourapi', n, s, e, c: city, cc: 'KR', u: '' });
+      if (valid(x)) out.push(x);
+    }
+    if (items.length < 500) break;
+  }
+  return out;
+});
+
 // ---- merge with previous (keep still-upcoming items), dedupe, drop ended ----------------------------
 fs.mkdirSync('data/fairs', { recursive: true });
 const path = 'data/fairs/auto.json';

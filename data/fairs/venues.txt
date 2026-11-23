@@ -1,0 +1,12 @@
+# Exhibition-centre websites crawled every day (scripts/fairs/venues.mjs): id|city (English)|country code|start URLs, comma-separated|detail-link regex (optional)
+# With no regex the crawler discovers list pages from the home page by itself. A wrong or dead URL only logs a failure.
+coex|Seoul|KR|https://www.coex.co.kr/event/exhibitions-calendar/,https://www.coex.co.kr/event/full-schedules/|coex\.co\.kr/exhibitions/[^/?#]+/?$
+kintex|Goyang|KR|https://www.kintex.com/
+bexco|Busan|KR|https://www.bexco.co.kr/
+exco|Daegu|KR|https://www.exco.co.kr/
+setec|Seoul|KR|https://www.setec.or.kr/
+atcenter|Seoul|KR|https://www.atcenter.or.kr/
+songdo|Incheon|KR|https://www.songdoconvensia.or.kr/
+ceco|Changwon|KR|https://www.ceco.co.kr/
+dcc|Daejeon|KR|https://www.dcckorea.or.kr/
+kdj|Gwangju|KR|https://www.kdjcenter.or.kr/
