@@ -22,7 +22,8 @@ const valid = x => x.n && x.n.length >= 4 && x.c && /^\d{4}-\d{2}-\d{2}$/.test(x
 // ---- Wikidata (CC0) -----------------------------------------------------------------------------
 await src('wikidata', async () => {
   const q = `SELECT ?e ?eLabel ?s ?en ?cityLabel ?cc ?web WHERE {
-    ?e wdt:P31/wdt:P279* wd:Q57305; wdt:P580 ?s. FILTER(?s >= NOW())
+    { ?e wdt:P31/wdt:P279* wd:Q57305 } UNION { ?e wdt:P31 wd:Q464980. ?e rdfs:label ?lb. FILTER(LANG(?lb) = "en" && REGEX(?lb, "expo|fair|show|messe|trade|salon|exhibition|fiera|feria|foire", "i")) }
+    { ?e wdt:P580 ?s } UNION { ?e wdt:P585 ?s }  FILTER(?s >= NOW())
     OPTIONAL { ?e wdt:P582 ?en } OPTIONAL { ?e wdt:P856 ?web }
     OPTIONAL { ?e wdt:P276 ?city. OPTIONAL { ?city wdt:P17 ?k. ?k wdt:P297 ?cc } }
     SERVICE wikibase:label { bd:serviceParam wikibase:language "en". } } LIMIT 2000`;

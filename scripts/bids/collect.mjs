@@ -169,8 +169,9 @@ const CAP = 2500; let done = 0, fails = 0, streak = 0;
 const sleep = ms => new Promise(r => setTimeout(r, ms));
 async function gtRetry(text, tl) { try { return await gt(text, tl); } catch (e) { if (/429/.test(String(e.message))) { await sleep(45000); return await gt(text, tl); } throw e; } }
 const todo = out.filter(x => !(TR[x.id]) && x.title).slice(0, CAP);
+const T0 = Date.now(), BUDGET = 40 * 60e3;   // keep the daily run short; the cache catches up over several days
 for (const x of todo) {
-  if (streak >= 5) break;
+  if (streak >= 5 || Date.now() - T0 > BUDGET) break;
   await sleep(1500);
   const e = {};
   try {

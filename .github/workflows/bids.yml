@@ -20,7 +20,7 @@ jobs:
         run: node scripts/fairs/images.mjs
         continue-on-error: true
       - name: Build pages
-        run: node scripts/fairs/build.mjs && node scripts/bids/build.mjs && node scripts/seo/sitemap.mjs
+        run: node scripts/fairs/build.mjs && node scripts/bids/build.mjs && node scripts/seo/inject_analytics.mjs && node scripts/seo/sitemap.mjs
       - name: Commit if changed
         run: |
           git config user.name cbm-lab-bot; git config user.email bot@users.noreply.github.com
