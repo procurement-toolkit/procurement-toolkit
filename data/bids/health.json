@@ -1,18 +1,18 @@
 {
- "at": "2026-11-25",
- "total": 8712,
+ "at": "2026-11-26",
+ "total": 9211,
  "bySource": {
-  "ungm": 590,
-  "boamp-fr": 1182,
+  "ungm": 684,
+  "boamp-fr": 1476,
+  "undp": 499,
+  "find-tender-uk": 67,
   "sam-gov": 1500,
-  "undp": 503,
-  "korea-g2b": 1468,
-  "find-tender-uk": 64,
-  "world-bank": 82,
+  "canada-buys": 828,
+  "korea-g2b": 1446,
+  "world-bank": 127,
   "uk": 5,
-  "canada-buys": 827,
   "eu-ted": 1500,
-  "secop-co": 991
+  "secop-co": 1079
  },
  "failedSources": []
 }
