@@ -48,3 +48,28 @@ JAGD & HUND|Jagd & Hund, 3. Februar 2018 - (115).jpg|Public domain|Kürschner (t
 # none: Anuga FoodTec
 # none: EuroCIS
 # none: GeoTHERM
+# none: MUTEC
+# none: BrauBeviale
+# none: SPS
+# none: PMRExpo
+# none: Valve World Expo
+# none: Aviation Forum
+# none: CES
+# none: BAU
+# none: PSI
+# none: opti
+# none: International Green Week
+# none: IPM Essen
+# none: Creativeworld
+# none: spoga horse
+# none: ISM Cologne
+# none: ISM Manufacturing Cologne
+# none: LEARNTEC
+# none: ISE
+# none: NORTEC
+# none: ILM
+# none: E-world energy & water
+# none: INHORGENTA MUNICH
+# none: Anuga FoodTec
+# none: EuroCIS
+# none: GeoTHERM
