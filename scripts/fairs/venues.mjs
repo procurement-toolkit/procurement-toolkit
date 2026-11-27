@@ -28,7 +28,7 @@ export function parsePage(html) {
   const ev = ld.flatMap(x => x?.['@graph'] || x).find(x => x && /Event/.test([].concat(x['@type'] || []).join(' ')) && x.startDate);
   return { n, s: ev ? String(ev.startDate).slice(0, 10) : r?.s || '', e: ev ? String(ev.endDate || ev.startDate).slice(0, 10) : r?.e || '' };
 }
-const TRADE = /전시|위크|박람회|엑스포|페어|대전|쇼(?![가-힣])|show|expo|fair|week|week$|fest|산업전|컨벤션|메쎄|messe|forum/i;
+const TRADE = /페스타|페스티벌|전시|위크|박람회|엑스포|페어|대전|쇼(?![가-힣])|show|expo|fair|week|week$|fest|산업전|컨벤션|메쎄|messe|forum/i;
 const NOT_TRADE = /입학|편입|유학|웨딩|결혼|베이비|입시|채용|취업|학술|세미나|컨퍼런스|conference|symposium|심포지엄|콘서트|concert|워크숍|workshop|공연|오픈하우스|설명회|대회(?![가-힣])|시상|총회|포럼(?![가-힣])/i;
 export const notTrade = n => NOT_TRADE.test(n);
 export const looksTrade = n => n && n.length >= 4 && n.length <= 120 && TRADE.test(n) && !NOT_TRADE.test(n);
@@ -49,6 +49,19 @@ export function listRows(html) {
   return rows;
 }
 
+// Fallback for markup without li/tr rows: find date-range text nodes and take the nearest preceding trade-looking title node.
+export function listRowsText(html) {
+  const nodes = String(html).replace(/<(script|style)[\s\S]*?<\/\1>/gi, ' ').replace(/<img[^>]*\balt="([^"]*)"[^>]*>/gi, '<b>$1</b>').split(/<[^>]+>/).map(x => x.replace(/&nbsp;/g, ' ').replace(/\s+/g, ' ').trim()).filter(Boolean);
+  const rows = [];
+  for (let i = 0; i < nodes.length; i++) {
+    const r = parseRange(nodes[i]); if (!r) continue;
+    let n = ''; const own = cleanName(nodes[i].replace(/\d{4}[.\-/].*$/, '').trim());
+    if (own.length >= 4 && looksTrade(own)) n = own;
+    for (let j = i - 1; !n && j >= Math.max(0, i - 4); j--) { const c = cleanName(nodes[j]); if (c.length >= 4 && c.length <= 120 && looksTrade(c)) n = c; }
+    if (n) rows.push({ n, s: r.s, e: r.e });
+  }
+  return rows;
+}
 const DROP_Q = new Set(['var_page', 'list_type', 'cy', 'cm', 'page', 'cPage', 'utm_source', 'utm_medium', 'utm_campaign']);
 function normUrl(u) { try { const x = new URL(u.replace(/#.*$/, '')); for (const k of [...x.searchParams.keys()]) if (DROP_Q.has(k)) x.searchParams.delete(k); x.pathname = x.pathname.replace(/\/{2,}/g, '/'); return x.toString().replace(/\/\?/, '?').replace(/\?$/, ''); } catch { return u; } }
 const FRONT_JUNK = /^(D-\d+|상세보기|열린|분류|전시회|EXHIBITION|EXHIBIT|전체|NEW|HOT|\d{1,3})$/i;
@@ -57,6 +70,9 @@ export function cleanName(n) {
   let w = t.split(' ');
   while (w.length > 1 && FRONT_JUNK.test(w[0])) w.shift();
   t = w.join(' ').replace(/\s*(기간|일시)$/, '').trim();
+  const km = t.match(/^(.*?(?:박람회|페어|쇼|전시회|엑스포|EXPO|대전|위크|페스타|페스티벌|컨벤션)\d{0,2}(?:\s*in\s*\S+|\s*\([^)]*\))?)(?:\s+\S|$)/i);
+  if (km && km[1].length >= 4) t = km[1].trim();
+  if (w.every(x => FRONT_JUNK.test(x)) || /^(전시홀|전시실|전시장|전시관)/.test(t)) return '';
   return /^(전시일정|행사일정|전시회 일정|일정)$/.test(t) ? '' : t;
 }
 async function get(u, log) { const r = await fetch(u, { headers: UA, signal: AbortSignal.timeout(30000), redirect: 'follow' }); if (!r.ok) throw new Error('HTTP ' + r.status + ' ' + u); const b = Buffer.from(await r.arrayBuffer()); const ct = r.headers.get('content-type') || ''; const cs = (ct.match(/charset=([\w-]+)/i) || [])[1] || (b.slice(0, 2000).toString('latin1').match(/charset=["']?([\w-]+)/i) || [])[1] || 'utf-8'; try { return new TextDecoder(cs).decode(b); } catch { return b.toString('utf8'); } }
@@ -71,7 +87,7 @@ export async function crawlVenue(cfg, cache, today, { maxLists = 12, maxPages = 
     let html; try { html = await get(lists[i]); } catch (e) { log(`list fail ${e.message}`); continue; } await sleep(delay);
     const ls = links(html, lists[i]).filter(x => same(x.u) && !/\.(jpg|png|pdf|zip|css|js)(\?|$)/i.test(x.u));
     log(`list ${lists[i]} links=${ls.length}`);
-    for (const r of listRows(html)) if (looksTrade(r.n) && r.e >= today && (Date.parse(r.e) - Date.parse(r.s)) / 864e5 <= 14) out.push({ ...r, u: lists[i] + '#' + encodeURIComponent(r.n).slice(0, 40) });
+    for (const r of [...listRows(html), ...listRowsText(html)]) if (looksTrade(r.n) && r.e >= today && (Date.parse(r.e) - Date.parse(r.s)) / 864e5 <= 14) out.push({ ...r, u: lists[i] + '#' + encodeURIComponent(r.n).slice(0, 40) });
     for (const x of ls) {
       const isDetail = cfg.detail ? cfg.detail.test(x.u) : (looksTrade(x.t) && x.t.length >= 6);
       if (isDetail) cand.set(normUrl(x.u), x.t);

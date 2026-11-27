@@ -5,7 +5,6 @@ kintex|Goyang|KR|https://www.kintex.com/web/ko/event/list.do,https://www.kintex.
 bexco|Busan|KR|https://www.bexco.co.kr/
 exco|Daegu|KR|https://www.exco.co.kr/
 setec|Seoul|KR|https://www.setec.or.kr/front/schedule/list.do,https://www.setec.or.kr/front/schedule/calendar.do
-atcenter|Seoul|KR|https://www.at.or.kr/ac/event/acko311200/posterList.action|at\.or\.kr/ac/event/acko311200/posterView\.action\?eventId=
 songdo|Incheon|KR|https://www.songdoconvensia.or.kr/
 ceco|Changwon|KR|https://www.ceco.co.kr/
 dcc|Daejeon|KR|https://www.dcckorea.or.kr/
