@@ -136,7 +136,7 @@
  },
  "venue:coex": {
   "ok": true,
-  "n": 0,
+  "n": 42,
   "at": "2026-11-27"
  },
  "venue:kintex": {
@@ -151,12 +151,12 @@
  },
  "venue:exco": {
   "ok": true,
-  "n": 0,
+  "n": 5,
   "at": "2026-11-27"
  },
  "venue:setec": {
   "ok": true,
-  "n": 0,
+  "n": 1,
   "at": "2026-11-27"
  },
  "venue:atcenter": {
@@ -171,7 +171,7 @@
  },
  "venue:ceco": {
   "ok": true,
-  "n": 1,
+  "n": 9,
   "at": "2026-11-27"
  },
  "venue:dcc": {
@@ -182,6 +182,31 @@
  "venue:kdj": {
   "ok": true,
   "n": 0,
+  "at": "2026-11-27"
+ },
+ "disc:www.targikielce.pl": {
+  "ok": false,
+  "error": "HTTP 502",
+  "at": "2026-11-27"
+ },
+ "disc:www.coex.co.kr": {
+  "ok": true,
+  "n": 0,
+  "at": "2026-11-27"
+ },
+ "disc:www.setec.or.kr": {
+  "ok": true,
+  "n": 0,
+  "at": "2026-11-27"
+ },
+ "venue:jiexpo": {
+  "ok": false,
+  "error": "HTTP 500",
+  "at": "2026-11-27"
+ },
+ "tourapi": {
+  "ok": false,
+  "error": "HTTP 403 {\n  \"OpenAPI_ServiceResponse\": {\n    \"cmmMsgHeader\": {\n      \"errMsg\": \"SERVICE_KEY_IS_NOT_REGISTERED_ERROR\",\n      \"returnAuthMsg\": \"등록되지 않은 서비스키\",\n ",
   "at": "2026-11-27"
  }
 }
