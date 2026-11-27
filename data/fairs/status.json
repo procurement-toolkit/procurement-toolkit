@@ -136,12 +136,12 @@
  },
  "venue:coex": {
   "ok": true,
-  "n": 52,
+  "n": 112,
   "at": "2026-11-27"
  },
  "venue:kintex": {
   "ok": true,
-  "n": 112,
+  "n": 150,
   "at": "2026-11-27"
  },
  "venue:bexco": {
@@ -156,7 +156,7 @@
  },
  "venue:setec": {
   "ok": true,
-  "n": 13,
+  "n": 9,
   "at": "2026-11-27"
  },
  "venue:atcenter": {
@@ -172,7 +172,7 @@
  },
  "venue:ceco": {
   "ok": true,
-  "n": 21,
+  "n": 17,
   "at": "2026-11-27"
  },
  "venue:dcc": {
