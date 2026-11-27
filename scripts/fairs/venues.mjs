@@ -29,7 +29,7 @@ export function parsePage(html) {
   return { n, s: ev ? String(ev.startDate).slice(0, 10) : r?.s || '', e: ev ? String(ev.endDate || ev.startDate).slice(0, 10) : r?.e || '' };
 }
 const TRADE = /전시|위크|박람회|엑스포|페어|대전|쇼(?![가-힣])|show|expo|fair|week|week$|fest|산업전|컨벤션|메쎄|messe|forum/i;
-const NOT_TRADE = /유학|웨딩|결혼|베이비|입시|채용|취업|학술|세미나|컨퍼런스|conference|symposium|심포지엄|콘서트|concert|워크숍|workshop|공연|오픈하우스|설명회|대회(?![가-힣])|시상|총회|포럼(?![가-힣])/i;
+const NOT_TRADE = /입학|편입|유학|웨딩|결혼|베이비|입시|채용|취업|학술|세미나|컨퍼런스|conference|symposium|심포지엄|콘서트|concert|워크숍|workshop|공연|오픈하우스|설명회|대회(?![가-힣])|시상|총회|포럼(?![가-힣])/i;
 export const notTrade = n => NOT_TRADE.test(n);
 export const looksTrade = n => n && n.length >= 4 && n.length <= 120 && TRADE.test(n) && !NOT_TRADE.test(n);
 const links = (html, base) => [...new Set([...html.matchAll(/<a\b[^>]*href=["']([^"'#]+)["']([^>]*)>([\s\S]{0,200}?)<\/a>/gi)].map(m => { try { return { u: new URL(dec(m[1]), base).href, t: dec(m[3].replace(/<[^>]+>/g, '')) }; } catch { return null; } }).filter(Boolean).map(x => JSON.stringify(x)))].map(x => JSON.parse(x));
@@ -37,17 +37,28 @@ const sleep = ms => new Promise(r => setTimeout(r, ms));
 // Rows of a list/calendar page that carry both a title and a date range (detail links may be '#'/JS, as on SETEC).
 export function listRows(html) {
   const rows = [];
-  for (const ch of html.split(/<li[\s>]|<tr[\s>]|<article[\s>]/i).slice(1)) {
+  for (const ch0 of html.split(/<li[\s>]|<tr[\s>]|<article[\s>]/i).slice(1)) {
+    const ch = ch0.replace(/^[^>]*>/, '');
     const t = ch.replace(/<(script|style)[\s\S]*?<\/\1>/gi, ' ').replace(/<[^>]+>/g, ' ').replace(/&nbsp;/g, ' ').replace(/\s+/g, ' ').trim();
     if (t.length < 8 || t.length > 400) continue;
     const r = parseRange(t); if (!r) continue;
     const m = t.search(/(기간|일시|일정|Period|Date)\s*[:：]|\d{4}\s*[.\-/년]\s*\d{1,2}/); if (m < 3) continue;
-    const n = t.slice(0, m).replace(/^\d{1,3}\s+/, '').replace(/\s*[\d]{1,4}\s*$/, '').trim();
+    const n = cleanName(t.slice(0, m).replace(/\s*[\d]{1,4}\s*$/, ''));
     if (n.length >= 4 && n.length <= 120) rows.push({ n, s: r.s, e: r.e });
   }
   return rows;
 }
 
+const DROP_Q = new Set(['var_page', 'list_type', 'cy', 'cm', 'page', 'cPage', 'utm_source', 'utm_medium', 'utm_campaign']);
+function normUrl(u) { try { const x = new URL(u.replace(/#.*$/, '')); for (const k of [...x.searchParams.keys()]) if (DROP_Q.has(k)) x.searchParams.delete(k); x.pathname = x.pathname.replace(/\/{2,}/g, '/'); return x.toString().replace(/\/\?/, '?').replace(/\?$/, ''); } catch { return u; } }
+const FRONT_JUNK = /^(D-\d+|상세보기|열린|분류|전시회|EXHIBITION|EXHIBIT|전체|NEW|HOT|\d{1,3})$/i;
+export function cleanName(n) {
+  let t = String(n || '').replace(/^[^<>]*?>\s*/, m => (/[=\"']/.test(m) ? '' : m)).replace(/\s*[<|]\s*[A-Za-z가-힣 ]*$/, '').replace(/\s+/g, ' ').trim();
+  let w = t.split(' ');
+  while (w.length > 1 && FRONT_JUNK.test(w[0])) w.shift();
+  t = w.join(' ').replace(/\s*(기간|일시)$/, '').trim();
+  return /^(전시일정|행사일정|전시회 일정|일정)$/.test(t) ? '' : t;
+}
 async function get(u, log) { const r = await fetch(u, { headers: UA, signal: AbortSignal.timeout(30000), redirect: 'follow' }); if (!r.ok) throw new Error('HTTP ' + r.status + ' ' + u); const b = Buffer.from(await r.arrayBuffer()); const ct = r.headers.get('content-type') || ''; const cs = (ct.match(/charset=([\w-]+)/i) || [])[1] || (b.slice(0, 2000).toString('latin1').match(/charset=["']?([\w-]+)/i) || [])[1] || 'utf-8'; try { return new TextDecoder(cs).decode(b); } catch { return b.toString('utf8'); } }
 const LIST_HINT = /전시|박람회|exhibit|schedule|calendar|일정|event|expo|fair|show/i;
 // cfg: { id, city, cc, lists: [urls], detail: RegExp|null }
@@ -63,7 +74,7 @@ export async function crawlVenue(cfg, cache, today, { maxLists = 12, maxPages = 
     for (const r of listRows(html)) if (looksTrade(r.n) && r.e >= today && (Date.parse(r.e) - Date.parse(r.s)) / 864e5 <= 14) out.push({ ...r, u: lists[i] + '#' + encodeURIComponent(r.n).slice(0, 40) });
     for (const x of ls) {
       const isDetail = cfg.detail ? cfg.detail.test(x.u) : (looksTrade(x.t) && x.t.length >= 6);
-      if (isDetail) cand.set(x.u.replace(/#.*$/, '').replace(/\/+\?.*$/, '').replace(/\?.*$/, '').replace(/([^:])\/\/+/g, '$1/'), x.t);
+      if (isDetail) cand.set(normUrl(x.u), x.t);
       else if (!cfg.detail && cfg.lists.length === 1 && i === 0 && LIST_HINT.test(x.t + ' ' + x.u) && lists.length < maxLists) lists.push(x.u);   // one level of list discovery from the home page
       else if (cfg.detail && LIST_HINT.test(x.u) && /page|list|calendar|schedule/i.test(x.u) && lists.length < maxLists) lists.push(x.u);
     }
@@ -76,7 +87,7 @@ export async function crawlVenue(cfg, cache, today, { maxLists = 12, maxPages = 
     try {
       const p = parsePage(await get(u)); await sleep(delay);
       const okN = x => cfg.detail ? (x && x.length >= 4 && x.length <= 120 && !NOT_TRADE.test(x)) : looksTrade(x);
-      const n0 = okN(p.n) ? p.n : (okN(t) ? t : ''), multi = p.s && p.e && p.e > p.s, n = n0 && (!cfg.detail || TRADE.test(n0) || multi) ? n0 : '';   // generic detail pages: single-day events need a trade keyword
+      const n0 = cleanName(okN(p.n) ? p.n : (okN(t) ? t : '')), multi = p.s && p.e && p.e > p.s, n = n0 && (!cfg.detail || TRADE.test(n0) || multi) ? n0 : '';   // generic detail pages: single-day events need a trade keyword
       if (!n || !p.s || !p.e || p.e < p.s || (Date.parse(p.e) - Date.parse(p.s)) / 864e5 > 14) { cache[u] = { skip: 1, at: today.slice(0, 7) }; continue; }
       cache[u] = { n, s: p.s, e: p.e, at: today.slice(0, 7) };
       if (p.e >= today) out.push({ n, s: p.s, e: p.e, u });
