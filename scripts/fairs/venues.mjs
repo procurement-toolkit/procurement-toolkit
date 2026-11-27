@@ -34,6 +34,20 @@ export const notTrade = n => NOT_TRADE.test(n);
 export const looksTrade = n => n && n.length >= 4 && n.length <= 120 && TRADE.test(n) && !NOT_TRADE.test(n);
 const links = (html, base) => [...new Set([...html.matchAll(/<a\b[^>]*href=["']([^"'#]+)["']([^>]*)>([\s\S]{0,200}?)<\/a>/gi)].map(m => { try { return { u: new URL(dec(m[1]), base).href, t: dec(m[3].replace(/<[^>]+>/g, '')) }; } catch { return null; } }).filter(Boolean).map(x => JSON.stringify(x)))].map(x => JSON.parse(x));
 const sleep = ms => new Promise(r => setTimeout(r, ms));
+// Rows of a list/calendar page that carry both a title and a date range (detail links may be '#'/JS, as on SETEC).
+export function listRows(html) {
+  const rows = [];
+  for (const ch of html.split(/<li[\s>]|<tr[\s>]|<article[\s>]/i).slice(1)) {
+    const t = ch.replace(/<(script|style)[\s\S]*?<\/\1>/gi, ' ').replace(/<[^>]+>/g, ' ').replace(/&nbsp;/g, ' ').replace(/\s+/g, ' ').trim();
+    if (t.length < 8 || t.length > 400) continue;
+    const r = parseRange(t); if (!r) continue;
+    const m = t.search(/(기간|일시|일정|Period|Date)\s*[:：]|\d{4}\s*[.\-/년]\s*\d{1,2}/); if (m < 3) continue;
+    const n = t.slice(0, m).replace(/^\d{1,3}\s+/, '').replace(/\s*[\d]{1,4}\s*$/, '').trim();
+    if (n.length >= 4 && n.length <= 120) rows.push({ n, s: r.s, e: r.e });
+  }
+  return rows;
+}
+
 async function get(u, log) { const r = await fetch(u, { headers: UA, signal: AbortSignal.timeout(30000), redirect: 'follow' }); if (!r.ok) throw new Error('HTTP ' + r.status + ' ' + u); const b = Buffer.from(await r.arrayBuffer()); const ct = r.headers.get('content-type') || ''; const cs = (ct.match(/charset=([\w-]+)/i) || [])[1] || (b.slice(0, 2000).toString('latin1').match(/charset=["']?([\w-]+)/i) || [])[1] || 'utf-8'; try { return new TextDecoder(cs).decode(b); } catch { return b.toString('utf8'); } }
 const LIST_HINT = /전시|박람회|exhibit|schedule|calendar|일정|event|expo|fair|show/i;
 // cfg: { id, city, cc, lists: [urls], detail: RegExp|null }
@@ -46,6 +60,7 @@ export async function crawlVenue(cfg, cache, today, { maxLists = 12, maxPages = 
     let html; try { html = await get(lists[i]); } catch (e) { log(`list fail ${e.message}`); continue; } await sleep(delay);
     const ls = links(html, lists[i]).filter(x => same(x.u) && !/\.(jpg|png|pdf|zip|css|js)(\?|$)/i.test(x.u));
     log(`list ${lists[i]} links=${ls.length}`);
+    for (const r of listRows(html)) if (looksTrade(r.n) && r.e >= today && (Date.parse(r.e) - Date.parse(r.s)) / 864e5 <= 14) out.push({ ...r, u: lists[i] + '#' + encodeURIComponent(r.n).slice(0, 40) });
     for (const x of ls) {
       const isDetail = cfg.detail ? cfg.detail.test(x.u) : (looksTrade(x.t) && x.t.length >= 6);
       if (isDetail) cand.set(x.u.replace(/#.*$/, ''), x.t);
