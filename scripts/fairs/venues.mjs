@@ -80,7 +80,7 @@ export function cleanName(n) {
 async function get(u, log) { const r = await fetch(u, { headers: UA, signal: AbortSignal.timeout(30000), redirect: 'follow' }); if (!r.ok) throw new Error('HTTP ' + r.status + ' ' + u); const b = Buffer.from(await r.arrayBuffer()); const ct = r.headers.get('content-type') || ''; const cs = (ct.match(/charset=([\w-]+)/i) || [])[1] || (b.slice(0, 2000).toString('latin1').match(/charset=["']?([\w-]+)/i) || [])[1] || 'utf-8'; try { return new TextDecoder(cs).decode(b); } catch { return b.toString('utf8'); } }
 const LIST_HINT = /전시|박람회|exhibit|schedule|calendar|일정|event|expo|fair|show/i;
 // cfg: { id, city, cc, lists: [urls], detail: RegExp|null }
-export async function crawlVenue(cfg, cache, today, { maxLists = 12, maxPages = 120, delay = 350, log = () => {} } = {}) {
+export async function crawlVenue(cfg, cache, today, { maxLists = 40, maxPages = 160, delay = 350, log = () => {} } = {}) {
   const origin = new URL(cfg.lists[0]).origin, out = [], seenList = new Set(), cand = new Map();
   let lists = cfg.lists.slice(), fetched = 0;
   const same = u => { try { return new URL(u).origin === origin; } catch { return false; } };
