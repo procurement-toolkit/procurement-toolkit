@@ -62,6 +62,17 @@ export function renderGuides(c) {
       const ul = a => `<ul>${a.map(x => `<li>${esc(x)}</li>`).join('')}</ul>`;
       const row = (r, lab) => `<tr><th>${esc(r[0])}</th><td>${esc(r[L === 'ko' ? 1 : 2])}</td></tr>`;
       const cnt = (f) => { const m = {}; for (const x of list) { const v = f(x); if (v) m[v] = (m[v] || 0) + 1 } return Object.entries(m).sort((a, b) => b[1] - a[1]).slice(0, 5) };
+      // data-derived brief: unique per sector, recalculated from the notices collected each day
+      const brief = (() => {
+        if (list.length < 5) return '';
+        const d30 = new Date(Date.parse(today) + 30 * 864e5).toISOString().slice(0, 10), soon = list.filter(x => x.deadline && x.deadline >= today && x.deadline <= d30).length;
+        const orgs = cnt(x => x.org).slice(0, 3).map(([a, b]) => `${a} (${b})`).join(', '), nC = new Set(list.map(x => x.country).filter(Boolean)).size, nS = new Set(list.map(x => x.source)).size;
+        const wv = list.filter(x => x.value).length;
+        const p = L === 'ko'
+          ? `이 사이트에는 ${label} 공고가 ${list.length.toLocaleString(t.loc)}건 모여 있고, ${nC}개 나라와 ${nS}개 출처에서 왔습니다. 앞으로 30일 안에 마감되는 공고는 ${soon.toLocaleString(t.loc)}건입니다. 공고를 가장 많이 낸 발주처는 ${orgs || '여러 기관'} 순이며, 추정 금액이 적힌 공고는 ${wv.toLocaleString(t.loc)}건입니다. 숫자는 매일 새로 계산됩니다.`
+          : `This site holds ${list.length.toLocaleString(t.loc)} ${label} notices from ${nC} countries and ${nS} sources. ${soon.toLocaleString(t.loc)} of them close within the next 30 days. The most active buyers are ${orgs || 'a wide range of agencies'}, and ${wv.toLocaleString(t.loc)} notices state an estimated value. Figures are recalculated every day.`;
+        return `<p class="note">${esc(p)}</p>`;
+      })();
       const live = list.length
         ? `<p>${X.live(list.length.toLocaleString(t.loc), label)}</p><ul class="gl">${list.slice(0, 5).map(x => `<li><a href="../n/${x.h}">${esc(x.title)}</a><small>${esc(x.org || '')}${x.country ? ' · ' + esc(x.country) : ''}${x.deadline ? ' · ' + X.deadline + ' ' + esc(x.deadline) : ''}</small></li>`).join('')}</ul><p>${X.topC}: ${cnt(x => x.country).map(([a, b]) => `${esc(a)} (${b})`).join(', ')}</p><p>${X.topS}: ${cnt(x => SRC[x.source]?.[L]).map(([a, b]) => `${esc(a)} (${b})`).join(', ')}</p><a class="gcta" href="../c-${k}.html">${X.all(label)} →</a>`
         : `<p>${X.liveNone}</p>`;
@@ -75,7 +86,7 @@ export function renderGuides(c) {
 <h2>${X.s_pit}</h2>${ul(G.pit)}
 <h2>${X.s_docs}</h2>${ul(G.docs)}
 <h2>${X.s_flow}</h2><ol>${X.flow.map(f => `<li><b>${esc(f[0])}</b> — ${esc(f[1])}</li>`).join('')}</ol>
-<h2>${X.s_live}</h2>${live}
+<h2>${X.s_live}</h2>${live}${brief}
 <h2>${X.s_faq}</h2>${G.faq.map(f => `<h3>${esc(f[0])}</h3><p>${esc(f[1])}</p>`).join('')}
 <h2>${X.s_kw}</h2><p class="kw">${S.terms.map(w => `<span>${esc(w)}</span>`).join('')}</p>
 <h2>${X.s_rel}</h2><ul>${rel.map(r => `<li><a href="${r}.html">${esc(SECT_LABEL[r][L])}</a></li>`).join('')}</ul>

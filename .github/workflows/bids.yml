@@ -20,7 +20,7 @@ jobs:
         run: node scripts/fairs/images.mjs
         continue-on-error: true
       - name: Build fairs pages
-        run: node scripts/fairs/build.mjs && node scripts/seo/inject_analytics.mjs && node scripts/seo/sitemap.mjs
+        run: node scripts/fairs/build.mjs && node scripts/seo/inject_analytics.mjs && node scripts/seo/core_links.mjs && node scripts/seo/sitemap.mjs
       - name: Commit if changed
         run: |
           git config user.name cbm-lab-bot; git config user.email bot@users.noreply.github.com
@@ -38,7 +38,7 @@ jobs:
       - run: node scripts/bids/collect.mjs
         env: { DATA_GO_KR_KEY: '${{ secrets.DATA_GO_KR_KEY }}', SAM_GOV_API_KEY: '${{ secrets.SAM_GOV_API_KEY }}' }
       - name: Build pages
-        run: node scripts/bids/build.mjs && node scripts/seo/inject_analytics.mjs && node scripts/seo/sitemap.mjs
+        run: node scripts/bids/build.mjs && node scripts/seo/inject_analytics.mjs && node scripts/seo/core_links.mjs && node scripts/seo/sitemap.mjs
       - name: Commit if changed
         run: |
           git config user.name cbm-lab-bot; git config user.email bot@users.noreply.github.com
