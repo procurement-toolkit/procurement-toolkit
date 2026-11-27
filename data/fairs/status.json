@@ -133,5 +133,55 @@
   "ok": true,
   "n": 0,
   "at": "2026-11-27"
+ },
+ "venue:coex": {
+  "ok": true,
+  "n": 0,
+  "at": "2026-11-27"
+ },
+ "venue:kintex": {
+  "ok": true,
+  "n": 0,
+  "at": "2026-11-27"
+ },
+ "venue:bexco": {
+  "ok": false,
+  "error": "robots.txt disallows",
+  "at": "2026-11-27"
+ },
+ "venue:exco": {
+  "ok": true,
+  "n": 0,
+  "at": "2026-11-27"
+ },
+ "venue:setec": {
+  "ok": true,
+  "n": 0,
+  "at": "2026-11-27"
+ },
+ "venue:atcenter": {
+  "ok": true,
+  "n": 0,
+  "at": "2026-11-27"
+ },
+ "venue:songdo": {
+  "ok": true,
+  "n": 0,
+  "at": "2026-11-27"
+ },
+ "venue:ceco": {
+  "ok": true,
+  "n": 1,
+  "at": "2026-11-27"
+ },
+ "venue:dcc": {
+  "ok": true,
+  "n": 0,
+  "at": "2026-11-27"
+ },
+ "venue:kdj": {
+  "ok": true,
+  "n": 0,
+  "at": "2026-11-27"
  }
 }
