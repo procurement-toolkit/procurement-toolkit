@@ -2,9 +2,34 @@ name: Bids & opportunities
 on:
   schedule: [{ cron: '40 21 * * *' }]   # 06:40 KST daily
   workflow_dispatch:
+    inputs:
+      only_fairs: { description: 'Run only the fairs job (fast feedback)', type: boolean, default: false }
 permissions: { contents: write }
 jobs:
+  fairs:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 22 }
+      - name: Collect fairs (Wikidata, ICS, venue calendars, TourAPI, organizer JSON-LD)
+        run: node scripts/fairs/collect.mjs
+        env: { ITA_API_KEY: '${{ secrets.ITA_API_KEY }}', DATA_GO_KR_KEY: '${{ secrets.DATA_GO_KR_KEY }}' }
+        continue-on-error: true
+      - name: Fair photos (Wikimedia Commons)
+        run: node scripts/fairs/images.mjs
+        continue-on-error: true
+      - name: Build fairs pages
+        run: node scripts/fairs/build.mjs && node scripts/seo/inject_analytics.mjs && node scripts/seo/sitemap.mjs
+      - name: Commit if changed
+        run: |
+          git config user.name cbm-lab-bot; git config user.email bot@users.noreply.github.com
+          for p in data/fairs fairs en/fairs sitemap.xml; do [ -e "$p" ] && git add -A "$p"; done
+          if git diff --staged --quiet; then echo clean; exit 0; fi
+          git commit -m "Auto: fairs $(date -u +%F)"; git pull --rebase origin main && git push origin HEAD:main
   bids:
+    needs: fairs
+    if: ${{ always() && github.event.inputs.only_fairs != 'true' }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -12,19 +37,12 @@ jobs:
         with: { node-version: 22 }
       - run: node scripts/bids/collect.mjs
         env: { DATA_GO_KR_KEY: '${{ secrets.DATA_GO_KR_KEY }}', SAM_GOV_API_KEY: '${{ secrets.SAM_GOV_API_KEY }}' }
-      - name: Collect fairs (Wikidata, organizer JSON-LD)
-        run: node scripts/fairs/collect.mjs
-        env: { ITA_API_KEY: '${{ secrets.ITA_API_KEY }}' }
-        continue-on-error: true
-      - name: Fair photos (Wikimedia Commons)
-        run: node scripts/fairs/images.mjs
-        continue-on-error: true
       - name: Build pages
-        run: node scripts/fairs/build.mjs && node scripts/bids/build.mjs && node scripts/seo/inject_analytics.mjs && node scripts/seo/sitemap.mjs
+        run: node scripts/bids/build.mjs && node scripts/seo/inject_analytics.mjs && node scripts/seo/sitemap.mjs
       - name: Commit if changed
         run: |
           git config user.name cbm-lab-bot; git config user.email bot@users.noreply.github.com
-          for p in data/bids data/fairs fairs en/fairs bids en/bids sitemap.xml sitemap-bids.xml; do [ -e "$p" ] && git add -A "$p"; done
+          for p in data/bids bids en/bids sitemap.xml sitemap-bids.xml; do [ -e "$p" ] && git add -A "$p"; done
           if git diff --staged --quiet; then echo clean; exit 0; fi
           git commit -m "Auto: bids $(date -u +%F)"; git pull --rebase origin main && git push origin HEAD:main
       - name: Wait for deploy, ping IndexNow, health check
