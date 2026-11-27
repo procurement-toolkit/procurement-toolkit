@@ -102,7 +102,7 @@ const vcache = fs.existsSync(VC_PATH) ? JSON.parse(fs.readFileSync(VC_PATH, 'utf
 const VLINES = fs.existsSync('data/fairs/venues.txt') ? fs.readFileSync('data/fairs/venues.txt', 'utf8').split('\n').map(l => l.trim()).filter(l => l && !l.startsWith('#')) : [];
 for (const line of VLINES) {
   const [id, city, cc, lists, det] = line.split('|').map(x => x.trim());
-  const ls = (lists || '').split(',').map(x => x.trim()).filter(Boolean); if (!id || !ls.length) continue;
+  const ls = [...new Set((lists || '').split(',').map(x => x.trim()).filter(Boolean).flatMap(u => /\{Y\}/.test(u) ? Array.from({ length: 7 }, (_, k) => { const d = new Date(today + 'T00:00:00Z'); d.setUTCMonth(d.getUTCMonth() + k, 1); return u.replace('{Y}', d.getUTCFullYear()).replace('{M}', d.getUTCMonth() + 1); }) : [u]))]; if (!id || !ls.length) continue;
   await src('venue:' + id, async () => {
     if (!(await robotsOk(ls[0]))) throw new Error('robots.txt disallows');
     return (await crawlVenue({ id, city, cc, lists: ls, detail: det ? new RegExp(det) : null }, vcache, today, { log: m => console.log('  [' + id + ']', m) })).filter(valid);

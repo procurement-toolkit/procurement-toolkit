@@ -63,7 +63,7 @@ export async function crawlVenue(cfg, cache, today, { maxLists = 12, maxPages = 
     for (const r of listRows(html)) if (looksTrade(r.n) && r.e >= today && (Date.parse(r.e) - Date.parse(r.s)) / 864e5 <= 14) out.push({ ...r, u: lists[i] + '#' + encodeURIComponent(r.n).slice(0, 40) });
     for (const x of ls) {
       const isDetail = cfg.detail ? cfg.detail.test(x.u) : (looksTrade(x.t) && x.t.length >= 6);
-      if (isDetail) cand.set(x.u.replace(/#.*$/, ''), x.t);
+      if (isDetail) cand.set(x.u.replace(/#.*$/, '').replace(/\/+\?.*$/, '').replace(/\?.*$/, '').replace(/([^:])\/\/+/g, '$1/'), x.t);
       else if (!cfg.detail && cfg.lists.length === 1 && i === 0 && LIST_HINT.test(x.t + ' ' + x.u) && lists.length < maxLists) lists.push(x.u);   // one level of list discovery from the home page
       else if (cfg.detail && LIST_HINT.test(x.u) && /page|list|calendar|schedule/i.test(x.u) && lists.length < maxLists) lists.push(x.u);
     }
@@ -76,7 +76,7 @@ export async function crawlVenue(cfg, cache, today, { maxLists = 12, maxPages = 
     try {
       const p = parsePage(await get(u)); await sleep(delay);
       const okN = x => cfg.detail ? (x && x.length >= 4 && x.length <= 120 && !NOT_TRADE.test(x)) : looksTrade(x);
-      const n = okN(p.n) ? p.n : (okN(t) ? t : '');
+      const n0 = okN(p.n) ? p.n : (okN(t) ? t : ''), multi = p.s && p.e && p.e > p.s, n = n0 && (!cfg.detail || TRADE.test(n0) || multi) ? n0 : '';   // generic detail pages: single-day events need a trade keyword
       if (!n || !p.s || !p.e || p.e < p.s || (Date.parse(p.e) - Date.parse(p.s)) / 864e5 > 14) { cache[u] = { skip: 1, at: today.slice(0, 7) }; continue; }
       cache[u] = { n, s: p.s, e: p.e, at: today.slice(0, 7) };
       if (p.e >= today) out.push({ n, s: p.s, e: p.e, u });
