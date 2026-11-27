@@ -85,3 +85,25 @@ export async function crawlVenue(cfg, cache, today, { maxLists = 12, maxPages = 
   log(`fetched=${fetched} kept=${out.length}`);
   return out.map(x => ({ id: `venue-${cfg.id}-${Buffer.from(x.u).toString('base64url').slice(-24)}-${x.s}`, source: 'venue:' + cfg.id, n: x.n, s: x.s, e: x.e, c: cfg.city, cc: cfg.cc, u: x.u }));
 }
+
+// iCalendar feeds published by exhibition centres (e.g. JIExpo "export events" ICS).
+export function parseIcs(txt) {
+  const L = String(txt || '').replace(/\r/g, '').replace(/\n[ \t]/g, '').split('\n'), out = []; let ev = null;
+  const dt = v => { const m = String(v).match(/(\d{4})(\d{2})(\d{2})/); return m ? `${m[1]}-${m[2]}-${m[3]}` : ''; };
+  const un = s => String(s || '').replace(/\\n/g, ' ').replace(/\\([,;\\])/g, '$1').trim();
+  for (const l of L) {
+    if (l.startsWith('BEGIN:VEVENT')) ev = {};
+    else if (l.startsWith('END:VEVENT')) { if (ev && ev.n && ev.s) out.push(ev); ev = null; }
+    else if (ev) {
+      const i = l.indexOf(':'); if (i < 0) continue; const k = l.slice(0, i).split(';')[0].toUpperCase(), v = l.slice(i + 1);
+      if (k === 'SUMMARY') ev.n = un(v); else if (k === 'DTSTART') ev.s = dt(v);
+      else if (k === 'DTEND') { ev.e = dt(v); ev.allDay = !/T\d/.test(v); } else if (k === 'URL') ev.u = un(v);
+    }
+  }
+  return out.map(x => { let e = x.e || x.s; if (x.allDay && x.e && x.e > x.s) { const d = new Date(x.e + 'T00:00:00Z'); d.setUTCDate(d.getUTCDate() - 1); e = d.toISOString().slice(0, 10); } return { n: x.n, s: x.s, e, u: x.u || '' }; });
+}
+export async function crawlIcs(cfg, today, log = () => {}) {
+  const r = await fetch(cfg.url, { headers: UA, signal: AbortSignal.timeout(30000), redirect: 'follow' }); if (!r.ok) throw new Error('HTTP ' + r.status);
+  const ev = parseIcs(await r.text()); log(`events=${ev.length}`);
+  return ev.filter(x => x.e >= today && (Date.parse(x.e) - Date.parse(x.s)) / 864e5 <= 14 && !notTrade(x.n)).map(x => ({ id: `venue-${cfg.id}-ics-${Buffer.from(x.n + x.s).toString('base64url').slice(0, 24)}`, source: 'venue:' + cfg.id, n: x.n, s: x.s, e: x.e, c: cfg.city, cc: cfg.cc, u: x.u || cfg.url }));
+}

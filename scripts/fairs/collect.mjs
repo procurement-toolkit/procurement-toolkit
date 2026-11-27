@@ -96,7 +96,7 @@ for (const line of SRC_LINES) {
 }
 
 // ---- exhibition-centre calendars (self-discovering crawler, see venues.mjs) ---------------------------------------
-import { crawlVenue, looksTrade } from './venues.mjs';
+import { crawlVenue, crawlIcs, looksTrade } from './venues.mjs';
 const VC_PATH = 'data/fairs/venue-cache.json';
 const vcache = fs.existsSync(VC_PATH) ? JSON.parse(fs.readFileSync(VC_PATH, 'utf8')) : {};
 const VLINES = fs.existsSync('data/fairs/venues.txt') ? fs.readFileSync('data/fairs/venues.txt', 'utf8').split('\n').map(l => l.trim()).filter(l => l && !l.startsWith('#')) : [];
@@ -107,6 +107,13 @@ for (const line of VLINES) {
     if (!(await robotsOk(ls[0]))) throw new Error('robots.txt disallows');
     return (await crawlVenue({ id, city, cc, lists: ls, detail: det ? new RegExp(det) : null }, vcache, today, { log: m => console.log('  [' + id + ']', m) })).filter(valid);
   });
+}
+
+// iCalendar feeds: data/fairs/ics.txt  ->  id|city|CC|url
+const ILINES = fs.existsSync('data/fairs/ics.txt') ? fs.readFileSync('data/fairs/ics.txt', 'utf8').split('\n').map(l => l.trim()).filter(l => l && !l.startsWith('#')) : [];
+for (const line of ILINES) {
+  const [id, city, cc, url] = line.split('|').map(x => x.trim()); if (!id || !url) continue;
+  await src('venue:' + id, async () => !(await robotsOk(url)) ? (() => { throw new Error('robots.txt disallows'); })() : (await crawlIcs({ id, city, cc, url }, today, m => console.log('  [' + id + ']', m))).filter(valid));
 }
 fs.mkdirSync('data/fairs', { recursive: true }); fs.writeFileSync(VC_PATH, JSON.stringify(vcache));
 

@@ -1,0 +1,2 @@
+# id|city|CC|ICS url
+jiexpo|Jakarta|ID|https://exhibition.jiexpo.com/export-events/all/

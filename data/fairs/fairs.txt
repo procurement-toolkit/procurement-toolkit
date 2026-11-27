@@ -249,3 +249,26 @@ Asia TV Forum & Market (ATF) 2026|2026-12-02|2026-12-04|Singapore|||SG|official
 Spring Fair 2027|2027-02-07|2027-02-10|Birmingham||https://bira.co.uk/events/spring-fair-2027/|GB|official
 Expo Revestir 2027|2027-02-22|2027-02-26|São Paulo||https://en.exporevestir.com.br/|BR|official
 FISPAL Tecnologia 2027|2027-06-22|2027-06-25|São Paulo||https://www.fispaltecnologia.com.br/en/|BR|official
+TSW 2027 Fruit and Vegetable Farming Expo|2027-01-14|2027-01-15|Kielce|Fruit and vegetable farming expo in Kielce, Poland.|https://www.targikielce.pl/en/tsw/about-the-event|PL|official
+DACH FORUM 2027|2027-01-28|2027-01-29|Kielce|Congress and expo for roofers, tinsmiths and carpenters.|https://www.targikielce.pl/en/dachforum/about-the-event|PL|official
+KIDS' TIME 2027|2027-02-25|2027-02-26|Kielce|International fair of toys and products for parents and children.|https://www.targikielce.pl/en/kids-time/about-the-event|PL|official
+ENEX 2027|2027-03-03|2027-03-04|Kielce|International power industry and renewable energy fair.|https://www.targikielce.pl/en/enex/about-the-event|PL|official
+EKOTECH 2027|2027-03-03|2027-03-04|Kielce|Circular economy fair.|https://www.targikielce.pl/en/ekotech/about-the-event|PL|official
+AGROTECH 2027|2027-03-12|2027-03-14|Kielce|International fair of agricultural techniques.|https://www.targikielce.pl/en/agrotech/about-the-event|PL|official
+LAS-EXPO 2027|2027-03-12|2027-03-14|Kielce|Timber industry and forest resources management fair.|https://www.targikielce.pl/en/las-expo/about-the-event|PL|official
+Industrial Spring 2027|2027-04-06|2027-04-09|Kielce|Metalworking and automation fairs under one roof: STOM-TOOL, BLECH & CUTTING, LASER, ROBOTICS, FIX, Welding, Expo-Surface, Fluid Power, Control-Stom.|https://www.targikielce.pl/en/industrial-spring/about-the-event|PL|official
+STOM-TOOL 2027|2027-04-06|2027-04-09|Kielce|Metal processing, tools and machine tools fair.|https://www.targikielce.pl/en/stom-tool/about-the-event|PL|official
+STOM-BLECH & CUTTING 2027|2027-04-06|2027-04-09|Kielce|Sheet metal processing and cutting fair.|https://www.targikielce.pl/en/stom-blech-cutting/about-the-event|PL|official
+STOM-LASER 2027|2027-04-06|2027-04-09|Kielce|Industrial laser and laser technology expo.|https://www.targikielce.pl/en/stom-laser/about-the-event|PL|official
+STOM-ROBOTICS 2027|2027-04-06|2027-04-09|Kielce|Industrial robotics expo.|https://www.targikielce.pl/en/stom-robotics/about-the-event|PL|official
+CONTROL-STOM 2027|2027-04-06|2027-04-09|Kielce|Fair of industrial measuring technology.|https://www.targikielce.pl/en/control-stom/about-the-event|PL|official
+WELDING 2027 Kielce|2027-04-06|2027-04-09|Kielce|International fair of welding technology and equipment.|https://www.targikielce.pl/en/welding/about-the-event|PL|official
+FLUID POWER 2027|2027-04-06|2027-04-09|Kielce|Fair of pneumatics, hydraulics, drives and controls.|https://www.targikielce.pl/en/fluid-power/about-the-event|PL|official
+3D Printing Days 2027|2027-04-06|2027-04-09|Kielce|Additive manufacturing fair.|https://www.targikielce.pl/en/3d-printing-days/about-the-event|PL|official
+TEiA 2027 Electronics and Automation Expo|2027-04-06|2027-04-09|Kielce|Electronics and automation expo.|https://www.targikielce.pl/en/teia/about-the-event|PL|official
+EXPO-SURFACE 2027|2027-04-06|2027-04-09|Kielce|Corrosion protection, surface treatment and industrial painting exhibition.|https://www.targikielce.pl/en/expo-surface/about-the-event|PL|official
+STOM-FIX 2027|2027-04-06|2027-04-09|Kielce|Fastening and fixing technologies and components expo.|https://www.targikielce.pl/en/stom-fix/about-the-event|PL|official
+Home & Design 2027 Kielce|2027-04-17|2027-04-18|Kielce|Home and interior design fair.|https://www.targikielce.pl/en/home-design/about-the-event|PL|official
+Garden Expo 2027 Kielce|2027-04-17|2027-04-18|Kielce|Garden and landscape expo.|https://www.targikielce.pl/en/garden-expo/about-the-event|PL|official
+SLOWTRAVEL 2027|2027-04-17|2027-04-18|Kielce|Sustainable travel expo.|https://www.targikielce.pl/en/slowtravel/about-the-event|PL|official
+Expo2Bee 2027|2027-04-17|2027-04-18|Kielce|International beekeeping expo and bee product festival.|https://www.targikielce.pl/en/expo2bee/about-the-event|PL|official
