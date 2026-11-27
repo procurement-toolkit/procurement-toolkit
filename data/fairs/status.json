@@ -136,12 +136,12 @@
  },
  "venue:coex": {
   "ok": true,
-  "n": 40,
+  "n": 52,
   "at": "2026-11-27"
  },
  "venue:kintex": {
   "ok": true,
-  "n": 0,
+  "n": 112,
   "at": "2026-11-27"
  },
  "venue:bexco": {
@@ -151,12 +151,12 @@
  },
  "venue:exco": {
   "ok": true,
-  "n": 5,
+  "n": 7,
   "at": "2026-11-27"
  },
  "venue:setec": {
   "ok": true,
-  "n": 1,
+  "n": 13,
   "at": "2026-11-27"
  },
  "venue:atcenter": {
@@ -172,7 +172,7 @@
  },
  "venue:ceco": {
   "ok": true,
-  "n": 9,
+  "n": 21,
   "at": "2026-11-27"
  },
  "venue:dcc": {
@@ -186,8 +186,8 @@
   "at": "2026-11-27"
  },
  "disc:www.targikielce.pl": {
-  "ok": false,
-  "error": "HTTP 502",
+  "ok": true,
+  "n": 1,
   "at": "2026-11-27"
  },
  "disc:www.coex.co.kr": {
