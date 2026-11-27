@@ -272,3 +272,11 @@ Home & Design 2027 Kielce|2027-04-17|2027-04-18|Kielce|Home and interior design 
 Garden Expo 2027 Kielce|2027-04-17|2027-04-18|Kielce|Garden and landscape expo.|https://www.targikielce.pl/en/garden-expo/about-the-event|PL|official
 SLOWTRAVEL 2027|2027-04-17|2027-04-18|Kielce|Sustainable travel expo.|https://www.targikielce.pl/en/slowtravel/about-the-event|PL|official
 Expo2Bee 2027|2027-04-17|2027-04-18|Kielce|International beekeeping expo and bee product festival.|https://www.targikielce.pl/en/expo2bee/about-the-event|PL|official
+2026 대한민국발명특허대전|2026-12-02|2026-12-05|Seoul|Korea Invention and Patent Exhibition at COEX, Seoul.|https://www.coex.co.kr/event/exhibitions-calendar/|KR|venue-cal
+2026 서울국제발명전시회|2026-12-02|2026-12-05|Seoul|Seoul International Invention Fair at COEX.|https://www.coex.co.kr/event/exhibitions-calendar/|KR|venue-cal
+제11회 대한민국 소프트웨어 대전 소프트웨이브 2026|2026-12-02|2026-12-04|Seoul|Korea's software industry exhibition (SoftWave) at COEX.|https://www.coex.co.kr/event/exhibitions-calendar/|KR|venue-cal
+2026 월드 웹툰 페스티벌|2026-12-02|2026-12-05|Seoul|Webtoon industry festival and exhibition at COEX.|https://www.coex.co.kr/event/exhibitions-calendar/|KR|venue-cal
+2026 티&크래프트 페어(하)|2026-12-17|2026-12-20|Seoul|Tea and craft fair at SETEC, Seoul.|https://www.setec.or.kr/front/schedule/list.do|KR|venue-cal
+2026년 소상공인박람회|2026-12-22|2026-12-23|Seoul|Small business expo at SETEC, Seoul.|https://www.setec.or.kr/front/schedule/list.do|KR|venue-cal
+제2회 서울 가구·인테리어 박람회|2026-12-26|2026-12-29|Seoul|Furniture and interior fair at SETEC, Seoul.|https://www.setec.or.kr/front/schedule/list.do|KR|venue-cal
+2027 구정 명절 선물 박람회|2026-12-27|2026-12-29|Seoul|Lunar New Year gift fair at SETEC, Seoul.|https://www.setec.or.kr/front/schedule/list.do|KR|venue-cal
