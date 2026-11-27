@@ -105,7 +105,7 @@ for (const line of VLINES) {
   const ls = [...new Set((lists || '').split(',').map(x => x.trim()).filter(Boolean).flatMap(u => /\{(Y|YM)\}/.test(u) ? Array.from({ length: 14 }, (_, k) => { const d = new Date(today + 'T00:00:00Z'); d.setUTCMonth(d.getUTCMonth() + k, 1); return u.replaceAll('{YM}', d.getUTCFullYear() + String(d.getUTCMonth() + 1).padStart(2, '0')).replace('{Y}', d.getUTCFullYear()).replace('{M}', d.getUTCMonth() + 1); }) : [u]))]; if (!id || !ls.length) continue;
   await src('venue:' + id, async () => {
     if (!(await robotsOk(ls[0]))) throw new Error('robots.txt disallows');
-    return (await crawlVenue({ id, city, cc, lists: ls, detail: det ? new RegExp(det) : null }, vcache, today, { log: m => console.log('  [' + id + ']', m) })).filter(valid);
+    return (await crawlVenue({ id, city, cc, lists: ls, detail: det ? new RegExp(det) : null }, vcache, today, { maxLists: 30, maxPages: 200, log: m => console.log('  [' + id + ']', m) })).filter(valid);
   });
 }
 

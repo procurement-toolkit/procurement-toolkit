@@ -101,9 +101,12 @@ export function renderGuides(c) {
       fs.writeFileSync(`${t.dir}/guide/${k}.html`, shell(t, k, title, desc, X.h1(label), S.intro[0], body, ld));
       out.push(`${t.dir}/guide/${k}.html`);
     }
+    const hubIntro = L === 'ko'
+      ? `<section class="box"><h2>입찰공고, 어디서 찾나요?</h2><p>국내 공공기관의 입찰공고는 조달청 <a href="https://www.g2b.go.kr" rel="noopener" target="_blank">나라장터(국가종합전자조달시스템)</a>에서 확인하는 것이 기본입니다. 국방, 도로공사, 한전처럼 기관별 전자조달 시스템을 따로 쓰는 곳은 해당 기관 사이트를 함께 봐야 합니다. 해외 공고는 유럽연합의 <a href="https://ted.europa.eu" rel="noopener" target="_blank">TED</a>, 국제기구의 <a href="https://www.ungm.org" rel="noopener" target="_blank">UNGM</a> 같은 공식 플랫폼에 올라옵니다.</p><p>이 사이트는 여러 출처의 공고를 한곳에 모아 한국어·영어로 함께 보여 줍니다. 입찰정보를 분야별로 훑어보고 싶을 때 아래 가이드에서 시작하세요. 참가 자격과 제출 조건은 공고마다 다르므로 반드시 공고 원문을 기준으로 확인하세요.</p></section>`
+      : `<section class="box"><h2>Where to find tender notices</h2><p>Public tenders are published on official platforms such as <a href="https://ted.europa.eu" rel="noopener" target="_blank">TED</a> in the EU and <a href="https://www.ungm.org" rel="noopener" target="_blank">UNGM</a> for UN organizations; in Korea, notices are posted on the Public Procurement Service's <a href="https://www.g2b.go.kr" rel="noopener" target="_blank">KONEPS (Nara Marketplace)</a>. This site collects notices from several sources in one place, in Korean and English. Start with the sector guides below, and always rely on the original notice for eligibility and submission terms.</p></section>`;
     const hubBody = FAMS.map(f => { const ks = keys.filter(k => f.s.includes(k)); return ks.length ? `<h3 class="fam" style="--c:${f.c}">${esc(f[L])}</h3><div class="ghub">${ks.map(k => `<a href="${k}.html" style="--c:${f.c}">${svg(SEC_ICON[k])}<span><b>${esc(SECT_LABEL[k][L])}</b><small>${esc(SECT_BY[k][L].intro[0].slice(0, 70))}…</small></span></a>`).join('')}</div>` : '' }).join('');
     const hubLd = { '@context': 'https://schema.org', '@type': 'CollectionPage', name: X.hubTitle, inLanguage: L, url: `${BASE}/${t.dir}/guide/index.html`, mainEntity: { '@type': 'ItemList', itemListElement: keys.map((k, i) => ({ '@type': 'ListItem', position: i + 1, url: `${BASE}/${t.dir}/guide/${k}.html`, name: SECT_LABEL[k][L] })) } };
-    fs.writeFileSync(`${t.dir}/guide/index.html`, shell(t, 'index', X.hubTitle, X.hubDesc(keys.length), X.hubH1, X.hubSub, hubBody, hubLd));
+    fs.writeFileSync(`${t.dir}/guide/index.html`, shell(t, 'index', X.hubTitle, X.hubDesc(keys.length), X.hubH1, X.hubSub, hubIntro + hubBody, hubLd));
     out.push(`${t.dir}/guide/index.html`);
   }
   return { keys, out };
