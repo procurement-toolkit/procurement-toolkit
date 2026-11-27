@@ -2,136 +2,136 @@
  "wikidata": {
   "ok": true,
   "n": 1,
-  "at": "2026-11-26"
+  "at": "2026-11-27"
  },
  "ita-events": {
   "ok": false,
   "error": "ITA_API_KEY not set",
-  "at": "2026-11-26"
+  "at": "2026-11-27"
  },
  "disc:www.koreapharm.org": {
   "ok": false,
   "error": "HTTP 404",
-  "at": "2026-11-26"
+  "at": "2026-11-27"
  },
  "disc:www.koreamat.org": {
   "ok": false,
   "error": "HTTP 404",
-  "at": "2026-11-26"
+  "at": "2026-11-27"
  },
  "disc:www.automationworld.co.kr": {
   "ok": true,
   "n": 0,
-  "at": "2026-11-26"
+  "at": "2026-11-27"
  },
  "disc:bauma-china.com": {
   "ok": true,
   "n": 4,
-  "at": "2026-11-26"
+  "at": "2026-11-27"
  },
  "disc:www.ciwf.com.cn": {
   "ok": true,
   "n": 0,
-  "at": "2026-11-26"
+  "at": "2026-11-27"
  },
  "disc:www.big5constructsaudi.com": {
   "ok": true,
   "n": 0,
-  "at": "2026-11-26"
+  "at": "2026-11-27"
  },
  "disc:vietnamexpo.com.vn": {
   "ok": true,
   "n": 0,
-  "at": "2026-11-26"
+  "at": "2026-11-27"
  },
  "disc:bira.co.uk": {
   "ok": true,
   "n": 0,
-  "at": "2026-11-26"
+  "at": "2026-11-27"
  },
  "disc:en.exporevestir.com.br": {
   "ok": true,
   "n": 0,
-  "at": "2026-11-26"
+  "at": "2026-11-27"
  },
  "disc:www.fispaltecnologia.com.br": {
   "ok": true,
   "n": 1,
-  "at": "2026-11-26"
+  "at": "2026-11-27"
  },
  "disc:www.ces.tech": {
   "ok": true,
   "n": 0,
-  "at": "2026-11-26"
+  "at": "2026-11-27"
  },
  "disc:www.mwcbarcelona.com": {
   "ok": true,
   "n": 1,
-  "at": "2026-11-26"
+  "at": "2026-11-27"
  },
  "disc:www.computex.biz": {
   "ok": true,
   "n": 0,
-  "at": "2026-11-26"
+  "at": "2026-11-27"
  },
  "disc:www.gulfood.com": {
   "ok": true,
   "n": 0,
-  "at": "2026-11-26"
+  "at": "2026-11-27"
  },
  "disc:foodex.jma.or.jp": {
   "ok": true,
   "n": 0,
-  "at": "2026-11-26"
+  "at": "2026-11-27"
  },
  "disc:www.jma.or.jp": {
   "ok": true,
   "n": 0,
-  "at": "2026-11-26"
+  "at": "2026-11-27"
  },
  "disc:messe.nikkei.co.jp": {
   "ok": true,
   "n": 0,
-  "at": "2026-11-26"
+  "at": "2026-11-27"
  },
  "disc:bharat-mobility.com": {
   "ok": false,
   "error": "HTTP 403",
-  "at": "2026-11-26"
+  "at": "2026-11-27"
  },
  "disc:ae.messefrankfurt.com": {
   "ok": true,
   "n": 0,
-  "at": "2026-11-26"
+  "at": "2026-11-27"
  },
  "disc:ksa.messefrankfurt.com": {
   "ok": true,
   "n": 0,
-  "at": "2026-11-26"
+  "at": "2026-11-27"
  },
  "disc:www.seoulmobilityshow.com": {
   "ok": false,
   "error": "fetch failed",
-  "at": "2026-11-26"
+  "at": "2026-11-27"
  },
  "disc:www.kif.net": {
   "ok": true,
   "n": 0,
-  "at": "2026-11-26"
+  "at": "2026-11-27"
  },
  "disc:www.cityscape-events.com": {
   "ok": true,
   "n": 1,
-  "at": "2026-11-26"
+  "at": "2026-11-27"
  },
  "disc:www.ifema.es": {
   "ok": true,
   "n": 4,
-  "at": "2026-11-26"
+  "at": "2026-11-27"
  },
  "disc:eng.chemexpokorea.com": {
   "ok": true,
   "n": 0,
-  "at": "2026-11-26"
+  "at": "2026-11-27"
  }
 }
