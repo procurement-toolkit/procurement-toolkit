@@ -66,13 +66,15 @@ const DROP_Q = new Set(['var_page', 'list_type', 'cy', 'cm', 'page', 'cPage', 'u
 function normUrl(u) { try { const x = new URL(u.replace(/#.*$/, '')); for (const k of [...x.searchParams.keys()]) if (DROP_Q.has(k)) x.searchParams.delete(k); x.pathname = x.pathname.replace(/\/{2,}/g, '/'); return x.toString().replace(/\/\?/, '?').replace(/\?$/, ''); } catch { return u; } }
 const FRONT_JUNK = /^(D-\d+|상세보기|열린|분류|전시회|EXHIBITION|EXHIBIT|전체|NEW|HOT|\d{1,3})$/i;
 export function cleanName(n) {
+  n = String(n || '').replace(/&middot;/g, '·').replace(/&amp;/g, '&').replace(/&nbsp;/g, ' ').replace(/&#(\d+);/g, (_, d) => String.fromCharCode(+d)).replace(/&[a-z]+;/gi, ' ');
   let t = String(n || '').replace(/^[^<>]*?>\s*/, m => (/[=\"']/.test(m) ? '' : m)).replace(/\s*[<|]\s*[A-Za-z가-힣 ]*$/, '').replace(/\s+/g, ' ').trim();
   let w = t.split(' ');
   while (w.length > 1 && FRONT_JUNK.test(w[0])) w.shift();
   t = w.join(' ').replace(/\s*(기간|일시)$/, '').trim();
   const km = t.match(/^(.*?(?:박람회|페어|쇼|전시회|엑스포|EXPO|대전|위크|페스타|페스티벌|컨벤션)\d{0,2}(?:\s*in\s*\S+|\s*\([^)]*\))?)(?:\s+\S|$)/i);
   if (km && km[1].length >= 4) t = km[1].trim();
-  if (w.every(x => FRONT_JUNK.test(x)) || /^(전시홀|전시실|전시장|전시관)/.test(t)) return '';
+  t = t.replace(/^진행중\s+/, '');
+  if (w.every(x => FRONT_JUNK.test(x)) || /^(\d*\s*)?(전시홀|전시실|전시장|전시관)/.test(t) || /^장소\s*:/.test(t) || /^(CONVENTION\s*컨벤션|컨벤션|열린 분류.*|전시일정.*)$/i.test(t) || /<\s*SETEC/i.test(t)) return '';
   return /^(전시일정|행사일정|전시회 일정|일정)$/.test(t) ? '' : t;
 }
 async function get(u, log) { const r = await fetch(u, { headers: UA, signal: AbortSignal.timeout(30000), redirect: 'follow' }); if (!r.ok) throw new Error('HTTP ' + r.status + ' ' + u); const b = Buffer.from(await r.arrayBuffer()); const ct = r.headers.get('content-type') || ''; const cs = (ct.match(/charset=([\w-]+)/i) || [])[1] || (b.slice(0, 2000).toString('latin1').match(/charset=["']?([\w-]+)/i) || [])[1] || 'utf-8'; try { return new TextDecoder(cs).decode(b); } catch { return b.toString('utf8'); } }
