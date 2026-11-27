@@ -136,7 +136,7 @@
  },
  "venue:coex": {
   "ok": true,
-  "n": 42,
+  "n": 40,
   "at": "2026-11-27"
  },
  "venue:kintex": {
@@ -160,9 +160,10 @@
   "at": "2026-11-27"
  },
  "venue:atcenter": {
-  "ok": true,
+  "ok": false,
   "n": 0,
-  "at": "2026-11-27"
+  "at": "2026-11-27",
+  "error": "robots.txt disallows"
  },
  "venue:songdo": {
   "ok": true,
