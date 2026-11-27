@@ -62,7 +62,7 @@ if (fs.existsSync('data/fairs/auto.json')) for (const a of JSON.parse(fs.readFil
   seen.add(key);
   if (!CITY[a.c]) CITY[a.c] = [a.cc, KO_CITY[a.c] || a.c];
   if (!CTRY[a.cc]) { try { CTRY[a.cc] = [dnKo.of(a.cc), dnEn.of(a.cc)]; } catch { continue; } }
-  keep.push({ n: a.n, s: a.s, e: a.e, c: a.c, d: '', u: a.u || '', auto: a.source, sr: a.source === 'wikidata' ? 'wikidata' : /^venue:/.test(a.source) ? 'venue-cal' : a.source === 'tourapi' ? 'tourapi' : 'organizer-ld' }); autoN++;
+  keep.push({ n: a.n, s: a.s, e: a.e, c: a.c, d: '', u: a.u || '', auto: a.source, vn: /^venue:/.test(a.source) ? a.source.slice(6) : '', sr: a.source === 'wikidata' ? 'wikidata' : /^venue:/.test(a.source) ? 'venue-cal' : a.source === 'tourapi' ? 'tourapi' : 'organizer-ld' }); autoN++;
 }
 keep.sort((a, b) => a.s.localeCompare(b.s) || a.n.localeCompare(b.n));
 for (const f of keep) {
@@ -182,12 +182,12 @@ const PAGE = 20;
 const hotOf = (f, t) => f.status === 'upcoming' && daysTo(f) <= 30 ? t.ddays(daysTo(f)) : f.status === 'ongoing' ? t.ddays(-1) : '';
 const place = (f, L) => (L === 'ko' ? f.ck : f.c) + (CTRY[f.cc] ? ', ' + CTRY[f.cc][L === 'ko' ? 0 : 1] : '');
 const alt = (f, L) => f.n + (f.img?.venue ? (L === 'ko' ? ' 개최지 전시장' : ' venue') : '');
-const rec = (f, t) => { const L = t.lang, d = t.fmt(f.s, f.e).split(' – '); return { h: f.slug, n: f.n, pl: place(f, L), g: f.g, gl: gLabel(f.g, L), c: f.cc, k: f.k, ci: slugify(f.c), sr: f.sr, s: f.s, e: f.e, d1: d[0], d2: f.s !== f.e ? '~ ' + (d[1] || '') : '', hl: hotOf(f, t), th: f.img ? imgUrl(f.img, 240) : '', al: alt(f, L), q: `${f.n} ${f.c} ${f.ck} ${CTRY[f.cc]?.[0] || ''} ${CTRY[f.cc]?.[1] || ''}`.toLowerCase() }; };
+const rec = (f, t) => { const L = t.lang, d = t.fmt(f.s, f.e).split(' – '); return { h: f.slug, n: f.n, pl: place(f, L), g: f.g, gl: gLabel(f.g, L), c: f.cc, k: f.k, ci: slugify(f.c), vn: f.vn || '', sr: f.sr, s: f.s, e: f.e, d1: d[0], d2: f.s !== f.e ? '~ ' + (d[1] || '') : '', hl: hotOf(f, t), th: f.img ? imgUrl(f.img, 240) : '', al: alt(f, L), q: `${f.n} ${f.c} ${f.ck} ${CTRY[f.cc]?.[0] || ''} ${CTRY[f.cc]?.[1] || ''}`.toLowerCase() }; };
 const CLIENT_JS = String.raw`(function(){var CFG=__CFG__,$=function(i){return document.getElementById(i)},q=$('q');if(!q)return;
 var list=$('list'),cnt=$('fcnt'),pager=$('pager'),pinfo=$('pinfo'),orig=list.innerHTML,DATA=null,page=1,size=20,T=CFG.T;
 var T0=new Date(Date.now()+9*36e5).toISOString().slice(0,10),T30=new Date(Date.now()+9*36e5+30*864e5).toISOString().slice(0,10);
 function esc(s){return String(s==null?'':s).replace(/[&<>"]/g,function(m){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[m]})}
-function inScope(r){var p=CFG.SCOPE;if(!p)return true;var i=p.indexOf(':'),k=p.slice(0,i),v=p.slice(i+1);return k==='g'?r.g===v:k==='c'?r.c===v:k==='k'?r.k===v:k==='m'?r.s.slice(0,7)===v:k==='y'?r.ci===v:r.sr===v}
+function inScope(r){var p=CFG.SCOPE;if(!p)return true;var i=p.indexOf(':'),k=p.slice(0,i),v=p.slice(i+1);return k==='g'?r.g===v:k==='c'?r.c===v:k==='k'?r.k===v:k==='m'?r.s.slice(0,7)===v:k==='y'?r.ci===v:k==='v'?r.vn===v:r.sr===v}
 function card(r){var en=r.e<T0;return '<article class="item'+(r.th?' hasimg':'')+(en?' past':'')+'" style="--c:'+(CFG.COL[r.g]||'#6b7780')+'"><div class="dt"><b>'+esc(r.d1)+'</b>'+esc(r.d2)+'</div><div><a class="t" href="'+CFG.UP+'f/'+r.h+'.html">'+esc(r.n)+'</a><p>'+esc(r.pl)+' · '+esc(r.gl)+'</p>'+(r.hl&&!en?'<span class="tag hot">'+esc(r.hl)+'</span>':'')+'</div>'+(r.th?'<img class="th" loading="lazy" width="120" height="80" src="'+esc(r.th)+'" alt="'+esc(r.al)+'">':'')+'</article>'}
 function pg(n){var pages=Math.max(1,Math.ceil(n/size)),h='',i,set=[1,pages,page-1,page,page+1],last=0;pinfo.textContent=pages>1?T.info.replace('{p}',page).replace('{n}',pages):'';if(pages<2){pager.innerHTML='';return}
 h+='<button type="button" data-p="'+(page-1)+'"'+(page<2?' disabled':'')+'>'+T.prev+'</button>';
@@ -265,7 +265,7 @@ for (const t of Object.values(T)) {
     const body = `${G.sec.map(([h, ps]) => `<section class="box"><h2>${esc(h)}</h2>${ps.map(x => `<p>${esc(x)}</p>`).join('')}</section>`).join('')}<section class="box"><h2>${L === 'ko' ? '참고한 공식 자료' : 'References'}</h2><ul>${G.refs.map(([n, u]) => `<li><a href="${u}" rel="noopener nofollow" target="_blank">${esc(n)}</a></li>`).join('')}</ul></section><section class="box"><h2>${L === 'ko' ? '함께 쓰는 도구' : 'Related tools'}</h2><div class="tl">${t.tools.map(([h, n]) => `<a href="${L === 'ko' ? '../' : '../../'}${h}">${esc(n)}</a>`).join('')}</div></section><p style="margin:16px 0"><a class="gl2" href="index.html">${L === 'ko' ? '전시회 일정 보러 가기' : 'Browse the trade fair calendar'}</a></p>`;
     write(t, 'guide.html', layout(t, { path: 'guide.html', title: G.title + ' — CBM Lab', desc: G.desc, ld, up: '', alt: '', hero: heroHtml(t, G.h1, G.desc, '', 'index.html'), body })); }
   const MN = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-  const actYears = [...new Set(active.map(f => f.s.slice(0, 4)))].sort(), YR = actYears[actYears.length - 1] || today.slice(0, 4);
+  const actYears = [...new Set(active.map(f => f.s.slice(0, 4)))].sort(), YR = (() => { const c = {}; for (const f of active) c[f.s.slice(0, 4)] = (c[f.s.slice(0, 4)] || 0) + 1; return Object.entries(c).sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]))[0]?.[0] || today.slice(0, 4); })();   // year with the most upcoming fairs (what people search for)
   const mUsed = [...new Set(active.map(f => f.s.slice(0, 7)))].sort();
   const monLabel = m => L === 'ko' ? `${m.slice(0, 4)}년 ${+m.slice(5)}월` : `${MN[+m.slice(5) - 1]} ${m.slice(0, 4)}`;
   const cityCount = active.reduce((o, f) => (o[f.c] = (o[f.c] || 0) + 1, o), {});
@@ -317,9 +317,20 @@ for (const t of Object.values(T)) {
       ? `${name}에서는 현재 ${arr.length}건의 전시회가 정리되어 있고, 이 중 ${up.length}건이 개최 예정이거나 진행 중입니다. 개최 도시는 ${cities.join(', ')} 순으로 많고, 분야는 ${gs.join(', ')} 순입니다. 개막 월은 ${mon[0]}월(${mon[1]}건)에 가장 몰려 있으며, 평균 개최 기간은 ${avg}일입니다. 가장 가까운 일정은 ${t.fmt(nxt.s, nxt.e)}에 ${nxt.ck || nxt.c}에서 열리는 「${nxt.n}」입니다.`
       : `We currently track ${arr.length} trade fairs in ${name}, of which ${up.length} are upcoming or running. The busiest host cities are ${cities.join(', ')}, and the most common industries are ${gs.join(', ')}. Openings cluster in ${MN[mon[0] - 1]} (${mon[1]} fairs), and a fair lasts ${avg} days on average. The next one is "${nxt.n}" in ${nxt.c}, ${t.fmt(nxt.s, nxt.e)}.`;
     const q = L === 'ko' ? `일정은 주최 측 사정으로 바뀔 수 있으니 방문 전 공식 사이트에서 개막일과 장소를 다시 확인하세요. 수치는 이 사이트에 모인 일정을 기준으로 매일 다시 계산됩니다.` : `Dates can change at the organizer's discretion, so confirm the opening date and venue on the official site before you travel. Figures are recalculated daily from the schedule collected here.`;
-    return `<section class="box"><h2>${L === 'ko' ? `${name} 전시회 한눈에 보기` : `${name} trade fairs at a glance`}</h2><p>${esc(p)}</p><p class="note">${esc(q)}</p></section>`;
+    return `<section class="box"><h2>${L === 'ko' ? `${name} 전시회 한눈에 보기` : `${name} trade fairs at a glance`}</h2><p>${esc(p)}</p><p class="note">${esc(q)}</p>${c === 'KR' && !/\/venue\//.test(name) ? `<h3>${L === 'ko' ? '전시장별 일정' : 'By venue'}</h3>${venueChips('../')}` : ''}</section>`;
   };
-  for (const c of cPages) { const arr = keep.filter(f => f.cc === c), name = ctryName(c, L); page({ kind: 'c', key: c, slug: `country/${slugC(c)}`, arr, up: '../', intro: countryBrief(c, arr, name), name: name + (L === 'ko' ? ' 전시회' : ' trade fairs'), title: L === 'ko' ? `${name} 전시회 일정 ${YR} | ${name} 박람회·무역박람회 캘린더 — CBM Lab` : `Trade Fairs in ${name} ${YR} — Upcoming Dates & Cities | CBM Lab`, desc: t.cdesc(name, arr.filter(f => f.status !== 'ended').length) }); }
+  // venue landing pages (domestic exhibition centres) - target "코엑스 전시회 일정" style searches
+  const VENUES = { coex: ['코엑스', 'COEX', 'Seoul'], kintex: ['킨텍스', 'KINTEX', 'Goyang'], setec: ['세텍(SETEC)', 'SETEC', 'Seoul'], exco: ['엑스코(EXCO)', 'EXCO', 'Daegu'], ceco: ['창원컨벤션센터(CECO)', 'CECO', 'Changwon'] };
+  const venueUsed = Object.keys(VENUES).filter(v => keep.filter(f => f.vn === v).length >= 3);
+  const venueChips = up => venueUsed.length ? `<div class="chips">${venueUsed.map(v => `<a class="chip" href="${up}venue/${v}.html">${esc(L === 'ko' ? VENUES[v][0] : VENUES[v][1])} <b>${keep.filter(f => f.vn === v && f.status !== 'ended').length}</b></a>`).join('')}</div>` : '';
+  for (const v of venueUsed) {
+    const arr = keep.filter(f => f.vn === v), nm = L === 'ko' ? VENUES[v][0] : VENUES[v][1], k = arr.filter(f => f.status !== 'ended').length;
+    page({ kind: 'v', key: v, slug: `venue/${v}`, arr, up: '../', name: nm + (L === 'ko' ? ' 전시회 일정' : ' exhibition schedule'),
+      title: L === 'ko' ? `${nm} 전시회 일정 ${YR} | ${nm} 박람회·행사 캘린더 ${k}건 — CBM Lab` : `${nm} Exhibition Schedule ${YR} — ${k} Upcoming Trade Shows | CBM Lab`,
+      desc: L === 'ko' ? `${nm}에서 열리는 전시회·박람회 ${k}건의 개최 일정을 날짜순으로 정리했습니다. 전시장 공식 사이트의 공개 일정을 기준으로 매일 갱신합니다.` : `${k} upcoming trade shows and expos at ${nm}, listed by date from the venue's own public calendar and updated daily.`,
+      intro: countryBrief('KR', arr, nm) });
+  }
+  for (const c of cPages) { const arr = keep.filter(f => f.cc === c), name = ctryName(c, L); page({ kind: 'c', key: c, slug: `country/${slugC(c)}`, arr, up: '../', intro: countryBrief(c, arr, name), name: name + (L === 'ko' ? ' 전시회' : ' trade fairs'), title: L === 'ko' ? (c === 'KR' ? `국내 전시회 일정 ${YR} | 코엑스·킨텍스·세텍 박람회 캘린더 — CBM Lab` : `${name} 전시회 일정 ${YR} | ${name} 박람회·무역박람회 캘린더 — CBM Lab`) : `Trade Fairs in ${name} ${YR} — Upcoming Dates & Cities | CBM Lab`, desc: t.cdesc(name, arr.filter(f => f.status !== 'ended').length) }); }
   for (const m of mUsed) { const arr = keep.filter(f => f.s.startsWith(m)), nm = monLabel(m), k = arr.filter(f => f.status !== 'ended').length; page({ kind: 'm', key: m, slug: `m-${m}`, arr, up: '', name: L === 'ko' ? `${nm} 해외 전시회` : `Trade fairs in ${nm}`, title: L === 'ko' ? `${nm} 해외 전시회 일정 | ${+m.slice(5)}월 개최 박람회 ${k}건 — CBM Lab` : `Trade Fairs in ${nm} — ${k} Shows, Dates & Cities | CBM Lab`, desc: L === 'ko' ? `${nm}에 개막하는 해외 전시회 ${k}건. 개최 도시·분야·기간을 한눈에 보고 출장·소싱 일정을 잡아 보세요.` : `${k} trade fairs opening in ${nm}. Compare cities, industries and dates to plan sourcing trips.` }); }
   for (const c of cityList) { const arr = keep.filter(f => f.c === c), f0 = arr[0], nm = L === 'ko' ? f0.ck : c, k = cityCount[c]; page({ kind: 'y', key: slugify(c), slug: `city/${slugify(c)}`, arr, up: '../', name: L === 'ko' ? `${nm} 전시회` : `Trade fairs in ${nm}`, title: L === 'ko' ? `${nm} 전시회 일정 ${YR} | ${nm} 박람회·전시장 캘린더 — CBM Lab` : `Trade Fairs in ${nm} ${YR} — Exhibition Calendar & Dates | CBM Lab`, desc: L === 'ko' ? `${nm}에서 열리는 전시회 ${k}건. 개최 기간과 분야, 방문 전 체크리스트를 정리했습니다.` : `${k} trade fairs in ${nm} with dates, industries and a pre-visit checklist.` }); }
   // all countries
