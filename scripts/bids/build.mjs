@@ -144,7 +144,8 @@ const GUIDES = renderGuides({ T, SECT, SECT_OTHER, SECT_BY, SECT_LABEL, SEC_ICON
 const pub = data.map(x => ({ h: x.h, n: x.title, ne: x.te || '', nk: x.tk || '', o: x.org, c: x.country, cs: x.country ? cSlug[x.country] : '', cp: cPages.some(([c]) => c === x.country), s: x.source, sl: { ko: SRC[x.source]?.ko, en: SRC[x.source]?.en }, t: x.sector, fc: SCOL[x.sector], kc: CC[x.cont] || '', tl: SECT_LABEL[x.sector], p: x.published, e: x.deadline, v: x.value, u: x.url, ct: x.category, d: { ko: descr(x, T.ko), en: descr(x, T.en) }, cr: { ko: SRC[x.source]?.credit.ko, en: SRC[x.source]?.credit.en } }));
 fs.writeFileSync('data/bids/pub.json', JSON.stringify(pub));
 const smUrls = [];
-for (const x of data) { smUrls.push([`${BASE}/bids/n/${x.h}`, `${BASE}/en/bids/n/${x.h}`, x.published || today]); }
+// individual notice pages (~10k, thin and short-lived) are left out of the sitemap so crawl budget goes to hubs/guides; they stay reachable via internal links
+// for (const x of data) smUrls.push([...])
 for (const k of GUIDES.keys.concat(['index'])) smUrls.push([`${BASE}/bids/guide/${k}.html`, `${BASE}/en/bids/guide/${k}.html`, today]);
 const alt = (a, b) => `<xhtml:link rel="alternate" hreflang="ko" href="${a}"/><xhtml:link rel="alternate" hreflang="en" href="${b}"/>`;
 fs.writeFileSync('sitemap-bids.xml', `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">\n` + smUrls.map(([a, b, d]) => `<url><loc>${a}</loc><lastmod>${d}</lastmod>${alt(a, b)}</url>\n<url><loc>${b}</loc><lastmod>${d}</lastmod>${alt(a, b)}</url>`).join('\n') + '\n</urlset>\n');
