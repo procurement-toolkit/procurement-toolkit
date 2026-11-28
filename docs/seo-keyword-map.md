@@ -9,7 +9,7 @@
 | 관부가세 | 3,160 | 낮음 | /personal-duty-calculator.html | 본문 반영 |
 | 해외직구관세 | 1,670 | 높음 | /personal-duty-calculator.html, /aliexpress-temu-guide.html | 반영 |
 | 목록통관 | 630 | 중간 | /list-clearance-exclusion-guide.html | 기존 |
-| 통관번호(개인통관고유부호) | 25,280 | 중간 | /personal-duty-calculator.html (안내 섹션) | 관세청 안내로 연결 |
+| 통관번호(개인통관고유부호) | 25,280 | 중간 | /jikgu/customs-id.html (+계산기 안내 섹션) | 2026 유효기간·재발급·도용방지 반영(관세청·정책브리핑) |
 | 코엑스전시회 | 25,890 | 높음 | /fairs/venue/coex.html | 신설 |
 | 킨텍스전시회 | 1,770 | 높음 | /fairs/venue/kintex.html | 신설 |
 | 박람회일정 / 전시회일정 | 3,210 / 600 | 높음 | /fairs/year-2027.html, /fairs/ | 신설 |
