@@ -187,7 +187,7 @@ const CLIENT_JS = String.raw`(function(){var CFG=__CFG__,$=function(i){return do
 var list=$('list'),cnt=$('fcnt'),pager=$('pager'),pinfo=$('pinfo'),orig=list.innerHTML,DATA=null,page=1,size=20,T=CFG.T;
 var T0=new Date(Date.now()+9*36e5).toISOString().slice(0,10),T30=new Date(Date.now()+9*36e5+30*864e5).toISOString().slice(0,10);
 function esc(s){return String(s==null?'':s).replace(/[&<>"]/g,function(m){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[m]})}
-function inScope(r){var p=CFG.SCOPE;if(!p)return true;var i=p.indexOf(':'),k=p.slice(0,i),v=p.slice(i+1);return k==='g'?r.g===v:k==='c'?r.c===v:k==='k'?r.k===v:k==='m'?r.s.slice(0,7)===v:k==='y'?r.ci===v:k==='v'?r.vn===v:r.sr===v}
+function inScope(r){var p=CFG.SCOPE;if(!p)return true;var i=p.indexOf(':'),k=p.slice(0,i),v=p.slice(i+1);return k==='g'?r.g===v:k==='c'?r.c===v:k==='k'?r.k===v:k==='m'?r.s.slice(0,7)===v:k==='y'?r.ci===v:k==='v'?r.vn===v:k==='n'?r.s.slice(0,4)===v:r.sr===v}
 function card(r){var en=r.e<T0;return '<article class="item'+(r.th?' hasimg':'')+(en?' past':'')+'" style="--c:'+(CFG.COL[r.g]||'#6b7780')+'"><div class="dt"><b>'+esc(r.d1)+'</b>'+esc(r.d2)+'</div><div><a class="t" href="'+CFG.UP+'f/'+r.h+'.html">'+esc(r.n)+'</a><p>'+esc(r.pl)+' · '+esc(r.gl)+'</p>'+(r.hl&&!en?'<span class="tag hot">'+esc(r.hl)+'</span>':'')+'</div>'+(r.th?'<img class="th" loading="lazy" width="120" height="80" src="'+esc(r.th)+'" alt="'+esc(r.al)+'">':'')+'</article>'}
 function pg(n){var pages=Math.max(1,Math.ceil(n/size)),h='',i,set=[1,pages,page-1,page,page+1],last=0;pinfo.textContent=pages>1?T.info.replace('{p}',page).replace('{n}',pages):'';if(pages<2){pager.innerHTML='';return}
 h+='<button type="button" data-p="'+(page-1)+'"'+(page<2?' disabled':'')+'>'+T.prev+'</button>';
@@ -300,7 +300,8 @@ for (const t of Object.values(T)) {
       + `<script>${CLIENT_JS.replace('__CFG__', () => JSON.stringify(cfg)).replace('PAGE', () => String(PAGE))}</script>`;
     write(t, `${o.slug}.html`, layout(t, { path: `${o.slug}.html`, title: o.title, desc: o.desc, ld, up, alt: '', hero, body }));
   }
-  page({ kind: 'index', slug: 'index', arr: keep, up: '', title: L === 'ko' ? `${YR} 세계 전시회 일정 | 해외 박람회·무역박람회 캘린더 — CBM Lab` : `Trade Fairs ${YR} — Worldwide Trade Show Calendar by Industry | CBM Lab`, desc: t.sub });
+  const yearArr = keep.filter(f => f.s.startsWith(YR));
+  page({ kind: 'index', slug: 'index', arr: keep, up: '', intro: yearArr.length >= 20 ? `<section class="box"><h2>${L === 'ko' ? `${YR} 전시회 일정 총정리` : `${YR} trade fair calendar`}</h2><p><a class="chip" href="year-${YR}.html">${L === 'ko' ? `${YR}년 전시회 ${yearArr.length}건 월별로 보기 →` : `Browse ${yearArr.length} fairs of ${YR} by month →`}</a></p></section>` : '', title: L === 'ko' ? `${YR} 세계 전시회 일정 | 해외 박람회·무역박람회 캘린더 — CBM Lab` : `Trade Fairs ${YR} — Worldwide Trade Show Calendar by Industry | CBM Lab`, desc: t.sub });
   for (const g of gUsed) { const arr = keep.filter(f => f.g === g.k), name = gName(g); page({ kind: 'g', key: g.k, slug: `c-${g.k}`, arr, up: '', name: t.gd(name), title: L === 'ko' ? `${name} 전시회 일정 ${YR} | 해외 ${name} 박람회 캘린더 — CBM Lab` : `${name} Trade Fairs ${YR} — Dates & Cities | CBM Lab`, desc: t.gdesc(name, arr.filter(f => f.status !== 'ended').length), intro: `<section class="intro"><h2>${esc(name)}</h2><p>${esc(gIntro(g.k, L))}</p></section>${comply(g.k, '')}` }); }
   for (const c of contUsed) { const arr = keep.filter(f => f.k === c.k); page({ kind: 'k', key: c.k, slug: `r-${c.k}`, arr, up: '', name: c[L] + (L === 'ko' ? ' 전시회' : ' trade fairs'), title: t.contTitle(c[L]), desc: t.contDesc(c[L], arr.filter(f => f.status !== 'ended').length) }); }
   for (const k of srcUsed) { const arr = keep.filter(f => f.sr === k); page({ kind: 'sr', key: k, slug: k, arr, up: '', name: SRC[k][L], title: t.srcTitle(SRC[k][L]), desc: t.srcDesc(SRC[k][L], arr.filter(f => f.status !== 'ended').length) }); }
@@ -321,6 +322,17 @@ for (const t of Object.values(T)) {
     const q = L === 'ko' ? `일정은 주최 측 사정으로 바뀔 수 있으니 방문 전 공식 사이트에서 개막일과 장소를 다시 확인하세요. 수치는 이 사이트에 모인 일정을 기준으로 매일 다시 계산됩니다.` : `Dates can change at the organizer's discretion, so confirm the opening date and venue on the official site before you travel. Figures are recalculated daily from the schedule collected here.`;
     return `<section class="box"><h2>${L === 'ko' ? `${name} 전시회 한눈에 보기` : `${name} trade fairs at a glance`}</h2><p>${esc(p)}</p>${monP ? `<p>${esc(monP)}</p>` : ''}<p class="note">${esc(q)}</p>${c === 'KR' && !/\/venue\//.test(name) ? `<h3>${L === 'ko' ? '전시장별 일정' : 'By venue'}</h3>${venueChips('../')}` : ''}</section>`;
   };
+  // year hub: "2027 전시회 일정 총정리" (targets year + 일정 searches)
+  const yearHref = up => `${up}year-${YR}.html`;
+  if (yearArr.length >= 20) {
+    const ym = mUsed.filter(m => m.startsWith(YR)), cn = {}; for (const f of yearArr) cn[f.cc] = (cn[f.cc] || 0) + 1;
+    const topC = Object.entries(cn).sort((a, b) => b[1] - a[1]).slice(0, 6).map(([c, v]) => `${ctryName(c, L)}(${v})`).join(', ');
+    const monLinks = ym.map(m => `<a class="chip" href="m-${m}.html">${L === 'ko' ? +m.slice(5) + '월' : MN[+m.slice(5) - 1].slice(0, 3)} <b>${keep.filter(f => f.s.startsWith(m)).length}</b></a>`).join('');
+    const intro = `<section class="box"><h2>${L === 'ko' ? `${YR}년 전시회 일정 한눈에 보기` : `${YR} trade fair calendar at a glance`}</h2><p>${esc(L === 'ko' ? `${YR}년에 개막하는 전시회·박람회 ${yearArr.length}건을 모았습니다. 개최가 많은 나라는 ${topC} 순입니다. 월을 눌러 그 달에 열리는 전시회만 볼 수 있고, 국내 일정은 전시장별 페이지에서 확인할 수 있습니다.` : `We list ${yearArr.length} trade fairs opening in ${YR}. The countries with the most are ${topC}. Pick a month to see only that month, or open a country or venue page for more.`)}</p><div class="chips">${monLinks}</div></section>`;
+    page({ kind: 'n', key: YR, slug: `year-${YR}`, arr: yearArr, up: '', intro, name: L === 'ko' ? `${YR} 전시회 일정 총정리` : `${YR} trade fair calendar`,
+      title: L === 'ko' ? `${YR} 전시회 일정 총정리 | 월별·국가별 박람회 일정 ${yearArr.length}건 — CBM Lab` : `${YR} Trade Fair Calendar — ${yearArr.length} Shows by Month and Country | CBM Lab`,
+      desc: L === 'ko' ? `${YR}년 전시회·박람회 일정 ${yearArr.length}건을 월별·국가별로 정리했습니다. 개최일과 도시를 확인하고 출장 일정을 짜 보세요. 공식 일정 기준으로 매일 갱신합니다.` : `${yearArr.length} trade fairs opening in ${YR}, grouped by month and country with dates and host cities. Updated daily from official schedules.` });
+  }
   // venue landing pages (domestic exhibition centres) - target "코엑스 전시회 일정" style searches
   const VENUES = { coex: ['코엑스', 'COEX', 'Seoul'], kintex: ['킨텍스', 'KINTEX', 'Goyang'], setec: ['세텍(SETEC)', 'SETEC', 'Seoul'], exco: ['엑스코(EXCO)', 'EXCO', 'Daegu'], ceco: ['창원컨벤션센터(CECO)', 'CECO', 'Changwon'] };
   const venueUsed = Object.keys(VENUES).filter(v => keep.filter(f => f.vn === v).length >= 3);
