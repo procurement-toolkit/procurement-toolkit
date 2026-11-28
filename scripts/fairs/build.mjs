@@ -320,7 +320,7 @@ for (const t of Object.values(T)) {
     const byM = Object.entries(up.reduce((m, f) => (m[f.s.slice(0, 7)] = (m[f.s.slice(0, 7)] || 0) + 1, m), {})).sort();
     const monP = up.length >= 5 && byM.length >= 2 ? (L === 'ko' ? `월별 개막 건수는 ${byM.map(([m, v]) => `${m.slice(0, 4)}년 ${+m.slice(5)}월 ${v}건`).join(', ')}입니다.` : `Openings by month: ${byM.map(([m, v]) => `${MN[+m.slice(5) - 1]} ${m.slice(0, 4)} ${v}`).join(', ')}.`) : '';
     const q = L === 'ko' ? `일정은 주최 측 사정으로 바뀔 수 있으니 방문 전 공식 사이트에서 개막일과 장소를 다시 확인하세요. 수치는 이 사이트에 모인 일정을 기준으로 매일 다시 계산됩니다.` : `Dates can change at the organizer's discretion, so confirm the opening date and venue on the official site before you travel. Figures are recalculated daily from the schedule collected here.`;
-    return `<section class="box"><h2>${L === 'ko' ? `${name} 전시회 한눈에 보기` : `${name} trade fairs at a glance`}</h2><p>${esc(p)}</p>${monP ? `<p>${esc(monP)}</p>` : ''}<p class="note">${esc(q)}</p>${c === 'KR' && !/\/venue\//.test(name) ? `<h3>${L === 'ko' ? '전시장별 일정' : 'By venue'}</h3>${venueChips('../')}` : ''}</section>`;
+    return `<section class="box"><h2>${L === 'ko' ? `${name} 전시회 한눈에 보기` : `${name} trade fairs at a glance`}</h2><p>${esc(p)}</p>${monP ? `<p>${esc(monP)}</p>` : ''}<p class="note">${esc(q)}</p>${c === 'CN' && L === 'ko' ? '<p><a href="/guides/canton-fair.html">캔톤페어 일정·기수별 품목 보기 →</a></p>' : ''}${c === 'KR' && !/\/venue\//.test(name) ? `<h3>${L === 'ko' ? '전시장별 일정' : 'By venue'}</h3>${venueChips('../')}` : ''}</section>`;
   };
   // year hub: "2027 전시회 일정 총정리" (targets year + 일정 searches)
   const yearHref = up => `${up}year-${YR}.html`;
