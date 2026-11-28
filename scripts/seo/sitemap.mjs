@@ -3,13 +3,16 @@ import fs from 'fs';
 import { execSync } from 'child_process';
 const lm = f => { try { return execSync(`git log -1 --format=%cs -- "${f}"`, { encoding: 'utf8' }).trim(); } catch { return ''; } };
 const BASE = 'https://procurement-toolkit-eight.vercel.app/';
-const GEN_DIRS = ['fairs', 'en/fairs', 'fairs/country', 'en/fairs/country', 'fairs/f', 'en/fairs/f', 'fairs/city', 'en/fairs/city', 'fairs/venue', 'en/fairs/venue', 'jikgu', 'cbm-size', 'recalls', 'bids', 'en/bids', 'bids/country', 'en/bids/country','bids/guide','en/bids/guide'];             // evergreen generated sections (every .html inside is indexable)
+const GEN_DIRS = ['fairs', 'en/fairs', 'fairs/country', 'en/fairs/country', 'fairs/city', 'en/fairs/city', 'fairs/venue', 'en/fairs/venue', 'jikgu', 'cbm-size', 'recalls', 'bids', 'en/bids', 'bids/country', 'en/bids/country','bids/guide','en/bids/guide'];             // evergreen generated sections (every .html inside is indexable)
 const s = fs.readFileSync('sitemap.xml', 'utf8');
 const meta = new Map([...s.matchAll(/<url><loc>([^<]+)<\/loc>(.*?)<\/url>/g)].map(m => [m[1], m[2]]));
+// 크롤링 집중: 개별 전시회 상세·입찰 국가 페이지는 사이트맵에서 제외(내부 링크로만 발견). 색인이 늘면 되돌린다.
+const LOW = /^(en\/)?(fairs\/f|bids\/country)\//;
 const out = new Map();
 for (const [u, rest] of meta) {
   const f = u === BASE ? 'index.html' : u.slice(BASE.length);
   if (!fs.existsSync(f)) continue;
+  if (LOW.test(f)) continue;
   if (/name=["']robots["'][^>]*noindex/i.test(fs.readFileSync(f, 'utf8'))) continue;
   out.set(u, rest);
 }
